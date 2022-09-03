@@ -2,7 +2,7 @@
 
 ??? abstract "Duració i criteris d'avaluació"
 
-    Duració estimada: 4 hores
+    Duració estimada: 3 hores
 
     <hr />
 
@@ -107,7 +107,7 @@ En separar els components en elements conceptuals permet reutilitzar el codi i m
 
 * Model: representa la informació i gestiona tots els accessos a aquesta, tant consultes com actualitzacions provinents, normalment, d'una base de dades. S'accedeix via el controlador.
 * Controlador: Respon a les accions de l'usuari, i realitza peticions al model per a sol·licitar informació. Després de rebre la resposta del model, li envia les dades a la vista.
-* Vista: Presenta a l'usuari de manera visual el model i les dades preparades pel controlador. L'usuari *interactura amb la vista i realitza noves peticions al controlador.
+* Vista: Presenta a l'usuari de manera visual el model i les dades preparades pel controlador. L'usuari interactua amb la vista i realitza noves peticions al controlador.
 
 L'estudiarem en més detall en aprofundir en l'ús dels **frameworks PHP**.
 
@@ -120,7 +120,7 @@ L'estudiarem en més detall en aprofundir en l'ús dels **frameworks PHP**.
 * Conte amb algun servidor web o gestor de base de dades disponible o puc decidir lliurement utilitzar el que crega necessari?
 * Quin tipus de llicència aplicaré a l'aplicació que desenvolupe?
 
-## Herramientas
+## Ferramentes
 
 ### Servidor Web
 
@@ -166,7 +166,7 @@ Les aplicacions que generen les pàgines web es programen en algun dels següent
 
 #### JavaEE
 
-**Java Enterprise Edition** és la solució Java per al desenvolupament d'aplicacions **enterprise*. Ofereix una arquitectura molt completa i complexa, escalable i tolerant a fallades. Plantejada per a aplicacions per a grans sistemes.
+**Java Enterprise Edition** és la solució Java per al desenvolupament d'aplicacions *enterprise*. Ofereix una arquitectura molt completa i complexa, escalable i tolerant a fallades. Plantejada per a aplicacions per a grans sistemes.
 
 ![JavaEE](imagenes/01/javaee.png)
 
@@ -177,9 +177,9 @@ Les aplicacions que generen les pàgines web es programen en algun dels següent
 * Actualment en la versió 8. Es recomana almenys utilitzar una versió superior a la 7.0.
 * Codi embegut en l'HTML
 * Instruccions entre etiquetes `<?php` y `?>`
-* Per a generar codi dins de PHP, podem usar la instrucció `echo`
 * Multitud de llibreries i frameworks:
-  * Laravel, Symfony, Codeigniter, Zend
+  
+      * Laravel, Symfony, Codeigniter, Zend
 
 La seua documentació és bastant completa: <https://www.php.net/manual/es/index.php>
 
@@ -192,7 +192,7 @@ El següent mapa mental mostra un resum dels seus elements:
 
 Durant les següents unitats estudiarem PHP en profunditat.
 
-## Posada en marxa
+## Posada en funcionament
 
 Pera fer correr les aplicacions de servidor ens cal, com a mínim, un **servidor web**, l'interpret de **php** i un **motor de base de dades**. Hem de distinguir l'**entorn de desenvolupament**, on anem a programar i mantindre la nostra aplicació, de l'**entorn de producció**, on anem a executar-la.
 Normalment el primer depén de nosaltres mentre que el segon pot dependre de l'empresa on s'allotjarà la nostra web. Per a preparar el nostre entorn de desenvolupament podem optar per:
@@ -203,7 +203,7 @@ Normalment el primer depén de nosaltres mentre que el segon pot dependre de l'e
 
 La primera solució és senzilla d'implementar però no hauria de ser la nostra primera opció per:
 
-* Estem possant en marxa en la nostra màquina una sèrie de servicis que normalment no fariem, baixant el rendiment de la màquina i obrint vulnerabilitats.
+* Estem possant en funcionament en la nostra màquina una sèrie de serveis que normalment no fariem, baixant el rendiment de la màquina i obrint vulnerabilitats.
 * Si treballem en grup, les instal·lacions i el funcionament no són iguals, depenen del sistema operatiu que té instal·lat cadascú. Allò que li funciona a ú  pot ser no li funciona a un altre. Això és inevitable quan el projecte es complica i es perd molt de temps.
 * Passa el mateix quan passem a l'entorn de producció.
 
@@ -254,7 +254,7 @@ Per a això és necessari tindre instal·lat **Docker Desktop** (<https://www.do
 Al llarg del curs anirem creant diferents contenidors amb els serveis necessaris, de manera que cada vegada només treballem amb el programari mínim.
 
 !!! caution "Versions"
-    Al llarg del curs usarem PHP `8.0`. Respecte a *Docker*, per a escriure les anotacions hem utilitzat la versio `20.10` i la versio `2.19` de **docker compose**. Finalment, la versió de *Docker Desktop* que hem utilitzat és la `4.0`.
+    Al llarg del curs usarem PHP `8.1`. Respecte a *Docker*, per a escriure les anotacions hem utilitzat la versio `20.10` i la versio `2.19` de **docker compose**. Finalment, la versió de *Docker Desktop* que hem utilitzat és la `4.0`.
 
 #### Instal·lació de docker
 
@@ -318,21 +318,37 @@ Per a això, emplenarem l'arxiu `docker-compose.yaml` amb:
     # Services
     services:
 
-      nginx:
-        image: nginx:1.19
-        ports:
-          - 80:80
-        volumes:
-          - ./src:/var/www/php
-          - ./.docker/nginx/conf.d:/etc/nginx/conf.d # cargamos la configuración de un fichero externo
-        depends_on:
-          - php   # enlazamos nginx con php
+    # Nginx Service
+    nginx:
+    image: nginx:1.19
+    ports:
+      - 80:80
+    volumes:
+      - ./src:/var/www/php
+      - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - php
 
-      php:
-        image: php:8.0-fpm
-        working_dir: /var/www/php
-        volumes:
-          - ./src:/var/www/php
+    # PHP Service
+    php: 
+    build: ./.docker/php/
+    working_dir: /var/www/php
+    expose:
+      - 9000
+    volumes:
+      - ./src:/var/www/php
+      - ./.docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./.docker/php/conf.d/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
+
+    # Más info en
+    # https://tech.osteel.med/posts/docker-for-local-web-development-part-1-a-basic-lemp-stack
+
+    # Lanzar con
+    # docker-compose up -d
+
+    # Ver los logs con
+    # docker-compose logs -f
+    
     ```
 
 Dins de la carpeta que continga aquest arxiu, hem de crear una carpeta `src` on col·locarem el nostre codi font. Per a facilitar la posada en marxa, teniu la plantilla de  [Nginx/PHP](recursos/plantilla-NP.zip) disponible per a la seua descàrrega.
@@ -387,9 +403,11 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 !!! question "Però vull saver com funciona..."
     En el mòdul de Desplegament d'aplicacions estudiareu en profunditat, a més de Docker, Apatxe i altres serveis que ens serviran d'ajuda per al desenvolupament en entorn servidor.
 
+
+
 ### Entorn de desenvolupament
 
-En este curso utilitzarem *PHP Storm* (<https://www.jetbrains.com/phpstorm/>) com a entorn de desenvolupament. Existixen altres alternatives, com *Visual Studio Code* (<https://code.visualstudio.com>).
+En este curso utilitzarem [**PHP Storm**](<https://www.jetbrains.com/phpstorm/>) com a entorn de desenvolupament. Existixen altres alternatives, com [**Visual Studio Code**](<https://code.visualstudio.com>).
 
 ### Hola mon
 
@@ -412,6 +430,11 @@ Si nomenem l'arxiu com `index.php`, en accedir a `http://localhost` automàticam
 </body>
 </html>
 ```
+### Entorn de proves
+
+La màquina docker ve configurada amb **[codeception](https://codeception.com/)** i una col·leció de proves per als exercicis que desenvoluparem al llarg de les primeres unitats. Per possar en funcionament les proves haurem d'executar el comanament '**composer update**' en el directori que hem creat.
+Este comanament instal·la paquets de tercers en el nostre aplicatiu i serà estudiat més avant. Per a executar les proves funcionarem amb el comanament '**php vendor/bin/codecept run --html**' que genera una pàgina web, que podem vore amb el nevegador, amb els resultats del test.
+
 
 ## Referències
 
@@ -420,7 +443,7 @@ Si nomenem l'arxiu com `index.php`, en accedir a `http://localhost` automàticam
 
 ## Activitats
 
-101. Cerca en internet quals són els tres *frameworks *PHP més utilitzats, i indica:
+101. Cerca en internet quals són els tres *frameworks de PHP* més utilitzats, i indica:
 
      * Nom i URL
      * Any de creació
@@ -430,7 +453,7 @@ Si nomenem l'arxiu com `index.php`, en accedir a `http://localhost` automàticam
 
      * Empresa + lloc + frameworks PHP + requeriments + sou + enllaç a l'oferta.
 
-103. Una vegada arrancat el servei PHP (mitjançant XAMPP o Docker), crea l'arxiu `info.php` i afig el següent fragment de codi:
+103. Una vegada arrancat el servei PHP (mitjançant XAMPP o Docker), consulta `phpinfo.php` que té el següent fragment de codi:
    
     ``` php
     <?php phpinfo() ?>
@@ -438,7 +461,7 @@ Si nomenem l'arxiu com `index.php`, en accedir a `http://localhost` automàticam
     Anota els valors de:
 
     * Versió de PHP
-    * *Loaded Configuration File*
+    * Loaded Configuration File
     * `memory_limit`
     * `DOCUMENT_ROOT`
 
@@ -449,4 +472,4 @@ Si nomenem l'arxiu com `index.php`, en accedir a `http://localhost` automàticam
     * `short_open_tag`
 
     !!! note "php.ini"
-        Es el archivo de configuración de PHP, y en toda instalación vienen dos plantillas (`php.ini-development` y `php.ini-production`) para que elijamos los valores más acordes a nuestro proyecto y creemos nuestro archivo propio de `php.ini`.
+        És l'arxiu de configuració de PHP, i en tota instal·lació venen dues plantilles (`php.ini-development` i `php.ini-production`) perquè triem els valors més concordes al nostre projecte i creiem el nostre arxiu propi de `php.ini`.

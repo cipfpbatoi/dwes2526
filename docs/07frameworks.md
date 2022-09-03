@@ -24,11 +24,11 @@
 
 ## Puesta en marcha
 
-Lo primero de todo es crear una carpeta con el nombre del proyecto que vayamos a crear y nos metemos en ella.
+Lo primero de todo es crear una carpeta con el nombre del Projecte que vayamos a crear y nos metemos en ella.
 
 Vamos a utilizar la imagen de Bitnami ya preparada, así que lo que hacer ahora es [descargar el archivo docker-compose.yml](https://github.com/bitnami/bitnami-docker-laravel/blob/master/docker-compose.yml) del repositorio de Github oficial.
 
-Una vez descargado el archivo en nuestra carpeta que acabamos de crear con el nombre del proyecto, lanzamos el siguiente comando por consola para instalar todas las dependencias y crear las imágenes de Docker correspondientes.
+Una vez descargado el archivo en nuestra carpeta que acabamos de crear con el nombre del Projecte, lanzamos el siguiente comando por consola para instalar todas las dependencias y crear las imágenes de Docker correspondientes.
 
 ```console
 docker-compose -p Laravel up -d
@@ -46,13 +46,13 @@ Si por alguna extraña razón **estás en Windows** y no te funciona una de las 
     <img src="imagenes/07/error-laravel.png">
 </div>
 
-Para solucionarlo, nos vamos a la carpeta del proyecto que se te habrá creado por defecto al hacer docker-compose, en este caso y si no has modificado el archivo .yml la carpeta del proyecto sera `my-proyect` y dentro de ella eliminamos la carpeta `vendor`.
+Para solucionarlo, nos vamos a la carpeta del Projecte que se te habrá creado por defecto al hacer docker-compose, en este caso y si no has modificado el archivo .yml la carpeta del Projecte sera `my-proyect` y dentro de ella eliminamos la carpeta `vendor`.
 
 Cuando hayamos eliminado dicha carpeta, necesitaremos instalar `Composer` de manera global en nuestro sistema Windows. Para ello. bájate el instalador [desde este enlace](https://getcomposer.org/Composer-Setup.exe).
 
 Una vez lo instales ya serás capaz de lanzar el comando `composer` desde cualquier consola de Windows.
 
-Por último, abrimos una consola dentro de la carpeta `my-project` o el nombre que le hayas puesto a la carpeta del proyecto de Laravel y ejecutamos el siguiente comando.
+Por último, abrimos una consola dentro de la carpeta `my-project` o el nombre que le hayas puesto a la carpeta del Projecte de Laravel y ejecutamos el siguiente comando.
 
 ```console
 composer install
@@ -69,7 +69,7 @@ Recomendable instalar los siguientes plugins para Visual Studio Code
 
 ## Carpetas en Laravel
 
-Al crear un nuevo proyecto con este framework, Laravel crea una serie de carpetas por defecto. Esta estructura de carpetas es la recomendada para utilizar Laravel.
+Al crear un nuevo Projecte con este framework, Laravel crea una serie de carpetas por defecto. Esta estructura de carpetas es la recomendada para utilizar Laravel.
 
 ### Public
 
@@ -77,7 +77,7 @@ Esta es la carpeta más importante ya que es donde se ponen todos los archivos q
 
 ### Routes
 
-Otra de las carpetas que más vamos a usar a lo largo de este curso de Laravel. En ella se albergan todas las rutas (redirecciones web) de nuestro proyecto, pero más concretamente en el archivo `web.php`
+Otra de las carpetas que más vamos a usar a lo largo de este curso de Laravel. En ella se albergan todas las rutas (redirecciones web) de nuestro Projecte, pero más concretamente en el archivo `web.php`
 
     Dada una ruta → se cargará una vista
 
@@ -345,7 +345,7 @@ Por defecto, los controladores se guardan en una carpeta específica situada en 
 
 Para crear un controlador nuevo debemos hacer uso de nuestro querido autómata `artisan` donde le diremos que cree un controlador con el nombre que nosotros queramos.
 
-Abrimos la consola y nos situamos en la raíz de nuestro proyecto
+Abrimos la consola y nos situamos en la raíz de nuestro Projecte
 
 ```console
 php artisan make:controller PagesController
@@ -420,7 +420,7 @@ Si te fijas, nada más instalar Laravel con la imagen de Bitnami, se han creado 
 
 ### Archivos .env
 
-Es de uso común trabajr con archivos de entorno llamados también `archivos .env`. Normalmente, eun unproyecto real puedes encontrarte con varios archivos de este tipo en función del despliegue que se quiera hacer; como por ejemplo:
+Es de uso común trabajr con archivos de entorno llamados también `archivos .env`. Normalmente, eun unProjecte real puedes encontrarte con varios archivos de este tipo en función del despliegue que se quiera hacer; como por ejemplo:
 
   - `test.env` config. para desplegar en entorno seguro de pruebas
   - `release.env` config. para desplegar cambios de versión que se envía a los *beta testers*
@@ -983,9 +983,9 @@ Existe otra dependencia en `resources/lang/en/pagination.php` donde encontrarás
 
 Para la utenticación de usuarios necesitamos instalar unas cuantas dependencias ya preparadas para ello.
 
-No es necesarios crear un proyecto nuevo pero nosotros vamos a hacerlo para tener uno con autenticación y otro no, el que ya hicimos al principio.
+No es necesarios crear un Projecte nuevo pero nosotros vamos a hacerlo para tener uno con autenticación y otro no, el que ya hicimos al principio.
 
-Primero de todo, vamos a crear un nuevo proyecto en Laravel que se llame `notas_auth` y nos metemos dentro de la carpeta del mismo cuando el script haya terminado.
+Primero de todo, vamos a crear un nuevo Projecte en Laravel que se llame `notas_auth` y nos metemos dentro de la carpeta del mismo cuando el script haya terminado.
 
 Dentro de la carpeta `notas_auth` lanzamos los siguientes comandos.
 
@@ -1016,7 +1016,7 @@ public function __construct()
 
 Mediante el uso del `middleware` llamado `auth` establecemos que todas las rutas que hagan uso de este controlador deban pasar por el login para mostrar el contenido.
 
-Por lo tanto, en nuestros proyectos es recomendable utilizar diferentes controladores para diferentes vistas; las que estén reestringidas por el login y las que no.
+Por lo tanto, en nuestros Projectes es recomendable utilizar diferentes controladores para diferentes vistas; las que estén reestringidas por el login y las que no.
 
 ### Datos del usuario
 
@@ -1568,9 +1568,9 @@ El último paso que vamos a hacer es, listar los datos relacionados en una vista
 
   - `Nosotros` enlace que vaya a la página "nosotros"  y muestre, además de los elementos estáticos de todo el sitio, un h2 que diga "Estás en la sección Nosotros"
 
-  - `Proyecto` enlace que cargue una vista con el siguiente texto "Estás en el proyecto numero: X" donde X es un número entero que podamos introducirlo en la propia ruta. Si no se mete ningún número en la ruta, por defecto tiene que ser 1; por ejemplo
+  - `Projecte` enlace que cargue una vista con el siguiente texto "Estás en el Projecte numero: X" donde X es un número entero que podamos introducirlo en la propia ruta. Si no se mete ningún número en la ruta, por defecto tiene que ser 1; por ejemplo
 
-        http://localhost:8000s/proyecto/210937
+        http://localhost:8000s/Projecte/210937
 
   - Recuerda que el título y el menú de navegación han de aparecer en todas las vistas que cargues.
 
@@ -1594,9 +1594,9 @@ El último paso que vamos a hacer es, listar los datos relacionados en una vista
 
 ---
 
-703. Crear el proyecto CholloSevero:
+703. Crear el Projecte CholloSevero:
 
-  - Crea un nuevo repositorio para el proyecto
+  - Crea un nuevo repositorio para el Projecte
   - Configura el `.gitignore` para no incluir en el repo los siguientes archivos y carpetas:
       - carpeta `vendor`
       - archivos `.env` y cualquier archivo que empiece por `.` excepto el `.gitignore`
@@ -1660,13 +1660,13 @@ Muy parecida a la de Crear un chollo pero que puedas editar un Chollo en funció
 
 - Ve haciendo commits en función de las tareas que vayas acabando o que veas que el commit tiene sentido. No es buena práctica subir los camios de un archivo y el siguiente commit volver a subir más cambios del mismo archivo (a no ser que nos hayamos saltado o equivocado en algo).
 
-- El proyecto es individual y después se presentará, uno por uno al profesor para que evalúe todos los aspectos del mismo. Se harán preguntas de cómo se ha hecho cierta cosa o por qué se ha determinado cierto flujo de trabajo así que, <span class="alert">***no os copiéis porque se evalúa también la presentación del proyecto***</span>
+- El Projecte es individual y después se presentará, uno por uno al profesor para que evalúe todos los aspectos del mismo. Se harán preguntas de cómo se ha hecho cierta cosa o por qué se ha determinado cierto flujo de trabajo así que, <span class="alert">***no os copiéis porque se evalúa también la presentación del Projecte***</span>
 
 
 <!--
 ### Configuración
 
-En el directorio raiz del proyecto tenemos el archivo `.env`. Este archivo define las variables de entorno que personalizan nuestro entorno. Así pues, es aquí donde deberemos configurar nuestra base de datos.
+En el directorio raiz del Projecte tenemos el archivo `.env`. Este archivo define las variables de entorno que personalizan nuestro entorno. Así pues, es aquí donde deberemos configurar nuestra base de datos.
 
 ```
 DB_HOST=localhost
@@ -1685,11 +1685,11 @@ Las migraciones (<https://laravel.com/docs/master/migrations>) permiten a *Larav
 
 Además de desacoplar el sistema gestor de base de datos de nuestra aplicación mediante el uso de la fachada `Schema`, las migraciones evitan errores de sintaxis y mantienen los entornos de producción, preproducción, pruebas y entorno local con la misma información.
 
-Todo proyecto *Laravel* viene con tres migraciones por defecto, las cuales podemos modificar o eliminar.
+Todo Projecte *Laravel* viene con tres migraciones por defecto, las cuales podemos modificar o eliminar.
 
 ### Creación
 
-Para crear una migración podemos crear directamente nuestras clases en la ruta `database/migrations/` de nuestro proyecto *Laravel*, o utilizar los comandos de `artisan`.
+Para crear una migración podemos crear directamente nuestras clases en la ruta `database/migrations/` de nuestro Projecte *Laravel*, o utilizar los comandos de `artisan`.
 
 Para crear nuestras migraciones en Laravel se usa el siguiente comando:
 

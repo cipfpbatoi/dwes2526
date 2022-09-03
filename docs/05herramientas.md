@@ -880,7 +880,7 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
      * Afig una propietat denominada `hora`, la qual s'inicialitza únicament com a paràmetre del constructor. Si la `hora` és inferior a 0 o major de 24, ha d'escriure un log de *warning* amb un missatge apropiat.
      * Modifica els mètodes `saludar` i `acomiadar` per a fer-lo concorde a la propietat `hora` (bon dia, bona vesprada, fins demà, etc...)
 
-### Proyecto Videoclub IV
+### Projecte Videoclub IV
 
 511. Com ja tenim *Composer* instal·lat:
      * Inicialitza-ho dins del teu projecte Videoclub

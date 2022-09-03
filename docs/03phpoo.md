@@ -1534,7 +1534,7 @@ Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante
 330. Modifica els operacions de llogar, tant en `Client` com en `Videoclub`, per a donar suport a l'encadenament de mètodes.
      Posteriorment, modifica el codi de prova per a utilitzar aquesta tècnica.
 331. Fent ús de *namespaces*:
-     * Col·boja totes els classes/interfícies en `Dwes\ProyectoVideoclub`
+     * Col·boja totes els classes/interfícies en `Dwes\ProjecteVideoclub`
      * Cada classe ha de fer `include_once` dels recursos que empra
      * Col·boja el/els arxivaments de prova en l'arrel (sense espai de noms)
      * Dones de l'arxiu de proves, utilitza `use` per a poder realitzar accessos sense qualificar
@@ -1542,7 +1542,7 @@ Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante
 332. Reorganitza els carpeta tal com hem vist en els anotacions: `app`, `test` i `vendor`.
      * Crea un fitxer `autolloeu.php` per a registrar la ruta on trobar els classes
      * Modifica tot el codi necessari, incloent `autolloeu.php` on seguisca necessari i esborrant els *includes* previs.
-333. A continuació crearem un conjunt d'excepcions d'aplicació. Aquestes excepcions són simples, no necessiten sobreescriure cap mètode. Així doncs, crea l'excepció d'aplicació `VideoclubException` en el *namespace* `Dwes\ProyectoVideoclub\Util`.
+333. A continuació crearem un conjunt d'excepcions d'aplicació. Aquestes excepcions són simples, no necessiten sobreescriure cap mètode. Així doncs, crea l'excepció d'aplicació `VideoclubException` en el *namespace* `Dwes\ProjecteVideoclub\Util`.
      Posteriorment crea els següents fills (han d'heretar de `VideoclubException`), cadascun en el seu propi arxiu:    * `SoporteYaAlquiladoException`
     * `CupoSuperadoException`
     * `SoporteNoEncontradoException`

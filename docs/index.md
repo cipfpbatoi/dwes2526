@@ -93,14 +93,16 @@ Duració estimada: 88 hores
 
 La nota de cada avaluació es calcula mitjançant:
 
-  * 30% Treball en Classe / Activitats
+  * 40% Treball en Classe / Activitats
     * S'avaluen totes les activitats realitzades en classe i a casa.
-    * Les activitats s'avaluen mitjançant tasques de *Aules* amb qualificacions compreses entre 0 i 3 punts:
-      * 0: No entregada
-      * 1: Entregada però solució errònia o incompleta
-      * 2: Entregada i solució acceptable, encara que té algun apartat incomplet
-      * 3: Entregada i solució correcta.
-  * 70% Activitat d'avaluació
-    * Una o dues proves per avaluació.
+      * Les activitats s'avaluen mitjançant tasques de *Aules* amb qualificacions compreses entre 0 i 3 punts:
+      
+         * 0: No entregada
+         * 1: Entregada però solució errònia o incompleta
+         * 2: Entregada i solució acceptable, encara que té algun apartat incomplet
+         * 3: Entregada i solució correcta.
+        
+  * 60% Activitat d'avaluació
+     * Una o dues proves per avaluació.
 
 La nota final es calcula mitjançant la mitjana de cadascuna de les avaluacions.

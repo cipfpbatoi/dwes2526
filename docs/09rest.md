@@ -179,7 +179,7 @@ $response = Http::post('http://localhost:8000/api/chollo-severo', [
 
 ## Actividades
 
-901. <span class="success">**Chollo Severo V 2.0**</span> Crea un controlador nuevo que se llame `RestController` (o como quieras llamarlo) y escribe todos los métodos que necesites para convertir tu `app` que, consume de una Base de Datos, a una `Restful App` que reciba los datos a través de la API de tu proyecto de Chollos.
+901. <span class="success">**Chollo Severo V 2.0**</span> Crea un controlador nuevo que se llame `RestController` (o como quieras llamarlo) y escribe todos los métodos que necesites para convertir tu `app` que, consume de una Base de Datos, a una `Restful App` que reciba los datos a través de la API de tu Projecte de Chollos.
 
 <!-- 
 ## Producción y consumo

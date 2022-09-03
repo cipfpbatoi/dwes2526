@@ -8,7 +8,7 @@
 
 https://igomis.github.io/apunts/docs/4.8.Laravel.html
 
-!!! tip Proyecto
+!!! tip Projecte
     1. Pregunta
     2. Respuesta
     3. Relacion P-R
