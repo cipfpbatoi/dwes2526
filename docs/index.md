@@ -29,30 +29,30 @@ La primera avaluació contindria les unitats compreses entre la 1 i 5, i part de
 
 ### Primera avaluació
 
-Duració estimada: 72 hores
+Duració estimada: 80 hores
 
-1. [Arquitectures Web](01arquitecturas.md) (4h)
+1. [Arquitectures Web](01arquitecturas.md) (2h)
 
      * Client/Servidor. 
      * MVC.
 
-3. [El llenguatge PHP](02php.md) (26h)
+3. [El llenguatge PHP](02php.md) (27h)
    
      * Condicions i bucles.
      * Arrays.
 
-4. [Orientació a objectes amb *PHP](03phpoo.md) (18h)
+4. [Orientació a objectes amb PHP](03phpoo.md) (19h)
 
      * Classes i objectes 
      * Namespaces
      * Excepcions
    
-5. [Programació Web](04web.md) (12h)
+5. [Programació Web](04web.md) (13h)
 
      * Formularis.
      * Cookies i sessió.
 
-6. [Eines Web](05herramientas.md) (16h)
+6. [Eines Web](05herramientas.md) (19h)
 
        * *Composer*.
        * Ús de logs amb *Monolog*.
@@ -62,38 +62,35 @@ Duració estimada: 72 hores
 
 ### Segona avaluació
 
-Duració estimada: 88 hores
+Duració estimada: 80 hores
 
-6. [Accés a dades](06accesoDatos.md) (28h)
+6. [Accés a dades](06accesoDatos.md) (14h)
 
      * SQL
      * *PDO*
      * Fitxers CSV i PDF.
      * *ORM* amb *Eloquent*.
    
-7. [Frameworks PHP. Laravel bàsic](07frameworks.md) (24h)
+7. [Frameworks PHP. Laravel bàsic](07frameworks.md) (26h)
    
      * Rutes
      * Vistes.
      * Migracions i integració amb *Eloquent*.
+     
 
-8. [Ús avançat de Frameworks](08frameworks2.md) (22h)
-
-    * Plantilles amb *Blade*.
-    * Autenticació i autorització.
-    * *i18n*.
-
-9. [Serveis REST](09rest.md) (12h)
+8. [Serveis REST](09rest.md) (16h)
 
     * Producció i consum.
     * *AJAX* amb *JSON*.
     * Interacció amb *Vue.js*.
 
+9. [Projecte Integrador]
+
 ## Instruments de qualificació
 
 La nota de cada avaluació es calcula mitjançant:
 
-  * 40% Treball en Classe / Activitats
+  * 30% Treball en Classe / Activitats
     * S'avaluen totes les activitats realitzades en classe i a casa.
       * Les activitats s'avaluen mitjançant tasques de *Aules* amb qualificacions compreses entre 0 i 3 punts:
       
@@ -101,8 +98,10 @@ La nota de cada avaluació es calcula mitjançant:
          * 1: Entregada però solució errònia o incompleta
          * 2: Entregada i solució acceptable, encara que té algun apartat incomplet
          * 3: Entregada i solució correcta.
-        
-  * 60% Activitat d'avaluació
+    
+  * 30% Projectes
+
+  * 40% Activitat d'avaluació
      * Una o dues proves per avaluació.
 
 La nota final es calcula mitjançant la mitjana de cadascuna de les avaluacions.

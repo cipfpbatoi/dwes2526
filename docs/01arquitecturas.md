@@ -287,9 +287,8 @@ usermod -aG docker $USER
 On $USER és el teu usuari.
 
 També haurem d'instal·lar el docker-compose
-
 ~~~
-curl -L "https://github.com/docker/compose/releases/download/1.26.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+curl -SL "https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 chmod +x /usr/local/bin/docker-compose
 ~~~
@@ -356,13 +355,13 @@ Dins de la carpeta que continga aquest arxiu, hem de crear una carpeta `src` on 
 Quan estiguem llestos, llançarem el servei mitjançant:
 
 ``` console
-docker-compose up -d
+docker compose up -d
 ```
 
 Si volem veure el contingut dels arxius de log del servei utilitzarem:
 
 ``` console
-docker-compose logs -f
+docker compose logs -f
 ```
 
 Per a copiar un arxiu des del nostre sistema a l'interior del contenidor:
