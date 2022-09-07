@@ -308,8 +308,8 @@ sudo systemctl start docker.service
 #### Plantilla Servidor Web + PHP
 
 **Docker** es basa en l'ús d'imatges per a crear contenidors. *Docker Compose* simplifica el treball amb múltiples contenidors, i per això, per a facilitar l'arranc, ens centrarem en *Docker Compose* utilitzant una plantilla que únicament contindrà com a serveis Nginx i PHP.
-
-Per a això, emplenarem l'arxiu `docker-compose.yaml` amb:
+Per a facilitar la posada en marxa, teniu la plantilla de  [Nginx/PHP](recursos/plantilla-NP.zip) disponible per a la seua descàrrega.
+El fitxer que diu quines màquines ha de montar es diu docker-compose.yaml i té el següent aspecte
 
 === "Nginx i PHP"
 
@@ -336,7 +336,7 @@ Per a això, emplenarem l'arxiu `docker-compose.yaml` amb:
       - 9000
     volumes:
       - ./src:/var/www/php
-      - ./.docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./.docker/php/conf.d/Xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./.docker/php/conf.d/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
 
     # Más info en
@@ -350,13 +350,13 @@ Per a això, emplenarem l'arxiu `docker-compose.yaml` amb:
     
     ```
 
-Dins de la carpeta que continga aquest arxiu, hem de crear una carpeta `src` on col·locarem el nostre codi font. Per a facilitar la posada en marxa, teniu la plantilla de  [Nginx/PHP](recursos/plantilla-NP.zip) disponible per a la seua descàrrega.
 
 Quan estiguem llestos, llançarem el servei mitjançant:
 
 ``` console
 docker compose up -d
 ```
+Una vegada llançat el comandament tindre disponible un servidor web a l'adreça http::/localhost i que agafa el fitxer del directori /src
 
 Si volem veure el contingut dels arxius de log del servei utilitzarem:
 
