@@ -431,7 +431,33 @@ Si nomenem l'arxiu com `index.php`, en accedir a `http://localhost` automàticam
 ```
 ### Entorn de proves
 
-La màquina docker ve configurada amb **[codeception](https://codeception.com/)** i una col·leció de proves per als exercicis que desenvoluparem al llarg de les primeres unitats. Per possar en funcionament les proves haurem d'executar el comanament '**composer update**' en el directori que hem creat.
+La màquina docker ve configurada amb **[codeception](https://codeception.com/)** i una col·leció de proves per als exercicis que desenvoluparem al llarg de les primeres unitats. 
+Haurem d'instal·lar el php 8.1 en la nostra màquina. Podem comprovar si està instal.lat i quina versió si en la terminal possem : 
+
+``` console
+php -v
+```
+
+En cas de que no estiga instal·lat o la versió no siga la correcta, haurem de executar les següents instruccions:
+
+``` console
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+sudo apt-get update
+apt install php8.1-fpm php8.1-cli
+php -v
+```
+
+En cas de que la versió siga incorrecta hauriem d'executar els següent comanaments:
+
+``` console
+sudo rm /etc/alternatives/php
+sudo ln -s /usr/bin/php8.1 /etc/alternatives/php
+php -v
+```
+
+
+Per possar en funcionament les proves haurem d'executar el comanament '**composer update**' en el directori que hem creat.
 Este comanament instal·la paquets de tercers en el nostre aplicatiu i serà estudiat més avant. Per a executar les proves funcionarem amb el comanament '**php vendor/bin/codecept run --html**' que genera una pàgina web, que podem vore amb el nevegador, amb els resultats del test.
 
 

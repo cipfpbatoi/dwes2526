@@ -1574,9 +1574,9 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
 Tots els exercicis s'han de realitzar creant noves funcions per a encapsular el codi.
 A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar-lo.
 
-250. `250fraseImpares.php`: Lee una frase i retorna una nova amb solo els caràcters de les posicions imparelles.
-251. `251vocales.php`: A partir d'una frase, retorna la quantitat de cadascuna de les vocals, i el total d'elles.
-252. `252analizador.php`: A partir d'una frase amb paraules només separades per espais, retornar
+250. `250.php`: Lee una frase i retorna una nova amb solo els caràcters de les posicions imparelles.
+251. `251.php`: A partir d'una frase, retorna la quantitat de cadascuna de les vocals, i el total d'elles.
+252. `252.php`: A partir d'una frase amb paraules només separades per espais, retornar
      * Lletres totals i quantitat de paraules
      * Una línia per cada paraula indicant la seua grandària
 
