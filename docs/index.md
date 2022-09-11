@@ -25,7 +25,11 @@ La duració del mòdul és de 160 hores lectives, a raó de **8 hores setmanals*
 ## Unitats didàctiques / Temporalització
 
 A continuació es mostren les unitats didàctiques i una estimació temporal de cadascuna d'elles.
-La primera avaluació contindria les unitats compreses entre la 1 i 5, i part de la unitats 6. Així doncs, des de la meitat de la unitat 6 a la unitat 9 es veuran en la segona avaluació.
+La primera avaluació contindria les unitats compreses entre la 1 i 6. Així doncs, des de la meitat de la unitat 6 a la unitat 9 es veuran en la segona avaluació.
+
+### Planning
+
+[Calendari Previst](planning.md)
 
 ### Primera avaluació
 
@@ -36,7 +40,7 @@ Duració estimada: 80 hores
      * Client/Servidor. 
      * MVC.
 
-3. [El llenguatge PHP](02php.md) (27h)
+3. [El llenguatge PHP](02php.md) (24h)
    
      * Condicions i bucles.
      * Arrays.
@@ -47,12 +51,12 @@ Duració estimada: 80 hores
      * Namespaces
      * Excepcions
    
-5. [Programació Web](04web.md) (13h)
+5. [Programació Web](04web.md) (14h)
 
      * Formularis.
      * Cookies i sessió.
 
-6. [Eines Web](05herramientas.md) (19h)
+6. [Eines Web](05herramientas.md) (21h)
 
        * *Composer*.
        * Ús de logs amb *Monolog*.
@@ -64,44 +68,44 @@ Duració estimada: 80 hores
 
 Duració estimada: 80 hores
 
-6. [Accés a dades](06accesoDatos.md) (14h)
+7. [Accés a dades](06accesoDatos.md) (14h)
 
      * SQL
      * *PDO*
      * Fitxers CSV i PDF.
      * *ORM* amb *Eloquent*.
    
-7. [Frameworks PHP. Laravel bàsic](07frameworks.md) (26h)
+8. [Frameworks PHP. Laravel bàsic](07frameworks.md) (26h)
    
      * Rutes
      * Vistes.
      * Migracions i integració amb *Eloquent*.
      
 
-8. [Serveis REST](09rest.md) (16h)
+9. [Serveis REST](09rest.md) (16h)
 
     * Producció i consum.
     * *AJAX* amb *JSON*.
     * Interacció amb *Vue.js*.
 
-9. [Projecte Integrador]
+10. [Projecte Integrador]
 
 ## Instruments de qualificació
 
-La nota de cada avaluació es calcula mitjançant:
+La nota del curs es calcula mitjançant:
 
-  * 30% Treball en Classe / Activitats
-    * S'avaluen totes les activitats realitzades en classe i a casa.
+  * 20% Treball en Classe / Activitats
+    * S'avaluen totes les activitats realitzades en classe i a casa. Es faran per parelles.
       * Les activitats s'avaluen mitjançant tasques de *Aules* amb qualificacions compreses entre 0 i 3 punts:
       
-         * 0: No entregada
-         * 1: Entregada però solució errònia o incompleta
-         * 2: Entregada i solució acceptable, encara que té algun apartat incomplet
+         * 0: No entregada.
+         * 1: Entregada però solució errònia o incompleta.
+         * 2: Entregada i solució acceptable, encara que té algun apartat incomplet.
          * 3: Entregada i solució correcta.
     
-  * 30% Projectes
+  * 20% Projectes (1 per avaluació)
+  * 10% Projecte Integrador (Final de curs)
 
-  * 40% Activitat d'avaluació
-     * Una o dues proves per avaluació.
+  * 50% Activitats d'avaluació (Fan mitja a partir de 4)
+     * Tres proves escrites.
 
-La nota final es calcula mitjançant la mitjana de cadascuna de les avaluacions.

@@ -351,32 +351,7 @@ El fitxer que diu quines màquines ha de montar es diu docker-compose.yaml i té
     ```
 
 
-Quan estiguem llestos, llançarem el servei mitjançant:
-
-``` console
-docker compose up -d
-```
-Una vegada llançat el comandament tindre disponible un servidor web a l'adreça http::/localhost i que agafa el fitxer del directori /src
-
-Si volem veure el contingut dels arxius de log del servei utilitzarem:
-
-``` console
-docker compose logs -f
-```
-
-Per a copiar un arxiu des del nostre sistema a l'interior del contenidor:
-
-``` console
-docker cp ./miFichero idContenedor:/tmp
-```
-
-I a l'inrevés, si volem consultar un arxiu contingut dins d'un contenidor, el copiarem al nostre sistema:
-
-``` console
-docker cp idContenedor:/tmp/archivoAConsultar.txt ./
-```
-
-Finalment, si volem accedir a un terminal interactiu dins del contenidor:
+Si volem accedir a un terminal interactiu dins del contenidor:
 
 ``` console
 docker exec -it nombreContenedor bash
@@ -402,33 +377,30 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 !!! question "Però vull saver com funciona..."
     En el mòdul de Desplegament d'aplicacions estudiareu en profunditat, a més de Docker, Apatxe i altres serveis que ens serviran d'ajuda per al desenvolupament en entorn servidor.
 
+### Tot funciona
+
+Heu de comprovar que a l'accedir a `http://localhost` en el vostre navegador se us obre una pàgina de salutació.
 
 
 ### Entorn de desenvolupament
 
 En este curso utilitzarem [**PHP Storm**](<https://www.jetbrains.com/phpstorm/>) com a entorn de desenvolupament. Existixen altres alternatives, com [**Visual Studio Code**](<https://code.visualstudio.com>).
 
-### Hola mon
+#### Instal.lació
+Podem fer-ho de manera automàtica utilitzant snap. Per fer-ho amb linux-mint
 
-I com no, el nostre primer exemple serà un Hola Món en PHP.
-
-Si nomenem l'arxiu com `index.php`, en accedir a `http://localhost` automàticament carregarà el resultat:
-
-``` html+php hl_lines="9-11"
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hola Món</title>
-</head>
-<body>
-    <?php
-        echo "Hola Món";
-    ?>
-</body>
-</html>
+``` console
+sudo rm /etc/apt/preferences.d/nosnap.pref
+sudo apt update
+sudo apt install snapd
+sudo snap install phpstorm --classic
 ```
+També es pot instal·lar baixant-se el paquet de la pàgina web.
+
+##### Llicència
+Podeu sol·licitar una llicència a i.gomismullor@edu.gva.es
+
+
 ### Entorn de proves
 
 La màquina docker ve configurada amb **[codeception](https://codeception.com/)** i una col·leció de proves per als exercicis que desenvoluparem al llarg de les primeres unitats. 
@@ -454,12 +426,14 @@ En cas de que la versió siga incorrecta hauriem d'executar els següent comanam
 sudo rm /etc/alternatives/php
 sudo ln -s /usr/bin/php8.1 /etc/alternatives/php
 php -v
+sh composer.sh
 ```
 
+S'ha creat un shell per executar totes les proves
 
-Per possar en funcionament les proves haurem d'executar el comanament '**composer update**' en el directori que hem creat.
-Este comanament instal·la paquets de tercers en el nostre aplicatiu i serà estudiat més avant. Per a executar les proves funcionarem amb el comanament '**php vendor/bin/codecept run --html**' que genera una pàgina web, que podem vore amb el nevegador, amb els resultats del test.
-
+``` console
+sh test.sh
+```
 
 ## Referències
 
