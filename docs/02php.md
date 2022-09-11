@@ -1515,7 +1515,7 @@ Exercicis d'investigació:
      Posteriorment, recorre el array i mostra-ho en una taula HTML.
 
 237. `237.html` i `237.php`: a partir d'un formulari amb un camp de `quantitat` de persones, generar un nou formulari per a llegir el nom, altura i email de `quantitat` persones.
-`237.php`: A partir de les persones introduïdes, mostrar les seues dades en una taula, i posteriorment, destacar les dades del més alt i el del més baix.
+`237.php`: A partir de les persones introduïdes, mostrar les seues dades en una taula, i posteriorment, destaca les dades del més alt i el del més baix.
 
 238. `238.php`: Emplena un array bidimensional de 6 files per 9 columnes amb números aleatoris compresos entre 100 i 999 (tots dos inclosos). Tots els números han de ser diferents, és a dir, no es pot repetir cap. 
 Mostra a continuació per pantalla el contingut del array de tal forma que:
@@ -1543,9 +1543,7 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
      * `digitN(int $num, int $post): int` → retorna el dígit que ocupa, començant per l'esquerra, la posició `$post`.
      * `llevaDarrere(int $num, int $cant): int` → li lleva per darrere (dreta) `$cant` dígits.
      * `llevaDavant(int $num, int $cant): int` → li lleva per davant (esquerra) `$cant` dígits.
-
-    Per a provar les funcions, fes ús tant de pas d'arguments posicionals com arguments amb nom.
-
+     
 243. `functions.php`: Crea una biblioteca amb dues funcions:
 
      * peseta2euros: passa de pessetes a euros
@@ -1556,20 +1554,26 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
     * La quantitat a transformar
     * La cotització, amb un paràmetre per defecte amb el factor de transformació.
 
-    `243.php`: utilitza per construir un formulari que faça la transformació en ambdos sentits.
+    `243.php`: utilitza-la per construir un formulari que faça la transformació en ambdos sentits.
 
-244. `244.php`: A partir d'una quantitat de productes, llegir el nom i cost de la quantitat de productes indicats (similar a l'exercici 237, però aquesta vegada no fa falta crear el formulari amb la quantitat, es rep mitjançant un paràmetre GET via URL). 
+244. `244a.php`: A partir d'una quantitat de productes, llegir el nom i cost de la quantitat de productes indicats (similar a l'exercici 237, però aquesta vegada no fa falta crear el formulari amb la quantitat, es rep mitjançant un paràmetre GET via URL). 
 
-    `244.php`: Després de llegir les dades del tiquet de compra, enumera en una taula els productes, amb el seu preu en euros i pessetes, i finalment, en una última fila, totalitzar en totes dues monedes.
+    `244b.php`: Després de llegir les dades del tiquet de compra, enumera en una taula els productes, amb el seu preu en euros i pessetes, i finalment, en una última fila, totalitzar en totes dues monedes.
 
-245. Simularem un formulari d'accés:
+### Plantilles
 
-     * `245.php`: el formulari d'entrada, que sol·licita l'usuari i contrasenya.
-     * `245.php`: rep les dades i comprova si són correctes (els usuaris es guarden en un array associatiu en el fitxer `247password.php`).Utilitza  `include`.
-     * `245.php`: L'usuari introduït és correcte
-     * `245.php`: L'usuari és incorrecte. Informar si tots dos estan mal o només la contrasenya. Tornar a mostrar el formulari d'accés.
+245. `245a.php`: A partir dels arxius creats en l'exercici anterior, crea una plantilla mitjançant *includes*: *246a.php*: similar a *245a.*php, però separant l'encapçalat (Supermercat Sever en *h1*) i el peu (El teu supermercat de confiança) en fitxers externs i referenciant a ells mitjançant *include*.
+     `245b.php`: rep les dades de l'anterior, i reutilitza part de *245b.php* canviant la taula per una llista desordenada dels productes al costat del seu preu i utilitzan les plantilles fetes. 
 
-### Funcions predefinides
+246. Simularem un formulari d'accés:
+
+     * `246.html`: el formulari d'entrada, que sol·licita l'usuari i contrasenya.
+     * `246.php`: rep les dades i comprova si són correctes (els usuaris es guarden en un array associatiu en el fitxer `246password.php`).Utilitza  `include`.
+     * `246.php`: L'usuari introduït és correcte
+     * `246.php`: L'usuari és incorrecte. Informar si tots dos estan mal o només la contrasenya.
+
+
+### Cadenes i subcadenes
 
 Tots els exercicis s'han de realitzar creant noves funcions per a encapsular el codi.
 A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar-lo.
@@ -1598,6 +1602,8 @@ A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar
      Els 3 nombres parells són: 4 10 8
      ```
 257. `257investiga.php`: Investiga les següents funcions de cadena (explica per a què serveixen mitjançant comentaris, i programa un xicotet exemple de cadascuna d'elles): `ucwords`, `strrev`, `str_repeat` i `md5`.
+
+### Math i tipus de dades
 
 Els següents exercicis es basen en la generació de números aleatoris.
 

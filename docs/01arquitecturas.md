@@ -308,8 +308,9 @@ sudo systemctl start docker.service
 #### Plantilla Servidor Web + PHP
 
 **Docker** es basa en l'ús d'imatges per a crear contenidors. *Docker Compose* simplifica el treball amb múltiples contenidors, i per això, per a facilitar l'arranc, ens centrarem en *Docker Compose* utilitzant una plantilla que únicament contindrà com a serveis Nginx i PHP.
-Per a facilitar la posada en marxa, teniu la plantilla de  [Nginx/PHP](recursos/plantilla-NP.zip) disponible per a la seua descàrrega.
-El fitxer que diu quines màquines ha de montar es diu docker-compose.yaml i té el següent aspecte
+Per a facilitar la posada en marxa, teniu la plantilla de  [Nginx/PHP](recursos/plantilla-NP.zip) disponible per a la seua descàrrega. **L'haureu de possar en un directori fàcilment localitzable i amb un nom significatiu, ja que serà el vostre directori de treball**.
+
+Dins d'este directori, el fitxer **'docker-compose.yaml'** indica quines màquines ha de montar  i té el següent aspecte
 
 === "Nginx i PHP"
 
@@ -349,7 +350,11 @@ El fitxer que diu quines màquines ha de montar es diu docker-compose.yaml i té
     # docker-compose logs -f
     
     ```
+Per arrencar les màquines o podem fer des de la consola amb
 
+``` console
+docker compose up -d
+```
 
 Si volem accedir a un terminal interactiu dins del contenidor:
 
@@ -386,7 +391,7 @@ Heu de comprovar que a l'accedir a `http://localhost` en el vostre navegador se 
 
 En este curso utilitzarem [**PHP Storm**](<https://www.jetbrains.com/phpstorm/>) com a entorn de desenvolupament. Existixen altres alternatives, com [**Visual Studio Code**](<https://code.visualstudio.com>).
 
-#### Instal.lació
+#### Instal·lació
 Podem fer-ho de manera automàtica utilitzant snap. Per fer-ho amb linux-mint
 
 ``` console
