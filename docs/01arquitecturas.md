@@ -408,38 +408,28 @@ Podeu sol·licitar una llicència a i.gomismullor@edu.gva.es
 
 ### Entorn de proves
 
-La màquina docker ve configurada amb **[codeception](https://codeception.com/)** i una col·leció de proves per als exercicis que desenvoluparem al llarg de les primeres unitats. 
-Haurem d'instal·lar el php 8.1 en la nostra màquina. Podem comprovar si està instal.lat i quina versió si en la terminal possem : 
-
-``` console
-php -v
-```
-
-En cas de que no estiga instal·lat o la versió no siga la correcta, haurem de executar les següents instruccions:
-
-``` console
-sudo apt install software-properties-common
-sudo add-apt-repository ppa:ondrej/php
-sudo apt-get update
-apt install php8.1-fpm php8.1-cli php8.1-curl php8.1-mbstring
-php -v
-sh composer.sh
-```
-
-En cas de que la versió siga incorrecta hauriem d'executar els següent comanaments:
-
-``` console
-sudo rm /etc/alternatives/php
-sudo ln -s /usr/bin/php8.1 /etc/alternatives/php
-php -v
-sh composer.sh
-```
-
+La màquina docker ve configurada amb **[codeception](https://codeception.com/)** i una col·leció de proves per als exercicis que desenvoluparem al llarg de les primeres unitats.
 S'ha creat un shell per executar totes les proves
 
 ``` console
 sh test.sh
 ```
+#### GitHub Classroom
+
+Us podeu [registrar](https://classroom.github.com/)
+
+**Metodologia de treball amb el github classroom**
+
+* Se proporcionarà a l'alumnat un enllaç amb la invitació.
+* Accedint a l'enllaç a cada alumne se li crearà un repositori individual en l'organització.
+* L'alumnat treballa en el seu repositori assignat. Se'l pot baixar per treballar en local.
+* Inicialment, l'alumne crea una branca nova sobre la que va a treballar.
+* Quan vullga sol.licitar ajuda o revisió del professor, l'alumne genera una pull request a la branca principal del seu repositori en la que cita al professor per tal que reba una notificació.
+* El profesor proporciona retroalimentació mitjançant comentaris en la pull request o en un determinat commit individual.
+* Opcionalment es poden utilitzar els issues y les cites d'usuari per sol·licitar la intervenció del profesor.
+* Quan l'alumne finalitza la tasca, genera una últim pull request
+* El profesor revisa la pull request i opcionalment fa comentaris.
+
 
 ## Referències
 
