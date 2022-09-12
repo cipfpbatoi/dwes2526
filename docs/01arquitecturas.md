@@ -421,8 +421,9 @@ En cas de que no estiga instal·lat o la versió no siga la correcta, haurem de 
 sudo apt install software-properties-common
 sudo add-apt-repository ppa:ondrej/php
 sudo apt-get update
-apt install php8.1-fpm php8.1-cli
+apt install php8.1-fpm php8.1-cli php8.1-curl php8.1-mbstring
 php -v
+sh composer.sh
 ```
 
 En cas de que la versió siga incorrecta hauriem d'executar els següent comanaments:
