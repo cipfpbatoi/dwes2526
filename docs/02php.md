@@ -1558,7 +1558,7 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
 
 244. `244a.php`: A partir d'una quantitat de productes, llegir el nom i cost de la quantitat de productes indicats (similar a l'exercici 237, però aquesta vegada no fa falta crear el formulari amb la quantitat, es rep mitjançant un paràmetre GET via URL). 
 
-    `244b.php`: Després de llegir les dades del tiquet de compra, enumera en una taula els productes, amb el seu preu en euros i pessetes, i finalment, en una última fila, totalitzar en totes dues monedes.
+     `244b.php`: Després de llegir les dades del tiquet de compra, enumera en una taula els productes, amb el seu preu en euros i pessetes, i finalment, en una última fila, totalitzar en totes dues monedes.
 
 ### Plantilles
 
@@ -1578,7 +1578,7 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
 Tots els exercicis s'han de realitzar creant noves funcions per a encapsular el codi.
 A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar-lo.
 
-250. `250.php`: Lee una frase i retorna una nova amb solo els caràcters de les posicions imparelles.
+250. `250.php`: A partir d'una frase, retorna una nova amb solo els caràcters de les posicions imparelles.
 251. `251.php`: A partir d'una frase, retorna la quantitat de cadascuna de les vocals, i el total d'elles.
 252. `252.php`: A partir d'una frase amb paraules només separades per espais, retornar
      * Lletres totals i quantitat de paraules
@@ -1586,30 +1586,30 @@ A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar
 
 !!! tip  "no es pot usar `str_word_count`"
        
- `252analizadorWC.php`: Investiga que fa la funció `str_word_count`, i torna a fer l'exercici.
+ `252b.php`: Investiga que fa la funció `str_word_count`, i torna a fer l'exercici.
 
-253. `253cani.php`: EsCrIu UnA fUnCiÓ qUe TrAnSfOrMe UnA cAdEnA eN cAnI.
-254. `254palindromo.php`: Escriu una funció que retorne un booleà indicant si una paraula és palíndroma (es llig igual d'esquerra a dreta que de dreta a esquerra, per exemple, “lligar és ser agil”).
-255. `255codificar.php`: Utilitzant les funcions per a treballar amb caràcters, a partir d'una cadena i un desplaçament:
+253. `253.php`: EsCrIu UnA fUnCiÓ qUe TrAnSfOrMe UnA cAdEnA eN cAnI.
+254. `254.php`: Escriu una funció que retorne un booleà indicant si una paraula és palíndroma (es llig igual d'esquerra a dreta que de dreta a esquerra, per exemple, “lligar és ser agil”).
+255. `255.php`: Utilitzant les funcions per a treballar amb caràcters, a partir d'una cadena i un desplaçament:
      * Si el desplaçament és 1, substitueix l'A per B, la B per C, etc.
      * El desplaçament no pot ser negatiu
      * Si s'ix de l'abecedari, ha de tornar a començar
      * Cal respectar els espais, punts i comes.
-256. `256filtrado.html`: Crea un programa que permeta a l'usuari llegir un conjunt de números separats per espais.
-     `256filtrado.php`: El programa filtrarà els números llegits per a tornar a mostrar únicament els nombres parells i indicarà la quantitat existent.
+256. `256.html`: Crea un programa que permeta a l'usuari llegir un conjunt de números separats per espais.
+     `256.php`: El programa filtrarà els números llegits per a tornar a mostrar únicament els nombres parells i indicarà la quantitat existent.
      ```
      Dona'm números: 1 4 7 9 23 10 8
      Els 3 nombres parells són: 4 10 8
      ```
-257. `257investiga.php`: Investiga les següents funcions de cadena (explica per a què serveixen mitjançant comentaris, i programa un xicotet exemple de cadascuna d'elles): `ucwords`, `strrev`, `str_repeat` i `md5`.
+257. `257.php`: Investiga les següents funcions de cadena (explica per a què serveixen mitjançant comentaris, i programa un xicotet exemple de cadascuna d'elles): `ucwords`, `strrev`, `str_repeat` i `md5`.
 
 ### Math i tipus de dades
 
 Els següents exercicis es basen en la generació de números aleatoris.
 
-260. `260generador.php`: Crea una funció que permet generar una lletra aleatòria, majúscula o minúscula.
-261. `261generaContrasenya.php`: Crea una funció que a partir d'una grandària, genere una contrasenya aleatòria composta de lletres i dígits de manera aleatòria.
-262. `262quinielas.php`: Crea les següents funcions:
+260. `260.php`: Crea una funció que permet generar una lletra aleatòria, majúscula o minúscula.
+261. `261.php`: Crea una funció que a partir d'una grandària, genere una contrasenya aleatòria composta de lletres i dígits de manera aleatòria.
+262. `262.php`: Crea les següents funcions:
      * `quinigol() : array` --> Genera un array multidimensional amb 6 resultats aleatoris amb combinacions `[012M, 012M]`
      * `travessa() : array` --> Genera un array amb una combinació de travessa generada de manera aleatòria: 14 resultats amb `1X2` i el ple al quinze amb `[012M, 012M]`
      * `taula(array $travessa) : string` --> transforma un array d'una quniela en una taula HTML
