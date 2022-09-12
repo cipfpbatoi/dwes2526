@@ -92,7 +92,7 @@ Duració estimada: 80 hores
 La nota del curs es calcula mitjançant:
 
   * 20% Treball en Classe / Activitats
-    * S'avaluen totes les activitats realitzades en classe i a casa. Es faran per parelles.
+    * S'avaluen totes les activitats realitzades en classe i a casa. 
       * Les activitats s'avaluen mitjançant tasques de *Aules* amb qualificacions compreses entre 0 i 3 punts:
       
          * 0: No entregada.
@@ -100,7 +100,7 @@ La nota del curs es calcula mitjançant:
          * 2: Entregada i solució acceptable, encara que té algun apartat incomplet.
          * 3: Entregada i solució correcta.
     
-  * 20% Projectes (1 per avaluació)
+  * 20% Projectes (1 per avaluació). Es faran per parelles.
   * 10% Projecte Integrador (Final de curs)
 
   * 50% Activitats d'avaluació (Fan mitja a partir de 4)
