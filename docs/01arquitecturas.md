@@ -308,9 +308,9 @@ sudo systemctl start docker.service
 #### Plantilla Servidor Web + PHP
 
 **Docker** es basa en l'ús d'imatges per a crear contenidors. *Docker Compose* simplifica el treball amb múltiples contenidors, i per això, per a facilitar l'arranc, ens centrarem en *Docker Compose* utilitzant una plantilla que únicament contindrà com a serveis Nginx i PHP.
-Per a facilitar la posada en marxa, teniu la plantilla de  [Nginx/PHP](https://classroom.github.com/a/hrZehkpi) disponible per a la seua descàrrega. **L'haureu de possar en un directori fàcilment localitzable i amb un nom significatiu, ja que serà el vostre directori de treball**.
+Per a facilitar la posada en marxa, us facilite un repositori en [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/hrZehkpi) disponible per a la seua descàrrega. **L'haureu de possar en un directori fàcilment localitzable i amb un nom significatiu, ja que serà el vostre directori de treball**.
 
-Dins d'este directori, el fitxer **'docker-compose.yaml'** indica quines màquines ha de montar  i té el següent aspecte
+Dins d'este repositori, el fitxer **'docker-compose.yaml'** indica quines màquines ha de montar i té el següent aspecte
 
 === "Nginx i PHP"
 
@@ -414,7 +414,7 @@ S'ha creat un shell per executar totes les proves
 ``` console
 sh test.sh
 ```
-#### GitHub Classroom
+### GitHub Classroom
 
 Us podeu [registrar](https://classroom.github.com/)
 
