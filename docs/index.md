@@ -24,7 +24,7 @@ La duració del mòdul és de 160 hores lectives, a raó de **8 hores setmanals*
 
 ## Unitats didàctiques / Temporalització
 
-A continuació es mostren les unitats didàctiques i una [estimació temporal]((planning.md)) de cadascuna d'elles.
+A continuació es mostren les unitats didàctiques i una [estimació temporal](planning.md) de cadascuna d'elles.
 La primera avaluació contindria les unitats compreses entre la 1 i 6. Així doncs, des de la meitat de la unitat 6 a la unitat 9 es veuran en la segona avaluació.
 
 
