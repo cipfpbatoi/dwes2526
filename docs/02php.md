@@ -267,7 +267,6 @@ $nombre = $_GET["nombre"];
 $apellido1 = $_GET["apellido1"];
 
 echo "Hola $nombre $apellido1";
-?>
 ```
 
 Si el volguérem realitzar tot en un únic arxiu (la qual cosa no és recomanable), podem fer-ho així:
@@ -310,7 +309,6 @@ if ($hora === 8) {
 echo "<br>";
 if ($hora === 8)
     echo "Suena el despertador.";
-?>
 ```
 
 Les condicions compostes mitjançant `if-else`:
@@ -323,7 +321,6 @@ if ($hora <= 12) {
 } else {
     echo "Son las " . ($hora - 12) . " de la tarde";
 }
-?>
 ```
 
 Les condicions niades mitjançant `if-else if-else`:
@@ -340,7 +337,6 @@ if ($hora === 8) {
 } else {
     echo "Ahora no toca comer.";
 }
-?>
 ```
 
 La sentència `switch` també permet treballar amb condicions múltiples:
@@ -361,7 +357,6 @@ switch ($hora) {
     default:
         echo "Ahora no toca comer";
 }
-?>
 ```
 
 !!! warning "No oblides el `break`"
@@ -374,7 +369,6 @@ Finalment, també tenim l'operador ternari `condició ? valorTrue : valorFalse`
 $hora = 14;
 $formato = ($hora > 12) ? 24 : 12;
 echo "El formato es de $formato horas"
-?>
 ```
 
 Si volem comprovar si una variable té valor i si no donar-li un valor determinat, usarem l'operador `?:` (es coneix com l'operador Elvis - <https://en.wikipedia.org/wiki/Elvis_operator>) amb la sintaxi `expressió ?: valorSiVacio`:
@@ -382,7 +376,6 @@ Si volem comprovar si una variable té valor i si no donar-li un valor determina
 ``` php
 <?php
 $nombre = $_GET['nombre'] ?: "desconocido"
-?>
 ```
 
 ## Bucles
@@ -397,7 +390,6 @@ while ($i <= 10) {
     echo "<br>";
     $i++;
 }
-?>
 ```
 
 Mitjançant la instrucció `do-while`:
@@ -412,7 +404,6 @@ do {
     echo "<br>";
 } while ($dado != 5);
 echo "¡Bien! Saco una ficha de casa.";
-?>
 ```
 
 Mitjançant la instrucció `for`:
@@ -430,7 +421,6 @@ for ($i = 10; $i >= 0; $i--) {
     echo "Línea " . $i;
     echo "<br>";
 }
-?>
 ```
 
 Més endavant estudiarem el bucle `foreach` per a recórrer arrays.
@@ -450,7 +440,7 @@ Al seu torn, `continue` permet saltar a la següent iteració.
         $salir = true;
       }
     }
-    ?>
+    
     ```
 
 ## Arrays
