@@ -703,7 +703,7 @@ function diaSemana() {
 
 $diaCine = diaSemana();
 echo "El próximo $diaCine voy al cine.";
-?>
+
 ```
 
 ### Paràmetres per referència
@@ -731,7 +731,7 @@ $numero2 = 7;
 echo "Antes de llamar: $numero2.<br>";
 duplicarPorReferencia($numero2);
 echo "Después de llamar: $numero2.<br>";
-?>
+
 ```
 
 ### Paràmetres per defecte / opcionals
@@ -797,7 +797,7 @@ function sumaParametros() {
 }
 
 echo sumaParametros(1, 5, 9); // 15
-?>
+
 ```
 
 Des de PHP 5.6, es pot utilitzar l'operador `...` (*variadics*) el qual "disfressa" els paràmetres com un array:
@@ -819,7 +819,7 @@ function sumaParametrosMejor(...$numeros) {
 }
 
 echo sumaParametrosMejor(1, 5, 9); // 15
-?>
+
 ```
 
 !!! tip "Més usos de `...`"
@@ -835,7 +835,7 @@ echo sumaParametrosMejor(1, 5, 9); // 15
 
     $a = [1, 5];
     echo suma(...$a);
-    ?>
+    
     ```
 
 ### Arguments amb nom
@@ -884,7 +884,6 @@ $num = 33;
 echo suma(10, 30);
 echo suma(10, $num);
 echo suma("10", 30); // error por tipificación estricta, sino daría 40
-?>
 ```
 
 ### Abast
@@ -907,7 +906,7 @@ En cas de conflicte, tenen prioritat les variables locals. Per a evitar el confl
     echo "Antes de la función: $ciudad.<br>";
     miCiudad();
     echo "Después de la función: $ciudad.<br>"
-    ?>
+    
     ```
 
 === "Abast global"
@@ -924,7 +923,7 @@ En cas de conflicte, tenen prioritat les variables locals. Per a evitar el confl
     echo "Antes de llamar: $ciudad.<br>";
     miCiudad();
     echo "Después de llamar: $ciudad.<br>"
-    ?>
+    
     ```
 
 !!! important "No globals"
@@ -941,7 +940,7 @@ En cas de conflicte, tenen prioritat les variables locals. Per a evitar el confl
 <?php
 $miFuncionSuma = "suma";
 echo $miFuncionSuma(3,4); // invoca a la función suma
-?>
+
 ```
 
 !!! info "Funcions anònimes"
@@ -1000,7 +999,7 @@ function suma(int $a, int $b) : int {
 function resta(int $a, int $b) : int {
     return $a - $b;
 }
-?>
+
 ```
 
 I posteriorment en un altre arxiu:
@@ -1010,7 +1009,7 @@ I posteriorment en un altre arxiu:
 include_once("biblioteca.php");
 echo suma(10,20);
 echo resta(40,20);
-?>
+
 ```
 
 ### Plantilles mitjançant `include`
@@ -1060,7 +1059,7 @@ Ja hem vist que es poden crear amb cometes simples (`''`, sense interpretació) 
 <?php
 "Me llamo $nombre"
 "Son 30 {$moneda}s"
-?>
+
 ```
 
 S'accedeixen als caràcters com si fora un array.
@@ -1069,7 +1068,7 @@ S'accedeixen als caràcters com si fora un array.
 <?php
 $cadena = “Yo soy Batman”;
 $ygriega = $cadena[0];
-?>
+
 ```
 
 A més de `echo`, podem mostrar les cadenes mitjançant la funció `printf`. Aquesta funció ve heretada del llenguatge C, i en la cadena s'indica el tipus de dada a formatar i genera una eixida formatada. Si vull guardar el resultat en una variable, podem utilitzar `sprintf`.
@@ -1081,7 +1080,7 @@ $nombre = "Larry Bird";
 printf("%s llevaba el número %d", $nombre, $num); // %d -> número decimal, %s -> string
 $frase = sprintf("%s llevaba el número %d", $nombre, $num);
 echo $frase
-?>
+
 ```
 
 Teniu molts més exemples en <https://www.w3schools.com/php/func_string_printf.asp>
@@ -1125,7 +1124,7 @@ function despues(string $letra): string {
 }
 
 echo despues("B");
-?>
+
 ```
 
 Si volem netejar cadenes, tenim les funcions:
@@ -1140,7 +1139,7 @@ $cadena = " Programando en PHP ";
 $limpia = trim($cadena); // "Programando en PHP"
 
 $sucia = str_pad($limpia, 23, "."); // "Programando en PHP....."
-?>
+
 ```
 
 #### Comparant i buscant
@@ -1186,7 +1185,7 @@ $frase = "Quien busca encuentra, eso dicen, a veces";
 $pos1 = strpos($frase, ","); // encuentra la primera coma
 $pos2 = strrpos($frase, ","); // encuentra la última coma
 $trasComa = strstr($frase, ","); // ", eso dicen, a veces"
-?>
+
 ```
 
 Si volem esbrinar que conté les cadenes, tenim un conojunto de funcions de comprovacions de tipus, es coneixen com les funcions *ctype* que retornen un booleà:
@@ -1238,7 +1237,7 @@ $partes3cadena = chunk_split($frase, 3);
 // ...
 $partes3array = str_split($frase, 3);
 // ["Qui", "en ", "bus", "ca ", "enc", …] 
-?>
+
 ```
 
 Si volem treballar amb tokens:
@@ -1265,7 +1264,7 @@ $camarero1 = substr_replace($batman, "camarero", 15);
 $camarero2 = substr_replace($batman, "camarero", -6); // quita 6 desde el final
 // Bruno es Batman
 $bruno = substr_replace($batman, "Bruno", 0, 11);
-?>
+
 ```
 
 També disposem d'una sèrie de funcions que faciliten les codificacions des d'i cap a HTML:
@@ -1301,7 +1300,7 @@ Mitjançant la funció `number_format(numere, cantidadDecimales, separadorDecima
 $nf = 1234.5678;
 echo number_format($nf, 2); // 1,234.57
 echo number_format($nf, 2, "M", "#"); // 1#234M57
-?>
+
 ```
 
 Per a arredonir, tenim `abs` per al valor absolut i `round` per a arredonir, `ceil` per a aproximació per excés i `floor` per defecte.
@@ -1316,7 +1315,7 @@ $otro = 4.49;
 $cuatro = round($otro);
 $cuatrocinco = round($otro, 1);
 $cinco = round($cuatrocinco);
-?>
+
 ```
 
 ### Tipus de dades
@@ -1340,7 +1339,7 @@ settype($uno, "float");
 var_dump(is_int($uno)); // false
 var_dump(is_float($uno)); // true
 var_dump(is_int(intval($uno))); // true
-?>
+
 ```
 
 ## Referències
