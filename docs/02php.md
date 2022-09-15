@@ -368,14 +368,14 @@ Finalment, també tenim l'operador ternari `condició ? valorTrue : valorFalse`
 <?php
 $hora = 14;
 $formato = ($hora > 12) ? 24 : 12;
-echo "El formato es de $formato horas"
+echo "El formato es de $formato horas";
 ```
 
 Si volem comprovar si una variable té valor i si no donar-li un valor determinat, usarem l'operador `?:` (es coneix com l'operador Elvis - <https://en.wikipedia.org/wiki/Elvis_operator>) amb la sintaxi `expressió ?: valorSiVacio`:
 
 ``` php
 <?php
-$nombre = $_GET['nombre'] ?: "desconocido"
+$nombre = $_GET['nombre'] ?: "desconocido";
 ```
 
 ## Bucles
