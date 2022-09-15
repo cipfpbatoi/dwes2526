@@ -125,7 +125,6 @@ $suerte = true;
 $sinValor;
 
 echo $sinValor;
-?>
 ```
 
 !!! info "Tipus"
@@ -144,7 +143,6 @@ define("PI", 3.1416);
 const IVA = 0.21;
 
 echo PI, " ", IVA; // No se pone el símbolo dolar
-?>
 ```
 
 * Es declaren sempre en MAJÚSCULES
@@ -171,10 +169,9 @@ En el cas de **cadenes**, si volem concatenar-les, s'utilitza l'operador `.`:
 $x = 33;
 $y = 11;
 $z = $x + $y;
-echo "La suma de 33 y 11 es ".44."<br />";
+echo "La suma de 33 y 11 es ".(44)."<br />";
 echo "La suma de ".$x." y ".$y." es ".(33 + 11)."<br />";
 echo "La suma de ".$x." y ".$y." es ".$z."<br />";
-?>
 ```
 
 Realment, en comptes de concatenar cadenes amb variables, podem imprimir-les directament ja que s'expandeixen automàticament:
@@ -182,7 +179,6 @@ Realment, en comptes de concatenar cadenes amb variables, podem imprimir-les dir
 ``` php
 <?php
 echo "La suma de $x y $y es $z <br />";
-?>
 ```
 
 A vegades, necessitem envoltar el nom de la variable entre claus per a poder unir més text al resultat:
