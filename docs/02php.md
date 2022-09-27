@@ -888,8 +888,8 @@ echo suma("10", 30); // error por tipificación estricta, sino daría 40
 
 ### Abast
 
-Les variables definides fora de les funcions tenen abast *global**: accessibles des de qualsevol funció.
-Els paràmetres d'una funció i les variables declarades dins d'una funció (es coneixen com a variables locals) només són accessibles des de dins de la mateixa funció → aconseguisca de *funció**.
+Les variables definides fora de les funcions tenen abast *global* dins del fitxer, es veuen enlloc excepte dins de les funcions.
+Els paràmetres d'una funció i les variables declarades dins d'una funció (es coneixen com a variables locals) només són accessibles des de dins de la mateixa funció.
 
 En cas de conflicte, tenen prioritat les variables locals. Per a evitar el conflicte, dins de la funció, podem declarar la variable com a `global`.
 
@@ -1525,7 +1525,7 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
 242. `functions.php`: Afig les següents funcions:
 
      * `digits(int $num): int` → retorna la quantitat de dígits d'un número.
-     * `digitN(int $num, int $post): int` → retorna el dígit que ocupa, començant per l'esquerra, la posició `$post`.
+     * `digitsN(int $num, int $post): int` → retorna el dígit que ocupa, començant per l'esquerra, la posició `$post`.
      * `llevaDarrere(int $num, int $cant): int` → li lleva per darrere (dreta) `$cant` dígits.
      * `llevaDavant(int $num, int $cant): int` → li lleva per davant (esquerra) `$cant` dígits.
      
@@ -1547,7 +1547,7 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
 
 ### Plantilles
 
-245. `245a.php`: A partir dels arxius creats en l'exercici anterior, crea una plantilla mitjançant *includes*: *246a.php*: similar a *245a.*php, però separant l'encapçalat (Supermercat Sever en *h1*) i el peu (El teu supermercat de confiança) en fitxers externs i referenciant a ells mitjançant *include*.
+245. `245a.php`: A partir dels arxius creats en l'exercici anterior, crea una plantilla mitjançant *includes*: *245a.php*: similar a *244a.*php, però separant l'encapçalat (Supermercat Sever en *h1*) i el peu (El teu supermercat de confiança) en fitxers externs i referenciant a ells mitjançant *include*.
      `245b.php`: rep les dades de l'anterior, i reutilitza part de *245b.php* canviant la taula per una llista desordenada dels productes al costat del seu preu i utilitzan les plantilles fetes. 
 
 246. Simularem un formulari d'accés:
