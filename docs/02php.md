@@ -1381,7 +1381,7 @@ var_dump(is_int(intval($uno))); // true
 206. `206.php`: anys - Després de llegir l'edat d'una persona, mostrar l'edat que tindrà dins de 10 anys i fa 10 anys.
      A més, mostra quin any serà en cadascun dels casos.
      Finalment, mostra l'any de jubilació suposant que treballaràs fins als 67 anys.
-     En aquest cas, no fa falta que prèviament crees un formulari, pots provar l'exercici via URL: `206anyos.php?edat=33`.
+     En aquest cas, no fa falta que prèviament crees un formulari, pots provar l'exercici via URL: `206.php?edat=33`.
 
 !!! tip "`$anyoActual = date("Y");`"
 

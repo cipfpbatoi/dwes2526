@@ -2,17 +2,17 @@
 
 ## 1.- Arquitectures Web (2h)
 
-- [ ] 1.- (M 13 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. Posada en funcionament/ Docker - Activitats 101,102,103,104
+- [X] 1.- (M 13 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. Posada en funcionament/ Docker - Activitats 101,102,103,104
 
 
 ## 2.- El llenguatge PHP (24h)
 
-- [ ] 1.- (J 15S) Sintaxi. Activitats 201-208 - 3
-- [ ] 2.- (L 19S) Activitats 209-215 - 6 
-- [ ] 3.- (M 20S) Condicions i Bucles. Activitats 208-228 - 6
-- [ ] 4.- (J 22S) Arrays, asociatius, bidimensionals. Activitats 230-238 -8
-- [ ] 5.- (L 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions. Activitats 240-244 - 11
-- [ ] 6.- (M 27S) Plantilles. Activitats 245-246. - 14
+- [X] 1.- (J 15S) Sintaxi. Activitats 201-208 - 3
+- [X] 2.- (L 19S) Activitats 209-215 - 6 
+- [X] 3.- (M 20S) Condicions i Bucles. Activitats 208-228 - 6
+- [X] 4.- (J 22S) Arrays, asociatius, bidimensionals. Activitats 230-238 -8
+- [X] 5.- (L 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions. Activitats 240-244 - 11
+- [X] 6.- (M 27S) Plantilles. Activitats 245-246. - 14
 - [ ] 7.- (J 29S) Cadenas i subcadenes. Activitats 250-257 - 16
 - [ ] 8.- (L 3O) Math i tipus de dades. Activitats 260-262 - 19
 - [ ] 9.- (M 4O) Prova escrita - 24
