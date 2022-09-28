@@ -1598,3 +1598,7 @@ Els següents exercicis es basen en la generació de números aleatoris.
      * `quinigol() : array` --> Genera un array multidimensional amb 6 resultats aleatoris amb combinacions `[012M, 012M]`
      * `travessa() : array` --> Genera un array amb una combinació de travessa generada de manera aleatòria: 14 resultats amb `1X2` i el ple al quinze amb `[012M, 012M]`
      * `taula(array $travessa) : string` --> transforma un array d'una quniela en una taula HTML
+
+### Examen
+
+270. `270.php` : A partir del fitxer de records d'atletisme que se un [suministra](recursos/atletes.php)
