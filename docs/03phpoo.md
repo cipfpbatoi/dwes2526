@@ -249,8 +249,6 @@ Producto::nuevoProducto();
 $impuesto = Producto::IVA;
 ```
 
-## Classes estàtiques
-
 També podem tindre classes normals que tinguen alguna propietat estàtica:
 
 ``` php
@@ -1023,33 +1021,30 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 ### Objetos
 
-301. `301Empleado.php`: Crea una classe `Emprat` amb el seu nom, cognoms i sou.
+301. `Empleado.php`: Crea una classe `Empleado` amb el seu nom, cognoms i sou.
      Encapsula les propietats mitjançant *getters/setters* i afig mètodes per a:
      * Obtindre el seu nom complet → `getNombreCompleto(): string`
      * Que retorne un booleà indicant si deu o no pagar impostos (es paguen quan el sou és superior a 3333€) → `debePagarImpuestos(): bool`
-302. `302EmpleadoTelefonos.php`: Còpia la classe de l'exercici anterior i modifica-la.
-     Afig una propietat privada que emmagatzeme un array de nombres de telèfons.
+302. `EmpleadoTelefonos.php`: Crea un classe que herete de l'anterior i afig una propietat privada que emmagatzeme un array de nombres de telèfons.
      Afig els següents mètodes:
      * `public function anyadirTelefono(int $telefono) : void` → Afig un telèfon al array
      * `public function listarTelefonos(): string` → Mostra els telèfons separats per comes
      * `public function vaciarTelefonos(): void` → Elimina tots els telèfons
-303. `303EmpleadoConstructor.php`: Còpia la classe de l'exercici anterior i modifica-la.
-     Elimina els setters* de `nom` i `cognoms`, de manera que aquestes dades s'assignen mitjançant el constructor (utilitza la sintaxi de PHP7).
-     Si el constructor rep un tercer paràmetre, serà el sou del `Empleat`. Si no, se li assignarà 1000€ com a sou inicial.
+303. `Empleado7.php`: Modifica la classe empleado. Afig el constructor de manera que assignem nom i cognoms mitjançant el constructor (utilitza la sintaxi de PHP7).
+     Si el constructor rep un tercer paràmetre, serà el sou del `Empleat`. Si no, se li assignarà 1000€ com a sou inicial. Esborra els setter de Nom i cognoms.
 
-`303EmpleadoConstructor8.php`: Modifica la classe i utilitza la sintaxi de PHP 8 de promoció de les propietats del constructor.
+`    'Empleado8.php`: Copia la classe empleado7 i modifica la classe per a  utilitzar la sintaxi de PHP 8 de promoció de les propietats del constructor. 
 
-304. `304EmpleadoConstante.php`: Còpia la classe de l'exercici anterior i modifica-la.
-     Afig una constant `SOU_TOPALL` amb el valor del sou que ha de pagar impostos, i modifica el codi per a utilitzar la constant.
-305. `305EmpleadoSueldo.php`: Còpia la classe de l'exercici anterior i modifica-la.
-     Canvia la constant per una variable estàtica `sueldoTope`, de manera que mitjançant *getter/setter* pugues modificar el seu valor.306. `306EmpleadoStatic.php`: Copia la clase del ejercicio anterior y modifícala.
+304. `Empleado8.php`: Modifica la classe de l'exercici anterior per afegir una constant `LIMITE_SUELDO` amb el valor del sou que ha de pagar impostos, i modifica el codi per a utilitzar la constant. Pon la constante en 2000.
+305. `EmpleadoSueldo.php`: Còpia la classe de l'exercici anterior i modifica-la, canviant la constant per una variable estàtica `limite_sueldo`, de manera que mitjançant *getter/setter* pugues modificar el seu valor.306. `306EmpleadoStatic.php`: Copia la clase del ejercicio anterior y modifícala.
 306. Completa el següent mètode amb una cadena HTML que mostre les dades d'un empleat dins d'un paràgraf i tots els telèfons mitjançant una llista ordenada (per a això, hauràs de crear un *getter* per als telèfons):
      * `public static function toHtml(Empleado $emp): string`
  <figure style="float: right;">
      <img src="imagenes/03/03p307.png">
      <figcaption>Ejercicio 307</figcaption>
  </figure>
-307. `307Persona.php`: Còpia la classe de l'exercici anterior en `307Empleado.php` i modifica-la.
+
+307. `Persona.php`: Còpia la classe de l'exercici anterior en `Empleado.php` i modifica-la.
      Crea una classe `Persona` que siga pare de `Empleat`, de manera que `Persona` continga el nom i els cognoms, i en `Empleat` quede el salari i els telèfons.
 
 308. `308PersonaH.php`: Còpia les classes de l'exercici anterior i modifica-les. Crea en `Persona` el mètode estàtic `toHtml(Persona $p)`, i modifica en `Empleat` el mateix mètode `toHtml(Persona $p)`, però canvia la signatura perquè reba una `Persona` com a paràmetre.
