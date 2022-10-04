@@ -1627,4 +1627,4 @@ Els següents exercicis es basen en la generació de números aleatoris.
 !!! tip  "La funció [array_column_ext](recursos/functions.php) ens permet extraure una columna d'un array multidimensional respectant la clau del array. La possariem de la següent forma: array_column_ext($records,'data',-1)"
 
 
-!!! tip Els [tests](recursos/tests_examen.zip) s'han de possar en la carpeta corresponent. El d'aceptació en accceptance i l'altre en unit
+!!! tip "Els [tests](recursos/tests_examen.zip) s'han de possar en la carpeta corresponent. El d'aceptació en accceptance i l'altre en unit"
