@@ -1021,38 +1021,36 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 ### Objetos
 
-301. `Empleado.php`: Crea una classe `Empleado` amb el seu nom, cognoms i sou.
+301. `Persona.php`: Crea una classe `Persona` amb el seu nom, cognoms i edat.
      Encapsula les propietats mitjançant *getters/setters* i afig mètodes per a:
      * Obtindre el seu nom complet → `getNombreCompleto(): string`
-     * Que retorne un booleà indicant si deu o no pagar impostos (es paguen quan el sou és superior a 3333€) → `debePagarImpuestos(): bool`
-302. `EmpleadoTelefonos.php`: Crea un classe que herete de l'anterior i afig una propietat privada que emmagatzeme un array de nombres de telèfons.
-     Afig els següents mètodes:
-     * `public function anyadirTelefono(int $telefono) : void` → Afig un telèfon al array
-     * `public function listarTelefonos(): string` → Mostra els telèfons separats per comes
-     * `public function vaciarTelefonos(): void` → Elimina tots els telèfons
-303. `Empleado7.php`: Modifica la classe empleado. Afig el constructor de manera que assignem nom i cognoms mitjançant el constructor (utilitza la sintaxi de PHP7).
-     Si el constructor rep un tercer paràmetre, serà el sou del `Empleat`. Si no, se li assignarà 1000€ com a sou inicial. Esborra els setter de Nom i cognoms.
+     * Saver si està jubilat o no → `estaJubilado(): bool`
+     
 
-`    'Empleado8.php`: Copia la classe empleado7 i modifica la classe per a  utilitzar la sintaxi de PHP 8 de promoció de les propietats del constructor. 
-
-304. `Empleado8.php`: Modifica la classe de l'exercici anterior per afegir una constant `LIMITE_SUELDO` amb el valor del sou que ha de pagar impostos, i modifica el codi per a utilitzar la constant. Pon la constante en 2000.
-305. `EmpleadoSueldo.php`: Còpia la classe de l'exercici anterior i modifica-la, canviant la constant per una variable estàtica `limite_sueldo`, de manera que mitjançant *getter/setter* pugues modificar el seu valor.306. `306EmpleadoStatic.php`: Copia la clase del ejercicio anterior y modifícala.
-306. Completa el següent mètode amb una cadena HTML que mostre les dades d'un empleat dins d'un paràgraf i tots els telèfons mitjançant una llista ordenada (per a això, hauràs de crear un *getter* per als telèfons):
-     * `public static function toHtml(Empleado $emp): string`
+302. `Persona7.php`: Còpia la classe persona i modifica-la. Afig el constructor de manera que assignem nom i cognoms mitjançant el constructor (utilitza la sintaxi de PHP7).
+     Si el constructor rep un tercer paràmetre, serà l'edat de la `Persona`. Si no, se li assignarà 25 anys com a edat. 
+303. `Persona8.php`: Copia la classe persona i modifica la classe per a utilitzar la sintaxi de PHP 8 de promoció de les propietats del constructor. 
+304. `Persona8.php`: Modifica la classe de l'exercici anterior per afegir una constant `LIMITE_EDAT` amb el valor de la edat jubilació, i modifica el codi per a utilitzar la constant. Pon la constante en 66.
+305. `Persona8.php`: Modifica la classe de l'exercici anterior, canviant la constant per una variable estàtica `limite_edat`, de manera que mitjançant *getter/setter* pugues modificar el seu valor. Per defecte se li assignara la constant `LIMITE_EDAT`
+306. `Empleado.php`: Crea un classe que herete de l'anterior i afig una propietat privada que emmagatzeme el sou i un array de nombres de telèfons.
+          Afig els següents mètodes:
+    * `public function anyadirTelefono(int $telefono) : void` → Afig un telèfon al array
+    * `public function listarTelefonos(): string` → Mostra els telèfons separats per comes
+    * `public function vaciarTelefonos(): void` → Elimina tots els telèfons
+    * `public debePagarImpuestos(): bool`Que retorne un booleà indicant si deu o no pagar impostos (es paguen quan el sou és superior a 3333€)
+307. `Empleado.php`: Completa-la el següent mètode amb una cadena HTML que mostre les dades d'un empleat dins d'un paràgraf i tots els telèfons mitjançant una llista ordenada (per a això, hauràs de crear un *getter* per als telèfons):
+     * `public static function toHtml(EmpleadoTelefono $emp): string`
  <figure style="float: right;">
      <img src="imagenes/03/03p307.png">
      <figcaption>Ejercicio 307</figcaption>
  </figure>
 
-307. `Persona.php`: Còpia la classe de l'exercici anterior en `Empleado.php` i modifica-la.
-     Crea una classe `Persona` que siga pare de `Empleat`, de manera que `Persona` continga el nom i els cognoms, i en `Empleat` quede el salari i els telèfons.
-
-308. `308PersonaH.php`: Còpia les classes de l'exercici anterior i modifica-les. Crea en `Persona` el mètode estàtic `toHtml(Persona $p)`, i modifica en `Empleat` el mateix mètode `toHtml(Persona $p)`, però canvia la signatura perquè reba una `Persona` com a paràmetre.
+308. `EmpleadoTelefono.php`: Crea en `Empleado` el mètode estàtic `toHtml(Empleado $p)`, i modifica en `EmpleadoTelefono` el mateix mètode `toHtml(Empleado $p)`, però canvia la signatura perquè reba una `Persona` com a paràmetre.
      Per a accedir a les propietats de l'empleat amb la persona que rebem com a paràmetre, comprovarem el seu tipus:
 
     ``` php
     <?php
-    class Empleado extends Persona {
+    class EmpleadoTelefono extends Empleado {
         /// resto del código
 
 

@@ -13,9 +13,9 @@
 - [X] 4.- (J 22S) Arrays, asociatius, bidimensionals. Activitats 230-238 -8
 - [X] 5.- (L 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions. Activitats 240-244 - 11
 - [X] 6.- (M 27S) Plantilles. Activitats 245-246. - 14
-- [ ] 7.- (J 29S) Cadenas i subcadenes. Activitats 250-257 - 16
-- [ ] 8.- (L 3O) Math i tipus de dades. Activitats 260-262 - 19
-- [ ] 9.- (M 4O) Prova escrita - 24
+- [X] 7.- (J 29S) Cadenas i subcadenes. Activitats 250-257 - 16
+- [X] 8.- (L 3O) Math i tipus de dades. Activitats 260-262 - 19
+- [X] 9.- (M 4O) Prova escrita - 24
 
 
 ## 3.- PHP Orientat a Objectes (19h)
