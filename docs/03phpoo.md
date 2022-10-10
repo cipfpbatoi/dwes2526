@@ -1092,16 +1092,18 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 312.`JSerializable.php`: Crea una interfície JSerializable, de manera que oferisca els mètodes:
        
-* `toJSON(): string` → utilitza la funció [`json_encode(mixed)`](https://www.php.net/manual/es/function.json-encode.php). Tingues en compte que com tenim les propietats dels objectes privats, has de recórrer les propietats i col·locar-les en un mapa. Per exemple:        ``` php
-               <?php
-               public function toJSON(): string {
-                   foreach ($this as $clave => $valor) {
-                       $mapa->$clave = $valor;
-                   }
-                   return json_encode($mapa);
-               }
-               ?>
-               ```
+* `toJSON(): string` → utilitza la funció [`json_encode(mixed)`](https://www.php.net/manual/es/function.json-encode.php). Tingues en compte que com tenim les propietats dels objectes privats, has de recórrer les propietats i col·locar-les en un mapa. Per exemple:        
+
+``` php
+   <?php
+       public function toJSON(): string {
+           foreach ($this as $clave => $valor) {
+               $mapa->$clave = $valor;
+           }
+           return json_encode($mapa);
+       }
+    ?>
+```
 
   * `toSerialize(): string` → utilizta la funció [`serialize(mixed)`](https://www.php.net/manual/es/function.serialize.php)
   * Modifica totes les classes perquè implementen la interfície creada.
