@@ -1081,6 +1081,7 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 </figure>
 
 311.`Enterprise.php`: Utilitzant les classes dels exercicis anteriors.
+
 * Crea una classe `Enterprise` que a més del nom i la direcció, continga una propietat amb un array de `Workers`, ja siguen Employees o Managers. 
   * Afig *getters/setters* per al nom i direcció.
   * Afig mètodes per a afegir i llistar els treballadors.
