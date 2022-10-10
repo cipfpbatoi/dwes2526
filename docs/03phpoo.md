@@ -1532,9 +1532,9 @@ Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante
          * `CupoSuperadoException`
          * `SoporteNoEncontradoException`
          * `ClienteNoEncontradoException`
-334. En `Cliente`, modifica els mètodes `alquilar` i `retornar`, perquè facen ús de les noves excepcions (llançant-les quan siga necessari) i funcionen com a mètodes encadenats. Destacar que aquests mètodes, no es capturar estàs excepcions, només es llancen.
-     En `Videoclub`, modifica `alquilarSocioPelicula` per a capturar totes les excepcions que ara llança `Cliente` i informar l'usuari en conseqüència.
-335. Modificarem el projecte perquè el videoclub sàpia quins productes estan o no llogats:
+334. En `Cliente`, modifica els mètodes `alquilar` i `retornar`, perquè facen ús de les noves excepcions (llançant-les quan siga necessari) i funcionen com a mètodes encadenats. Destacar que aquests mètodes, no són per capturar estes exempcions, només es llancen.
+     En `Videoclub`, modifica `alquilarSocioPelicula` per a capturar totes les exempcions que ara llança `Cliente` i informar l'usuari en conseqüència.
+335. Modifica el projecte perquè el videoclub sàpia quins productes estan o no llogats:
      * En `Soporte`, crea una propietat pública el nom de la qual siga `alquilado` que inicialment estarà a `false`. Quan es llogue, es posarà a `true`. En retornar, la tornarem a posar a `false`.
      * En `Videoclub`, crea dues noves propietats i les seues getters:
              * `numProductosAlquilados`
