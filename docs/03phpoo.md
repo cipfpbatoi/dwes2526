@@ -1068,11 +1068,11 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 310.`Worker.php`:
 * Copia classes i canvia el nom(Person,Worker,Employee,Manager).
-  * Transforma `Person` a una classe abstracta on el seu mètode estàtic `toHtml(Persona $p)` haja de ser redefinit en tots els seus fills.
-  * Canvia l'estructura de classes conforme al gràfic respectant tots els mètodes que ja estan fets
-  * `Worker` és una classe abstracta que ara emmagatzema els `telefonos` i on `calcularSueldo` és un mètode abstracte de manera que:
-    * El sou d'un `Empleat` es calcula a partir de les hores treballades i el que cobra per hora.
-    * Per als `Gerents`, el seu sou s'incrementa percentualment sobre la base de la seua edat: `salari + salari*edat/100`
+* Transforma `Person` a una classe abstracta on el seu mètode estàtic `toHtml(Persona $p)` haja de ser redefinit en tots els seus fills.
+* Canvia l'estructura de classes conforme al gràfic respectant tots els mètodes que ja estan fets
+* `Worker` és una classe abstracta que ara emmagatzema els `telefonos` i on `calcularSueldo` és un mètode abstracte de manera que:
+  * El sou d'un `Empleat` es calcula a partir de les hores treballades i el que cobra per hora.
+  * Per als `Gerents`, el seu sou s'incrementa percentualment sobre la base de la seua edat: `salari + salari*edat/100`
 <figure>
    <img src="imagenes/03/03p312.png">
    <figcaption>Ejercicio 312</figcaption>
@@ -1080,15 +1080,16 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 311.`Enterprise.php`: Utilitzant les classes dels exercicis anteriors.
 * Crea una classe `Enterprise` que a més del nom i la direcció, continga una propietat amb un array de `Workers`, ja siguen Employees o Managers. 
-     * Afig *getters/setters* per al nom i direcció.
-     * Afig mètodes per a afegir i llistar els treballadors.
-        * `public function addWorker(Worker $t)`
-        * `public function listWorkersHtml() : string` -> utilitza `Worker::toHtml(Person $p)`
-     * Afig un mètode per a obtindre el cost total en nòmines.
-        * `public function getCosteNominas(): float` -> recorre els treballadors i invoca al mètode `calcularSueldo()`.
+* Afig *getters/setters* per al nom i direcció.
+* Afig mètodes per a afegir i llistar els treballadors.
+   * `public function addWorker(Worker $t)`
+   * `public function listWorkersHtml() : string` -> utilitza `Worker::toHtml(Person $p)`
+* Afig un mètode per a obtindre el cost total en nòmines.
+   * `public function getCosteNominas(): float` -> recorre els treballadors i invoca al mètode `calcularSueldo()`.
 
 312.`JSerializable.php`: Crea una interfície JSerializable, de manera que oferisca els mètodes:
-       * `toJSON(): string` → utilitza la funció [`json_encode(mixed)`](https://www.php.net/manual/es/function.json-encode.php). Tingues en compte que com tenim les propietats dels objectes privats, has de recórrer les propietats i col·locar-les en un mapa. Per exemple:        ``` php
+       
+* `toJSON(): string` → utilitza la funció [`json_encode(mixed)`](https://www.php.net/manual/es/function.json-encode.php). Tingues en compte que com tenim les propietats dels objectes privats, has de recórrer les propietats i col·locar-les en un mapa. Per exemple:        ``` php
                <?php
                public function toJSON(): string {
                    foreach ($this as $clave => $valor) {
@@ -1099,8 +1100,8 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
                ?>
                ```
 
-       * `toSerialize(): string` → utilizta la funció [`serialize(mixed)`](https://www.php.net/manual/es/function.serialize.php)
-    * Modifica totes les classes perquè implementen la interfície creada.
+* `toSerialize(): string` → utilizta la funció [`serialize(mixed)`](https://www.php.net/manual/es/function.serialize.php)
+* Modifica totes les classes perquè implementen la interfície creada.
 
 
 ### Projecte Videoclub
