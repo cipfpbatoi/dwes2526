@@ -1028,22 +1028,22 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 302. `Persona7.php`: Còpia la classe persona i modifica-la. Afig el constructor de manera que assignem nom i cognoms mitjançant el constructor (utilitza la sintaxi de PHP7).
      Si el constructor rep un tercer paràmetre, serà l'edat de la `Persona`. Si no, se li assignarà 25 anys com a edat. 
 303. `Persona8.php`: Copia la classe persona i modifica la classe per a utilitzar la sintaxi de PHP 8 de promoció de les propietats del constructor. 
-304. `Persona8.php`: Modifica la classe de l'exercici anterior per afegir una constant `LIMITE_EDAT` amb el valor de la edat jubilació, i modifica el codi per a utilitzar la constant. Pon la constante en 66.
-305. `Persona8.php`: Modifica la classe de l'exercici anterior, canviant la constant per una variable estàtica `limite_edat`, de manera que mitjançant *getter/setter* pugues modificar el seu valor. Per defecte se li assignara la constant `LIMITE_EDAT`
+304. `Persona8.php`: Modifica la classe de l'exercici anterior per afegir una constant `LIMITE_EDAT` amb el valor de la edat jubilació, i modifica el codi per a utilitzar la constant. Posa la constant en 66.
+305. `Persona8.php`: Modifica la classe de l'exercici anterior, canviant la constant per una variable estàtica `limite_edat`, de manera que mitjançant la funció estatica *modificaLimite()* pugues modificar el seu valor. Per defecte se li assignarà la constant `LIMITE_EDAT`
 306. `Empleado.php`: Crea un classe que herete de l'anterior i afig una propietat privada que emmagatzeme el sou i un array de nombres de telèfons.
           Afig els següents mètodes:
     * `public function anyadirTelefono(int $telefono) : void` → Afig un telèfon al array
     * `public function listarTelefonos(): string` → Mostra els telèfons separats per comes
     * `public function vaciarTelefonos(): void` → Elimina tots els telèfons
     * `public debePagarImpuestos(): bool`Que retorne un booleà indicant si deu o no pagar impostos (es paguen quan el sou és superior a 3333€)
-307. `Empleado.php`: Completa-la el següent mètode amb una cadena HTML que mostre les dades d'un empleat dins d'un paràgraf i tots els telèfons mitjançant una llista ordenada (per a això, hauràs de crear un *getter* per als telèfons):
+307. `Empleado.php`: Completa-la el següent mètode amb una cadena HTML que mostre el nom complet d'un empleat dins d'un paràgraf i tots els telèfons mitjançant una llista ordenada (per a això, hauràs de crear un *getter* per als telèfons):
      * `public static function toHtml(Empleado $emp): string`
  <figure style="float: right;">
      <img src="imagenes/03/03p307.png">
      <figcaption>Ejercicio 307</figcaption>
  </figure>
 
-308. `Persona.php`: Crea en `Persona` el mètode estàtic `ToHtml(Persona $p)`, i modifica en `Empleado` el mateix mètode `toHtml(Persona $p)`, però canvia la signatura perquè reba una `Persona` com a paràmetre.
+308. `Persona8.php`: Crea en `Persona` el mètode estàtic `toHtml(Persona $p)` que mostrarà el nom complet de la persona dins d'un paragraf, i modifica en `Empleado` el mateix mètode `toHtml(Persona $p)`, però canvia la signatura perquè reba una `Persona` com a paràmetre.
      Per a accedir a les propietats de l'empleat amb la persona que rebem com a paràmetre, comprovarem el seu tipus:
 
     ``` php
@@ -1059,17 +1059,16 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
         }
     }
     ```
-309. `Persona.php`: 
-     Afig nous mètodes que facen una representació de totes les propietats de les classes `Persona` i `Empleat`, de manera similar als realitzats en HTML, però sense que siguen estàtics, de manera que  obtinga les dades mitjançant `$this`.
+309. `Persona8.php i Empleado.php`: 
+     Afig nous mètodes que facen una representació de totes les propietats de les classes `Persona` i `Empleado`, de manera similar als realitzats en HTML, però sense que siguen estàtics, de manera que  obtinga les dades mitjançant `$this`.
      * `function public __toString(): string`
 
 !!! tip "*Magic methods*"
     El mètode `__toString()` és un mètode màgic que s'invoca automàticament quan volem obtindre la representació en cadena d'un objecte.
 
-310. `PersonaA.php`: Transforma `Persona` a una classe abstracta on el seu mètode estàtic `toHtml(Persona $p)` haja de ser redefinit en tots els seus fills.
-
-311. `Worker.php`: 
+310.`Worker.php`: 
      * Copia classes i canvia el nom(Person,Worker,Employee,Manager).
+     * Transforma `Person` a una classe abstracta on el seu mètode estàtic `toHtml(Persona $p)` haja de ser redefinit en tots els seus fills.
      * Canvia l'estructura de classes conforme al gràfic respectant tots els mètodes que ja estan fets
      * `Worker` és una classe abstracta que ara emmagatzema els `telefonos` i on `calcularSueldo` és un mètode abstracte de manera que:
        * El sou d'un `Empleat` es calcula a partir de les hores treballades i el que cobra per hora.
@@ -1079,8 +1078,9 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
    <figcaption>Ejercicio 312</figcaption>
 </figure>
 
-312.`Enterprise.php`: Utilitzant les classes dels exercicis anteriors:
-     * Crea una classe `Enterprise` que a més del nom i la direcció, continga una propietat amb un array de `Treballadors, ja siguen Employees o Managers. 
+311.`Enterprise.php`: Utilitzant les classes dels exercicis anteriors:
+
+     * Crea una classe `Enterprise` que a més del nom i la direcció, continga una propietat amb un array de `Workers`, ja siguen Employees o Managers. 
      * Afig *getters/setters* per al nom i direcció.
      * Afig mètodes per a afegir i llistar els treballadors.
         * `public function addWorker(Worker $t)`
@@ -1088,7 +1088,7 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
      * Afig un mètode per a obtindre el cost total en nòmines.
         * `public function getCosteNominas(): float` -> recorre els treballadors i invoca al mètode `calcularSueldo()`.
 
-313. `314EmpresaI.php`: Còpia les classes de l'exercici anterior i modifica-les.
+312.`Empresa.php`: 
      * Crea una interfície JSerializable, de manera que oferisca els mètodes:
        * `toJSON(): string` → utilitza la funció [`json_encode(mixed)`](https://www.php.net/manual/es/function.json-encode.php). Tingues en compte que com tenim les propietats dels objectes privats, has de recórrer les propietats i col·locar-les en un mapa. Per exemple:        ``` php
                <?php
