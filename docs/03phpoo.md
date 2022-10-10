@@ -1059,6 +1059,7 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
         }
     }
     ```
+
 309. `Persona8.php i Empleado.php`: 
      Afig nous mètodes que facen una representació de totes les propietats de les classes `Persona` i `Empleado`, de manera similar als realitzats en HTML, però sense que siguen estàtics, de manera que  obtinga les dades mitjançant `$this`.
      * `function public __toString(): string`
@@ -1066,13 +1067,14 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 !!! tip "*Magic methods*"
     El mètode `__toString()` és un mètode màgic que s'invoca automàticament quan volem obtindre la representació en cadena d'un objecte.
 
-310.`Worker.php`:
-* Copia classes i canvia el nom(Person,Worker,Employee,Manager).
+310.`Worker.php`: Copia classes i canvia el nom(Person,Worker,Employee,Manager).
+
 * Transforma `Person` a una classe abstracta on el seu mètode estàtic `toHtml(Persona $p)` haja de ser redefinit en tots els seus fills.
-* Canvia l'estructura de classes conforme al gràfic respectant tots els mètodes que ja estan fets
-* `Worker` és una classe abstracta que ara emmagatzema els `telefonos` i on `calcularSueldo` és un mètode abstracte de manera que:
-  * El sou d'un `Empleat` es calcula a partir de les hores treballades i el que cobra per hora.
-  * Per als `Gerents`, el seu sou s'incrementa percentualment sobre la base de la seua edat: `salari + salari*edat/100`
+  * Canvia l'estructura de classes conforme al gràfic respectant tots els mètodes que ja estan fets
+  * `Worker` és una classe abstracta que ara emmagatzema els `telefonos` i on `calcularSueldo` és un mètode abstracte de manera que:
+    * El sou d'un `Empleat` es calcula a partir de les hores treballades i el que cobra per hora.
+    * Per als `Gerents`, el seu sou s'incrementa percentualment sobre la base de la seua edat: `salari + salari*edat/100`
+
 <figure>
    <img src="imagenes/03/03p312.png">
    <figcaption>Ejercicio 312</figcaption>
@@ -1080,12 +1082,12 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 311.`Enterprise.php`: Utilitzant les classes dels exercicis anteriors.
 * Crea una classe `Enterprise` que a més del nom i la direcció, continga una propietat amb un array de `Workers`, ja siguen Employees o Managers. 
-* Afig *getters/setters* per al nom i direcció.
-* Afig mètodes per a afegir i llistar els treballadors.
-   * `public function addWorker(Worker $t)`
-   * `public function listWorkersHtml() : string` -> utilitza `Worker::toHtml(Person $p)`
-* Afig un mètode per a obtindre el cost total en nòmines.
-   * `public function getCosteNominas(): float` -> recorre els treballadors i invoca al mètode `calcularSueldo()`.
+  * Afig *getters/setters* per al nom i direcció.
+  * Afig mètodes per a afegir i llistar els treballadors.
+     * `public function addWorker(Worker $t)`
+     * `public function listWorkersHtml() : string` -> utilitza `Worker::toHtml(Person $p)`
+  * Afig un mètode per a obtindre el cost total en nòmines.
+     * `public function getCosteNominas(): float` -> recorre els treballadors i invoca al mètode `calcularSueldo()`.
 
 312.`JSerializable.php`: Crea una interfície JSerializable, de manera que oferisca els mètodes:
        
@@ -1100,8 +1102,8 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
                ?>
                ```
 
-* `toSerialize(): string` → utilizta la funció [`serialize(mixed)`](https://www.php.net/manual/es/function.serialize.php)
-* Modifica totes les classes perquè implementen la interfície creada.
+  * `toSerialize(): string` → utilizta la funció [`serialize(mixed)`](https://www.php.net/manual/es/function.serialize.php)
+  * Modifica totes les classes perquè implementen la interfície creada.
 
 
 ### Projecte Videoclub
