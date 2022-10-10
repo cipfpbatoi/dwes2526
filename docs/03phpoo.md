@@ -1066,13 +1066,14 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 !!! tip "*Magic methods*"
     El mètode `__toString()` és un mètode màgic que s'invoca automàticament quan volem obtindre la representació en cadena d'un objecte.
 
-310.`Worker.php`: 
-     * Copia classes i canvia el nom(Person,Worker,Employee,Manager).
-     * Transforma `Person` a una classe abstracta on el seu mètode estàtic `toHtml(Persona $p)` haja de ser redefinit en tots els seus fills.
-     * Canvia l'estructura de classes conforme al gràfic respectant tots els mètodes que ja estan fets
-     * `Worker` és una classe abstracta que ara emmagatzema els `telefonos` i on `calcularSueldo` és un mètode abstracte de manera que:
-       * El sou d'un `Empleat` es calcula a partir de les hores treballades i el que cobra per hora.
-       * Per als `Gerents`, el seu sou s'incrementa percentualment sobre la base de la seua edat: `salari + salari*edat/100`
+310.`Worker.php`:
+
+* Copia classes i canvia el nom(Person,Worker,Employee,Manager).
+* Transforma `Person` a una classe abstracta on el seu mètode estàtic `toHtml(Persona $p)` haja de ser redefinit en tots els seus fills.
+* Canvia l'estructura de classes conforme al gràfic respectant tots els mètodes que ja estan fets
+* `Worker` és una classe abstracta que ara emmagatzema els `telefonos` i on `calcularSueldo` és un mètode abstracte de manera que:
+  * El sou d'un `Empleat` es calcula a partir de les hores treballades i el que cobra per hora.
+  * Per als `Gerents`, el seu sou s'incrementa percentualment sobre la base de la seua edat: `salari + salari*edat/100`
 <figure>
    <img src="imagenes/03/03p312.png">
    <figcaption>Ejercicio 312</figcaption>
