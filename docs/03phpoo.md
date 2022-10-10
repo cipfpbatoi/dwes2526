@@ -1267,7 +1267,7 @@ Arribats a aquest punt, el nostre model és similar al següent diagrama:
     <figcaption>Afegim Cliente</figcaption>
 </figure>
 
-324. Crear la classe `Cliente`. El constructor rebrà el `nom`, `numere` i `maxLloguerConcurrent`, aquest últim podent ser opcional i prenent com a valor per defecte 3. Després d'això, afig *getter/setter* únicament a `numere`, i un *getter* a `numSoportsalquilados` (aquest camp emmagatzemarà un comptador del total de lloguers que ha realitzat). El array de suports alquilados contedrá classes que hereten de `Soporte`. Finalment, afig el mètode `MuestraResumen` que mostre el nom i la quantitat de lloguers (grandària del array `soportsalquilados`).
+324. Crear la classe `Cliente`. El constructor rebrà el `nombre`, `numero` i `maxAlquilerConcurrente`, aquest últim podent ser opcional i prenent com a valor per defecte 3. Després d'això, afig *getter/setter* únicament a `numero`, i un *getter* a `numSoportsalquilados` (aquest camp emmagatzemarà un comptador del total de lloguers que ha realitzat). El array de suports alquilados contedrá classes que hereten de `Soporte`. Finalment, afig el mètode `MuestraResumen` que mostre el nom i la quantitat de lloguers (grandària del array `soportsalquilados`).
 
 325. Dins de `Cliente`, afig les següent operacions:
      * `tieneAlquilado(Soporte $s): bool` → Recorre el array de suports i comprova si està el suport
@@ -1275,7 +1275,7 @@ Arribats a aquest punt, el nostre model és similar al següent diagrama:
 
 326. Seguim amb `Cliente` per a afegir les operacions:
      * `retornar(int $numSoporte): bool` → Ha de comprovar que el suport estava llogat i actualitzar la quantitat de suports llogats. Per a cada cas ha de mostrar un missatge informant de l'ocorregut
-     * `llistarLloguers(): void` → Informa de quants lloguers té el client i els mostra.
+     * `listarAlquileres(): void` → Informa de quants lloguers té el client i els mostra.
 
 Crea l'arxiu `inicio2.php` amb el següent codi font per a provar la classe:
 
@@ -1509,28 +1509,29 @@ I per a provar el projecte, dins `inicio3.php` col·locarem:
 
 328. Transforma `Soporte` a una classe abstracta i comprova que tot continua funcionant. Què aconseguim en fer-la abstracta?
 
-329. Crea una interfície `Resumible`, de manera que les classes que l'implementen han d'oferir el mètode `muestraResumen()`. Modifica la classe `Soporte` i feix que implemente la interfície. Fa falta que també l'implementen els fills?
+329. Crea una interfície `Resumible`, de manera que les classes que l'implementen han d'oferir el mètode `muestraResumen()`. Modifica la classe `Soporte` i fes que implemente la interfície. Fa falta que també l'implementen els fills?
 
 ### Projecte Videoclub 2.0
 
 Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante `git tag` con el nombre `v0.329` y sube los cambios a GitHub.
 
-330. Modifica els operacions de llogar, tant en `Client` com en `Videoclub`, per a donar suport a l'encadenament de mètodes.
+330. Modifica les operacions de llogar, tant en `Client` com en `Videoclub`, per a donar suport a l'encadenament de mètodes.
      Posteriorment, modifica el codi de prova per a utilitzar aquesta tècnica.
 331. Fent ús de *namespaces*:
-     * Col·boja totes els classes/interfícies en `Dwes\ProjecteVideoclub`
+     * Col·loca totes els classes/interfícies en `Dwes\ProjecteVideoclub`
      * Cada classe ha de fer `include_once` dels recursos que empra
-     * Col·boja el/els arxivaments de prova en l'arrel (sense espai de noms)
+     * Col·loca el/els arxivaments de prova en l'arrel (sense espai de noms)
      * Dones de l'arxiu de proves, utilitza `use` per a poder realitzar accessos sense qualificar
      * Etiqueta els canvis com `v0.331`.
 332. Reorganitza els carpeta tal com hem vist en els anotacions: `app`, `test` i `vendor`.
-     * Crea un fitxer `autolloeu.php` per a registrar la ruta on trobar els classes
-     * Modifica tot el codi necessari, incloent `autolloeu.php` on seguisca necessari i esborrant els *includes* previs.
+     * Crea un fitxer `autoload.php` per a registrar la ruta on trobar els classes
+     * Modifica tot el codi necessari, incloent `autoload.php` on seguisca necessari i esborrant els *includes* previs.
 333. A continuació crearem un conjunt d'excepcions d'aplicació. Aquestes excepcions són simples, no necessiten sobreescriure cap mètode. Així doncs, crea l'excepció d'aplicació `VideoclubException` en el *namespace* `Dwes\ProjecteVideoclub\Util`.
-     Posteriorment crea els següents fills (han d'heretar de `VideoclubException`), cadascun en el seu propi arxiu:    * `SoporteYaAlquiladoException`
-    * `CupoSuperadoException`
-    * `SoporteNoEncontradoException`
-    * `ClienteNoEncontradoException`
+     Posteriorment crea els següents fills (han d'heretar de `VideoclubException`), cadascun en el seu propi arxiu:    
+     * `SoporteYaAlquiladoException`
+         * `CupoSuperadoException`
+         * `SoporteNoEncontradoException`
+         * `ClienteNoEncontradoException`
 334. En `Cliente`, modifica els mètodes `alquilar` i `retornar`, perquè facen ús de les noves excepcions (llançant-les quan siga necessari) i funcionen com a mètodes encadenats. Destacar que aquests mètodes, no es capturar estàs excepcions, només es llancen.
      En `Videoclub`, modifica `alquilarSocioPelicula` per a capturar totes les excepcions que ara llança `Cliente` i informar l'usuari en conseqüència.
 335. Modificarem el projecte perquè el videoclub sàpia quins productes estan o no llogats:
