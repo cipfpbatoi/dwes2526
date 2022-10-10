@@ -536,7 +536,7 @@ class NombreClase implements NombreInterfaz {
 // código de la clase
 ```
 
-Se permite la herencia de interfaces. Además, una clase puede implementar varios interfaces (en este caso, sí soporta la herecia múltiple, pero sólo de interfaces).
+Es permet l'herència d'interfícies. A més, una classe pot implementar diverses interfícies (en aquest cas, sí que suporta l'herència múltiple, però només d'interfícies).
 
 ``` php
 <?php
@@ -575,7 +575,7 @@ $p2->setNombre("Patria")->setAutor("Aramburu");
 echo $p2;
 ```
 
-Per a facilitar-ho, modificarem tots els seus mètodes mutadores (que modifiquen dades, setters*, ...) perquè retornen una referència a `$this`:
+Per a facilitar-ho, modificarem tots els seus mètodes mutants (que modifiquen dades, setters*, ...) perquè retornen una referència a `$this`:
 
 ``` php
 <?php
@@ -626,7 +626,7 @@ Els més destacables són:
 Des de PHP 5.3 i també coneguts com *Namespaces*, permeten organitzar les classes/interfícies, funcions i/o constants de manera similar als paquets a *Java*.
 
 !!! tip "Recomanació"
-    Un només namespace per arxiu i crear una estructura de carpetes respectant els anivelles/subnivells (igual que es fa a Java)
+    Un només namespace per arxiu i crear una estructura de carpetes respectant els nivells/subnivells (igual que es fa a Java)
 
 Es declaren en la primera línia mitjançant la paraula clau `namespace` seguida del nom de l'espai de noms assignat (cada subnivell se separa amb la barra invertida `\`):
 
@@ -1113,12 +1113,7 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 En els següents exercicis simularem un xicotet projecte d'un Videoclub (basat en la proposta que fa el tutorial de desarrolloweb.com), el qual realitzarem mitjançant un desenvolupament incremental i seguint la pràctica de programació en parelles (*pair programming*).
 
-Abans de res, crea un repositori privat en GitHub i puja el projecte actual de Videoclub*. Una vegada creat, convida al teu company al repositori com a col·laborador.
-
-  * Inicialitza en local el teu repostorio de git, mitjançant `git init`
-  * Afig i puja els canvis al teu repositori, mitjançant `git add .` i després `git commit -m 'Inicialitzant projecte'.`
-  * Connecta el teu repositori amb GitHub i puja els canvis (mira la instruccions de GitHub: comandos `git remalnom` i `git push`).
-  * El teu company haurà de descarregar el projecte amb les seues credencials.
+Abans de res, utilitza l'enllaç al [repositori base](https://classroom.github.com/a/CRsCydtX) i clona el repositori.
 
 !!! warning "Projecte no real"
     El següent projecte està pensat des d'un punt de vista formatiu. Algunes de les decisions que es prenen no s'han d'usar (com fer `tire` dins de les classes) o provar el codi comparant el resultat en el navegador.
@@ -1131,11 +1126,11 @@ Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implement
 
 320. Crea una classe per a emmagatzemar suports (`Soporte.php`). Aquesta classe serà la classe pare dels diferents suports amb els quals treballe el nostre videoclub (cintes de vídeo, videojocs, etc...):
 
-     * Crea el constructor que inicialitze les seues propietats. Fixa't que la classe no té mètodes setters*.
-     * Definir una constant mitjançant un propietat privada i estàtica denominada `IVA amb un valor del 21%
+     * Crea el constructor que inicialitze les seues propietats. Fixa't que la classe no té mètodes *setters*.
+     * Definir una constant mitjançant un propietat privada i estàtica denominada IVA amb un valor del 21%
      * Crear un arxiu (`inici.php`) per a usar les classes i còpia el següent fragment:
 
-=== "Código de prueba"
+=== "Codi de prova"
 
     ``` php
     <?php
@@ -1167,7 +1162,7 @@ Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implement
 
     Afig a `inici.php` el codi per a provar la classe:
 
-=== "Código de prueba"
+=== "Codi de prova"
 
     ``` php
     <?php
@@ -1201,7 +1196,7 @@ Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implement
 
     Afig a `inici.php` el codi per a provar la classe:
 
-=== "Código de prueba"
+=== "Codi de prova"
 
     ``` php
     <?php
@@ -1236,7 +1231,7 @@ Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implement
 
     Afig a `inici.php` el codi per a provar la classe:
 
-=== "Código de prueba"
+=== "Codi de prova"
 
     ``` php
     <?php
