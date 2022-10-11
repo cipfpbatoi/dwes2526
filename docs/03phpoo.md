@@ -1097,8 +1097,9 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 ``` php
    <?php
        public function toJSON(): string {
+            $mapa = array()
            foreach ($this as $clave => $valor) {
-               $mapa->$clave = $valor;
+               $mapa[$clave] = $valor;
            }
            return json_encode($mapa);
        }
@@ -1253,7 +1254,7 @@ Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implement
     Juego para: PS4
     *The Last of Us Part II*
     49.99 € (IVA no incluido)
-    Para un jugador
+    Para 1 jugador
     </pre>
 
 Arribats a aquest punt, el nostre model és similar al següent diagrama:

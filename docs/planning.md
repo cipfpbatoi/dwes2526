@@ -20,9 +20,9 @@
 
 ## 3.- PHP Orientat a Objectes (19h)
 
-- [ ] 1.- (J 6O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
-- [ ] 3.- (L 10O) Herencia. Classes abstractas. Activitats 308-311 - 6
-- [ ] 4.- (M 11O) Interfaces. Activitats 312-314 - 8
+- [X] 1.- (J 6O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
+- [X] 3.- (L 10O) Herencia. Classes abstractas. Activitats 308-310 - 6
+- [ ] 4.- (M 11O) Interfaces. Activitats 311-312 - 8
 - [ ] 5.- (J 13O) Projecte Videoclub I. Activitats 320-323 - 11
 - [ ] 6.- (L 17O) Projecte Videoclub I. Activitats 324-328 - 14
 - [ ] 7.- (M 18O) Mètodos encadenats. Namespaces. Exempcions. Activitats 330-334  - 16
