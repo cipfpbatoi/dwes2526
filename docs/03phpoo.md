@@ -1106,7 +1106,7 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
     ?>
 ```
 
-  * `toSerialize(): string` → utilizta la funció [`serialize(mixed)`](https://www.php.net/manual/es/function.serialize.php)
+  * `toSerialize(): string` → utilitza la funció [`serialize(mixed)`](https://www.php.net/manual/es/function.serialize.php)
   * Modifica totes les classes perquè implementen la interfície creada.
 
 
