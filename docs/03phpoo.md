@@ -1114,7 +1114,7 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 En els següents exercicis simularem un xicotet projecte d'un Videoclub (basat en la proposta que fa el tutorial de desarrolloweb.com), el qual realitzarem mitjançant un desenvolupament incremental i seguint la pràctica de programació en parelles (*pair programming*).
 
-Abans de res, utilitza l'enllaç al [repositori base](https://classroom.github.com/a/CRsCydtX) i clona el repositori.
+Abans de res, utilitza l'enllaç al [repositori base](https://classroom.github.com/a/qWtcqXKj) i clona el repositori.
 
 !!! warning "Projecte no real"
     El següent projecte està pensat des d'un punt de vista formatiu. Algunes de les decisions que es prenen no s'han d'usar (com fer `tire` dins de les classes) o provar el codi comparant el resultat en el navegador.
@@ -1268,11 +1268,11 @@ Arribats a aquest punt, el nostre model és similar al següent diagrama:
     <figcaption>Afegim Cliente</figcaption>
 </figure>
 
-324. Crear la classe `Cliente`. El constructor rebrà el `nombre`, `numero` i `maxAlquilerConcurrente`, aquest últim podent ser opcional i prenent com a valor per defecte 3. Després d'això, afig *getter/setter* únicament a `numero`, i un *getter* a `numSoportsalquilados` (aquest camp emmagatzemarà un comptador del total de lloguers que ha realitzat). El array de suports alquilados contedrá classes que hereten de `Soporte`. Finalment, afig el mètode `MuestraResumen` que mostre el nom i la quantitat de lloguers (grandària del array `soportsalquilados`).
+324. Crear la classe `Cliente`. El constructor rebrà el `nombre`, `numero` i `maxAlquilerConcurrente`, aquest últim podent ser opcional i prenent com a valor per defecte 3. Després d'això, afig *getter/setter* únicament a `numero`, i un *getter* a `numSoportesalquilados` (aquest camp emmagatzemarà un comptador del total de lloguers que ha realitzat). El array de suports alquilados contedrá classes que hereten de `Soporte`. Finalment, afig el mètode `MuestraResumen` que mostre el nom i la quantitat de lloguers (grandària del array `soportsalquilados`).
 
 325. Dins de `Cliente`, afig les següent operacions:
      * `tieneAlquilado(Soporte $s): bool` → Recorre el array de suports i comprova si està el suport
-     * `alquilar(Soporte $s): bool` -→ Ha de comprovar si el suport està alquilado i si no ha superat el contingent de lloguers. En llogar, incrementarà el `numSoportsalquilados` i emmagatzemarà el suport en el array. Per a cada cas ha de mostrar un missatge informant de l'ocorregut.
+     * `alquilar(Soporte $s): bool` -→ Ha de comprovar si el suport està alquilado i si no ha superat el contingent de lloguers. En llogar, incrementarà el `numSoporetsalquilados` i emmagatzemarà el suport en el array. Per a cada cas ha de mostrar un missatge informant de l'ocorregut.
 
 326. Seguim amb `Cliente` per a afegir les operacions:
      * `retornar(int $numSoporte): bool` → Ha de comprovar que el suport estava llogat i actualitzar la quantitat de suports llogats. Per a cada cas ha de mostrar un missatge informant de l'ocorregut
@@ -1314,15 +1314,15 @@ Crea l'arxiu `inicio2.php` amb el següent codi font per a provar la classe:
     //este soporte no lo va a poder alquilar
     $cliente1->alquilar($soporte4);
     //este soporte no lo tiene alquilado
-    $cliente1->tornar(4);
+    $cliente1->retornar(4);
     //devuelvo un soporte que sí que tiene alquilado
-    $cliente1->tornar(2);
+    $cliente1->retornar(2);
     //alquilo otro soporte
     $cliente1->Alquilar($soporte4);
     //listo los elementos alquilados
-    $cliente1->llistaLloguers();
+    $cliente1->listarAlquileres();
     //este cliente no tiene alquileres
-    $cliente2->tornar(2);
+    $cliente2->retornar(2);
     ```
 
 === "Navegador"
