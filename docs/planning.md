@@ -22,7 +22,7 @@
 
 - [X] 1.- (J 6O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
 - [X] 3.- (L 10O) Herencia. Classes abstractas. Activitats 308-310 - 6
-- [ ] 4.- (M 11O) Interfaces. Activitats 311-312 - 8
+- [X] 4.- (M 11O) Interfaces. Activitats 311-312 - 8
 - [ ] 5.- (J 13O) Projecte Videoclub I. Activitats 320-323 - 11
 - [ ] 6.- (L 17O) Projecte Videoclub I. Activitats 324-328 - 14
 - [ ] 7.- (M 18O) Mètodos encadenats. Namespaces. Exempcions. Activitats 330-334  - 16
@@ -34,7 +34,7 @@
 - [ ] 1.- (L 24O) Formularis. Activitats 401-403 - 3
 - [ ] 2.- (M 25O) Upload. Cookies.Sessió Activitats 404-409 - 5
 - [ ] 3.- (J 27O) Gestió d'usuaris. Activitats 410-415 - 8
-- [ ] 4.- (J 3N)Projecte Videoclub III. Activitats 420-423 - 11 
+- [ ] 4.- (J 3N) Projecte Videoclub III. Activitats 420-423 - 11 
 - [ ] 5.- (L 7N) Projecte Videoclub III. Activitats 424-426 - 14
 
 
