@@ -1530,26 +1530,24 @@ Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante
 333. A continuació crearem un conjunt d'excepcions d'aplicació. Aquestes excepcions són simples, no necessiten sobreescriure cap mètode. Així doncs, crea l'excepció d'aplicació `VideoclubException` en el *namespace* `Dwes\ProjecteVideoclub\Util`.
      Posteriorment crea els següents fills (han d'heretar de `VideoclubException`), cadascun en el seu propi arxiu:    
 
-         * `SoporteYaAlquiladoException`
-         * `CupoSuperadoException`
-         * `SoporteNoEncontradoException`
-         * `ClienteNoEncontradoException`
+         * SoporteYaAlquiladoException
+         * CupoSuperadoException
+         * SoporteNoEncontradoException
+         * ClienteNoEncontradoException
 334. En `Cliente`, modifica els mètodes `alquilar` i `retornar`, perquè facen ús de les noves excepcions (llançant-les quan siga necessari) i funcionen com a mètodes encadenats. Destacar que aquests mètodes, no són per capturar estes exempcions, només es llancen.
 
      En `Videoclub`, modifica `alquilarSocioProducto` per a capturar totes les exempcions que ara llança `Cliente` i informar l'usuari en conseqüència.
      En `Videoclub`, modifica `alquilarSocioProducto` per si es pasa un soci que no existeix (utilitza exempcions).
 
-336. Modifica el projecte perquè el videoclub sàpia quins productes estan o no llogats:
+335. Modifica el projecte perquè el videoclub sàpia quins productes estan o no llogats:
      * En `Soporte`, crea una propietat pública el nom de la qual siga `alquilado` que inicialment estarà a `false`. Quan es llogue, es posarà a `true`. En retornar, la tornarem a posar a `false`.
-     * En `Videoclub`, crea dues noves propietats i les seues getters:
      
-             * `numProductosAlquilados`
-             * `numTotalAlquileres`
-337. Crea un nou mètode en `Videoclub` anomenat `alquilarSocioProductos(int numSocio, array numerosProductos)`, el qual ha de rebre un array amb els productes a llogar.
+336. Crea un nou mètode en `Videoclub` anomenat `alquilarSocioProductos(int numSocio, array numerosProductos)`, el qual ha de rebre un array amb els productes a llogar.
      Abans de llogar-los, ha de comprovar que tots els suports estiguen disponibles, de manera que si un no ho està, no se li llogue cap.
-338. Crea dos nous mètodes en `Videoclub`, i mitjançant la definició, dedueix què han de realitzar:
-    * `devolverSocioProducto(int numSocio, int numeroProducto)`
-    * `devolverSocioProductos(int numSocio, array numerosProductos)`
+337. Crea dos nous mètodes en `Videoclub`, i mitjançant la definició, dedueix què han de realitzar:
+
+    * devolverSocioProducto(int numSocio, int numeroProducto)
+    * devolverSocioProductos(int numSocio, array numerosProductos)
 
     Han de suportar l'encadenament de mètodes.
     Recorda actualitzar la propietat `alquilado` dels diferents suports.
