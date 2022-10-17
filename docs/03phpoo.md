@@ -615,7 +615,7 @@ Els més destacables són:
 
 * `__construct()`
 * `__destruct()` → s'invoca en perdre la referència. S'utilitza per a tancar una connexió a la BD, tancar un fitxer, ...
-* `__toString()` → representació de l'objecte com a cadena. És a dir, quan fem `tire $objecte` s'executa automàticament aquest mètode.
+* `__toString()` → representació de l'objecte com a cadena. És a dir, quan fem `echo $objecte` s'executa automàticament aquest mètode.
 * `__get(propietat)`, `__set(propietat, valor)` → Permetria accedir a les propietat privades, encara que sempre és més llegible/mantenible codificar els *getter/setter*.
 * `__isset(propietat)`, `__unset(propietat)` → Permet esbrinar o llevar el valor a una propietat.
 * `__sleep()`, `__wakeup()` → S'executen en recuperar (*unserialize^) o emmagatzemar un objecte que se serialitza (*serialize), i s'utilitzen per a permet definir quines propietats se serialitzen.
@@ -717,9 +717,9 @@ Tot projecte, conforme creix, necessita organitzar el seu codi font. Es planteja
 
 ### Autoload
 
-No és tediós haver de fer el `include` de les classes? El autolloeu* ve al rescat.
+No és tediós haver de fer el `include` de les classes? El autoload ve al rescat.
 
-Així doncs, permet carregar les classes (no les constants ni les funcions) que s'utilitzaran i evitar haver de fer el `include_onze` de cadascuna d'elles. Per a això, s'utilitza la funció `spl_autolloeu_register`
+Així doncs, permet carregar les classes (no les constants ni les funcions) que s'utilitzaran i evitar haver de fer el `include_once` de cadascuna d'elles. Per a això, s'utilitza la funció `spl_autoload_register`
 
 ``` php
 <?php
@@ -748,19 +748,19 @@ Com hem col·locat tots els nostres recursos dins de `app`, ara nostre `autoload
 spl_autoload_register( function( $nombreClase ) {
     include_once "app/".$nombreClase.'.php';
 } );
-?>
+
 ```
 
-!!! tip "autolloeu i rutes errònies"
+!!! tip "autoload i rutes errònies"
     En *Ubuntu* en fer el *include* de la classe que rep com a paràmetre, les barres dels namespace (`\`) són diferents a les de les rutes (`/`). Per això, és millor que utilitzem el fitxer autoload:
     ``` php
     <?php
     spl_autoload_register( function( $nombreClase ) {
         $ruta = "app\\".$nombreClase.'.php';
         $ruta = str_replace("\\", "/", $ruta); // Sustituimos las barras
-        include_once $ruta';
+        include_once $ruta;
     } );
-    ?>
+    
     ```
 
 ## Gestió d'Errors
@@ -1117,7 +1117,7 @@ En els següents exercicis simularem un xicotet projecte d'un Videoclub (basat e
 Abans de res, utilitza l'enllaç al [repositori base](https://classroom.github.com/a/qWtcqXKj) i clona el repositori.
 
 !!! warning "Projecte no real"
-    El següent projecte està pensat des d'un punt de vista formatiu. Algunes de les decisions que es prenen no s'han d'usar (com fer `tire` dins de les classes) o provar el codi comparant el resultat en el navegador.
+    El següent projecte està pensat des d'un punt de vista formatiu. Algunes de les decisions que es prenen no s'han d'usar (com fer `echo` dins de les classes) o provar el codi comparant el resultat en el navegador.
 
 Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implementació, es mostra l'estructura UML del model i un fragment de codi per a provar les classes:
 <figure style="float: right;">
@@ -1519,22 +1519,23 @@ Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante
 330. Modifica les operacions de llogar, tant en `Client` com en `Videoclub`, per a donar suport a l'encadenament de mètodes.
      Posteriorment, modifica el codi de prova per a utilitzar aquesta tècnica.
 331. Fent ús de *namespaces*:
-     * Col·loca totes els classes/interfícies en `Dwes\ProjecteVideoclub`
+     * Col·loca totes els classes/interfícies en `Dwes\ProjecteVideoclub` i el directori `app` dins de `src`
      * Cada classe ha de fer `include_once` dels recursos que empra
      * Col·loca el/els arxivaments de prova en l'arrel (sense espai de noms)
      * Dones de l'arxiu de proves, utilitza `use` per a poder realitzar accessos sense qualificar
      * Etiqueta els canvis com `v0.331`.
-332. Reorganitza els carpeta tal com hem vist en els anotacions: `app`, `test` i `vendor`.
-     * Crea un fitxer `autoload.php` per a registrar la ruta on trobar els classes
+332. * Crea un fitxer `autoload.php` per a registrar la ruta on trobar els classes
      * Modifica tot el codi necessari, incloent `autoload.php` on seguisca necessari i esborrant els *includes* previs.
 333. A continuació crearem un conjunt d'excepcions d'aplicació. Aquestes excepcions són simples, no necessiten sobreescriure cap mètode. Així doncs, crea l'excepció d'aplicació `VideoclubException` en el *namespace* `Dwes\ProjecteVideoclub\Util`.
      Posteriorment crea els següents fills (han d'heretar de `VideoclubException`), cadascun en el seu propi arxiu:    
-     * `SoporteYaAlquiladoException`
+         * `SoporteYaAlquiladoException`
          * `CupoSuperadoException`
          * `SoporteNoEncontradoException`
          * `ClienteNoEncontradoException`
 334. En `Cliente`, modifica els mètodes `alquilar` i `retornar`, perquè facen ús de les noves excepcions (llançant-les quan siga necessari) i funcionen com a mètodes encadenats. Destacar que aquests mètodes, no són per capturar estes exempcions, només es llancen.
-     En `Videoclub`, modifica `alquilarSocioPelicula` per a capturar totes les exempcions que ara llança `Cliente` i informar l'usuari en conseqüència.
+
+     En `Videoclub`, modifica `alquilarSocioProducto` per a capturar totes les exempcions que ara llança `Cliente` i informar l'usuari en conseqüència.
+
 335. Modifica el projecte perquè el videoclub sàpia quins productes estan o no llogats:
      * En `Soporte`, crea una propietat pública el nom de la qual siga `alquilado` que inicialment estarà a `false`. Quan es llogue, es posarà a `true`. En retornar, la tornarem a posar a `false`.
      * En `Videoclub`, crea dues noves propietats i les seues getters:
