@@ -1528,6 +1528,7 @@ Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante
      * Modifica tot el codi necessari, incloent `autoload.php` on seguisca necessari i esborrant els *includes* previs.
 333. A continuació crearem un conjunt d'excepcions d'aplicació. Aquestes excepcions són simples, no necessiten sobreescriure cap mètode. Així doncs, crea l'excepció d'aplicació `VideoclubException` en el *namespace* `Dwes\ProjecteVideoclub\Util`.
      Posteriorment crea els següents fills (han d'heretar de `VideoclubException`), cadascun en el seu propi arxiu:    
+
          * `SoporteYaAlquiladoException`
          * `CupoSuperadoException`
          * `SoporteNoEncontradoException`
@@ -1539,6 +1540,7 @@ Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante
 335. Modifica el projecte perquè el videoclub sàpia quins productes estan o no llogats:
      * En `Soporte`, crea una propietat pública el nom de la qual siga `alquilado` que inicialment estarà a `false`. Quan es llogue, es posarà a `true`. En retornar, la tornarem a posar a `false`.
      * En `Videoclub`, crea dues noves propietats i les seues getters:
+     
              * `numProductosAlquilados`
              * `numTotalAlquileres`
 336. Crea un nou mètode en `Videoclub` anomenat `alquilarSocioProductos(int numSocio, array numerosProductos)`, el qual ha de rebre un array amb els productes a llogar.
