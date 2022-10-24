@@ -521,7 +521,7 @@ header("Location: index.php");
 
 ### Formularis
 
-402. `[402.html](recursos/402.html)` i `402.php`: Crea un formulari que sol·licite:
+402. [402.html](recursos/402.html) i `402.php`: Crea un formulari que sol·licite:
 
        * Nom i cognoms.
        * Email.
@@ -536,7 +536,8 @@ header("Location: index.php");
      * el camps nom, cognoms,sexe, aficions i menu siguen requerits.
      * el camp email siga vàlid
 
-!!! Tip: 'Utilitza exempcions i Investiga l'ús de la funció `filter_var`'.
+!!! Tip: "Utilitza exempcions"
+    Pots utilitzar exempcions per a tractar els error. Investiga l'ús de la funció `filter_var` i utilitza-la per a validar l'email.
 
 404. `404.php`: Crea una pàgina amb el formulari de l'exercici 402 i fes que si la validació no és correcta
       es torne a carregar el formulari amb les dades ja emplenades i amb el missatge d'error.
