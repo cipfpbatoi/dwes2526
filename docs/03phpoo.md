@@ -1429,7 +1429,8 @@ I per a provar el projecte, dins `inicio3.php` col·locarem:
     $vc->alquilaSocioProducto(1,2); 
     //alquilo el soporte 6 al socio 1. 
     //no se puede porque el socio 1 tiene 2 alquileres como máximo 
-    $vc->alquilaSocioProducto(1,6); 
+    $vc->alquilaSocioProducto(1,6);
+    $vc->alquilaSocioProducto(12,12);
 
     //listo los socios 
     $vc->listarSocios();
@@ -1501,6 +1502,8 @@ I per a provar el projecte, dins `inicio3.php` col·locarem:
     El cliente ya tiene alquilado el soporte Torrente
 
     Este cliente tiene 2 elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo
+
+    Cliente 12 no existe
 
     Listado de 2 socios del videoclub:
     1.- **Cliente 0**: Amancio Ortega
