@@ -514,27 +514,29 @@ header("Location: index.php");
 
 ## Activitats
 
-401. `401server.php`: igual que l'exemple vist en les anotacions, mostra els valors de `$_SERVER` en executar un script en el teu ordinador.
+401. `401.php`: igual que l'exemple vist en les anotacions, mostra els valors de `$_SERVER` en executar un script en el teu ordinador.
      Prova a passar-li paràmetres per GET (i a no passar-li cap).
-     Prepara un formulari (`401post.html`) que faça un enviament per POST i comprova'l de nou.
-     Crea una pàgina (`401enlace.html`) que tinga un enllaç a `401server.php` i comprova el valor de `HTTP_REFERER`.
+     Prepara un formulari (`401.html`) que faça un enviament per POST i comprova'l de nou.
+     Crea una pàgina (`401enlace.html`) que tinga un enllaç a `401.php` i comprova el valor de `HTTP_REFERER`.
 
 ### Formularis
 
-402. `402formulario.html` i `402formulario.php`: Crea un formulari que sol·licite:
+402. `402.html` i `402.php`: Crea un formulari que sol·licite:
 
        * Nom i cognoms.
        * Email.
        * URL pàgina personal.
        * Sexe (ràdio).
-       * Nombre de convivents en el domicili.
        * Aficions (caselles de selecció) – posar mínim 4 valors.
        * Menú favorit (llesta selecció múltiple) – posar mínim 4 valors.
 
     Mostra els valors carregats en una taula-resumeixen.
 
-403. `403validacion.php`: A partir del formulari anterior, introdueix validacions en HTML mitjançant l'atribut `required` dels camps (ús els tipus adequats per a cada camp), i en comprova els tipus de les dades i que compleixen els valors esperats (per exemple, en les caselles de selecció que els valors recollits formen part de tots els possibles). Pots provar de passar-li dades erroneos via URL i comprovar el seu comportament.
-     Tip: Investiga l'ús de la funció `filter_var`.
+403. `403.php`: A partir del formulari anterior, introdueix validacions en php per tal que:
+     * el camps nom, cognoms,sexe, aficions i menu siguen requerits.
+     * el camp email siga vàlid
+     
+     Tip: Utilitza exempcions i Investiga l'ús de la funció `filter_var`.
 
 404. `404subida.html` i `404subida.php`: Crea un formulari que permeta pujar un arxiu al servidor.
      A més del fitxer, ha de demanar en el mateix formulari dos camps numèrics que sol·liciten l'amplària i l'altura. Comprova que tant el fitxer com les dades arriben correctament.
