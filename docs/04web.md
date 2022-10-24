@@ -246,7 +246,7 @@ exit();
 
 Es pot comprovar en les eines del desenvolupador dels navegadors web mitjançant *Developer Tools --> Network --> Headers*.
 
-És molt comú configurar les capçaleres per a evitar consultes a la caixet o provocar la seua renovació:
+És molt comú configurar les capçaleres per a evitar consultes a la cache o provocar la seua renovació:
 
 ``` php
 <?php
@@ -339,8 +339,8 @@ L'alternativa en el client per a emmagatzemar informació en el navegador és l'
 ### Sessió
 
 La sessió afig la gestió de l'estat a HTTP, emmagatzemant en aquest cas la informació en el servidor.
-Cada visitant té un ANEU de sessió únic, el qual per defecte s'emmagatzema en una cookie denominada `PHPSESSID`.
-Si el client no té les cookies actives, l'ANEU es propaga en cada URL dins del mateix domini.
+Cada visitant té un ID de sessió únic, el qual per defecte s'emmagatzema en una cookie denominada `PHPSESSID`.
+Si el client no té les cookies actives, l'ID es propaga en cada URL dins del mateix domini.
 Cada sessió té associat un magatzem de dades mitjançant el array global `$_SESSION`, en el qual podem emmagatzemar i recuperar informació.
 
 La sessió comença en executar un script PHP. Es genera un nou ANEU i es carreguen les dades del magatzem:
@@ -536,13 +536,13 @@ header("Location: index.php");
      * el camps nom, cognoms,sexe, aficions i menu siguen requerits.
      * el camp email siga vàlid
 
-!!! Tip: "Utilitza exempcions"
+!!! tip: "Utilitza exempcions"
     Pots utilitzar exempcions per a tractar els error. Investiga l'ús de la funció `filter_var` i utilitza-la per a validar l'email.
 
 404. `404.php`: Crea una pàgina amb el formulari de l'exercici 402 i fes que si la validació no és correcta
       es torne a carregar el formulari amb les dades ja emplenades i amb el missatge d'error.
 
-405. `405.html` i `405.php`: Crea un formulari que permeta pujar un arxiu al servidor.
+405. `405.html` i `405.php`: Crea un formulari que permeta pujar un arxiu d'una imatge al servidor.
      A més del fitxer, ha de demanar en el mateix formulari dos camps numèrics que sol·liciten l'amplària i l'altura. S'ha de comprovar que el tipus siga correcte. 
      En el cas de pujar el tipus correcte, visualitzar la imatge amb la grandària d'amplària i altura rebut com a paràmetre.
 
