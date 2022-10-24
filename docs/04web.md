@@ -535,8 +535,8 @@ header("Location: index.php");
 403. `402.php`: A partir del formulari anterior, introdueix validacions en php per tal que:
      * el camps nom, cognoms,sexe, aficions i menu siguen requerits.
      * el camp email siga vàlid
-     
-Tip: Utilitza exempcions i Investiga l'ús de la funció `filter_var`.
+
+!!! Tip: 'Utilitza exempcions i Investiga l'ús de la funció `filter_var`'.
 
 404. `404.php`: Crea una pàgina amb el formulari de l'exercici 402 i fes que si la validació no és correcta
       es torne a carregar el formulari amb les dades ja emplenades i amb el missatge d'error.
