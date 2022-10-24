@@ -521,7 +521,7 @@ header("Location: index.php");
 
 ### Formularis
 
-402. `402.html` i `402.php`: Crea un formulari que sol·licite:
+402. `[402.html](recursos/402.html)` i `402.php`: Crea un formulari que sol·licite:
 
        * Nom i cognoms.
        * Email.
@@ -532,16 +532,17 @@ header("Location: index.php");
 
     Mostra els valors carregats en una taula-resumeixen.
 
-403. `403.php`: A partir del formulari anterior, introdueix validacions en php per tal que:
+403. `402.php`: A partir del formulari anterior, introdueix validacions en php per tal que:
      * el camps nom, cognoms,sexe, aficions i menu siguen requerits.
      * el camp email siga vàlid
      
-     Tip: Utilitza exempcions i Investiga l'ús de la funció `filter_var`.
+Tip: Utilitza exempcions i Investiga l'ús de la funció `filter_var`.
 
-404. `404subida.html` i `404subida.php`: Crea un formulari que permeta pujar un arxiu al servidor.
-     A més del fitxer, ha de demanar en el mateix formulari dos camps numèrics que sol·liciten l'amplària i l'altura. Comprova que tant el fitxer com les dades arriben correctament.
+404. `404.php`: Crea una pàgina amb el formulari de l'exercici 402 i fes que si la validació no és correcta
+      es torne a carregar el formulari amb les dades ja emplenades i amb el missatge d'error.
 
-405. `405subidaImagen.php`: Modifica l'exercici anterior perquè únicament permeta pujar imatges (comprova la propietat `type` de l'arxiu pujat). Si l'usuari selecciona un altre tipus d'arxius, se l'ha d'informar de l'error i permetre que puge un nou arxiu.
+405. `405.html` i `405.php`: Crea un formulari que permeta pujar un arxiu al servidor.
+     A més del fitxer, ha de demanar en el mateix formulari dos camps numèrics que sol·liciten l'amplària i l'altura. S'ha de comprovar que el tipus siga correcte. 
      En el cas de pujar el tipus correcte, visualitzar la imatge amb la grandària d'amplària i altura rebut com a paràmetre.
 
 ### Cookies i Sessió
