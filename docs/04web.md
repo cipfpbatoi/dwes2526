@@ -530,7 +530,7 @@ header("Location: index.php");
        * Aficions (caselles de selecció) – posar mínim 4 valors.
        * Menú favorit (llesta selecció múltiple) – posar mínim 4 valors.
 
-    Mostra els valors carregats en una taula-resumeixen.
+    Mostra els valors carregats en un resumen.
 
 403. `402.php`: A partir del formulari anterior, introdueix validacions en php per tal que:
      * el camps nom, cognoms,sexe, aficions i menu siguen requerits.
