@@ -536,7 +536,8 @@ header("Location: index.php");
      * el camps nom, cognoms,sexe, aficions i menu siguen requerits.
      * el camp email siga vàlid
 
-!!! tip: "Utilitza exempcions"
+
+!!! tip "Utilitza exempcions"
     Pots utilitzar exempcions per a tractar els error. Investiga l'ús de la funció `filter_var` i utilitza-la per a validar l'email.
 
 404. `404.php`: Crea una pàgina amb el formulari de l'exercici 402 i fes que si la validació no és correcta
@@ -548,10 +549,10 @@ header("Location: index.php");
 
 ### Cookies i Sessió
 
-406. `406contadorVisitas.php`: Mitjançant l'ús de cookies, informa l'usuari de si és la seua primera visita, o si no ho és, mostre el seu valor (valor d'un comptador).
+406. `406.php`: Mitjançant l'ús de cookies, informa l'usuari de si és la seua primera visita, o si no ho és, mostre el seu valor (valor d'un comptador).
      A més, has de permetre que l'usuari reinicialitze el seu comptador de visites.
 
-407. `407fondo.php`: Mitjançant l'ús de cookies, crea una pàgina amb un desplegable amb diversos colors, de manera que l'usuari puga canviar el color de fons de la pàgina (atribut `bgcolor`).
+407. `407.php`: Mitjançant l'ús de cookies, crea una pàgina amb un desplegable amb diversos colors, de manera que l'usuari puga canviar el color de fons de la pàgina (atribut `bgcolor`).
      En tancar la pàgina, aquesta ha de recordar, almenys durant 24h, el color triat i la pròxima vegada que es carregue la pàgina, ho faça amb l'últim color seleccionat.
 
 408. `408fondoSesion1.php`: Modifica l'exercici anterior per a emmagatzemar el color de fons en la sessió i no emprar cookies. A més, ha de contindre un enllaç al següent arxiu.
