@@ -555,15 +555,13 @@ header("Location: index.php");
 407. `407.php`: Mitjançant l'ús de cookies, crea una pàgina amb un desplegable amb diversos colors, de manera que l'usuari puga canviar el color de fons de la pàgina (atribut `bgcolor`).
      En tancar la pàgina, aquesta ha de recordar, almenys durant 24h, el color triat i la pròxima vegada que es carregue la pàgina, ho faça amb l'últim color seleccionat.
 
-408. `408fondoSesion1.php`: Modifica l'exercici anterior per a emmagatzemar el color de fons en la sessió i no emprar cookies. A més, ha de contindre un enllaç al següent arxiu.
-     `408fondoSesion2.php`: Ha de mostrar el color i donar la possibilitat de:
-* tornar a la pàgina anterior mitjançant un enllaç i mitjançant un altre enllaç, buidar la sessió i tornar a la pàgina anterior.
+408. `408.php`: Modifica l'exercici anterior per a emmagatzemar el color de fons en la sessió i no emprar cookies. A més, ha de contindre un enllaç per buidar la sessió.
 
-409. Fent ús de la sessió, dividirem el formulari de l'exercici `402formulario.php` en 2 subformularios:
+409. Fent ús de la sessió, dividirem el formulari de l'exercici `402.php` en 2 subformularis:
 
-     * `409formulario1.php` envia les dades (nom i cognoms, email, url i sexe) a `409formulario2.php`.
-     * `409formulario2.php` llig les dades i els fica en la sessió. A continuació, mostra la resta de camps del formulari a emplenar (convivents, aficions i menú). Envia aquestes dades a `409formulario3.php`.
-     * `409formulario3.php` recull les dades enviades en el pas anterior i al costat dels quals ja estaven en la sessió, es mostren totes les dades en una taula/llista desordenada.
+     * `409.php` envia les dades (nom i cognoms, email, url i sexe) a `409a.php`.
+     * `409a.php` llig les dades i els fica en la sessió. A continuació, mostra la resta de camps del formulari a emplenar ( aficions i menú). Envia aquestes dades a `409b.php`.
+     * `409b.php` recull les dades enviades en el pas anterior i al costat dels quals ja estaven en la sessió, es mostren totes les dades.
      
 ### Autenticació
 
