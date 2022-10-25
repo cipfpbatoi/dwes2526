@@ -559,8 +559,8 @@ header("Location: index.php");
 
 409. Fent ús de la sessió, dividirem el formulari de l'exercici `402.php` en 2 subformularis:
 
-     * `409.php` envia les dades (nom i cognoms, email, url i sexe) a `409a.php`.
-     * `409a.php` llig les dades i els fica en la sessió. A continuació, mostra la resta de camps del formulari a emplenar ( aficions i menú). Envia aquestes dades a `409b.php`.
+     * `409.html` envia les dades (nom i cognoms, email, url i sexe) a `409.php`.
+     * `409.php` llig les dades i els fica en la sessió. A continuació, mostra la resta de camps del formulari a emplenar ( aficions i menú). Envia aquestes dades a `409b.php`.
      * `409b.php` recull les dades enviades en el pas anterior i al costat dels quals ja estaven en la sessió, es mostren totes les dades.
      
 ### Autenticació
