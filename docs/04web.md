@@ -343,7 +343,7 @@ Cada visitant té un ID de sessió únic, el qual per defecte s'emmagatzema en u
 Si el client no té les cookies actives, l'ID es propaga en cada URL dins del mateix domini.
 Cada sessió té associat un magatzem de dades mitjançant el array global `$_SESSION`, en el qual podem emmagatzemar i recuperar informació.
 
-La sessió comença en executar un script PHP. Es genera un nou ANEU i es carreguen les dades del magatzem:
+La sessió comença en executar un script PHP. Es genera un nou ID i es carreguen les dades del magatzem:
 
 <figure style="align: center;">
     <img src="imagenes/04/04sesion.png" width="700">
