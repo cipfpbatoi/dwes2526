@@ -567,11 +567,11 @@ header("Location: index.php");
 
 En els següents exercicis muntarem una estructura d'inici de sessió similar a la vista en les anotacions.
 
-410. `410index.php`: formulari d'inici de sessió
-411. `411login.php`: fa de controlador, per la qual cosa ha de comprovar les dades rebudes (només permet l'entrada de `usuari/usuari` i si tot és correcte, cedir el control a la vista del següent exercici. No conté codi HTML.
-412. `412peliculas.php`: vista que mostra com a títol "Llistat de Pel·lícules", i una llista desordenada amb tres pel·lícules.
-413. `413logout.php`: buida la sessió i ens porta de nou al formulari d'inici de sessió. No conté codi HTML
-414. `414series.php`: Afig un nova vista similar a `412peliculas.php` que mostra un "Llistat de Sèries" amb una llista desordenada amb tres sèries. Tant `412pelicuas.php` com la vista recien creades, han de tindre un xicotet menú (senzill, mitjançant enllaços) que permeta passar d'un llistat a un altre.
+410. `410.html`: formulari d'inici de sessió
+411. `411.php`: fa de controlador, per la qual cosa ha de comprovar les dades rebudes (només permet l'entrada de `usuari/usuari` i si tot és correcte, cedir el control a la vista del següent exercici. No conté codi HTML.
+412. `412.php`: vista que mostra com a títol "Llistat de Pel·lícules", i una llista desordenada amb tres pel·lícules.
+413. `413.php`: buida la sessió i ens porta de nou al formulari d'inici de sessió. No conté codi HTML
+414. `414.php`: Afig un nova vista similar a `412.php` que mostra un "Llistat de Sèries" amb una llista desordenada amb tres sèries. Tant `412pelicuas.php` com la vista recien creades, han de tindre un xicotet menú (senzill, mitjançant enllaços) que permeta passar d'un llistat a un altre.
      Comprova que si s'accedeix directament a qualsevol de les vistes sense tindre un usuari *loguejao* via URL del navegador, no es mostra el llistat.
 415. Modifica tant el controlador com les vistes perquè:
      * les dades els obtinga el controlador (emmagatzema en la sessió un array de pel·lícules i un altre de sèries)
