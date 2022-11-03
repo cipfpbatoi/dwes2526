@@ -581,11 +581,12 @@ En els següents exercicis muntarem una estructura d'inici de sessió similar a 
 ### Projecte Videoclub 3.0
 
 420. Per al Videoclub, crearem una pàgina `index.php` amb un formulari que continga un formulari de login/password.
-     Es comprovaran les dades en `login.php`. Els possibles usuaris són admin/admin o usuari/usuari
-* Si l'usuari és correcte, en `main.php` mostrar un missatge de benvinguda amb el nom de l'usuari, al costat d'un enllaç per a tancar la sessió, que el portaria de nou al login.
-* Si l'usuari és incorrecte, ha de tornar a carregar el formulari donant informació a l'usuari d'accés incorrecte.
+     Es comprovaran les dades en `login.php`. Els possibles usuaris són admin/admin o usuari/usuari.
 
-421. Si l'usuari és administrador, es carregaran en la sessió les dades de suports i clients del videoclub que teníem en les nostres proves.
+     * Si l'usuari és correcte, en `main.php` mostrar un missatge de benvinguda amb el nom de l'usuari, al costat d'un enllaç per a tancar la sessió, que el portaria de nou al login.
+     * Si l'usuari és incorrecte, ha de tornar a carregar el formulari donant informació a l'usuari d'accés incorrecte.
+
+421. Si l'usuari és administrador, es carregaran en la sessió les dades de suports i clients del videoclub que teníem en les nostres proves (inici3.php)
      En la següent unitat els obtindrem de la base de dades.
      En `mainAdmin.php`, a més de la benvinguda, ha de mostrar:
      * Llistat de clients
