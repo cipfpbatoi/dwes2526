@@ -597,10 +597,10 @@ En els següents exercicis muntarem una estructura d'inici de sessió similar a 
  <figcaption>Esquema navegació exercici 423</figcaption>
 </figure>
 
-422. Modificarem la classe `Client` per a emmagatzemar el `user` i la `password` de cada client.
-     Després de codificar els canvis, modificar el llistat de clients de `mainAdmin.php` per a afegir al llistat l'usuari.
+422. Modificarem la classe `Client` per a emmagatzemar el `user` i la `password` de cada client. Si no ho explicitem el 'user' serà igual a la primera paraula de l'username en minúscules i el password '1234'.
+     Després de codificar els canvis, modificar el llistat de clients de `mainAdmin.php` per a afegir al llistat l'user (la password no eixirà).
 
-423. Si l'usuari que accedeix no és administrador i coincideix amb algun dels clients que tenim carregats després del login, ha de carregar `mainCliente.php` on es mostrarà un llistat dels lloguers del client. Per a això, modificarem la classe `Client` per a oferir el mètode `getAlquileres() : array`, el qual anomenarem i després recorrerem per a mostrar el llistat sol·licitat.
+423. Si l'usuari que accedeix no és administrador i coincideix amb algun dels clients que tenim carregats després del login, ha de carregar `mainCliente.php` on es mostrarà un llistat dels lloguers del client. 
 
 Ara tornem a la part d'administració
 
