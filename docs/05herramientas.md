@@ -37,8 +37,6 @@ En canvi, si usem *Docker*, necessitem modificar la configuració del nostre con
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
 ```
 
-Per a facilitar el treball, hem creat una [plantilla ja preparada](recursos/plantilla-APC.zip).
-
 És important que dins del contenidor comprovem que tenim la v2:
 
 ``` bash
@@ -157,15 +155,15 @@ Monolog 2 requereix almenys PHP 7.2, compleix amb el estandar de logging PSR-3, 
 
 A continuació vam mostrar els diferents nivells de menys a més restrictiu:
  
-    * *debug -100*: Informació detallada amb propòsits de debug. No usar en entorns de producció.
-    * *info - 200*: Esdeveniments interessants com l'inici de sessió d'usuaris.
-    * *notice - 250*: Esdeveniments normals però significatius.
-    * *warning - 300*: Ocurrències excepcionals que no arriben a ser error.
-    * error - 400*: Errors d'execució que permeten continuar amb l'execució de l'aplicació però que han de ser monitorats.
-    * *critical - 500*: Situacions importants on es generen excepcions no esperades o no hi ha disponible un component.
-    * *alert - 550*: S'han de prendre mesures immediatament.
+    * debug -100: Informació detallada amb propòsits de debug. No usar en entorns de producció.
+    * info - 200: Esdeveniments interessants com l'inici de sessió d'usuaris.
+    * notice - 250: Esdeveniments normals però significatius.
+    * warning - 300: Ocurrències excepcionals que no arriben a ser error.
+    * error - 400: Errors d'execució que permeten continuar amb l'execució de l'aplicació però que han de ser monitorats.
+    * critical - 500: Situacions importants on es generen excepcions no esperades o no hi ha disponible un component.
+    * alert - 550: S'han de prendre mesures immediatament.
       Caiguda completa de la web, base de dades no disponible, etc... A més, se solen enviar missatges per email.
-    * *emergency - 600*: És l'error més greu i indica que tot el sistema està inutilitzable.
+    * emergency - 600: És l'error més greu i indica que tot el sistema està inutilitzable.
 
 ### Hola Monolog
 
@@ -863,8 +861,9 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 
 ### Monolog
 
-501. Crea un nou projecte amb *Composer* anomenat `Monologos`:
+501. Continuant amb el repositori d'exercicis:
      * Inclou com a llibreria l'última versió de Monolog.
+     * Fes que el composer carrega les classes en el domini `Dwes`.
      * Crea la classe `Dwes\Monologos\HolaMonolog`.
      * Defineix una propietat privada nomenada `miLog` per a guardar el log.
      * Defineix en el constructor un `RotatingFileHandler` que escriga en la carpeta `logs` del projecte, i que emmagatzeme els missatges a partir de *debug*.
