@@ -32,10 +32,10 @@
 ## 4.- Programació Web (14h)
 
 - [X] 1.- (L 24O) Formularis. Upload Activitats 401-404 - 3
-- [ ] 2.- (M 25O) Cookies.Sessió Activitats 405-409 - 5
-- [ ] 3.- (J 27O) Gestió d'usuaris. Activitats 410-415 - 8
-- [ ] 4.- (J 3N) Projecte Videoclub III. Activitats 420-423 - 11 
-- [ ] 5.- (L 7N) Projecte Videoclub III. Activitats 424-426 - 14
+- [X] 2.- (M 25O) Cookies.Sessió Activitats 405-409 - 5
+- [X] 3.- (J 27O) Gestió d'usuaris. Activitats 410-415 - 8
+- [X] 4.- (J 3N) Projecte Videoclub III. Activitats 420-423 - 11 
+- [X] 5.- (L 7N) Projecte Videoclub III. Activitats 424-426 - 14
 
 
 ## 5.- Ferramentes Web (21h)
