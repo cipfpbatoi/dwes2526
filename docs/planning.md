@@ -40,13 +40,12 @@
 
 ## 5.- Ferramentes Web (21h)
 
-- [ ] 1.- (M 8N) Composer. Introducció Monolog.  Manejadors. Us de logs amb *Monolog*. Activitats 501 - 503 - 2
-- [ ] 2.- (J 10N) Projecte Videoclub IV. Activitats 511 - 515 - 5
-- [ ] 4.- (L 14N) Documentació amb *phpDocumentor*. Activitats 521 - 522.- 8
-- [ ] 5.- (M 15N) Webscrapping. Activitats 531 - 533. -10
-- [ ] 6.- (J 17N) Proves con *PhpUnit*. Activitats 541 - 545. - 13 
-- [ ] 7.- (L 21N) Projecte Videoclub V. Activitats 551 - 554. - 16
-- [ ] 8.- (M 22N) Tasques retrasades, repas - 18
+- [ ] 1.- (J 10N) Composer. Introducció Monolog.  Manejadors. Us de logs amb *Monolog*. Activitats 501 - 503 - 2
+- [ ] 2.- (L 14N) Projecte Videoclub IV. Activitats 511 - 515 - 5
+- [ ] 4.- (M 15N) Documentació amb *phpDocumentor*. Activitats 521 - 522.- 8
+- [ ] 5.- (J 17N) Webscrapping. Activitats 531 - 533. -10
+- [ ] 6.- (L 21N) Proves con *PhpUnit*. Activitats 541 - 545. - 13 
+- [ ] 7.- (M 22N) Projecte Videoclub V. Activitats 551 - 554. - 16
 - [ ] 9.- (J 24N) Prova escrita - 21
 
 ## 6.- Accès a Dades (14h)
