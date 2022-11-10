@@ -871,12 +871,13 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
      * Defineix en el constructor un `RotatingFileHandler` que escriga en la carpeta `logs` del projecte, i que emmagatzeme els missatges a partir de *debug*.
      * Crea els mètodes `saludar` i `acomiadar` que facen un log de tipus *info* amb l'acció corresponent.
 
-502. Seguint amb el projecte `Monologs`:
+502. Seguint amb el projecte `Monologos`:
      * Crea un arxiu anomenat `inici.php` que permeta provar `HolaMonolog`.
      * Comprova que els missatges apareixen en el *log*.
      * Canvia el nivell perquè el manejador només mostre els missatges a partir de *warning*.
      * Torna a ejectuar `inici.php` i comprova l'arxiu de log.
 503. Modifica la classe `HolaMonolog`:
+     * En el constructor, afig a la pila el manejador FirePHPHandler i comprova que instal·lant el fireBug pots vore els missatges.
      * Afig una propietat denominada `hora`, la qual s'inicialitza únicament com a paràmetre del constructor. Si la `hora` és inferior a 0 o major de 24, ha d'escriure un log de *warning* amb un missatge apropiat.
      * Modifica els mètodes `saludar` i `acomiadar` per a fer-lo concorde a la propietat `hora` (bon dia, bona vesprada, fins demà, etc...)
 
