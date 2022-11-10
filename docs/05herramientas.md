@@ -144,7 +144,7 @@ composer require monolog/monolog
 
 Monolog 2 requereix almenys PHP 7.2, compleix amb el estandar de logging PSR-3, i és la llibreria emprada per *Laravel* i *Symfony* per a la gestió de logs.
 
-!!! info "Quan usar un log"
+!!! info "Quan utilitzar un log"
     * Seguir les acciones/moviments dels usuaris
     * Registrar les transaccions
     * Rastrejar els errors d'usuari
@@ -187,7 +187,8 @@ $log->critical("Esto es un mensaje de CRITICAL");
 $log->alert("Esto es un mensaje de ALERT");
 ```
 
-En tots els mètodes de registre de missatges (`debug`, `info`, ...), a més del propi missatge, li podem passar informació com el contingut d'alguna variable, usuari de l'aplicació, etc.. com a segon paràmetre dins d'un array, el qual es coneix com **array de context**. És convenient fer-ho mitjançant un array associatiu per a facilitar la lectura del log.
+En tots els mètodes de registre de missatges (`debug`, `info`, ...), a més del propi missatge, li podem passar informació com el contingut d'alguna variable, usuari de l'aplicació, etc.. com a segon paràmetre dins d'un array, el qual es coneix com **array de contexte**. 
+És convenient fer-ho mitjançant un array associatiu per a facilitar la lectura del log.
 
 ``` php
 <?php
@@ -201,10 +202,10 @@ Cada instància `Logger` té un nom de canal i una pila de manejadores (*handler
 Cada missatge que manem al log travessa la pila de manejadores, i cadascun decideix si ha de registrar la informació, i si es dona el cas, finalitzar la propagació.
 Per exemple, un `StreamHandler` en el fons de la pila que ho escriga tot en disc, i en el topall afig un `MailHandler` que envie un mail només quan hi haja un error.
 
-### Manejadores
+### Manejadors
 
-Cada manejador tambien té un formateador (`Formatter`). Si no s'indica cap, se li assigna un per defecte. L'últim manejador inserit serà el primer a executar-se.
-Després es van executant* conforme a la pila.
+Cada manejador tambien té un formatejador (`Formatter`). Si no s'indica cap, se li assigna un per defecte. L'últim manejador inserit serà el primer a executar-se.
+Després es van executant conforme a la pila.
 
 Els manejadores més utilitzats són:
 
@@ -243,12 +244,12 @@ $log->pushHandler(new StreamHandler("php://stderr", Logger::DEBUG));
         <figcaption>Ejemplo de uso de FirePHP</figcaption>
     </figure>
 
-### Canales
+### Canals
 
 Se'ls assigna en crear el `Logger`. En grans aplicacions, es crea un canal per cada subsistema: vendes, comptabilitat, magatzem.
-No és una bona pràctica usar el nom de la classe com a canal, això es fa amb un processador*.
+No és una bona pràctica usar el nom de la classe com a canal, això es fa amb un processador.
 
-Per al seu ús, és recomane assignar el log a una propietat privada a Logger, i posteriorment, en el constructor de la classe, assignar el canal, manejadores i format.
+Per al seu ús, és recomane assignar el log a una propietat privada a Logger, i posteriorment, en el constructor de la classe, assignar el canal, manejadors i format.
 
 ``` php
 <?php
@@ -266,7 +267,8 @@ $this->log->warning("Producto no encontrado", [$producto]);
 
 ### Processadors
 
-Els processadors permeten afegir informació als missatges. Per a això, s'apilen després de cada manejador mitjançant el mètode `pushProcessor($processador)`.
+Els processadors permeten afegir informació als missatges. 
+Per a això, s'apilen després de cada manejador mitjançant el mètode `pushProcessor($processador)`.
 
 Alguns processadors coneguts són `IntrospectionProcessor` (mostren la línia, fitxer, classe i metodo des del qual s'invoca el log), `WebProcessor` (afig la URI, mètode i IP) o `GitProcessor` (afig la branca i el commit).
 
@@ -864,18 +866,17 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 501. Continuant amb el repositori d'exercicis:
      * Inclou com a llibreria l'última versió de Monolog.
      * Fes que el composer carrega les classes en el domini `Dwes`.
-     * Crea la classe `Dwes\Monologos\HolaMonolog`.
+     * Crea la classe `Dwes\Monologs\HolaMonolog`.
      * Defineix una propietat privada nomenada `miLog` per a guardar el log.
      * Defineix en el constructor un `RotatingFileHandler` que escriga en la carpeta `logs` del projecte, i que emmagatzeme els missatges a partir de *debug*.
      * Crea els mètodes `saludar` i `acomiadar` que facen un log de tipus *info* amb l'acció corresponent.
 
-502. Seguint amb el projecte `Monologos`:
+502. Seguint amb el projecte `Monologs`:
      * Crea un arxiu anomenat `inici.php` que permeta provar `HolaMonolog`.
      * Comprova que els missatges apareixen en el *log*.
      * Canvia el nivell perquè el manejador només mostre els missatges a partir de *warning*.
      * Torna a ejectuar `inici.php` i comprova l'arxiu de log.
 503. Modifica la classe `HolaMonolog`:
-     * En el constructor, afig a la pila un manejador que escriga a l'eixida d'error conjunt al processador d'introspecció, mostrant missatges des del nivell *debug*.
      * Afig una propietat denominada `hora`, la qual s'inicialitza únicament com a paràmetre del constructor. Si la `hora` és inferior a 0 o major de 24, ha d'escriure un log de *warning* amb un missatge apropiat.
      * Modifica els mètodes `saludar` i `acomiadar` per a fer-lo concorde a la propietat `hora` (bon dia, bona vesprada, fins demà, etc...)
 
