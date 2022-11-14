@@ -339,7 +339,7 @@ class LogFactory {
 }
 ```
 
-Si en comptes de retornar un `Monolog\Logger` utilitzem la interfície de PSR, si en el futur canviem la implementació del log, no haurem de modificar nostre codigo. Així doncs, la factoria ara retornarà `Psr\Log\LoggerInterface`:
+Si en comptes de retornar un `Monolog\Logger` utilitzem la interfície de PSR, si en el futur canviem la implementació del log, no haurem de modificar nostre codi. Així doncs, la factoria ara retornarà `Psr\Log\LoggerInterface`:
 
 ``` php
 <?php
@@ -886,8 +886,7 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 511. Com ja tenim *Composer* instal·lat:
      * Inicialitza-ho dins del teu projecte Videoclub
      * Inclou *Monolog* i *PhpUnit*, cadascuna en el seu lloc adequat.
-     * Afig el autoload a l'arxiu `composer.json`, i feix els canvis necessaris en les classes per a utilitzar el autolloeu* de *Composer*.
-     * Puja els canvis a *GitHub* i crea l'etiqueta `v0.511`.
+     * Afig el autoload a l'arxiu `composer.json`, i feix els canvis necessaris en les classes per a utilitzar el autoload de *Composer*.
 
 512. Modifica la classe `Client` per a introduir un `Logger` de *Monolog*.
      * Afig el log com una propietat de la classe i inicialitza-ho en el constructor, amb el nom del canal `VideoclubLogger`.
@@ -901,22 +900,22 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 
 514. REFACTORITZAREM el codi comú d'inicialització de *Monolog* que tenim repetits en els constructors a una factoria de *Monolog*, la qual col·locarem en `\Dwes\Videoclub\Util\LogFactory`. Comprova que continua funcionant correctament.
 
-515. Modifica la factoria perquè retorne `LogInterface` i comprova que continua funcionant. Puja els canvis a GitHub amb l'etiqueta `v0.515`.
+515. Modifica la factoria perquè retorne `LogInterface` i comprova que continua funcionant. 
 
 ### phpDocumentor
 
 521. Comprova que en el contenidor de Docker funciona *phpDocumentor*.
-     Executa phpdoc sobre el teu projecte *Monolog* i comprova el api que es crea.
-     Comenta tant la classe com els mètodes, i posteriorment, torna a executar phpdoc.
-522. Documenta el projecte Videoclub*, i genera la documentació. Comença per les classes de `Suport` i els seus fills. Comprova el resultat. Després segueix amb `Client` i finalment `Videoclub`.
+     Executa phpdoc sobre el teu projecte d'exercicis i comprova el api que es crea (tingues en compte els directoris a l'hora de crear la documentació)
+     Comenta la classe Employee i els seus mètodes, i posteriorment, torna a executar phpdoc.
+522. Documenta el projecte *Videoclub*, i genera la documentació. Comença per les classes de `Suport` i els seus fills. Comprova el resultat. Després segueix amb `Client` i finalment `Videoclub`.
 
 ### Web Scraping
 
-531. A partir de les dades de <http://www.seleccionbaloncesto.es>, calcula l'altura i edat mitjana de l'equip de bàsquet masculí. Observa que tens les dades dins d'una taula davall de les notícies.
+531. A partir de les dades de <http://www.seleccionbaloncesto.es>, calcula l'altura i edat mitjana de l'equip de bàsquet masculí i mostra-los en la pàgina basket.php. Observa que tens les dades dins d'una taula davall de les notícies.
 
 532. Tornant al Videoclub, en `Suport` afig una propietat anomenada `metacritic` per a emmagatzemar la URL de cada suport. A continuació, modifica els mètodes `incluirXXX` de `Videoclub` perquè admeten com a primer paràmetre aquesta URL. Després d'això, modifica el fitxer `inicio3.php` per a passar-li la URL de cada suport (per a això hauràs de consultar-los en Metacritic fent cerques manuals). Per exemple, en el cas de la pel·lícula Cazafantasmas, la seua URL és <https://www.metacritic.com/movie/ghostbusters>.
 
-533. Finalment, afig un mètode abstracte en `Suport` anomenat `getPuntuacion`, que fent ús de Web Scraping* es connecte a *Metacritic* i obtinga la seua puntuació. Modifica `inicio3.php` per a obtindre tots els lloguers d'un client mitjançant `getAlquileres() : array`, i per a cadascun d'ells, a més del títol, mostra la seua puntuació.
+533. Finalment, afig un mètode abstracte en `Suport` anomenat `getPuntuacion`, que fent ús de *Web Scraping* es connecte a *Metacritic* i obtinga la seua puntuació. Modifica `inicio3.php` per a obtindre tots els lloguers d'un client mitjançant `getAlquileres() : array`, i per a cadascun d'ells, a més del títol, mostra la seua puntuació.
 
 ### phpUnit
 
