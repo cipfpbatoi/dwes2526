@@ -523,8 +523,6 @@ Aquesta pràctica requereix l'ús d'una llibreria que facilite la descàrrega de
 
 [Goutte](https://github.com/FriendsOfPHP/Goutte) és un senzill client HTTP per a PHP creat específicament per a fer web scraping. Ho va desenvolupar el mateix autor del framework *Symfony* i ofereix un API senzilla per a extraure dades de les respostes HTML/XML dels llocs web.
 
-FIXME: Revisar https://godofredo.ninja/web-scraping-amb-php-utilitzant-goutte/
-
 Els components principals que abstrau *Goutte* sobre *Symfony* són:
 
 * `BrowserKit`: simula el comportament d'un navegador web.

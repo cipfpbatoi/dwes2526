@@ -40,9 +40,9 @@
 
 ## 5.- Ferramentes Web (21h)
 
-- [ ] 1.- (J 10N) Composer. Introducció Monolog.  Manejadors. Us de logs amb *Monolog*. Activitats 501 - 503 - 2
-- [ ] 2.- (L 14N) Projecte Videoclub IV. Activitats 511 - 515 - 5
-- [ ] 4.- (M 15N) Documentació amb *phpDocumentor*. Activitats 521 - 522.- 8
+- [X] 1.- (J 10N) Composer. Introducció Monolog.  Manejadors. Us de logs amb *Monolog*. Activitats 501 - 503 - 2
+- [X] 2.- (L 14N) Projecte Videoclub IV. Activitats 511 - 515 - 5
+- [X] 4.- (M 15N) Documentació amb *phpDocumentor*. Activitats 521 - 522.- 8
 - [ ] 5.- (J 17N) Webscrapping. Activitats 531 - 533. -10
 - [ ] 6.- (L 21N) Proves con *PhpUnit*. Activitats 541 - 545. - 13 
 - [ ] 7.- (M 22N) Projecte Videoclub V. Activitats 551 - 554. - 16
