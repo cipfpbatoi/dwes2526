@@ -905,7 +905,7 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 521. Comprova que en el contenidor de Docker funciona *phpDocumentor*.
      Executa phpdoc sobre el teu projecte d'exercicis i comprova el api que es crea (tingues en compte els directoris a l'hora de crear la documentació)
      Comenta la classe Employee i els seus mètodes, i posteriorment, torna a executar phpdoc.
-522. Documenta el projecte *Videoclub*, i genera la documentació. Comença per les classes de `Suport` i els seus fills. Comprova el resultat. Després segueix amb `Client` i finalment `Videoclub`.
+522. Documenta les classes del projecte *Videoclub*, i genera la documentació. Comença per les classes de `Suport` i els seus fills. Després segueix amb `Client` i finalment `Videoclub`.
 
 ### Web Scraping
 
