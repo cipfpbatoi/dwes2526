@@ -911,9 +911,12 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 
 531. A partir de les dades de <http://www.seleccionbaloncesto.es>, calcula l'altura i edat mitjana de l'equip de bàsquet masculí i mostra-los en la pàgina basket.php. Observa que tens les dades dins d'una taula davall de les notícies.
 
-532. Tornant al Videoclub, en `Suport` afig una propietat anomenada `metacritic` per a emmagatzemar la URL de cada suport. A continuació, modifica els mètodes `incluirXXX` de `Videoclub` perquè admeten com a primer paràmetre aquesta URL. Després d'això, modifica el fitxer `inicio3.php` per a passar-li la URL de cada suport (per a això hauràs de consultar-los en Metacritic fent cerques manuals). Per exemple, en el cas de la pel·lícula Cazafantasmas, la seua URL és <https://www.metacritic.com/movie/ghostbusters>.
+532. Tornant al Videoclub, en `Suport` afig una propietat anomenada `metacritic` per a emmagatzemar la URL de cada suport. A continuació, modifica els mètodes `incluirXXX` de `Videoclub` perquè admeten com a primer paràmetre aquesta URL. 
+     Després d'això, modifica el fitxer `inici3.php` per a passar-li la URL de cada video (per a això hauràs de consultar-los en Metacritic fent cerques manuals). Per exemple, en el cas de la pel·lícula Cazafantasmas, la seua URL és <https://www.metacritic.com/movie/ghostbusters>.
 
-533. Finalment, afig un mètode abstracte en `Suport` anomenat `getPuntuacion`, que fent ús de *Web Scraping* es connecte a *Metacritic* i obtinga la seua puntuació. Modifica `inicio3.php` per a obtindre tots els lloguers d'un client mitjançant `getAlquileres() : array`, i per a cadascun d'ells, a més del títol, mostra la seua puntuació.
+533. Afig un mètode abstracte en `Suport` anomenat `getPuntuacion`, que fent ús de *Web Scraping* es connecte a *Metacritic* i obtinga la seua puntuació. Fes que quan mostre la informació d'un soport afegisca la seua puntuació.
+534. Fes els canvis necesaris per tal que si al donar d'alta un soport no se li passa metacritic, es connecte a la pàgina de metacritic per a fer una cerca per nom i aconseguir l'enllaç.
+     (Per a fer una cerca el metacritic gasta la següent url : https://www.metacritic.com/search/all/god%20of%20war/results)
 
 ### phpUnit
 
@@ -936,7 +939,7 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 
 545. Comenta l'última prova realitzada (la comprovació de les excepcions) i realitza un informe de cobertura de proves. Analitza els resultats obtinguts. Elimina els últims comentaris sobre l'última prova i torna a generar i analitzar l'informe de cobertura.
 
-### Projecte Videoclub V
+### Ampliació videoclub (Opcional)
 
 L'objectiu dels següents exercicis és aconseguir de manera incremental una cobertura de proves superior al 95%.
 
@@ -953,9 +956,6 @@ L'objectiu dels següents exercicis és aconseguir de manera incremental una cob
 554. Crea l'informe de cobertura. Una vegada creat, analitza les dades de cobertura (>= 90%) i comprova el valor de CRAP, de manera que sempre siga <= 5.
      En cas de no complir-se, crea nous casos de prova i/o refactoritza el codi de la teua aplicació.
 
-Puja els canvis a GitHub amb l'etiqueta `v0.554`.
-
-### Ampliació
 
 561. Volem que en `Videoclub`, quan un client no existeix (tant en llogar com en retornar) es llance una nova excepció: `ClienteNoExisteException`.
      A més, donat el nombre creixent d'excepcions, volem moure les excepcions al namespace `Dwes\Videoclub\Exception`.
