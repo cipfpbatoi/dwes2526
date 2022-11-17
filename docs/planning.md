@@ -44,7 +44,7 @@
 - [X] 2.- (L 14N) Projecte Videoclub IV. Activitats 511 - 515 - 5
 - [X] 4.- (M 15N) Documentació amb *phpDocumentor*. Activitats 521 - 522.- 8
 - [X] 5.- (J 17N) Webscrapping. Activitats 531 - 533. -10
-- [No] 6.- (L 21N) Proves con *PhpUnit*. Activitats 541 - 545. - 13 
+- [X] 6.- (L 21N) Proves con *PhpUnit*. Activitats 541 - 545. - 13 
 - [No] 7.- (M 22N) Projecte Videoclub V. Activitats 551 - 554. - 16
 - [ ] 9.- (J 24N) Prova escrita - 21
 

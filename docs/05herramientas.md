@@ -655,11 +655,6 @@ composer require --dev phpunit/phpunit ^9
 !!! tip "Llibreries de desenvolupament"
         Les llibreries que es col·loquen en `require-dev` són les de desenvolupament i *testing*, de manera que no s'instal·laran en un entorn de producció.
 
-Com hem creat un *script*, podem llançar les proves mitjançant:
-
-``` bash
-composer test
-```
 
 Vasmos a realitzar la nostra primera prova:
 
@@ -699,7 +694,7 @@ Tal com hem vist en l'exemple, la classe de prova ha d'heretar de `TestCase`, i 
 
 Una prova implica un mètode de prova (públic) per cada funcionalitat a provar. Cada un dels mètodes se'ls associa un cas de prova.
 
-Els mètodes han de nomenar-se amb el prefix `test`, per exemple, `testPushAndPop`. És molt important que el nom siga molt clar i descriptiu del propòsit de la prova. (*camelCase).
+Els mètodes han de nomenar-se amb el prefix `test`, per exemple, `testPushAndPop`. És molt important que el nom siga molt clar i descriptiu del propòsit de la prova. (*camelCase*).
 
 En els casos de prova prepararem diverses assercions per a tota la casuística: rangs de valors, tipus de dades, excepcions, etc...
 
@@ -816,7 +811,7 @@ public function testAlquilarCupoLleno() {
 }
 ```
 
-### Cobertura de codi
+### Cobertura de codi (NO)
 
 La cobertura de proves indica la quantitat de codi que les proves cobreixen, sent recomanable que cobrisquen entre el 95 i el 100%.
 
@@ -923,21 +918,8 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 541. A partir de la classe `HolaMonolog`, modifica els mètodes perquè a més d'escriure en en log, retornen la salutació com una cadena.
      Crea la classe `HolaMonologTest` i afig diferents casos de prova per a comprovar que les salutacions i comiats són concordes a l'hora amb la qual es crea la classe.
 
-542. Simularem Test Driven Development*. Volem que la nostra aplicació emmagatzeme els últims tres salutacions que ha realitzat. Per a això:
-
-* Crea les prova necessàries (invoca al mètode `saludar` diverses vegades i crida al mètode que et retorne les salutacions emmagatzemades)
-* Implementa el codi per a passar les proves
-* refactoritza el codi
-
-543. Crea una nova prova que utilitze proveïdors de dades per a comprovar aquesta última funcionalitat, passant-li:
-* Una salutació.
-* Tres salutacions.
-* Quatre salutacions.
-
-544. Recordes que si l'hora és negativa o superior a 24 escrivíem en el log un *warning?
-     Ara ha de llançar una excepció de tipus `InvalidArgumentException` (com l'excepció forma per a de PHP, cal posar la seua FQN: `\InvalidArgumentException`). Torna a aplicar TDD i completa els teus casos de prova.
-
-545. Comenta l'última prova realitzada (la comprovació de les excepcions) i realitza un informe de cobertura de proves. Analitza els resultats obtinguts. Elimina els últims comentaris sobre l'última prova i torna a generar i analitzar l'informe de cobertura.
+542. Recordes que si l'hora és negativa o superior a 24 escrivíem en el log un *warning*?
+     Ara ha de llançar una excepció de tipus `InvalidArgumentException` (com l'excepció forma per a de PHP, cal posar la seua FQN: `\InvalidArgumentException`). Completa els teus casos de prova.
 
 ### Ampliació videoclub (Opcional)
 
@@ -970,4 +952,3 @@ L'objectiu dels següents exercicis és aconseguir de manera incremental una cob
      A més del `títol` i la `duracion`, ens interessa emmagatzemar si `es4k`.
      Fes tots els canvis necessaris, primer en les proves i després en el codi.
 
-Puja els canvis a GitHub amb l'etiqueta `v0.563`.
