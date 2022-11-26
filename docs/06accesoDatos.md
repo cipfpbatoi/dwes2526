@@ -18,29 +18,27 @@
     }
 </style>
 
-# Acceso a datos
+# Accès a dades
 <!-- 
-> Duración estimada: 26 sesiones
+> Duració estimada: 26 hores
  -->
-En esta unidad vamos a aprender a acceder a datos que se encuentran en un servidor; recuperando, editando y creando dichos datos a través de una base de datos.
+En aquesta unitat aprendrem a accedir a dades que es troben en un servidor; recuperant, editant i creant aquestes dades a través d'una base de dades.
 
-A través de las distintas capas o niveles, de las cuales 2 de ellas ya conocemos (*Apache*, *PHP*) y *MySQL* la que vamos a estudiar en este tema.
+A través de les diferents capes o nivells, de les quals 2 d'elles ja coneixem (*Nginx*, *PHP*) i *MySQL* la que estudiarem en aquest tema.
 
 <div class="center img-large">
     <img src="imagenes/06/06-bbdd-arquitectura-3-niveles.png">
 </div>
 
-## Instalación
-A través de ***XAMPP*** es muy sencillo, simplemente nos descargaríamos el programa y lo activaríamos. Para descargar XAMPP [pulsa aquí](https://www.apachefriends.org/es/download.html).
+## Instal·lació
+A través de **XAMPP** és molt senzill, simplement ens descarregaríem el programa i l'activaríem. Per a descarregar XAMPP [prem ací](https://www.apachefriends.org/es/download.html).
 
-Con ***Docker*** nos descargaremos [esta imagen de docker](recursos/plantilla-APCM.zip) y lanzamos 
-
+Amb ***Docker*** utilitzarem un altre  repositori que inclou el mysql i el phpMyAdmin i llancem
 ``` bash
 docker-compose up -d
 ```
 
-Si todo ha salido bien y el contenedor está en marcha, podremos visitar la página de phpMyAdmin de la siguiente manera
-
+Si tot ha eixit bé i el contenidor està en marxa, podrem visitar la pàgina de phpMyAdmin de la següent manera
 ``` html
 http://localhost:8000
 ```
@@ -49,17 +47,17 @@ http://localhost:8000
     <img src="imagenes/06/06-bbdd-phpMyAdmin-login.png">
 </div>
 
-Para acceder debemos utilizar las siguientes credenciales que vienen configuradas en el alrchivo `docker-compose.yml` 
+Per a accedir hem d'utilitzar les següents credencials que venen configurades en el arxiu `docker-compose.yml`
 
 ```
 usuario: root
 contraseña: 1234
 ```
 
-## Estructura de una base de datos
+## Estructura d'una base de dades
 
-Sabemos que una base de datos tiene muchos campos con sus nombres y valores, pero además sabemos que la base de datos debe tener un nombre. por tanto tendríamos la siguiente estructura para una base de datos:
-
+Sabem que una base de dades té molts camps amb els seus noms i valors, però a més sabem que la base de dades ha de tindre un nom. per tant tindríem la següent estructura per a una base de dades:
+    
     NombreBaseDeDatos
         |__Tabla-#1
         |       |__DatosTabla-#1
@@ -72,7 +70,7 @@ Sabemos que una base de datos tiene muchos campos con sus nombres y valores, per
         [...]
 
 
-Veámoslo en un ejemplo real
+Vegem-ho en un exemple real
 
     Ryanair
         |__pasajero
@@ -93,7 +91,7 @@ Veámoslo en un ejemplo real
              |__nombre
 
 <div class="leyenda">
-    [*] Clave primaria [^] Clave Foránea
+    [*] Clau primària [^] Clave Forània
 </div>
 
 <div class="center img-large">
@@ -102,7 +100,7 @@ Veámoslo en un ejemplo real
 
 ## CholloSevero
 
-Como muy bien habéis elegido, a lo largo de esta unidad vamos a trabajar con una base de datos que iremos confeccionando conforme avancemos, donde almacenaremos la información relacionada con ofertas que publiquen los usuarios y los listaremos en función de varios filtros; nuevos, más votados, más vistos, más comentados entre otros, al más puro estilo ***[Chollometro](https://www.chollometro.com)***.
+Al llarg d'aquesta unitat treballarem amb una base de dades que anirem confeccionant conforme avancem, on emmagatzemarem la informació relacionada amb ofertes que publiquen els usuaris i els llistarem en funció de diversos filtres; nous, més votats, més vistos, més comentats entre altres, al més pur estil **[*Chollometro](https://www.chollometro.com)**.
 
 <div class="center img-large">
     <img src="imagenes/06/06-chollometro.gif">
@@ -110,10 +108,9 @@ Como muy bien habéis elegido, a lo largo de esta unidad vamos a trabajar con un
 
 ## SQL
 
-Este lenguaje de consulta estructurada (*Structured Query Language*) es el que vamos a utilizar para realizar las consultas a nuestras bases de datos para mostrar el contenido en las distintas interfaces web que creemos a lo largo de la unidad. Si quieres saber más detalles visita [Wiki SQL](https://es.wikipedia.org/wiki/SQL)
+Aquest llenguatge de consulta estructurada (*Structured Query Language*) és el que utilitzarem per a realitzar les consultes a les nostres bases de dades per a mostrar el contingut en les diferents interfícies web que creem al llarg de la unitat. Si vols saber més detalls visita [Wiki SQL](https://es.wikipedia.org/wiki/sql)
 
-Ejemplo de una sentencia SQL donde seleccionamos todas las filas y columnas de nuestra tabla llamada **'pais'**
-
+Exemple d'una sentència SQL on seleccionem totes les files i columnes de la nostra taula anomenada **'pais'**
 ``` sql
 SELECT * FROM pais
 ```
@@ -124,7 +121,7 @@ Las sentencias SQL también las podemos usar dentro de nuestro código php, de t
 
 ``` php
 <?php
-    // Listado de clientes, ordenados por DNI de manera ASCendente
+    // Llistat de clients, adreçats per DNI de manera ASCendent
     $clientesOrdenadosPorDNI = "SELECT * FROM `pasajero` ORDER BY `dni`" ASC;
 ?>
 ```
@@ -135,144 +132,57 @@ Las sentencias SQL también las podemos usar dentro de nuestro código php, de t
     <img src="imagenes/06/06-bbdd-phpMyAdmin-logo.png">
 </div>
 
-Este software funciona bajo Apache y PHP y es más que nada una interfaz web para gestionar las bases de datos que tengamos disponibles en nuestro servidor local. Muchos *hostings* ofrecen esta herramienta por defecto para poder gestionar las BBDD que tengamos configuradas bajo nuestra cuenta.
+Aquest programari funciona sota Ngingx i PHP i és més que res una interfície web per a gestionar les bases de dades que tinguem disponibles en el nostre servidor local. Molts **hostings* ofereixen aquesta eina per defecte per a poder gestionar les BBDD que tinguem configurades sota el nostre compte.
 
-### Creando una base de datos dentro de phpMyAdmin
+### Creant una base de dades dins de phpMyAdmin
 
 <div class="center img-large">
     <img src="imagenes/06/06-bbdd-phpMyAdmin.gif">
 </div>
 
-1.  Para crear una nueva base de datos debemos entrar en phpMyAdmin como **usuario root** y pinchar en la opción <span class="warning">***Nueva***</span> del menú de la izquierda.
+1.  Per a crear una nova base de dades hem d'entrar en *phpMyAdmin* com a *usuari root* i punxar en l'opció <span class="warning">*Nova*</span> del menú de l'esquerra.
 
-2.  En la nueva ventana de creación pondremos un **nombre** a nuestra bbdd.
+2. En la nova finestra de creació posarem un **nom** a nostra *bbdd*.
 
-3.  También estableceremos el **cotejamiento** <span class="warning">***utf8m4_unicode_ci***</span> para que nuestra bbdd soporte todo tipo de caracteres (como los asiáticos) e incluso emojis ;)
+3. També establirem el **cotejamiento** <span class="warning">*utf8m4_unicode_ci*</span> perquè nostra *bbdd* suporte tot tipus de caràcters (com els asiàtics) i fins i tot *emojis* ;)
 
-4.  Le damos al botón de **Crear** para crear la bbdd y empezar a escribir las distintas tablas que vayamos a introducir en ella.
+4. Li donem al botó de **Crear** per a crear la *bbdd* i començar a escriure les diferents taules que anem a introduir en ella.
 
-El sistema generará el código SQL para crear todo lo que le hemos puesto y creará la base de datos con las tablas que le hayamos metido.
-
+El sistema generarà el codi SQL per a crear tot el que li hem posat i crearà la base de dades amb les taules que li hàgem ficat.
 ``` sql
 CREATE TABLE `persona`. ( `id` INT NOT NULL AUTO_INCREMENT , `nombre` TINYTEXT NOT NULL , `apellidos` TEXT NOT NULL , `telefono` TINYTEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 ```
 
-### Opciones en phpMyAdmin
+### Opcions en phpMyAdmin
 
-Cuando seleccionamos una base de datos de la lista, el sistema nos muestra varias pestañas con las cuales interactuar con la base de datos en cuestión:
+Quan seleccionem una base de dades de la llista, el sistema ens mostra diverses pestanyes amb les quals interactuar amb la base de dades en qüestió:
 
-- `Estructura`: Podemos ver las distintas tablas que consolidan nuestra base de datos
+- `Estructura`: Podem veure les diferents taules que consoliden la nostra base de dades
 
-- `SQL`: Por si queremos inyectar código SQL para que el sistema lo interprete
+- `SQL`: Per si volem injectar codi SQL perquè el sistema l'interprete
 
-- `Buscar`: Sirve para buscar por términos, en nuestra base de datos, aplicando distintos filtros de búsqueda
+- `Buscar`: Serveix per a buscar per termes, en la nostra base de dades, aplicant diferents filtres de cerca
 
-- `Generar consulta`: parecido a SQL pero de una manera más gráfica, sin tener que saber nada del lenguaje
+- `Generar consulta`: semblança a SQL però d'una manera més gràfica, sense haver de saber res del llenguatge
 
-- `Exportar e importar`: Como su nombre indica, para hacer cualquiera de las 2 operaciones sobre la base de datos
+- `Exportar i importar`: Com el seu nom indica, per a fer qualsevol de les 2 operacions sobre la base de dades
 
-- `Operaciones`: Distintas opciones avanzadas para realizar en nuestra base de datos, de la cual destacaremos la opción ***Cotejamiento*** donde podremos cambiar el cotejamiento de nuestra tabla pero <span class="alert">***OJO CON ÉSTO*** porque podemos eliminar datos sin querer, ya que al cambiar el cotejamiento podemos suprimir caracteres no soportados por el nuevo cotejamiento</span>
+- `Operacions`: Diferents opcions avançades per a realitzar en la nostra base de dades, de la qual destacarem l'opció *Cotejamiento* on podrem canviar el *cotejamiento* de la nostra taula però <span class="alert">*ULL AMB ACÔ* perquè podem eliminar dades sense voler, ja que en canviar el *cotejamiento* podem suprimir caràcters no suportats pel nou *cotejamiento*</span>
 
-No vamos a profundizar en el resto de opciones pero, en la pestaña **Más** existe la opción ***Diseñador*** para poder editar las relaciones entre tablas de una manera gráfica (pinchando y arrastrando) que veremos más adelante.
-
-## MySQLi
-
-PHP hace uso de esta extensión mejorada para poder comunicarse con las bases de datos, ya sean MySQL (4.1 o superior) o MariaDB.
-
-Cualquier consulta que queramos hacer a una base de datos necesitaremos hacer uso de la extensión mysqli()
-
-Veamos como conectarnos con una base de datos a través del código PHP
-
-``` php
-<?php
-    // ▒▒▒▒▒▒▒▒ pruebas.php ▒▒▒▒▒▒▒▒
-
-    // "SERVIDOR", "USUARIO", "CONTRASEÑA", "BASE DE DATOS"
-    $conexion = mysqli_connect("d939ebf6a741","tuUsuario","1234","pruebas");
-
-    // COMPROBAMOS LA CONEXIÓN
-    if(mysqli_connect_errno()) {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        exit();
-    }
-
-    echo "<h1>Bienvenid@ a MySQL !!</h1>";
-?>
-```
-
-- `servidor`: El servidor donde se encuentra la base de datos que queremos usar suele ser **localhost**, pero en nuestro caso, al utilizar Docker será el nombre de la imagen <span class="warning">***mysql:8.0***</span> que aparece al dejar el ratón encima en el Visual Studio Code
-
-<div class="center img-large">
-    <img src="imagenes/06/06-mysql-servidor-docker.gif">
-</div>
-
-- `usuarioDB`: El usuario de la base de datos
-- `passwordDB`: La contraseña para ese usuario de la base de datos
-- `baseDeDatos`: Nombre de la base de datos que queramos usar
-
-Si todo ha salido bien habréis visto un mensaje diciendo <span class="success">***Bienvenid@ a MySQL !!***</span>
-
-### Recuperando datos de una BD
-
-Ahora que ya sabemos cómo conectarnos a una base de datos alojada en nuestro servidor, lo que necesitamos saber es cómo recuperar datos almacenados en la base de datos.
-
-Durante la instalación de la imagen de Docker, se ha creado una tabla llamada **Pruebas** que contiene varios registros de distintas personas.
-
-Vamos a recuperar esos datos para ver de qué forma se hace con PHP.
-
-``` php
-<?php
-    // ▒▒▒▒▒▒▒▒ pruebas.php ▒▒▒▒▒▒▒▒
-
-    $conexion = mysqli_connect("d939ebf6a741", "lupa", "1234", "pruebas");
-
-    // COMPROBAMOS LA CONEXIÓN
-    if (mysqli_connect_errno()) {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        exit();
-    }
-
-    // CONSULTA A LA BASE DE DATOS
-    $consulta = "SELECT * FROM `Person`";
-    $listaUsuarios = mysqli_query($conexion, $consulta);
-
-    // COMPROBAMOS SI EL SERVIDOR NOS HA DEVUELTO RESULTADOS
-    if($listaUsuarios) {
-
-        // RECORREMOS CADA RESULTADO QUE NOS DEVUELVE EL SERVIDOR
-        foreach ($listaUsuarios as $usuario) {
-            echo "
-                $usuario[id]
-                $usuario[name]
-                <br>
-            ";
-        }
-    }
-?>
-```
-
-Si todo ha salido bien, por pantalla verás el siguiente listado
-
-    ▒▒▒▒▒▒▒▒ http://localhost/pruebas.php ▒▒▒▒▒▒▒▒
-
-    1 William
-    2 Marc
-    3 John
-    4 Antonio Moreno
+No aprofundirem en la resta d'opcions però, en la pestanya **Més** existeix l'opció **Dissenyador** per a poder editar les relacions entre taules d'una manera gràfica (punxant i arrossegant) que veurem més endavant.
 
 ## PHP Data Objects :: PDO
 
-De la misma manera que hemos visto con mysqli, PHP Data Objects (o PDO) es un driver de PHP que se utiliza para trabajar bajo una interfaz de objetos con la base de datos. A día de hoy es lo que más se utiliza para manejar información desde una base de datos, ya sea relacional o no relacional.
+*PHP Data Objects* (o *PDO*) és un *driver* de *PHP* que s'utilitza per a treballar sota una interfície d'objectes amb la base de dades. Hui dia és el que més s'utilitza per a manejar informació des d'una base de dades, ja siga relacional o no relacional.
 
-De igual manera que pasaba con los objetos en PHP nativos, en la interfaz de MySQL la cosa cambia la hora de conectarnos con una base de datos.
+Per establir la connexió en la bbdd utilitzarem:
 
 ``` php
 <?php
     $conexion = new PDO('mysql:host=localhost; dbname=dwes', 'dwes', 'abc123');
 ```
 
-Además, con PDO podemos usar las excepciones con try catch para gestionar los errores que se produzcan en nuestra aplicación, para ello, como hacíamos antes, debemos encapsular el código entre bloques try / catch.
-
+A més, amb *PDO* podem usar les excepcions amb *try catch* per a gestionar els errors que es produïsquen en la nostra aplicació, per a això, com féiem abans, hem d'encapsular el codi entre blocs *try / catch*.
 ``` php
 <?php
 
@@ -287,19 +197,18 @@ Además, con PDO podemos usar las excepciones con try catch para gestionar los e
         echo 'Falló la conexión: ' . $e->getMessage();
     }
 ```
-En primer lugar, creamos la conexión con la base de datos a través del constructor PDO pasándole la información de la base de datos.
+En primer lloc, creem la connexió amb la base de dades a través del constructor *PDO* passant-li la informació de la base de dades.
 
-En segundo lugar, establecemos los parámetros para manejar las excepciones, en este caso hemos utilizado:
+En segon lloc, establim els paràmetres per a manejar les exempcions, en aquest cas hem utilitzat:
 
-- `PDO::ATTR_ERRMODE` indicándole a PHP que queremos un reporte de errores.
-- `PDO::ERRMODE_EXCEPTION` con este atributo obligamos a que lance excepciones, además de ser la opción más humana y legible que hay a la hora de controlar errores.
+- `*PDO::ATTR_ERRMODE*` indicant-li a PHP que volem un reporte d'errors.
+- `*PDO::ERRMODE_EXCEPTION*` amb aquest atribut obliguem al fet que llance exempcions, a més de ser l'opció més humana i llegible que hi ha a l'hora de controlar errors.
 
-Cualquier error que se lance a través de PDO, el sistema lanzará una <span class="alert">**PDOException**</span>.
+Qualsevol error que es llance a través de *PDO^, el sistema llançarà una <span class="alert">**PDOException**</span>.
 
-### Fichero de configuración de la BD
+### Fitxer de configuració de la *BD*
 
-De la misma manera que creamos nuestro archivo de funciones `funciones-php` y albergamos todas las funciones que se usan de manera global en la aplicación, podemos establecer un archivo de constantes donde definamos los parámetros de conexión con la base de datos.
-
+De la mateixa manera que podem tenir el nostre arxiu de funcions `funciones.php` i alberguem totes les funcions que s'usen de manera global en l'aplicació, podem establir un arxiu de constants on definim els paràmetres de connexió amb la base de dades.
 ```php
 <?php
 
@@ -317,28 +226,28 @@ De la misma manera que creamos nuestro archivo de funciones `funciones-php` y al
 
 ```
 
-Este archivo contiene información <span class="alert">**muy sensible**</span> así que no es recomendable que subas este archivo a git.
+Aquest arxiu conté informació <span class="alert">**molt sensible**</span> així que no és recomanable que puges aquest arxiu a *git.
 
-### Sentencias preparadas
+### Sentències preparades
 
-Se trata de sentencias que se establecen como si fueran plantillas de la SQL que vamos a lanzar, aceptando parámetros que son establecidos a posteriori de la declaración de la sentencia preparada.
+Es tracta de sentències que s'estableixen com si foren plantilles de la SQL que llançarem, acceptant paràmetres que són establits a posteriori de la declaració de la sentència preparada.
 
-Las sentencias preparadas evitan la injección de SQL (SQL Injection) y mejoran el rendimiento de nuestras aplicaciónes o páginas web.
+Les sentències preparades eviten la *injecció* de SQL (SQL Injection) i milloren el rendiment de nostres *aplicacions* o pàgines web.
 
 ``` php
 <?php
     $sql = "INSERT INTO Clientes VALUES (?, ?, ?, ?)";
 ```
 
-Cada interrogante es un parámetro que estableceremos después, unas cuantas líneas más abajo.
+Cada interrogant és un paràmetre que establirem després, unes quantes línies més a baix.
 
-Una vez tenemos la plantilla de nuestra consulta, debemos seguir con la preparación junto con 3 métodos más de PHP para su completa ejecución:
+Una vegada tenim la plantilla de la nostra consulta, hem de seguir amb la preparació juntament amb 3 mètodes més de *PHP* per a la seua completa execució:
 
-- `prepare:` prepara la sentencián antes de ser ejecutada
-- `bind`: el tipo de unión (bind) de dato que puede ser mediante ' ? ' o ' :parametro '
-- `execute` se ejecuta la consulta uniendo la plantilla con las bariables o parámetros que hemos establecido.
+- `prepare:` prepara la *sentencia* abans de ser executada.
+- `bind`: el tipus d'unió (*bind*) de dada que pot ser mitjançant ' ? ' o ' :parametre '
+- `execute` s'executa la consulta unint la plantilla amb les *variables* o paràmetres que hem establit.
 
-### Ejemplo parámetros
+### Exemple paràmetros
 
 ```php
 <?php
@@ -368,9 +277,9 @@ Una vez tenemos la plantilla de nuestra consulta, debemos seguir con la preparac
     $conexion = null
 ```
 
-### Ejemplo bindParam
+### Exemple bindParam
 
-Muy parecido a utilizar parámetros pero esta vez la variable está dentro de la sentencia SQL, en este caso la hemos llamado `:cant`
+Molt semblant a utilitzar paràmetres però aquesta vegada la variable està dins de la sentència SQL, en aquest cas l'hem anomenada `:cant`
 
 ```php
 <?php
@@ -403,7 +312,7 @@ Muy parecido a utilizar parámetros pero esta vez la variable está dentro de la
 
 ### bindParam VS bindValue
 
-Utilizaremos `bindValue()` cuando tengamos que insertar datos sólo una vez, en cambio, deberemos usar `bindParam()` cuando tengamos que pasar datos múltiples, como por ejemplo, un array.
+Utilitzarem `bindValue()` quan hàgem d'inserir dades només una vegada, en canvi, haurem d'usar `bindParam()` quan hàgem de passar dades múltiples, com per exemple, un *array*.
 
 ```php
 <?php
@@ -430,11 +339,11 @@ Utilizaremos `bindValue()` cuando tengamos que insertar datos sólo una vez, en 
     $isOk = $sentencia->execute();
 ```
 
-Para más información y uso de las variables PDO [consulta el manual de PHP](https://www.php.net/manual/es/pdo.constants.php).
+Per a més informació i ús de les variables *PDO* [consulta el manual de PHP](https://www.php.net/manual/es/pdo.constants.php).
 
-### Insertando registros
+### Inserint registres
 
-A la hora de insertar registros en una base de datos, debemos tener en cuenta que en la tabla puede haber valores autoincrementados. Para salvaguardar ésto, lo que debemos hacer es dejar ese cambpo autoincrementado vacío, pero a la hora de hacer la conexión, debemos recuperarlo con el método `lastInsertId()`.
+A l'hora d'inserir registres en una base de dades, hem de tindre en compte que en la taula pot haver-hi valors autoincrementats. Per a salvaguardar açò, el que hem de fer és deixar aqueix camp autoincrementat buit, però a l'hora de fer la connexió, hem de recuperar-ho amb el mètode `lastInsertId()`.
 
 ``` php
 <?php
@@ -453,15 +362,15 @@ A la hora de insertar registros en una base de datos, debemos tener en cuenta qu
     echo $idGenerado;
 ```
 
-### Consultando registros
+### Consultant registres
 
-A la hora de recuperar los resultados de una consulta, bastará con invocar al método `PDOStatement::fetch` para listar las filas generadas por la consulta.
+A l'hora de recuperar els resultats d'una consulta, bastarà amb invocar al mètode `PDOStatement::fetch` per a llistar les files generades per la consulta.
 
-Pero debemos elegir el tipo de dato que queremos recibir entre los 3 que hay disponibles:
+Però hem de triar el tipus de dada que volem rebre entre els 3 que hi ha disponibles:
 
-- `PDO::FETCH_ASSOC:` array indexado cuyos keys son el nombre de las columnas.
-- `PDO::FETCH_NUM:` array indexado cuyos keys son números.
-- `PDO::FETCH_BOTH:` valor por defecto. Devuelve un array indexado cuyos keys son tanto el nombre de las columnas como números.
+- `PDO::FETCH_ASSOC:` array indexat que els seus keys són el nom de les columnes.
+- `PDO::FETCH_NUM:` array indexat que els seus keys són números.
+- `PDO::FETCH_BOTH:` valor per defecte. Retorna un array indexat que els seus keys són tant el nom de les columnes com números.
 
 <div class="center img-large">
     <img src="imagenes/06/06-pdo-listado-fetch.png">
@@ -498,7 +407,7 @@ Pero debemos elegir el tipo de dato que queremos recibir entre los 3 que hay dis
     $conexion = null;
 ```
 
-Recuperando datos con una matriz como resultado de nuestra consulta
+Recuperant dades amb una matriu com a resultat de la nostra consulta
 
 ``` php
 <?php
@@ -517,7 +426,7 @@ Recuperando datos con una matriz como resultado de nuestra consulta
         echo"Nombre:" . $tienda["nombre"] . "<br />";
     }
 ```
-Pero si lo que queremos es leer datos con forma de objeto utilizando `PDO::FETCH_OBJ`, debemos crear un objeto con propiedades públicas con el mismo nombre que las columnas de la tabla que vayamos a consultar.
+Però si el que volem és llegir dades amb forma d'objecte utilitzant `PDO::FETCH_OBJ`, hem de crear un objecte amb propietats públiques amb el mateix nom que les columnes de la taula que anem a consultar.
 
 ``` php
 <?php
@@ -536,13 +445,13 @@ Pero si lo que queremos es leer datos con forma de objeto utilizando `PDO::FETCH
     }
 ```
 
-### Consultas con modelos
+### Consultes amb models
 
-Llevamos tiempo creando clases en PHP y las consultas también admiten este tipo de datos mediante el uso de `PDO::FETCH_CLASS`
+Portem temps creant classes en PHP i les consultes també admeten aquest tipus de dades mitjançant l'ús de `PDO::FETCH_CLASS`
 
-Si usamos este método, debemos tener en cuenta que los nombres de los atributos privados deben coincidir con los nombres de las columnas de la tabla que vayamos a manejar.
+Si usem aquest mètode, hem de tindre en compte que els noms dels atributs privats han de coincidir amb els noms de les columnes de la taula que anem a manejar.
 
-Así pues, si por lo que sea cambiamos la estructura de la tabla <span class="alert">**DEBEMOS CAMBIAR**</span> nuestra clase para que todo siga funcionando.
+Així doncs, si pel que siga canviem l'estructura de la taula <span class="alert">**HEM DE CANVIAR**</span> la nostra classe perquè tot continue funcionant.
 
 ``` php
 <?php
@@ -587,8 +496,7 @@ Así pues, si por lo que sea cambiamos la estructura de la tabla <span class="al
     }
 ```
 
-Pero ¿qué pasa si nuestras clases tienen constructor? pues que debemos indicarle, al método FECTH, que rellene las propiedades después de llamar al constructor y para ello hacemos uso de `PDO::FETCH_PROPS_LATE`.
-
+Però què passa si les nostres classes tenen constructor? doncs que hem d'indicar-li, al mètode FECTH, que emplene les propietats després de cridar al constructor i per a això fem ús de `PDO::FETCH_PROPS_LATE`.
 ``` php
 <?php
     //  ▒▒▒▒▒▒▒▒ Consulta para una clase con constructor ▒▒▒▒▒▒▒▒
@@ -602,9 +510,9 @@ Pero ¿qué pasa si nuestras clases tienen constructor? pues que debemos indicar
     $tiendas = $sentencia -> fetchAll();
 ```
 
-### Consultas con LIKE
+### Consultes amb LIKE
 
-Para utilizar el comodín LIKE u otros comodines, debemos asociarlo al dato y NUNCA en la propia consulta.
+Per a utilitzar el comodí *LIKE* o altres comodins, hem d'associar-lo a la dada i MAI en la pròpia consulta.
 
 ``` php
 <?php
@@ -622,7 +530,7 @@ Para utilizar el comodín LIKE u otros comodines, debemos asociarlo al dato y NU
     $result = $sentencia -> fetchAll();
 ```
 
-Tenéis una lista de ejemplos muy completa en la [documentación oficial](https://phpdelusions.net/pdo/objects).
+Teniu una llista d'exemples molt completa en la [documentació oficial](https://phpdelusions.net/pdo/objects).
 
 ## Login & Password
 
@@ -630,16 +538,16 @@ Tenéis una lista de ejemplos muy completa en la [documentación oficial](https:
     <img src="imagenes/06/06-login-password.gif">
 </div>
 
-Para manejar un sistema completo de login y password con contraseñas cifradas, necesitamos un método que cifre esos strings que el usuario introduce como contraseña; tanto en el formulario de registro como en el del login, ya que al codificar una contraseña, después tenemos que decodificarla para comprobar que ambas contrasñeas (la que instroduce el usuario en el login y la que tenemos en la base de datos) coincidan.
+Per a manejar un sistema complet de login i password amb contrasenyes xifrades, necessitem un mètode que xifre aqueixos *strings* que l'usuari introdueix com a contrasenya; tant en el formulari de registre com en el del *login*, ja que en codificar una contrasenya, després hem de descodificar-la per a comprovar que totes dues *contrasenyes (la que introdueix l'usuari en el login i la que tenim en la base de dades) coincidisquen.
 
-Necesitamos pues:
+Necessitem doncs:
 
-- `password_hash()` para almacenar la contraseña en la base de datos a la hora de hacer el INSERT
-    - `PASSWORD_DEFAULT` almacenamos la contraseña usando el método de encriptación bcrypt
+- `password_hash()` per a emmagatzemar la contrasenya en la base de dades a l'hora de fer el *INSERT*
+- `PASSWORD_DEFAULT` emmagatzemem la contrasenya usant el mètode d'encriptació bcrypt
 
-    - `PASSWORD_BCRYPT` almacenamos la contraseña usando el algoritmo CRYPT_BLOWFISH compatible con crypt()
+- `PASSWORD_BCRYPT` emmagatzemem la contrasenya usant l'algorisme CRYPT_BLOWFISH compatible amb crypt()
 
-- `password_verify()` para verificar el usuario y la contraseña
+- `password_verify()` per a verificar l'usuari i la contrasenya
 
 ``` php
 <?php
@@ -658,8 +566,7 @@ Necesitamos pues:
     ]);
 ```
 
-Ahora que tenemos el usuario codificado y guardado en la base de datos, vamos a recuperarlo para poder loguearlo correctamente.
-
+Ara que tenim l'usuari codificat i guardat en la base de dades, el recuperarem per a poder loguejar-lo correctament.
 ``` php
 <?php
     //  ▒▒▒▒▒▒▒▒ Recuperando usuario y password en BD ▒▒▒▒▒▒▒▒
@@ -680,17 +587,17 @@ Ahora que tenemos el usuario codificado y guardado en la base de datos, vamos a 
     }
 ```
 
-## Acceso a ficheros
+## Accès a fitxers
 
-Gracias a la funcion fopen() desde PHP podemos abrir archivos que se encuentren en nuestros servidor o una URL.
+Gràcies a la funció fopen() des de PHP podem obrir arxius que es troben en els nostres servidor o una URL.
 
-A esta función hay que pasarle 2 parámetros; el nombre del archivo que queremos abrir y el modo en el que se abrirá
+A aquesta funció cal passar-li 2 paràmetres; el nom de l'arxiu que volem obrir i la manera en què s'obrirà
 
 ``` php
 $fp = fopen("miarchivo.txt", "r");
 ```
 
-Muchas veces no podemos abrir el archivo porque éste no se encuentra o no tenemos acceso a él, por eso es recomendable comprobar que podemos hacerlo
+Moltes vegades no podem obrir l'arxiu perquè aquest no es troba o no tenim accés a ell, per això és recomanable comprovar que podem fer-ho
 
 ``` php
 if (!$fp = fopen("miarchivo.txt", "r")){
@@ -698,23 +605,23 @@ if (!$fp = fopen("miarchivo.txt", "r")){
 }
 ```
 
-### Modos de apertura de ficheros
+### Maneres d'obertura de fitxers
 
-- `r`:  Modo lectura. Puntero al principio del archivo.
-- `r+`: Apertura para lectura y escritura. Puntero al principio del archivo
-- `w`: Apertura para escritura. Puntero al principio del archivo y lo sobreescribe. Si no existe se intenta crear.
-- `w+`: Apertura para lectura y escritura. Puntero al principio del archivo y lo sobreescribe. Si no existe se intenta crear.
-- `a`: Apertura para escritura. Puntero al final del archivo. Si no existe se intenta crear.
-- `a+`: Apertura para lectura y escritura. Puntero al final del archivo. Si no existe se intenta crear.
-- `x`: Creación y apertura para sólo escritura. Puntero al principio del archivo. Si el archivo ya existe dará error E_WARNING. Si no existe se intenta crear.
-- `x+`: Creación y apertura para lectura y escritura. Mismo comportamiento que x.
-- `c`: Apertura para escritura. Si no existe se crea. Si existe no se sobreescribe ni da ningún error. Puntero al principio del archivo.
-- `c+`: Apertura para lectura y escritura. Mismo comportamiento que C.
-- `b`: Cuando se trabaja con archivos binarios como jpg, pdf, png y demás. Se suele colocar al final del modo, es decir rb, r+b, x+b, wb...
+- `r`: Manera lectura. Punter al principi de l'arxiu.
+- `r+`: Obertura per a lectura i escriptura. Punter al principi de l'arxiu
+- `w`: Obertura per a escriptura. Punter al principi de l'arxiu i el sobreescriu. Si no existeix s'intenta crear.
+- `w+`: Obertura per a lectura i escriptura. Punter al principi de l'arxiu i el sobreescriu. Si no existeix s'intenta crear.
+- `a`: Obertura per a escriptura. Punter al final de l'arxiu. Si no existeix s'intenta crear.
+- `a+`: Obertura per a lectura i escriptura. Punter al final de l'arxiu. Si no existeix s'intenta crear.
+- `x`: Creació i obertura per a només escriptura. Punter al principi de l'arxiu. Si l'arxiu ja existeix donarà error E_*WARNING. Si no existeix s'intenta crear.
+- `x+`: Creació i obertura per a lectura i escriptura. Mateix comportament que x.
+- `c`: Obertura per a escriptura. Si no existeix es crea. Si existeix no se sobreescriu ni dona cap error. Punter al principi de l'arxiu.
+- `c+`: Obertura per a lectura i escriptura. Mateix comportament que C.
+- `b`: Quan es treballa amb arxius binaris com *jpg, pdf, *png i altres. Se sol col·locar al final de la manera, és a dir *rb, r+b, x+b, *wb...
 
-### Operaciones con archivos
+### Operacions amb arxius
 
-Para poder **leer** un archivo necesitamos usar la función fread() de PHP
+Per a poder **llegir** un arxiu necessitem usar la funció *fread()* de *PHP*
 
 ```php
 //  ▒▒▒▒▒▒▒▒ Abriendo un archivo y leyendo su contenido ▒▒▒▒▒▒▒▒
@@ -729,7 +636,7 @@ $contents = fread($fp, filesize($file));
 fclose();
 ```
 
-Si lo que queremos es **escribir** en un archivo, deberemos hacer uso de la función fwrite()
+Si el que volem és **escriure** en un arxiu, haurem de fer ús de la funció *fwrite()*
 
 ```php
 //  ▒▒▒▒▒▒▒▒ Escribiendo en un archivo ▒▒▒▒▒▒▒▒
@@ -743,25 +650,25 @@ fwrite($fp, $texto);
 fclose($fp);
 ```
 
-### Información de un fichero
+### Informació d'un fitxer
 
-Con PHP y su método stat() podemos obtener información sobre los archivos que le indiquemos. Este método devuelve hasta un total de 12 elementos con ifnormación acerca de nuestro archivo.
+Amb PHP i el seu mètode *stat()* podem obtindre informació sobre els arxius que li indiquem. Aquest mètode retorna fins a un total de 12 elements amb *informació* sobre el nostre arxiu.
 
-    0	dev	        número de dispositivo
-    1	ino	        número de i-nodo
-    2	mode	    modo de protección del i-nodo
-    3	nlink	    número de enlaces
-    4	uid	        ID de usuario del propietario
-    5	gid	        ID de grupo del propietario
-    6	rdev	    tipo de dispositivo, si es un dispositivo i-nodo
-    7	size	    tamaño en bytes
-    8	atime	    momento del último acceso (tiempo Unix)
-    9	mtime	    momento de la última modificación (tiempo Unix)
-    10	ctime	    momento de la última modificación del i-nodo (tiempo Unix)
-    11	blksize	    tamaño del bloque E/S del sistema de ficheros
-    12	blocks	    número de bloques de 512 bytes asignados
+0	*dev*	 número de dispositiu
+1	*ino*	 número d'i-node
+2	*mode*	 manera de protecció de l'i-node
+3	*nlink*	 nombre d'enllaços
+4	*uid*	 ID d'usuari del propietari
+5	*gid*	 ID de grup del propietari
+6	*rdev*	 tipus de dispositiu, si és un dispositiu i-node
+7	*size*	 grandària en bytes
+8	*atime*	 moment de l'últim accés (temps Unix)
+9	*mtime*	 moment de l'última modificació (temps Unix)
+10	*ctime*	 moment de l'última modificació de l'i-node (temps Unix)
+11	*blksize*	 grandària del bloc E/S del sistema de fitxers
+12	*blocks*	 nombre de blocs de 512 bytes assignats
 
-Unos ejemplos...
+Uns exemples...
 
 ``` php
 <?php
@@ -784,25 +691,23 @@ echo $datos[9] . "<br>"; // Momento de última modificación, 1444138251
 ?>
 ```
 
-Echa un vistazo a [las funciones de directorios](https://www.php.net/manual/es/book.dir.php) que tiene PHP, es muy interesante.
+Dona una ullada a [les funcions de directoris](https://www.php.net/manual/es/book.dir.php) que té *PHP, és molt interessant.
 
-### Archivos PDF
+### Arxius PDF
 
 
-Con PHP podemos manejar todo tipo de archivos como ya hemos visto pero, ¿qué pasa si queremos generar ficheros PDF con datos sacados de una base de datos?
+Amb PHP podem manejar tot tipus d'arxius com ja hem vist però, què passa si volem generar fitxers PDF amb dades tretes d'una base de dades?
 
 <div class="center img-small">
     <img src="imagenes/06/06-pdf.png">
 </div>
 
 
-Gracias a una clase escrita en PHP, podemos generar archivos PDF sin necesidad de instalar librerías adicionales en nuestro servidor.
+Gràcies a una classe escrita en PHP, podem generar arxius PDF sense necessitat d'instal·lar llibreries addicionals en el nostre servidor.
 
-Para ello, como tenemos composer dentro de nuestra imagen de Docker, usaremos composer para instalar esta dependencia.
+Per a això, com tenim *composer* dins de la nostra imatge de *Docker*, usarem *composer* per a instal·lar aquesta dependència.
 
-Acuérdate que debemes haber hecho `composer init` para empezar un Projecte con composer, de lo contrario no podrás añadir ningún paquete.
-
-Veamos un ejemplo de Hello World convertido a PDF
+Vegem un exemple de *Hello World* convertit a PDF
 
 ```php
 <?php
@@ -828,9 +733,9 @@ $pdf->Output();
   
 ?>
 ```
-Hay muchos ejemplos y tutoriales, así como documentación de la clase FPDF en la página oficial.
+Hi ha molts exemples i tutorials, així com documentació de la classe *FPDF* en la pàgina oficial.
 
-Visita [la sección de tutoriales y el manual](http://www.fpdf.org/) para sacar mayor partido a esta clase.
+Visita [la secció de tutorials i el manual](http://www.fpdf.org/) per a traure major partit a aquesta classe.
 
 ```php
 <?php
@@ -897,46 +802,41 @@ $pdf->Output();
 
 ## Actividades
 
-### MySQLi
+### PDO
 
-601. Crea una nueva base de datos con el nombre `lol` y cotejamiento de datos `utf8mb4_unicode_ci`.
+601. Crea una nova base de dades amb el nom `lol` i *cotejamiento* de dades `*utf8mb4_unicode_ci*`.
 
-602. En nuestra base de datos `lol` que acabamos de crear,  vamos a crear la tabla `campeon` con los siguientes campos.
+602. En la nostra base de dades `*lol*` que acabem de crear, crearem la taula `*campio*` amb els següents camps.
 
-- id [*]
-- nombre
+- ID [*]
+- nom
 - rol
-- dificultad
-- descripcion
+- dificultat
+- descripcio
 
-    Acuérdate que [*] significa que es clave primaria y no olvides poner el tipo de datos de cada uno de los campos.
+Recorda't que [*] significa que és clau primària i no oblides posar el tipus de dades de cadascun dels camps.
 
-603. Rellena la tabla `campeon` con, al menos 5 registros, con los datos que tú quieras o si lo prefieres, puedes basarte en la [página oficial del juego](https://www.leagueoflegends.com/es-es/champions) pero <span class="alert">**¡¡ NO TE PONGAS A JUGAR !!**</span>
+603. Emplena la taula `*campio*` amb, almenys 5 registres, amb les dades que tu vulgues o si ho prefereixes, pots basar-te en la [pàgina oficial del joc](https://www.leagueoflegends.com/es-es/champions) però <span class="alert">** NO ET POSES A JUGAR !!**</span>
 
-604. Crea el archivo `604campeones.php` donde listes todos los campeones del LOL que has metido en tu base de datos. Acuérdate que para ello deberas hacer una conexión con la base de datos y un `foreach` para cada campeón que tengas albergado en la tabla `campeon`.
+604. Crea l'arxiu `604.php` on llistes tots els campions del *LOL* que has ficat en la teua base de dades. Recorda't que per a això hauràs fer una connexió amb la base de dades i un `foreach` per a cada campió que tingues albergat en la taula `campio`.
 
-605. Modifica el archivo `604campeones.php` y guárdalo como `606campeones.php` pero pon al lado de cada uno de los campeones listados un botón para `editar` y otro para `borrar`. Cada uno de esos botones hará la correspondiente función dependiendo del id del campeón seleccionado.
+605. Modifica l'arxiu `604.php` i guarda-ho com `605.php` però posa al costat de cadascun dels campions llistats un botó per a `editar` i un altre per a `esborrar`. Cadascun d'aqueixos botons farà la corresponent funció depenent de l'id del campió seleccionat.
 
-- Al pinchar en editar, el usuario será redirigido al archivo `605editando.php` donde mostrará un formulario con los campos rellenos por los datos del campeón seleccionado. Al darle al botón de `guardar` los datos se guardarán en la base de datos y el usuario será redirigido a la lista de campones para poder ver los cambios.
+- En punxar a editar, l'usuari serà redirigit a l'arxiu `605editant.php` on mostrarà un formulari amb els camps farcits per les dades del campió seleccionat. En donar-li al botó de `guardar` les dades es guardaran en la base de dades i l'usuari serà redirigit a la llista de *campions* per a poder veure els canvis.
 
-- Al pinchar en borrar, el usuario será preguntado a través de un mensaje de JavaScript (prompt) si está seguro de que quiere borrar al campeón seleccionado. En el mensaje de confirmación debe aparecer el **nombre del campeón seleccionado**. Si el usuario pincha en `Aceptar` el campeón será eliminado de la base de datos y el usuario será redirigido nuevamente al listado de campeones para comprobar que, efectivamente dicho campeón se ha eliminado de la lista.
+- En punxar a esborrar, l'usuari serà preguntat a través d'un missatge de JavaScript (*prompt*) si està segur que vol esborrar al campió seleccionat. En el missatge de confirmació ha d'aparéixer el **nom del campió seleccionat**. Si l'usuari punxa a `Acceptar` el campió serà eliminat de la base de dades i l'usuari serà redirigit novament al llistat de campions per a comprovar que, efectivament aquest campió s'ha eliminat de la llista.
 
 ### Filtros y comodines
 
-606. modifica el archivo `604campeones.php` y guárdalo como `606campeones.php` para que se muestre como una tabla con las columnas de la propia tabla de la base de datos, es decir; id, nombre, rol, dificultad, descripción. Al lado de cada nombre de cada columna, pon 2 iconos que sean ˄ ˅ y que cada uno de ellos ordene el listado en función de cuál se haya pinchado.
+606. Modifica l'arxiu `604.php` i guarda-ho com `606.php` perquè es mostre com una taula amb les columnes de la pròpia taula de la base de dades, és a dir; id, nom, rol, dificultat, descripció. Al costat de cada nom de cada columna, posa 2 icones que siguen ˄ ˅ i que cadascun d'ells ordene el llistat en funció de quin s'haja punxat.
 
-- Si se ha pulsado en Nombre el icono de ˄, el listado debe aparecer ordenado por nombre ascendente. Si por el contrario se ha pulsado ˅ tendrá que ordenarse por nombre descendente.
+- Si s'ha premut en Nom la icona de ˄, el llistat ha d'aparéixer ordenat per nom ascendent. Si per contra s'ha premut ˅ haurà d'ordenar-se per nom descendent.
 
-- Ten en cuenta que cada icono debe llevar consigo un enlace al listado que contenga parámetros en la URL que satisfagan las opciones seleccionadas así que haced uso de $_GET para poder capturarlos y escribid las consultas SQL que sean necesarias para hacer cada uno de los filtros.
+- Tingues en compte que cada icona ha de portar amb si un enllaç al llistat que continga paràmetres en la URL que satisfacen les opcions seleccionades així que feu ús de $_GET per a poder capturar-los i escriviu les consultes SQL que siguen necessàries per a fer cadascun dels filtres.
 
-- Puedes usar [Font Awesome](https://fontawesome.com) para los iconos pero es algo opcional
+- Pots usar [Font *Awesome](https://fontawesome.com) per a les icones però és una cosa opcional
 
-
-### PDO
-
-607. Aprovecha lo que hiciste de los ejercicios 601 al 604 pero esta vez utilizando `PDO::FETCH_ASSOC`.
-
-608. Crea una tabla nueva dentro de la base de datos `lol` que ya tienes y crea un sistema de login con usuarios. Introduce en la base de datos al menos 3 usuarios diferentes con sus contraseñas distintas. Recuerda que:
+607. Crea una tabla nueva dentro de la base de datos `lol` que ya tienes y crea un sistema de login con usuarios. Introduce en la base de datos al menos 3 usuarios diferentes con sus contraseñas distintas. Recuerda que:
 
 - La tabla nueva ha de llamarse `usuario`
 
