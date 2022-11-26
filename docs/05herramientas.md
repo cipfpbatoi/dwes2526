@@ -906,7 +906,7 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 
 531. A partir de les dades de <http://www.seleccionbaloncesto.es>, calcula l'altura i edat mitjana de l'equip de bàsquet masculí i mostra-los en la pàgina basket.php. Observa que tens les dades dins d'una taula davall de les notícies.
 
-532. Tornant al Videoclub, en `Suport` afig una propietat anomenada `metacritic` per a emmagatzemar la URL de cada suport. A continuació, modifica els mètodes `incluirXXX` de `Videoclub` perquè admeten com a primer paràmetre aquesta URL. 
+532. Tornant al Videoclub, en `Suport` afig una propietat anomenada `metacritic` per a emmagatzemar la URL de cada suport. A continuació, modifica els mètodes `incluirXXX` de `Videoclub` perquè admeten com a últim paràmetre opcional aquesta URL. 
      Després d'això, modifica el fitxer `inici3.php` per a passar-li la URL de cada video (per a això hauràs de consultar-los en Metacritic fent cerques manuals). Per exemple, en el cas de la pel·lícula Cazafantasmas, la seua URL és <https://www.metacritic.com/movie/ghostbusters>.
 
 533. Afig un mètode abstracte en `Suport` anomenat `getPuntuacion`, que fent ús de *Web Scraping* es connecte a *Metacritic* i obtinga la seua puntuació. Fes que quan mostre la informació d'un soport afegisca la seua puntuació.
