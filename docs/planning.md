@@ -46,38 +46,37 @@
 - [X] 5.- (J 17N) Webscrapping. Activitats 531 - 533. -10
 - [X] 6.- (L 21N) Proves con *PhpUnit*. Activitats 541 - 545. - 13 
 - [No] 7.- (M 22N) Projecte Videoclub V. Activitats 551 - 554. - 16
-- [ ] 9.- (J 24N) Prova escrita - 21
+- [X] 9.- (J 24N) Prova escrita - 21
 
-## 6.- Accès a Dades (14h)
+## 6.- Accès a Dades (11h)
 
 - [ ] 1.- (L 28N) SQL. Activitats 601 - 605 - 3
-- [ ] 2.- (M 29N) Filtres i comodins. 606 - 5
-- [ ] 3.- (J 1D) PDO. Activitats 607 - 608 -8
-- [ ] 4.- (L 5D) Fitxers i PDF. Activitats 609 - 611 -11
-- [ ] 5.- (L 12D) Projecte cholloSevero. Activitats 615-618 - 14
+- [ ] 2.- (M 29N) Filtres i comodins.PDO 606-608 - 5
+- [ ] 4.- (J 1D) Fitxers i PDF. Activitats 609 - 611 -8
+- [ ] 5.- (L 5D) Projecte cholloSevero. Activitats 615-618 - 11
 
 
 ## 7.- Frameworks PHP (26h)
 
-- [ ] 1.- (M 13D) Introducció e Instal·lació de Laravel - 2 
-- [ ] 2.- (J 15D) Rutes i vistes - 5
-- [ ] 3.- (L 19D) Controladors - 8
-- [ ] 4.- (M 20D) Migraciones - 10
-- [ ] 5.- (L 9G) Eloquent - 13 
-- [ ] 6.- (M 10G) Formularis - 15 
-- [ ] 7.- (J 12G) Paginació i Autenticació - 18  
-- [ ] 8.- (L 16G) Rel·lacions - 21 
-- [ ] 9.- (M 17G) Projecte chollo servero - 23
-- [ ] 10.- (J 19G) Projecte chollo severo - 26
-
+- [ ] 1.- (L 12D) Introducció e Instal·lació de Laravel - 2 
+- [ ] 2.- (M 13D) Rutes i vistes - 5
+- [ ] 3.- (J 15D) Controladors - 8
+- [ ] 4.- (L 19D) Migraciones - 10
+- [ ] 5.- (M 20D) Eloquent - 13 
+- [ ] 6.- (L 9G) Formularis - 15 
+- [ ] 7.- (M 10G) Paginació i Autenticació - 18  
+- [ ] 8.- (J 12G) Rel·lacions - 21 
+- [ ] 9.- (L 16G) Projecte chollo servero - 23
+- [ ] 10.- (M 17G) Projecte chollo severo - 26
+ 
 ## 8.- Serveis REST (16h)
 
-- [ ] 1.- (L 23G) API Provant API externes  - 3
-- [ ] 2.- (M 24G) REST - GET  - 5
-- [ ] 3.- (J 26G) POST i PUT - 8
-- [ ] 4.- (L 30G) Autenticació - 11 
-- [ ] 5.- (M 31G) Projecte chollo severo - 13 
-- [ ] 6.- (J 2F) Prova escrita -16
+- [ ] 1.- (J 19G) API Provant API externes  - 3
+- [ ] 2.- (L 23G) REST - GET  - 5
+- [ ] 3.- (M 24G) POST i PUT - 8
+- [ ] 4.- (J 26G) Autenticació - 11 
+- [ ] 5.- (L 30G) Projecte chollo severo - 13 
+- [ ] 6.- (M 31G) Prova escrita -16
 
 ## Projecte Integrador
 

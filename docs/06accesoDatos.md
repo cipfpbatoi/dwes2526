@@ -20,7 +20,7 @@
 
 # Accès a dades
 <!-- 
-> Duració estimada: 26 hores
+> Duració estimada: 14 hores
  -->
 En aquesta unitat aprendrem a accedir a dades que es troben en un servidor; recuperant, editant i creant aquestes dades a través d'una base de dades.
 
@@ -852,7 +852,7 @@ Recorda't que [*] significa que és clau primària i no oblides posar el tipus d
 
 - Crea el formulari `607.php` on l'usuari introduïsca les dades de registre i vincula'l amb `607nuoUsuari.php` perquè reculla les dades mitjançant POST i els inserisca en la base de dades si tot ha anat bé.
 
-- Queda <span class="alert">**PROHIBIDÍSSIM**</span> accedir a `607nuoUsuari.php` sense el formulari emplenat.
+- Queda <span class="alert">**PROHIBIDÍSSIM**</span> accedir a `607nouUsuari.php` sense el formulari emplenat.
 
 - La sentència de *INSERT* ha d'estar controlada perquè no puga introduir-se cap dada en blanc. Tingues en compte que estàs modificant la base de dades i no volem camps mal emplenats.
 
