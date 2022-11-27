@@ -826,7 +826,7 @@ Recorda't que [*] significa que és clau primària i no oblides posar el tipus d
 
 - En punxar a esborrar, l'usuari serà preguntat a través d'un missatge de JavaScript (*prompt*) si està segur que vol esborrar al campió seleccionat. En el missatge de confirmació ha d'aparéixer el **nom del campió seleccionat**. Si l'usuari punxa a `Acceptar` el campió serà eliminat de la base de dades i l'usuari serà redirigit novament al llistat de campions per a comprovar que, efectivament aquest campió s'ha eliminat de la llista.
 
-### Filtros y comodines
+### Filtres i comodins
 
 606. Modifica l'arxiu `604.php` i guarda-ho com `606.php` perquè es mostre com una taula amb les columnes de la pròpia taula de la base de dades, és a dir; id, nom, rol, dificultat, descripció. Al costat de cada nom de cada columna, posa 2 icones que siguen ˄ ˅ i que cadascun d'ells ordene el llistat en funció de quin s'haja punxat.
 
@@ -836,58 +836,44 @@ Recorda't que [*] significa que és clau primària i no oblides posar el tipus d
 
 - Pots usar [Font *Awesome](https://fontawesome.com) per a les icones però és una cosa opcional
 
-607. Crea una tabla nueva dentro de la base de datos `lol` que ya tienes y crea un sistema de login con usuarios. Introduce en la base de datos al menos 3 usuarios diferentes con sus contraseñas distintas. Recuerda que:
+607. Crea una taula nova dins de la base de dades `*lol` que ja tens i crea un sistema de login amb usuaris. Introdueix en la base de dades almenys 3 usuaris diferents amb les seues contrasenyes diferents. Recorda que:
 
-- La tabla nueva ha de llamarse `usuario`
+- La taula nova ha de dir-se `usuari`
 
-- Los campos a crear en la nueva tabla deben ser
+- Els camps a crear en la nova taula han de ser
 
-    - `id` [*]
-    - `nombre`
-    - `usuario`
-    - `password`
-    - `email`
+- `id` [*]
+- `nom`
+- `usuari`
+- `password`
+- `email`
 
-- Las contraseñas deben ser cifradas antes de guardar el datos en la base de datos.
+- Les contrasenyes han de ser xifrades abans de guardar el dades en la base de dades.
 
-- Crea el formulario `608registro.php` donde el usuario introduzca los datos de registro y vincúlalo con `608nuevoUsuario.php` para que recoja los datos mediante POST y los inserte en la base de datos si todo ha ido bien.
+- Crea el formulari `607.php` on l'usuari introduïsca les dades de registre i vincula'l amb `607nuoUsuari.php` perquè reculla les dades mitjançant POST i els inserisca en la base de dades si tot ha anat bé.
 
-- Queda <span class="alert">**PROHIBIDÍSIMO**</span> acceder a `608nuevoUsuario.php` sin el formulario rellenado.
+- Queda <span class="alert">**PROHIBIDÍSSIM**</span> accedir a `607nuoUsuari.php` sense el formulari emplenat.
 
-- La sentencia de INSERT debe estar controlada para que no pueda introducirse ningún dato en blanco. Ten en cuenta que estás modificando la base de datos y no queremos campos mal rellenados.
+- La sentència de *INSERT* ha d'estar controlada perquè no puga introduir-se cap dada en blanc. Tingues en compte que estàs modificant la base de dades i no volem camps mal emplenats.
 
-- Si todo ha ido bien, muestra un mensaje por pantalla diciendo `El usuario XXX ha sido introducido en el sistema con la contraseña YYY`.
+- Si tot ha anat bé, mostra un missatge per pantalla dient `L'usuari XXX ha sigut introduït en el sistema amb la contrasenya YYY`.
 
-### Ficheros
+### Fitxers
 
-609. Métete en [loremipsum.com](https://www.lipsum.com/) y genera un texto de 3 párrafos. Copia el texto generado y guárdalo en un archivo nuevo llamado `609loremIpsum.txt`. Genera un archivo php llamado `609loremIpsum.php` y muestra por pantalla el texto del archivo txt que acabas de crear, su tamaño en **Kilobytes** , la fecha de su última modificación y el ID de usuario que creó el archivo.
+609. Fica't en [loremipsum.com](https://www.lipsum.com/) i genera un text de 3 paràgrafs. Còpia el text generat i guarda'l en un arxiu nou anomenat `*609.txt`. Genera un arxiu php anomenat `609.php` i mostra per pantalla el text de l'arxiu txt que acabes de crear, la seua grandària en **Kilobytes** , la data de la seua última modificació i l'id d'usuari que va crear l'arxiu.
 
-610. Vuelve a cargar el archivo `606campeones.php` y renómbralo a `610campeones.php` pero en vez de mostrar la tabla por pantalla, genera un archivo CSV `610campeones.csv` y otro `610campeonesCSV.php` donde saques por pantalla el contenido del archivo `610campeones.csv`.
-
+610. Torna a carregar l'arxiu `606.php` i canvia-ho de nom a `610.php` però en comptes de mostrar la taula per pantalla, genera un arxiu CSV `610.csv` i un altre `610CSV.php` on mostres per pantalla el contingut de l'arxiu `610.csv`.
 
 ### Projecte CholloSevero
 
-615. Estructura el Projecte y piensa en las tablas y bases de datos que necesitéis para crear el Projecte. Crea los UML necesarios con nombres como `615UMLnombreTabla` metiendo todos los campos que se necesiten así como las relaciones que creas necesarias. Establece un sistema de archivos para el Projecte, teniendo en cuenta que van a haber imágenes, css, funciones php, constantes e incluso javaScript (pero algo básico) para controlar los eventos del usuario a lo largo de la interfaz.
+615. Estructura el Projecte i pensa en les taules i bases de dades que necessiteu per a crear el Projecte. Crea els UML necessaris amb noms com `615UMLnomTabla` ficant tots els camps que es necessiten així com les relacions que cregues necessàries. Estableix un sistema d'arxius per al Projecte, tenint en compte que hi haurà imatges, css, funcions php, constants i fins i tot javaScript (però una cosa bàsica) per a controlar els esdeveniments de l'usuari al llarg de la interfície.
 
-616. Crea un sistema de login/password con los roles `administrador` y `usuario`. De momento que se validen los usuarios correctamente utilizando encriptación en la contraseña.
+616. Crea un sistema de login/password amb els rols `administrador` i `usuari`. De moment que es validen els usuaris correctament utilitzant encriptació en la contrasenya.
 
-- `Administrador`: Puede ver todos los usuarios registrados así como los administradores y los chollos creados en la base de datos.
+- `Administrador`: Pot veure tots els usuaris registrats així com els administradors i les gangues creades en la base de dades.
 
-- `Usuario`: Puede ver sus propios chollos, editarlos y borrarlos, además de crear nuevos.
+- `Usuari`: Pot veure les seues pròpies gangues, editar-los i esborrar-los, a més de crear nous.
 
-617. Crea la vista para poner nuevos chollos y recuerda <span class="alert">***sólo pueden entrar a esta vista usuarios registrados o administradores***</span>.
+617. Crea la vista per a posar noves gangues i recorda <span class="alert">només poden entrar a aquesta vista usuaris registrats o administradors</span>.
 
-618. Crea la vista donde se muestren todos los chollos creados. Esta vista puede verla cualquier usuario, registrado o no en el sistema. Ten en cuenta que esta vista será la vista general de la web así que puedes llamarla `index.php` donde después aplicaremos filtros por $_GET.
-
-<!--
-
-## Eloquent
-
-### Mapeo ORM
-
-#### Modelo
-
-``` console
-php artisan make:model Pregunta
-```
- -->
+618. Crea la vista on es mostren totes les gangues creades. Aquesta vista pot veure-la qualsevol usuari, registrat o no en el sistema. Tingues en compte que aquesta vista serà la vista general de la web així que pots cridar-la `index.php` on després aplicarem filtres per $_GET.
