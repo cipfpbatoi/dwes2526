@@ -804,11 +804,11 @@ $pdf->Output();
 
 ### PDO
 
-601. Crea una nova base de dades amb el nom `lol` i *cotejamiento* de dades `*utf8mb4_unicode_ci*`.
+601. Crea una nova base de dades amb el nom `lol` i cotejamiento de dades `utf8mb4_unicode_ci`.
 
-602. En la nostra base de dades `*lol*` que acabem de crear, crearem la taula `*campio*` amb els següents camps.
+602. En la nostra base de dades `lol` que acabem de crear, crearem la taula `campio` amb els següents camps.
 
-- ID [*]
+- id [*]
 - nom
 - rol
 - dificultat
@@ -816,7 +816,7 @@ $pdf->Output();
 
 Recorda't que [*] significa que és clau primària i no oblides posar el tipus de dades de cadascun dels camps.
 
-603. Emplena la taula `*campio*` amb, almenys 5 registres, amb les dades que tu vulgues o si ho prefereixes, pots basar-te en la [pàgina oficial del joc](https://www.leagueoflegends.com/es-es/champions) però <span class="alert">** NO ET POSES A JUGAR !!**</span>
+603. Emplena la taula `campio` amb, almenys 5 registres, amb les dades que tu vulgues o si ho prefereixes, pots basar-te en la [pàgina oficial del joc](https://www.leagueoflegends.com/es-es/champions) però <span class="alert">** NO ET POSES A JUGAR !!**</span>
 
 604. Crea l'arxiu `604.php` on llistes tots els campions del *LOL* que has ficat en la teua base de dades. Recorda't que per a això hauràs fer una connexió amb la base de dades i un `foreach` per a cada campió que tingues albergat en la taula `campio`.
 
