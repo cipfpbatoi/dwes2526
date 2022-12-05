@@ -868,10 +868,9 @@ Recorda't que [*] significa que és clau primària i no oblides posar el tipus d
     <img src="imagenes/06/06-chollometro.gif">
 </div>
 
-Anem A treballarem amb una base de dades que anirem confeccionant conforme avancem, on emmagatzemarem la informació relacionada amb ofertes que publiquen els usuaris i els llistarem en funció de diversos filtres; nous, més votats, més vistos, més comentats entre altres, al més pur estil **[Chollometro](https://www.chollometro.com/)**.
+Anem A treballarem amb una base de dades on emmagatzemarem la informació relacionada amb ofertes que publiquen els usuaris i els llistarem en funció de diversos filtres; nous, més votats, més vistos, més comentats entre altres, al més pur estil **[Chollometro](https://www.chollometro.com/)**.
 
-
-615. Estructura el Projecte i pensa en les taules i bases de dades que necessiteu per a crear el Projecte. Crea els UML necessaris amb noms com `615UMLnomTabla` ficant tots els camps que es necessiten així com les relacions que cregues necessàries. Estableix un sistema d'arxius per al Projecte, tenint en compte que hi haurà imatges, css, funcions php, constants i fins i tot javaScript (però una cosa bàsica) per a controlar els esdeveniments de l'usuari al llarg de la interfície.
+615. Estructura el Projecte i pensa en les taules i bases de dades que necessiteu per a crear el Projecte. 
 
 616. Crea un sistema de login/password amb els rols `administrador` i `usuari`. De moment que es validen els usuaris correctament utilitzant encriptació en la contrasenya.
 
