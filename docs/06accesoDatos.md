@@ -794,11 +794,9 @@ $pdf->Output();
   
 ?>
 ```
-
 <div class="center img-large">
     <img src="imagenes/06/06-pdf-output.gif">
 </div>
-
 
 ## Actividades
 
@@ -818,25 +816,25 @@ Recorda't que [*] significa que és clau primària i no oblides posar el tipus d
 
 603. Emplena la taula `campio` amb, almenys 5 registres, amb les dades que tu vulgues o si ho prefereixes, pots basar-te en la [pàgina oficial del joc](https://www.leagueoflegends.com/es-es/champions) però <span class="alert">** NO ET POSES A JUGAR !!**</span>
 
-604. Crea l'arxiu `604.php` on llistes tots els campions del *LOL* que has ficat en la teua base de dades. Recorda't que per a això hauràs fer una connexió amb la base de dades i un `foreach` per a cada campió que tingues albergat en la taula `campio`.
+604. Crea l'arxiu `604.php` on llistes tots els campions del **LOL** que has ficat en la teua base de dades. Recorda't que per a això hauràs fer una connexió amb la base de dades i un `foreach` per a cada campió que tingues albergat en la taula `campio`.
 
 605. Modifica l'arxiu `604.php` i guarda-ho com `605.php` però posa al costat de cadascun dels campions llistats un botó per a `editar` i un altre per a `esborrar`. Cadascun d'aqueixos botons farà la corresponent funció depenent de l'id del campió seleccionat.
 
 - En punxar a editar, l'usuari serà redirigit a l'arxiu `605editant.php` on mostrarà un formulari amb els camps farcits per les dades del campió seleccionat. En donar-li al botó de `guardar` les dades es guardaran en la base de dades i l'usuari serà redirigit a la llista de *campions* per a poder veure els canvis.
 
-- En punxar a esborrar, l'usuari serà preguntat a través d'un missatge de JavaScript (*prompt*) si està segur que vol esborrar al campió seleccionat. En el missatge de confirmació ha d'aparéixer el **nom del campió seleccionat**. Si l'usuari punxa a `Acceptar` el campió serà eliminat de la base de dades i l'usuari serà redirigit novament al llistat de campions per a comprovar que, efectivament aquest campió s'ha eliminat de la llista.
+- En punxar a esborrar, l'usuari serà preguntat a través d'un missatge de JavaScript (prompt) si està segur que vol esborrar al campió seleccionat. En el missatge de confirmació ha d'aparéixer el **nom del campió seleccionat**. Si l'usuari punxa a `Acceptar` el campió serà eliminat de la base de dades i l'usuari serà redirigit novament al llistat de campions per a comprovar que, efectivament aquest campió s'ha eliminat de la llista.
 
 ### Filtres i comodins
 
-606. Modifica l'arxiu `604.php` i guarda-ho com `606.php` perquè es mostre com una taula amb les columnes de la pròpia taula de la base de dades, és a dir; id, nom, rol, dificultat, descripció. Al costat de cada nom de cada columna, posa 2 icones que siguen ˄ ˅ i que cadascun d'ells ordene el llistat en funció de quin s'haja punxat.
+606. Modifica l'arxiu `605.php` i guarda-ho com `606.php` perquè es mostre com una taula amb les columnes de la pròpia taula de la base de dades, és a dir; id, nom, rol, dificultat, descripció. Al costat de cada nom de cada columna, posa 2 icones que siguen ˄ ˅ i que cadascun d'ells ordene el llistat en funció de quin s'haja punxat.
 
 - Si s'ha premut en Nom la icona de ˄, el llistat ha d'aparéixer ordenat per nom ascendent. Si per contra s'ha premut ˅ haurà d'ordenar-se per nom descendent.
 
 - Tingues en compte que cada icona ha de portar amb si un enllaç al llistat que continga paràmetres en la URL que satisfacen les opcions seleccionades així que feu ús de $_GET per a poder capturar-los i escriviu les consultes SQL que siguen necessàries per a fer cadascun dels filtres.
 
-- Pots usar [Font *Awesome](https://fontawesome.com) per a les icones però és una cosa opcional
+- Pots usar [Font Awesome](https://fontawesome.com) per a les icones però és una cosa opcional
 
-607. Crea una taula nova dins de la base de dades `*lol` que ja tens i crea un sistema de login amb usuaris. Introdueix en la base de dades almenys 3 usuaris diferents amb les seues contrasenyes diferents. Recorda que:
+607. Crea una taula nova dins de la base de dades `lol` que ja tens i crea un sistema de login amb usuaris. Introdueix en la base de dades almenys 3 usuaris diferents amb les seues contrasenyes diferents. Recorda que:
 
 - La taula nova ha de dir-se `usuari`
 
@@ -854,7 +852,7 @@ Recorda't que [*] significa que és clau primària i no oblides posar el tipus d
 
 - Queda <span class="alert">**PROHIBIDÍSSIM**</span> accedir a `607nouUsuari.php` sense el formulari emplenat.
 
-- La sentència de *INSERT* ha d'estar controlada perquè no puga introduir-se cap dada en blanc. Tingues en compte que estàs modificant la base de dades i no volem camps mal emplenats.
+- La sentència de **INSERT** ha d'estar controlada perquè no puga introduir-se cap dada en blanc. Tingues en compte que estàs modificant la base de dades i no volem camps mal emplenats.
 
 - Si tot ha anat bé, mostra un missatge per pantalla dient `L'usuari XXX ha sigut introduït en el sistema amb la contrasenya YYY`.
 
@@ -865,6 +863,13 @@ Recorda't que [*] significa que és clau primària i no oblides posar el tipus d
 610. Torna a carregar l'arxiu `606.php` i canvia-ho de nom a `610.php` però en comptes de mostrar la taula per pantalla, genera un arxiu CSV `610.csv` i un altre `610CSV.php` on mostres per pantalla el contingut de l'arxiu `610.csv`.
 
 ### Projecte CholloSevero
+
+<div class="center img-large">
+    <img src="imagenes/06/06-chollometro.gif">
+</div>
+
+Anem A treballarem amb una base de dades que anirem confeccionant conforme avancem, on emmagatzemarem la informació relacionada amb ofertes que publiquen els usuaris i els llistarem en funció de diversos filtres; nous, més votats, més vistos, més comentats entre altres, al més pur estil **[Chollometro](https://www.chollometro.com/)**.
+
 
 615. Estructura el Projecte i pensa en les taules i bases de dades que necessiteu per a crear el Projecte. Crea els UML necessaris amb noms com `615UMLnomTabla` ficant tots els camps que es necessiten així com les relacions que cregues necessàries. Estableix un sistema d'arxius per al Projecte, tenint en compte que hi haurà imatges, css, funcions php, constants i fins i tot javaScript (però una cosa bàsica) per a controlar els esdeveniments de l'usuari al llarg de la interfície.
 
