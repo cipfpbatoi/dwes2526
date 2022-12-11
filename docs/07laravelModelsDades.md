@@ -1,6 +1,6 @@
 # FRAMEWORK LARAVEL
 
-## [Base de dades](https://laravel.com/docs/8.x/database)
+## [Base de dades](https://laravel.com/docs/9.x/database)
 
 Laravel facilita la configuració i l'ús de diferents tipus de base de dades: MySQL, Postgres, SQLite i SQL Server. En el fitxer de configuració (**config/database.php**) hem d'indicar tots els paràmetres d'accés a les nostres bases de dades i a més especificar com és la connexió que s'utilitzarà per defecte. En Laravel podem fer ús de diverses bases de dades alhora, encara que siguen de diferent tipus. Per defecte s'accedirà a la qual especifiquem en la configuració i si volem accedir a una altra connexió ho haurem d'indicar expressament en realitzar la consulta.
 
@@ -80,7 +80,16 @@ com per exemple **unique()** per a indicar valors únics (claus alternatives), o
 que un camp admet nuls. Ací tenim un exemple de mètode **up** :
 
 ```php
-public function up(){	Schema::create('usuarios', function(BluePrint $tabla) {		$tabla->id();		$tabla->string('nombre');		$tabla->string('email')->unique();		...		$tabla->timestamps();	});}
+public function up()
+{
+	Schema::create('usuarios', function(BluePrint $tabla) {
+		$tabla->id();
+		$tabla->string('nombre');
+		$tabla->string('email')->unique();
+		...
+		$tabla->timestamps();
+	});
+}
 ```
 Per defecte, com veiem en els exemples que es proporcionen, els esquemes es creen amb un id
 autonumèric, i uns **timestamps** per a indicar la data de creació i de modificació de cada registre, i que
@@ -126,13 +135,26 @@ si volem crear o modificar una taula, i d'aquesta manera podem definir el nom de
 en l'idioma que vulguem, i sense restriccions de patrons. Aquestes dues migracions creen una taula (comandes) i modifiquen una altra (usuaris), respectivament:
 
 ```
-php artisan make:migration crear_tabla_pedidos --create=pedidosphp artisan make:migration nuevo_campo_usuario --table=usuarios	
+php artisan make:migration crear_tabla_pedidos --create=pedidos
+php artisan make:migration nuevo_campo_usuario --table=usuarios	
 ```
 En el cas de la segona migració, si, per exemple, volem afegir una columna amb el número de telèfon
  dels usuaris, pot quedar així (tant el mètode up com el down ):
  
 ``` 
-public function up(){	Schema::table('usuarios', function(Blueprint $tabla) 	{		$tabla->string('telefono')->nullable();	});}public function down(){	Schema::table('usuarios', function(Blueprint $tabla) 	{		$tabla->dropColumn('telefono');	});}
+public function up()
+{
+	Schema::table('usuarios', function(Blueprint $tabla) 	{
+		$tabla->string('telefono')->nullable();
+	});
+}
+
+public function down()
+{
+	Schema::table('usuarios', function(Blueprint $tabla) 	{
+		$tabla->dropColumn('telefono');
+	});
+}
 ```
 
 
@@ -170,7 +192,6 @@ A més si volem comprovar l'estat de les migracions, per a veure les que ja esta
 ### Migració inversa
 
 Si tenim la base de dades i volem crear les migracions a partir d'ella podem instal·lar el següent [component](https://github.com/oscarafdev/migrations-generator). Te un bug ,explicat en aquest [enllaç](https://github.com/Xethron/migrations-generator/issues/191).
-
 
 
 ### Schema Builder
@@ -276,9 +297,7 @@ Per a eliminar una clau aliena, en el mètode down de la migració hem d'utilitz
 Per a indicar la clau aliena a eliminar hem de seguir el següent patró per a especificar el nom **<tabla>_<columna>_foreign**. On "taula" és el nom de la taula actual i "columna" el nom de la columna sobre la qual es cree la clau aliena.
 
 
-
-
-## [Models de dades mitjançant ORM](https://laravel.com/docs/8.x/eloquent)
+## [Models de dades mitjançant ORM](https://laravel.com/docs/9.x/eloquent)
 
 El mapeado objecte-relacional (més conegut pel seu nom en anglès, Object-Relational mapping, o per les seues sigles ORM) és una tècnica de programació per a convertir dades entre un llenguatge de programació orientat a objectes i una base de dades relacional com a motor de persistència. Açò possibilita l'ús de les característiques pròpies de l'orientació a objectes, podrem accedir directament als camps d'un objecte per a llegir les dades d'una base de dades o per a inserir-los o modificar-los.
 Laravel inclou el seu propi sistema de ORM anomenat **Eloquent**, el qual ens proporciona una manera elegant i fàcil d'interactuar amb la base de dades. Per a cada taula de la base dades haurem de definir el seu corresponent **model**, el qual s'utilitzarà per a interactuar des de codi amb la taula.
@@ -294,15 +313,24 @@ Per defecte els models es guardaran com a classes PHP dins de la carpeta **app/M
 Aquest comando crearà el fitxer movie.php dins de la carpeta **app/Models** amb el codi bàsic d'un model.
 
 ```php
-<?php	namespace App\Models;	use Illuminate\Database\Eloquent\Model;	class Movie extends Model	{
-	...	}?>
+<?php
+	namespace App\Models;
+	use Illuminate\Database\Eloquent\Model;
+	class Movie extends Model
+	{
+	...
+	}
+?>
 ```
 
 Automàticament, s'associa aquest model a una taula amb el mateix nom, però en plural i en minúscula,
 per la qual cosa els models anteriors estarien associats a unes taules llibres i usuaris en la base de dades, respectivament. En cas que no vulguem que siga així, definim una propietat \$table en la classe amb el nom que vulguem que tinga la taula associada. Per exemple:
 
 ```php
-class Movie extends Model{	protected $table = 'movies';}
+class Movie extends Model
+{
+	protected $table = 'movies';
+}
 ```
 
 ##### Altres opcions de crear models
@@ -385,12 +413,24 @@ Per exemple, si anem a usar els models User i Orders hauríem d'afegir:
 
 Per a obtenir totes les files de la taula associada a un model usarem el mètode all():
  
-```			use App\Models\Movie;	...	class MovieController extends Controller	{		public function index()		{			$movies = Movie::get();			return view('movies.index', compact('movies'));		}	}	
+```		
+	use App\Models\Movie;
+	...
+	class MovieController extends Controller
+	{
+		public function index()
+		{
+			$movies = Movie::get();
+			return view('movies.index', compact('movies'));
+		}
+	}	
 ```	
 Aquest mètode pasarà a la vista un array de objectes, on cada item del array serà una instància del model movie i accedirem a les seues propietats com a tals. Així en la vista tindriem alguna cosa com:
 
 ```	
-@forelse($movies as $movie)	{{ "{{  $movies->titulo " }}}}@endforelse
+@forelse($movies as $movie)
+	{{ "{{  $movies->titulo " }}}}
+@endforelse
 ```	
 
 
@@ -402,7 +442,8 @@ $movies = Movie::where('precio', '<', 10)->get();
 o combinant-les
 
 ```	
-$movies = Movie::where('precio', '<', 10)->where('precio', '>', 5)->get();
+$movies = Movie::where('precio', '<', 10)
+->where('precio', '>', 5)->get();
 ```	
 
 Sobre aquestes consultes base podem aplicar una sèrie d'afegits. Per exemple, podem voler ordenar
@@ -431,14 +472,21 @@ Si volem paginar els resultats obtinguts, devem, d'una banda, quan obtinguem el 
 controlador, indicar amb **paginate** quants registres volem per pàgina:
 
 ```php
-public function index()	{		$movies = Movie::paginate(5);		return view('movies.index', compact('moviemovies'));	}
+public function index()
+	{
+		$movies = Movie::paginate(5);
+		return view('movies.index', compact('moviemovies'));
+	}
 ```
 
 Després, en la vista associada ( **movies.index** en l'exemple anterior), podem emprar el mètode
 links perquè mostre els botons de paginació en el lloc desitjat:
 
 ```php
-	@forelse($movies as $movie)		{{ "{{  $movie->titulo " }}}}	@endforelse	{{ "{{  $movies->links() " }}}}
+	@forelse($movies as $movie)
+		{{ "{{  $movie->titulo " }}}}
+	@endforelse
+	{{ "{{  $movies->links() " }}}}
 ```
 ###### Paginació des de Laravel 8
 
@@ -461,9 +509,12 @@ títol o alguna part visible d'aqueix objecte. Per exemple, si volem veure les d
 llistat amb els seus títols, podem fer alguna cosa com això en la plantilla **Blade**:
 
 ```php
-@forelse($movies as $movie)	<li>
-		<a href="{{ "{{  route('movies.show', $movie) " }}}}">		{{ "{{  $movie->titulo " }}}}</a>
-	</li>@endforelse
+@forelse($movies as $movie)
+	<li>
+		<a href="{{ "{{  route('movies.show', $movie) " }}}}">
+		{{ "{{  $movie->titulo " }}}}</a>
+	</li>
+@endforelse
 ```
 
 Veiem que hem utilitzat el mètode **route** per a indicar la ruta a seguir, amb un segon paràmetre,
@@ -471,14 +522,24 @@ que en aquest cas és l'objecte concret d'aqueixa fila. Laravel automàticament 
 Per part seua, la ruta associada a aquest enllaç podria ser una cosa així (en l'arxiu de rutes):
 
 ```php
-Route::get('/movies/{id}', [movieController::class, 'show'])->name('movies.show');
+Route::get('/movies/{id}', [movieController::class, 'show'])
+->name('movies.show');
 ```
 #### Mostar dades
 
 Finalment, el mètode show del controlador associat s'encarregarà d'obtindre les dades del llibre a partir de el seu **id**, i generar la vista corresponent. Per a obtindre les dades d'un objecte a partir del seu identificador,podem emprar el mètode **find** del model, passant-li com a paràmetre l'identificador. Així,podríem generar una vista amb les dades com aquesta:
 
 ```php
-...class movieController extends Controller{	...	public function show($id)	{		$movie = movie::find($id);		return view('movies.show', compact('movie'));	}}
+...
+class movieController extends Controller
+{
+	...
+	public function show($id)
+	{
+		$movie = movie::find($id);
+		return view('movies.show', compact('movie'));
+	}
+}
 ```
 
 En el cas que l'objecte no es trobe (perquè, per exemple, utilitzem un aneu equivocat), la vista
@@ -496,7 +557,11 @@ $movie = movie::findOrFail($id);
 Per a afegir una entrada en la taula de la base de dades associada amb un model simplement hem de crear una nova instància d'aquest model, assignar els valors que vulguem i finalment guardar-los amb el mètode save():
 
 ```php
-	$movie = new movie();	$movie->titulo = "La guerra de las galaxias";	$movie->director = "George Lucas";	$movie->precio = 3.95;	$movie->save();
+	$movie = new movie();
+	$movie->titulo = "La guerra de las galaxias";
+	$movie->director = "George Lucas";
+	$movie->precio = 3.95;
+	$movie->save();
 ```
 
 Per a obtenir l'identificador assignat en la base de dades després de guardar (quan es tracte de taules amb índex auto-incremental), ho podrem recuperar simplement accedint al camp id de l'objecte que havíem creat, per exemple:
@@ -519,7 +584,10 @@ encara que ens interessen tots els camps, per a evitar insercions massives malin
 , editant el codi font per a afegir altres camps i modificar dades inesperades).
 
 ```php
-class movie extends Model{protected $fillable = ['titulo', 'director', 'precio'];}
+class movie extends Model
+{
+protected $fillable = ['titulo', 'director', 'precio'];
+}
 ```
 
 Aquest codi d'inserció (o bé camp a camp, o usant el mètode **all** ) se sol posar en el mètode
@@ -536,7 +604,9 @@ explicat abans).
 canvis.
 
 ```php
-$movieAModificar = movie::findOrFail($id);$movieAModificar->titulo="Otro título";$movieAModificar->save();
+$movieAModificar = movie::findOrFail($id);
+$movieAModificar->titulo="Otro título";
+$movieAModificar->save();
 ```
 També podem utilitzar el mètode **update** enllaçat amb **findOrFail** , i passar-li com a paràmetre
 totes les dades de la petició, igual que s'ha explicat per a la inserció, i sempre que hàgem
@@ -559,7 +629,12 @@ redirigir o renderitzar alguna vista resultat, com el llistat de llibres general
 esborrat.
 
 ```php
-public function destroy($id){	movie::findOrFail($id)->delete();	$movies = movie::get();	return view('movies.index', compact('movies'));}
+public function destroy($id)
+{
+	movie::findOrFail($id)->delete();
+	$movies = movie::get();
+	return view('movies.index', compact('movies'));
+}
 ```
 
 ##### Sobre lesborrat des de les vistes
@@ -568,21 +643,770 @@ El normal és que l'esborrat s'active fent clic en algun element d'una vista. Pe
 clic en un botó o enllaç que pose "Esborrar". Tanmateix, si implementem això així:
 
 ```html	
-	<a href="{{ "{{  route('movies.destroy', $movie " }}}}">Borrar</a>
+	<a href="{{ "{{  route('movies.destroy', $movie " }}}}">
+Borrar
+</a>
 ```
 
 Si volem esborrar el llibre amb id 3, es generarà una ruta **http://biblioteca/movies/3**. Ho podem comprovar
 passant el ratolí per l'enllaç i veient la barra inferior d'estat del navegador. Aquesta ruta, no obstant això,ens enviarà a la fitxa del llibre 3, no a l'esborrat, ja que estem enviant una petició **GET**, i no una d'esborrat (**DELETE**). Per a evitar això, l'opció d'esborrat ha de fer-se sempre des d'un formulari, on a través del **helper** **@method** indiquem que és una petició d'esborrat (DELETE). Amb el que l'enllaç per a esborrar un llibre quedaria així:
 
 ```html
-<form action="{{ "{{  route('movies.destroy', $movie) " }}}}" method="POST">	@method('DELETE')	@csrf	<button>Borrar</button></form>
+<form action="{{ "{{  route('movies.destroy', $movie) " }}}}" method="POST">
+	@method('DELETE')
+	@csrf
+	<button>Borrar</button>
+</form>
 ```
 
 
 NOTA el helper @csrf ho veurem amb més detall en parlar de formularis, però s'afig als formularis Laravel per a evitar atacs de tipus cross-site, és a dir, accessos a una URL de la nostra web
 des d'altres webs.
+
+## Relacions en Laravel
+
+Les taules de les bases de dades es relacionen sovint unes amb unes altres. Eloquent facilita la gestió i el treball amb aquestes relacions fàcilment suportant diversos tipus de relacions diferents:
+
+* Un a un – One to one
+* Un a molts – One to many
+* Molts a molts – Many to many
+* Molta a molts mitjançant - Has Many Through
+
+Les relacions entre models **Eloquent** es defineixen com a mètodes en les pròpies classes. Atès que, com els propis **models** Eloquent, les relacions també serveixen com a poderosos **query builders**, la definició de relacions com a mètodes proporciona potents **funcions d'encadenament** i consulta de mètodes.
+
+### Un a Un
+
+Suposem que tenim dos models Usuario i Telefono , de manera que podem establir una relació un a un entre ells: un usuari té un telèfon, i un telèfon pertany a un usuari.
+Per a reflectir aquesta relació en taules, una de les dues hauria de tindre una referència a l'altra. En aquest cas, podríem tindre un camp usuari_id en la taula de telefonos que indique a qui pertany
+aquest telèfon. És important que el camp es diga usuari_id , com veurem a continuació.
+Per a indicar que un usuari té un telèfon, afegim un nou mètode en el model d'Usuari , que
+es cride igual que el model amb el qual volem connectar ( telefono , en aquest cas):
+
+```php
+class Usuario extends Model
+{
+	public function telefono()
+	{
+		return $this->hasOne('App\Models\Telefono');
+	}
+}
+```
+
+Ara, si volem obtindre el telèfon d'un usuari, n'hi ha prou que fem això:
+
+$telefono = Usuario::findOrFail($id)->telefono;
+
+Hem emprat una característica de **Eloquent** denominada propietats dinàmiques, per la qual podem
+referenciar un mètode de relació com si fóra una propietat (en lloc d'usar **telefono()** , hem
+emprat **telefono** ).
+La instrucció anterior obté l'objecte **Telefono** associat amb l'usuari buscat (a través del \$id
+de l'usuari). Perquè aquesta associació tinga efecte, cal que en la taula **telefonos** existisca un
+camp **usuario_id** i que es corresponga amb un camp **id** de la taula d'usuaris , de manera que
+**Eloquent** estableix la connexió entre una i una altra taula. Haurem de definir una nova migració de modificació sobre la taula **telefonos** per a afegir aqueix nou camp, o refrescar la migració original amb ell i esborrar els continguts previs.
+Si volem utilitzar altres camps diferents en una i una altra taula per a connectar-les, hem d'indicar dos
+paràmetres més en cridar a **hasOne** . Per exemple, així relacionaríem les dues taules anteriors, indicant
+que la clau aliena de telefonos és **idUsuario** , i que la clau local a la qual es referencia en
+usuaris és **codigo** :
+
+```php
+return $this->hasOne('App\Models\Telefono', 'idUsuario', 'codigo');
+```
+
+També és possible obtindre la relació inversa, és a dir, a partir d'un telèfon, obtindre l'usuari al qual
+pertany. Per a això, afegim un mètode en el model Telefono i emprem el mètode
+**belongsTo** per a indicar a quin model s'associa:
+
+```php
+class Telefono extends Model
+{
+	public function usuario()
+	{
+		return $this->belongsTo('App\Models\Usuario');
+	}
+}
+```
+
+Novament, podem especificar altres noms de clau passant paràmetres addicionals a **belongsTo**
+, igual que es fa per a **hasOne** .
+D'aquesta manera, si volem obtindre l'usuari a partir del telèfon, podem fer-lo així:
+
+```
+$usuario = Telefono::findOrFail($idTelefono)->usuario;
+```
+
+#### Guardar dades relacionades
+
+
+Suposem que volem guardar un usuari amb el seu telèfon associat. Podem simplement guardar l'id del telèfon com un camp més de l'usuari:
+
+```php
+// Buscamos el teléfono que queremos asociar
+// (suponiendo que existe previamente)
+$telefono = Telefono::findOrFail($idTelefono);
+$usuario = new Usuario();
+$usuario->nombre = "Pepe";
+$usuario->email = "pepe@gmail.com";
+$usuario->telefono_id = $telefono->id;
+$usuario->save();
+```
+
+Però, a més, podem vincular tots dos objectes en la relació, usant el mètode **associate** , d'aquesta manera:
+
+```php
+// Buscamos el teléfono que queremos asociar
+// (suponiendo que existe previamente)
+$telefono = Telefono::findOrFail($idTelefono);
+$usuario = new Usuario();
+$usuario->nombre = "Pepe";
+$usuario->email = "pepe@gmail.com";
+$usuario->telefono()->associate($telefono);
+$usuario->save();
+```
+
+### Un a molts
+
+Una relació "un-a-molts" s'usa per a definir relacions en les quals un model únic posseeix qualsevol quantitat d'altres models. Per exemple: suposem que tenim els models Autor i Llibre , de manera que un autor pot tindre diversos llibres, i un llibre està associat a un autor.
+La manera d'establir la relació entre tots dos consistirà a afegir en la taula de llibres una clau
+aliena a l'autor al qual pertany. A l'hora de plasmar aquesta relació en els models, es fa de manera similar
+al cas anterior, només que en lloc d'utilitzar el mètode **hasOne** en la classe Autor usaríem el
+mètode **hasMany** :
+
+```php
+class Autor extends Model
+{
+	public function libros()
+	{
+		return $this->hasMany('App\Models\Libro');
+	}
+}
+```
+
+Igual que ocorria abans, s'assumeix que la taula de llibres té una clau primària id , i que la clau aliena
+corresponent cap a la taula d'autors és autor_id . En cas contrari, es poden especificar uns altres
+passant més paràmetres a **hasMany** .
+D'aquesta manera obtenim els llibres associats a un autor:
+
+```php
+$libros = Autor::findOrFail($id)->libros();
+```
+
+Finalment, també podem establir la relació inversa, i recuperar l'autor al qual pertany un
+determinat llibre, definint un mètode en la classe Llibre que empre *belongsTo , com en les
+relacions un a un:
+
+```php
+class Libro extends Model
+{
+	public function autor()
+	{
+		return $this->belongsTo('App\Models\Autor');
+	}
+}
+```
+
+I obtindre, per exemple, el nom de l'autor a partir del llibre:
+
+```
+$nombreAutor = Libro::findOrFail($id)->autor->nombre;
+```
+
+#### Accés eficient a dades relacionades. Eager loading
+
+Si en una vista Blade, accedim al nom de l'autor de esta manera:
+
+```
+{{ "{{ $libro->autor->nombre " }}}}
+```
+aquest codi provoca una nova consulta en la base de dades per a buscar les dades de l'autor
+associat al llibre, al que, per a un llistat de 100 llibres, estarem fent 100 consultes addicionals
+per a extraure la informació dels respectius autors.
+Per a evitar aquesta sobrecàrrega, podem emprar una tècnica anomenada **eager loading** (que en valencià
+podríem traduir com a càrrega precipitada o impacient). Consisteix a emprar el mètode **with** per a indicar
+quina relació volem deixar pre-carregada en el resultat. Per exemple, si indiquem una cosa així en la
+funció **index** del controlador de llibres:
+
+```php
+public function index()
+{
+	$libros = Libro::with('autor')->get();
+	return view('libros.index', compact('libros'));
+}
+```
+
+### Molts a molts – Many to many
+
+Les relacions molts-a-molts són una mica més complicades que les hasOne o les hasMany. Un exemple de tal relació és un usuari que conté diversos rols, on els rols són compartits per altres usuaris. Per exemple, diversos usuaris poden tenir el rol de "Admin". Per a definir aquesta relació, es requereixen tres taules de la base de dades: users, rols, i role_user. La taula role_user és derivada de l'ordre alfabètic dels noms dels models relacionats i conté les columnes user_id i role_id.
+
+Les relacions molts-a-molts es defineixen amb un mètode que retorna el resultat del mètode **belongsToMany**. Per exemple, definir el mètode rols en el model User:
+
+```php
+	class User extends Model
+	{
+	    /
+	      The roles that belong to the user.
+	     /
+	    public function roles()
+	    {
+	        return $this->belongsToMany('App\Models\Role');
+	    }
+	}
+```	
 	
-## Exemple
+Una vegada definida la relació, es pot accedir als rols de l'usuari usant la propietat dinàmica rols:
+
+```
+	$roles = App\User::find($id)->roles;
+```	
+
+Per a definir la inversa d'una relació de molts a molts, simplement cal posar una altra cridada a belongsToMany en el model relacionat. 
+
+```php
+class Rol extends Model
+{
+	public function usuarios()
+	{
+		return $this->belongsToMany('App\Models\Usuario');
+	}
+}
+```
+
+A l'efecte d'automatització, és a dir, perquè Eloquent establisca els nexes de manera automàtica, si
+volem establir una relació molts a molts entre un model A i un altre B , s'assumeix que existirà
+una altra taula a_b (l'ordre en què es col·loquen els noms de les taules és alfabètic), amb els camps
+a_id i b_id , que relacionen els dos models. En este cas, s'assumirà que existeix una taula
+rol_usuari amb un camp **rol_id** i un altre anomenat **usuario_id** , que enllacen amb els
+corresponents id de les taules d'usuaris i rols. Si això no fóra així, podem passar més
+paràmetres a **belongsToMany** per a indicar-ho.
+
+En el cas de les relacions molts a molts, és possible que ens interesse accedir a alguna dada d'aqueixa taula
+intermèdia que els relaciona. En aqueix cas, fem ús de l'atribut **pivot** , predefinit, i que apunta a la
+taula o model intermedi entre els dos relacionats. Per exemple, si volguérem obtindre la data de creació
+de la relació entre un usuari i un rol, podríem fer això:
+
+```
+$roles = Usuario::findOrFail($id)->roles;
+for($roles as $rol)
+{
+	echo $rol->pivot->created_at;
+}
+```
+
+Per defecte, només les claus del model estaran presents en l'objecte pivot. Si la taula pivot conté atributs addicionals, s'han d'especificar en definir la relació:
+
+```
+	return $this->belongsToMany('App\Role')->withPivot('column1', 'column2');
+```
+
+Si es desitja que els camps crated_at i updated_at es mantinguen de forma automàtica, cal utilitzar el mètode withTimestamps en definir la relació:
+
+```
+	return $this->belongsToMany('App\Role')->withTimestamps();
+```
+
+##### Filtrant Relacions Via Columnes de Taula Intermèdia
+
+També pots filtrar els resultats van retornar per belongsToMany utilitzant el **wherePivot** i **wherePivotIn** mètodes quan definint la relació:
+
+```
+	retorn $this->belongsToMany('App\Notes')->wherePivot('aprovat', 1);
+```	
+
+## Seeders i factories
+
+En les proves que hem fet fins ara, per a tindre dades amb què provar l'aplicació, ens hem limitat a afegir-los a mà des de **phpMyAdmin**.
+Atés que les dades d'inici són necessaris per a provar algunes funcionalitats bàsiques de l'aplicació,
+com són les cerques i filtrats, i atés que els formularis per a donar d'alta i gestionar aquestes dades normalment no es tenen llestos fins a etapes més tardanes, pot resultar convenient disposar d'algun
+mecanisme que genere aquestes dades de prova a l'inici, sense preocupar-nos de tocar la base de dades a mà o
+alterar el codi de l'aplicació per a això. En aquest aspecte, els **seeders i factories** juguen un paper
+important.
+
+### Los seeds
+
+Els **seeders** són classes especials que permeten sembrar (seed) de contingut una aplicació. Per a crear-los, utilitzem el comando **php artisan** com segueix:
+
+php artisan make:seeder NombreSeeder
+
+Això crearà una classe anomenada **NombreSeeder** en la carpeta **database/seeders**. En el mètode **run** d'aquesta classe podem crear els elements que necessitem afegir a la base de dades.
+Per exemple, per a emplenar un taula de llibres podem fer un LibrosSeeder:
+
+```
+php artisan make:seeder LibrosSeeder
+```
+
+Editem el mètode run del seeder que hem creat, i definim aquest codi per a crear un autor amb
+un llibre associat (haurem d'incorporar amb use els models d'Autor i Llibre prèviament):
+
+```php
+public function run()
+{
+	$autor = new Autor();
+$autor->nombre = "Juan Seeder";
+$autor->nacimiento = 1960;
+$autor->save();
+$libro = new Libro();
+$libro->titulo = "El libro del Seeder";
+$libro->editorial = "Seeder S.A.";
+$libro->precio = 10;
+$libro->autor()->associate($autor);
+$libro->save();
+}
+```
+
+#### Afegint els seeders a l'aplicació
+
+Per defecte, els *seeders que creguem no formen part de l'aplicació encara, en el sentit que encara no els
+podem executar. Per a això, hem de donar-los d'alta en el seeder general, anomenat **DatabaseSeeder** ,
+situat en la mateixa carpeta que els seeders que definim:
+
+```
+class DatabaseSeeder extends Seeder
+{
+	public function run()
+	{
+		...
+		$this->call(LibrosSeeder::class);
+	}
+}
+```
+
+#### Llançant els seeders
+
+Si només volem executar aquest *seeder perquè afija les dades, emprarem aquest comando:
+
+```
+php artisan db:seed
+```
+
+Això llançarà tots els seeders que tinguem declarats en la classe DatabaseSeeder . Si només volem
+llançar un en concret, podem fer el següent:
+
+```
+php artisan db:seed --class=LibrosSeeder
+```
+
+També pot ser necessari (i a vegades convenient) netejar la base de dades i omplir-la des de zero amb les dades dels seeds per a començar a provar l'aplicació. En aquest cas, el comando és el següent:
+
+```
+php artisan migrate:fresh --seed
+```
+
+### Els factories
+
+Els seeders són una eina útil per a poblar la nostra aplicació amb dades a l'inici. Podem, per exemple
+, donar d'alta una sèrie d'usuaris inicials amb accés a l'aplicació, perquè amb ells es puguen
+emplenar la resta de dades. També podem donar d'alta una sèrie de dades predefinides en unes certes taules, o dades de prova que després poder esborrar.
+No obstant això, els **seeders** per si sols es queden una mica "coixos". Què hauríem de fer per a donar d'alta 10 o 20 llibres en la nostra taula. Hauríem de definir algun tipus de bucle en el **seeder**,
+i definir dades diferents (per exemple, amb identificadors o comptadors aleatoris) per a cada llibre. Per a facilitar
+aquesta tasca, podem tirar mà dels **factories**.
+
+Els factories són classes que permeten generar dades per lots. Es creen amb el següent comando,
+emmagatzemant-se la classe en la carpeta **database/factories** :
+
+```
+php artisan make:factory NombreFactory
+```
+
+Per exemple, anem a crear un factori per crear autors:
+
+```
+php artisan make:factory AutorFactory
+```
+
+Un dels canvis importants que ha portat la versió 8 de Laravel és que ara els factories estan
+orientats a objectes, per la qual cosa s'engloben en classes. A més, per defecte s'associen als models que creguem, de manera que podem generar una factoria d'objectes a partir d'una classe, com veurem a continuació. Per aquest motiu, quan creguem un model s'afig una clàusula use indicant que
+empra el **trait HasFactory**.
+
+```
+class Libro extends Model
+{
+use HasFactory;
+...
+}
+```
+
+Un **trait** bàsicament és un conjunt de mètodes que es pot emprar per qualsevol classe que vulga
+utilitzar-los. D'aquesta manera, s'esmorteeix en part la limitació de només poder heretar d'una classe, i
+mitjançant aquests **traits** podem incorporar la funcionalitat d'unes altres.
+
+Quan creem una factoria en **Laravel 8** emprant el comando **php artisan make:factory**
+comentat anteriorment, obtindrem una classe amb el nom que hàgem indicat, en la carpeta
+**database/factories** . Per exemple:
+
+```
+namespace Database\Factories;
+use App\Models\Autor;
+use Illuminate\Database\Eloquent\Factories\Factory;
+class AutorFactory extends Factory
+{
+	/**
+	* The name of the factory's corresponding model.
+	*
+	* @var string
+	*/
+	protected $model = Autor::class;
+		/**
+		* Define the model's default state.
+		*
+		* @return array
+		*/
+		public function definition()
+		{
+			return [
+				//
+			];
+	}
+}
+```
+Ara haurem d'emplenar el mètode **definition** amb les dades que vulguem generar per a cada objecte
+que es cree. Per exemple, així empraríem el **faker** (ara automàticament incorporat en el propi
+objecte \$this ), per a generar dades a l'atzar per als autors:
+
+```php
+public function definition()
+{
+	return [
+		'nombre' => $this->faker->name,
+		'nacimiento' => $this->faker->numberBetween(1950, 1990)
+	];
+}
+```
+
+Finalment, en el seeder corresponent, podem utilitzar aquest factory per a generar N objectes del model
+associat. Per exemple:
+
+```php
+class AutoresSeeder extends Seeder
+{
+	public function run()
+	{
+		Autor::factory()->count(5)->create();
+	}
+}
+```
+
+Per a generar dades relacionades entre models (per exemple, llibres amb els seus autors), procedim igual queen les versions anteriors de Laravel, però tenint en compte que per a cridar a la factoria s'ha d'utilitzar
+el mètode estàtic del model associat. Per exemple:
+
+```php
+class LibrosSeeder extends Seeder
+{
+	public function run()
+	{
+		$autores = Autor::all();
+		$autores->each(function($autor) {
+			Libro::factory()->count(2)->create([
+'autor_id' => $autor->id]);
+		});
+	}
+}
+```
+## Query Builder
+
+Laravel inclou una sèrie de classes que ens facilita la construcció de consultes i un altre tipus d'operacions amb la base de dades. A més, en utilitzar aquestes classes, vam crear una notació molt més llegible, compatible amb tots els tipus de bases de dades suportats per Laravel i que ens prevé de cometre errors o d'atacs per injecció de codi SQL.
+
+#### Consultes
+Per a realitzar una "Select" que retorne totes les files d'una taula utilitzarem el següent codi:
+
+```php
+	$users = DB::table('users')->get();
+	foreach ($users as $user) {
+		echo $user->name; 
+	}
+```	
+	
+En l'exemple s'utilitza el constructor DB::taula indicant el nom de la taula sobre la qual es va a realitzar la consulta, i finalment es diu al mètode get() per a obtenir totes les files de la mateixa.
+
+Si volem obtenir un sol element podem utilitzar first en lloc de get, de la forma: 
+
+```
+	$user = DB::table('users')->first();
+```
+
+##### Clausula where
+
+Per a filtrar les dades usem la clausula where, indicant el nom de la columna i el valor a filtrar:
+
+```	
+	$user = DB::table('users')->where('name','Pedro')->get();
+```	
+	 
+En aquest exemple, la clausula where filtrarà totes les files la columna de les quals name siga igual a Pedro. Si volem realitzar un altre tipus de filtrats, com a columnes que tinguen un valor major (>), major o igual (>=), menor (<), menor o igual (<=), diferent de l'indicat (<>) o usar l'operador like, ho podem indicar com a segon paràmetre de la forma:
+
+```	
+	$users = DB::table('users')->where('votes', '>', 100)->get(); 
+	$users = DB::table('users')->where('status', '<>', 'active')->get();
+	$users = DB::table('users')->where('name', 'like', 'T%')->get();
+```
+
+Si afegim més clausulas where a la consulta per defecte s'uniran mitjançant l'operador lògic AND. En cas que vulguem utilitzar l'operador lògic OR ho haurem de realitzar usant **orWhere** de la forma:
+
+```
+	$users = DB::table('users') ->where('votes', '>', 100)->orWhere('name', 'Pedro') ->get();
+```
+
+##### orderBy / groupBy / having
+
+També podem utilitzar els mètodes orderBy, groupBy i having en les consultes:
+
+```
+	$users = DB::table('users') ->orderBy('name', 'desc')->groupBy('count') ->having('count', '>', 100)->get();
+```
+
+##### Offset / Limit
+
+Si volem indicar un offset o limit ho realitzarem mitjançant els mètodes skip (per a l'offset) i take (para limit), per exemple:
+
+```
+	$users = DB::table('users')->skip(10)->take(5)->get();
+```
+
+### Transaccions
+
+Laravel també permet crear transaccions sobre un conjunt d'operacions:
+
+```
+	DB::transaction(function() {
+		DB::table('users')->update(array('votes' => 1));
+		DB::table('posts')->delete(); 
+	});
+```
+
+En cas que es produïsca qualsevol excepció en les operacions que es realitzen en la transacció es desfarien tots els canvis aplicats fins a aqueix moment de forma automàtica.
+
+## Us de dates
+
+En algunes taules que hem vist o creat, s'ha usat un tipus **timestamp**, que bàsicament genera un
+tipus data en la taula corresponent. Aquests camps de tipus taula són instàncies d'una llibreria PHP
+anomenada **Carbon**, molt útil per a treballar amb dates. Així que, si tenim un registre de tipus Persona amb un camp **created_at** de tipus data, podem treballar amb ell com una data **Carbon**, i, per exemple,
+mostrar-la en una vista amb un format específic:
+
+<p>Fecha creación: {{ "{{ Carbon\Carbon::parse($persona->created_at)->format('d/m/Y) " }}}}</p>
+
+A més, per a treballar sobre els camps created_at i updated_at que per defecte es creen en una
+taula des d'una migració Laravel, podem emprar aquesta llibreria **Carbon** per a donar-los valor, encara que d'això ja s'encarrega Eloquent automàticament, però per si ho volem fer manualment, ací va un exemple:
+
+```php 
+DB::table('personas')->insert([
+'nombre' => 'Juan',
+'edad' => 56,
+'created_at' => Carbon::now(),
+'updated_at' => Carbon::now()
+]);
+```
+
+Per a poder emprar la classe Carbon , hem d'importar-la ( **use Carbon\Carbon** ).
+
+
+
+## Addendum sobre relacions
+
+### Has Many Through
+
+El "Has Many Through" proporciona una drecera convenient per accedir relacions distants via una relació intermèdia.Per exemple, un model Country, pot tenir molts models Post a través d'un model intermedi User. En aquest exemple, es podria reunir fàcilment tots els missatges d'un blog per a un país determinat. Fem una ullada a les taules per a definir aquesta relació:
+
+countries
+id - integer
+name - string
+
+users
+id - integer
+country_id - integer
+name - string
+
+posts
+id - integer
+user_id - integer
+title - string
+
+Encara que Post no conté una columna country_id, la relació hasManyThrough proporciona accés als missatges d'un país via \$country->posts.
+
+Per a realitzar aquesta consulta, Eloquent inspecciona country_id en la taula intermèdia users. Després de trobar els IDs d'usuaris coincidents, seran usats per a la consulta a la taula posts.
+
+Ara que s'ha examinat l'estructura de la taula per a la relació, es va a definir sobre el model Country:
+
+```php	
+	class Country extends Model
+	{
+	    /*
+	     * Get all of the posts for the country.
+	     */
+	    public function posts()
+	    {
+	        return $this->hasManyThrough('App\Post', 'App\User');
+	    }
+	}
+```
+
+El primer paràmetre passat al mètode hasManyThrough és el nom del model final al que es desitja accedir, mentre que el segon paràmetre és el nom del model intermedi.
+
+Els convenis típics per a claus de Eloquent seran usats per a realitzar les consultes de la relació. Si es desitja personalitzar les claus de la relació, es pot fer pels paràmetres tercer i quart al mètode hasManyThrough. El tercer paràmetre és el nom de la clau aliena del model intermediari. El quart paràmetre correspon amb el nom de la clau aliena del model final. El cinquè argument és la clau local, mentre que el sisè és la clau local del model intermedi:
+
+```php
+	class Country extends Model
+	{
+	    public function posts()
+	    {
+	        return $this->hasManyThrough(
+	            'App\Post',
+	            'App\User',
+	            'country_id', // Foreign key on users table...
+	            'user_id', // Foreign key on posts table...
+	            'id', // Local key on countries table...
+	            'id' // Local key on users table...
+	        );
+	    }
+	}
+```
+
+##### Consultar l'Existència de Relacions
+
+Quan s'accedeixen als registres d'un model, es poden limitar els resultats basats en l'existència d'una relació. Per exemple, imaginar que es desitja obtenir tots els posts que continguen almenys un comentari. Per a açò, es passaria el nom de la relació al mètode has o a orHas:
+
+```
+	// Retrieve all posts that have at least one comment...
+	$posts = App\Post::has('comments')->get();
+```
+
+A més es pot especificar un operador i un comptador per a personalitzar la consulta:
+
+```
+	// Retrieve all posts that have three or habite comments...
+	$posts = Post::has('comments', '>=', 3)->get();
+```
+
+Es poden nigar estructures has utilitzant la notació de "punts". Per exemple, es podrien obtenir tots els posts que tenen almenys un comentari i un vot:
+
+```
+	// Retrieve all posts that have at least one comment with votes...
+	$posts = Post::has('comments.votes')->get();
+```	
+
+Si es necessita encara més control, es poden utilitzar els mètodes whereHas i orWhereHas per a incloure condicions "where" en les consultes has. Aquests mètodes permeten afegir restricciones personalitzades a una relació, així com comprovar el contingut d'un comentari:
+
+```
+	// Retrieve all posts with at least one comment containing words like foo%
+	$posts = Post::whereHas('comments', function ($query) {
+	    $query->where('content', 'like', 'foo%');
+	})->get();
+```	
+	
+Quan s'accedeixen als registres d'un model, es poden limitar els resultats basats en la **inexistència** d'una relació. Per exemple, imaginar que es desitja obtenir tots els posts que no continguen almenys un comentari. Per a açò, es passaria el nom de la relació al mètode doesntHave o a orDoesntHave:
+
+```
+	$posts = App\Post::doesntHave('comments')->get();
+```
+
+#### Insertant i modificant Models rel.lacionats
+
+##### El mètode Save
+
+Eloquent proveeix mètodes convenients per a l'addició de nous models a les relacions. Per exemple, potser necessite inserir un nou Comment a un model Post. En lloc de configurar manualment l'atribut **post_id** en el Comment, pot inserir el Comment directament des del mètode **save** de la relació:
+
+	$comment = new App\Comment(['message' => 'A new comment.']);
+	$post = App\Post::find(1);
+	$post->comments()->save($comment);
+	
+Note's que no accedim als comments de la relació com una propietat dinàmica. En el seu lloc, cridem al mètode comments per a obtenir una instància de la relació. El mètode save agregarà automàticament el valor post_id apropiat al nou model Comment.
+
+Si necessitem gravar multiples models relacionats, pot usar el mètode **saveMany**
+
+```
+	$post = App\Post::find(1);
+	
+	$post->comments()->saveMany([
+	    new App\Comment(['message' => 'A new comment.']),
+	    new App\Comment(['message' => 'Another comment.']),
+	]);
+```	
+
+#### El mètode Create
+
+A més dels mètodes save i saveMany, es pot utilitzar també el mètode **create**, eque accepta una matriu d'atributs, crea el model i ho insereix en la base de dades. De nou, la diferència entre save i create és que save accepta una instància d'un model complet de Eloquent mentre que create accepta una matriu de PHP:
+
+```
+	$post = App\Post::find(1);
+	
+	$comment = $post->comments()->create([
+	    'message' => 'A new comment.',
+	]);
+```	
+	
+
+Abans d'utilitzar el crear mètode, revisa la documentació d'assignment masssiu.
+Pots utilitzar el createMany mètode per crear el múltiple va relacionar models:
+
+```
+	$post = App\Post::find(1);
+	$post->comments()->createMany([
+	    [
+	        'message' => 'A new comment.',
+	    ],
+	    [
+	        'message' => 'Another new comment.',
+	    ],
+	]);
+```	
+	
+#### Belongs To Relationships
+
+Quan actualitzem una relació **belongsTo**, utilitzaem el mètode associate. Aquest mètode establirà la clau forània en el model fill.
+
+	$account = App\Account::find(10);
+	$user->account()->associate($account);
+	$user->save();
+	
+Per a llevar-la, pots utilitzar el mètode **dissociate**. Aquest mètode posarà la clau forània de la relació a null:
+
+	$user->account()->dissociate();
+	$user->save();
+	
+#### Relacions Molts a Molts
+
+##### Adjuntar / Separar (Attaching / Detaching)
+
+Eloquent també proporciona uns quants helpers addicionals helper mètodes per fer que treballen amb va relacionar models habite convenient. Per exemple, imaginar que un usuari pot tenir diversos rols i un rol pot tenir diversos usuaris. Per un adjuntar un rol un un usuari inserint un registre en la taula intermèdia que uneix els models, utilitzar el mètode attach:
+
+	$user = App\User::find(1);
+	$user->rols()->attach($roleId);
+	
+Quan s'adjunta una relació a un model, es pot passar a més un array de dades addicional per a inserir-ho en la taula intermèdia:
+
+	$user->rols()->attach($roleId, ['expires' => $expires]);
+
+Per descomptat, a voltes és necessari eliminar un rol d'un usuari. Per a eliminar un registre d'una relació molts-a-molts, utilitzar el mètode **detach**. El mètode detach eliminarà el registre apropiat de la taula intermèdia; no obstant açò, tots dos models romandran en la base de dades:
+
+	// Detach a single role from the user...
+	$user->rols()->dettach($roleId);
+	
+	// Detach all rols from the user...
+	$user->rols()->dettach();
+
+Per comoditat, attach i dettach accepten a més un array de IDs com a entrada:
+
+	$user = App\User::find(1);
+	
+	$user->rols()->detach([1, 2, 3]);
+	
+	$user->rols()->attach([
+	    1 => ['expires' => $expires],
+	    2 => ['expires' => $expires]
+	]);
+	
+##### Guardant dades addicional en la taula pivot
+
+Quan treballem amb una relació molts-a-molts, el mètode Save accepta , com a segon argument, una matriu de attributes de la taula annexa (taula pivot)
+
+	App\User::find(1)->rols()->save($role, ['expires' => $expires]);
+
+##### Modificant un registre en la taula Pivot 
+
+Si necessites actualitzar una fila en el taula pivot, pots utilitzar el mètode **updateExistingPivot**. Aquest mètode accepta la clau forània i una varietat d'atributs per actualitzar:
+
+	$user = App\User::find(1);
+	$user->rols()->updateExistingPivot($roleId, $attributes);
+	
+
+Consulta [documentación](https://laravel.com/docs/8.x/eloquent-relationships)
 
 
 

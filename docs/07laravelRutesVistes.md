@@ -640,6 +640,30 @@ En cas contrari el mètode NO serà executat com una prova, la qual cosa és út
 * Pots llegir sobre els mètodes d'assercions disponibles en la documentació de Laravel.
 
 
+#### Exercicis
 
+En el repositori anem a crear un Blog:
 
+701. Edita el fitxer routes/web.php i afig una nova [ruta](#rutes-simples) a la URL posts. En accedir a aquesta ruta (http://blog/posts), haurem de veure un missatge amb el text “Llistat de posts”.
 
+702. Afig una nova [ruta parametritzada](#afegir-paràmetres-a-les-rutes) a **posts/{id}** , de manera que el paràmetre id siga numèric (és a dir, només continga dígits del 0 al 9) i obligatori. Fes que la ruta retorne el missatge "Fitxa del post XXXX", sent XXXX l'id que haja rebut com a paràmetre.
+
+Posa un [nom](#named-routes) a les tres rutes que hi ha definides fins ara:
+
+* a la pàgina d'inici posa-li el nom "inici"
+* a la del llistat la direm "posts_llistat"
+* a la de fitxa que acabes de crear, la direm "posts_fitxa".
+
+703. Definix una [plantilla](#definir-plantilles-comunes) anomenada plantilla.blade.php en la carpeta de vistes del projecte ( resources/views ). Defineix una capçalera amb una secció yield per al títol, i una altra per al contingut de la pàgina, com la de l'exemple que hem vist anteriorment.
+Defineix en un arxiu a part en la subcarpeta **partials** , anomenat **nav.blade.php** , una barra de navegació que ens permeta accedir a aquestes direccions de moment:
+
+	* Pàgina d'inici
+	* Llistat de posts
+
+[Inclou la barra de navegació en la plantilla base](#incloure-vistes-dins-daltres) que has definit abans
+A partir de la plantilla base, [defineix altres dues vistes](#definir-plantilles-comunes) en una subcarpeta posts , anomenades posts/llistat.blade.php i posts/fitxa.blade.php . Com a títol de cada pàgina posa un breu text del que són (per exemple, "Llistat posts" i "Fitxa post"), i com a contingut de moment deixa un encapçalat **h1** que indique la pàgina en la qual estem: "Llistat de posts" o "Fitxa del post XXXX", on XXXX serà [l'identificador del post](#pasar-valor-a-les-vistes) que haurem passat per la URL (i que deuràs passar a la vista).
+
+Fes que les rutes corresponents de routes/web.php que ja has definit [renderitzen](#vistes) aquestes vistes en lloc de retornar text pla.
+
+Edita l'arxiu **partials/nav.blade.php** per a modificar la barra de navegació i deixar-la amb un estil particular de Bootstrap. Pots consultar aquesta [pàgina](https://getbootstrap.com/docs/4.5/components/navbar/) per a prendre idees d'alguns dissenys que pots aplicar en la barra de navegació.
+Canvia de nom l'arxiu welcome.blade.php a inici.blade.php i canvia-ho perquè també herete de la plantilla base. Afig algun text introductori com a contingut. 
