@@ -58,7 +58,7 @@ Arribats a aquest punt... quines característiques té Laravel que ens hagen fet
 
 És bastant popular hui dia, potser el que més, si atenem diferents webs estadístiques. Per exemple, si comparem les cerques en **Google Trends** dels principals frameworks PHP, observem que Laravel és el més destacat:
 
-![Comparativa frameworks PHP](../img/compFra.png)
+![Comparativa frameworks PHP](../imagenes/07/compFra.png)
 
 També és un dels frameworks PHP que més demanda laboral a nivell nacional segons  **InfoJobs**.
 
@@ -185,30 +185,8 @@ Açò ens mostrarà una taula amb el mètode, l'adreça, l'acció i els filtres 
 
 En crear un nou projecte de Laravel se'ns generarà una estructura de carpetes i fitxers per a organitzar el nostre codi. És important que coneguem perquè val cada element i on hem de col·locar el nostre codi. Les carpetes que més utilitzarem i les que millor haurem de conèixer són:
 
-
-
-
-El directori de rutes
-El directori de rutes conté totes les definicions de rutes per a la vostra aplicació. Per defecte, s'inclouen diversos fitxers de ruta amb Laravel: web.php, api.php, console.php i channels.php.
-
-El fitxer web.php conté rutes que el RouteServiceProvider col·loca en el grup web de middleware, que proporciona estat de la sessió, protecció CSRF i xifratge de galetes. Si la vostra aplicació no ofereix una API apàtrida, RESTful, aleshores és molt probable que totes les vostres rutes estiguin definides al fitxer web.php.
-
-El fitxer api.php conté rutes que el RouteServiceProvider col·loca en el grup de middleware api. Aquestes rutes estan destinades a ser apàtrides, de manera que les sol·licituds que entren a l'aplicació a través d'aquestes rutes estan destinades a ser autenticades a través de tokens i no tindran accés a l'estat de la sessió.
-
-El fitxer console.php és on podeu definir totes les vostres ordres de consola basades en el tancament. Cada tancament està lligat a una instància de comandament que permet un enfocament senzill per interaccionar amb els mètodes d'E/S de cada comandament. Encara que aquest fitxer no defineix rutes HTTP, defineix punts d'entrada basats en la consola (routes) a la vostra aplicació.
-
-El fitxer channels.php és on podeu registrar tots els canals d'emissió d'esdeveniments que admeti la vostra aplicació.
-
-El directori d'emmagatzematge
-El directori d'emmagatzematge
-
-
-El directori de proves
-El directori de proves conté les proves automàtiques. Exemple de proves unitàries PHPUnit i proves de característiques es proporcionen fora de la caixa. Cada classe de prova s'ha de sufixar amb la paraula Test. Podeu executar les vostres proves utilitzant les ordres phpunit o php vendor/bin/phpunit. O, si voleu una representació més detallada i bonica dels resultats de les proves, podeu executar les proves utilitzant l'ordre php artisan test Artisan.
-
-El directori del proveïdor
-El directori del proveïdor conté les vostres dependències de l'editor.
 * **app** – Conté el codi central de la vostra aplicació. Aviat explorarem aquest directori amb més detall; no obstant això, gairebé totes les classes de la vostra aplicació estaran en aquest directori.
+
 * **bootstrap** - Conté el fitxer app.php que arrossega l'entorn de treball. Aquest directori també alberga un directori de memòria cau que conté els fitxers generats per l'entorn de treball per a l'optimització del rendiment, com ara els fitxers de memòria cau de rutes i serveis. Normalment no hauríeu de modificar cap fitxer dins d'aquest directori.
 * **config** – conté tots els fitxers de configuració de l'aplicació. És una gran idea llegir tots aquests fitxers i familiaritzar-se amb totes les opcions disponibles.
 * **database** – En aquesta carpeta s'inclou tot el relacionat amb la definició de la base de dades del nostre projecte. Dins d'ella podem trobar al seu torn tres carpetes: factors, migrations i seeds. En el capítol sobre base de dades analitzarem millor el seu contingut.
@@ -230,7 +208,6 @@ El directori del proveïdor conté les vostres dependències de l'editor.
 
 ##### Carpeta App
 La majoria de la vostra aplicació es troba al directori d'aplicacions. De manera predeterminada, aquest directori es troba a l'espai de noms d'App i el Composer el carrega automàticament utilitzant l'estàndard de càrrega automàtica PSR-4.
-
 El directori d'aplicacions conté una varietat de directoris addicionals com Console, Http i Providers. Penseu en els directoris Console i Http com proporcionar una API al nucli de la vostra aplicació. El protocol HTTP i la CLI són mecanismes per interactuar amb la vostra aplicació, però en realitat no contenen lògica d'aplicació. En altres paraules, són dues maneres d'emetre ordres a la vostra sol·licitud. El directori Consola conté totes les vostres ordres de l'Artisan, mentre que el directori Http conté les vostres controladores, programari intermediari i peticions.
 
 Es generaran una varietat d'altres directoris dins del directori d'aplicacions a mesura que utilitzeu les ordres make Artisan per generar classes. Així, per exemple, el directori d'apps/Jobs no existirà fins que executeu l'ordre make:job Artisan per generar una classe de treball.
@@ -285,7 +262,7 @@ De manera genèrica, els components de MVC es podrien definir com segueix:
 * El **Controlador**: **Respon a esdeveniments** (usualment accions de l'usuari) i **invoca peticions al 'model'** quan es fa alguna sol·licitud d'informació (per exemple, editar un document o un registre en una base de dades). Per tant es podria dir que el 'controlador' fa d'intermediari entre la 'vista' i el 'model'.
 * La **Vista**: **Presenta el 'model'** i les dades preparades pel controlador a l'usuari de **forma visual**. L'usuari podrà interactuar amb la vista i realitzar altres peticions que s'enviaran al controlador.
 
-![Modelo Vista Controlador](../img/mvc.png)
+![Modelo Vista Controlador](../imagenes/07/mvc.png)
 
 ##### Funcionament bàsic
 
@@ -301,5 +278,5 @@ El funcionament bàsic que segueix Laravel després d'una petició web a una URL
   mostrar-se correctament a partir de les dades d'entrada i finalment es mostrarà a l'usuari.
   A continuació s'inclou un xicotet esquema d'aquest funcionament:
 
-![](../img/l101.png)
+![](../imagenes/07/l101.png)
 
