@@ -37,23 +37,23 @@ Duració estimada: 80 hores
      * Client/Servidor. 
      * MVC.
 
-3. [El llenguatge PHP](02php.md) (24h)
+2. [El llenguatge PHP](02php.md) (24h)
    
      * Condicions i bucles.
      * Arrays.
 
-4. [Orientació a objectes amb PHP](03phpoo.md) (19h)
+3. [Orientació a objectes amb PHP](03phpoo.md) (19h)
 
      * Classes i objectes 
      * Namespaces
      * Excepcions
    
-5. [Programació Web](04web.md) (14h)
+4. [Programació Web](04web.md) (14h)
 
      * Formularis.
      * Cookies i sessió.
 
-6. [Eines Web](05herramientas.md) (21h)
+5. [Eines Web](05herramientas.md) (21h)
 
        * *Composer*.
        * Ús de logs amb *Monolog*.
@@ -65,14 +65,14 @@ Duració estimada: 80 hores
 
 Duració estimada: 80 hores
 
-7. [Accés a dades](06accesoDatos.md) (14h)
+6. [Accés a dades](06accesoDatos.md) (14h)
 
      * SQL
-     * *PDO*
+     * PDO
      * Fitxers CSV i PDF.
 
    
-8. [Frameworks PHP. Laravel.](07frameworksLaravel.md) (26h)
+7. [Frameworks PHP. Laravel.](07frameworksLaravel.md) (26h)
    
      * [Rutes i vistes](07laravelRutesVistes.md)
      * [Controladors](07laravelControladors.md)
@@ -80,7 +80,7 @@ Duració estimada: 80 hores
      * [Validacio i Autenticacio](07laravelValidacioAutenticacio.md)
      
 
-9. [Serveis REST](09rest.md) (16h)
+8. [Serveis REST](08rest.md) (16h)
 
     * Producció i consum.
     * *AJAX* amb *JSON*.
