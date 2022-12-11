@@ -70,9 +70,9 @@ Duració estimada: 80 hores
      * SQL
      * *PDO*
      * Fitxers CSV i PDF.
-     * *ORM* amb *Eloquent*.
+
    
-8. [Frameworks PHP. Laravel bàsic](07frameworksLaravel.md) (26h)
+8. [Frameworks PHP. Laravel.](07frameworksLaravel.md) (26h)
    
      * [Rutes i vistes](07laravelRutesVistes.md)
      * [Controladors](07laravelControladors.md)
