@@ -44,16 +44,16 @@
 - [X] 2.- (L 14N) Projecte Videoclub IV. Activitats 511 - 515 - 5
 - [X] 4.- (M 15N) Documentació amb *phpDocumentor*. Activitats 521 - 522.- 8
 - [X] 5.- (J 17N) Webscrapping. Activitats 531 - 533. -10
-- [X] 6.- (L 21N) Proves con *PhpUnit*. Activitats 541 - 545. - 13 
+- [X] 6.- (L 21N) Proves con PhpUnit. Activitats 541 - 545. - 13 
 - [No] 7.- (M 22N) Projecte Videoclub V. Activitats 551 - 554. - 16
 - [X] 9.- (J 24N) Prova escrita - 21
 
 ## 6.- Accès a Dades (11h)
 
-- [ ] 1.- (L 28N) SQL. Activitats 601 - 605 - 3
-- [ ] 2.- (M 29N) Filtres i comodins.PDO 606-608 - 5
-- [ ] 4.- (J 1D) Fitxers i PDF. Activitats 609 - 611 -8
-- [ ] 5.- (L 5D) Projecte cholloSevero. Activitats 615-618 - 11
+- [X] 1.- (L 28N) SQL. Activitats 601 - 605 - 3
+- [X] 2.- (M 29N) Filtres i comodins.PDO 606-608 - 5
+- [X] 4.- (J 1D) Fitxers i PDF. Activitats 609 - 611 -8
+- [X] 5.- (L 5D) Projecte cholloSevero. Activitats 615-618 - 11
 
 
 ## 7.- Frameworks PHP (26h)

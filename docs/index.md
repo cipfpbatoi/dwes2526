@@ -72,11 +72,12 @@ Duració estimada: 80 hores
      * Fitxers CSV i PDF.
      * *ORM* amb *Eloquent*.
    
-8. [Frameworks PHP. Laravel bàsic](07frameworks.md) (26h)
+8. [Frameworks PHP. Laravel bàsic](07frameworksLaravel.md) (26h)
    
-     * Rutes
-     * Vistes.
-     * Migracions i integració amb *Eloquent*.
+     * [Rutes i vistes](07laravelRutesVistes.md)
+     * [Controladors](07laravelControladors.md)
+     * [Models i dades](07laravelModelsDades.md)
+     * [Validacio i Autenticacio](07laravelValidacioAutenticacio.md)
      
 
 9. [Serveis REST](09rest.md) (16h)
