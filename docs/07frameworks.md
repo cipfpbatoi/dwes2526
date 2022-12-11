@@ -58,7 +58,7 @@ Arribats a aquest punt... quines característiques té Laravel que ens hagen fet
 
 És bastant popular hui dia, potser el que més, si atenem diferents webs estadístiques. Per exemple, si comparem les cerques en **Google Trends** dels principals frameworks PHP, observem que Laravel és el més destacat:
 
-![Comparativa frameworks PHP](../imagenes/07/compFra.png)
+![Comparativa frameworks PHP](imagenes/07/compFra.png)
 
 També és un dels frameworks PHP que més demanda laboral a nivell nacional segons  **InfoJobs**.
 
@@ -262,7 +262,7 @@ De manera genèrica, els components de MVC es podrien definir com segueix:
 * El **Controlador**: **Respon a esdeveniments** (usualment accions de l'usuari) i **invoca peticions al 'model'** quan es fa alguna sol·licitud d'informació (per exemple, editar un document o un registre en una base de dades). Per tant es podria dir que el 'controlador' fa d'intermediari entre la 'vista' i el 'model'.
 * La **Vista**: **Presenta el 'model'** i les dades preparades pel controlador a l'usuari de **forma visual**. L'usuari podrà interactuar amb la vista i realitzar altres peticions que s'enviaran al controlador.
 
-![Modelo Vista Controlador](../imagenes/07/mvc.png)
+![Modelo Vista Controlador](imagenes/07/mvc.png)
 
 ##### Funcionament bàsic
 
@@ -278,5 +278,9 @@ El funcionament bàsic que segueix Laravel després d'una petició web a una URL
   mostrar-se correctament a partir de les dades d'entrada i finalment es mostrarà a l'usuari.
   A continuació s'inclou un xicotet esquema d'aquest funcionament:
 
-![](../imagenes/07/l101.png)
+<figure>
+  <img src="/imagenes/07/l101.png" />
+  <figcaption>Funcionament Bàsic Laravel</figcaption>
+</figure>
+
 
