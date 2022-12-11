@@ -46,13 +46,13 @@ Actualment existeix una gran varietat de frameworks PHP que triar per a desenvol
 
 De fet, molts frameworks més antics també han incorporat recentment la possibilitat d'executar-los com microframeworks. Quasi tots els frameworks PHP tenen una sèrie de característiques comunes, com són l'ús del patró MVC per a desenvolupar els seus projectes, la injecció de dependències per a gestionar recursos com ara connexions a bases de dades, o elements compartits per tota l'aplicació, la possibilitat de desenvolupar tant webs completes com serveis REST accessibles des de diversos clients, etc.
 
-### Quin triar
+#### Quin triar
 
 A l'hora de decantar-nos per l'un o l'altre framework, no ens hauríem de deixar enganyar per la popularitat d'aquest, en termes de quota de mercat. En aqueix terreny, Symfony i Laravel probablement són els més demandats, però la corba d'aprenentatge en ells pot ser que siga més pronunciada que en uns altres a priori més senzills, com CodeIgniter o CakePHP.
 
 Cada framework pot estar millor orientat que un altre per a determinats tipus de projectes o necessitats. Si volem aprendre una cosa ràpida per a llançar l'aplicació com més prompte millor, potser Symfony **no** és la millor opció. Si, per contra, preferim xopar-nos d'un framework amb una comunitat important darrere que ens puga donar suport i ens garantisca un temps de vida llarg, llavors Symfony o Laravel poden ser millors candidats.
 
-### Per què Laravel?
+#### Per què Laravel?
 
 Arribats a aquest punt... quines característiques té Laravel que ens hagen fet triar-ho per a aquest curs enfront d'altres frameworks? És un framework que ofereix bastants avantatges.
 
@@ -67,7 +67,7 @@ Té una bona documentació, tant per terceres parts com a través de la seua pr�
 
 En realitat, una vegada es coneix un d'aquests frameworks, és més senzill assimilar la resta, arribat el moment. Així que Laravel pot ser un bon punt de partida. En concret, durant el curs utilitzarem la versió 8 del framework, que es recolza en PHP 7 per a funcionar.
 
-### Característiques
+## Característiques Laravel
 
 **Laravel** és un framework de codi obert per al desenvolupament d'aplicacions web en PHP que posseeix una sintaxi simple, expressiva i elegant. Va ser creat en 2011 per Taylor Otwell, inspirant-se en **Ruby on Rails i Symfony**, dels quals ha adoptat els seus principals avantatges.
 
@@ -115,8 +115,6 @@ I per a inicialitzar la base de dades des de dins del contenidor:
 ```php
 php artisan migrate
 ```
-
-
 
 ### Instal·lació des de repositori github
 
@@ -181,7 +179,7 @@ Per a veure un llistat amb totes les rutes que hem definit en el fitxer routes.p
 Açò ens mostrarà una taula amb el mètode, l'adreça, l'acció i els filtres definits per a totes les rutes. D'aquesta forma podem comprovar totes les rutes de la nostra aplicació i assegurar-nos que estiga tot correcte.
 
 
-#### Estructura d'un projecte Laravel
+### Estructura d'un projecte Laravel
 
 En crear un nou projecte de Laravel se'ns generarà una estructura de carpetes i fitxers per a organitzar el nostre codi. És important que coneguem perquè val cada element i on hem de col·locar el nostre codi. Les carpetes que més utilitzarem i les que millor haurem de conèixer són:
 
@@ -206,7 +204,7 @@ En crear un nou projecte de Laravel se'ns generarà una estructura de carpetes i
 * **composer.json** – Aquest fitxer és l'utilitzat per Composer per a realitzar la instal·lació de Laravel. En una instal·lació inicial
   únicament s'especificarà la instal·lació d'un paquet, el propi framework de Laravel, però podem especificar la instal·lació d'altres llibreries o paquets externs que afigen funcionalitat a Laravel.
 
-##### Carpeta App
+#### Carpeta App
 La majoria de la vostra aplicació es troba al directori d'aplicacions. De manera predeterminada, aquest directori es troba a l'espai de noms d'App i el Composer el carrega automàticament utilitzant l'estàndard de càrrega automàtica PSR-4.
 El directori d'aplicacions conté una varietat de directoris addicionals com Console, Http i Providers. Penseu en els directoris Console i Http com proporcionar una API al nucli de la vostra aplicació. El protocol HTTP i la CLI són mecanismes per interactuar amb la vostra aplicació, però en realitat no contenen lògica d'aplicació. En altres paraules, són dues maneres d'emetre ordres a la vostra sol·licitud. El directori Consola conté totes les vostres ordres de l'Artisan, mentre que el directori Http conté les vostres controladores, programari intermediari i peticions.
 
@@ -220,7 +218,7 @@ Es generaran una varietat d'altres directoris dins del directori d'aplicacions a
 * A més, ací s'inclouen, o es poden incloure, carpetes addicionals per a la nostra aplicació, com la carpeta **Events** per a definir els esdeveniments que ocórreguen, o diferents carpetes per a emmagatzemar el model de dades o classes de la nostra aplicació.
 
 
-#### Arquitectura d'un projecte Laravel
+### Arquitectura d'un projecte Laravel
 
 Una vegada vista l'estructura de carpetes i arxius que es genera quan creguem un projecte Laravel, és important també tindre unes nocions bàsiques de com s'interconnecten els elements internament, i què fa que un projecte Laravel es puga posar en marxa.
 
@@ -253,7 +251,7 @@ return Cache::get('key');
 Els **contracts** són un conjunt d'interfícies que proporcionen el nucli de serveis oferits per Laravel. Per exemple, mètodes per a enviar e-mails, o encolar tasques en una cola de prioritat, etc.
 
 
-##### MVC: Model - Vista - Controlador
+### MVC: Model - Vista - Controlador
 
 El model–vista–controlador (MVC) és un patró d'arquitectura de programari que separa les dades i la lògica de negoci d'una aplicació de la interfície d'usuari i el mòdul encarregat de gestionar els esdeveniments i les comunicacions. Per a açò MVC proposa la construcció de tres components diferents que són el model, la vista i el controlador, és a dir, d'una banda defineix components per a la representació de la informació, i d'altra banda per a la interacció de l'usuari. Aquest patró d'arquitectura de programari es basa en les idees de **reutilització de codi** i la **separació de conceptes**, característiques que cerquen facilitar la tasca de desenvolupament d'aplicacions i el seu posterior manteniment.
 De manera genèrica, els components de MVC es podrien definir com segueix:
@@ -264,7 +262,7 @@ De manera genèrica, els components de MVC es podrien definir com segueix:
 
 ![Modelo Vista Controlador](imagenes/07/mvc.png)
 
-##### Funcionament bàsic
+#### Funcionament bàsic
 
 El funcionament bàsic que segueix Laravel després d'una petició web a una URL del nostre lloc és el següent:
 
@@ -279,7 +277,7 @@ El funcionament bàsic que segueix Laravel després d'una petició web a una URL
   A continuació s'inclou un xicotet esquema d'aquest funcionament:
 
 <figure>
-  <img src="/imagenes/07/l101.png" />
+  <img src="imagenes/07/l101.png" />
   <figcaption>Funcionament Bàsic Laravel</figcaption>
 </figure>
 
