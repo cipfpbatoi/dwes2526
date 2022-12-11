@@ -10,7 +10,7 @@ nav:
   - "4.- Programació Web": "04web.md"
   - "5.- Ferramentes Web": "05herramientas.md"
   - "6.- Accès a Dades": "06accesoDatos.md"
-  - "7.- Frameworks PHP - Laravel": "07frameworks.md"
+  - "7.- Framework Laravel": "07frameworks.md"
   - "7.1- Rutes i vistes": "07laravelRutesVistes.md"
   - "7.2- Controladors": "07laravelControladors.md"
   - "7.3- Models i Dades": "07laravelModelsDades.md"
