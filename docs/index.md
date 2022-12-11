@@ -72,7 +72,7 @@ Duració estimada: 80 hores
      * Fitxers CSV i PDF.
 
    
-7. [Frameworks PHP. Laravel.](07frameworksLaravel.md) (26h)
+7. [Frameworks PHP. Laravel.](07frameworks.md) (26h)
    
      * [Rutes i vistes](07laravelRutesVistes.md)
      * [Controladors](07laravelControladors.md)
