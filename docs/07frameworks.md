@@ -32,17 +32,17 @@ Un **framework** és una eina que proporciona una sèrie de mòduls que ajuden a
 
 Actualment existeix una gran varietat de frameworks PHP que triar per a desenvolupar les nostres aplicacions. Alguns dels més populars són:
 
-* Laravel, un framework relativament recent (va ser creat en 2011), i que ha guanyat bastant popularitat en els últims anys. La seua ﬁlosofia és el poder desenvolupar projectes de manera elegant i simple. Compta amb una àmplia comunitat de suport darrere, i se li augura un futur bastant consolidat.
+* **Laravel**, un framework relativament recent (va ser creat en 2011), i que ha guanyat bastant popularitat en els últims anys. La seua ﬁlosofia és el poder desenvolupar projectes de manera elegant i simple. Compta amb una àmplia comunitat de suport darrere, i se li augura un futur bastant consolidat.
 
-* Symfony, creat en 2005, compta amb més camí fet que Laravel, i una estructura més consolidada. En les seues primeres versions es presentava com un framework més monolític (s'instal·laven massa mòduls que després no necessitàvem), però recentment ha adaptat la seua estructura per a fer-la més modular.
+* **Symfony**, creat en 2005, compta amb més camí fet que Laravel, i una estructura més consolidada. En les seues primeres versions es presentava com un framework més monolític (s'instal·laven massa mòduls que després no necessitàvem), però recentment ha adaptat la seua estructura per a fer-la més modular.
 
-* CodeIgniter, un framework més lleuger que els anteriors, però també amb un ampli grup de seguidors i desenvolupadors. Va ser creat en 2006 i, encara que ha patit una etapa d'abandó, ha tornat a agafar força en els últims anys, potser a causa de la seua simplicitat d'ús.
+* **CodeIgniter**, un framework més lleuger que els anteriors, però també amb un ampli grup de seguidors i desenvolupadors. Va ser creat en 2006 i, encara que ha patit una etapa d'abandó, ha tornat a agafar força en els últims anys, potser a causa de la seua simplicitat d'ús.
 
-* CakePHP, creat en 2005, és un altre framework similar a CodeIgniter quant a simplicitat i facilitat d'ús. Té una àmplia comunitat també darrere que li dóna suport.
+* **CakePHP**, creat en 2005, és un altre framework similar a CodeIgniter quant a simplicitat i facilitat d'ús. Té una àmplia comunitat també darrere que li dóna suport.
 
-* Zend, creat en 2006, és un altre framework bastant popular, encara que potser amb menor visibilitat que els anteriors hui dia, a l'altura de CakePHP.
+* **Zend**, creat en 2006, és un altre framework bastant popular, encara que potser amb menor visibilitat que els anteriors hui dia, a l'altura de CakePHP.
 
-* Phalcon, un altre framework de recent creació (2012), amb una potent capacitat de processament de pàgines PHP, i la possibilitat de treballar com microframework (més lleuger, per a oferir funcionalitats molt especíﬁcas) o com framework complet.
+* **Phalcon**, un altre framework de recent creació (2012), amb una potent capacitat de processament de pàgines PHP, i la possibilitat de treballar com microframework (més lleuger, per a oferir funcionalitats molt especíﬁcas) o com framework complet.
 
 De fet, molts frameworks més antics també han incorporat recentment la possibilitat d'executar-los com microframeworks. Quasi tots els frameworks PHP tenen una sèrie de característiques comunes, com són l'ús del patró MVC per a desenvolupar els seus projectes, la injecció de dependències per a gestionar recursos com ara connexions a bases de dades, o elements compartits per tota l'aplicació, la possibilitat de desenvolupar tant webs completes com serveis REST accessibles des de diversos clients, etc.
 
@@ -65,7 +65,7 @@ També és un dels frameworks PHP que més demanda laboral a nivell nacional seg
 Té una gran comunitat darrere, la qual cosa permet trobar fàcilment ajuda per a problemes que tinguem
 Té una bona documentació, tant per terceres parts com a través de la seua pròpia pàgina oﬁcial. Disposa d'algunes llibreries addicionals que permeten afegir funcionalitat molt interessant, com el motor de plantilles **Blade**, o el **ORM Eloquent**, que veurem més endavant, així com llibreries de terceres parts que podem incorporar als nostres projectes.
 
-En realitat, una vegada es coneix un d'aquests frameworks, és més senzill assimilar la resta, arribat el moment. Així que Laravel pot ser un bon punt de partida. En concret, durant el curs utilitzarem la versió 8 del framework, que es recolza en PHP 7 per a funcionar.
+En realitat, una vegada es coneix un d'aquests frameworks, és més senzill assimilar la resta, arribat el moment. Així que Laravel pot ser un bon punt de partida. En concret, durant el curs utilitzarem la versió 9 del framework, que es recolza en PHP 8 per a funcionar.
 
 ## Característiques Laravel
 
@@ -88,7 +88,7 @@ Laravel facilita el desenvolupament simplificant el treball amb tasques comunes 
 
 ### Instal·lacio amb docker (laravel sail)
 
-Si ja esteu desenvolupant Linux i Docker Compose està instal·lat, podeu utilitzar una senzilla ordre de terminal per a crear un nou projecte Laravel. Per exemple, per a crear una nova aplicació Laravel en un directori anomenat "exemple", podeu executar l'ordre següent al terminal:
+Si ja esteu desenvolupant Linux i Docker Compose està instal·lat, podeu utilitzar una senzilla ordre de terminal per a crear un nou projecte Laravel. Per exemple, per a crear una nova aplicació Laravel en un directori anomenat "exemple-app", podeu executar l'ordre següent al terminal:
 
 curl -s https://laravel.build/example-app | bash
 
@@ -122,11 +122,14 @@ php artisan migrate
 Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar des de Github. Aquest és un exemple
 
 1. Clona el repositori, exemple:
+
    $ git clone https://github.com/example/laravel-backend-api.git
 2. Canvia el directori a l'aplicació/projecte de nova creació.
-   $ cd laravel-backend-api
+   
+    $ cd laravel-backend-api
 3. Copia el fitxer .env
-   $ cp .env.example .env
+   
+    $ cp .env.example .env
 4. Obre .env per a coincidir la configuració amb les línies següents:
 
    ```php
@@ -139,18 +142,25 @@ Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar
    ```
 
 5. Instal·la totes les dependències requerides
-   $ docker run --rm -v $(pwd):/opt -w /opt laravelsail/php81-composer:latest composer install
-   NOTA: Això pot trigar una estona si aquesta és la primera vegada que s'instal·la com a contenidor.
+   
+    $ docker run --rm -v $(pwd):/opt -w /opt laravelsail/php81-composer:latest composer install
+   
+    NOTA: Això pot trigar una estona si aquesta és la primera vegada que s'instal·la com a contenidor.
 6. Executa els servidors amb Sail
-   $ vendor/bin/sail up -d
+   
+    $ vendor/bin/sail up -d
 7. Entra en el phpmyadmin (localhost:8080) i crea la base de dades laravel.
 8. Inicia el terminal del contenidor
-   $ vendor/bin/sail bash
+   
+    $ vendor/bin/sail bash
 9. Genera la clau APP.KEY.
-   $ php artisan key:generate
+   
+    $ php artisan key:generate
 10. Construeix la llavor.
+    
     $ php artisan migrate:fresh --seed
 11. Genera els node_modules
+    
     $ npm install
     $ npm run build
 
