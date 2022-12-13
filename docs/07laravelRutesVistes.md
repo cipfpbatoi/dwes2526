@@ -599,6 +599,7 @@ En cas contrari el mètode NO serà executat com una prova, la qual cosa és út
 #### Exercicis
 
 En el repositori anem a crear un Blog:
+Crea la rama v.1 per a pujar este exercici. 
 
 701. Edita el fitxer routes/web.php i afig una nova [ruta](#rutes-simples) a la URL posts. En accedir a aquesta ruta (http://localhost/posts), haurem de veure un missatge amb el text “Llistat de posts”.
 
