@@ -644,17 +644,18 @@ En cas contrari el mètode NO serà executat com una prova, la qual cosa és út
 
 En el repositori anem a crear un Blog:
 
-701. Edita el fitxer routes/web.php i afig una nova [ruta](#rutes-simples) a la URL posts. En accedir a aquesta ruta (http://blog/posts), haurem de veure un missatge amb el text “Llistat de posts”.
+701. Edita el fitxer routes/web.php i afig una nova [ruta](#rutes-simples) a la URL posts. En accedir a aquesta ruta (http://localhost/posts), haurem de veure un missatge amb el text “Llistat de posts”.
 
 702. Afig una nova [ruta parametritzada](#afegir-paràmetres-a-les-rutes) a **posts/{id}** , de manera que el paràmetre id siga numèric (és a dir, només continga dígits del 0 al 9) i obligatori. Fes que la ruta retorne el missatge "Fitxa del post XXXX", sent XXXX l'id que haja rebut com a paràmetre.
 
-Posa un [nom](#named-routes) a les tres rutes que hi ha definides fins ara:
+Posa un [nom](#named-routes) a les dos rutes que has definides fins ara:
 
-* a la pàgina d'inici posa-li el nom "inici"
 * a la del llistat la direm "posts_llistat"
 * a la de fitxa que acabes de crear, la direm "posts_fitxa".
 
-703. Definix una [plantilla](#definir-plantilles-comunes) anomenada plantilla.blade.php en la carpeta de vistes del projecte ( resources/views ). Defineix una capçalera amb una secció yield per al títol, i una altra per al contingut de la pàgina, com la de l'exemple que hem vist anteriorment.
+A més, a la ruta que carrega el wellcome l'anomenarem "inici".
+
+703. Definix una [plantilla](#definir-plantilles-comunes) anomenada plantilla.blade.php en la carpeta de vistes del projecte ( resources/views/layouts ). Defineix una capçalera amb una secció yield per al títol, i una altra per al contingut de la pàgina, com la de l'exemple que hem vist anteriorment.
 Defineix en un arxiu a part en la subcarpeta **partials** , anomenat **nav.blade.php** , una barra de navegació que ens permeta accedir a aquestes direccions de moment:
 
 	* Pàgina d'inici
@@ -665,5 +666,5 @@ A partir de la plantilla base, [defineix altres dues vistes](#definir-plantilles
 
 Fes que les rutes corresponents de routes/web.php que ja has definit [renderitzen](#vistes) aquestes vistes en lloc de retornar text pla.
 
-Edita l'arxiu **partials/nav.blade.php** per a modificar la barra de navegació i deixar-la amb un estil particular de Bootstrap. Pots consultar aquesta [pàgina](https://getbootstrap.com/docs/4.5/components/navbar/) per a prendre idees d'alguns dissenys que pots aplicar en la barra de navegació.
-Canvia de nom l'arxiu welcome.blade.php a inici.blade.php i canvia-ho perquè també herete de la plantilla base. Afig algun text introductori com a contingut. 
+Edita l'arxiu **partials/nav.blade.php** per a modificar la barra de navegació i deixar-la amb un estil particular de tailwindcss. Pots consultar aquesta [pàgina](https://tailwindcss.com/docs/installation) per a prendre idees d'alguns dissenys que pots aplicar en la barra de navegació.
+Modificat l'arxiu welcome.blade.php  i canvia-ho perquè també herete de la plantilla base. Afig algun text introductori com a contingut. 
