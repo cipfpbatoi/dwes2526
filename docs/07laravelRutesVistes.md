@@ -520,7 +520,7 @@ el cas, i a més, poden ocupar molt d'espai.
 A més, d'una banda, tenim l'arxiu **resources/css/app.css** , o bé
 **resources/sass/app.scss** (depenent de la versió de Laravel que usem), on podem definir estils CSS propis, o incorporar llibreries externes com veurem després, utilitzant o bé CSS pla o bé Sass. 
 
-D'altra banda, tenim l'arxiu *resources/*js/app.*js per a incloure les nostres pròpies funcions en
+D'altra banda, tenim l'arxiu **resources/js/app.js** per a incloure les nostres pròpies funcions en
 Javascript, o fins i tot funcionalitats externes (a través de **jQuery**, per exemple).
 
 #### Generació automàtica de css i javascript
@@ -541,7 +541,7 @@ similar, es prendran els estils definits en **resources/sass/app.scss o en
 optimitzat en **public/css/app.css** . Per a desencadenar aquest procés, Laravel i WebPack es valen de la llibreria **laravel-mix** , inclosa en l'arxiu **package.json** . Per això és important aquesta llibreria, i per això hem de deixar-la instal·lada prèviament amb el comando **npm install** que hem explicat abans. Una vegada instal·lada, per a generar els CSS i Javascript hem d'executar aquest comando des de l'arrel del projecte:
 
 ```
-npm run dev
+npm run buils
 ```
 
 
@@ -556,50 +556,6 @@ afegir aquests arxius en les nostres vistes, amb alguna cosa com això, respecti
 	</script>
 ```
 
-#### Incloure estils Bootstrap
-
-Un dels frameworks de disseny web més utilitzats a l'hora d'elaborar una web és Bootstrap. En aquest
-curs no donarem massa nocions sobre ell, però sí que utilitzarem algunes pinzellades perquè les nostres vistes tinguen un aspecte més professional.
-Per a incloure aquest framework en Laravel, hem d'incloure una llibreria en el servidor anomenada ui, que s'encarrega d'incorporar diferents eines per a disseny d'interfícies d'usuari (UI, User Interface).
-
-```
-composer require laravel/ui
-```
-
-Una vegada afegida l'eina, la podem emprar a través del comando artisan per a incorporar
-Bootstrap al projecte:
-
-```
-php artisan ui bootstrap
-```
-
-Això incorporarà Bootstrap a l'arxiu package.json , en la secció de dependències...
-
-```
-"devDependencies": {
-...
-"bootstrap": "^4.0.0",
-...
-}
-```
-... i també afegirà un enllaç a aquesta llibreria en l'arxiu **resources/sass/app.scss** , perquè
-puguem generar un arxiu CSS optimitzat amb Bootstrap inclòs: 
-
-```
-...
-@import '~bootstrap/scss/bootstrap';
-```
-
-
-Per a poder utilitzar finalment Bootstrap, hem d'executar novament les instruccions:
-
-```
-npm install
-npm run dev
-```
-
-
-La primera instrucció descarregarà i instal·larà Bootstrap en el projecte (en la subcarpeta node_modules), ila segona generarà els arxius CSS i Javascript incloent en ells la llibreria Bootstrap. Amb això ja tindrem disponibles les classes i estils de Bootstrap per a les nostres vistes.
  
 ## Proves amb laravel
 En les primeres rutes de la nostra aplicació, utilitzem el navegador per a provar aquestes rutes i URLs. El problema d'aquestes proves en el navegador és que no perduren en el temps ni poden executar-se de forma ràpida / automàtica. Així que avui veurem com podem provar el codi que desenvolupem de forma més intel·ligent, utilitzant el component de proves automatitzades que ve inclòs amb Laravel.
