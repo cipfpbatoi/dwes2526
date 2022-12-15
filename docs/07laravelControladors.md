@@ -49,7 +49,23 @@ arrova @ i el nom del mètode a invocar. Per exemple:
 Route::get('prueba', 'PruebaController@index')->name('listado_prueba');
 ```
 
+!!! note Per a que esta definició de rutes funcione correctament hem d'afegir un linea al app/providers/RouteServiceProvider per afegir el espai de noms dels control·ladors:
+```php
+public function boot()
+    {
+        $this->configureRateLimiting();
 
+        $this->routes(function () {
+            Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api.php'));
+
+            Route::middleware('web')
+                ->namespace('App\Http\Controllers')
+                ->group(base_path('routes/web.php'));
+        });
+    }
+```
 
 #### Unint totes les rutes dun controlador
 
@@ -73,24 +89,7 @@ Des del costat oposat, tenim disponible el mètode **except** per a indicar que 
 Route::resource('catalog', 'catalogController')->except(['update', 'edit']);
 ```
 
-!!! note "Configurant la sessió en `php.ini`"
-Per a que tot funcione correctament hem d'afegir un linea al RouteServiceProvider en providers per a que quede
-```php
-public function boot()
-    {
-        $this->configureRateLimiting();
 
-        $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->namespace('App\Http\Controllers')
-                ->group(base_path('routes/web.php'));
-        });
-    }
-```
 
 #### Reanomenant les vistes
 
