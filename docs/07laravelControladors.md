@@ -398,16 +398,16 @@ Sobre el projecte blog de la sessió anterior, afegirem aquests canvis:
 * Crea un [controlador](#controladors-de-recursos) de recursos (opció -r ) anomenat **PostController** , que ens servirà per a gestionar tota la lògica dels posts del blog.
 * [Assigna automàticament](#unint-totes-les-rutes-dun-controlador) amb el mètode **resource** cada ruta a la seua funció corresponent del controlador, en l'arxiu **routes/web.php** . Limita amb **only** les accions només a les funcions de llistat (index), fitxa (show), creació (create) i edició (edit).
 * Canvia de nom les [vistes](#reanomenant-les-vistes) de **llistat** i **fitxa** d'un post a **index.blade.php** i show.blade.php, dins de la seua carpeta posts, i fes que els mètodes corresponents del controlador de posts [renderitzen](#renderitzant-les-vistes) aquestes vistes.
-* Per als mètodes create i edit , simplement retorna un text pla
-  indicant "Nou post" i "Edició de post", per exemple.
+* Per als mètodes create i, simplement retorna un text pla en una vista indicant "Nou post" , per exemple.
 * Fes els canvis addicionals que siguen convenients (per exemple, en el menú de navegació) perquè els enllaços continuen funcionant, i prova que les quatre rutes (llistat, fitxa, creació i edició) funcionen adequadament.
-
+* Afegix el nou post al menú de navegació
+* 
 #### Exercisi 705
 
 Sobre el projecte blog anterior, afegirem aquests canvis:
 
-* Fes que les funcions de **create** i **edit** del controlador de posts, en lloc de mostrar un missatge de text pla indicant que ací va un formulari, redirigisquen a la pàgina d'inici, usant la instrucció [**redirect**](#utilitzar-la-resposta-per-fer-redireccions) .
-* Afig un [helper](#helperserviceprovider) al projecte que definisca una funció anomenada **fechaActual** . Rebrà com a paràmetre un format de data (per exemple, "d/m/i") i traurà la data actual en aquest format. Utilitza-ho per a mostrar la data actual en format "d/m/I" en la plantilla base, sota la barra de navegació, alineada a la dreta.
+* Fes que la funció **edit** del controlador de posts, en lloc de mostrar un missatge de text pla indicant que ací va un formulari, redirigisquen a la pàgina d'inici, usant la instrucció [**redirect**](#utilitzar-la-resposta-per-fer-redireccions) .
+* Afig un [helper](#helperserviceprovider) al projecte que definisca una funció anomenada **fechaActual** . Rebrà com a paràmetre un format de data (per exemple, "d/m/Y") i traurà la data actual en aquest format. Utilitza-ho per a mostrar la data actual en format "d/m/Y" en la plantilla base alineada a la dreta de la barra de navegació.
 
 
 
