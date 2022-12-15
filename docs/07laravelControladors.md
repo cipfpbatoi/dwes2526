@@ -23,62 +23,15 @@ php artisan make:controller PruebaController
 
 Això generarà una classe buida amb el nom del controlador. Per defecte, els controladors es guarden en la subcarpeta **app/Http/Controllers** del nostre projecte Laravel.
 
+#### Controladors de recursos
 
-##### Nota
-Per a que tot funcione correctament hem de descomentar la següent línea del RouteServiceProvider en providers
+El comando anterior admet alguns paràmetres addicionals més. Si creem un controlador amb l'opció -r, crearà un controlador de recursos ( resources ), i predefinirà en ell una sèrie de mètodes d'utilitat per a les operacions principals que es poden realitzar sobre una entitat de la nostra aplicació:
+
 
 ```php
-protected $namespace = 'App\\Http\\Controllers';
+php artisan make:controller PruebaController -r
 ```
 
-#### Controladors d'un sol mètode (invoke)
-
-El comando anterior admet alguns paràmetres addicionals més. Un molt útil és el paràmetre -i , que crea el controlador amb un mètode anomenat __invoke , que s'acte executa quan és anomenat des d'algun procés d'encaminament. Per exemple, si creem el controlador així:
-
-```php
-php artisan make:controller PruebaController -i
-```
-
-Es crearà la classe PruebaController en la carpeta app/Http/Controllers , amb un contingut com aquest:
-
-```php
-<?php
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-class PruebaController extends Controller
-{
-...
-public function __invoke(Request $request)
-{
-...
-}
-}
-
-```
-
-Dins del mètode __invoke podem definir la lògica de generar o obtindre les dades que necessita una vista, i renderitzar-la. Per exemple:
-
-```php
-public function __invoke(Request $request)
-{
-	$datos = array(...);
-	return view('miVista', compact('datos'));
-}
-```
-
-Així, en l'arxiu de rutes, n'hi ha prou amb definir la ruta que vulguem, i com segon paràmetre del mètode **get** , indicar el nom del controlador que es dispararà per a processar aqueixa ruta. Addicionalment,
-també li podem assignar un nom a la ruta, com ja hem fet en exemples anteriors.
-
-```php
-Route::get('prueba', 'PruebaController')->name('prueba');
-```
-
-#### Controladors de multiples mètodes
-
-##### Controladors de recursos
-
-
-Si creem un controlador amb l'opció -r en lloc de l'opció -i utilitzada en l'exemple anterior, crearà un controlador de recursos ( resources ), i predefinirà en ell una sèrie de mètodes d'utilitat per a les operacions principals que es poden realitzar sobre una entitat de la nostra aplicació:
 
 * index : mostra un llistat dels elements d'aqueixa entitat o recurs
 * create : mostra el formulari per a donar d'alta nous elements
@@ -96,20 +49,7 @@ arrova @ i el nom del mètode a invocar. Per exemple:
 Route::get('prueba', 'PruebaController@index')->name('listado_prueba');
 ```
 
-#### Controladors API
 
-Com a alternativa als controladors de recursos vistos abans, podem crear els controladors amb l'opció --api. Crearà un controlador amb els mateixos mètodes que el de recursos, excepte els mètodes create i edit , encarregats de mostrar els formularis de creació i edició de recursos, ja que en les APIs aquests formularis no són necessaris, com veurem en sessions posteriors.
-
-#### Reanomenant les vistes
-
-A mesura que el projecte creix, generarem un bon nombre de vistes associades a controladors, i és necessari estructurar aquestes vistes d'una forma adequada per a poder-les identificar ràpidament. Una convenció que podem seguir és nomenar les vistes a partir del controlador o model al qual fan referència, i a l'operació que realitzen. Per exemple, si tenim un controlador anomenat
-PruebaController , se suposa que actuarà sobre una taula anomenada prueba (ho veurem més endavant, en la sessió d'accés a dades). I, podem emmagatzemar les vistes en la subcarpeta **resources/views/pruebas** , i definir dins les vistes
-associades a cada operació del controlador que tinguem definida. Per exemple:
-index.blade.php
-show.blade.php
-...
-
-Paral·lelament, cada vegada que anem a carregar una vista des d'algun controlador o ruta, farem referència a aquest nom.
 
 #### Unint totes les rutes dun controlador
 
@@ -133,11 +73,36 @@ Des del costat oposat, tenim disponible el mètode **except** per a indicar que 
 Route::resource('catalog', 'catalogController')->except(['update', 'edit']);
 ```
 
-Amb els controladors de tipus API també podem generar automàticament totes les rutes per als seus mètodes, utilitzant el mètode apiResource de la classe Route , en lloc del mètode resource empleat abans:
+!!! note "Configurant la sessió en `php.ini`"
+Per a que tot funcione correctament hem d'afegir un linea al RouteServiceProvider en providers per a que quede
+```php
+public function boot()
+    {
+        $this->configureRateLimiting();
 
+        $this->routes(function () {
+            Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api.php'));
+
+            Route::middleware('web')
+                ->namespace('App\Http\Controllers')
+                ->group(base_path('routes/web.php'));
+        });
+    }
 ```
-Route::apiResource('prueba', 'PruebaController');
-```
+
+#### Reanomenant les vistes
+
+A mesura que el projecte creix, generarem un bon nombre de vistes associades a controladors, i és necessari estructurar aquestes vistes d'una forma adequada per a poder-les identificar ràpidament. Una convenció que podem seguir és nomenar les vistes a partir del controlador o model al qual fan referència, i a l'operació que realitzen. Per exemple, si tenim un controlador anomenat
+PruebaController , se suposa que actuarà sobre una taula anomenada prueba (ho veurem més endavant, en la sessió d'accés a dades). I, podem emmagatzemar les vistes en la subcarpeta **resources/views/pruebas** , i definir dins les vistes
+associades a cada operació del controlador que tinguem definida. Per exemple:
+index.blade.php
+show.blade.php
+...
+
+Paral·lelament, cada vegada que anem a carregar una vista des d'algun controlador o ruta, farem referència a aquest nom.
+
 
 #### Controladors i espais de noms
 
@@ -169,6 +134,17 @@ class PruebaController extends Controller
 	}
 }
 ```
+
+#### Controladors API
+
+Com a alternativa als controladors de recursos vistos abans, podem crear els controladors amb l'opció --api. Crearà un controlador amb els mateixos mètodes que el de recursos, excepte els mètodes create i edit , encarregats de mostrar els formularis de creació i edició de recursos, ja que en les APIs aquests formularis no són necessaris, com veurem en sessions posteriors.
+
+Amb els controladors de tipus API també podem generar automàticament totes les rutes per als seus mètodes, utilitzant el mètode apiResource de la classe Route , en lloc del mètode resource empleat abans:
+
+```
+Route::apiResource('prueba', 'PruebaController');
+```
+
 
 ### Exemple: La resposta
 
