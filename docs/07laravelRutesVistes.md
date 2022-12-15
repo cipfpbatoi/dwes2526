@@ -495,67 +495,69 @@ al sufix de la vista).
 @endsection
 ```
 
-## Enllaçant amb CSS i Javascript en el client
+## Enllaçant amb CSS i Javascript en el client
 
 Ara que ja tenim una visió bastant completa del que el motor de plantilles Blade pot oferir-nos, arriba el moment d'acabar de perfilar les nostres vistes. Fins ara no hem parlat res d'estils CSS, i això és una cosa que tota vista que es pree ha d'incloure. A més, també pot ser necessari en alguns casos incloure alguna llibreria Javascript en el costat del client per a uns certs processaments.
-Veurem com gestiona Laravel aquests recursos.
-
-
-#### Infraestructura per a arxius CSS i Javascript.
-
-Per a poder afegir estils CSS o arxius Javascript al nostre projecte Laravel, el framework proporciona
+Veurem com gestiona Laravel aquests recursos.  Per a poder afegir estils CSS o arxius Javascript al nostre projecte Laravel, el framework proporciona
 ja uns arxius on centralitzar aquestes opcions.
-En primer lloc, hem de tindre en compte que totes les dependències de llibreries en la part del client se centralitzen en l'arxiu **package.json** , disponible en l'arrel del projecte. Inicialment compta ja amb
-una sèrie de dependències pre-afegides. Algunes d'elles són importants, com **laravel-mix** , i altres
-pot ser que no les necessitem i les puguem esborrar. És recomanable instal·lar les dependències quan
-creguem el projecte, per a tindre-les disponibles, amb aquest comando:
+
+### Vite
+
+Vite és una eina de construcció de frontend moderna que proporciona un entorn de desenvolupament extremadament ràpid i empaqueta el vostre codi per a la producció. En construir aplicacions amb Laravel, normalment utilitzareu Vite per empaquetar els fitxers CSS i JavaScript de la vostra aplicació en actius preparats per a la producció.
+Laravel s'integra perfectament amb Vite proporcionant una directiva oficial de connectors i de Blade per carregar els vostres actius per al desenvolupament i la producció.
+
+#### Instal·lació del connector Vite i Laravel
+
+En una instal·lació nova del Laravel, trobareu un fitxer package.json a l'arrel de l'estructura de directoris de la vostra aplicació. El fitxer predeterminat package.json ja inclou tot el que necessiteu per començar utilitzant el connector Vite i Laravel. Podeu instal·lar les dependències del frontal de l'aplicació mitjançant NPM:
 
 ```
 npm install
 ```
 
-Aquesta carpeta és similar a la carpeta **vendor** , també en l'arrel del projecte, però aquesta última conté dependències PHP (no Javascript). Cap d'aquestes carpetes ha de pujar-se a un repositori git, ja que
-ambdues poden reconstruir-se amb el corresponent comando d'instal·lació de npm o de composer, segons
-el cas, i a més, poden ocupar molt d'espai.
-A més, d'una banda, tenim l'arxiu **resources/css/app.css** , o bé
-**resources/sass/app.scss** (depenent de la versió de Laravel que usem), on podem definir estils CSS propis, o incorporar llibreries externes com veurem després, utilitzant o bé CSS pla o bé Sass. 
+##### Configuració de Vite
 
-D'altra banda, tenim l'arxiu **resources/js/app.js** per a incloure les nostres pròpies funcions en
-Javascript, o fins i tot funcionalitats externes (a través de **jQuery**, per exemple).
+Vite està configurat a través d'un fitxer vite.config.js a l'arrel del projecte. Podeu personalitzar aquest fitxer segons les vostres necessitats, i també podeu instal·lar altres connectors que requereixi la vostra aplicació, com ara .vitejs/plugin-vue o .vitejs/plugin-react.
 
-#### Generació automàtica de css i javascript
-
-Aquests dos arxius necessiten ser processats per a generar el codi resultant (CSS i Javascript) que
-formarà part de l'aplicació, conjuminant totes les llibreries i funcions que hàgem especificat. Per a això,es té l'arxiu **webpack.mix.js** en l'arrel del projecte, que empra l'eina WebPack per a compilar,
-empaquetar i minificar aquests arxius resultat CSS i Javascript.
+El connector Laravel Vite requereix que especifiqueu els punts d'entrada per a la vostra aplicació. Aquests poden ser fitxers JavaScript o CSS, i inclouen llenguatges preprocessats com TypeScript, JSX, TSX, i Sass.
 
 ```
-mix.js('resources/js/app.js', 'public/js')
-.css('resources/sass/app.scss', 'public/css');
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+
+export default defineConfig({
+   plugins: [
+      laravel([
+         'resources/css/app.css',
+         'resources/js/app.js',
+     ]),
+   ],
+});
 ```
 
-Com podem intuir, des d'aquest arxiu **webpack.mix.js** es prendrà tot el que hi ha en l'arxiu
-**resources/js/app.js** i es generarà un arxiu optimitzat situat en **public/js/app.js** . De manera
-similar, es prendran els estils definits en **resources/sass/app.scss o en
-**resources/css/app.css (depenent de la versió de Laravel) i es generarà un arxiu **CSS**
-optimitzat en **public/css/app.css** . Per a desencadenar aquest procés, Laravel i WebPack es valen de la llibreria **laravel-mix** , inclosa en l'arxiu **package.json** . Per això és important aquesta llibreria, i per això hem de deixar-la instal·lada prèviament amb el comando **npm install** que hem explicat abans. Una vegada instal·lada, per a generar els CSS i Javascript hem d'executar aquest comando des de l'arrel del projecte:
+##### Carregar els vostres scripts i estils
+Amb els punts d'entrada de Vite configurats, només els necessiteu referències en una directiva .vite() Blade que afegiu a la <head> de la plantilla arrel de la vostra aplicació:.
 
 ```
-npm run buils
+<!doctype html>
+<head>
+    {{-- ... --}}
+ 
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 ```
 
+La directiva @vite detectarà automàticament el servidor de desenvolupament de Vite i injectarà el client de Vite per habilitar la substitució del mòdul Hot. En el mode de construcció, la directiva carregarà els vostres actius compilats i versionats, incloent-hi qualsevol CSS importat.
 
-Això generarà els arxius **public/css/app.css** i **public/js/app.js** , i després ja podrem
-afegir aquests arxius en les nostres vistes, amb alguna cosa com això, respectivament:
+##### Executar Vite
+Hi ha dues maneres d'executar Vite. Podeu executar el servidor de desenvolupament mitjançant l'ordre dev, la qual és útil mentre es desenvolupa localment. El servidor de desenvolupament detectarà automàticament els canvis als vostres fitxers i els reflectirà instantàniament en qualsevol finestra del navegador oberta.
 
-```html
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="/css/app.css">
-	<script type="text/javascript" src="/js/app.js">
-	</script>
-```
+O, executar l'ordre de construcció versionarà i empaquetarà els actius de la vostra aplicació i els prepararà per a desplegar-los en producció:
 
+# Run the Vite development server...
+npm run dev
+
+# Build and version the assets for production...
+npm run build
  
 ## Proves amb laravel
 En les primeres rutes de la nostra aplicació, utilitzem el navegador per a provar aquestes rutes i URLs. El problema d'aquestes proves en el navegador és que no perduren en el temps ni poden executar-se de forma ràpida / automàtica. Així que avui veurem com podem provar el codi que desenvolupem de forma més intel·ligent, utilitzant el component de proves automatitzades que ve inclòs amb Laravel.
