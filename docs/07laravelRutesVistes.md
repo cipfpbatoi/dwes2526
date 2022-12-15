@@ -231,7 +231,7 @@ En general el codi que inclou Blade en una vista començarà pels símbols **@**
 El mètode més bàsic que tenim en Blade és el de mostrar dades, per a açò utilitzarem les claus dobles (**{{ "{{ " }}}}**) i dins d'elles escriurem la variable o funció amb el contingut a mostrar:
 
 ```   
-    Hola {{ "{{ $name " }}}}.
+    Hola {{  $name }}.
 ```
 
 Cada vegada que es renderitza una vista en Laravel, s'emmagatzema el contingut PHP generat en
@@ -254,13 +254,13 @@ En general sempre haurem d'usar les claus dobles, especialment si anem a mostrar
 Per a comprovar que una variable existeix o té un determinat valor podem utilitzar l'operador ternari de la forma:
 
 ```php    
-    {{ "{{ isset($name) ? $name : 'Valor per defecte' " }}}}
+    {{  isset($name) ? $name : 'Valor per defecte' }}
 ```
     
 O simplement usar la notació que inclou Blade per a aquesta fi: 
 
 ```  
-    {{ "{{ $name or 'Valor per defecte' " }}}}
+    {{  $name or 'Valor per defecte' }}
 ```
   
 #### Comentaris
@@ -274,7 +274,7 @@ Per a iterar sobre un conjunt de dades (array), podem emprar la directiva @forea
 ```html
 <ul>
 	@foreach($elementos as $elemento)
-		<li>{{ "{{ $elemento " }}}}</li>
+		<li>{{  $elemento}}</li>
 	@endforeach
 </ul>
 ```
@@ -287,7 +287,7 @@ Opcionalment, es pot intercalar una directiva @else per al camí alternatiu, o t
 <ul>
 	@if($elementos)
 		@foreach($elementos as $elemento)
-			<li>{{ "{{ $elemento " }}}}</li>
+			<li>{{  $elemento }}</li>
 		@endforeach
 	@else
 			<li>No hay elementos que mostrar</li>
@@ -301,7 +301,7 @@ També podem comprovar si una variable està definida. En aquest cas, reemplacem
 <ul>
 	@isset($elementos)
 		@foreach($elementos as $elemento)
-			<li>{{ "{{ $elemento " }}}}</li>
+			<li>{{ $elemento }}</li>
 		@endforeach
 	@else
 		<li>No hay elementos que mostrar</li>
@@ -314,7 +314,7 @@ No obstant això, amb qualsevol d'aquestes opcions tenim un problema: en el prim
 ```
 <ul>
 	@forelse($elementos as $elemento)
-		<li>{{ "{{ $elemento " }}}}</li>
+		<li>{{  $elemento }}</li>
 	@empty
 		<li>No hay elementos que mostrar</li>
 	@endforelse
@@ -331,7 +331,7 @@ propietats disponibles en aquest objecte cridant a var_dump :
 ```html
 <ul>
 	@forelse($elementos as $elemento)
-		<li>{{ "{{ $elemento " }}}} {{ "{{ var_dump($loop) " }}}} </li>
+		<li>{{  $elemento }} {{  var_dump($loop) }} </li>
 	@empty
 		<li>No hay elementos que mostrar</li>
 	@endforelse
@@ -343,8 +343,8 @@ Si, per exemple, volem determinar si és l'últim element de la llista, i mostra
 ```html
 <ul>
 	@forelse($elementos as $elemento)
-		<li>{{ "{{ $elemento " }}}}
-			{{ "{{ $loop->last ? "Ultimo elemento" : "" " }}}}
+		<li>{{  $elemento }}
+			{{  $loop->last ? "Ultimo elemento" : "" }}
 		</li>
 	@empty
 		<li>No hay elementos que mostrar</li>
@@ -365,14 +365,14 @@ echo '<a href="/contacto">Contacte</a>';
 ... o bé emprant la funció route seguida del nom que li hem donat a la ruta:
 
 ```php
-<a href="{{ "{{ route('ruta_contacto') " }}}}">Contacte</a>
+<a href="{{  route('ruta_contacto') }}">Contacte</a>
 ```
 
 A més, mitjançant Blade existeix una tercera manera d'enllaçar, emprant la funció url , que genera una
 URL completa fins a la ruta que indiquem:
 
 ```php
-<a href="{{ "{{ url('/contacto') " }}}}">Contacte</a>
+<a href="{{  url('/contacto') " }}">Contacte</a>
 ```
 
 ### Definir Plantilles comunes
@@ -409,7 +409,7 @@ Finalitzarem cada secció amb la directiva @endsection . Així, per a la nostra 
 @section('titulo', 'Inicio')
 @section('contenido')
 	<h1>Página de inicio</h1>
-	Bienvenido/a {{ "{{ $nombre " }}}}
+	Bienvenido/a {{ $nombre }}
 @endsection
 ```
 Notar, a més, que a la directiva @section se li pot passar un segon paràmetre amb el contingut
@@ -424,7 +424,7 @@ De la mateixa manera, la nostra vista per al llistat de llibres quedaria d'aques
 	<h1>Listado de libros</h1>
 		<ul>
 		@forelse ($libros as $libro)
-			<li>{{ "{{ $libro["titulo"] " }}}}({{ "{{ $libro["autor"] " }}}})</li>
+			<li>{{  $libro["titulo"] }}({{  $libro["autor"] }})</li>
 		@empty
 			<li>No se encontraron libros</li>
 		@endforelse
@@ -441,8 +441,8 @@ Per exemple, definirem un menú de navegació. Suposem que aquest menú està en
 
 ```html
 <nav>
-	<a href="{{ "{{ route('inici') " }}}}">Inici</a>
-	<a href="{{ "{{ route('libres_llistat') " }}}}">Llistat de llibres</a>
+	<a href="{{  route('inici') }}">Inici</a>
+	<a href="{{  route('libres_llistat') }}">Llistat de llibres</a>
 </nav>
 ```
 

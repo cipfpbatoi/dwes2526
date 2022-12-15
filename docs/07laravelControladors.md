@@ -127,7 +127,7 @@ També podem utilitzar el mètode only per a indicar per a quins mètodes volem 
 Route::resource('catalog', 'CatalogController')->only(['index', 'show']);
 ```
 
-Des del costat oposat, tenim disponible el mètode *except per a indicar que es generen totes les rutes excepte aquelles per als mètodes indicats:
+Des del costat oposat, tenim disponible el mètode **except** per a indicar que es generen totes les rutes excepte aquelles per als mètodes indicats:
 
 ```
 Route::resource('catalog', 'catalogController')->except(['update', 'edit']);
@@ -234,7 +234,7 @@ Per a accedir a aquest missatge des de la vista afectada, hem d'utilitzar la fun
 
 ```
 @if(session()->has('mensaje'))
-	{{ "{{  session('mensaje') " }}}}
+	{{ session('mensaje') }}
 @endif
 ```
 
