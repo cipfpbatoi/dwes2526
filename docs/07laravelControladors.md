@@ -100,7 +100,14 @@ index.blade.php
 show.blade.php
 ...
 
+##### Renderitzant les vistes
 Paral·lelament, cada vegada que anem a carregar una vista des d'algun controlador o ruta, farem referència a aquest nom.
+
+```
+  public function index(){
+    return view('catalog.index');
+  }
+```
 
 
 #### Controladors i espais de noms
