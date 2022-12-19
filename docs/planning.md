@@ -58,15 +58,15 @@
 
 ## 7.- Frameworks PHP (26h)
 
-- [ ] 1.- (L 12D) Introducció e Instal·lació de Laravel - 2 
-- [ ] 2.- (M 13D) Rutes i vistes - 5
-- [ ] 3.- (J 15D) Controladors - 8
-- [ ] 4.- (L 19D) Migraciones - 10
+- [X] 1.- (L 12D) Introducció e Instal·lació de Laravel - 3 
+- [X] 2.- (M 13D) Rutes i vistes. Activitats 701-703 - 5
+- [X] 3.- (J 15D) Controladors Activitat 704-705 - 8
+- [ ] 4.- (L 19D) Migraciones - 11
 - [ ] 5.- (M 20D) Eloquent - 13 
-- [ ] 6.- (L 9G) Formularis - 15 
+- [ ] 6.- (L 9G) Formularis - 16 
 - [ ] 7.- (M 10G) Paginació i Autenticació - 18  
 - [ ] 8.- (J 12G) Rel·lacions - 21 
-- [ ] 9.- (L 16G) Projecte chollo servero - 23
+- [ ] 9.- (L 16G) Projecte chollo servero - 24
 - [ ] 10.- (M 17G) Projecte chollo severo - 26
  
 ## 8.- Serveis REST (16h)

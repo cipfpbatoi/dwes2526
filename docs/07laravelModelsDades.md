@@ -117,7 +117,7 @@ Per a crear una nova migració s'utilitza el comando de Artisan **make:migration
 
 ```
 	php artisan make:migration nom_migracio
-```	
+```
 	
 Açò ens crearà un fitxer de migració en la carpeta database/migrations amb el nom **<TIMESTAMP>_nom_migracio.php**. En afegir un timestamp a les migracions el sistema sap l'ordre en el qual ha d'executar (o desfer) les mateixes.
 
@@ -235,7 +235,7 @@ En aquesta funció podem anar afegint tots els camps que vulguem, indicant per a
 		$table->boolean('confirmat')->default(false);
 		$table->timestamps();
 	});
-```	
+```
 	
 Schema defineix molts tipus de dades que podem utilitzar per a definir les columnes d'una taula, alguns dels principals són:
 
@@ -394,7 +394,7 @@ A continuació es mostra un exemple d'un model de Eloquent en el qual s'afigen t
 		protected $primaryKey = 'my_id';
 		public $timestamps = false;
 		}
-```	
+```
 		
 ### Ús d'un model de dades
 
@@ -407,7 +407,7 @@ Per exemple, si anem a usar els models User i Orders hauríem d'afegir:
 ```		
 	use App\Models\User;
 	use App\Models\Orders;
-```		
+```
 
 #### Consultar dades
 
@@ -424,34 +424,34 @@ Per a obtenir totes les files de la taula associada a un model usarem el mètode
 			return view('movies.index', compact('movies'));
 		}
 	}	
-```	
+```
 Aquest mètode pasarà a la vista un array de objectes, on cada item del array serà una instància del model movie i accedirem a les seues propietats com a tals. Així en la vista tindriem alguna cosa com:
 
 ```	
 @forelse($movies as $movie)
 	{{ "{{  $movies->titulo " }}}}
 @endforelse
-```	
+```
 
 
 Alternativament, també podem obtindre una consulta filtrada, amb el mètode **get** i especificant amb el mètode **where** la condició que han de complir els registres a obtindre. Per exemple, així obtindríem els llibres el preu dels quals siga inferior a 10 euros
 
 ```	
 $movies = Movie::where('precio', '<', 10)->get();
-```	
+```
 o combinant-les
 
-```	
+```
 $movies = Movie::where('precio', '<', 10)
 ->where('precio', '>', 5)->get();
-```	
+```
 
 Sobre aquestes consultes base podem aplicar una sèrie d'afegits. Per exemple, podem voler ordenar
 els llibres per títol, per al que faríem això en el controlador:
 
 ```	php
 $movies = Movie::orderBy('titulo', 'DESC')->get();
-```	
+```
 
 **Nota**: Tots els mètodes que es descriuen en la secció de "Constructor de consultes" i en la documentació de Laravel sobre "Query Builder" també es poden utilitzar en els models Eloquent. Per tant podrem utilitzar where, orWhere, first, get, orderBy, groupBy, having, skip, take, etc. per a elaborar les consultes.
 
@@ -464,7 +464,7 @@ També podem utilitzar els mètodes agregats per a calcular el total de registre
 	$price = Orders::min('price');
 	$price = Orders::avg('price');
 	$total = User::sum('votes');
-```	
+```
 
 ##### Paginaciò de resultats
 
@@ -484,9 +484,9 @@ links perquè mostre els botons de paginació en el lloc desitjat:
 
 ```php
 	@forelse($movies as $movie)
-		{{ "{{  $movie->titulo " }}}}
+		{{  $movie->titulo " }}
 	@endforelse
-	{{ "{{  $movies->links() " }}}}
+	{{   $movies->links() }}
 ```
 
 #### Objectes individuals
@@ -498,8 +498,8 @@ llistat amb els seus títols, podem fer alguna cosa com això en la plantilla **
 ```php
 @forelse($movies as $movie)
 	<li>
-		<a href="{{ "{{  route('movies.show', $movie) " }}}}">
-		{{ "{{  $movie->titulo " }}}}</a>
+		<a href="{{  route('movies.show', $movie) }}">
+		{{   $movie->titulo " }}</a>
 	</li>
 @endforelse
 ```
@@ -609,7 +609,7 @@ Per a esborrar una instància d'un model en la base de dades simplement hem d'us
 
 ```
 	movie::findOrFail($id)->delete();
-```	
+```
 	
 Això ho farem normalment en el mètode **destroy** del controlador en qüestió. Després, podem
 redirigir o renderitzar alguna vista resultat, com el llistat de llibres general per a comprovar que s'ha
@@ -802,7 +802,7 @@ $nombreAutor = Libro::findOrFail($id)->autor->nombre;
 Si en una vista Blade, accedim al nom de l'autor de esta manera:
 
 ```
-{{ "{{ $libro->autor->nombre " }}}}
+{{  $libro->autor->nombre }}
 ```
 aquest codi provoca una nova consulta en la base de dades per a buscar les dades de l'autor
 associat al llibre, al que, per a un llistat de 100 llibres, estarem fent 100 consultes addicionals
@@ -837,13 +837,13 @@ Les relacions molts-a-molts es defineixen amb un mètode que retorna el resultat
 	        return $this->belongsToMany('App\Models\Role');
 	    }
 	}
-```	
+```
 	
 Una vegada definida la relació, es pot accedir als rols de l'usuari usant la propietat dinàmica rols:
 
 ```
 	$roles = App\User::find($id)->roles;
-```	
+```
 
 Per a definir la inversa d'una relació de molts a molts, simplement cal posar una altra cridada a belongsToMany en el model relacionat. 
 
@@ -896,7 +896,7 @@ També pots filtrar els resultats van retornar per belongsToMany utilitzant el *
 
 ```
 	retorn $this->belongsToMany('App\Notes')->wherePivot('aprovat', 1);
-```	
+```
 
 ## Seeders i factories
 
@@ -1099,7 +1099,7 @@ Per a realitzar una "Select" que retorne totes les files d'una taula utilitzarem
 	foreach ($users as $user) {
 		echo $user->name; 
 	}
-```	
+```
 	
 En l'exemple s'utilitza el constructor DB::taula indicant el nom de la taula sobre la qual es va a realitzar la consulta, i finalment es diu al mètode get() per a obtenir totes les files de la mateixa.
 
@@ -1115,7 +1115,7 @@ Per a filtrar les dades usem la clausula where, indicant el nom de la columna i 
 
 ```	
 	$user = DB::table('users')->where('name','Pedro')->get();
-```	
+```
 	 
 En aquest exemple, la clausula where filtrarà totes les files la columna de les quals name siga igual a Pedro. Si volem realitzar un altre tipus de filtrats, com a columnes que tinguen un valor major (>), major o igual (>=), menor (<), menor o igual (<=), diferent de l'indicat (<>) o usar l'operador like, ho podem indicar com a segon paràmetre de la forma:
 
@@ -1407,10 +1407,6 @@ Sobre el projecte blog de la sessió anterior, afegirem aquests canvis:
 Modifica també l'arxiu **.env** del projecte per a accedir a aquesta base de dades amb les
 credencials adequades.
 
-* Elimina les migracions relatives a password_resets i failed_jobs, i edita la migració de la taula
-users per a deixar-la únicament amb els camps login i
-password, a més de l'id i els timestamps.
-
 * Crea una nova migració anomenada crear_taula_posts , que crearà una taula anomenada posts amb aquests camps:
 
 	* **Id** autonumérico
@@ -1440,7 +1436,7 @@ X"). Pots emprar la funció **rand** de PHP per a generar aquests números aleat
 	* Un mètode anomenat **editarPrueba** , que rebrà com a paràmetre un id i modificarà el títol i contingut del post altres generats aleatòriament, com en el punt anterior.
 	* Aquests dos mètodes (especialment el primer) ens serviran per a crear una sèrie de posts de prova que després ens serviran per a provar el llistat i la fitxa dels posts.
 
-* En l'arxiu **routes/web.php** , recorda afegir dues noves rutes temporals de tipus **get** per a provar aquestes insercions i modificacions. La primera pot apuntar a **/posts/nuevoPrueba** ,per exemple, i la segona a **/movies/editarPrueba/{id}** . Recorda també eliminar o editar la restricció **only** de les rutes del controlador que vas establir la sessió anterior, perquè no sols permeta les rutes **index, show, create i edit**, i a més permeta la de destroy (o totes les possibles, si vols, ja que tard o d'hora les utilitzarem).
+* En l'arxiu **routes/web.php** , recorda afegir dues noves rutes temporals de tipus **get** per a provar aquestes insercions i modificacions. La primera pot apuntar a **/nuevoPrueba** ,per exemple, i la segona a **/editarPrueba/{id}** . Recorda també eliminar o editar la restricció **only** de les rutes del controlador que vas establir la sessió anterior, perquè no sols permeta les rutes **index, show, create i edit**, i a més permeta la de destroy (o totes les possibles, si vols, ja que tard o d'hora les utilitzarem).
 
 
 #### Exercisi 713 (Branca v2.3):
@@ -1448,16 +1444,15 @@ X"). Pots emprar la funció **rand** de PHP per a generar aquests números aleat
 Sobre el projecte blog de la sessió anterior, afegirem aquests canvis:
 
 * Crea una [relació](#un-a-molts) un a molts entre el model d'Usuari i el model de Post , tots dos ja existents en l'aplicació, de manera que un post és d'un usuari, i un usuari pot tindre molts posts. Hauràs de definir una nova [migració de modificació](../7.6.Laravel_dades.md#crear-una-nova-migració) sobre la taula posts que afija un nou camp usuari_id , i establir a partir d'ell la relació.
-* Crea des de phpMyAdmin una sèrie d'usuaris de prova en la taula usuaris, i associa alguns d'ells als posts que hi haja.
+* Registra una sèrie d'usuaris  en la taula usuaris, i associa alguns d'ells als posts que hi haja des del phpMyaAdmin.
 
-* Modifica la vista posts/index.blade.php perquè, al costat del títol de cada post, entre parèntesi, aparega el **login** de l'usuari que el va crear.
+* Modifica la vista posts/index.blade.php perquè, al costat del títol de cada post, entre parèntesi, aparega el **name** de l'usuari que el va crear.
 
 #### Exercisi 714 (Branca v2.4):
 
 Continuem amb el projecte blog anterior. Ara afegirem el següent:
 
-* Crea un [seeder](#los-seeds) anomenat **UsuariosSeeder** , amb un factory associat anomenat **UsuarioFactory** (canvia de nom el que ve per defecte **UserFactory** per a aprofitar-ho). Crea amb això 3 usuaris de prova,
-amb logins que siguen únics i d'una sola [paraula](#els-factories) (usa el faker), i passwords també d'una sola paraula, sense encriptar (per a poder-los identificar després, arribat el cas).
+* Crea un [seeder](#los-seeds) anomenat **UsersSeeder** , amb el factory associat anomenat **UserFactory** que ja està creat. Crea amb això 3 usuaris de prova.
 * Crea un altre seeder anomenat **PostsSeeder** amb un factory associat anomenat **PostFactory** . En el factory, defineix amb el faker títols aleatoris (frases) i continguts aleatoris (textos llargs). Usa el seeder per a crear 3 posts per a cadascun dels usuaris existents.
 * Utilitza l'opció **php artisan migrate:fresh --seed** per a esborrar tot contingut previ i poblar la base de dades amb aquests nous elements. Comprova després des de la pàgina del llistat de posts, i des de phpmyAdmin que la informació és correcta.
 
@@ -1466,7 +1461,7 @@ amb logins que siguen únics i d'una sola [paraula](#els-factories) (usa el fake
 Afig al projecte blog un nou model anomenat Comentari , juntament amb la seua migració i controlador associats. Cada comentari tindrà com a camp el contingut del comentari, i estarà relacionat un a molts amb el model Usuari , de manera que un usuari pot tindre molts comentaris, i cada comentari pertany a un usuari. També tindrà una relació un a molts amb el model Post , de manera que un comentari pertany a un post, i un post pot tindre molts comentaris. Per tant, la
 migració dels comentaris haurà de tindre com a camps addicionals la relació amb l'usuari ( usuario_id ) i amb el post al qual pertany ( post_id ).
 
-Aplica la migració per a reflectir la nova taula en la base de dades, i utilitza un **seeder** i un **factory** per a crear 3 comentaris en cada post, amb l'usuari que siga. A l'hora d'aplicar tot això, esborra els continguts previs de la base de dades ( **migrate:fresh --seed ).
+Aplica la migració per a reflectir la nova taula en la base de dades, i utilitza un **seeder** i un **factory** per a crear 3 comentaris en cada post, amb l'usuari que siga. A l'hora d'aplicar tot això, esborra els continguts previs de la base de dades ( **migrate:fresh --seed** ).
 
 AJUDA: si vols triar un usuari a l'atzar com a autor de cada comentari, pots fer una cosa així:
 
