@@ -2,6 +2,8 @@
 
 ## [Base de dades](https://laravel.com/docs/9.x/database)
 
+[Video](https://www.youtube.com/watch?v=SYAffKndJTI&t=444s)
+
 Laravel facilita la configuració i l'ús de diferents tipus de base de dades: MySQL, Postgres, SQLite i SQL Server. En el fitxer de configuració (**config/database.php**) hem d'indicar tots els paràmetres d'accés a les nostres bases de dades i a més especificar com és la connexió que s'utilitzarà per defecte. En Laravel podem fer ús de diverses bases de dades alhora, encara que siguen de diferent tipus. Per defecte s'accedirà a la qual especifiquem en la configuració i si volem accedir a una altra connexió ho haurem d'indicar expressament en realitzar la consulta.
 
 En aquest capítol veurem com configurar una base de dades, com crear taules i especificar els seus camps des de codi, com inicialitzar la base de dades i com construir consultes tant de forma directa com a través del ORM anomenat **Eloquent**.
@@ -298,6 +300,8 @@ Per a indicar la clau aliena a eliminar hem de seguir el següent patró per a e
 
 
 ## [Models de dades mitjançant ORM](https://laravel.com/docs/9.x/eloquent)
+
+[Video](https://www.youtube.com/watch?v=Y0W5GNNQFXU)
 
 El mapeado objecte-relacional (més conegut pel seu nom en anglès, Object-Relational mapping, o per les seues sigles ORM) és una tècnica de programació per a convertir dades entre un llenguatge de programació orientat a objectes i una base de dades relacional com a motor de persistència. Açò possibilita l'ús de les característiques pròpies de l'orientació a objectes, podrem accedir directament als camps d'un objecte per a llegir les dades d'una base de dades o per a inserir-los o modificar-los.
 Laravel inclou el seu propi sistema de ORM anomenat **Eloquent**, el qual ens proporciona una manera elegant i fàcil d'interactuar amb la base de dades. Per a cada taula de la base dades haurem de definir el seu corresponent **model**, el qual s'utilitzarà per a interactuar des de codi amb la taula.
