@@ -4,10 +4,6 @@
 
 [Casos Especials](#casos-especials)
 
-[Exercisis](#exercisis)
-
-[Exemple](#videoclub)
-
 	
 ## [Dades d'entrada](https://laravel.com/docs/9.x/requests#retrieving-input)
 
@@ -383,190 +379,65 @@ Altres mètodes que podem utilitzar per a recuperar informació del fitxer són:
 	$acarone = $request->file('photo')->getMimeType();
 ```
 
-## [Control d'usuaris](https://laravel.com/docs/8.x/authentication)
+## [Control d'usuaris](https://laravel.com/docs/9.x/authentication)
 
+Primer, hauríeu d'instal·lar un kit d'iniciador d'aplicacions Laravel. Els kits d'inici actuals, Laravel Breeze i Laravel Jetstream, ofereixen punts de partida molt ben dissenyats per incorporar l'autenticació a l'aplicació Laravel.
 
-A l'hora d'afegir autenticació d'usuaris en les nostres aplicacions Laravel, hem de tindre en compte
-que existeixen dos possibles escenaris:
+Laravel Breeze és una implementació mínima i simple de totes les funcions d'autenticació de Laravel, incloent-hi l'inici de sessió, registre, restabliment de contrasenya, verificació de correu electrònic i confirmació de contrasenya. La capa de visió de Laravel Breeze està formada per plantilles simples de Blade amb CSS de Tailwind. Breeze també ofereix una opció de bastida basada en Inertia utilitzant Vue o React.
 
-* Estem treballant sobre un projecte ja existent que no disposa d'autenticació
-* Estem creant un nou projecte en el qual definirem l'autenticació des de l'inici
+El Laravel Jetstream és un kit d'inici d'aplicació més robust que inclou suport per a bastides de la vostra aplicació amb Livewire o Inertia i Vue. A més, Jetstream ofereix suport opcional per a l'autenticació de dos factors, equips, gestió de perfils, gestió de sessions del navegador, suport d'API via Laravel Sanctum, supressió de comptes, i més.
 
+### Recuperanció l'usuari autenticat
+Després d'instal·lar un kit d'inici d'autenticació i permetre als usuaris registrar-se i autenticar-se amb la vostra aplicació, sovint haureu d'interactuar amb l'usuari actualment autenticat. Mentre gestioneu una sol·licitud entrant, podeu accedir a l'usuari autenticat mitjançant el mètode d'usuari de la façana Auth:
 
-En el primer cas, haurem d'implementar una autenticació més o menys "manual", encara que molt senzilla.
-En el segon cas, podem especificar unes opcions en crear el projecte que ens facilitaran molt la
-incorporació del **login**, i fins i tot del registre de nous usuaris. Veurem cada cas per separat.
-
-### Configuració general de l'autenticació
-
-En l'arxiu **config/auth.php** es disposa d'algunes opcions de configuració generals d'autenticació.
-Aquesta autenticació en Laravel es recolza en dos elements: els **guards** i els **providers**.
-
-* Els guards són mecanismes que defineixen com s'autenticaran els usuaris per a cada petició. El
-  mecanisme més habitual és mitjançant sessions, on es guarda la informació de l'usuari
-  autenticat en la sessió, encara que per defecte també s'habilita l'autenticació mitjançant tokens.
-
-* Els providers indiquen com s'obtindran els usuaris de la base de dades per a comprovar l'autenticació.
-  Les opcions habilitades per defecte són mitjançant Eloquent (i el model d'usuaris que tinguem definit), o mitjançant **query builder**, consultant directament la taula corresponent d'usuaris.
-
-Haurem de modificar en l'arxiu la referència a la taula on emmagatzemarem els usuaris (per defecte
-es fa referència a una taula anomenada **users** ) i/o al model associat (per defecte, la classe **User** ). Així que convindrà modificar els noms d'aquests dos elements en la secció **providers** , així com la
-ubicació (namespace) del model d'usuari, si escau. Per exemple:
-
-```
-...
-'providers' => [
-'users' => [
-'driver' => 'eloquent',
-'model' => App\Models\Usuario::class,
-],
-// 'users' => [
-// 'driver' => 'database',
-// 'table' => 'usuarios',
-// ],
-],
+```php
+use Illuminate\Support\Facades\Auth;
+ 
+// Retrieve the currently authenticated user...
+$user = Auth::user();
+ 
+// Retrieve the currently authenticated user's ID...
+$id = Auth::id();
 ```
 
-Notar que la secció providers disposa de dos proveïdors d'autenticació: un (el que està
-habilitat) està basat en Eloquent, i fa ús del model d'usuaris que hàgem definit. L'altre (que
-apareix comentat) no utilitza Eloquent, sinó del query builder contra la pròpia base de dades. Si preferim
-aquesta segona opció, haurem de comentar la primera i deixar habilitada la segona. També és possible
-deixar habilitats múltiples providers, cadascun amb un nom diferent, i assignar-lo a múltiples guards.
+Alternativament, un cop un usuari estiga autenticat, podeu accedir a l'usuari autenticat mitjançant una instància d'**Illuminate\Http\Request**. Recordeu, les classes amb tipus s'injectaran automàticament als vostres mètodes de control. 
+Per escriure l'objecte Illuminate\Http\Request, podeu accedir convenientment a l'usuari autenticat des de qualsevol mètode de control de la vostra aplicació mitjançant el mètode d'usuari de la sol·licitud:
 
-#### El model o la taula users
-
-Si triem el provider basat en Eloquent, haurem de tindre un model d'usuaris al qual accedir. En el
-cas de la nostra aplicació de blog, disposem ja d'un model creat en **App\Models\Usuari** , per la qual cosa l'exemple anterior ens serviria per a establir aquest model com el model d'usuaris per defecte.
-
-Si optem per utilitzar el query builder en lloc de Eloquent, haurem de tindre una taula en la base de dades on estiguen les dades dels usuaris. En el nostre cas, també disposem d'aqueixa taula usuaris, per la qual cosa podríem emprar aquesta altra opció per a autenticar usuaris si volguérem.
-
-No obstant això, ens valdrem de Eloquent per a l'autenticació. En qualsevol cas, com veurem a continuació, serà convenient que els passwords dels usuaris estiguen **encriptats** mitjançant **bcrypt**, que és el mecanisme d'encriptació per defecte que utilitza Laravel.
-
-#### Afegir autenticació a un projecte existent
-
-Per a afegir autenticació a un projecte Laravel ja existent que no dispose d'aquests mecanismes,seguirem aquests passos:
-
-1. Definirem un formulari de *login
-2. Definirem un nou controlador que s'encarregue de gestionar el *login: tant de mostrar el
-   formulari quan l'usuari no estiga autenticat com de validar les seues credencials quan les envie
-3. Afegirem les rutes pertinents en l'arxiu **routes/web.php** tant per al formulari de *login
-   com per a l'autenticació posterior
-4. Protegirem les rutes que siguen d'accés restringit
-5. Opcionalment, podem afegir també una opció de **logout**.
-
-##### El formulari de login
-
-Definirem un formulari de login en la vista **resources/views/auth/login.blade.php , perquè
-l'usuari especifique el seu login i el seu password. També deixarem una zona per a mostrar un possible
-missatge d'error si l'autenticació no ha sigut reeixida:
-
-```
-@extends('plantilla')
-@section('titulo', 'Login')
-@section('contenido')
-	<h1>Login</h1>
-	@if (!empty($error))
-		<div class="text-danger">
-			{{ $error }}
-		</div>
-	@endif
-<form action="{{ route('login') }}" method="POST">
-	@csrf
-	<div class="form-group">
-		<label for="login">Login:</label>
-		<input type="text" class="form-control"
-name="login" id="login" />
-	</div>
-	<div class="form-group">
-		<label for="password">Password:</label>
-		<input type="password" class="form-control"
-name="password" id="password" />
-	</div>
-	<input type="submit" name="enviar" value="Enviar"
-class="btn btn-dark btn-block">
-</form>
-@endsection
-```
-
-##### El controlador de Login
-
-Crearem un nou controlador que s'encarregue de gestionar tota l'autenticació:
-
-
-```
-php artisan make:controller LoginController
-```
-
-Dins, definim una funció que s'encarregarà de mostrar el formulari anterior:
-
-```
-public function loginForm()
+```php
+<?php
+ 
+namespace App\Http\Controllers;
+ 
+use Illuminate\Http\Request;
+ 
+class FlightController extends Controller
 {
-	return view('auth.login');
+    /**
+     * Update the flight information for an existing flight.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        // $request->user()
+    }
 }
 ```
 
-I afegirem una segona funció que s'encarregue de validar les credencials enviades per l'usuari. Per a això,farem ús del facade d'autenticació, existent en **Illuminate\Support\Facades\Auth** .
-Recorda que un **facade** és bàsicament un element que proporciona accés a una sèrie de mètodes estàtics d'utilitat, en aquest cas per a autenticar usuaris.
+### Determinar si l'usuari actual està autenticat
+Per determinar si l'usuari que fa la petició HTTP entrant està autenticat, podeu utilitzar el mètode de comprovació a la façana d'Auth. Aquest mètode retornarà cert si l'usuari està autenticat:
 
-```
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
+```php
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
-{
-	...
-	public function login(Request $request)
-	{
-		$credenciales = $request->only('login', 'password');
-		if (Auth::attempt($credenciales))
-		{
-			// Autenticación exitosa
-			return redirect()->intended(route('movies.index'));
-		} else {
-			$error = 'Usuario incorrecto';
-			return view('auth.login', compact('error'));
-		}
-	}
+if (Auth::check()) {
+// The user is logged in...
 }
 ```
 
-El mètode **attempt** accepta una sèrie de parells clau-valor com a primer paràmetre. En aquest cas, li passem un només parell format pel **login** (o **l'e-mail**, depenent del camp que usem per a autenticar)
-i el password rebuts en la petició. Això servirà per a localitzar a l'usuari per la clau , i comprovar
-si té el valor associat (el password). En el cas dels passwords, Laravel automàticament els encripta
-en format **bcrypt**, per la qual cosa hem de cerciorar-nos que el password està encriptat en aqueix format en la base de dades.
 
-D'altra banda, el mètode **intended** tracta d'enviar a l'usuari a la ruta a la qual intentava accedir abans que se li sol·licitara autenticació. Li passem com a paràmetre una ruta per defecte en el cas que la
-destinació prevista no estiga disponible.
-
-##### Les rutes associades
-
-Finalment, hem de definir les rutes tant per a mostrar el formulari (per get) com per a recollir les
-credencials i validar a l'usuari (per post).
-
-```php
-Route::get('login', [LoginController::class, 'loginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-```
-
-##### Redirecció en cas d'error
-
-Quan es detecta que un usuari no autenticat intenta accedir a una ruta protegida, automàticament
-se li redirigeix a la ruta nomenada com login (com la que hem definit prèviament), on veurà el
-formulari d'accés. Si volem canviar el nom de la ruta a la qual redirigir (en el cas que no
-vulguem que siga login), hem de modificar el mètode **redirectTo** en el middleware d'autenticació
-**app/Http/Middleware/Authenticate.php** :
-
-```php
-protected function redirectTo($request)
-{
-...
-return route('login');
-}
-```
-
-##### Protegir les rutes d'accés restringit
+### Protegir les rutes d'accés restringit
 
 Ara que ja tenim definit el mecanisme de login (controlador amb mètode d'autenticació,
 formulari de login i ruta associada), podem protegir aquelles rutes o enllaços que vulguem que siguen d'accés restringit. Per exemple, podem fer que les operacions de creació, esborrat i edició de videos
@@ -593,89 +464,22 @@ volem que s'aplique el middleware d'autenticació:
 Route::get('prueba', [PruebaController::class, 'create'])->middleware('auth');
 ```
 
-##### Detectar en les vistes l'usuari autenticat
-
-Pot ser molt necessari detectar en una vista si l'usuari s'ha autenticat o no, bé per a mostrar
-certs controls (per exemple, enllaços per a crear llibres), o per a carregar informació pròpia de l'usuari (per exemple, posts creats per l'usuari que ha entrat en un blog).
-Per exemple, d'aquesta manera podem modificar el menú de navegació
-( **resources/views/partials/nav.blade.php ) perquè mostre l'enllaç de crear nou nova película només
-si l'usuari s'ha autenticat:
+#### Redirigir els usuaris no autenticats
+Quan el middleware auth detecta un usuari no autenticat, redirigirà l'usuari a la ruta amb nom d'inici de sessió. Podeu modificar aquest comportament actualitzant la funció redirectTo al fitxer app/Http/Middleware/Authenticate de la vostra aplicació:
 
 ```php
-@if(Auth()::check())
-	<li class="{{ setActivo('movies.create') }} nav-item">
-<a class="nav-link" href="{{ route('movies.create') }}">Nova pelicula</a
-</li>
-@endif
-```
-Podem emprar el mètode **Auth::guest()** si volem comprovar si l'usuari encara NO s'ha
-autenticat (per exemple, per a mostrar-li l'enllaç a login), i el mètode **Auth::check()** per a comprovar
-si **SI** està autenticat (per a mostrar-li, per exemple, les opcions restringides). De manera
-anàloga, el mètode **Auth::user()** obté l'objecte de l'usuari autenticat, amb el que podem
-accedir als seus atributs:
-
-```
-Bienvenido/a {{ Auth::user()->login }}
-```
-##### Implementació del logout
-
-Per a implementar el **logout**, n'hi ha prou amb cridar al mètode logout del **facade Auth** utilitzat
-anteriorment, en el mètode que es vaja a encarregar d'aqueixa tasca. Ho podem afegir en el mateix
-controlador anterior:
-
-```php
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-class LoginController extends Controller
-{
-	...
-	public function logout()
-	{
-		Auth::logout();
-		// ... Renderizar la vista deseada
-	}
+/**
+* Get the path the user should be redirected to.
+*
+* @param  \Illuminate\Http\Request  $request
+* @return string
+  */
+  protected function redirectTo($request)
+  {
+  return route('login');
+  }
 ```
 
-També farà falta definir la ruta associada en **routes/web.php** :
-
-```php
-Route::get('logout', [LoginController::class, 'logout'])->name('logout');
-```
-
-Òbviament, també serà necessari afegir un enllaç per a fer logout en alguna part. Podem posar-ho
-en el menú de navegació (arxiu **resources/views/partials/nav.blade.php** , quan detectem que l'usuari està autenticat):
-
-```php
-@if(Auth::check())
-	<li class="{{ setActivo('movies.create') }} nav-item">
-		<a class="nav-link" href="{{ route('movies.create') }}">Nuevo libro</a
-	</li>
-	<li class="nav-item">
-		<a class="nav-link" href="{{ route('logout') }}">Logout</a>
-	</li>
-@endif
-```
-
-## Crear un projecte desde cero amb l'autenticació incorporada
-
-Laravel també ofereix l'opció de crear un projecte des de zero incorporant mecanismes d'autenticació
-d'usuaris des del principi. Aquesta opció ha variat amb el pas de les versions de Laravel,però bàsicament es conserva una mateixa essència: quan creem el projecte, podem deixar ja establit el model d'usuaris, i mecanismes per a registrar i autenticar usuaris en l'aplicació.
-
-Per a crear un projecte amb aquesta infraestructura ja definida executem el comando laravel **new** amb l'opció **--jet** en Laravel 8.
-
-```
-laravel new nombre_proyecto --jet
-```
-
-Això crearà el projecte incorporant la infraestructura de gestió d'usuaris, juntament amb formularis
-bàsics per a registre i login. En el cas de Laravel 8 s'empra **JetStream**, la nova utilitat incorporada en
-aquesta versió per a proporcionar l'esquelet bàsic o **scaffolding** d'autenticació.  Una de les principals diferències entre totes dues versions és que
-en Laravel 7 s'empra Bootstrap per a l'aparença o el disseny web, i en Laravel 8 s'empra **Tailwind**.
-Ho podem comprovar donant una ullada al contingut de la carpeta views , on ja tindrem unes quantes vistes preparades per a registre, login, recuperació de contrasenya, etc:
-
-
-Evidentment, abans de poder fer res necessitem tindre una base de dades creada. Recorda crear-la i modificar les dades de connexió en l'arxiu .env del teu projecte, i també executar les migracions predefinides en el projecte amb **php artisan migrate:fresh**.
 
 ### Canviar l'idioma
 
@@ -790,4 +594,57 @@ des que es rep la petició fins que s'emet la resposta, i permet alterar aqueix 
 fent certes comprovacions sobre la petició. Per exemple, com és el cas, verificar que l'usuari
 té els permisos adequats abans d'emetre una resposta o una altra.
 
+#### Exercicis
 
+Sobre el projecte blog, afegirem aquests canvis:
+
+721. Crea un [formulari](#creació-i-enviament-de-formularis) per a donar d'alta nous posts, en la vista
+  **resources/views/posts/create.blade.php** . 
+     * Afig un parell de camps (un text curt i un text llarg) per a emplenar el títol i el contingut, i com a autor o usuari del post de moment deixa un predefinit; per exemple, l'autor amb id = 1, o el primer autor que trobes en la base de dades ( Autor::get()->first() ). Més endavant ja ho farem dependent de l'usuari que s'haja autenticat. Recorda definir el mètode store en el controlador de posts per a donar d'alta el post, i redirigir després al llistat principal de posts. Per a carregar el formulari, afig una nova opció en el menú principal de navegació. 
+     * En la fitxa d'un post, afig un botó amb un formulari per a esborrar el post. Hauràs de definir el codi del mètode **destroy** per a eliminar el post i redirigir de nou al llistat. Deuràs eliminar tots els comentaris associats a aqueix post, i després esborrar el post. Per a filtrar els comentaris d'un post i esborrar-los, utilitza la clàusula **where**.
+
+```
+Comentario::where('post_id', $id)->delete();
+```
+
+722. Ara afegirem el [formulari d'edició](#actualitzacions-i-esborrats) d'un post, també des de la vista de la fitxa del post. El formulari haurà de mostrar les dades ja farcides del post. Aquestformulari es carrega a partir del mètode **edit** (que haurà de renderitzar la vista amb el formulari d'edició,
+**resources/views/posts/edit.blade.php** ), i el formulari s'enviarà al mètode **update** del controlador, passant-li com a paràmetre l'id del post a modificar.
+
+723. Crea un **form request** anomenat **PostRequest** , que [valide](#utilitzar-form-requests-per-a-validacions-més-complexes) les
+dades del post. En concret, han de complir-se aquests requisits:
+
+	* El títol del post ha de ser obligatori, i d'almenys 5 caràcters de longitud
+	* El contingut del post ha de ser obligatori, i d'almenys 50 caràcters de longitud
+
+Defineix [missatges d'error](#mostrar-missatges-derror) personalitzats per a cada possible error de validació, i mostra'ls al costat de cada camp afectat. A més, utilitza la [funció **old**](../7.7.Laravel_validacio#recordar-valors-enviats) per a recordar el valor antic correcte, en el cas que un camp passe la validació però un altre(s) no.
+
+724. Fes els següents canvis:
+
+* En el controlador de posts, [protegeix](#protegir-les-rutes-daccés-restringit) totes les opcions menys les de index i show .
+
+
+* Fes que només es mostren els enllaços i botons de crear, editar o esborrar posts quan l'usuari estiga
+  autenticat. En aqueix mateix cas, fes que també es mostre una opció de logout en el menú
+  superior, que hauràs d'implementar.
+
+* Finalment, afig la funcionalitat que l'usuari autenticat només pot editar i esborrar els seus
+  propis posts, però no els dels altres usuaris.
+
+725. Rols d'usuaris
+
+* Crea una nova migració que modifique la taula d'usuaris per a afegir un nou camp anomenat rol,
+  de tipus string. Assegura't que la migració siga de modificació, i no de creació de taula. Després,
+  executa-la per a crear el nou camp.
+
+* Fes que algun dels usuaris de la taula tinga un rol de **admin** (edita'l a mà des de phpMyAdmin),
+  i la resta seran de tipus editor.
+
+* Crea un nou [middleware](#definir-roles-ús-de-middleware) anomenat **RolCheck** , amb una funció que comprove si l'usuari té el
+  rol indicat, com en l'exemple vist abans en les anotacions. Registra-ho adequadament en l'arxiu
+  App/Http/Kernel.php , com s'ha explicat.
+
+* Modifica les vistes necessàries perquè, si l'usuari és de tipus **admin** puga veure els botons d'edició
+  i esborrat de qualsevol post, encara que no siguen seus.
+
+* Modifica els mètodes edit , update i destroy de PostController perquè redirigisquen a posts.index
+  si l'usuari no és administrador, o si no és el propietari del post a editar o esborrar.

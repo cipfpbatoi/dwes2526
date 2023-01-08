@@ -60,12 +60,12 @@
 
 - [X] 1.- (L 12D) Introducció e Instal·lació de Laravel - 3 
 - [X] 2.- (M 13D) Rutes i vistes. Activitats 701-703 - 5
-- [X] 3.- (J 15D) Controladors Activitat 704-705 - 8
-- [X] 4.- (L 19D) Migraciones - 11
-- [X] 5.- (M 20D) Eloquent - 13 
-- [ ] 6.- (L 9G) Formularis - 16 
-- [ ] 7.- (M 10G) Paginació i Autenticació - 18  
-- [ ] 8.- (J 12G) Rel·lacions - 21 
+- [X] 3.- (J 15D) Controladors. Activitats 704-705 - 8
+- [X] 4.- (L 19D) Migraciones. Activitats 711-714 - 11
+- [X] 5.- (M 20D) Eloquent. Activitat 715 - 13 
+- [ ] 6.- (L 9G) Formularis. Activitat 721 - 23 - 16 
+- [ ] 7.- (M 10G) Autenticació. Activitat 724- 25 - 18  
+- [ ] 8.- (J 12G) Projecte chollo severo  - 21 
 - [ ] 9.- (L 16G) Projecte chollo servero - 24
 - [ ] 10.- (M 17G) Projecte chollo severo - 26
  
