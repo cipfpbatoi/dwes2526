@@ -545,6 +545,8 @@ $movie = movie::findOrFail($id);
 
 #### Inserir dades
 
+[Video](https://www.youtube.com/watch?v=eg47wpRMNxw&list=PL3hkkJmy9pApI_gtgXELwy31PVf5Uafs0&index=7)
+
 Per a afegir una entrada en la taula de la base de dades associada amb un model simplement hem de crear una nova instància d'aquest model, assignar els valors que vulguem i finalment guardar-los amb el mètode save():
 
 ```php

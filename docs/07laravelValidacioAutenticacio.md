@@ -9,7 +9,7 @@
 [Exemple](#videoclub)
 
 	
-## [Dades d'entrada](https://laravel.com/docs/8.x/requests#retrieving-input)
+## [Dades d'entrada](https://laravel.com/docs/9.x/requests#retrieving-input)
 
 Laravel facilita l'accés a les dades d'entrada de l'usuari a través de solament uns pocs mètodes. No importa el tipus de petició que s'haja realitzat (POST, GET, PUT, DELETE), si les dades són d'un formulari o si s'han afegit a la query string, en tots els casos s'obtindran de la mateixa forma.
 
@@ -442,7 +442,7 @@ Si optem per utilitzar el query builder en lloc de Eloquent, haurem de tindre un
 
 No obstant això, ens valdrem de Eloquent per a l'autenticació. En qualsevol cas, com veurem a continuació, serà convenient que els passwords dels usuaris estiguen **encriptats** mitjançant **bcrypt**, que és el mecanisme d'encriptació per defecte que utilitza Laravel.
 
-#### Afegir autentiació a un projecte existent
+#### Afegir autenticació a un projecte existent
 
 Per a afegir autenticació a un projecte Laravel ja existent que no dispose d'aquests mecanismes,seguirem aquests passos:
 
