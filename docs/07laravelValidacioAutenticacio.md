@@ -594,7 +594,7 @@ des que es rep la petició fins que s'emet la resposta, i permet alterar aqueix 
 fent certes comprovacions sobre la petició. Per exemple, com és el cas, verificar que l'usuari
 té els permisos adequats abans d'emetre una resposta o una altra.
 
-#### Exercicis
+## Exercicis
 
 Sobre el projecte blog, afegirem aquests canvis:
 
