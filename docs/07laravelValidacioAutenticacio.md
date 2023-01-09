@@ -616,7 +616,7 @@ dades del post. En concret, han de complir-se aquests requisits:
 	* El títol del post ha de ser obligatori, i d'almenys 5 caràcters de longitud
 	* El contingut del post ha de ser obligatori, i d'almenys 50 caràcters de longitud
 
-Defineix [missatges d'error](#mostrar-missatges-derror) personalitzats per a cada possible error de validació, i mostra'ls al costat de cada camp afectat. A més, utilitza la [funció **old**](../7.7.Laravel_validacio#recordar-valors-enviats) per a recordar el valor antic correcte, en el cas que un camp passe la validació però un altre(s) no.
+Defineix [missatges d'error](#mostrar-missatges-derror) personalitzats per a cada possible error de validació, i mostra'ls al costat de cada camp afectat. A més, utilitza la [funció **old**](#recordar-valors-enviats) per a recordar el valor antic correcte, en el cas que un camp passe la validació però un altre(s) no.
 
 724. Fes els següents canvis:
 
