@@ -480,35 +480,102 @@ Quan el middleware auth detecta un usuari no autenticat, redirigirà l'usuari a 
   }
 ```
 
+## Configurar la configuració regional
+L'idioma predeterminat per a l'aplicació s'emmagatzema a l'opció de configuració regional del fitxer de configuració config/app.php. 
+Es pot modificar aquest valor per adaptar-lo a les necessitats de l'aplicació.
 
-### Canviar l'idioma
+Podeu modificar la llengua per defecte per a una sol·licitud HTTP única en temps d'execució utilitzant el mètode setLocale proporcionat per la façana de l'aplicació:
 
-Un dels inconvenients que tenim en utilitzar aquest **scaffolding** és que tots els enllaços i camps de formularis que s'han creat vénen amb textos en anglés. Podem afegir missatges en altres idiomes amb
-dos passos senzills:
+```php
+use Il·lumina\Support\Facades\App;
 
-* D'una banda, hem de modificar la regió (locale) per defecte definida en l'arxiu **config/app.php** . Així la deixaríem per a fixar l'idioma en espanyol:
+Route::get('/greeting/{locale}', funció ($locale) {
+if (! in,array($locale, ['en', 'es', 'ca'])) {
+    abort(400);
+}
 
-```
-'locale' => 'es',
-```
-* D'altra banda, hem de descarregar el paquet de fitxers en l'idioma corresponent, i situar-lo en la subcarpeta adequada dins de **resources/lang** . En el nostre cas, podem per exemple copiar els arxius d'aquesta carpeta en la subcarpeta **resources/lang** del nostre projecte, de manera que l'arxiu **es.json** quedarà en aqueixa carpeta, i a més es crearà una subcarpeta **es** amb el contingut dels arxius que hi ha en aqueix repositori.
-
-Si els donem una ullada, podem veure que contenen les traduccions a l'espanyol de diferents missatges de diferents seccions de la web.
-Amb això ja podrem veure els continguts de la web en espanyol. Aquesta "màgia" es deu al fet que en les vistes que hem carregat, els missatges s'obtenen directament d'aquesta carpeta **resources/lang** per a l'idioma especificat en **config/app.php** . Per exemple, així es mostra el missatge **Forgot Your Password?** original en el formulari de login:
-
-```
-<a class="btn btn-link" href="{{ route('password.request') }}">
-{{ __('Forgot Your Password?') }}
-</a>
+    App::setLocale($locale);
+ 
+    //
+});
 ```
 
-La instrucció __() cerca la clau que li passem (Forgot Your Password?) en els arxius de configuració
-en anglés, i si no la troba, posa directament la clau sense més. Si busquem aquesta mateixa
-clau en l'arxiu **es.json** que hem descarregat, podem veure per què text se substituirà quan
-canviem l'idioma a espanyol:
+Es pot configurar una "llengua alternativa", que s'utilitzarà quan la llengua activa no contingui una cadena de traducció donada. Igual que la llengua per defecte, la llengua alternativa també està configurada al fitxer de configuració config/app.php:
 
+'fallback =locale' => 'en',
+
+### Definició de cadenes de traducció
+ #### Ús de tecles curtes
+Normalment, les cadenes de traducció s'emmagatzemen en fitxers dins del directori de lang. Dins d'aquest directori, hi ha d'haver un subdirectori per a cada llengua compatible amb l'aplicació. Aquesta és l'aproximació que Laravel utilitza per gestionar les cadenes de traducció per a les característiques integrades de Laravel, com ara missatges d'error de validació:
+
+/lang
+/en
+message.php
+/es
+message.php
+
+Tots els fitxers d'idioma retornen una matriu de cadenes clau. Per exemple:
+
+```php
+
+// lang/en/messages.php
+
+return [
+"Benvinguts" => "Benvinguts a la nostra aplicació!",
+];
 ```
-"Forgot Your Password?": "¿Olvidaste tu contraseña?",
+
+#### Ús de les cadenes de traducció com a claus
+
+Per a aplicacions amb un gran nombre de cadenes traduïbles, definir cada cadena amb una "tecla curta" pot resultar confús quan es fa referència a les claus en les vistes i és complicat inventar contínuament claus per a cada cadena de traducció admesa per la vostra aplicació.
+
+Per aquesta raó, Laravel també proporciona suport per definir cadenes de traducció utilitzant la traducció "per defecte" de la cadena com a clau. Els fitxers de traducció que utilitzen cadenes de traducció com a claus s'emmagatzemen com a fitxers JSON al directori de lang. Per exemple, si la vostra aplicació té una traducció al castellà, hauríeu de crear un fitxer lang/es.json:
+
+```php
+{
+"I love programming.": "Me encanta programar."
+}
+```
+
+
+### Recuperant les cadenes de traducció
+Podeu recuperar les cadenes de traducció dels vostres fitxers de llengua utilitzant la funció auxiliar .. Si esteu utilitzant «tecles curtes» per a definir les cadenes de traducció, haureu de passar el fitxer que conté la clau i la clau mateixa a la funció . utilitzant la sintaxi «punt». Per exemple, recuperarem la cadena de traducció benvinguda del fitxer de llengua lang/en/messages.php:
+
+```php
+echo __('messages.welcome');
+```
+Si la cadena de traducció especificada no existeix, la funció __ retornarà la clau de la cadena de traducció. Per tant, utilitzant l'exemple anterior, la funció . retornaria messages.wellcome amb satisfacció si la cadena de traducció no existeix.
+
+Si esteu utilitzant les cadenes de traducció predeterminades com a claus de traducció, haureu de passar la traducció predeterminada de la cadena a la __funció
+
+```php
+echo __('I love programming.');
+```
+De nou, si la cadena de traducció no existeix, la funció __ retornarà la clau de la cadena de traducció que s'ha donat.
+
+Si utilitzeu el motor de templating Blade, podeu utilitzar la {{ }} sintaxi d'eco per mostrar la cadena de traducció:
+
+```php
+{{ __('missages.welcome') }}
+```
+
+###Substitució de paràmetres a les cadenes de traducció
+Si ho desitgeu, podeu definir paràmetres a les cadenes de traducció. Tots els paràmetres estan prefixats amb un :. Per exemple, podeu definir un missatge de benvinguda amb un paràmetre:
+
+```php
+'benvingut' => 'Benvingut, :name',
+```
+
+Per a reemplaçar els paràmetre en recuperar una cadena de traducció, podeu passar una matriu de reemplaçaments com a segon argument a la funció __
+
+```php
+echo __('missages.welcome', ['name' => 'dayle']);
+```
+Si el paràmetres conté totes les lletres majúscules, o només té la primera lletra en majúscula, el valor traduït es posarà en majúscula en conseqüència:
+
+```php
+'wellcome' => 'Benvingut, :NAME', // Benvingut, DAYLE
+'goodbye' => 'Adéu, :Nom', // Adéu, Dayle
 ```
 
 ### Altres consideracions
@@ -648,3 +715,70 @@ Defineix [missatges d'error](#mostrar-missatges-derror) personalitzats per a cad
 
 * Modifica els mètodes edit , update i destroy de PostController perquè redirigisquen a posts.index
   si l'usuari no és administrador, o si no és el propietari del post a editar o esborrar.
+
+726. Idioma
+
+* Cerca el paquet de castellà o valencia i possa'l en la carpeta corresponent.
+* Canvia l'idioma de l'aplicació al paquet baixat.
+
+## Projecte cholloSevero
+
+* La pàgina principal del lloc ha de ser un llistat amb totes les gangues disponibles
+  
+  * Configura la base de dades amb **Eloquent**, mitjançant migracions i seeders.
+
+    * La taula Ganga ha de contindre les següents columnes:
+      * id únic i **autoincremental**
+      * title: un títol per a la ganga
+      * description: *descripció de la ganga
+      * url: un camp per a introduir la URL externa de la ganga
+      * category: albergarà la id de la categoria de les gangues
+      * likes: un nombre enter que indique els likes de la ganga
+      * unlikes: un nombre enter que indique els unlikes de la ganga
+      * price: per a albergar el preu de la ganga
+      * price_sale: per a albergar el nou preu
+      * available: disponible de tipus boolean
+      * user_id: id del usuari que ha creat la ganga qui ha creat la ganga
+    
+    * La tabla users i categories les pots fer semblants a l'exercici del tema anterior.
+    * Almenys, el lloc ha de contindre un controlador de Laravel; pots crear tants com cregues necessaris però mínim ha d'haver-hi un.
+    
+    * Elements estàtics Com ja hem vist, hi ha uns certs elements que sempre es mostren en totes les vistes del lloc web. A continuació es llisten els elements que han d'estar si o si en totes les plantilles que creeu.
+
+      * Logo del lloc i el títol Ganga ░▒▓ Severa
+      * Inici | Nous | Destacats
+      * Un **footer** amb el vostre nom i alguna dada copyright del tipus ©*CholloSevero 2023 on l'any ha de ser calculat a través de la data del servidor.
+      
+    * Pàgina principal
+      * A més del llistat de totes les gangues paginades de la base de dades ha de contindre l'enllaç al login:
+      * Cada ganga ha de ser accessible des d'aquest llistat
+      * Cada ganga ha de contindre una imatge que estarà guardada en /storage/app/public/img
+      * El nom de les imatges ha d'estar composta per la següent fórmula idChollo-ganga-severa.extension.Per exemple: 25-ganga-severa.jpg 
+      * La imatge de la ganga es puja a través del formulari de creació.
+    
+    * Pàgina privada de l'usuari loguejat
+      * Nomès eixiran les gangues creades per l'usuari en qüestió.
+      
+    * Pàgina de Ganga
+      * Quan punxem en un de les gangues del llistats hem de ser redirigits a aquesta vista on podrem veure tota la informació del taula ganga. Pots maquetar-la com vulgues i fins i tot pots basar-te en la web de CholloMetre. El camp disponible no és necessari que el mostres en aquesta vista.
+      * Cada ganga ha de contindre els seus botons d'editar i esborrar que faça les funcions que toquen si l'usuari està autoritzat a fer-ho. Pots utilitzar icones per a cadascun dels botons.
+
+    * Pàgina de Crear una ganga (només usuaris autenticats)
+      + Un formulari amb els camps necessaris per a poder crear una ganga nova. A més, has de tindre en compte que has de validar els camps, de tal manera que no es puga enviar el formulari si s'ha deixat algun camp en blanc o algun tipus no compatible amb la base de dades; aquestes validacions, a més d'afegir la propietat **required** d'HTML5 has de fer-ho amb **Laravel**.
+      * En cas que hi haja hagut algun error en el formulari has de mostrar un missatge en la part de dalt del mateix amb el missatge d'error (per exemple, si el camp està buit).
+
+    * Pàgina d'Editar una ganga (només usuaris autenticats)
+      * Molt semblant a la de Crear una ganga però que pugues editar una Ganga en funció de la seua id. Recorda't de la validació.
+
+    * Ampliació:
+      * Afegix un rol d'usuari per poder afegir usuaris administradors. Els administradors podran editar i esborrar totes les gangues
+      * Els administradors podran afegir, editar i esborrar les categories.
+      * Afegeix botons per a fer like o dislike en una ganga. Quan un usuari faça like/unlinke s'incrementarà en la base de dades.
+      * Només podran votar els usuaris loguejats. Un usuari sols podrà emetre un vot sobre un article, encara que podrà canviar el sentit del seu vot.
+    
+  * COSES A TINDRE EN COMPTE
+    * L'aplicació ha de quedar presentable 
+    * Els missatges d'error o d'informació han d'estar estilitzats perquè l'usuari puga veure'ls amb facilitat 
+    * Els elements estàtics han de ser presents en totes les vistes; incloses les d'editar i crear. 
+    * Aneu fent **commits** en funció de les tasques que vages acabant o que veges que el commit té sentit. No és bona pràctica pujar els canvis d'un arxiu i el següent **commit** tornar a pujar més canvis del mateix arxiu (llevat que ens hàgem saltat o equivocat en alguna cosa). 
+    * El projecte és individual i després es presentarà, d'un en un al professor perquè avalue tots els aspectes d'aquest. Es faran preguntes de com s'ha fet una certa cosa o per què s'ha determinat un cert flux de treball així que, no us copieu perquè s'avalua també la presentació del projecte.

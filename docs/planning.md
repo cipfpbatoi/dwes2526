@@ -63,8 +63,8 @@
 - [X] 3.- (J 15D) Controladors. Activitats 704-705 - 8
 - [X] 4.- (L 19D) Migraciones. Activitats 711-714 - 11
 - [X] 5.- (M 20D) Eloquent. Activitat 715 - 13 
-- [ ] 6.- (L 9G) Formularis. Activitat 721 - 23 - 16 
-- [ ] 7.- (M 10G) Autenticació. Activitat 724- 25 - 18  
+- [X] 6.- (L 9G) Formularis. Activitat 721 - 23 - 16 
+- [X] 7.- (M 10G) Autenticació. Activitat 724- 25 - 18  
 - [ ] 8.- (J 12G) Projecte chollo severo  - 21 
 - [ ] 9.- (L 16G) Projecte chollo servero - 24
 - [ ] 10.- (M 17G) Projecte chollo severo - 26
