@@ -171,6 +171,7 @@ Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar
 11. **Genera els node_modules**
     
     $ npm install
+
     $ npm run build
 
 Ara podeu obrir la vostra aplicació amb el vostre navegador: http://localhost
