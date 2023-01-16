@@ -123,7 +123,7 @@ Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar
 
 1. **Clona el repositori, exemple:**
 
-   $ git clone https://github.com/example/laravel-backend-api.git
+    $ git clone https://github.com/example/laravel-backend-api.git
 
 2. **Canvia el directori a l'aplicació/projecte de nova creació.**
    
