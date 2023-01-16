@@ -124,13 +124,16 @@ Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar
 1. Clona el repositori, exemple:
 
    $ git clone https://github.com/example/laravel-backend-api.git
-2. Canvia el directori a l'aplicació/projecte de nova creació.
+
+3. Canvia el directori a l'aplicació/projecte de nova creació.
    
     $ cd laravel-backend-api
-3. Copia el fitxer .env
+
+4. Copia el fitxer .env
    
     $ cp .env.example .env
-4. Obre .env per a coincidir la configuració amb les línies següents:
+
+5. Obre .env per a coincidir la configuració amb les línies següents:
 
    ```php
    DB_CONNECTION=mysql
@@ -146,20 +149,26 @@ Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar
     $ docker run --rm -v $(pwd):/opt -w /opt laravelsail/php81-composer:latest composer install
    
     NOTA: Això pot trigar una estona si aquesta és la primera vegada que s'instal·la com a contenidor.
-6. Executa els servidors amb Sail
+
+7. Executa els servidors amb Sail
    
     $ vendor/bin/sail up -d
-7. Entra en el phpmyadmin (localhost:8080) i crea la base de dades laravel.
-8. Inicia el terminal del contenidor
+
+8. Entra en el phpmyadmin (localhost:8080) i crea la base de dades laravel.
+
+9. Inicia el terminal del contenidor
    
     $ vendor/bin/sail bash
-9. Genera la clau APP.KEY.
+
+10. Genera la clau APP.KEY.
    
     $ php artisan key:generate
-10. Construeix la llavor.
+
+11. Construeix la llavor.
     
     $ php artisan migrate:fresh --seed
-11. Genera els node_modules
+
+12. Genera els node_modules
     
     $ npm install
     $ npm run build
