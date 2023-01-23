@@ -84,7 +84,7 @@ Duració estimada: 80 hores
 
     * Producció i consum.
     * *AJAX* amb *JSON*.
-    * Interacció amb *Vue.js*.
+   
 
 10. [Projecte Integrador]
 
