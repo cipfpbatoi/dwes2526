@@ -40,57 +40,6 @@ Exemples de **APIs** gratuïtes:
 - [The Star Wars API](https://swapi.dev/)
 
 
-
-A hores d'ara tots hauríem de tindre clar que qualsevol aplicació web es basa en una arquitectura client-servidor, on un servidor queda a l'espera de connexions de clients, i els clients es connecten als
-servidors per a sol·licitar certs recursos. Sobre aquesta base, veurem unes breus pinzellades de com
-funciona el protocol HTTP, i en què consisteixen els serveis **REST**.
-
-#### El protocol HTTP
-
-Les comunicacions web entre client i servidor es realitzen mitjançant el protocol **HTTP** (o **HTTPS**, en el cas de comunicacions segures). En tots dos casos, client i servidor s'envien certa informació estàndard,
-en cada missatge.
-
-Quant als clients, envien al servidor les dades del recurs que sol·liciten, juntament amb certa informació
-addicional, com per exemple les capçaleres de petició (informació relativa a la mena de client o navegador,
-contingut que accepta, etc), i paràmetres addicionals anomenats normalment dades del formulari, ja que
- solen contindre la informació d'algun formulari que s'envia de client a servidor.
-
-Pel que respecta als servidors, accepten aquestes peticions, les processen i envien de tornada algunes
-dades rellevants, com un codi d'estat (indicant si la petició va poder ser atesa satisfactòriament
-o no), capçaleres de resposta (indicant el tipus de contingut enviat, grandària, idioma, etc), i el recurs
-sol·licitat pròpiament dit, si tot ha anat correctament.
-
-Aquest és el mecanisme que hem estat utilitzant fins ara a través dels controladors: reben la
-petició concreta del client, i envien una resposta, que de moment s'ha centrat en renderitzar un
-contingut HTML d'una vista.
-
-Quant als codis d'estat de la resposta, depén del resultat de l'operació que s'haja
-realitzat, aquests es cataloguen en cinc grups:
-
-* Codis **1xx**: representen informació sobre una petició normalment incompleta. No són molt
-habituals, però es poden emprar quan la petició és molt llarga, i s'envia abans una capçalera
-per a comprovar si es pot processar aquesta petició.
-
-* Codis **2xx**: representen peticions que s'han pogut atendre satisfactòriament. El codi més
-habitual és el 200, resposta estàndard per a les peticions que són correctes. Existeixen altres variants, com el codi 201, que s'envia quan s'ha inserit o creat un nou recurs en el servidor (una
-inserció en una base de dades, per exemple), o el codi 204, que indica que la petició s'ha atés
-bé, però no s'ha retornat res com a resposta.
-
-* Codis **3xx**: són codis de redirecció, que indiquen que d'alguna manera la petició original s'ha
-redirigit a un altre recurs del servidor. Per exemple, el codi 301 indica que el recurs sol·licitat s'ha
-mogut permanentment a una altra URL. El codi 304 indica que el recurs sol·licitat no ha canviat
-des de l'última vegada que es va sol·licitar, per si es vol recuperar de la caixet local en aqueix cas.
-
-* Codis **4xx**: indiquen un error per part del client. El més típic és l'error 404, que indica que estem
-sol·licitant una URL o recurs que no existeix. Però també hi ha altres habituals, com el 401 (client
-no autoritzat), o 400 (les dades de la petició no són correctes, per exemple, perquè els camps del
-formulari no són vàlids).
-
-* Codis **5xx**: indiquen un error per part del servidor. Per exemple, l'error 500 indica un error intern del servidor, o el 504, que és un error de **timeout** per temps excessiu a emetre la resposta.
-
-Farem ús d'aquests codis d'estat en els nostres serveis **REST** per a informar el client de la mena d'error
-que s'haja produït, o de l'estat en què s'ha pogut atendre la seua petició.
-
 #### Els serveis REST
 
 ## REST
@@ -332,38 +281,132 @@ public function show(Movie $movie)
          * Codis 5xx: indiquen un error per part del servidor. Per exemple, l'error 500 indica un error intern del servidor, o el 504, que és un error de timeout per temps excessiu a emetre la resposta.
 
 
-### Recuperant dades en vista **BLADE**
+## [Eloquent: API Resources](https://laravel.com/docs/9.x/eloquent-resources)
 
-Ja tenim nostra **API** muntada i pot ser consumida a través del navegador o qualsevol client com `PostMan` o `Thunder Client` però el que ens interessa ara és **poder** llistar la informació en una **vista** com féiem en el tema anterior.
+Quan creeu una API, és possible que necessiteu una capa de transformació que es trobe entre els vostres models Eloqüents i les respostes JSON que es retornen realment als usuaris de la vostra aplicació. Per exemple, podeu voler mostrar certs atributs per a un subconjunt d'usuaris i no d'altres, o podeu incloure sempre certes relacions en la representació JSON dels vostres models. Les classes de recursos d'Eloquent permeten transformar expressivament i fàcilment els vostres models i col·leccions de models en JSON.
 
-El que haurem de fer és el següent
-
-- Modificar el `Controlador` perquè consumisca de la **API**
-- Convertir el tipus de dada que ens retorna la **API** com a resposta
-- Utilitzar una estructura de control `**forEach**` dins de la nostra vista
-- Accedir a cada clau de l'objecte **JSON** rebut en la vista `blade`
+Per descomptat, sempre podreu convertir models o col·leccions eloqüents a JSON utilitzant els seus mètodes toJson; no obstant això, els recursos eloqüents proporcionen un control més granular i robust sobre la serialització JSON dels vostres models i les seves relacions.
 
 
-Modificarem el controlador perquè consumisca de la **API** i convertim les dades amb el mètode `collect()`.
+### Generació de recursos
+Per a generar una classe de recursos, podeu utilitzar l'ordre make:resource Artisan. Per defecte, els recursos es col·locaran al directori app/Http/Resources de la vostra aplicació. Els recursos amplien la classe Illuminate\Http\Resources\Json\JsonResource:
 
-Per a la crida hem d'importar `**Http**`.
+```console
+php artisan make:resource UserResource
+```
 
+#### Col·leccions de recursos
+A més de generar recursos que transformen models individuals, podeu generar recursos que són responsables de transformar col·leccions de models. Permet que les respostes JSON incloguin enllaços i altres metainformació que són rellevants per a tota una col·lecció d'un recurs donat.
+
+Per a crear una col·lecció de recursos, haureu d'utilitzar l'indicador --collection en crear el recurs. O, incloent la paraula Col·lecció en el nom del recurs indicarà a Laravel que hauria de crear un recurs de col·lecció. Els recursos de la col·lecció estenen la classe Illuminate\Http\Resources\Json\ResourceCollection:
+
+```console
+php artisan make:resource User --collection
+
+php artisan make:resource UserCollection
+```
+
+### Conceptes bàsics
+
+Una classe de recursos representa un únic model que s'ha de transformar en una estructura JSON. Per exemple, aquí hi ha una classe senzilla de recursos UserResource:
 
 ```php
 <?php
-
-use Illuminate\Support\Facades\Http; 
-
-class VideoController extends Controller
+ 
+namespace App\Http\Resources;
+ 
+use Illuminate\Http\Resources\Json\JsonResource;
+ 
+class UserResource extends JsonResource
 {
-    public function index() {
-        $movies = Http::get('http://localhost/api/movies') -> collect(); 
-
-        // $movies = Movie::all();
-        return view('rest', compact('movies'));
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }
 ```
+
+Cada classe de recurs defineix un mètode toArray que retorna la matriu d'atributs que s'han de convertir en JSON quan es retorna el recurs com a resposta des d'una ruta o mètode de controlador.
+
+Tingueu en compte que podem accedir a les propietats del model directament des de la variable $this. Això és degut al fet que una classe de recurs farà un servidor intermediari automàtic de la propietat i l'accés als mètodes fins al model subjacent per a un accés convenient. Un cop definit el recurs, es pot retornar des d'una ruta o controlador. El recurs accepta la instància del model subjacent a través del seu constructor:
+
+```php
+use App\Http\Resources\UserResource;
+use App\Models\User;
+
+Route::get('/user/{id}', function ($id) {
+return new UserResource(User::findOrFail($id));
+});
+```
+Cada classe de recurs defineix un mètode toArray Si esteu retornant una col·lecció de recursos o una resposta paginada, hauríeu d'utilitzar el mètode de col·lecció proporcionat per la classe de recurs quan creeu la instància de recurs en la vostra ruta o controlador:
+
+```php
+use App\Http\Resources\UserResource;
+use App\Models\User;
+
+Route::get('/users', function () {
+return UserResource::collection(User::all());
+});
+```
+
+Tingueu en compte que això no permet afegir metadades personalitzades que puguin necessitar ser retornades amb la vostra col·lecció. Si voleu personalitzar la resposta de la col·lecció de recursos, podeu crear un recurs dedicat per a representar la col·lecció:
+
+```console
+php artisan make:resource UserCollection
+```
+
+Un cop generada la classe de col·lecció de recursos, podeu definir fàcilment qualsevol metadada que s'ha d'incloure amb la resposta:
+
+```php
+<?php
+ 
+namespace App\Http\Resources;
+ 
+use Illuminate\Http\Resources\Json\ResourceCollection;
+ 
+class UserCollection extends ResourceCollection
+{
+    /**
+     * Transform the resource collection into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return [
+            'data' => $this->collection,
+            'links' => [
+                'self' => 'link-value',
+            ],
+        ];
+    }
+}
+```
+
+Després de definir la col·lecció de recursos, es pot retornar des d'una ruta o controlador:
+
+```php
+use App\Http\Resources\UserCollection;
+use App\Models\User;
+
+Route::get('/users', function () {
+return new UserCollection(User::all());
+});
+```
+
 
 #### Resta dels serveis
 
@@ -723,4 +766,5 @@ sol·licitada.
 
 A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les credencials per JSON al servidor, obtindríem el token de tornada i l'emmagatzemaríem localment en alguna variable o suport
 (per exemple, en l'element localStorage , si treballem amb algun framework Javascript). Després, davant cada petició JSON que férem al servidor, adjuntaríem aquest token en la capçalera Authorization perquè fóra validat pel servidor.
+
 
