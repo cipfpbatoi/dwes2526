@@ -86,7 +86,7 @@ Duració estimada: 80 hores
     * *AJAX* amb *JSON*.
    
 
-10. [Projecte Integrador]
+9. [Projecte Integrador]
 
 ## Instruments de qualificació
 
