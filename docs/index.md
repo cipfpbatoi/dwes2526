@@ -80,7 +80,7 @@ Duració estimada: 80 hores
      * [Validacio i Autenticacio](07laravelValidacioAutenticacio.md)
      
 
-8. [Serveis REST](08rest.md) (16h)
+8. [Serveis REST](08laravelRestFull.md) (13h)
 
     * Producció i consum.
     * *AJAX* amb *JSON*.
