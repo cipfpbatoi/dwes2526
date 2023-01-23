@@ -36,7 +36,6 @@ Exemples de **APIs** gratuïtes:
 - [ChuckNorris IO](https://api.chucknorris.io/#!)
 - [OMDB](https://www.omdbapi.com/)
 - [PokeAPI - Pokemon](https://pokeapi.co/)
-- [RAWg - Videojuegos](https://rawg.io/)
 - [The Star Wars API](https://swapi.dev/)
 
 
