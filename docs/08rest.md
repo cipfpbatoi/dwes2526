@@ -23,9 +23,9 @@
 > Duración estimada: 32 sesiones
 
 
-### Introducció als serveis REST
+## Introducció als serveis REST
 
-[![](../img/ull.png)Video](https://youtu.be/ByJ804KuEas)
+[![](../imagenes/ull.png)Video](https://youtu.be/ByJ804KuEas)
 
 Una **API** (Application Programming Interface) és un conjunt de funcions i procediments pels quals, una aplicació externa accedeix a les dades, a manera de biblioteca com una capa d'abstracció i la API s'encarrega d'enviar la dada sol·licitada.
 
@@ -40,18 +40,18 @@ Exemples de **APIs** gratuïtes:
 - [The Star Wars API](https://swapi.dev/)
 
 
-#### Els serveis REST
+## Els serveis REST
 
-## REST
+### REST
 
 Amb aquesta metodologia anomenada **REST** podrem construir *APIs* perquè des d'un client extern es puguen consumir.
 
 Gràcies a aquest **standard** de l'arquitectura del programari podrem muntar una API que utilitze els mètodes standard GET, POST, PUT i DELETE.
 
 
-### Construïnt una API/REST bàsica
+#### Construïnt una API/REST bàsica
 
-[![](../img/ull.png)Video](https://youtu.be/1O8cvJKNhm8)
+[![](../imagenes/ull.png)Video](https://youtu.be/1O8cvJKNhm8)
 
 
 Vegem ara quins passos donar per a construir una API REST en Laravel que done suport a les operacions
@@ -59,7 +59,7 @@ bàsiques sobre una o diverses entitats: consultes (GET), insercions (POST), mod
 i que proporcionen un conjunt de funcions ja definides per a donar suport a cadascun d'aquests
 comandos.
 
-#### Definint els controlador de la API
+##### Definint els controlador de la API
 
 Per a proporcionar una API REST als clients que ho requerisquen, necessitem definir un controlador (o
 controladors) orientats a oferir aquests serveis REST. Aquests controladors en Laravel es denominen de tipus
@@ -146,9 +146,7 @@ class MovieController extends Controller
 Observem que s'incorpora automàticament la clàusula use per a carregar el model associat, que
 hem indicat en el paràmetre **--model** . A més, els mètodes show , update i destroy ja vénen amb un paràmetre de tipus Llibre que facilitarà molt algunes tasques.
 
-
-
-#### Establint les rutes
+##### Establint les rutes (endPoints)
 
 
 Una vegada tenim el controlador API creat, definirem les rutes associades a cada mètode del controlador. Si recordem de sessions anteriors, podíem emprar el mètode **Route::resource** en l'arxiu **routes/web.php** per a establir de colp totes les rutes associades a un controlador de recursos.
@@ -182,7 +180,7 @@ php artisan route:list
 
 ```
 
-#### Serveis GET
+### Serveis GET
 
 Començarem per definir el mètode index . En aquest cas, obtindrem el conjunt de videos de labase de dades i retornar-lo tal qual:
 
@@ -234,12 +232,32 @@ public function show(Movie $movie)
 En aquest cas, si accedim a la URI **api/movies/1** , obtindrem la informació del video amb id = 1. Notar que Laravel s'encarrega automàticament de buscar el llibre per nosaltres (fer la corresponent operació **find** per a l'id proporcionat). És el que es coneix com a enllaç implícit, i és alguna cosa que
 també està disponible en els controladors web normals, sempre que els associem correctament amb el model vinculat. Això es fa automàticament si creem el controlador juntament amb el model o si usem el paràmetre --model per a associar-ho, com hem fet ací.
 
-##### Mes coses sobre el format JSON i la resposta
+#### Mes coses sobre el format JSON i la resposta
 
 Després de provar els dos serveis anteriors, hauràs observat que Laravel s'encarrega de transformar directament els registres obtinguts a format JSON quan els enviem mitjançant return , per la qual cosa, en principi, no tenim per què preocupar-nos d'aquest procés. No obstant això, d'aquesta manera s'escapen
 algunes coses al nostre control. Per exemple, i sobretot, no podem especificar el codi d'estat de la resposta, que per defecte és 200 si tot ha anat correctament. A més, tampoc podem controlar quina informació enviar de l'objecte en qüestió.
 
 Si volem limitar o formatar la informació a enviar dels objectes que estem tractant, i que no s'envien tots els seus camps sense més, tenim diverses opcions:
+
+* Si volem afegir o modificar més informació en la resposta, com el codi d'estat, l'estructura anterior no ens serveix, ja que sempre s'enviarà un codi 200. Per a això, és convenient emprar el mètode **response()->json(...)** , que permet especificar com a primer paràmetre les dades a enviar, i com segon paràmetre el codi d'estat. Els mètode anterior quedaria així,
+  enviant un codi 200 com a resposta (encara que si s'omet el segon paràmetre, s'assumeix que és 200):
+
+```php
+public function show(Movie $movie)
+{
+	return response()->json($movie, 200);
+}
+```
+
+!!! note "Codis de resposta"
+Quant als codis d'estat de la resposta, depén del resultat de l'operació que s'haja realitzat, aquests es cataloguen en cinc grups:
+
+         * Codis 1xx: representen informació sobre una petició normalment incompleta. No són molt habituals, però es poden emprar quan la petició és molt llarga, i s'envia abans una capçalera per a comprovar si es pot processar aquesta petició.
+         * Codis 2xx: representen peticions que s'han pogut atendre satisfactòriament. El codi més habitual és el 200, resposta estàndard per a les peticions que són correctes. Existeixen altres variants, com el codi 201, que s'envia quan s'ha inserit o creat un nou recurs en el servidor (una inserció en una base de dades, per exemple), o el codi 204, que indica que la petició s'ha atés bé, però no s'ha retornat res com a resposta.
+         * Codis 3xx: són codis de redirecció, que indiquen que d'alguna manera la petició original s'ha redirigit a un altre recurs del servidor. Per exemple, el codi 301 indica que el recurs sol·licitat s'ha mogut permanentment a una altra URL. El codi 304 indica que el recurs sol·licitat no ha canviat des de l'última vegada que es va sol·licitar, per si es vol recuperar de la caixet local en aqueix cas.
+         * Codis 4xx: indiquen un error per part del client. El més típic és l'error 404, que indica que estem sol·licitant una URL o recurs que no existeix. Però també hi ha altres habituals, com el 401 (client no autoritzat), o 400 (les dades de la petició no són correctes, per exemple, perquè els camps del formulari no són vàlids).
+         * Codis 5xx: indiquen un error per part del servidor. Per exemple, l'error 500 indica un error intern del servidor, o el 504, que és un error de timeout per temps excessiu a emetre la resposta.
+
 
 * Afegir clàusules **hidden** en els models corresponents, per a indicar que aqueixa informació no ha de ser enviada en cap cas enlloc de l'aplicació. És el que ocorre, per exemple, amb el camp password del model d'Usuari :
 
@@ -259,43 +277,24 @@ public function show(Movie $movie)
 }
 ```
 
-* En el cas que el pas anterior siga molt costós (perquè el model té molts camps, o perquè hem de fer el mateix en diverses parts del codi), també podem definir recursos (resources), que permeten separar el codi de la informació a mostrar del propi controlador. [Ací](https://laravel.com/docs/8.x/eloquent-resources) podeu trobar informació sobre aquest tema.
-
-D'altra banda, si volem afegir o modificar més informació en la resposta, com el codi d'estat, l'estructura anterior no ens serveix, ja que sempre s'enviarà un codi 200. Per a això, és convenient emprar el mètode **response()->json(...)** , que permet especificar com a primer paràmetre les dades a enviar, i com segon paràmetre el codi d'estat. Els mètode anterior quedaria així,
-enviant un codi 200 com a resposta (encara que si s'omet el segon paràmetre, s'assumeix que és 200):
-
-```php
-public function show(Movie $movie)
-{
-	return response()->json($movie, 200);
-}
-```
-
-!!! note "Codis de resposta"
-    Quant als codis d'estat de la resposta, depén del resultat de l'operació que s'haja realitzat, aquests es cataloguen en cinc grups:
-
-         * Codis 1xx: representen informació sobre una petició normalment incompleta. No són molt habituals, però es poden emprar quan la petició és molt llarga, i s'envia abans una capçalera per a comprovar si es pot processar aquesta petició.
-         * Codis 2xx: representen peticions que s'han pogut atendre satisfactòriament. El codi més habitual és el 200, resposta estàndard per a les peticions que són correctes. Existeixen altres variants, com el codi 201, que s'envia quan s'ha inserit o creat un nou recurs en el servidor (una inserció en una base de dades, per exemple), o el codi 204, que indica que la petició s'ha atés bé, però no s'ha retornat res com a resposta.
-         * Codis 3xx: són codis de redirecció, que indiquen que d'alguna manera la petició original s'ha redirigit a un altre recurs del servidor. Per exemple, el codi 301 indica que el recurs sol·licitat s'ha mogut permanentment a una altra URL. El codi 304 indica que el recurs sol·licitat no ha canviat des de l'última vegada que es va sol·licitar, per si es vol recuperar de la caixet local en aqueix cas.
-         * Codis 4xx: indiquen un error per part del client. El més típic és l'error 404, que indica que estem sol·licitant una URL o recurs que no existeix. Però també hi ha altres habituals, com el 401 (client no autoritzat), o 400 (les dades de la petició no són correctes, per exemple, perquè els camps del formulari no són vàlids).
-         * Codis 5xx: indiquen un error per part del servidor. Per exemple, l'error 500 indica un error intern del servidor, o el 504, que és un error de timeout per temps excessiu a emetre la resposta.
+* En el cas que el pas anterior siga molt costós (perquè el model té molts camps, o perquè hem de fer el mateix en diverses parts del codi), també podem definir recursos (resources), que permeten separar el codi de la informació a mostrar del propi controlador. 
 
 
-## [Eloquent: API Resources](https://laravel.com/docs/9.x/eloquent-resources)
+### [Eloquent: API Resources](https://laravel.com/docs/9.x/eloquent-resources)
 
 Quan creeu una API, és possible que necessiteu una capa de transformació que es trobe entre els vostres models Eloqüents i les respostes JSON que es retornen realment als usuaris de la vostra aplicació. Per exemple, podeu voler mostrar certs atributs per a un subconjunt d'usuaris i no d'altres, o podeu incloure sempre certes relacions en la representació JSON dels vostres models. Les classes de recursos d'Eloquent permeten transformar expressivament i fàcilment els vostres models i col·leccions de models en JSON.
 
 Per descomptat, sempre podreu convertir models o col·leccions eloqüents a JSON utilitzant els seus mètodes toJson; no obstant això, els recursos eloqüents proporcionen un control més granular i robust sobre la serialització JSON dels vostres models i les seves relacions.
 
 
-### Generació de recursos
+#### Generació de recursos
 Per a generar una classe de recursos, podeu utilitzar l'ordre make:resource Artisan. Per defecte, els recursos es col·locaran al directori app/Http/Resources de la vostra aplicació. Els recursos amplien la classe Illuminate\Http\Resources\Json\JsonResource:
 
 ```console
 php artisan make:resource UserResource
 ```
 
-#### Col·leccions de recursos
+##### Col·leccions de recursos
 A més de generar recursos que transformen models individuals, podeu generar recursos que són responsables de transformar col·leccions de models. Permet que les respostes JSON incloguin enllaços i altres metainformació que són rellevants per a tota una col·lecció d'un recurs donat.
 
 Per a crear una col·lecció de recursos, haureu d'utilitzar l'indicador --collection en crear el recurs. O, incloent la paraula Col·lecció en el nom del recurs indicarà a Laravel que hauria de crear un recurs de col·lecció. Els recursos de la col·lecció estenen la classe Illuminate\Http\Resources\Json\ResourceCollection:
@@ -306,7 +305,7 @@ php artisan make:resource User --collection
 php artisan make:resource UserCollection
 ```
 
-### Conceptes bàsics
+#### Conceptes bàsics
 
 Una classe de recursos representa un únic model que s'ha de transformar en una estructura JSON. Per exemple, aquí hi ha una classe senzilla de recursos UserResource:
 
@@ -408,9 +407,9 @@ return new UserCollection(User::all());
 ```
 
 
-#### Resta dels serveis
+### Resta dels serveis
 
-[![](../img/ull.png)Video](https://youtu.be/pieNTwMManY)
+[![](../imagenes/ull.png)Video](https://youtu.be/pieNTwMManY)
 
 
 Vegem ara com implementar la resta de serveis (POST, PUT i DELETE). En el cas de la inserció (POST), haurem de rebre en la petició les dades de l'objecte a inserir (un llibre, en el nostre exemple). Igual que les dades del servidor al client s'envien en format JSON, és d'esperar en aplicacions que segueixen l'arquitectura REST que les dades del client al servidor també s'envien en format JSON.
@@ -511,24 +510,24 @@ de pestanyes, afegint noves:
 
 Per a afegir una petició, habitualment triarem el tipus de comando sota les pestanyes (GET, POST, PUT, DELETE) i la URL associada a aquest comando. Per exemple:
 
-![](../img/postman_1.png)
+![](../imagenes/08/postman_1.png)
 
 Llavors, podem fer clic en el botó "Save" en la part dreta, i guardar la petició per a poder-la reutilitzar. En guardar-la, ens demanarà que li assignem un nom (per exemple, "GET movies" en aquest cas), i la
 col·lecció en la qual s'emmagatzemarà (la nostra col·lecció de "Movies").
 
-![](../img/postman_2.png)
+![](../imagenes/08/postman_2.png)
 
 Després, podrem veure la prova associada a la col·lecció, en el panell esquerre, i si seleccionem aquesta prova i premem en el botó blau de "*Send" (part dreta), podem veure la resposta emesa pel servidor en el panell inferior de resposta (si tenim, és clar, el servidor en marxa)
 
-![](../img/postman_3.png)
+![](../imagenes/08/postman_3.png)
 
 Seguint aquests mateixos passos, podem també crear una nova petició per a obtindre un llibre a partir del seu id, per GET:
 
-![](../img/postman_4.png)
+![](../imagenes/08/postman_4.png)
 
 Bastaria amb reemplaçar l'id de la URL pel qual vulguem consultar realment. Si provem aquesta petició, obtindrem la resposta corresponent:
 
-![](../img/postman_5.png)
+![](../imagenes/08/postman_5.png)
 
 #### Afegir altres tipus de peticions
 
@@ -537,21 +536,21 @@ En primer lloc, creem una nova petició, triem el comando POST i definim la URL 
 Llavors, fem clic en la pestanya Body, sota la URL, i establim el tipus com **raw** perquè ens deixe escriure'l sense restriccions. També convé canviar la propietat **Text** perquè siga JSON, i que així el servidor reculla el tipus de dada adequada. S'afegirà automàticament una capçalera de petició (**Header**)
 que especificarà que el tipus de contingut que s'enviarà són dades JSON. Després, en el quadre de text sota aquestes opcions, especifiquem l'objecte JSON que volem enviar per a inserir:
 
-![](../img/postman_6.png)
+![](../imagenes/08/postman_6.png)
 
 Després d'això, n'hi ha prou amb guardar la petició com hem fet amb les anteriors, i llançar-la per a veure el resultat.
 
 Quant a les peticions PUT, procedirem de manera similar a les peticions POST: hem de triar el comando (PUT en aquest cas), la URL, i completar el cos de la petició amb les dades que vulguem modificar del contacte. En aquest cas, a més, l'id del llibre l'enviarem també en la pròpia URL:
 
-![](../img/postman_7.png)
+![](../imagenes/08/postman_7.png)
 
 Per a peticions DELETE, la mecànica és similar a la fitxa de l'element (operació GET), canviant el comando GET per DELETE, i sense necessitat d'establir res en el cos de la petició:
 
-![](../img/postman_8.png)
+![](../imagenes/08/postman_8.png)
 
 ## Autenticació en serveis REST
 
-[![](../img/ull.png)Video](https://youtu.be/DyTbHfQHp0I)
+[![](../imagenes/08/ull.png)Video](https://youtu.be/DyTbHfQHp0I)
 
 
 En una API REST també pot ser necessari protegir certs serveis, de manera que només puguen accedir a ells els usuaris autenticats. No obstant això, en aquest cas no tenim disponible el mecanisme d'autenticació basat en sessions que vam veure en temes anteriors, ja que la parteix client que consula la API
@@ -642,7 +641,7 @@ class Handler extends ExceptionHandler
 
 A l'hora de instal·lar una llibreria per a l'autenticació podem triar per Passport que utilitza **OATH2** per autenticació o una versió més simple que no l'utilitza com és Sanctum. Esta senzilla gràfica us pot orientar per saber quin dels dos instal·le. 
 
-![](../img/api10.png)
+![](../imagenes/08/api10.png)
 
 ## Autenticació basada en tokens emprant Laravel Sanctum
 
@@ -757,12 +756,12 @@ Si accedim a un recurs protegit obtenim
 Ara anem a loguejar-se
 
 
-![](../img/postman_9.png)
+![](../imagenes/08/postman_9.png)
 
 Ara hem de copiar aquest token, i pegar-ho en la petició d'accés restringit. Haurem de pegar-ho en la capçalera Authorization (obrir aqueixa pestanya sota la URL de la petició en Postman), i el normal és enviar-ho com un **Bearer token**, segons els estàndards. Llavors sí que tindrem la resposta correcta de l'operació
 sol·licitada.
 
-![](../img/postman_10.png)
+![](../imagenes/08/postman_10.png)
 
 A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les credencials per JSON al servidor, obtindríem el token de tornada i l'emmagatzemaríem localment en alguna variable o suport
 (per exemple, en l'element localStorage , si treballem amb algun framework Javascript). Després, davant cada petició JSON que férem al servidor, adjuntaríem aquest token en la capçalera Authorization perquè fóra validat pel servidor.
