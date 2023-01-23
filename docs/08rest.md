@@ -778,4 +778,8 @@ A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les c
        * DELETE \api\gangas\{id]
      * Les ganges han de retornar els camps de la base de dades i el nom de l'usuari i de la categoria (utilitzar API RESOURCE)
      * Opcional (Mira de paginar els resultats)
-     * El POST es validarà amb el mateix Request
+     * El POST i el PUT es validaran amb el mateix Request que està en l'aplicació ja feta
+     * Crea les colecciones en el POSTMAN per a poder provar-ho tot.
+
+802. Protegix l'API mitjançant laravel sanctum.
+
