@@ -56,7 +56,7 @@
 - [X] 5.- (L 5D) Projecte cholloSevero. Activitats 615-618 - 11
 
 
-## 7.- Frameworks PHP (26h)
+## 7.- Frameworks PHP (29h)
 
 - [X] 1.- (L 12D) Introducció e Instal·lació de Laravel - 3 
 - [X] 2.- (M 13D) Rutes i vistes. Activitats 701-703 - 5
@@ -65,18 +65,18 @@
 - [X] 5.- (M 20D) Eloquent. Activitat 715 - 13 
 - [X] 6.- (L 9G) Formularis. Activitat 721 - 23 - 16 
 - [X] 7.- (M 10G) Autenticació. Activitat 724- 25 - 18  
-- [ ] 8.- (J 12G) Projecte chollo severo  - 21 
-- [ ] 9.- (L 16G) Projecte chollo servero - 24
-- [ ] 10.- (M 17G) Projecte chollo severo - 26
+- [X] 8.- (J 12G) Projecte chollo severo  - 21 
+- [X] 9.- (L 16G) Projecte chollo servero - 24
+- [X] 10.- (M 17G) Projecte chollo severo - 26
+- [X] 11.- (J 19G) Projecte chollo severo - 29
  
-## 8.- Serveis REST (16h)
+## 8.- Serveis REST (13h)
 
-- [ ] 1.- (J 19G) API Provant API externes  - 3
-- [ ] 2.- (L 23G) REST - GET  - 5
-- [ ] 3.- (M 24G) POST i PUT - 8
-- [ ] 4.- (J 26G) Autenticació - 11 
-- [ ] 5.- (L 30G) Projecte chollo severo - 13 
-- [ ] 6.- (M 31G) Prova escrita -16
+- [ ] 1.- (L 23G) REST - GET  - 5
+- [ ] 2.- (M 24G) POST i PUT - 8
+- [ ] 3.- (J 26G) Autenticació - 11 
+- [ ] 4.- (L 30G) Projecte chollo severo - 13 
+- [ ] 5.- (M 31G) Revisió de projectes - 16
 
 ## Projecte Integrador
 

@@ -36,8 +36,8 @@ Ejemplos de APIs gratuitas:
 - [RAWg - Videojuegos](https://rawg.io/)
 - [The Star Wars API](https://swapi.dev/)
 
-Para hacer pruebas con estas APIs podemos implementar el código para consumirlas o utilizar un cliente especial para el consumo de estos servicios.
-
+Per a fer proves amb aquestes **APIs** podem implementar el codi per a consumir-les o utilitzar un client especial per al consum d'aquests serveis.
+- 
 - [PostMan](https://www.postman.com/)
 - [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
 - [Insomnia](https://insomnia.rest/download)
@@ -135,7 +135,7 @@ use Illuminate\Support\Facades\Http; // INDISPENSABLE EN CASO DE API EXTERNA
 class RestController extends Controller
 {
     public function index() {
-        // $restChollos = Http::get('http://localhost/api/chollos') -> collect(); // PARA API EXTERNA
+        // $restChollos = Http::get('http://localhost/api/chollos')->collect(); // PARA API EXTERNA
 
         $chollos = Chollo::all();
 
@@ -144,18 +144,17 @@ class RestController extends Controller
 }
 ```
 
-Modificamos nuestra vista `blade` para poder listar los datos correctamente o si lo prefieres, puedes crear una ruta nueva e incluso un nuevo controlador que se encargue de manejar las llamadas a la API.
+Modifiquem la nostra vista `blade` per a poder llistar les dades correctament o si ho prefereixes, pots crear una ruta nova i fins i tot un nou controlador que s'encarregue de manejar les anomenades a la API.
 
-El nombre que va entre corchetes es el nombre de las columnas de la tabla de la base de datos
-
+El nom que va entre claudàtors és el nom de les columnes de la taula de la base de dades
 ```php
 <?php
-// estamos en ▓▓▓ chollos.blade.php
+// estamos en ▓▓▓ movies.blade.php
 
-@foreach ($chollos as $chollo)
-    <p>ID:  {{ $chollo -> id }}</p> // Columna ID
-    <p>Nombre:  {{ $chollo -> nombre }}</p>  // Columna NOMBRE
-    <p>Descripción:  {{ $chollo -> descripcion }}</p>  // Columna DESCRIPCION
+@foreach ($movies as $movie)
+    <p>ID:  {{ $movie -> id }}</p> // Columna ID
+    <p>Nombre:  {{ $movie -> name }}</p>  // Columna NAME
+    <p>Descripción:  {{ $movie -> description }}</p>  // Columna DESCRIPTION
 
     // [...]
     <hr>

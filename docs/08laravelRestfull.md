@@ -27,6 +27,20 @@
 
 [![](../img/ull.png)Video](https://youtu.be/ByJ804KuEas)
 
+Una **API** (Application Programming Interface) és un conjunt de funcions i procediments pels quals, una aplicació externa accedeix a les dades, a manera de biblioteca com una capa d'abstracció i la API s'encarrega d'enviar la dada sol·licitada.
+
+Una de les característiques fonamentals de les API és que són **Sateless**, la qual cosa vol dir que les peticions es fan i desapareixen, no hi ha usuaris loguejats ni dades que es queden emmagatzemats.
+
+Exemples de **APIs** gratuïtes:
+
+- [ChuckNorris IO](https://api.chucknorris.io/#!)
+- [OMDB](https://www.omdbapi.com/)
+- [PokeAPI - Pokemon](https://pokeapi.co/)
+- [RAWg - Videojuegos](https://rawg.io/)
+- [The Star Wars API](https://swapi.dev/)
+
+
+
 A hores d'ara tots hauríem de tindre clar que qualsevol aplicació web es basa en una arquitectura client-servidor, on un servidor queda a l'espera de connexions de clients, i els clients es connecten als
 servidors per a sol·licitar certs recursos. Sobre aquesta base, veurem unes breus pinzellades de com
 funciona el protocol HTTP, i en què consisteixen els serveis **REST**.
@@ -79,65 +93,12 @@ que s'haja produït, o de l'estat en què s'ha pogut atendre la seua petició.
 
 #### Els serveis REST
 
-**REST** són les sigles de REpresentational State Transfer, i designa un estil d'arquitectura d'aplicacions distribuïdes basada en HTTP. En un sistema REST, identifiquem cada recurs a sol·licitar amb una **URI** (identificador uniforme de recurs), i definim un conjunt delimitat de comandos o mètodes a realitzar,que típicament són:
+## REST
 
-* **GET**: per a obtindre resultats d'algun tipus (llistats complets o filtrats per alguna condició)
-POST: per a realitzar insercions o afegir elements en un conjunt de dades
-* **PUT**: per a realitzar modificacions o actualitzacions del conjunt de dades
+Amb aquesta metodologia anomenada **REST** podrem construir *APIs* perquè des d'un client extern es puguen consumir.
 
-* **DELETE**: per a realitzar esborrats del conjunt de dades
+Gràcies a aquest **standard** de l'arquitectura del programari podrem muntar una API que utilitze els mètodes standard GET, POST, PUT i DELETE.
 
-Existeixen altres tipus de comandos o mètodes, com per exemple **PATCH** (similar a PUT, però per a canvis
-parcials), **HEAD** (per a consultar només l'encapçalat de la resposta obtinguda), etc. Ens
-centrarem de moment en els quatre mètodes principals anteriors.
-
-Per tant, identificant el recurs a sol·licitar i el comando a aplicar-li, el servidor que ofereix aquesta **API REST** proporciona una resposta a aqueixa petició. Aquesta resposta típicament ve donada per un missatge en format **JSON** o XML (encara que aquest cada vegada està més en desús). Això permet que les aplicacions puguen estendre's a diferents plataformes, i accedir als mateixos serveis des d'una aplicació Angular, o una aplicació d'escriptori **.NET**, o una aplicació mòbil en Android, per posar diversos exemples.
-
-ACLARIMENT: per als qui no conegueu la definició de **API** (Application Programming Interface),
-bàsicament és el conjunt de mètodes o funcionalitats que es posen a la disposició dels qui els
-vulguen utilitzar. En aquest cas, el concepte de **API REST** fa referència al conjunt de serveis REST
-proporcionats pel servidor per als clients que vulguen utilitzar-los.
-
-
-#### [Nivells arquitectura REST](https://www.arquitecturajava.com/arquitecturas-rest-y-sus-niveles/)
-
-#### El format JSON
-
-**JSON** són les sigles de Javascript Object Notation, una sintaxi pròpia de Javascript per a poder representar objectes com a cadenes de text, i poder així serialitzar i enviar informació d'objectes a través de fluxos de dades
-(arxius de text, comunicacions client-servidor, etc).
-Un objecte Javascript es defineix mitjançant una sèrie de propietats i valors. Per exemple, les dades d'una
-persona (com a nom i edat) podríem emmagatzemar-los així:
-
-```javascript
-let persona = {
-nombre: "Nacho",
-edad: 39
-};
-```
-
-Aquest mateix objecte, convertit a JSON, formaria una cadena de text amb aquest contingut:
-
-```json
-{"nombre":"Nacho","edad":39}
-```
-
-De la mateixa manera, si tenim una col·lecció (vector) d'objectes com aquesta:
-
-```javascript
-let personas = [
-{ nombre: "Nacho", edad: 39},
-{ nombre: "Mario", edad: 4},
-{ nombre: "Laura", edad: 2},
-{ nombre: "Nora", edad: 10}
-];
-```
-
-Transformada a JSON segueix la mateixa sintaxi, però entre claudàtors:
-
-```json
-[{"nombre":"Nacho","edad":39}, {"nombre":"Mario","edad":4},
-{"nombre":"Laura","edad":2}, {"nombre":"Nora","edad":10}]
-```
 
 ### Construïnt una API/REST bàsica
 
@@ -236,22 +197,7 @@ class MovieController extends Controller
 Observem que s'incorpora automàticament la clàusula use per a carregar el model associat, que
 hem indicat en el paràmetre **--model** . A més, els mètodes show , update i destroy ja vénen amb un paràmetre de tipus Llibre que facilitarà molt algunes tasques.
 
-Cadascuna de les funcions del nou controlador creat s'associa a un dels mètodes REST comentats
-anteriorment:
 
-* index s'associaria amb una operació GET de llistat general, per a obtindre tots els registres (de videos, en aquest cas)
-
-* store s'associaria amb una operació POST, per a emmagatzemar les dades que arriben en la petició
-(com un nou video, en el nostre cas)
-
-* show s'associaria amb una operació GET per a obtindre el registre associat a un identificador
-concret
-
-* update s'associaria amb una operació PUT, per a actualitzar les dades del registre associat a un
-identificador concret
-
-* destroy s'associaria amb una operació DELETE, per a eliminar les dades del registre associat a un
-identificador concret
 
 #### Establint les rutes
 
@@ -326,7 +272,6 @@ Si accedim a la ruta **api/videos** des del navegador, s'activarà el mètode in
 }}
 ```
 
-NOTA: podem instal·lar l'extensió **JSON formatter** per a Chrome, i així poder veure les dades en format JSON més organitzats i amb la sintaxi ressaltada.
 
 D'una forma similar, podríem implementar i provar el mètode show
 
@@ -374,6 +319,49 @@ enviant un codi 200 com a resposta (encara que si s'omet el segon paràmetre, s'
 public function show(Movie $movie)
 {
 	return response()->json($movie, 200);
+}
+```
+
+!!! note "Codis de resposta"
+    Quant als codis d'estat de la resposta, depén del resultat de l'operació que s'haja realitzat, aquests es cataloguen en cinc grups:
+
+         * Codis 1xx: representen informació sobre una petició normalment incompleta. No són molt habituals, però es poden emprar quan la petició és molt llarga, i s'envia abans una capçalera per a comprovar si es pot processar aquesta petició.
+         * Codis 2xx: representen peticions que s'han pogut atendre satisfactòriament. El codi més habitual és el 200, resposta estàndard per a les peticions que són correctes. Existeixen altres variants, com el codi 201, que s'envia quan s'ha inserit o creat un nou recurs en el servidor (una inserció en una base de dades, per exemple), o el codi 204, que indica que la petició s'ha atés bé, però no s'ha retornat res com a resposta.
+         * Codis 3xx: són codis de redirecció, que indiquen que d'alguna manera la petició original s'ha redirigit a un altre recurs del servidor. Per exemple, el codi 301 indica que el recurs sol·licitat s'ha mogut permanentment a una altra URL. El codi 304 indica que el recurs sol·licitat no ha canviat des de l'última vegada que es va sol·licitar, per si es vol recuperar de la caixet local en aqueix cas.
+         * Codis 4xx: indiquen un error per part del client. El més típic és l'error 404, que indica que estem sol·licitant una URL o recurs que no existeix. Però també hi ha altres habituals, com el 401 (client no autoritzat), o 400 (les dades de la petició no són correctes, per exemple, perquè els camps del formulari no són vàlids).
+         * Codis 5xx: indiquen un error per part del servidor. Per exemple, l'error 500 indica un error intern del servidor, o el 504, que és un error de timeout per temps excessiu a emetre la resposta.
+
+
+### Recuperant dades en vista **BLADE**
+
+Ja tenim nostra **API** muntada i pot ser consumida a través del navegador o qualsevol client com `PostMan` o `Thunder Client` però el que ens interessa ara és **poder** llistar la informació en una **vista** com féiem en el tema anterior.
+
+El que haurem de fer és el següent
+
+- Modificar el `Controlador` perquè consumisca de la **API**
+- Convertir el tipus de dada que ens retorna la **API** com a resposta
+- Utilitzar una estructura de control `**forEach**` dins de la nostra vista
+- Accedir a cada clau de l'objecte **JSON** rebut en la vista `blade`
+
+
+Modificarem el controlador perquè consumisca de la **API** i convertim les dades amb el mètode `collect()`.
+
+Per a la crida hem d'importar `**Http**`.
+
+
+```php
+<?php
+
+use Illuminate\Support\Facades\Http; 
+
+class VideoController extends Controller
+{
+    public function index() {
+        $movies = Http::get('http://localhost/api/movies') -> collect(); 
+
+        // $movies = Movie::all();
+        return view('rest', compact('movies'));
+    }
 }
 ```
 
@@ -538,16 +526,14 @@ L'autenticació basada en tokens és un mecanisme de validació d'usuaris en apl
 
 Podem emprar diferents alternatives per a l'autenticació basada en tokens baix Laravel. Comentarem dues d'elles.
 
-* D'una banda, podem emprar el mecanisme natiu de Laravel per a autenticació basada en tokens.Com a avantatges principals, no es necessita instal·lar cap dependència addicional, i és relativament senzill d'utilitzar. Com a inconvenients, requereix afegir un camp més a la taula d'usuaris, per a emmagatzemar el token generat per a cada usuari, i requereix també d'una gestió manual del token, encara que és senzilla.
 
 * D'altra banda podem valdre'ns de la llibreria **Laravel Sanctum**, que proporciona mecanismes d'autenticació per a APIs i per a SPAs (Single Page Applications, aplicacions de pàgina única). Entre els seus avantatges podem destacar que és senzilla d'integrar en l'aplicació i automatitza alguns aspectes
 de la gestió de tokens, a més de comptar amb el suport oficial de Laravel. Com a inconvenients, és una llibreria més intrusiva que l'anterior, ja que requereix crear una taula addicional on emmagatzemar els tokens.
 
-En els següents apartats veurem com protegir mitjançant tokens un projecte senzill en Laravel emprant cadascun d'aquests mecanismes.
 
 #### Preparant l'entorn
 
-Hem d'editar l'arxiu **App\Exceptions\Hanlder.php** , en concret el seu mètode register per a definir els diferents errors que poden produir-se i els missatges que cal retornar en cada cas:
+Hem d'editar l'arxiu **App\Exceptions\Handler.php** , en concret el seu mètode register per a definir els diferents errors que poden produir-se i els missatges que cal retornar en cada cas:
 
 ```php
 <?php
@@ -609,152 +595,46 @@ class Handler extends ExceptionHandler
 }
 ```
 
-#### Autenticació amb token nativa
-
-##### Configuració bàsica
-
-En primer lloc, modifiquem la migració de la taula d'users per a afegir un nou camp on emmagatzemar el token. Aquest camp n'hi ha prou que tinga 60 caràcters de longitud, i serà necessari també que siga únic per a cada usuari:
-
-```
-public function up()
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('api_token', 60)->unique()->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-    }
-```  
-Llancem la migració i hem de comprovar que el artxiu **config/auth.php** faça referència al model d'usuaris, si utilitzarem un model diferent a User ho canviariem en:
-
-```php
-'providers' => [
-'users' => [
-'driver' => 'eloquent',
-'model' => App\Models\Usuario::class,
-],
-```
-No és el cas.
-
-##### Protecció de rutes
-
-
-Per a protegir les rutes d'accés restringit, primer crearem un controlador que s'encarregue de validar les credencials de l'usuari:
-
-```
-php artisan make:controller Api/LoginController
-```
-
-Definim un mètode login , per exemple, que validarà les credencials que li arriben (login i password). Si són correctes, generarà una cadena de text aleatòria de 60 caràcters i l'emmagatzemarà en el camp **api_token** de l'usuari validat. També retornarà dit token com a resposta en format JSON. En cas que hi haja un error en l'autenticació, enviarà de tornada un missatge d'error, amb el
-codi 401 d'accés no autoritzat.
-
-```php
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-
-class LoginController extends Controller
-{
-	public function login(Request $request)
-	{
-		$usuario = User::where('email', $request->login)->first();
-		if (!$usuario || !Hash::check($request->password, $usuario->password))
-		{
-			return response()->json(['error' => 'Credenciales no válidas'], 401);
-		}
-		else
-		{
-			$usuario->api_token = Str::random(60);
-			$usuario->save();
-			return response()->json(['token' => $usuario->api_token]);
-		}
-	}
-}
-```
-Definim en l'arxiu *+routes/api.php** una ruta que redirigisca a aquest mètode, per a quan l'usuari vulga autenticar-se (recorda afegir amb use la corresponent classe):  
-
-```
-Route::post('login', [LoginController::class, 'login']);
-```
-
-També podem eliminar en aquest cas la ruta predefinida d'aquest arxiu, que empra l'autenticació nativa de Laravel:
-
-```
-// Eliminar esta ruta:
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-return $request->user();
-});
-```
-
-Per a protegir les rutes que necessitem en els controladors API, les especifiquem en el constructor del controlador. Per exemple, així protegiríem totes les rutes del nostre controlador MovieController , excepte index i show :
-
-```
-class MovieController extends Controller
-{
-public function __construct()
-{
-	$this->middleware('auth:api',['except' => ['index', 'show']]);
-}
-...
-```
-
-També podem fer-ho en el fitxer de rutes. 
-
 #### Sanctum or Passport
 
 A l'hora de instal·lar una llibreria per a l'autenticació podem triar per Passport que utilitza **OATH2** per autenticació o una versió més simple que no l'utilitza com és Sanctum. Esta senzilla gràfica us pot orientar per saber quin dels dos instal·le. 
 
 ![](../img/api10.png)
 
-#### Autenticació basada en tokens emprant Laravel Sanctum
+## Autenticació basada en tokens emprant Laravel Sanctum
 
-Com hem comentat anteriorment, **Laravel Sanctum** és una llibreria que proporciona mecanismes d'autenticació per a SPAs (Single Page Applications, aplicacions de pàgina única), i APIs. En el nostre cas, l'emprarem
-per a autenticar-nos mitjançant tokens en nostres APIs. 
+Laravel Sanctum proporciona un sistema d'autenticació lleuger per a SPA (aplicacions de pàgina única), aplicacions mòbils i APIs simples basades en tokens. Sanctum permet a cada usuari de la vostra aplicació generar múltiples tokens API per al seu compte. A aquests tokens se'ls poden concedir habilitats  que especifiquin quines accions es permeten als tokens.
 
-Els passos a seguir per a laconfiguració són els següents...
-En primer lloc, hem d'incorporar Laravel Sanctum al nostre projecte, escrivint aquest comando des de l'arrel d'aquest:
+### Com funciona
+Laravel Sanctum existeix per resoldre dos problemes separats. Parlem de cadascun abans d'aprofundir més a la biblioteca.
+
+#### Tokens de l'API
+En primer lloc, Sanctum és un paquet senzill que podeu utilitzar per emetre tokens API als vostres usuaris sense la complicació d'OAuth. Aquesta característica s'inspira en GitHub i altres aplicacions que emeten "tokens d'accés personal". Per exemple, imagineu que la "configuració del compte" de la vostra aplicació té una pantalla on un usuari pot generar un token API per al seu compte. Podeu utilitzar Sanctum per generar i gestionar aquests tokens. Aquests tokens solen tenir un temps de venciment molt llarg (anys), però poden ser revocats manualment per l'usuari en qualsevol moment.
+Laravel Sanctum ofereix aquesta funció mitjançant l'emmagatzematge de tokens API d'usuari en una única taula de base de dades i l'autenticació de les peticions HTTP entrants a través de la capçalera Authorization que hauria de contenir un token API vàlid.
+
+#### Autenticació de SPA
+En segon lloc, Sanctum existeix per oferir una manera senzilla d'autenticar aplicacions de pàgina única (SPAs) que necessiten comunicar-se amb una API alimentada per Laravel. Aquests SPA poden existir al mateix repositori que la vostra aplicació Laravel o poden ser un repositori completament separat, com un SPA creat amb Vue CLI o una aplicació Next.js.
+Per a aquesta funció, Sanctum no utilitza tokens de cap tipus. En canvi, Sanctum utilitza els serveis d'autenticació de sessió basats en galetes de Laravel. Normalment, Sanctum utilitza el guard d'autenticació web de Laravel per aconseguir-ho. Això proporciona els beneficis de la protecció CSRF, l'autenticació de sessió, així com protegeix contra fuites de les credencials d'autenticació a través de XSS.
+El Sanctum només intentarà autenticar-se usant galetes quan la petició entrant s'origini des del vostre propi frontal de SPA. Quan Sanctum examina una sol·licitud HTTP entrant, primer comprovarà si hi ha una galeta d'autenticació i, si no n'hi ha cap, Sanctum examinarà la capçalera d'autorització per a un testimoni API vàlid.
+
+
+!!! note "Una autenticació"
+    Està molt bé utilitzar Sanctum només per a l'autenticació de tokens API o només per a l'autenticació de SPA. Només perquè utilitzeu Sanctum no vol dir que hàgiu d'utilitzar les dues característiques que ofereix.
+
+
+
+## Instal·lació
+
+Les versions més modernes de laravel ja la tenen instal·lada, en cas contrari podeu trobar la informació en la [documentació oficial](https://laravel.com/docs/9.x/sanctum#configuration)
+
+A continuació ( no és el nostre cas), si teniu previst utilitzar el Sanctum per a autenticar un SPA, hauríeu d'afegir el programari intermediari del Sanctum al grup de programari intermediari de l'API dins del fitxer app/Http/Kernel.php de la vostra aplicació:
 
 ```php
-composer require laravel/sanctum
-```
-
-
-Després, hem de publicar la configuració de Sanctum i el seu fitxer de migració, que generarà una taula addicional on emmagatzemar els tokens. Escrivim el següent comando (tot en una línia, encara que ací es divideix en dues per a poder-lo veure complet):
-
-```
-php artisan vendor:publish
---provider="Laravel\Sanctum\SanctumServiceProvider"
-```
-
-En finalitzar aquest pas, tindrem la migració creada i un arxiu de configuració
-**config/sanctum.php** disponible, per a editar la configuració per defecte de la llibreria. Per exemple, podem editar-ho per a especificar el temps de vida (TTL) dels tokens. El següent exemple estableix un temps de vida de 5 minuts, per exemple, encara que en el cas d'aplicacions basades en tokens és habitual
-deixar temps molt majors (o indefinits, segons el cas, deixant aquesta propietat a null ):
-
-```
-'expiration' => 5,
-```
-
-Després, hem de llançar la migració que s'ha creat, juntament amb les quals tinguem pendents (la de la taula d'usuaris, per exemple). S'afegirà una taula anomenada personal_access_tokens a la nostra base de dades.
-
-```
-php artisan migrate:fresh --seed
-```
-
-Finalment, hem de modificar el model d'usuaris (App\Models\User ) per a afegir el **trait HasApiTokens** . D'aquesta manera es vincula el model d'usuari amb els tokens que es vagen a generar per a aquests.
-
-```
-...
-use Laravel\Sanctum\HasApiTokens;
-class User extends Authenticatable
-{
-use HasApiTokens, HasFactory, Notifiable;
+    'api' => [
+    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+    'throttle:api',
+    \Illuminate\Routing\Middleware\SubstituteBindings::class,
+    ],
 ```
 
 ##### Protecció de rutes
