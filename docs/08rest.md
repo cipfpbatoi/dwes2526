@@ -25,7 +25,7 @@
 
 ## Introducció als serveis REST
 
-[![](../imagenes/ull.png)Video](https://youtu.be/ByJ804KuEas)
+[![](imagenes/ull.png)Video](https://youtu.be/ByJ804KuEas)
 
 Una **API** (Application Programming Interface) és un conjunt de funcions i procediments pels quals, una aplicació externa accedeix a les dades, a manera de biblioteca com una capa d'abstracció i la API s'encarrega d'enviar la dada sol·licitada.
 
@@ -51,7 +51,7 @@ Gràcies a aquest **standard** de l'arquitectura del programari podrem muntar un
 
 #### Construïnt una API/REST bàsica
 
-[![](../imagenes/ull.png)Video](https://youtu.be/1O8cvJKNhm8)
+[![](imagenes/ull.png)Video](https://youtu.be/1O8cvJKNhm8)
 
 
 Vegem ara quins passos donar per a construir una API REST en Laravel que done suport a les operacions
@@ -200,7 +200,7 @@ Si accedim a la ruta **api/videos** des del navegador, s'activarà el mètode in
 "title": "El padrino",
 "year": "1972",
 "director": "Francis Ford Coppola",
-"poster": "http://ia.media-imdb.com/images/M/MV5BMjEyMjcyNDI4MF5BMl5BanBnXkFtZTcwMDA5Mzg3OA@@._V1_SX214_AL_.jpg",
+"poster": "http://ia.media-imdb.cimages/M/MV5BMjEyMjcyNDI4MF5BMl5BanBnXkFtZTcwMDA5Mzg3OA@@._V1_SX214_AL_.jpg",
 "rented": 0,
 "synopsis": "Don Vito Corleone (Marlon Brando) es el respetado y temido jefe de una de las cinco familias de la mafia de Nueva York. Tiene cuatro hijos: Connie (Talia Shire), el impulsivo Sonny (James Caan), el pusilánime Freddie (John Cazale) y Michael (Al Pacino), que no quiere saber nada de los negocios de su padre. Cuando Corleone, en contra de los consejos de 'Il consigliere' Tom Hagen (Robert Duvall), se niega a intervenir en el negocio de las drogas, el jefe de otra banda ordena su asesinato. Empieza entonces una violenta y cruenta guerra entre las familias mafiosas.",
 "created_at": "2020-12-03T11:19:19.000000Z",
@@ -211,7 +211,7 @@ Si accedim a la ruta **api/videos** des del navegador, s'activarà el mètode in
 "title": "El Padrino. Parte II",
 "year": "1974",
 "director": "Francis Ford Coppola",
-"poster": "http://ia.media-imdb.com/images/M/MV5BNDc2NTM3MzU1Nl5BMl5BanBnXkFtZTcwMTA5Mzg3OA@@._V1_SX214_AL_.jpg",
+"poster": "http://ia.media-imdb.cimages/M/MV5BNDc2NTM3MzU1Nl5BMl5BanBnXkFtZTcwMTA5Mzg3OA@@._V1_SX214_AL_.jpg",
 "rented": 0,
 "synopsis": "Continuación de la historia de los Corleone por medio de dos historias paralelas: la elección de Michael Corleone como jefe de los negocios familiares y los orígenes del patriarca, el ya fallecido Don Vito, primero en Sicilia y luego en Estados Unidos, donde, empezando desde abajo, llegó a ser un poderosísimo jefe de la mafia de Nueva York.",
 "created_at": "2020-12-03T11:19:19.000000Z",
@@ -409,7 +409,7 @@ return new UserCollection(User::all());
 
 ### Resta dels serveis
 
-[![](../imagenes/ull.png)Video](https://youtu.be/pieNTwMManY)
+[![](imagenes/ull.png)Video](https://youtu.be/pieNTwMManY)
 
 
 Vegem ara com implementar la resta de serveis (POST, PUT i DELETE). En el cas de la inserció (POST), haurem de rebre en la petició les dades de l'objecte a inserir (un llibre, en el nostre exemple). Igual que les dades del servidor al client s'envien en format JSON, és d'esperar en aplicacions que segueixen l'arquitectura REST que les dades del client al servidor també s'envien en format JSON.
@@ -510,24 +510,24 @@ de pestanyes, afegint noves:
 
 Per a afegir una petició, habitualment triarem el tipus de comando sota les pestanyes (GET, POST, PUT, DELETE) i la URL associada a aquest comando. Per exemple:
 
-![](../imagenes/08/postman_1.png)
+![](imagenes/08/postman_1.png)
 
 Llavors, podem fer clic en el botó "Save" en la part dreta, i guardar la petició per a poder-la reutilitzar. En guardar-la, ens demanarà que li assignem un nom (per exemple, "GET movies" en aquest cas), i la
 col·lecció en la qual s'emmagatzemarà (la nostra col·lecció de "Movies").
 
-![](../imagenes/08/postman_2.png)
+![](imagenes/08/postman_2.png)
 
 Després, podrem veure la prova associada a la col·lecció, en el panell esquerre, i si seleccionem aquesta prova i premem en el botó blau de "*Send" (part dreta), podem veure la resposta emesa pel servidor en el panell inferior de resposta (si tenim, és clar, el servidor en marxa)
 
-![](../imagenes/08/postman_3.png)
+![](imagenes/08/postman_3.png)
 
 Seguint aquests mateixos passos, podem també crear una nova petició per a obtindre un llibre a partir del seu id, per GET:
 
-![](../imagenes/08/postman_4.png)
+![](imagenes/08/postman_4.png)
 
 Bastaria amb reemplaçar l'id de la URL pel qual vulguem consultar realment. Si provem aquesta petició, obtindrem la resposta corresponent:
 
-![](../imagenes/08/postman_5.png)
+![](imagenes/08/postman_5.png)
 
 #### Afegir altres tipus de peticions
 
@@ -536,21 +536,21 @@ En primer lloc, creem una nova petició, triem el comando POST i definim la URL 
 Llavors, fem clic en la pestanya Body, sota la URL, i establim el tipus com **raw** perquè ens deixe escriure'l sense restriccions. També convé canviar la propietat **Text** perquè siga JSON, i que així el servidor reculla el tipus de dada adequada. S'afegirà automàticament una capçalera de petició (**Header**)
 que especificarà que el tipus de contingut que s'enviarà són dades JSON. Després, en el quadre de text sota aquestes opcions, especifiquem l'objecte JSON que volem enviar per a inserir:
 
-![](../imagenes/08/postman_6.png)
+![](imagenes/08/postman_6.png)
 
 Després d'això, n'hi ha prou amb guardar la petició com hem fet amb les anteriors, i llançar-la per a veure el resultat.
 
 Quant a les peticions PUT, procedirem de manera similar a les peticions POST: hem de triar el comando (PUT en aquest cas), la URL, i completar el cos de la petició amb les dades que vulguem modificar del contacte. En aquest cas, a més, l'id del llibre l'enviarem també en la pròpia URL:
 
-![](../imagenes/08/postman_7.png)
+![](imagenes/08/postman_7.png)
 
 Per a peticions DELETE, la mecànica és similar a la fitxa de l'element (operació GET), canviant el comando GET per DELETE, i sense necessitat d'establir res en el cos de la petició:
 
-![](../imagenes/08/postman_8.png)
+![](imagenes/08/postman_8.png)
 
 ## Autenticació en serveis REST
 
-[![](../imagenes/08/ull.png)Video](https://youtu.be/DyTbHfQHp0I)
+[![](imagenes/08/ull.png)Video](https://youtu.be/DyTbHfQHp0I)
 
 
 En una API REST també pot ser necessari protegir certs serveis, de manera que només puguen accedir a ells els usuaris autenticats. No obstant això, en aquest cas no tenim disponible el mecanisme d'autenticació basat en sessions que vam veure en temes anteriors, ja que la parteix client que consula la API
@@ -641,7 +641,7 @@ class Handler extends ExceptionHandler
 
 A l'hora de instal·lar una llibreria per a l'autenticació podem triar per Passport que utilitza **OATH2** per autenticació o una versió més simple que no l'utilitza com és Sanctum. Esta senzilla gràfica us pot orientar per saber quin dels dos instal·le. 
 
-![](../imagenes/08/api10.png)
+![](imagenes/08/api10.png)
 
 ## Autenticació basada en tokens emprant Laravel Sanctum
 
@@ -756,14 +756,26 @@ Si accedim a un recurs protegit obtenim
 Ara anem a loguejar-se
 
 
-![](../imagenes/08/postman_9.png)
+![](imagenes/08/postman_9.png)
 
 Ara hem de copiar aquest token, i pegar-ho en la petició d'accés restringit. Haurem de pegar-ho en la capçalera Authorization (obrir aqueixa pestanya sota la URL de la petició en Postman), i el normal és enviar-ho com un **Bearer token**, segons els estàndards. Llavors sí que tindrem la resposta correcta de l'operació
 sol·licitada.
 
-![](../imagenes/08/postman_10.png)
+![](imagenes/08/postman_10.png)
 
 A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les credencials per JSON al servidor, obtindríem el token de tornada i l'emmagatzemaríem localment en alguna variable o suport
 (per exemple, en l'element localStorage , si treballem amb algun framework Javascript). Després, davant cada petició JSON que férem al servidor, adjuntaríem aquest token en la capçalera Authorization perquè fóra validat pel servidor.
 
+## Exercicis
 
+801. Crea una api per al projecte cholloSevero amb les següents especificacions:
+    
+     * Només has de crear els endPoint per a les gangues
+       * GET \api\gangas
+       * GET \api\gangas\{id}
+       * POST \api\gangas
+       * PUT \api\gangas\{id}
+       * DELETE \api\gangas\{id]
+     * Les ganges han de retornar els camps de la base de dades i el nom de l'usuari i de la categoria (utilitzar API RESOURCE)
+     * Opcional (Mira de paginar els resultats)
+     * El POST es validarà amb el mateix Request

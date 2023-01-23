@@ -178,5 +178,5 @@ $response = Http::post('http://localhost:8000/api/chollo-severo', [
 
 ## Actividades
 
-901. <span class="success">**Chollo Severo V 2.0**</span> .
+801 <span class="success">**Chollo Severo V 2.0**</span> .
 

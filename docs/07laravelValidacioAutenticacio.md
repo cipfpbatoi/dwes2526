@@ -730,7 +730,7 @@ La pàgina principal del lloc ha de ser un llistat amb totes les gangues disponi
   * La taula Ganga ha de contindre les següents columnes:
     * id únic i **autoincremental**
     * title: un títol per a la ganga
-    * description: *descripció de la ganga
+    * description: descripció de la ganga
     * url: un camp per a introduir la URL externa de la ganga
     * category: albergarà la id de la categoria de les gangues
     * likes: un nombre enter que indique els likes de la ganga
