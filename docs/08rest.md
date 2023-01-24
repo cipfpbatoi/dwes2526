@@ -469,112 +469,7 @@ A l'hora de rebre dades en format JSON per a serveis REST, també podem establir
 
 
 D'altra banda, hem d'assegurar-nos que qualsevol error que es produïsca en la part del API retorne un contingut en format JSON, i no una pàgina web. Per exemple, si sol·licitem veure la fitxa d'un llibre que el seu id no existeix, no hauria de retornar-nos una pàgina d'error 404, sinó un codi d'estat 404 amb un missatge d'error en format JSON.
-
 Això no es compleix per defecte, ja que Laravel està configurat per a renderitzar una vista amb l'error produït. En el cas de Laravel 8 hem de modificar el mètode **register** dins de la classe **App\Exceptions\Handler.php**. Ho podem deixar de la següent forma:
-
-```php
-public function register()
-{
-	$this->renderable(function (Throwable $exception) {
-	if (request()->is('api'))
-		{
-			if ($exception instanceof ModelNotFoundException)
-				return response()->json(['error' => 'Recurso no encontrado'],404);
-			else if ($exception instanceof ValidationException)
-				return response()->json(['error' => 'Datos no válidos'],400);
-			else if (isset($exception))
-				return response()->json(['error' => 'Error: ' .$exception->getMessage()], 500);
-		}
-	});
-}
-```
-
-### Provant els serveis amb POSTMAN
-
-Ja hem vist que provar uns serveis de llistat (GET) és senzill a través d'un navegador. Però els serveis d'inserció (POST), modificació (PUT) o esborrat (DELETE) exigeixen d'altres eines per a poder ser provats. Podríem definir formularis amb aquests mètodes encapsulats, però l'esforç de definir
-aqueixos formularis per a després no utilitzar-los més no mereix molt la pena. Veurem a continuació una eina molt útil per a provar tot tipus de serveis sense necessitat d'implementar gens addicional.
-
-**Postman** és una aplicació gratuïta i multiplataforma que permet enviar tot tipus de peticions a un servidor determinat, i examinar la resposta que aquest produeix. D'aquesta forma, podem comprovar que els serveis ofereixen la informació adequada abans de ser usats per una aplicació client real.
-
-La primera vegada que l'executem ens preguntarà si volem registrar-nos, de manera que puguem compartir els projectes que fem entre els diferents equips en què estiguem registrats, però podem saltar aquest pas fent clic en l'enllaç inferior.
-
-Després d'iniciar l'aplicació, veurem la pantalla d'inici de Postman. Al principi apareixeran diverses opcions en la zona central, per a crear col·leccions o peticions, encara que també les podem crear des del
-botó **New** a la cantonada superior esquerra. Per exemple, podem crear una col·lecció "Movies", i apareixerà en el panell esquerre:
-
-Des del mateix botó*New a la cantonada superior esquerra podem crear noves peticions i associar-les a una col·lecció. Existeix una forma alternativa (potser més còmoda) de crear aqueixes peticions, a través del panell
-de pestanyes, afegint noves:
-
-#### Afegir peticions GET
-
-
-Per a afegir una petició, habitualment triarem el tipus de comando sota les pestanyes (GET, POST, PUT, DELETE) i la URL associada a aquest comando. Per exemple:
-
-![](imagenes/08/postman_1.png)
-
-Llavors, podem fer clic en el botó "Save" en la part dreta, i guardar la petició per a poder-la reutilitzar. En guardar-la, ens demanarà que li assignem un nom (per exemple, "GET movies" en aquest cas), i la
-col·lecció en la qual s'emmagatzemarà (la nostra col·lecció de "Movies").
-
-![](imagenes/08/postman_2.png)
-
-Després, podrem veure la prova associada a la col·lecció, en el panell esquerre, i si seleccionem aquesta prova i premem en el botó blau de "*Send" (part dreta), podem veure la resposta emesa pel servidor en el panell inferior de resposta (si tenim, és clar, el servidor en marxa)
-
-![](imagenes/08/postman_3.png)
-
-Seguint aquests mateixos passos, podem també crear una nova petició per a obtindre un llibre a partir del seu id, per GET:
-
-![](imagenes/08/postman_4.png)
-
-Bastaria amb reemplaçar l'id de la URL pel qual vulguem consultar realment. Si provem aquesta petició, obtindrem la resposta corresponent:
-
-![](imagenes/08/postman_5.png)
-
-#### Afegir altres tipus de peticions
-
-Les peticions POST difereixen de les peticions GET en què s'envia certa informació en el cos de la petició. Aquesta informació normalment són les dades que es volen afegir en el servidor. Com podem fer això amb Postman?
-En primer lloc, creem una nova petició, triem el comando POST i definim la URL (en el nostre cas, videoclub.my/api/movies o una cosa similar, depenent de com tinguem en marxa el servidor).
-Llavors, fem clic en la pestanya Body, sota la URL, i establim el tipus com **raw** perquè ens deixe escriure'l sense restriccions. També convé canviar la propietat **Text** perquè siga JSON, i que així el servidor reculla el tipus de dada adequada. S'afegirà automàticament una capçalera de petició (**Header**)
-que especificarà que el tipus de contingut que s'enviarà són dades JSON. Després, en el quadre de text sota aquestes opcions, especifiquem l'objecte JSON que volem enviar per a inserir:
-
-![](imagenes/08/postman_6.png)
-
-Després d'això, n'hi ha prou amb guardar la petició com hem fet amb les anteriors, i llançar-la per a veure el resultat.
-
-Quant a les peticions PUT, procedirem de manera similar a les peticions POST: hem de triar el comando (PUT en aquest cas), la URL, i completar el cos de la petició amb les dades que vulguem modificar del contacte. En aquest cas, a més, l'id del llibre l'enviarem també en la pròpia URL:
-
-![](imagenes/08/postman_7.png)
-
-Per a peticions DELETE, la mecànica és similar a la fitxa de l'element (operació GET), canviant el comando GET per DELETE, i sense necessitat d'establir res en el cos de la petició:
-
-![](imagenes/08/postman_8.png)
-
-## Autenticació en serveis REST
-
-[![](imagenes/08/ull.png)Video](https://youtu.be/DyTbHfQHp0I)
-
-
-En una API REST també pot ser necessari protegir certs serveis, de manera que només puguen accedir a ells els usuaris autenticats. No obstant això, en aquest cas no tenim disponible el mecanisme d'autenticació basat en sessions que vam veure en temes anteriors, ja que la parteix client que consula la API
-REST no té per què estar basada en un navegador. Podríem accedir des d'una aplicació d'escriptori feta a Java, per exemple, o des d'una aplicació mòbil, i en aquests casos no podríem disposar de les sessions, pròpies de clients web o navegadors. En el seu lloc, emprarem un mecanisme d'autenticació basat en tokens.
-
-#### Fonaments de l'autenticació basada en tokens
-
-L'autenticació basada en tokens és un mecanisme de validació d'usuaris en aplicacions client/servidor que podríem dir que és més universal que l'autenticació basada en sessions, ja que permet autenticar usuaris provinents de diferents tipus de clients. El que es fa és el següent:
-
-* L'usuari necessita enviar les seues credencials (login i password), de manera similar a com es fa en una aplicació web normal, encara que aquesta vegada les dades s'envien normalment en format JSON.
-* El servidor valida aqueixes credencials i, si són correctes, genera una cadena de text anomenada **token**, d'una certa longitud, i que servirà per a identificar unívocament a l'usuari a partir d'aqueix moment. Dit token ha de ser enviat de tornada (també en format JSON) al client que es va validar.
-* A partir d'aquest punt, el client ha d'adjuntar el token com a part de la informació en cada petició que realitza a una zona d'accés restringit, de manera que el servidor puga consultar el token i comprovar si correspon amb el d'algun usuari autoritzat. Aquest token normalment s'envia en una capçalera de la petició anomenada **Authorization**, com veurem després, i el servidor pot consultar el valor d'aquesta capçalera per a verificar l'accés del client.
-
-#### Alternatives per a la implementació de l'autenticació basada en tokens
-
-Podem emprar diferents alternatives per a l'autenticació basada en tokens baix Laravel. Comentarem dues d'elles.
-
-
-* D'altra banda podem valdre'ns de la llibreria **Laravel Sanctum**, que proporciona mecanismes d'autenticació per a APIs i per a SPAs (Single Page Applications, aplicacions de pàgina única). Entre els seus avantatges podem destacar que és senzilla d'integrar en l'aplicació i automatitza alguns aspectes
-de la gestió de tokens, a més de comptar amb el suport oficial de Laravel. Com a inconvenients, és una llibreria més intrusiva que l'anterior, ja que requereix crear una taula addicional on emmagatzemar els tokens.
-
-
-#### Preparant l'entorn
-
-Hem d'editar l'arxiu **App\Exceptions\Handler.php** , en concret el seu mètode register per a definir els diferents errors que poden produir-se i els missatges que cal retornar en cada cas:
 
 ```php
 <?php
@@ -635,6 +530,90 @@ class Handler extends ExceptionHandler
     }
 }
 ```
+### Provant els serveis amb POSTMAN
+
+Ja hem vist que provar uns serveis de llistat (GET) és senzill a través d'un navegador. Però els serveis d'inserció (POST), modificació (PUT) o esborrat (DELETE) exigeixen d'altres eines per a poder ser provats. Podríem definir formularis amb aquests mètodes encapsulats, però l'esforç de definir
+aqueixos formularis per a després no utilitzar-los més no mereix molt la pena. Veurem a continuació una eina molt útil per a provar tot tipus de serveis sense necessitat d'implementar gens addicional.
+
+**Postman** és una aplicació gratuïta i multiplataforma que permet enviar tot tipus de peticions a un servidor determinat, i examinar la resposta que aquest produeix. D'aquesta forma, podem comprovar que els serveis ofereixen la informació adequada abans de ser usats per una aplicació client real.
+
+La primera vegada que l'executem ens preguntarà si volem registrar-nos, de manera que puguem compartir els projectes que fem entre els diferents equips en què estiguem registrats, però podem saltar aquest pas fent clic en l'enllaç inferior.
+
+Després d'iniciar l'aplicació, veurem la pantalla d'inici de Postman. Al principi apareixeran diverses opcions en la zona central, per a crear col·leccions o peticions, encara que també les podem crear des del
+botó **New** a la cantonada superior esquerra. Per exemple, podem crear una col·lecció "Movies", i apareixerà en el panell esquerre:
+
+Des del mateix botó*New a la cantonada superior esquerra podem crear noves peticions i associar-les a una col·lecció. Existeix una forma alternativa (potser més còmoda) de crear aqueixes peticions, a través del panell
+de pestanyes, afegint noves:
+
+#### Afegir peticions GET
+
+
+Per a afegir una petició, habitualment triarem el tipus de comando sota les pestanyes (GET, POST, PUT, DELETE) i la URL associada a aquest comando. Per exemple:
+
+![](imagenes/08/postman_1.png)
+
+Llavors, podem fer clic en el botó "Save" en la part dreta, i guardar la petició per a poder-la reutilitzar. En guardar-la, ens demanarà que li assignem un nom (per exemple, "GET movies" en aquest cas), i la
+col·lecció en la qual s'emmagatzemarà (la nostra col·lecció de "Movies").
+
+![](imagenes/08/postman_2.png)
+
+Després, podrem veure la prova associada a la col·lecció, en el panell esquerre, i si seleccionem aquesta prova i premem en el botó blau de "*Send" (part dreta), podem veure la resposta emesa pel servidor en el panell inferior de resposta (si tenim, és clar, el servidor en marxa)
+
+![](imagenes/08/postman_3.png)
+
+Seguint aquests mateixos passos, podem també crear una nova petició per a obtindre un llibre a partir del seu id, per GET:
+
+![](imagenes/08/postman_4.png)
+
+Bastaria amb reemplaçar l'id de la URL pel qual vulguem consultar realment. Si provem aquesta petició, obtindrem la resposta corresponent:
+
+![](imagenes/08/postman_5.png)
+
+#### Afegir altres tipus de peticions
+
+Les peticions POST difereixen de les peticions GET en què s'envia certa informació en el cos de la petició. Aquesta informació normalment són les dades que es volen afegir en el servidor. Com podem fer això amb Postman?
+En primer lloc, creem una nova petició, triem el comando POST i definim la URL (en el nostre cas, videoclub.my/api/movies o una cosa similar, depenent de com tinguem en marxa el servidor).
+Llavors, fem clic en la pestanya Body, sota la URL, i establim el tipus com **raw** perquè ens deixe escriure'l sense restriccions. També convé canviar la propietat **Text** perquè siga JSON, i que així el servidor reculla el tipus de dada adequada. S'afegirà automàticament una capçalera de petició (**Header**)
+que especificarà que el tipus de contingut que s'enviarà són dades JSON. Després, en el quadre de text sota aquestes opcions, especifiquem l'objecte JSON que volem enviar per a inserir:
+
+![](imagenes/08/postman_6.png)
+
+Després d'això, n'hi ha prou amb guardar la petició com hem fet amb les anteriors, i llançar-la per a veure el resultat.
+
+Quant a les peticions PUT, procedirem de manera similar a les peticions POST: hem de triar el comando (PUT en aquest cas), la URL, i completar el cos de la petició amb les dades que vulguem modificar del contacte. En aquest cas, a més, l'id del llibre l'enviarem també en la pròpia URL:
+
+![](imagenes/08/postman_7.png)
+
+Per a peticions DELETE, la mecànica és similar a la fitxa de l'element (operació GET), canviant el comando GET per DELETE, i sense necessitat d'establir res en el cos de la petició:
+
+![](imagenes/08/postman_8.png)
+
+## Autenticació en serveis REST
+
+![Video](https://youtu.be/DyTbHfQHp0I)
+
+
+En una API REST també pot ser necessari protegir certs serveis, de manera que només puguen accedir a ells els usuaris autenticats. No obstant això, en aquest cas no tenim disponible el mecanisme d'autenticació basat en sessions que vam veure en temes anteriors, ja que la parteix client que consula la API
+REST no té per què estar basada en un navegador. Podríem accedir des d'una aplicació d'escriptori feta a Java, per exemple, o des d'una aplicació mòbil, i en aquests casos no podríem disposar de les sessions, pròpies de clients web o navegadors. En el seu lloc, emprarem un mecanisme d'autenticació basat en tokens.
+
+#### Fonaments de l'autenticació basada en tokens
+
+L'autenticació basada en tokens és un mecanisme de validació d'usuaris en aplicacions client/servidor que podríem dir que és més universal que l'autenticació basada en sessions, ja que permet autenticar usuaris provinents de diferents tipus de clients. El que es fa és el següent:
+
+* L'usuari necessita enviar les seues credencials (login i password), de manera similar a com es fa en una aplicació web normal, encara que aquesta vegada les dades s'envien normalment en format JSON.
+* El servidor valida aqueixes credencials i, si són correctes, genera una cadena de text anomenada **token**, d'una certa longitud, i que servirà per a identificar unívocament a l'usuari a partir d'aqueix moment. Dit token ha de ser enviat de tornada (també en format JSON) al client que es va validar.
+* A partir d'aquest punt, el client ha d'adjuntar el token com a part de la informació en cada petició que realitza a una zona d'accés restringit, de manera que el servidor puga consultar el token i comprovar si correspon amb el d'algun usuari autoritzat. Aquest token normalment s'envia en una capçalera de la petició anomenada **Authorization**, com veurem després, i el servidor pot consultar el valor d'aquesta capçalera per a verificar l'accés del client.
+
+#### Alternatives per a la implementació de l'autenticació basada en tokens
+
+Podem emprar diferents alternatives per a l'autenticació basada en tokens baix Laravel. Comentarem dues d'elles.
+
+
+* D'altra banda podem valdre'ns de la llibreria **Laravel Sanctum**, que proporciona mecanismes d'autenticació per a APIs i per a SPAs (Single Page Applications, aplicacions de pàgina única). Entre els seus avantatges podem destacar que és senzilla d'integrar en l'aplicació i automatitza alguns aspectes
+de la gestió de tokens, a més de comptar amb el suport oficial de Laravel. Com a inconvenients, és una llibreria més intrusiva que l'anterior, ja que requereix crear una taula addicional on emmagatzemar els tokens.
+
+
+
 
 #### Sanctum or Passport
 
@@ -668,27 +647,30 @@ El Sanctum només intentarà autenticar-se usant galetes quan la petició entran
 
 Les versions més modernes de laravel ja la tenen instal·lada, en cas contrari podeu trobar la informació en la [documentació oficial](https://laravel.com/docs/9.x/sanctum#configuration)
 
-A continuació ( no és el nostre cas), si teniu previst utilitzar el Sanctum per a autenticar un SPA, hauríeu d'afegir el programari intermediari del Sanctum al grup de programari intermediari de l'API dins del fitxer app/Http/Kernel.php de la vostra aplicació:
+### Generant tokens
+
+Sanctum us permet emetre tokens API / tokens d'accés personal que es poden utilitzar per autenticar les peticions API a la vostra aplicació. Quan es fan sol·licituds utilitzant tokens API, el token s'ha d'incloure a la capçalera d'autorització com a token Bearer.
+
+Per començar a emetre tokens per als usuaris, el model d'usuari hauria d'utilitzar el trait Laravel\Sanctum\HasApiTokens:
 
 ```php
-    'api' => [
-    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-    'throttle:api',
-    \Illuminate\Routing\Middleware\SubstituteBindings::class,
-    ],
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+use HasApiTokens, HasFactory, Notifiable;
+}
 ```
 
-##### Protecció de rutes
+Per a emetre un token, podeu utilitzar el mètode createToken. El mètode createToken retorna una instància Laravel\Sanctum\NewAccessToken. Els tokens de l'API es generen utilitzant el hash SHA-256 abans de ser emmagatzemats a la vostra base de dades, però podeu accedir al valor de text net del token utilitzant la propietat PlainTextToken de la instància NewAccessToken.
+Per a vincular la generació del token amb un procediment d'autenticació podem fer-ho definint un mètode login , per exemple, que validarà les credencials que li arriben (login i password). Si són correctes, cridarà al mètode **createToken** de Sanctum (incorporat a l'usuari a través del **trait HasApiTokens** ), associant-lo al login de l'usuari entrant, i li retornarà el token en
+format text pla, com un objecte JSON. En cas que hi haja un error en l'autenticació, enviarà de tornada un missatge d'error, amb el codi 401 d'accés no autoritzat.
 
 
-Per a protegir les rutes d'accés restringit, primer crearem un controlador que s'encarregue de validar les credencials de l'usuari:
-
-```
+```console
 php artisan make:controller Api/LoginController
 ```
 
-Definim un mètode login , per exemple, que validarà les credencials que li arriben (login i password). Si són correctes, cridarà al mètode **createToken** de Sanctum (incorporat a l'usuari a través del **trait HasApiTokens** ), associant-lo al login de l'usuari entrant, i li retornarà el token en
-format text pla, com un objecte JSON. En cas que hi haja un error en l'autenticació, enviarà de tornada un missatge d'error, amb el codi 401 d'accés no autoritzat.
 
 ```php
 use App\Http\Controllers\Controller;
@@ -700,13 +682,10 @@ class LoginController extends Controller
 {
 	public function login(Request $request)
     {
-        $usuario = User::where('email', $request->login)->first();
-        if (!$usuario || !Hash::check($request->password, $usuario->password))
-        {
+        $usuario = User::where('email', $request->email)->first();
+        if (!$usuario || !Hash::check($request->password, $usuario->password)) {
             return response()->json(['error' => 'Credenciales no válidas'], 401);
-        }
-        else
-        {
+        } else {
             return response()->json(['token' => $usuario->createToken($usuario->email)->plainTextToken]);
         }
     }
@@ -716,28 +695,49 @@ class LoginController extends Controller
 Definim en l'arxiu **routes/api.php** una ruta que redirigisca a aquest mètode, per a quan l'usuari vulga autenticar-se (recorda afegir amb use la corresponent classe):
 
 ```php
-Route::post('login', 'Api\LoginController@login');
+Route::post('login', [\App\Http\Controllers\Api\LoginController::class,'login']);
 ```
 
-També podem eliminar en aquest cas la ruta predefinida d'aquest arxiu, que empra l'autenticació nativa de Laravel:
+##### Protecció de rutes
 
-```
-// Eliminar esta ruta:
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-return $request->user();
-});
-```
+
+Per protegir rutes de manera que totes les sol·licituds entrants s'hagin d'autenticar, hauríeu d'adjuntar el guard d'autenticació sanctum a les rutes protegides dins dels vostres fitxers de rutes/api.php. Aquest guard assegurarà que les peticions entrants s'autentiquen com a peticions d'estat, galetes autenticades o continguin una capçalera vàlida de testimoni API si la petició és d'un tercer.
+
 
 Per a protegir les rutes que necessitem en els controladors API, les especifiquem en el constructor del controlador. Per exemple, així protegiríem totes les rutes del nostre controlador MovieController , excepte index i show :
 
+```php
+use Illuminate\Http\Request;
+ 
+Route::get('/user',[userController::class,'show'])->middleware('auth:sanctum');
 ```
-class MovieController extends Controller
-{
-public function __construct()
-{
-	$this->middleware('auth:sanctum',['except' => ['index', 'show']]);
-}
-...
+
+#### Revocant tokens
+
+Podeu "revocar" tokens suprimint-los de la base de dades utilitzant la relació tokens que proporciona el tret Laravel\Sanctum\HasApiTokens:
+
+```php
+// Revoke all tokens...
+$user->tokens()->delete();
+
+// Revoke the token that was used to authenticate the current request...
+$request->user()->currentAccessToken()->delete();
+
+// Revoke a specific token...
+$user->tokens()->where('id', $tokenId)->delete();
+```
+
+#### Caducitat del tokens
+Per defecte, els tokens de Sanctum no caduquen i només poden ser invalidats revocant el token. No obstant això, si voleu configurar un temps de venciment per als toekns API de la vostra aplicació, podeu fer-ho mitjançant l'opció de configuració de venciment definida al fitxer de configuració de sanctum de la vostra aplicació. Aquesta opció de configuració defineix el nombre de minuts fins que un token emès es consideri expirat:
+
+```
+'expiració' =, 525600,
+```
+
+Si heu configurat un temps de venciment del token per a la vostra aplicació, també podeu programar una tasca per a eliminar els tokens caducats de la vostra aplicació. Afortunadament, Sanctum inclou un ordre sanctum:prune-expired Artisan que podeu utilitzar per aconseguir això. Per exemple, podeu configurar les tasques programades per a suprimir tots els registres de la base de dades de tokens caducats que hagin expirat almenys 24 hores:
+
+```console
+$schedule->command('sanctum:prune-expired --hours=24')->daily();
 ```
 
 ### Prova d'autenticació amb POSTMAN
@@ -765,6 +765,416 @@ sol·licitada.
 A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les credencials per JSON al servidor, obtindríem el token de tornada i l'emmagatzemaríem localment en alguna variable o suport
 (per exemple, en l'element localStorage , si treballem amb algun framework Javascript). Després, davant cada petició JSON que férem al servidor, adjuntaríem aquest token en la capçalera Authorization perquè fóra validat pel servidor.
 
+### [Què és swagger](https://www.chakray.com/es/swagger-y-swagger-ui-por-que-es-imprescindible-para-tus-apis/)
+
+
+[![](../img/ull.png)Video](https://youtu.be/3-gZqyhuFPY)
+[![](../img/ull.png)Video](https://youtu.be/thXuHLM54K4)
+
+### Documentació
+
+Per a poder utilitzar swagger en Laravel podem instal·lar el següent paquet que utilitza Swagger-php i swagger-ui adaptat per treballar amb Laravel.
+
+```
+composer require "darkaonline/l5-swagger"
+```
+
+i publicarem el fitxers de configuració i vistes
+
+```
+php artisan config:cache
+php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+```
+
+A continuació, obriu un fitxer **config/l5-swagger.php**.  Passem per les claus essencials:
+
+* routes.api - Aquest és una URL per accedir a la documentació d'interfície d'usuari.  El vostre equip de frontend l'utilitzarà per accedir a la documentació.  Per defecte és api/documentació.  Podeu canviar-ho a quelcom més petit com api/docs
+
+* Generar_always — Es millor desactivar-ho ja que generarà documentació sobre la marxa.  No és útil amb l'API gran.  Sempre podeu executar manualment
+
+```
+	php artisan l5-swagger:generate
+```
+
+Aquests són els més importants per a començar.  Ara si intenteu crear documents mitjançant aquesta ordre retornarà un error
+
+```
+Required @OA\Info() not found
+```
+
+Això vol dir que primer heu de crear aquesta notació.  Així que afegim-ho.  Prefereixo crear un controlador abstracte per a una API, però podeu afegir això a **app/Http/Controllers/Controller.php**
+
+
+```
+/**
+ * @OA\Info(
+ *    title="Your super  ApplicationAPI",
+ *    version="1.0.0",
+ * )
+ */
+class Controller extends BaseController
+{
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+}
+```
+
+A continuació, hem d'afegir documents per a almenys una ruta, per exemple per per app/Http/Controllers/Api/LoginController.php:
+
+```
+/**
+ * @OA\Post(
+ * path="/login",
+ * summary="Sign in",
+ * description="Login by email, password",
+ * operationId="authLogin",
+ * tags={"auth"},
+ * @OA\RequestBody(
+ *    required=true,
+ *    description="Pass user credentials",
+ *    @OA\JsonContent(
+ *       required={"email","password"},
+ *       @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
+ *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+ *       @OA\Property(property="persistent", type="boolean", example="true"),
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=422,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+ *        )
+ *     )
+ * )
+ */
+```
+
+Ara, estàs preparat per generar **php artisan l5-swagger:generate** i vés a l'URL que has proporcionat a la teva configuració.  En el meu cas, serà http://videoclub/api/docs.
+
+Veuràs una cosa així:
+
+![](../img/swagger_1.png)
+
+Ara mirarem les anotacions.  Intentaré explicar com utilitzar-les:
+
+* **@OA** — significa anotació d'Open API.  Podeu llegir més [aquí](https://swagger.io/specification/)
+* **@OA/POST**  — vol dir petició DE POST.  Hi ha GET, POST, DELETE, etc.
+* **Path** — és un URL
+* **Tags** — us agruparà API per seccions.
+* **@OA\RequestBody** — és obvi pel nom.  Hauria de tenir una anotació JsonContent dins amb propietats (és a dir, descripcions de camp).
+* **OA\Response** — podeu tenir tantes respostes com vulgueu.  Hauríeu de proporcionar totes les respostes possibles d'èxit i error.
+
+Anem a afegir un codi de resposta 200:
+
+```
+* 	@OA\Response(
+*     response=200,
+*     description="Success",
+*     @OA\JsonContent(
+*        @OA\Property(property="user", type="object", ref="#/components/schemas/User"),
+*     )
+*  ),
+```
+
+L'anotació **@OA\Property** té una clau de propietat(nom de camp) i un tipus.  El tipus pot tenir valors diferents: string, object, integer, array, boolean, etc.
+En aquesta resposta, vaig utilitzar el tipus objecte.  Podeu passar una referència a aquest objecte.  Crearem un objecte **user**.  Prefereixo afegir això a la classe Model.
+
+```
+/**
+ *
+ * @OA\Schema(
+ * required={"password"},
+ * @OA\Xml(name="User"),
+ * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
+ * @OA\Property(property="role", type="string", readOnly="true", description="User role"),
+ * @OA\Property(property="email", type="string", readOnly="true", format="email", description="User unique email address", example="user@gmail.com"),
+ * @OA\Property(property="email_verified_at", type="string", readOnly="true", format="date-time", description="Datetime marker of verification status", example="2019-02-25 12:59:20"),
+ * @OA\Property(property="first_name", type="string", maxLength=32, example="John"),
+ * @OA\Property(property="last_name", type="string", maxLength=32, example="Doe"),
+
+ * )
+ *
+ * Class User
+ *
+ */
+```
+
+Mireu aquesta notació **@OA\Xml(nom=” Usuari)**.  Aquest nom s'utilitzarà en una clau ref de la **@OA\Property**
+
+
+
+Ara veureu una icona de bloqueig prop de la ruta.  Quan feu clic sobre això, podreu afegir l'autenticació de Bearer.
+
+![](../img/swagger_2.png)
+
+### [Exemple](https://blog.quickadminpanel.com/laravel-api-documentation-with-openapiswagger/)
+
+El gran problema d'este component és que no està ben documentat. Partint del següent exemple he documentant el mètode get i post del videoclub i ha quedat així:
+
+Primer cal possar l'inici del swagger en el **Controller.php** de la següent manera:
+
+
+```
+/**
+ * @OA\Info(
+ *    title="VideoClub ApplicationAPI",
+ *    version="1.0.0",
+ * )
+ */
+
+/**
+ * @OA\SecurityScheme(
+ *     type="http",
+ *     description="Login with email and password to get the authentication token",
+ *     name="Token based Based",
+ *     in="header",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
+ *     securityScheme="apiAuth",
+ * )
+ */
+```
+La primera part serveix per a identificar el projecte i la segon per a l'autenticació de la API basada en tokens.
+
+Ara omplirem el **model Movie.php** per a generar el schema Movie.
+
+```
+/**
+ *
+ * @OA\Schema(
+ * required={"id,title"},
+ * @OA\Xml(name="Movie"),
+ * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
+ * @OA\Property(property="title", type="string", readOnly="true", description="User role"),
+ * @OA\Property(property="year", type="integer", readOnly="true",  description="Year", example="1956"),
+ * @OA\Property(property="director", type="string", readOnly="true",  description="Director", example="Copolla"),
+ * @OA\Property(property="genre", type="string", readOnly="true",  description="Genre", example="Thriller"),
+ * )
+ */
+```
+Observeu que en el genre retorne un string perquè serà el que voldrè retornar, en compte de la id de Genre.
+
+Ara generarè el schema de la petició request del post de movie. No és exactament igual que esta perquè ací voldré el genre amb ID i restriccions en alguns camps. Ho puc fer en el **MoviePost.php** dins de request.
+
+```
+/**
+ * @OA\Schema(
+ *      title="Store Movie Request",
+ *      required={"title,director,year"},
+ *      description="Store Movie request body data",
+ *      @OA\Xml(name="MoviePost"),
+ * )
+ */
+ /**
+     * @OA\Property(
+     *      property = "title",
+     *      title="name",
+     *      description="Title",
+     *      example="Titanic"
+     * )
+     *
+     * @var string
+     */
+  /**
+     * @OA\Property(
+     *      property = "year",
+     *      title="year",
+     *      description="Year",
+     *      example="1998"
+     * )
+     *
+     * @var integer
+     */
+ /**
+     * @OA\Property(
+     *      property = "genre",
+     *      title="genre",
+     *      description="Genre",
+     *      example="1"
+     * )
+     *
+     * @var integer
+     */
+ /**
+     * @OA\Property(
+     *      property = "director",
+     *      title="director",
+     *      description="Director",
+     *      example="Steven Spilberg"
+     * )
+     *
+     * @var string
+     */
+    /**
+     * @OA\Property(
+     *      property = "synopsis",
+     *      title="synopsis",
+     *      description="Synopsis",
+     *      example="De que va la pelicula"
+     * )
+     *
+     * @var string
+     */
+
+    /**
+     * @OA\Property(
+     *      property = "poster",
+     *      title="poster",
+     *      description="Poster",
+     *      example="adreça del poster"
+     * )
+     *
+     * @var string
+     */         
+``` 
+No he pogut fer-ho d'un altra manera. Diferix un poc de la que he utilitzat al model Movie, però si no ho feia així no funcionaba.
+
+Falta ara generar la resposta de totes les pelicules per al index. Per aço genere un Resource per a Movies, amb el següent codi.
+
+```php
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+/**
+ * @OA\Schema(
+ *     title="MovieResource",
+ *     description="Project resource",
+ *     @OA\Xml(name="MovieResource"),
+ * )
+ */
+class MovieResource extends JsonResource
+{
+    /**
+     * Transform the resource collection into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+
+    /**
+     * @OA\Property(
+     *     property="data",
+     *     title="data",
+     *     description="Data wrapper"
+     * )
+     *
+     * @var \App\Models\Movie[]
+     */
+    public function toArray($request)
+    {
+        return [ 'id' => $this->id,
+            'title' => $this->title,
+            'director' => $this->director,
+            'year' => $this->year,
+            'genre' => $this->Genre->title??'Desconocido'];
+    }
+}
+``` 
+Este resource farà que quan l'utilitze hem retornarà els camps que he possat en la funció toArray i no tots els camps. El puc utilitzar per tornar camps de relacions o canviar el nom dels camps. En quan al swagger, noteu que torne un array de Movies dins d'un camp data.
+
+Per últim el controlador de movies queda de la següent manera.
+
+```php
+  /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Get(
+     *      path="/api/movies",
+     *      operationId="getMoviesList",
+     *      tags={"Movies"},
+     *      summary="Get list of movies",
+     *      description="Returns list of movies",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/MovieResource")
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    public function index()
+    {
+
+        return MovieResource::collection(Movie::get());
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Post(
+     *      path="/api/movies",
+     *      operationId="movieProject",
+     *      tags={"Movies"},
+     *      summary="Store new movie",
+     *      description="Returns movie data",
+     *      security={ {"apiAuth": {} }},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/MoviePost")
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Movie")
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *           @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="error",
+     *                  type="string",
+     *                  example="Usuario no autenticado"))
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     */
+    public function store(MoviePost $request)
+    {
+        $movie = new Movie();
+        $movie->title = $request->title;
+        $movie->year = $request->year;
+        $movie->director = $request->director;
+        $movie->poster = $request->poster;
+        $movie->synopsis = $request->synopsis;
+        $movie->save();
+        response()->json($movie, 201);
+    }
+```
+
+Mireu que per al post utilitze la seguretat que ja havia definit.
+Ara veureu una icona de bloqueig prop de la ruta.  Quan feu clic sobre això, podreu afegir l'autenticació de Bearer.
+
+![](../img/swagger_2.png)
+
+Us encomane a que vejau el video on està tot explicat perquè amb els apunt soles queda una mica difícil d'entendre.
+
+[Documentació de swagger-php](http://zircote.github.io/swagger-php/Getting-started.html)
+
+
 ## Exercicis
 
 801. Crea una api per al projecte cholloSevero amb les següents especificacions:
@@ -780,5 +1190,8 @@ A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les c
      * El POST i el PUT es validaran amb el mateix Request que està en l'aplicació ja feta
      * Crea les colecciones en el POSTMAN per a poder provar-ho tot.
 
-802. Protegix l'API mitjançant laravel sanctum.
+802. Protegix l'API mitjançant laravel sanctum (has de protegir les rutes POST,PUT I DELETE).
+     * Soles el propietari pot modificar o esborrar una ganga
+
+803. Crea la documentació per a els endpoints de l'aplicació de gangues.
 
