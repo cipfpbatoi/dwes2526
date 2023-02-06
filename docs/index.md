@@ -86,7 +86,8 @@ Duració estimada: 80 hores
     * *AJAX* amb *JSON*.
    
 
-9. [Projecte Integrador]
+9. [Projecte Integrador](09mailLaravel.md)
+
 
 ## Instruments de qualificació
 

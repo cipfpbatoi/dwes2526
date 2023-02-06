@@ -72,11 +72,11 @@
  
 ## 8.- Serveis REST (13h)
 
-- [ ] 1.- (L 23G) REST - GET  - 5
-- [ ] 2.- (M 24G) POST i PUT - 8
-- [ ] 3.- (J 26G) Autenticació - 11 
-- [ ] 4.- (L 30G) Projecte chollo severo - 13 
-- [ ] 5.- (M 31G) Revisió de projectes - 16
+- [X] 1.- (L 23G) REST - GET  - 5
+- [X] 2.- (M 24G) POST i PUT - 8
+- [X] 3.- (J 26G) Autenticació - 11 
+- [X] 4.- (L 30G) Projecte chollo severo - 13 
+- [X] 5.- (M 31G) Revisió de projectes - 16
 
 ## Projecte Integrador
 

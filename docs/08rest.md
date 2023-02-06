@@ -782,7 +782,6 @@ composer require "darkaonline/l5-swagger"
 i publicarem el fitxers de configuració i vistes
 
 ```
-php artisan config:cache
 php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
 ```
 
@@ -793,6 +792,7 @@ A continuació, obriu un fitxer **config/l5-swagger.php**.  Passem per les claus
 * Generar_always — Es millor desactivar-ho ja que generarà documentació sobre la marxa.  No és útil amb l'API gran.  Sempre podeu executar manualment
 
 ```
+    php artisan config:cache
 	php artisan l5-swagger:generate
 ```
 
