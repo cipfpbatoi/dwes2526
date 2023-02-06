@@ -16,6 +16,7 @@ nav:
   - "7.3- Models i Dades": "07laravelModelsDades.md"
   - "7.4- Validació i Autenticació": "07laravelValidacioAutenticacio.md"
   - "8.- Serveis REST": "08rest.md"
+  - "9.- Projecte Integrador": "09mailLaravel.md"
 
 theme:
   language: ca
