@@ -1,4 +1,15 @@
-# Generant els mailables
+# Introducció
+No cal complicar enviar correus electrònics. Laravel proporciona una API de correu electrònic neta i senzilla alimentada pel popular component Symfony Mailer.
+El Laravel i el Symfony Mailer proporcionen controladors per enviar correus electrònics via SMTP, Mailgun, Postmark, Amazon SES i sendmail, permetent-vos començar ràpidament a enviar correus a través d'un servei local o basat en el núvol de la vostra elecció.
+
+## Configuració
+Els serveis de correu electrònic de Laravel es poden configurar a través del fitxer de configuració config/mail.php de la vostra aplicació. 
+Cada mailer configurat dins d'aquest fitxer pot tenir la seva pròpia configuració única i fins i tot el seu propi "transport", permetent a la vostra aplicació utilitzar diferents serveis de correu electrònic per enviar certs missatges de correu electrònic. 
+Per exemple, la vostra aplicació pot utilitzar Postmark per enviar correus electrònics transaccionals mentre s'utilitza Amazon SES per enviar correus electrònics massius.
+
+Dins del fitxer de configuració de correu, trobareu una matriu de configuració de mailers. Aquesta matriu conté una entrada de configuració d'exemple per a cadascun dels principals controladors de correu / transports admesos per Laravel, mentre que el valor de configuració predeterminat determina quin gestor de correu s'utilitzarà per defecte quan la vostra aplicació hagi d'enviar un missatge de correu electrònic.
+
+## Generant els mailables
 Quan es construeixen aplicacions Laravel, cada tipus de correu electrònic enviat per la vostra aplicació es representa com una classe "mailable".
 Aquestes classes s'emmagatzemen al directori app/mail. No us preocupeu si no veieu aquest directori a la vostra aplicació, ja que es generarà quan creeu la primera classe de mailable utilitzant l'ordre make:mail d'Artisan
 
