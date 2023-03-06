@@ -17,6 +17,7 @@ nav:
   - "7.4- Validació i Autenticació": "07laravelValidacioAutenticacio.md"
   - "8.- Serveis REST": "08rest.md"
   - "9.- Projecte Integrador": "09mailLaravel.md"
+  - "10.- Recuperacio": "10recuperacio.md"
 
 theme:
   language: ca

@@ -88,6 +88,7 @@ Duració estimada: 80 hores
 
 9. [Projecte Integrador](09mailLaravel.md)
 
+10. [Recuperació](10recuperacion.md)
 
 ## Instruments de qualificació
 
