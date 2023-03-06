@@ -206,7 +206,7 @@ En segon lloc, establim els paràmetres per a manejar les exempcions, en aquest 
 
 Qualsevol error que es llance a través de *PDO^, el sistema llançarà una <span class="alert">**PDOException**</span>.
 
-### Fitxer de configuració de la *BD*
+### Fitxer de configuració de la BD
 
 De la mateixa manera que podem tenir el nostre arxiu de funcions `funciones.php` i alberguem totes les funcions que s'usen de manera global en l'aplicació, podem establir un arxiu de constants on definim els paràmetres de connexió amb la base de dades.
 ```php
