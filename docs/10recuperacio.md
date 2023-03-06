@@ -12,7 +12,7 @@ config/
 
 ### Part 2 
 
-Posa els [paràmetres de connexiò a la base de dades](06accesoDatos.md#Fitxer-de-configuració-de-la-BD) en un fitxer de configuració que es trobi a la carpeta /config. 
+Posa els [paràmetres de connexiò a la base de dades](06accesoDatos.md#fitxer-de-configuració-de-la-BD) en un fitxer de configuració que es trobi a la carpeta /config. 
 
 ### Part 3
 
@@ -27,7 +27,7 @@ Crea una vista que continga un formulari amb el camps per a inserir un nou usuar
 
 ### Part 5
 
-Crea un fitxer [register.php](04web.md#Formularis) que continga el codi per cridar a la vista i per a fer la connexió a la base de dades i que inserte un nou usuari.
+Crea un fitxer [register.php](04web.md#formularis) que continga el codi per cridar a la vista i per a fer la connexió a la base de dades i que inserte un nou usuari.
 
 
 
