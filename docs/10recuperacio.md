@@ -63,3 +63,19 @@ Crea un mètode getAll que [consulte](06accesoDatos.md#sentencies-preparades) a 
 
 Crea un fitxer [products.php] que continga el codi per a mostrar tots els productes de la base de dades.
 
+### Part 4
+
+Crea un fitxer [product.php] que continga el codi per a mostrar un producte concret de la base de dades.
+
+### Part 5
+
+Crea un fitxer [newProduct.php] que continga el codi per a mostrar un formulari per a inserir un nou producte a la base de dades.
+
+
+
+
+
+
+    
+
+
