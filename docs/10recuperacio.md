@@ -71,6 +71,20 @@ Crea un fitxer [product.php] que continga el codi per a mostrar un producte conc
 
 Crea un fitxer [newProduct.php] que continga el codi per a mostrar un formulari per a inserir un nou producte a la base de dades.
 
+## Exercici 4
+
+### Part 1
+
+Crea un fixert [updateProduct.php] que continga el codi per a mostrar un formulari i per a modificar un producte de la base de dades.
+
+### Part 2
+
+Crea un fitxer [deleteProduct.php] que continga el codi per a eliminar un producte de la base de dades.
+
+### Part 3
+
+Pagina els resultats de la consulta a la base de dades de manera que només es mostren 10 productes per pàgina. Ha d'haver també un enllaç per a anar a la pàgina següent i un altre per a anar a la pàgina anterior.
+
 
 
 
