@@ -85,6 +85,13 @@ Crea un fitxer [deleteProduct.php] que continga el codi per a eliminar un produc
 
 Pagina els resultats de la consulta a la base de dades de manera que només es mostren 10 productes per pàgina. Ha d'haver també un enllaç per a anar a la pàgina següent i un altre per a anar a la pàgina anterior.
 
+### Exercici 5
+
+### Part 1
+
+Crea un fitxer [logout.php] que continga el codi per a esborrar la variable de sessió i que redirigeixi a la pàgina de login.
+
+### Part 2
 
 
 
