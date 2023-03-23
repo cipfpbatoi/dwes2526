@@ -85,14 +85,65 @@ Crea un fitxer [deleteProduct.php] que continga el codi per a eliminar un produc
 
 Pagina els resultats de la consulta a la base de dades de manera que només es mostren 10 productes per pàgina. Ha d'haver també un enllaç per a anar a la pàgina següent i un altre per a anar a la pàgina anterior.
 
+### Part 4
+
+Crea un fitxer [logout.php] que continga el codi per a esborrar la variable de sessió i que redirigeixi a la pàgina de login.
+
 ### Exercici 5
 
 ### Part 1
 
-Crea un fitxer [logout.php] que continga el codi per a esborrar la variable de sessió i que redirigeixi a la pàgina de login.
+Anem a crear una pagina [api/book.php] que ens retorni un json amb tots els llibres de la base de dades. Pots utilitzar el següent exemple per a fer-ho:
+
+```php
+<?php
+
+// Executar consulta SELECT per obtenir totes les dades de la taula "books"
+$sql = "SELECT * FROM books";
+$result = mysqli_query($conn, $sql);
+
+// Crear un array per a les dades de tots els llibres
+$books = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $books[] = $row;
+}
+
+// Convertir les dades en format JSON i retornar-les com a resposta HTTP
+header('Content-Type: application/json');
+echo json_encode($books);
+
+?>
+```
 
 ### Part 2
 
+Anem a afegir a la pàgina [api/book.php] un paràmetre que ens permeti obtenir un llibre concret. Hauràs de comprovar l'existència de la variable per discernir si l'usuari vol obtenir tots els llibres o un llibre concret. 
+
+### Part 3
+
+Anem a afegir a la pàgina [api/book.php] els mètodes POST, PUT i DELETE per a poder afegir, modificar i eliminar llibres de la base de dades. Pots utilitzar el següent exemple per a fer-ho:
+
+```php
+<?php
+
+// Comprovar el mètode de petició HTTP
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Executar una consulta SELECT per obtenir les dades de la taula "books"
+    // i mostrar-les en una taula HTML
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+       
+} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        // Executar una consulta DELETE per esborrar un registre amb un determinat "id"
+}
+
+
+```
+
+### Part 4
+
+Canvia el que necessites per tal que quan es produïsca una errada es retorni un codi d'estat HTTP adequat.
 
 
 
