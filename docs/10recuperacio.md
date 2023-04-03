@@ -145,9 +145,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 Canvia el que necessites per tal que quan es produïsca una errada es retorni un codi d'estat HTTP adequat.
 
+## Exercici 6
 
+### Part 1
 
+Possa validació als formularis de manera que no es puguin introduir valors no vàlids.
 
-    
+### Part 2
+
+Fes que despres de una validació incorrecta es mostri el formulari amb els valors que ja havia introduït l'usuari.
+
+### Part 3
+
+Fes que despres de una validació incorrecta es mostri un missatge d'error.
+
+## Exercici 7
+
+### Part 1
+
+Crea un classe [Cart](03phpoo.md) que es trobe a la carpeta /classes i que continga els atributs i els mètodes necessaris per a gestionar el carret de la compra.
+
+### Part 2
+
+Crea un fitxer [cart.php] que continga el codi per a mostrar el contingut del carret de la compra de l'usuari validat.
+
+## Exercici 8
+
+### Part 1
+
+Crear els fitxers adients en la carpeta /api per a gestionar les peticions que utilitzes en la part de client.
+
 
 
