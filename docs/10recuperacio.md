@@ -174,6 +174,3 @@ Crea un fitxer [cart.php] que continga el codi per a mostrar el contingut del ca
 ### Part 1
 
 Crear els fitxers adients en la carpeta /api per a gestionar les peticions que utilitzes en la part de client.
-
-
-
