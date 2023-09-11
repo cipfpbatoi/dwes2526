@@ -2,31 +2,24 @@
 
 ## 1.- Arquitectures Web (2h)
 
-- [ ] 1.- (M 13 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. Posada en funcionament/ Docker - Activitats 101,102,103,104
+- [ ] 1.- (L 18 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. Posada en funcionament/ Docker - Activitats 101,102,103,104
 
 
 ## 2.- El llenguatge PHP (24h)
 
-- [ ] 1.- (J 15S) Sintaxi. Activitats 201-208 - 3
-- [ ] 2.- (L 19S) Activitats 209-215 - 6 
-- [ ] 3.- (M 20S) Condicions i Bucles. Activitats 208-228 - 6
-- [ ] 4.- (J 22S) Arrays, asociatius, bidimensionals. Activitats 230-238 -8
-- [ ] 5.- (L 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions. Activitats 240-244 - 11
-- [ ] 6.- (M 27S) Plantilles. Activitats 245-246. - 14
-- [ ] 7.- (J 29S) Cadenas i subcadenes. Activitats 250-257 - 16
-- [ ] 8.- (L 3O) Math i tipus de dades. Activitats 260-262 - 19
-- [ ] 9.- (M 4O) Prova escrita - 24
-
-
-## 3.- PHP Orientat a Objectes (19h)
-
-- [ ] 1.- (J 6O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
-- [ ] 3.- (L 10O) Herencia. Classes abstractas. Activitats 308-310 - 6
-- [ ] 4.- (M 11O) Interfaces. Activitats 311-312 - 8
-- [ ] 5.- (J 13O) Projecte Videoclub I. Activitats 320-323 - 11
-- [ ] 6.- (L 17O) Projecte Videoclub I. Activitats 324-328 - 14
-- [ ] 7.- (M 18O) Mètodos encadenats. Namespaces. Exempcions. Activitats 330-334  - 16
-- [ ] 8.- (J 20O) Projecte Videoclub II. Activitats 335-337 - 19
+- [ ] 1.- (L 18S) Sintaxi. Activitats 201-209 - 3
+- [ ] 2.- (M 19S) Condicions i Bucles. Activitats 220-228 - 6
+- [ ] 3.- (J 21S) Arrays, asociatius, bidimensionals. Activitats 230-238 -8
+- [ ] 4.- (L 25S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions. Activitats 240-244 - 11
+- [ ] 5.- (M 26S) Plantilles. Activitats 245-246. - 14
+- [ ] 6.- (J 28S) Cadenas i subcadenes. Activitats 250-257 - 16
+- [ ] 7.- (L 2O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
+- [ ] 8.- (M 3O) Herencia. Classes abstractas. Activitats 308-310 - 6
+- [ ] 9.- (J 5O) Interfaces. Activitats 311-312 - 8
+- [ ] 10.- (M 10O) Mètodos encadenats. Namespaces. Exempcions. Activitats 330-334  - 16
+- [ ] 5.- (L 16O) Projecte Videoclub I. Activitats 320-323 - 11
+- [ ] 6.- (M 17O) Projecte Videoclub I. Activitats 324-328 - 14
+- [ ] 7.- (J 19O) Projecte Videoclub II. Activitats 335-337 - 19
 
 
 ## 4.- Programació Web (14h)

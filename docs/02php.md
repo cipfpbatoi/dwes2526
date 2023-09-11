@@ -1354,38 +1354,31 @@ var_dump(is_int(intval($uno))); // true
 
 ### PHP bàsic
 
-200. Visualitza el vídeo de Jesús Amieiro sobre [PHP en 2020](https://www.youtube.com/watch?v=o3iwaqslgum&t=12724s) a partir del minut 3.32 (són 40 minuts aproximadament).
+201. `201.php`: Crea un fitxer PHP anomenat "201.php". 
+Defineix dues variables per representar l'amplada i l'altura del rectangle i assigna'ls valors 10 i 5.
+Defineix una constant anomenada "factor" i assigna-li un valor 2. Aquesta constant s'utilitzarà per calcular l'àrea del rectangle.
+Calcula l'àrea del rectangle utilitzant la fórmula:
 
-     * Quina relació existeix entre PHP i Facebook?
-     * Respecte al rendiment, quina versió mínima hauríem d'utilitzar?
-     * Per què PHP té mala fama?
+Àrea = Amplada x Altura x FACTOR
 
-201. `201.php`: tresfrases - Mostra 3 frases, cadascuna en un paràgraf utilitzant les tres possibilitats que existeixen de mostrar contingut.
-     Després d'això, introdueix dos comentaris, un de bloc i un altre d'una línia.
+Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiva. Per exemple:
 
-202. `202.php`: calculs -Escriu un programa que utilitze les variables `$x` i `$i`. Assigna'ls els valors `166` i `999` respectivament.
-     A continuació, mostra per pantalla el valor de cada variable, la suma, la resta, la divisió i la multiplicació.
      ![203](imagenes/02/02p203.png){align=right}
 
-203. `203.php`: dadessPersonals -Escriu un programa que emmagatzeme en variables el teu nom, primer cognom, segon cognom, email, any de naixement i telèfon. Després mostra'ls per pantalla dins d'una taula.
+202.`202.php`: dadessPersonals -Escriu un programa que emmagatzeme en variables el teu nom, primer cognom, segon cognom, email, any de naixement i telèfon. Després mostra'ls per pantalla dins d'una taula.
 
-204. `204.html` i `204.php`: dadesPersonals - És el mateix exercici que l'anterior, però separant la lògica. En el primer arxiu crearem el formulari per a introduir les dades, i després recollim les dades i generem la taula en el segon arxiu.
+203.`203.html` i `203.php`: dadesPersonals - És el mateix exercici que l'anterior, però separant la lògica. En el primer arxiu crearem el formulari per a introduir les dades, i després recollim les dades i generem la taula en el segon arxiu.
 
 !!! tip "[Construir formulari Boostrap online](https://bootstrapformbuilder.com/)"
 
-205. `205.html`i `205.php`: madlib -A partir d'un nom, un verb, un adjectiu i un adverbi, crea una història que continga aquests elements. Per exemple:
-
-* Entrada: gos / caminar / blau / ràpidament
-* Eixida: T'agrada caminar amb el teu gos blau ràpidament ?
-
-206. `206.php`: anys - Després de llegir l'edat d'una persona, mostrar l'edat que tindrà dins de 10 anys i fa 10 anys.
+204.`204.php`: anys - Després de llegir l'edat d'una persona, mostrar l'edat que tindrà dins de 10 anys i fa 10 anys.
      A més, mostra quin any serà en cadascun dels casos.
      Finalment, mostra l'any de jubilació suposant que treballaràs fins als 67 anys.
-     En aquest cas, no fa falta que prèviament crees un formulari, pots provar l'exercici via URL: `206.php?edat=33`.
+     En aquest cas, no fa falta que prèviament crees un formulari, pots provar l'exercici via URL: `204.php?edat=33`.
 
 !!! tip "`$anyoActual = date("Y");`"
 
-207. `207.php`: dines -A partir d'una quantitat de diners, mostrar la seua descomposició en bitllets (500, 200, 100, 50, 20, 10, 5) i monedes (2, 1), perquè el nombre d'elements siga mínim.
+205.`205.php`: dines -A partir d'una quantitat de diners, mostrar la seua descomposició en bitllets (500, 200, 100, 50, 20, 10, 5) i monedes (2, 1), perquè el nombre d'elements siga mínim.
      No s'ha d'utilitzar cap instrucció condicional. Per exemple, en introduir `139` ha de mostrar:
 
 
@@ -1403,11 +1396,10 @@ var_dump(is_int(intval($uno))); // true
 
     !!! tip "Pots forçar a realitzar la divisió sencera mitjançant la funció `intdiv($dividend, $divisor)` o passar un número flotant a enter pots usar la funció `intval()`"
 
-208.`208.php`: posnegzero - A partir d'un `numero`, mostra per pantalla si el número és `positiu`, `negatiu` o `zero`.
+206.`206.php`: posnegzero - A partir d'un `numero`, mostra per pantalla si el número és `positiu`, `negatiu` o `zero`.
 
-209.`209.php`: major3 -Sense fer ús de condicions amb operadors lògics, mostra el major de tres números (`a`, `b` i `c`).
-
-210. `210.php`: nomEdat - A partir d'una `edat` mostra per pantalla:
+207.`207.php`: major3 -Sense fer ús de condicions amb operadors lògics, mostra el major de tres números (`a`, `b` i `c`).
+208.`208.php`: nomEdat - A partir d'una `edat` mostra per pantalla:
 
      * `bebé` si té menys de 3 anys
      * `xiquet` si té entre 3 i 12 anys
@@ -1415,21 +1407,7 @@ var_dump(is_int(intval($uno))); // true
      * `adult` entre 18 i 66
      * `jubilat` a partir de 67
 
-211. `211.php`: rellotge - Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`.
-
-![213](imagenes/02/02p213.png){align=right & width=150}
-
-212. `212.php`: ecuacio2g - Crea un programa que resolga una equació de 2n grau del tipus `ax² + bx + c = 0`.
-     Tingues en compte que pot tindre 2, 1 o no tindre solució depenent del valor del discriminant `b²-4ac`.
-
-    !!! tip "Per a calcular l'arrel quadrada hauràs d'utilitzar la funció `sqrt()`"
-
-213. `index.php` : index - Completa el fitxer index.php per enllaçar tots els exercicis
- 
-Exercicis d'investigació:
-
-214. Investiga perquè serveix l'operador nau espacial, disponible des de PHP7 (<https://www.php.net/manual/es/migration70.new-features.php>). Explica amb un parell de línies el seu propòsit i mitjançant codi demostra el seu ús.
-215. Investiga per a què serveix la instrucció `match()`, disponible des de PHP8 (<https://www.php.net/manual/es/control-structures.match.php>). Explica amb un parell de línies el seu propòsit i mitjançant codi demostra el seu ús.
+209.`209.php`: rellotge - Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`.
 
 ### Bucles
 
