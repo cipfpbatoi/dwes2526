@@ -1401,9 +1401,9 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
      * `xiquet` si té entre 3 i 12 anys
      * `adolescent` entre 13 i 17 anys
      * `adult` entre 18 i 66
-     * `jubilat` a partir de 67
-
-    !!! tip Opcional `209.php`: Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`.
+     * `jubilat` a partir de 67 
+     
+Reforç `209.php`: Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`.
 
 ### Bucles
 
@@ -1434,47 +1434,43 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
      Les cel·les han d'estar emplenades amb els valors de les coordenades de cada cel·la.
 
 226. `226.html` i `226.php`: Basant-te en l'exercici anterior, emplena la taula de manera que només les vores tinguen contingut, quedant-se la resta de cel·les en blanc.
-     ![228](imagenes/02/02p228.png){align=right & width=200}
-
-    !!! tip Opcional: `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha d'aparéixer el contingut dels dues diagonals.
+     
+Reforç: `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha d'aparéixer el contingut dels dues diagonals.
 
 
 ### Arrays
 
 230. `230.php`: Emplena un array amb 50 números aleatoris compresos entre el 0 i el 99, i després mostra-ho en una llista desordenada.
-     Per a crear un número aleatori, utilitza la funció `rand(inici, fi)`. Per exemple:
+     Per a crear un número aleatori, utilitza la funció `rand(inici, fi)`. (Pissarra) Per exemple:
 
     ``` php
     $num = rand(0, 99)
     ```
-
-231. `231.html`: Prepara un formulari amb un caixa de text que realitze a una pregunta a l'usuari.
-     `231.php`: A partir de l'anterior, crea un programa que mostre la pregunta rebuda i genere una resposta de manera aleatòria entre un conjunt de respostes predefinides, emmagatzemades en un array: Si, no, potser, clar que sí, per descomptat que no, no ho tinc clar, segur, jo diria que sí, ni de coña, etc..*.
-
-232. `232.php`: A partir de l'exercici 230, genera un array aleatori de 33 elements amb números compresos entre el 0 i 100 i calcula:
+231. `231.php`: A partir de l'exercici 230, genera un array aleatori de 33 elements amb números compresos entre el 0 i 100 i calcula:
 
      * El major
      * El menor
      * La mitjana
 
-233. `233.php`: Emplena un array de 100 elements de manera aleatòria amb valors `M` o `F` (per exemple `["M", "M", "F", "M", ...]`). Una vegada completat, torna a recórrer-ho i calcula quants elements hi ha de cadascun dels valors emmagatzemant el resultat en un array associatiu `['M' => 44, 'F' => 66]` (no utilitzes variables per a comptar les `M` o les `F`).
+232. `232.php`: Emplena un array de 100 elements de manera aleatòria amb valors `M` o `F` (per exemple `["M", "M", "F", "M", ...]`). Una vegada completat, torna a recórrer-ho i calcula quants elements hi ha de cadascun dels valors emmagatzemant el resultat en un array associatiu `['M' => 44, 'F' => 66]` (no utilitzes variables per a comptar les `M` o les `F`).
      Finalment, mostra el resultat per pantalla
 
-234. `234.php`: Torna a realitzar l'exercici 207, el de les monedes (500, 200, 100, 50, 20, 10, 5, 2, 1), però fent ús de arrays i un bucle.
-     Emmagatzema el resultat en un array associatiu.
+233. `233.php`: Torna a realitzar l'exercici 207, el de les monedes (500, 200, 100, 50, 20, 10, 5, 2, 1), però fent ús de arrays i un bucle.
+     Emmagatzema el resultat en un array associatiu. (pissarra
      Mostra el resultat en una llista desordenada únicament amb les quantitats que tenen algun valor.
 
-235. `235.php`: Mitjançant un array associatiu, emmagatzema el nom i l'alçada de 5 persones (`nom => alçada`).
+234. `234.php`: Mitjançant un array associatiu, emmagatzema el nom i l'alçada de 5 persones (`nom => alçada`).
      Posteriorment, recorre el array i mostra-ho en una taula HTML.
      Finalment afig una última fila a la taula amb l'altura mitjana.
 
-236. `236.php`: Mitjançant un array bidimensional, emmagatzema el nom, altura i email de 5 persones. Per a això, crea un array de persones, sent cada persona un array associatiu: `[ ['nom'=>'Aitor', 'altura'=>182, 'email'=>'aitor@correo.com'],[…],… ]`
-     Posteriorment, recorre el array i mostra-ho en una taula HTML.
+235. `235.php`: Mitjançant un array bidimensional, emmagatzema el nom, altura i email de 5 persones. Per a això, crea un array de persones, sent cada persona un array associatiu: `[ ['nom'=>'Aitor', 'altura'=>182, 'email'=>'aitor@correo.com'],[…],… ]`
+     Posteriorment, recorre el array i mostra-ho en una taula HTML. (pissarra)
 
-237. `237.html` i `237.php`: a partir d'un formulari amb un camp de `quantitat` de persones, generar un nou formulari per a llegir el nom, altura i email de `quantitat` persones.
-`237.php`: A partir de les persones introduïdes, mostrar les seues dades en una taula, i posteriorment, destaca les dades del més alt i el del més baix.
+236. `236.html` i `236.php`: a partir d'un formulari amb un camp de `quantitat` de persones, generar un nou formulari per a llegir el nom, altura i email de `quantitat` persones.
 
-238. `238.php`: Emplena un array bidimensional de 6 files per 9 columnes amb números aleatoris compresos entre 100 i 999 (tots dos inclosos). Tots els números han de ser diferents, és a dir, no es pot repetir cap. 
+237. `237.php`: A partir de les persones introduïdes, mostrar les seues dades en una taula, i posteriorment, destaca les dades del més alt i el del més baix.
+
+Reforç: `238.php`: Emplena un array bidimensional de 6 files per 9 columnes amb números aleatoris compresos entre 100 i 999 (tots dos inclosos). Tots els números han de ser diferents, és a dir, no es pot repetir cap. 
 Mostra a continuació per pantalla el contingut del array de tal forma que:
 
      * La columna del màxim ha d'aparéixer en blau.
