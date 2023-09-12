@@ -2,7 +2,7 @@
 
 ??? abstract "Duració i criteris d'avaluació"
 
-    Duració estimada: 18 hores
+    Duració estimada: 11 hores
 
     <hr />
 
@@ -1017,12 +1017,11 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 ## Activitats
 
-300. Investiga la diferència entre un paradigma orientat a objectes basat en classes (*PHP*) respecte a un basat en prototips (JavaScript).
 
-### Objetos
+### Objectes
 
 301. `Persona.php`: Crea una classe `Persona` amb el seu nom, cognoms i edat.
-     Encapsula les propietats mitjançant *getters/setters* i afig mètodes per a:
+     Encapsula les propietats mitjançant *getters/setters* i afig mètodes per a: (**Pissarra**)
      * Obtindre el seu nom complet → `getNombreCompleto(): string`
      * Saver si està jubilat o no → `estaJubilado(): bool`
 302. `Persona7.php`: Còpia la classe persona i modifica-la. Afig el constructor de manera que assignem nom i cognoms mitjançant el constructor (utilitza la sintaxi de PHP7).
@@ -1032,7 +1031,7 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 305. `Persona8.php`: Modifica la classe de l'exercici anterior, canviant la constant per una variable estàtica `limite_edat`, de manera que mitjançant la funció estatica *modificaLimite()* pugues modificar el seu valor. Per defecte se li assignarà la constant `LIMITE_EDAT`
 306. `Empleado.php`: Crea un classe que herete de l'anterior i afig una propietat privada que emmagatzeme el sou i un array de nombres de telèfons.
           Afig els següents mètodes:
-    * `public function anyadirTelefono(int $telefono) : void` → Afig un telèfon al array
+    * `public function anyadirTelefono(int $telefono) : void` → Afig un telèfon al array (**pissarra**)
     * `public function listarTelefonos(): string` → Mostra els telèfons separats per comes
     * `public function vaciarTelefonos(): void` → Elimina tots els telèfons
     * `public debePagarImpuestos(): bool`Que retorne un booleà indicant si deu o no pagar impostos (es paguen quan el sou és superior a 3333€)

@@ -5,20 +5,23 @@
 - [ ] 1.- (L 18 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. Posada en funcionament/ Docker 
 
 
-## 2.- El llenguatge PHP (24h)
+## 2.- El llenguatge PHP (13h)
 
 - [ ] 1.- (M 19S) Sintaxi. Activitats 201-209 - 3
 - [ ] 2.- (J 21S) Condicions i Bucles. Activitats 220-227 - 5
 - [ ] 3.- (L 25S) Arrays, asociatius, bidimensionals. Activitats 230-238 -8
 - [ ] 4.- (M 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions.Plantilles Activitats 240-246 - 11
 - [ ] 5.- (J 28S) Cadenas i subcadenes. Activitats 250-257 - 13
+    
+## 3.- Programació Orientada a Objectes (11h)
+
 - [ ] 6.- (L 2O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 16
 - [ ] 7.- (M 3O) Herencia. Classes abstractas.Interfaces Activitats 308-312 - 19
 - [ ] 8.- (J 5O) Mètodos encadenats. Namespaces. Exempcions. Activitats 330-334  - 21
 - [ ] 9.- (M 10O) Projecte BatoiBook. Activitats 320-323 - 24
 
 
-## 3.- Programació Web (14h)
+## 4.- Programació Web (14h)
 
 - [ ] 1.- (L 16O) Formularis. Upload Activitats 401-404 - 3
 - [ ] 2.- (M 17O) Cookies.Sessió Activitats 405-409 - 6
@@ -26,7 +29,7 @@
 - [ ] 4.- (L 23O) Projecte BatoiBook. Activitats 420-423 - 11 
 - [ ] 5.- (M 24O) Projecte BatoiBook. Activitats 424-426 - 14
 
-## 4.- Accès a Dades (16h)
+## 5.- Accès a Dades (16h)
 
 - [ ] 1.- (J 26O) SQL. Activitats 601 - 605 - 2
 - [ ] 2.- (L 30O) Filtres i comodins.PDO 606-608 - 5
@@ -36,7 +39,7 @@
 - [ ] 6.- (M 7N) Projecte BatoiBook. Activitats 615-618 -16
 
 
-## 5.- Ferramentes Web (16h)
+## 6.- Ferramentes Web (16h)
 
 - [ ] 1.- (J 9N) Composer. Introducció Monolog.  Manejadors. Us de logs amb *Monolog*. Activitats 501 - 503 - 2
 - [ ] 2.- (L 13N) Documentació amb *phpDocumentor*. Activitats 521 - 522.- 5
