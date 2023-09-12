@@ -1354,7 +1354,7 @@ var_dump(is_int(intval($uno))); // true
 
 ### PHP bàsic
 
-201. `201.php`: Crea un fitxer PHP anomenat "201.php". 
+201. `201.php` (pissarra): Crea un fitxer PHP anomenat "201.php". 
 Defineix dues variables per representar l'amplada i l'altura del rectangle i assigna'ls valors 10 i 5.
 Defineix una constant anomenada "factor" i assigna-li un valor 2. Aquesta constant s'utilitzarà per calcular l'àrea del rectangle.
 Calcula l'àrea del rectangle utilitzant la fórmula:
@@ -1363,20 +1363,19 @@ Calcula l'àrea del rectangle utilitzant la fórmula:
 
 Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiva.![203](imagenes/02/02p203.png){align=right}
 
-202.`202.php`: dadessPersonals -Escriu un programa que emmagatzeme en variables el teu nom, primer cognom, segon cognom, email, any de naixement i telèfon. Després mostra'ls per pantalla dins d'una taula.
+202. `202.php`: Escriu un programa que emmagatzeme en variables el teu nom, primer cognom, segon cognom, email, any de naixement i telèfon. Després mostra'ls per pantalla dins d'una taula.
 
-203.`203.html` i `203.php`: dadesPersonals - És el mateix exercici que l'anterior, però separant la lògica. En el primer arxiu crearem el formulari per a introduir les dades, i després recollim les dades i generem la taula en el segon arxiu.
+203. `203.html` i `203.php` (pissarra): És el mateix exercici que l'anterior, però separant la lògica. En el primer arxiu crearem el formulari per a introduir les dades, i després recollim les dades i generem la taula en el segon arxiu.
 
-204.`204.php`: anys - Després de llegir l'edat d'una persona, mostrar l'edat que tindrà dins de 10 anys i fa 10 anys.
+204. `204.php`: anys - Després de llegir l'edat d'una persona, mostrar l'edat que tindrà dins de 10 anys i fa 10 anys.
      A més, mostra quin any serà en cadascun dels casos.
      Finalment, mostra l'any de jubilació suposant que treballaràs fins als 67 anys.
      En aquest cas, no fa falta que prèviament crees un formulari, pots provar l'exercici via URL: `204.php?edat=33`.
 
 !!! tip "`$anyoActual = date("Y");`"
 
-205.`205.php`: dines -A partir d'una quantitat de diners, mostrar la seua descomposició en bitllets (500, 200, 100, 50, 20, 10, 5) i monedes (2, 1), perquè el nombre d'elements siga mínim.
+205. `205.php` (pissarra): dines -A partir d'una quantitat de diners, mostrar la seua descomposició en bitllets (500, 200, 100, 50, 20, 10, 5) i monedes (2, 1), perquè el nombre d'elements siga mínim.
      No s'ha d'utilitzar cap instrucció condicional. Per exemple, en introduir `139` ha de mostrar:
-
 
      1 bitllet de 100
     
@@ -1392,10 +1391,11 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
 
     !!! tip "Pots forçar a realitzar la divisió sencera mitjançant la funció `intdiv($dividend, $divisor)` o passar un número flotant a enter pots usar la funció `intval()`"
 
-206.`206.php`: posnegzero - A partir d'un `numero`, mostra per pantalla si el número és `positiu`, `negatiu` o `zero`.
+206. `206.php`: A partir d'un `numero`, mostra per pantalla si el número és `positiu`, `negatiu` o `zero`.
 
-207.`207.php`: major3 -Sense fer ús de condicions amb operadors lògics, mostra el major de tres números (`a`, `b` i `c`).
-208.`208.php`: nomEdat - A partir d'una `edat` mostra per pantalla:
+207. `207.php`: Sense fer ús de condicions amb operadors lògics, mostra el major de tres números (`a`, `b` i `c`).
+
+208. `208.php`: A partir d'una `edat` mostra per pantalla:
 
      * `bebé` si té menys de 3 anys
      * `xiquet` si té entre 3 i 12 anys
@@ -1403,15 +1403,15 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
      * `adult` entre 18 i 66
      * `jubilat` a partir de 67
 
-209.`209.php`: rellotge - Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`.
+!!! Opcional `209.php`: Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`.
 
 ### Bucles
 
-220. Escriu un programa que mostre els nombres parells del 0 al 50 (dins d'una llista desordenada).
+220. Escriu un programa que mostre els nombres parells del 0 al 50 (dins d'una llista desordenada) (pissarra).
 
 221. Escriu un programa que sume els números de l'1 al 10.
 
-222. A partir d'una `base` i `exponent`, mitjançant l'acumulació de productes, calcula la potència utilitzant la instrucció `for`.
+222. A partir d'una `base` i `exponent`, mitjançant l'acumulació de productes, calcula la potència utilitzant la instrucció `for` (pissarra).
 
 223. Mostra dins d'una taula HTML la taula de multiplicar del `nombre` que reba com a paràmetre. Utilitza `<thead>` amb els seus respectius `<th>` i `<tbody`> per a dibuixar la taula. Per exemple:
 
@@ -1423,7 +1423,7 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
     7  | * | 10 | = | 70
 
 
-224. `224.html`: Crea un formulari que permeta llegir una `quantitat`.
+224. `224.html`: Crea un formulari que permeta llegir una `quantitat`. (pissarra)
      `224.php`: a partir de la quantitat, prepara un formulari amb tantes caixes de dades com el seu valor.
      Finalment a partir de les dades de totes les caixes de la pàgina anterior, suma'ls i mostra el total.
 
@@ -1436,9 +1436,7 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
 226. `226.html` i `226.php`: Basant-te en l'exercici anterior, emplena la taula de manera que només les vores tinguen contingut, quedant-se la resta de cel·les en blanc.
      ![228](imagenes/02/02p228.png){align=right & width=200}
 
-227. `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha d'aparéixer el contingut dels dues diagonals.
-
-228. `228.php`: Crea un programa que mostre per pantalla un quadrat exactament igual (fixa't bé en els encapçalats, tant de les files com de les columnes) al de la imatge amb les taules de multiplicar.
+!!! Opcional `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha d'aparéixer el contingut dels dues diagonals.
 
 
 ### Arrays

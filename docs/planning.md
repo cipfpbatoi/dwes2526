@@ -1,53 +1,49 @@
 # Planificació
 
-## 1.- Arquitectures Web (2h)
+## 1.- Arquitectures Web (3h)
 
-- [ ] 1.- (L 18 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. Posada en funcionament/ Docker - Activitats 101,102,103,104
+- [ ] 1.- (L 18 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. Posada en funcionament/ Docker 
 
 
 ## 2.- El llenguatge PHP (24h)
 
-- [ ] 1.- (L 18S) Sintaxi. Activitats 201-209 - 3
-- [ ] 2.- (M 19S) Condicions i Bucles. Activitats 220-228 - 6
-- [ ] 3.- (J 21S) Arrays, asociatius, bidimensionals. Activitats 230-238 -8
-- [ ] 4.- (L 25S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions. Activitats 240-244 - 11
-- [ ] 5.- (M 26S) Plantilles. Activitats 245-246. - 14
-- [ ] 6.- (J 28S) Cadenas i subcadenes. Activitats 250-257 - 16
-- [ ] 7.- (L 2O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
-- [ ] 8.- (M 3O) Herencia. Classes abstractas. Activitats 308-310 - 6
-- [ ] 9.- (J 5O) Interfaces. Activitats 311-312 - 8
-- [ ] 10.- (M 10O) Mètodos encadenats. Namespaces. Exempcions. Activitats 330-334  - 16
-- [ ] 5.- (L 16O) Projecte Videoclub I. Activitats 320-323 - 11
-- [ ] 6.- (M 17O) Projecte Videoclub I. Activitats 324-328 - 14
-- [ ] 7.- (J 19O) Projecte Videoclub II. Activitats 335-337 - 19
+- [ ] 1.- (M 19S) Sintaxi. Activitats 201-209 - 3
+- [ ] 2.- (J 21S) Condicions i Bucles. Activitats 220-227 - 5
+- [ ] 3.- (L 25S) Arrays, asociatius, bidimensionals. Activitats 230-238 -8
+- [ ] 4.- (M 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions.Plantilles Activitats 240-246 - 11
+- [ ] 5.- (J 28S) Cadenas i subcadenes. Activitats 250-257 - 13
+- [ ] 6.- (L 2O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 16
+- [ ] 7.- (M 3O) Herencia. Classes abstractas.Interfaces Activitats 308-312 - 19
+- [ ] 8.- (J 5O) Mètodos encadenats. Namespaces. Exempcions. Activitats 330-334  - 21
+- [ ] 9.- (M 10O) Projecte BatoiBook. Activitats 320-323 - 24
 
 
-## 4.- Programació Web (14h)
+## 3.- Programació Web (14h)
 
-- [ ] 1.- (L 24O) Formularis. Upload Activitats 401-404 - 3
-- [ ] 2.- (M 25O) Cookies.Sessió Activitats 405-409 - 5
-- [ ] 3.- (J 27O) Gestió d'usuaris. Activitats 410-415 - 8
-- [ ] 4.- (J 3N) Projecte Videoclub III. Activitats 420-423 - 11 
-- [ ] 5.- (L 7N) Projecte Videoclub III. Activitats 424-426 - 14
+- [ ] 1.- (L 16O) Formularis. Upload Activitats 401-404 - 3
+- [ ] 2.- (M 17O) Cookies.Sessió Activitats 405-409 - 6
+- [ ] 3.- (J 19O) Gestió d'usuaris. Activitats 410-415 - 8
+- [ ] 4.- (L 23O) Projecte BatoiBook. Activitats 420-423 - 11 
+- [ ] 5.- (M 24O) Projecte BatoiBook. Activitats 424-426 - 14
+
+## 4.- Accès a Dades (16h)
+
+- [ ] 1.- (J 26O) SQL. Activitats 601 - 605 - 2
+- [ ] 2.- (L 30O) Filtres i comodins.PDO 606-608 - 5
+- [ ] 3.- (M 31O) Fitxers i PDF. Activitats 609 - 611 -8
+- [ ] 4.- (J 2N) Projecte BatoiBook. Activitats 615-618 - 10
+- [ ] 5.- (L 6N) Projecte BatoiBook. Activitats 615-618 - 13
+- [ ] 6.- (M 7N) Projecte BatoiBook. Activitats 615-618 -16
 
 
-## 5.- Ferramentes Web (21h)
+## 5.- Ferramentes Web (16h)
 
-- [ ] 1.- (J 10N) Composer. Introducció Monolog.  Manejadors. Us de logs amb *Monolog*. Activitats 501 - 503 - 2
-- [ ] 2.- (L 14N) Projecte Videoclub IV. Activitats 511 - 515 - 5
-- [ ] 4.- (M 15N) Documentació amb *phpDocumentor*. Activitats 521 - 522.- 8
-- [ ] 5.- (J 17N) Webscrapping. Activitats 531 - 533. -10
-- [ ] 6.- (L 21N) Proves con PhpUnit. Activitats 541 - 545. - 13 
-- [No] 7.- (M 22N) Projecte Videoclub V. Activitats 551 - 554. - 16
-- [ ] 9.- (J 24N) Prova escrita - 21
-
-## 6.- Accès a Dades (11h)
-
-- [ ] 1.- (L 28N) SQL. Activitats 601 - 605 - 3
-- [ ] 2.- (M 29N) Filtres i comodins.PDO 606-608 - 5
-- [ ] 4.- (J 1D) Fitxers i PDF. Activitats 609 - 611 -8
-- [ ] 5.- (L 5D) Projecte cholloSevero. Activitats 615-618 - 11
-
+- [ ] 1.- (J 9N) Composer. Introducció Monolog.  Manejadors. Us de logs amb *Monolog*. Activitats 501 - 503 - 2
+- [ ] 2.- (L 13N) Documentació amb *phpDocumentor*. Activitats 521 - 522.- 5
+- [ ] 3.- (M 14N) Webscrapping. Activitats 531 - 533. -8
+- [ ] 4.- (J 16N) API. Activitats 541 - 543 - 10
+- [ ] 5.- (L 20N) Projecte BatoiBook. Activitats 541 - 543 - 13
+- [ ] 5.- (M 21N) Prova escrita - 16h
 
 ## 7.- Frameworks PHP (29h)
 
