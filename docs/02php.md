@@ -1441,11 +1441,12 @@ Reforç: `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha 
 ### Arrays
 
 230. `230.php`: Emplena un array amb 50 números aleatoris compresos entre el 0 i el 99, i després mostra-ho en una llista desordenada.
-     Per a crear un número aleatori, utilitza la funció `rand(inici, fi)`. (Pissarra) Per exemple:
+     Per a crear un número aleatori, utilitza la funció `rand(inici, fi)`. (**Pissarra**) Per exemple:
 
     ``` php
     $num = rand(0, 99)
     ```
+
 231. `231.php`: A partir de l'exercici 230, genera un array aleatori de 33 elements amb números compresos entre el 0 i 100 i calcula:
 
      * El major
@@ -1456,7 +1457,7 @@ Reforç: `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha 
      Finalment, mostra el resultat per pantalla
 
 233. `233.php`: Torna a realitzar l'exercici 207, el de les monedes (500, 200, 100, 50, 20, 10, 5, 2, 1), però fent ús de arrays i un bucle.
-     Emmagatzema el resultat en un array associatiu. (pissarra
+     Emmagatzema el resultat en un array associatiu. (**pissarra**)
      Mostra el resultat en una llista desordenada únicament amb les quantitats que tenen algun valor.
 
 234. `234.php`: Mitjançant un array associatiu, emmagatzema el nom i l'alçada de 5 persones (`nom => alçada`).
@@ -1464,7 +1465,7 @@ Reforç: `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha 
      Finalment afig una última fila a la taula amb l'altura mitjana.
 
 235. `235.php`: Mitjançant un array bidimensional, emmagatzema el nom, altura i email de 5 persones. Per a això, crea un array de persones, sent cada persona un array associatiu: `[ ['nom'=>'Aitor', 'altura'=>182, 'email'=>'aitor@correo.com'],[…],… ]`
-     Posteriorment, recorre el array i mostra-ho en una taula HTML. (pissarra)
+     Posteriorment, recorre el array i mostra-ho en una taula HTML. (**pissarra**)
 
 236. `236.html` i `236.php`: a partir d'un formulari amb un camp de `quantitat` de persones, generar un nou formulari per a llegir el nom, altura i email de `quantitat` persones.
 
@@ -1479,7 +1480,7 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
 
 ### Funcions
 
-240. `functions.php`: Crea les següents funcions:
+240. `functions.php`: Crea les següents funcions: (**pissarra**)
 
      * Una funció que esbrine si un número és parell: `esParell(int $num): bool`
      * Una funció que retorne un array de grandària `$tam` amb números aleatoris comprés entre `$min` i `$max` : `arrayAleatori(int $tam, int $min, int $max) : array`
@@ -1497,7 +1498,7 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
      * `llevaDarrere(int $num, int $cant): int` → li lleva per darrere (dreta) `$cant` dígits.
      * `llevaDavant(int $num, int $cant): int` → li lleva per davant (esquerra) `$cant` dígits.
      
-243. `functions.php`: Crea una biblioteca amb dues funcions:
+243. `functions.php`: Afig dues funcions:
 
      * peseta2euros: passa de pessetes a euros
      * euro2pesetes: passa d'euros a pessetes
@@ -1515,13 +1516,13 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
 
 ### Plantilles
 
-245. `245a.php`: A partir dels arxius creats en l'exercici anterior, crea una plantilla mitjançant *includes*: *245a.php*: similar a *244a.*php, però separant l'encapçalat (Supermercat Sever en *h1*) i el peu (El teu supermercat de confiança) en fitxers externs i referenciant a ells mitjançant *include*.
+245. `245a.php`: A partir dels arxius creats en l'exercici anterior, crea una plantilla mitjançant *includes*: *245a.php*: similar a *244a.*php, però separant l'encapçalat (Supermercat Sever en *h1*) i el peu (El teu supermercat de confiança) en fitxers externs i referenciant a ells mitjançant *include*. (**pissarra**)
      `245b.php`: rep les dades de l'anterior, i reutilitza part de *245b.php* canviant la taula per una llista desordenada dels productes al costat del seu preu i utilitzan les plantilles fetes. 
 
 246. Simularem un formulari d'accés:
 
      * `246.html`: el formulari d'entrada, que sol·licita l'usuari i contrasenya.
-     * `246.php`: rep les dades i comprova si són correctes (els usuaris es guarden en un array associatiu en el fitxer `246password.php`).Utilitza  `include`.
+     * `246.php`: rep les dades i comprova si són correctes (els usuaris es guarden en un array associatiu en el fitxer `246password.php`.Utilitza  `include`.
      * `246.php`: L'usuari introduït és correcte
      * `246.php`: L'usuari és incorrecte. Informar si tots dos estan mal o només la contrasenya.
 
@@ -1531,15 +1532,11 @@ Mostra a continuació per pantalla el contingut del array de tal forma que:
 Tots els exercicis s'han de realitzar creant noves funcions per a encapsular el codi.
 A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar-lo.
 
-250. `250.php`: A partir d'una frase, retorna una nova amb solo els caràcters de les posicions imparelles.
+250. `250.php`: A partir d'una frase, retorna una nova amb només els caràcters de les posicions imparelles. (**pissarra**)
 251. `251.php`: A partir d'una frase, retorna la quantitat de cadascuna de les vocals, i el total d'elles.
-252. `252.php`: A partir d'una frase amb paraules només separades per espais, retornar
+252. `252.php`: A partir d'una frase amb paraules només separades per espais, retornar (**pissarra**)
      * Lletres totals i quantitat de paraules
      * Una línia per cada paraula indicant la seua grandària
-
-!!! tip  "no es pot usar `str_word_count`"
-       
- `252b.php`: Investiga que fa la funció `str_word_count`, i torna a fer l'exercici.
 
 253. `253.php`: EsCrIu UnA fUnCiÓ qUe TrAnSfOrMe UnA cAdEnA eN cAnI.
 254. `254.php`: Escriu una funció que retorne un booleà indicant si una paraula és palíndroma (es llig igual d'esquerra a dreta que de dreta a esquerra, per exemple, “lligar és ser agil”).
@@ -1554,20 +1551,7 @@ A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar
      Dona'm números: 1 4 7 9 23 10 8
      Els 3 nombres parells són: 4 10 8
      ```
-257. `257.php`: Investiga les següents funcions de cadena (explica per a què serveixen mitjançant comentaris, i programa un xicotet exemple de cadascuna d'elles): `ucwords`, `strrev`, `str_repeat` i `md5`.
-
-### Math i tipus de dades
-
-Els següents exercicis es basen en la generació de números aleatoris.
-
-260. `260.php`: Crea una funció que permet generar una lletra aleatòria, majúscula o minúscula.
-261. `261.php`: Crea una funció que a partir d'una grandària, genere una contrasenya aleatòria composta de lletres i dígits de manera aleatòria.
-262. `262.php`: Crea les següents funcions:
-     * `quinigol() : array` --> Genera un array multidimensional amb 6 resultats aleatoris amb combinacions `[012M, 012M]`
-     * `travessa() : array` --> Genera un array amb una combinació de travessa generada de manera aleatòria: 14 resultats amb `1X2` i el ple al quinze amb `[012M, 012M]`
-     * `taula(array $travessa) : string` --> transforma un array d'una quniela en una taula HTML
-
-### Examen
+### Reforç
 
 270. `270.php` : A partir del fitxer de records d'atletisme que se un [suministra](recursos/atletes.php) pinta una taula amb tots els records (1.5p)
      ![270](imagenes/02/02p270.png){align=right & width=250}. Es valorarà que s'utilitzen comentaris en el resultat d'html per a indicar el codi que s'ocupa de la capçalera de la taula i el del cos de la taula (0,5p). Tambè que no s'utilitze ninguna instrucció de php per a imprimir la taula(echo, print ...) (0,5p)
