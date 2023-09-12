@@ -1361,15 +1361,11 @@ Calcula l'àrea del rectangle utilitzant la fórmula:
 
 Àrea = Amplada x Altura x FACTOR
 
-Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiva. Per exemple:
-
-     ![203](imagenes/02/02p203.png){align=right}
+Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiva.![203](imagenes/02/02p203.png){align=right}
 
 202.`202.php`: dadessPersonals -Escriu un programa que emmagatzeme en variables el teu nom, primer cognom, segon cognom, email, any de naixement i telèfon. Després mostra'ls per pantalla dins d'una taula.
 
 203.`203.html` i `203.php`: dadesPersonals - És el mateix exercici que l'anterior, però separant la lògica. En el primer arxiu crearem el formulari per a introduir les dades, i després recollim les dades i generem la taula en el segon arxiu.
-
-!!! tip "[Construir formulari Boostrap online](https://bootstrapformbuilder.com/)"
 
 204.`204.php`: anys - Després de llegir l'edat d'una persona, mostrar l'edat que tindrà dins de 10 anys i fa 10 anys.
      A més, mostra quin any serà en cadascun dels casos.
