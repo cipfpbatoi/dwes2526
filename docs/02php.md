@@ -1403,7 +1403,7 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
      * `adult` entre 18 i 66
      * `jubilat` a partir de 67
 
-!!! Tip "Opcional `209.php`: Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`".
+    !!! tip Opcional `209.php`: Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`.
 
 ### Bucles
 
@@ -1436,7 +1436,7 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
 226. `226.html` i `226.php`: Basant-te en l'exercici anterior, emplena la taula de manera que només les vores tinguen contingut, quedant-se la resta de cel·les en blanc.
      ![228](imagenes/02/02p228.png){align=right & width=200}
 
-!!! tip Opcional: `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha d'aparéixer el contingut dels dues diagonals.
+    !!! tip Opcional: `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha d'aparéixer el contingut dels dues diagonals.
 
 
 ### Arrays
