@@ -18,8 +18,8 @@ La duració del mòdul és de 160 hores lectives, a raó de **8 hores setmanals*
 4. Desenvolupa aplicacions Web embegudes en llenguatges de marques analitzant i incorporant funcionalitats segons especificacions.
 5. Desenvolupa aplicacions Web identificant i aplicant mecanismes per a separar el codi de presentació de la lògica de negoci.
 6. Desenvolupa aplicacions d'accés a magatzems de dades, aplicant mesures per a mantindre la seguretat i la integritat de la informació.
-7. Desenvolupa serveis Web analitzant el seu funcionament i implantant l'estructura dels seus components.
-8. Genera pàgines Web dinàmiques analitzant i utilitzant tecnologies del servidor Web que afigen codi al llenguatge de marques.
+7. Desenvolupa serveis web reutilitzables i accessibles mitjançant protocols web, verificant el seu funcionament
+8. Genera pàgines web dinàmiques analitzant i utilitzant tecnologies i frameworks del servidor web que afigen codi al llenguatge de marques.
 9. Desenvolupa aplicacions Web híbrides seleccionant i utilitzant llibreries de codi i repositoris heterogenis d'informació.
 
 ## Unitats didàctiques / Temporalització
