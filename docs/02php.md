@@ -2,7 +2,7 @@
 
 ??? abstract "Duració i criteris d'avaluació"
 
-    Duració estimada: 26 hores
+    Duració estimada: 16 hores
 
     <hr />
 
@@ -23,7 +23,7 @@
 * El client rep el resultat generat després d'interpretar el codi en el servidor.
 * El codi s'emmagatzema en arxiu amb extensió `.*php`.
 
-L'última versió és la 8.1, de Novembre de 2021.
+L'última versió és la 8.2, d'Agost de 2023.
 
 La seua documentació és extensa i està traduïda: <https://www.php.net/manual/es/>.
 
