@@ -1350,7 +1350,7 @@ var_dump(is_int(intval($uno))); // true
 * [Guía de Estilo - PSR](http://coppeldev.github.io/php/standards/coppel.html)
 * [PHP - La manera correcta](http://phpdevenezuela.github.io/php-the-right-way/)
 
-## Activitats
+## Exercicis
 
 ### PHP bàsic
 
@@ -1551,7 +1551,7 @@ A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar
      Dona'm números: 1 4 7 9 23 10 8
      Els 3 nombres parells són: 4 10 8
      ```
-### Exercicis puntuables
+## Activitats
 
 270. `270.php` : A partir del fitxer de records d'atletisme que se un [suministra](recursos/atletes.php) pinta una taula amb tots els records.
      ![270](imagenes/02/02p270.png){align=right & width=250}. Es valorarà que s'utilitzen comentaris en el resultat d'html per a indicar el codi que s'ocupa de la capçalera de la taula i el del cos de la taula. Tambè que no s'utilitze ninguna instrucció de php per a imprimir la taula(echo, print ...)
