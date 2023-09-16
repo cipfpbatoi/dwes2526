@@ -1551,7 +1551,7 @@ A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar
      Dona'm números: 1 4 7 9 23 10 8
      Els 3 nombres parells són: 4 10 8
      ```
-### Reforç
+### Exercicis puntuables
 
 270. `270.php` : A partir del fitxer de records d'atletisme que se un [suministra](recursos/atletes.php) pinta una taula amb tots els records (1.5p)
      ![270](imagenes/02/02p270.png){align=right & width=250}. Es valorarà que s'utilitzen comentaris en el resultat d'html per a indicar el codi que s'ocupa de la capçalera de la taula i el del cos de la taula (0,5p). Tambè que no s'utilitze ninguna instrucció de php per a imprimir la taula(echo, print ...) (0,5p)
