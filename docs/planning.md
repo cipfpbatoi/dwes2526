@@ -12,7 +12,7 @@
 - [ ] 3.- (L 25S) Arrays, asociatius, bidimensionals. Activitats 230-238 - 8
 - [ ] 4.- (M 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions.Plantilles Activitats 240-246 - 11
 - [ ] 5.- (J 28S) Cadenas i subcadenes. Activitats 250-257 - 13
-- [ ] 6.- (L 2O) Activitats 270-272 - 16
+- [ ] 6.- (L 2O) Entrega Activitats 270-272 - 16
 
     
 ## 3.- Programació Orientada a Objectes (11h)

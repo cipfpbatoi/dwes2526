@@ -1553,26 +1553,26 @@ A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar
      ```
 ### Exercicis puntuables
 
-270. `270.php` : A partir del fitxer de records d'atletisme que se un [suministra](recursos/atletes.php) pinta una taula amb tots els records (1.5p)
-     ![270](imagenes/02/02p270.png){align=right & width=250}. Es valorarà que s'utilitzen comentaris en el resultat d'html per a indicar el codi que s'ocupa de la capçalera de la taula i el del cos de la taula (0,5p). Tambè que no s'utilitze ninguna instrucció de php per a imprimir la taula(echo, print ...) (0,5p)
+270. `270.php` : A partir del fitxer de records d'atletisme que se un [suministra](recursos/atletes.php) pinta una taula amb tots els records.
+     ![270](imagenes/02/02p270.png){align=right & width=250}. Es valorarà que s'utilitzen comentaris en el resultat d'html per a indicar el codi que s'ocupa de la capçalera de la taula i el del cos de la taula. Tambè que no s'utilitze ninguna instrucció de php per a imprimir la taula(echo, print ...)
 
-    `270a.php`: Extrau el codi que s'utilitza per a pintar la taula al fitxer 207a.php i fes un include del mateix des de 270.php (0,5p)
+    `270a.php`: Extrau el codi que s'utilitza per a pintar la taula al fitxer 207a.php i fes un include del mateix des de 270.php
 
 271. `271.php` : A partir del [formulari](recursos/formRecord.html) per a modificar un record i una vegada que l'usuari introduïsca les dades corresponents:
-     * Si no existeix la prova ixirà un missatge comunicant-li a l'usuari que no existeix eixa prova 'La prova ... no existeix en la llista de records oficials de la FEA' (0,5p)
-     * Si existeix es modificaran les dades i mostrarem la taula amb les dades modificades. (1.5p)
+     * Si no existeix la prova ixirà un missatge comunicant-li a l'usuari que no existeix eixa prova 'La prova ... no existeix en la llista de records oficials de la FEA' 
+     * Si existeix es modificaran les dades i mostrarem la taula amb les dades modificades. 
 
 !!! tip  "Hem de fer un include al fitxer 270a.php per mostrar la taula" 
 
-272. `272.php` : Fes una pàgina d'estadistiques (0.5p) i fes una funció per a cada una d'elles
-     * El record més vell. La funcio **vell(array):mixed** extrau la key de la més antiga de les dates d'un array en format 'dd.mm.yyyy' (1p)  
+272. `272.php` : Fes una pàgina d'estadistiques i fes una funció per a cada una d'elles
+     * El record més vell. La funcio **vell(array):mixed** extrau la key de la més antiga de les dates d'un array en format 'dd.mm.yyyy'  
 
-!!! tip "Crea una funció **fecha_inglesa(string):string**. Funció que donada un data en format 'dd.mm.yyyy' el transforma en format 'yyyy/mm/dd' (1p)"
+!!! tip "Crea una funció **fecha_inglesa(string):string**. Funció que donada un data en format 'dd.mm.yyyy' el transforma en format 'yyyy/mm/dd'"
 
-  * El club, el atleta i la ciutat amb més records. La funció **laureado(array):mixed** extrau la key de la que més es repeteix. Si hi ha més d'un extreu un. (1p)
-  * L'atleta més jove en conseguir el record. Funció **jove(array,array):mixed** on de l'array de natalici i data extreu el que la diferència siga menor. (1p)
+  * El club, el atleta i la ciutat amb més records. La funció **laureado(array):mixed** extrau la key de la que més es repeteix. Si hi ha més d'un extreu un. 
+  * L'atleta més jove en conseguir el record. Funció **jove(array,array):mixed** on de l'array de natalici i data extreu el que la diferència siga menor. 
 
-!!! tip "Crea una funció **any(string):string**. Funció que donada un data en format 'dd.mm.yyyy' el transforma en format 'yyyy' (0,5p)"
+!!! tip "Crea una funció **any(string):string**. Funció que donada un data en format 'dd.mm.yyyy' el transforma en format 'yyyy' "
 
   * Al final pinta la taula 
   
