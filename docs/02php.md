@@ -1403,7 +1403,7 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
      * `adult` entre 18 i 66
      * `jubilat` a partir de 67 
      
-Reforç `209.php`: Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`.
+209. `209.php`: Escriu un programa que funcione similar a un rellotge, de manera que a partir dels valors de `hora`, `minut` i `segon` mostre l'hora dins d'un segon. Després de les `23.59:59` seran les `0:0:0`.
 
 ### Bucles
 
@@ -1435,7 +1435,7 @@ Reforç `209.php`: Escriu un programa que funcione similar a un rellotge, de man
 
 226. `226.html` i `226.php`: Basant-te en l'exercici anterior, emplena la taula de manera que només les vores tinguen contingut, quedant-se la resta de cel·les en blanc.
      
-Reforç: `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha d'aparéixer el contingut dels dues diagonals.
+227. `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha d'aparéixer el contingut dels dues diagonals.
 
 
 ### Arrays
@@ -1471,7 +1471,7 @@ Reforç: `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha 
 
 237. `237.php`: A partir de les persones introduïdes, mostrar les seues dades en una taula, i posteriorment, destaca les dades del més alt i el del més baix.
 
-Reforç: `238.php`: Emplena un array bidimensional de 6 files per 9 columnes amb números aleatoris compresos entre 100 i 999 (tots dos inclosos). Tots els números han de ser diferents, és a dir, no es pot repetir cap. 
+238. `238.php`: Emplena un array bidimensional de 6 files per 9 columnes amb números aleatoris compresos entre 100 i 999 (tots dos inclosos). Tots els números han de ser diferents, és a dir, no es pot repetir cap. 
 Mostra a continuació per pantalla el contingut del array de tal forma que:
 
      * La columna del màxim ha d'aparéixer en blau.
@@ -1577,6 +1577,5 @@ A més de la pròpia funció, l'exercici ha de contindre codi per a poder provar
   * Al final pinta la taula 
   
 !!! tip  "La funció [array_column_ext](recursos/functions.php) ens permet extraure una columna d'un array multidimensional respectant la clau del array. La possariem de la següent forma: array_column_ext($records,'data',-1)"
-
 
 !!! tip "Els [tests](recursos/tests_examen.zip) s'han de possar en la carpeta corresponent. El d'aceptació en accceptance i l'altre en unit"
