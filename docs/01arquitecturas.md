@@ -436,35 +436,8 @@ Us podeu [registrar](https://classroom.github.com/)
 * Curs de introducció a Docker, per *Sergi García Barea* : <https://sergarb1.github.io/CursoIntroduccionADocker/>
 * Article [Arquitectures Web i sa evolució](https://www.arquitecturajava.com/arquitecturas-web-y-su-evolucion/)
 
-## Activitats
+## Videos
 
-101. Cerca en internet quals són els tres *frameworks de PHP* més utilitzats, i indica:
+* [Triar un llenguatge de programació](https://laracasts.com/series/php-for-beginners-2023-edition/episodes/1)
 
-     * Nom i URL
-     * Any de creació
-     * Última versió
-
-102. Cerca tres ofertes de treball de *desenvolupament de programari* en *Infojobs* a la província d'Alacant que citen PHP i anota:
-
-     * Empresa + lloc + frameworks PHP + requeriments + sou + enllaç a l'oferta.
-
-103. Una vegada arrancat el servei PHP (mitjançant XAMPP o Docker), consulta `phpinfo.php` que té el següent fragment de codi:
-   
-    ``` php
-    <?php phpinfo() ?>
-    ```
-    Anota els valors de:
-
-    * Versió de PHP
-    * Loaded Configuration File
-    * `memory_limit`
-    * `DOCUMENT_ROOT`
-
-104. Obri l'arxiu `php.ini-production` que està dins del contenidor (pots esbrinar la ruta a partir de la propietat *Configuration File* (php.ini) *Path*) i indica per a què serveixen les següents propietats i quins valors contenen:
-
-    * `file_uploads`
-    * `max_execution_time`
-    * `short_open_tag`
-
-    !!! note "php.ini"
-        És l'arxiu de configuració de PHP, i en tota instal·lació venen dues plantilles (`php.ini-development` i `php.ini-production`) perquè triem els valors més concordes al nostre projecte i creiem el nostre arxiu propi de `php.ini`.
+* [Instal.Lació entorn de desenvolupament](https://laracasts.com/series/php-for-beginners-2023-edition/episodes/2)

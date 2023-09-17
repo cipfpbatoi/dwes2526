@@ -7,7 +7,7 @@
 
 ## 2.- El llenguatge PHP (16h)
 
-  [ ] 1.- (M 19S) Posada en funcionament. Docker.Sintaxi. Activitats 201-209 - 3 
+- [ ] 1.- (M 19S) Posada en funcionament. Docker.Sintaxi. Activitats 201-209 - 3 
 - [ ] 2.- (J 21S) Condicions i Bucles. Activitats 220-227 - 5
 - [ ] 3.- (L 25S) Arrays, asociatius, bidimensionals. Activitats 230-238 - 8
 - [ ] 4.- (M 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions.Plantilles Activitats 240-246 - 11

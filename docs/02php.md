@@ -1433,7 +1433,7 @@ Imprimeix el resultat utilitzant la funció echo i una cadena de text descriptiv
 225. `225.html` i `225.php`: Apartir d'un nombre de `files` i `columnes`, crear una taula amb aqueixa grandària.
      Les cel·les han d'estar emplenades amb els valors de les coordenades de cada cel·la.
 
-226. `226.html` i `226.php`: Basant-te en l'exercici anterior, emplena la taula de manera que només les vores tinguen contingut, quedant-se la resta de cel·les en blanc.
+226. `226.html` i `226.php`: Basant-te en l'exercici anterior, emplena la taula de manera que només les vores de l'esquerra i la de dalt tinguen contingut, quedant-se la resta de cel·les en blanc.
      
 227. `227.html` i `227.php`:Basant-te en l'exercici anterior, ara només ha d'aparéixer el contingut dels dues diagonals.
 
