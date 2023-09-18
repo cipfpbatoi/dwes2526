@@ -53,7 +53,13 @@ Duració estimada: 80 hores
      * Formularis.
      * Cookies i sessió.
 
-5. [Eines Web](05herramientas.md) (21h)
+5. [Accés a dades](05accesoDatos.md) (14h)
+
+     * SQL
+     * PDO
+     * Fitxers CSV i PDF.
+
+6. [Eines Web](06herramientas.md) (21h)
 
        * *Composer*.
        * Ús de logs amb *Monolog*.
@@ -65,11 +71,6 @@ Duració estimada: 80 hores
 
 Duració estimada: 80 hores
 
-6. [Accés a dades](06accesoDatos.md) (14h)
-
-     * SQL
-     * PDO
-     * Fitxers CSV i PDF.
 
    
 7. [Frameworks PHP. Laravel.](07frameworks.md) (26h)
@@ -80,15 +81,19 @@ Duració estimada: 80 hores
      * [Validacio i Autenticacio](07laravelValidacioAutenticacio.md)
      
 
-8. [Serveis REST](08laravelRestFull.md) (13h)
+8. [Serveis Web](08laravelRestFull.md) (13h)
 
     * Producció i consum.
     * *AJAX* amb *JSON*.
    
+9. [Webs Híbrides](09webshibrides.md) (16h)
 
-9. [Projecte Integrador](09mailLaravel.md)
+    * Reutilització de codi i dades.
+    * OAuth2
+   
+10. [Projecte Integrador](09mailLaravel.md)
 
-10. [Recuperació](10recuperacion.md)
+
 
 ## Instruments de qualificació
 
