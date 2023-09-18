@@ -30,36 +30,36 @@ La primera avaluació contindria les unitats compreses entre la 1 i 6. Així don
 
 ### Primera avaluació
 
-Duració estimada: 80 hores
+Duració estimada: 75 hores
 
-1. [Arquitectures Web](01arquitecturas.md) (2h)
+1. [Arquitectures Web](01arquitecturas.md) (3h)
 
      * Client/Servidor. 
      * MVC.
 
-2. [El llenguatge PHP](02php.md) (24h)
+2. [El llenguatge PHP](02php.md) (16h)
    
      * Condicions i bucles.
      * Arrays.
 
-3. [Orientació a objectes amb PHP](03phpoo.md) (19h)
+3. [Orientació a objectes amb PHP](03phpoo.md) (11h)
 
      * Classes i objectes 
      * Namespaces
      * Excepcions
    
-4. [Programació Web](04web.md) (14h)
+4. [Programació Web](04web.md) (13h)
 
      * Formularis.
      * Cookies i sessió.
 
-5. [Accés a dades](05accesoDatos.md) (14h)
+5. [Accés a dades](05accesoDatos.md) (16h)
 
      * SQL
      * PDO
      * Fitxers CSV i PDF.
 
-6. [Eines Web](06herramientas.md) (21h)
+6. [Eines Web](06herramientas.md) (16h)
 
        * *Composer*.
        * Ús de logs amb *Monolog*.
@@ -69,11 +69,11 @@ Duració estimada: 80 hores
 
 ### Segona avaluació
 
-Duració estimada: 80 hores
+Duració estimada: 85 hores
 
 
    
-7. [Frameworks PHP. Laravel.](07frameworks.md) (26h)
+7. [Frameworks PHP. Laravel.](07frameworks.md) (29h)
    
      * [Rutes i vistes](07laravelRutesVistes.md)
      * [Controladors](07laravelControladors.md)
@@ -81,7 +81,7 @@ Duració estimada: 80 hores
      * [Validacio i Autenticacio](07laravelValidacioAutenticacio.md)
      
 
-8. [Serveis Web](08laravelRestFull.md) (13h)
+8. [Serveis Web](08laravelRestFull.md) (16h)
 
     * Producció i consum.
     * *AJAX* amb *JSON*.
@@ -91,7 +91,7 @@ Duració estimada: 80 hores
     * Reutilització de codi i dades.
     * OAuth2
    
-10. [Projecte Integrador](09mailLaravel.md)
+10. [Projecte Integrador](09mailLaravel.md) (24h)
 
 
 
@@ -99,18 +99,13 @@ Duració estimada: 80 hores
 
 La nota del curs es calcula mitjançant:
 
-  * 20% Treball en Classe / Activitats
-    * S'avaluen totes les activitats realitzades en classe i a casa. 
-      * Les activitats s'avaluen mitjançant tasques de *Aules* amb qualificacions compreses entre 0 i 3 punts:
-      
-         * 0: No entregada.
-         * 1: Entregada però solució errònia o incompleta.
-         * 2: Entregada i solució acceptable, encara que té algun apartat incomplet.
-         * 3: Entregada i solució correcta.
-    
-  * 20% Projectes (1 per avaluació). Es faran per parelles.
-  * 10% Projecte Integrador (Final de curs)
+  * 30% Activitats classe
+    * Cada Unitat Temàtica (excepte la primera) tindrà una sèrie d'activitats avaluables que poden ser realitzades en classe i a casa. 
+      * Les activitats s'avaluen mitjançant tasques de *Aules* avaluables per rúbriques.
+      * La puntuació de cada unitat temàtica serà la del número de hores previstes per eixa unitat, descomptat les proves escrites.
+  * 10% Qüestionaris per unitat temàtica (excepte la primera).
+  * 20% Projecte Integrador (Final de curs)
 
-  * 50% Activitats d'avaluació (Fan mitja a partir de 4)
-     * Tres proves escrites.
+  * 40% Exàmen d'avaluació (Fan mitja a partir de 4)
+     * Un per cada avaluació.
 
