@@ -1015,8 +1015,7 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 * [Manual de PHP](https://www.php.net/manual/es/index.php)
 * [Manual de OO en PHP - www.desarrolloweb.com](https://desarrolloweb.com/manuales/manual-php.html#manual68)
 
-## Activitats
-
+## Exercicis
 
 ### Objectes
 
@@ -1109,11 +1108,9 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
   * Modifica totes les classes perquè implementen la interfície creada.
 
 
-### Projecte Videoclub
+## Activitat
 
-En els següents exercicis simularem un xicotet projecte d'un Videoclub (basat en la proposta que fa el tutorial de desarrolloweb.com), el qual realitzarem mitjançant un desenvolupament incremental i seguint la pràctica de programació en parelles (*pair programming*).
-
-Abans de res, utilitza l'enllaç al [repositori base](https://classroom.github.com/a/qWtcqXKj) i clona el repositori.
+En la següent activitat simularem un xicotet projecte d'un Videoclub, el qual realitzarem mitjançant un desenvolupament incremental.
 
 !!! warning "Projecte no real"
     El següent projecte està pensat des d'un punt de vista formatiu. Algunes de les decisions que es prenen no s'han d'usar (com fer `echo` dins de les classes) o provar el codi comparant el resultat en el navegador.
@@ -1158,7 +1155,7 @@ Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implement
     <figcaption>Afegim Cinta de Video</figcaption>
 </figure>
 
-321. Crea la classe `CintaVideo` la qual hereta de `Soporte`. Afig l'atribut `duracion` i sobreescriu tant el contructor com el mètode `MuestraResumen` (des de `CintaVideo` hauràs de cridar al mètode `MuestraResumen` del pare).
+321. Crea la classe `CintaVideo` la qual hereta de `Soporte`. Afig l'atribut `duracion` i sobreescriu tant el constructor com el mètode `MuestraResumen`.
 
     Afig a `inici.php` el codi per a provar la classe:
 
@@ -1267,7 +1264,7 @@ Arribats a aquest punt, el nostre model és similar al següent diagrama:
     <figcaption>Afegim Cliente</figcaption>
 </figure>
 
-324. Crear la classe `Cliente`. El constructor rebrà el `nombre`, `numero` i `maxAlquilerConcurrente`, aquest últim podent ser opcional i prenent com a valor per defecte 3. Després d'això, afig *getter/setter* únicament a `numero`, i un *getter* a `numSoportesalquilados` (aquest camp emmagatzemarà un comptador del total de lloguers que ha realitzat). El array de suports alquilados contedrá classes que hereten de `Soporte`. Finalment, afig el mètode `MuestraResumen` que mostre el nom i la quantitat de lloguers (grandària del array `soportsalquilados`).
+324. Crear la classe `Cliente`. El constructor rebrà el `nombre`, `numero` i `maxAlquilerConcurrente`, aquest últim podent ser opcional i prenent com a valor per defecte 3. Després d'això, afig **getter/setter** únicament a `numero`, i un **getter** a `numSoportesalquilados` (aquest camp emmagatzemarà un comptador del total de lloguers que ha realitzat). El array de suports alquilados contedrá classes que hereten de `Soporte`. Finalment, afig el mètode `MuestraResumen` que mostre el nom i la quantitat de lloguers (grandària del array `soportsalquilados`).
 
 325. Dins de `Cliente`, afig les següent operacions:
      * `tieneAlquilado(Soporte $s): bool` → Recorre el array de suports i comprova si està el suport
@@ -1385,7 +1382,7 @@ Crea l'arxiu `inicio2.php` amb el següent codi font per a provar la classe:
 327. Arribat a aquest punt, relacionarem els clients i els suports mitjançant la classe `Videoclub`. Així doncs crea la classe que representa el gràfic, tenint en compte que:
      * `productes` és un array de `Soporte`
      * `socis` és una array de `Cliente`
-     * Els mètodes públics d'incloure algun suport, crearan la classe i cridaran al mètode privat de `incluirProducto`, el qual és l'encarregat d'introduir-lo dins del array.
+     * Els mètodes públics han d'incloure algun suport, crearan la classe i cridaran al mètode privat de `incluirProducto`, el qual és l'encarregat d'introduir-lo dins del array.
      * Crea el metode alquilarSocioProducto(numSocio,numProducto) per a que un soci llogue un producte.
 
 El model complet quedarà de la següent manera:
@@ -1511,13 +1508,9 @@ I per a provar el projecte, dins `inicio3.php` col·locarem:
     Alquileres actuales: 2
     </pre>
 
-328. Transforma `Soporte` a una classe abstracta i comprova que tot continua funcionant. Què aconseguim en fer-la abstracta?
+328. Transforma `Soporte` a una classe abstracta i comprova que tot continua funcionant.
 
-329. Crea una interfície `Resumible`, de manera que les classes que l'implementen han d'oferir el mètode `muestraResumen()`. Modifica la classe `Soporte` i fes que implemente la interfície. Fa falta que també l'implementen els fills?
-
-### Projecte Videoclub 2.0
-
-Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante `git tag` con el nombre `v0.329` y sube los cambios a GitHub.
+329. Crea una interfície `Resumible`, de manera que les classes que l'implementen han d'oferir el mètode `muestraResumen()`. Modifica la classe `Soporte` i fes que implemente la interfície. 
 
 330. Modifica les operacions de llogar, tant en `Client` com en `Videoclub`, per a donar suport a l'encadenament de mètodes.
      Posteriorment, modifica el codi de prova per a utilitzar aquesta tècnica.
@@ -1541,7 +1534,7 @@ Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante
      En `Videoclub`, modifica `alquilarSocioProducto` per a capturar totes les exempcions que ara llança `Cliente` i informar l'usuari en conseqüència.
      En `Videoclub`, modifica `alquilarSocioProducto` per si es pasa un soci que no existeix (utilitza exempcions).
 
-335. Modifica el projecte perquè el videoclub sàpia quins productes estan o no llogats:
+335. Modifica el projecte perquè el videoclub controle quins productes estan o no llogats:
      * En `Soporte`, crea una propietat pública el nom de la qual siga `alquilado` que inicialment estarà a `false`. Quan es llogue, es posarà a `true`. En retornar, la tornarem a posar a `false`.
      
 336. Crea un nou mètode en `Videoclub` anomenat `alquilarSocioProductos(int numSocio, array numerosProductos)`, el qual ha de rebre un array amb els productes a llogar.
@@ -1554,4 +1547,3 @@ Antes de comenzar con la segunda parte del videoclub, crea una etiqueta mediante
     Han de suportar l'encadenament de mètodes.
     Recorda actualitzar la propietat `alquilado` dels diferents suports.
 
-Quan hages realitzat tots els exercicis, crea una etiqueta mitjançant `git tag` amb el nom `v0.337` i puja els canvis a GitHub.
