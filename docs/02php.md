@@ -1093,7 +1093,7 @@ Les més importants són:
 
 * `strlen`: obté la longitud d'una cadena i retorna un nombre enter
 * `substr`: retorna una subcadena de la cadena original
-* `str_replau`: reemplaça caràcters en una cadena
+* `str_replace`: reemplaça caràcters en una cadena
 * `strtolower` i `strtoupper`: Transformen una cadena de caràcters en la mateixa cadena en minúscules o majúscules respectivament.
 
 ``` php
