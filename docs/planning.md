@@ -2,25 +2,25 @@
 
 ## 1.- Arquitectures Web (3h)
 
-- [ ] 1.- (L 18 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. 
+- [X] 1.- (L 18 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. 
 
 
 ## 2.- El llenguatge PHP (16h)
 
-- [ ] 1.- (M 19S) Posada en funcionament. Docker.Sintaxi. Activitats 201-209 - 3 
-- [ ] 2.- (J 21S) Condicions i Bucles. Activitats 220-227 - 5
-- [ ] 3.- (L 25S) Arrays, asociatius, bidimensionals. Activitats 230-238 - 8
-- [ ] 4.- (M 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions.Plantilles Activitats 240-246 - 11
-- [ ] 5.- (J 28S) Cadenas i subcadenes. Activitats 250-257 - 13
-- [ ] 6.- (L 2O) Entrega Activitats 270-272 - 16
+- [X] 1.- (M 19S) Posada en funcionament. Docker.Sintaxi. Activitats 201-209 - 3 
+- [X] 2.- (J 21S) Condicions i Bucles. Activitats 220-227 - 5
+- [X] 3.- (L 25S) Arrays, asociatius, bidimensionals. Activitats 230-238 - 8
+- [X] 4.- (M 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions.Plantilles Activitats 240-246 - 11
+- [X] 5.- (J 28S) Cadenas i subcadenes. Activitats 250-257 - 13
+- [X] 6.- (L 2O) Entrega Activitats 270-272 - 16
 
     
 ## 3.- Programació Orientada a Objectes (11h)
 
-- [ ] 6.- (M 3O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
-- [ ] 7.- (J 5O) Herencia. Classes abstractas.Interfaces Activitats 308-312 - 5
-- [ ] 8.- (M 10O) Mètodos encadenats. Namespaces. Exempcions. Activitats 330-334  - 8
-- [ ] 9.- (L 16O) Projecte BatoiBook. Activitats 320-323 - 11
+- [X] 6.- (M 3O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
+- [X] 7.- (J 5O) Herencia. Classes abstractas.Interfaces Activitats 308-312 - 5
+- [ ] 8.- (M 10O) Mètodos encadenats. Namespaces. Exempcions.Projecte BatoiBook. Activitats 320-323 - 8
+- [ ] 9.- (L 16O)  Projecte Batoi Book  - 11
 
 
 ## 4.- Programació Web (13h)

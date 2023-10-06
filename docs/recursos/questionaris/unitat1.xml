@@ -1,0 +1,97 @@
+<quiz>
+    <!-- Pregunta sobre Sessions 3 -->
+    <question type="multichoice">
+        <name>
+            <text>Sessions 3</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>Quina funció s'utilitza per obtenir o definir l'ID de sessió en PHP?</p>]]></text>
+        </questiontext>
+        <answer fraction="100">
+            <text>session_id()</text>
+        </answer>
+        <answer fraction="-50">
+            <text>get_session_id()</text>
+        </answer>
+        <answer fraction="-50">
+            <text>session()</text>
+        </answer>
+    </question>
+
+    <!-- Pregunta sobre Cookies 3 -->
+    <question type="multichoice">
+        <name>
+            <text>Cookies 3</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>Quin paràmetre de la funció setcookie() s'utilitza per definir el domini associat a la cookie?</p>]]></text>
+        </questiontext>
+        <answer fraction="100">
+            <text>domain</text>
+        </answer>
+        <answer fraction="-50">
+            <text>url</text>
+        </answer>
+        <answer fraction="-50">
+            <text>website</text>
+        </answer>
+    </question>
+
+    <!-- Pregunta sobre Pujada de Fitxers 2 -->
+    <question type="multichoice">
+        <name>
+            <text>Pujada de Fitxers 2</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>Quin atribut del formulari HTML és necessari per permetre la pujada de fitxers?</p>]]></text>
+        </questiontext>
+        <answer fraction="100">
+            <text>enctype="multipart/form-data"</text>
+        </answer>
+        <answer fraction="-50">
+            <text>method="post"</text>
+        </answer>
+        <answer fraction="-50">
+            <text>type="file"</text>
+        </answer>
+    </question>
+
+    <!-- Pregunta sobre Autenticació 3 -->
+    <question type="multichoice">
+        <name>
+            <text>Autenticació 3</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>Quina funció PHP s'utilitza per iniciar la utilització de sessions?</p>]]></text>
+        </questiontext>
+        <answer fraction="100">
+            <text>session_start()</text>
+        </answer>
+        <answer fraction="-50">
+            <text>session_begin()</text>
+        </answer>
+        <answer fraction="-50">
+            <text>start_session()</text>
+        </answer>
+    </question>
+
+    <!-- Pregunta sobre Variables de Servidor 3 -->
+    <question type="multichoice">
+        <name>
+            <text>Variables de Servidor 3</text>
+        </name>
+        <questiontext format="html">
+            <text><![CDATA[<p>Com es pot obtenir la URL completa de la sol·licitud actual amb variables de servidor?</p>]]></text>
+        </questiontext>
+        <answer fraction="100">
+            <text>Combinant $_SERVER['HTTP_HOST'] i $_SERVER['REQUEST_URI']</text>
+        </answer>
+        <answer fraction="-50">
+            <text>$_SERVER['FULL_URL']</text>
+        </answer>
+        <answer fraction="-50">
+            <text>$_SERVER['HOST'] . $_SERVER['URI']</text>
+        </answer>
+    </question>
+
+</quiz>

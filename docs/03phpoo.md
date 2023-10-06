@@ -1110,440 +1110,47 @@ També podeu consultar la documentació d'aquestes excepcions en <https://www.ph
 
 ## Activitat
 
-En la següent activitat simularem un xicotet projecte d'un Videoclub, el qual realitzarem mitjançant un desenvolupament incremental.
+En la següent activitat simularem una web d'intercanvi de llibres entre els usuaris de Batoi, el qual realitzarem mitjançant un desenvolupament incremental.
+Utilitzarem el repositori que trobareu a l'aules per a treballar. 
 
 !!! warning "Projecte no real"
     El següent projecte està pensat des d'un punt de vista formatiu. Algunes de les decisions que es prenen no s'han d'usar (com fer `echo` dins de les classes) o provar el codi comparant el resultat en el navegador.
 
 Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implementació, es mostra l'estructura UML del model i un fragment de codi per a provar les classes:
-<figure style="float: right;">
-    <img src="imagenes/03/03p320.png" width="150">
-    <figcaption>Creamos el Soporte</figcaption>
-</figure>
 
-320. Crea una classe per a emmagatzemar suports (`Soporte.php`). Aquesta classe serà la classe pare dels diferents suports amb els quals treballe el nostre videoclub (cintes de vídeo, videojocs, etc...):
-
-     * Crea el constructor que inicialitze les seues propietats. Fixa't que la classe no té mètodes *setters*.
-     * Definir una constant mitjançant un propietat privada i estàtica denominada IVA amb un valor del 21%
-     * Crear un arxiu (`inici.php`) per a usar les classes i còpia el següent fragment:
-
-=== "Codi de prova"
-
-    ``` php
-    <?php
-    include "Soporte.php";
-
-    $soporte1 = new Soporte("Tenet", 22, 3); 
-    echo "<strong>" . $soporte1->titulo . "</strong>"; 
-    echo "<br>Precio: " . $soporte1->getPrecio() . " euros"; 
-    echo "<br>Precio IVA incluido: " . $soporte1->getPrecioConIVA() . " euros";
-    $soporte1->muestraResumen();
-    ```
-
-=== "Navegador"
-
-    <pre>
-    **Tenet**
-    Precio: 3 euros
-    Precio IVA incluido: 3.48 euros
-    *Tenet*
-    3 € (IVA no incluido)
-    </pre>
-
-<figure style="float: right;">
-    <img src="imagenes/03/03p321.png" width="150">
-    <figcaption>Afegim Cinta de Video</figcaption>
-</figure>
-
-321. Crea la classe `CintaVideo` la qual hereta de `Soporte`. Afig l'atribut `duracion` i sobreescriu tant el constructor com el mètode `MuestraResumen`.
-
-    Afig a `inici.php` el codi per a provar la classe:
-
-=== "Codi de prova"
-
-    ``` php
-    <?php
-    include "CintaVideo.php";
-
-    $miCinta = new CintaVideo("Los cazafantasmas", 23, 3.5, 107); 
-    echo "<strong>" . $miCinta->titulo . "</strong>"; 
-    echo "<br>Precio: " . $miCinta->getPrecio() . " euros"; 
-    echo "<br>Precio IVA incluido: " . $miCinta->getPrecioConIva() . " euros";
-    $miCinta->muestraResumen();
-    ```
-
-=== "Navegador"
-
-    <pre>
-    **Los cazafantasmas**
-    Precio: 3.5 euros
-    Precio IVA incluido: 4.06 euros
-    Película en VHS:
-    *Los cazafantasmas*
-    3.5 € (IVA no incluido)
-    Duración: 107 minutos
-    </pre>
-
-<figure style="float: right;">
-    <img src="imagenes/03/03p322.png" width="250">
-    <figcaption>Afegim Dvd</figcaption>
-</figure>
-
-322. Crea la classe `Dvd` la qual hereta de `Soporte`. Afig els atributs `idiomas` i `formatoPantalla`. A continuació sobreescriu tant el contructor com el mètode `MuestraResumen`.
-
-    Afig a `inici.php` el codi per a provar la classe:
-
-=== "Codi de prova"
-
-    ``` php
-    <?php
-    include "Dvd.php";
-
-    $miDvd = new Dvd("Origen", 24, 15, "es,en,fr", "16:9"); 
-    echo "<strong>" . $miDvd->titulo . "</strong>"; 
-    echo "<br>Precio: " . $miDvd->getPrecio() . " euros"; 
-    echo "<br>Precio IVA incluido: " . $miDvd->getPrecioConIva() . " euros";
-    $miDvd->muestraResumen();
-    ```
-
-=== "Navegador"
-
-    <pre>
-    **Origen**
-    Precio: 15 euros
-    Precio IVA incluido: 17.4 euros
-    Película en DVD:
-    *Origen*
-    15 € (IVA no incluido)
-    Idiomas:es,en,fr
-    Formato Pantalla:16:9
-    </pre>
-
-<figure style="float: left;">
-    <img src="imagenes/03/03p323.png" width="350">
-    <figcaption>Afegim Juego</figcaption>
-</figure>
-
-323. Crea la classe `Juego` la qual hereta de `Soporte`. Afig els atributs `consola`, `minNumJugadores` i `maxNumJugadores`. A continuació afig el mètode `muestraJugadoresPosibles`, el qual ha de mostrar Per a un *jugador*, Per a X *Jugadores* o De X a I *Jugadores* depenent dels valors de les atributs creats. Finalment, sobreescriu tant el contructor com el mètode `MuestraResumen`.
-
-    Afig a `inici.php` el codi per a provar la classe:
-
-=== "Codi de prova"
-
-    ``` php
-    <?php
-    include "Juego.php";
-
-    $miJuego = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1); 
-    echo "<strong>" . $miJuego->titulo . "</strong>"; 
-    echo "<br>Precio: " . $miJuego->getPrecio() . " euros"; 
-    echo "<br>Precio IVA incluido: " . $miJuego->getPrecioConIva() . " euros";
-    $miJuego->muestraResumen();
-    ```
-
-=== "Navegador"
-
-    <pre>
-    **The Last of Us Part II**
-    Precio: 49.99 euros
-    Precio IVA incluido: 57.9884 euros
-    Juego para: PS4
-    *The Last of Us Part II*
-    49.99 € (IVA no incluido)
-    Para 1 jugador
-    </pre>
-
-Arribats a aquest punt, el nostre model és similar al següent diagrama:
-<figure>
-    <img src="imagenes/03/03videoclub1.png" width="600">
-    <figcaption>Model inicial de Videoclub</figcaption>
-</figure>
-
-<figure style="float: right;">
-    <img src="imagenes/03/03p324.png" width="275">
-    <figcaption>Afegim Cliente</figcaption>
-</figure>
-
-324. Crear la classe `Cliente`. El constructor rebrà el `nombre`, `numero` i `maxAlquilerConcurrente`, aquest últim podent ser opcional i prenent com a valor per defecte 3. Després d'això, afig **getter/setter** únicament a `numero`, i un **getter** a `numSoportesalquilados` (aquest camp emmagatzemarà un comptador del total de lloguers que ha realitzat). El array de suports alquilados contedrá classes que hereten de `Soporte`. Finalment, afig el mètode `MuestraResumen` que mostre el nom i la quantitat de lloguers (grandària del array `soportsalquilados`).
-
-325. Dins de `Cliente`, afig les següent operacions:
-     * `tieneAlquilado(Soporte $s): bool` → Recorre el array de suports i comprova si està el suport
-     * `alquilar(Soporte $s): bool` -→ Ha de comprovar si el suport està alquilado i si no ha superat el contingent de lloguers. En llogar, incrementarà el `numSoporetsalquilados` i emmagatzemarà el suport en el array. Per a cada cas ha de mostrar un missatge informant de l'ocorregut.
-
-326. Seguim amb `Cliente` per a afegir les operacions:
-     * `retornar(int $numSoporte): bool` → Ha de comprovar que el suport estava llogat i actualitzar la quantitat de suports llogats. Per a cada cas ha de mostrar un missatge informant de l'ocorregut
-     * `listarAlquileres(): void` → Informa de quants lloguers té el client i els mostra.
-
-Crea l'arxiu `inicio2.php` amb el següent codi font per a provar la classe:
-
-=== "Codi de prova"
-
-    ``` php
-    <?php
-    include_once "CintaVideo.php";
-    include_once "Dvd.php";
-    include_once "Juego.php";
-    include_once "Cliente.php";
-
-    //instanciamos un par de objetos Clientee
-    $cliente1 = new Cliente("Bruce Wayne", 23);
-    $cliente2 = new Cliente("Clark Kent", 33);
-
-    //mostramos el número de cada cliente creado 
-    echo "<br>El identificador del cliente 1 es: " . $cliente1->getNumero();
-    echo "<br>El identificador del cliente 2 es: " . $cliente2->getNumero();
-
-    //instancio algunos soportes 
-    $soporte1 = new CintaVideo("Los cazafantasmas", 23, 3.5, 107);
-    $soporte2 = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1);  
-    $soporte3 = new Dvd("Origen", 24, 15, "es,en,fr", "16:9");
-    $soporte4 = new Dvd("El Imperio Contraataca", 4, 3, "es,en","16:9");
-
-    //alquilo algunos soportes
-    $cliente1->alquilar($soporte1);
-    $cliente1->alquilar($soporte2);
-    $cliente1->alquilar($soporte3);
-
-    //voy a intentar alquilar de nuevo un soporte que ya tiene alquilado
-    $cliente1->alquilar($soporte1);
-    //el cliente tiene 3 soportes en alquiler como máximo
-    //este soporte no lo va a poder alquilar
-    $cliente1->alquilar($soporte4);
-    //este soporte no lo tiene alquilado
-    $cliente1->retornar(4);
-    //devuelvo un soporte que sí que tiene alquilado
-    $cliente1->retornar(2);
-    //alquilo otro soporte
-    $cliente1->Alquilar($soporte4);
-    //listo los elementos alquilados
-    $cliente1->listarAlquileres();
-    //este cliente no tiene alquileres
-    $cliente2->retornar(2);
-    ```
-
-=== "Navegador"
-
-    <pre>
-    El identificador del cliente 1 es: 23
-    El identificador del cliente 2 es: 33
-    **Alquilado soporte a**: Bruce Wayne
-
-    Película en VHS:
-    *Los cazafantasmas*
-    3.5 € (IVA no incluido)
-    Duración: 107 minutos
-
-    **Alquilado soporte a**: Bruce Wayne
-
-    Juego para: PS4
-    *The Last of Us Part II*
-    49.99 € (IVA no incluido)
-    Para un jugador
-
-    **Alquilado soporte a**: Bruce Wayne
-
-    Película en DVD:
-    *Origen*
-    15 € (IVA no incluido)
-    Idiomas:es,en,fr
-    Formato Pantalla:16:9
-
-    El cliente ya tiene alquilado el soporte **Los cazafantasmas**
-
-    Este cliente tiene 3 elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo
-
-    No se ha podido encontrar el soporte en los alquileres de este cliente
-
-    No se ha podido encontrar el soporte en los alquileres de este cliente
-
-    Este cliente tiene 3 elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo
-
-    **El cliente tiene 3 soportes alquilados**
-
-    Película en VHS:
-    *Los cazafantasmas*
-    3.5 € (IVA no incluido)
-    Duración: 107 minutos
-
-    Juego para: PS4
-    *The Last of Us Part II*
-    49.99 € (IVA no incluido)
-    Para un jugador
-
-    Película en DVD:
-    *Origen*
-    15 € (IVA no incluido)
-    Idiomas:es,en,fr
-    Formato Pantalla:16:9
-
-    Este cliente no tiene alquilado ningún elemento
-    </pre>
-
-327. Arribat a aquest punt, relacionarem els clients i els suports mitjançant la classe `Videoclub`. Així doncs crea la classe que representa el gràfic, tenint en compte que:
-     * `productes` és un array de `Soporte`
-     * `socis` és una array de `Cliente`
-     * Els mètodes públics han d'incloure algun suport, crearan la classe i cridaran al mètode privat de `incluirProducto`, el qual és l'encarregat d'introduir-lo dins del array.
-     * Crea el metode alquilarSocioProducto(numSocio,numProducto) per a que un soci llogue un producte.
-
-El model complet quedarà de la següent manera:
-
-<figure>
-    <img src="imagenes/03/03videoclub2.png" width="800">
-    <figcaption>Model complet de Videoclub</figcaption>
-</figure>
-
-I per a provar el projecte, dins `inicio3.php` col·locarem:
-
-=== "Codi de prova"
-
-    ``` php
-    <?php
-    include_once "Videoclub.php"; // No incluimos nada más
-
-    $vc = new Videoclub("Severo 8A"); 
-
-    //voy a incluir unos cuantos soportes de prueba 
-    $vc->incluirJuego("God of War", 19.99, "PS4", 1, 1); 
-    $vc->incluirJuego("The Last of Us Part II", 49.99, "PS4", 1, 1);
-    $vc->incluirDvd("Torrente", 4.5, "es","16:9"); 
-    $vc->incluirDvd("Origen", 4.5, "es,en,fr", "16:9"); 
-    $vc->incluirDvd("El Imperio Contraataca", 3, "es,en","16:9"); 
-    $vc->incluirCintaVideo("Los cazafantasmas", 3.5, 107); 
-    $vc->incluirCintaVideo("El nombre de la Rosa", 1.5, 140); 
-
-    //listo los productos 
-    $vc->listarProductos(); 
-
-    //voy a crear algunos socios 
-    $vc->incluirSocio("Amancio Ortega"); 
-    $vc->incluirSocio("Pablo Picasso", 2); 
-
-    $vc->alquilaSocioProducto(1,2); 
-    $vc->alquilaSocioProducto(1,3); 
-    //alquilo otra vez el soporte 2 al socio 1. 
-    // no debe dejarme porque ya lo tiene alquilado 
-    $vc->alquilaSocioProducto(1,2); 
-    //alquilo el soporte 6 al socio 1. 
-    //no se puede porque el socio 1 tiene 2 alquileres como máximo 
-    $vc->alquilaSocioProducto(1,6);
-    $vc->alquilaSocioProducto(12,12);
-
-    //listo los socios 
-    $vc->listarSocios();
-    ```
-
-=== "Navegador"
-
-    <pre>
-    Incluido soporte 0
-    Incluido soporte 1
-    Incluido soporte 2
-    Incluido soporte 3
-    Incluido soporte 4
-    Incluido soporte 5
-    Incluido soporte 6
-
-    Listado de los 7 productos disponibles:
-    1.- Juego para: PS4
-    *God of War*
-    19.99 € (IVA no incluido)
-    Para un jugador
-    2.- Juego para: PS4
-    *The Last of Us Part II*
-    49.99 € (IVA no incluido)
-    Para un jugador
-    3.- Película en DVD:
-    *Torrente*
-    4.5 € (IVA no incluido)
-    Idiomas:es
-    Formato Pantalla:16:9
-    4.- Película en DVD:
-    *Origen*
-    4.5 € (IVA no incluido)
-    Idiomas:es,en,fr
-    Formato Pantalla:16:9
-    5.- Película en DVD:
-    *El Imperio Contraataca*
-    3 € (IVA no incluido)
-    Idiomas:es,en
-    Formato Pantalla:16:9
-    6.- Película en VHS:
-    *Los cazafantasmas*
-    3.5 € (IVA no incluido)
-    Duración: 107 minutos
-    7.- Película en VHS:
-    *El nombre de la Rosa*
-    1.5 € (IVA no incluido)
-    Duración: 140 minutos
-
-    Incluido socio 0
-    Incluido socio 1
-
-    **Alquilado soporte a**: Pablo Picasso
-
-    Película en DVD:
-    *Torrente*
-    4.5 € (IVA no incluido)
-    Idiomas:es
-    Formato Pantalla:16:9
-
-    ** Alquilado soporte a**: Pablo Picasso
-
-    Película en DVD:
-    *Origen*
-    4.5 € (IVA no incluido)
-    Idiomas:es,en,fr
-    Formato Pantalla:16:9
-
-    El cliente ya tiene alquilado el soporte Torrente
-
-    Este cliente tiene 2 elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo
-
-    Cliente 12 no existe
-
-    Listado de 2 socios del videoclub:
-    1.- **Cliente 0**: Amancio Ortega
-    Alquileres actuales: 0
-    2.- **Cliente 1**: Pablo Picasso
-    Alquileres actuales: 2
-    </pre>
-
-328. Transforma `Soporte` a una classe abstracta i comprova que tot continua funcionant.
-
-329. Crea una interfície `Resumible`, de manera que les classes que l'implementen han d'oferir el mètode `muestraResumen()`. Modifica la classe `Soporte` i fes que implemente la interfície. 
-
-330. Modifica les operacions de llogar, tant en `Client` com en `Videoclub`, per a donar suport a l'encadenament de mètodes.
-     Posteriorment, modifica el codi de prova per a utilitzar aquesta tècnica.
-331. Fent ús de *namespaces*:
-     * Col·loca totes els classes/interfícies en `Dwes\ProjecteVideoclub` i el directori `app` dins de `src`
-     * Cada classe ha de fer `include_once` dels recursos que empra
-     * Col·loca el/els arxivaments de prova en l'arrel (sense espai de noms)
-     * Dones de l'arxiu de proves, utilitza `use` per a poder realitzar accessos sense qualificar
-     * Etiqueta els canvis com `v0.331`.
-332. * Crea un fitxer `autoload.php` per a registrar la ruta on trobar els classes
-     * Modifica tot el codi necessari, incloent `autoload.php` on seguisca necessari i esborrant els *includes* previs.
-333. A continuació crearem un conjunt d'excepcions d'aplicació. Aquestes excepcions són simples, no necessiten sobreescriure cap mètode. Així doncs, crea l'excepció d'aplicació `VideoclubException` en el *namespace* `Dwes\ProjecteVideoclub\Util`.
-     Posteriorment crea els següents fills (han d'heretar de `VideoclubException`), cadascun en el seu propi arxiu:    
-
-         * SoporteYaAlquiladoException
-         * CupoSuperadoException
-         * SoporteNoEncontradoException
-         * ClienteNoEncontradoException
-334. En `Cliente`, modifica els mètodes `alquilar` i `retornar`, perquè facen ús de les noves excepcions (llançant-les quan siga necessari) i funcionen com a mètodes encadenats. Destacar que aquests mètodes, no són per capturar estes exempcions, només es llancen.
-
-     En `Videoclub`, modifica `alquilarSocioProducto` per a capturar totes les exempcions que ara llança `Cliente` i informar l'usuari en conseqüència.
-     En `Videoclub`, modifica `alquilarSocioProducto` per si es pasa un soci que no existeix (utilitza exempcions).
-
-335. Modifica el projecte perquè el videoclub controle quins productes estan o no llogats:
-     * En `Soporte`, crea una propietat pública el nom de la qual siga `alquilado` que inicialment estarà a `false`. Quan es llogue, es posarà a `true`. En retornar, la tornarem a posar a `false`.
+320. Crea una classe per als llibres (`Book.php`).
+    
+     * Afig els atributs `idUser`, `idModule` , `publisher`, `price`,`pages`,`status`,`photo`,`comments`,`soldDate`.
+     * Crea el constructor que inicialitze les seues propietats. 
+     * Crea el setters i els getters.
+     * Crea un mètode per __toString() que mostre les dades del llibre dins d'un <div> amb la classe `book`.
+     * Crea un mètode __toJson() que retorne un objecte JSON amb les dades del llibre.
+     * Crea un mètode per a marcar el llibre com a venut.
+
+321. Crea un classe per als usuaris (`User.php`).
+    
+     * Afig els atributs  `email`, `password`, `nick`.
+     * Crea el constructor que inicialitze les seues propietats. 
+     * Crea el setters i els getters.
+     * Crea un mètode per __toString() que mostre les dades de l'usuari dins d'un <div> amb la classe `user`.
+     * Crea un mètode per a gestionar la complexitat de la contrasenya. La contrasenya ha de tindre almenys 8 caràcters, una lletra majúscula, una minúscula i un número. Si no compleix aquestes condicions, llança una excepció.
+
+323. Crea un classe per als cicles (`Course.php`).
+     * Afig els atributs `cycle`,`idFamily`,`vliteral`,`cliteral`
+     * Crea el constructor que inicialitze les seues propietats. 
+     * Crea el setters i els getters.
+     * Crea un mètode per __toString() que mostre les dades del cicle dins d'un <div> amb la classe `cycle` i que incloga els mòduls.
+     * Crea un mètode per __toJson() que retorne un objecte JSON amb les dades del cicle.
      
-336. Crea un nou mètode en `Videoclub` anomenat `alquilarSocioProductos(int numSocio, array numerosProductos)`, el qual ha de rebre un array amb els productes a llogar.
-     Abans de llogar-los, ha de comprovar que tots els suports estiguen disponibles, de manera que si un no ho està, no se li llogue cap.
-337. Crea dos nous mètodes en `Videoclub`, i mitjançant la definició, dedueix què han de realitzar:
+324. Crea un classe per al Modul (`Module.php`).
+    
+     * Afig els atributs `code`,`cliteral`,`vliteral`,`idCycle`
+     * Crea el constructor que inicialitze les seues propietats. 
+     * Crea el setters i els getters.
+     * Crea un mètode per __toString() que mostre les dades del mòdul dins d'un <div> amb la classe `module`.
+     * Crea un mètode per __toJson() que retorne un objecte JSON amb les dades del mòdul.
 
-    * devolverSocioProducto(int numSocio, int numeroProducto)
-    * devolverSocioProductos(int numSocio, array numerosProductos)
-
-    Han de suportar l'encadenament de mètodes.
-    Recorda actualitzar la propietat `alquilado` dels diferents suports.
-
+325. Importa les classes anteriors en `index.php` i crea un array per a modules i courses. 
+326. Importa dels fitxers [`modulesBook`](recursos/modulesbook.csv) i [`coursesBook`](recursos/coursesbook.csv) i ompli els arrays corresponents, savent que el primer camp de cada entrada és la key de l'array. Si es produix una errada es llança una exempció per a mostrar un missatge però s'ha de continuar intentant important la resta.
+326. Crea un usuari i un llibre d'eixe usuari. Mostra per pantalla el llibre i l'usuari.
+327. Crea un directori api i afegix un fitxer `book.php` i un altre `user.php` que acepte un paràmetre `id` i mostre el llibre o usuari corresponent en format JSON. Si no existeix, llança una excepció. 
