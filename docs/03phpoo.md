@@ -1155,7 +1155,12 @@ Cada classe ha d'anar en un arxiu php separat. Els arxius que no contenen classe
 326. Crea un usuari i un llibre d'eixe usuari. Mostra per pantalla el llibre i l'usuari.
 327. Crea un directori api i afegix un fitxer `book.php` que acepte un paràmetre `id` i mostre el llibre o usuari corresponent en format JSON. Si no existeix, llança una exempció `NotFoundException`.
 
-328. Anme a utilitzar el autoload de les classes. Posa tots els arxius de classes en una carpeta `app` i les exempcions dins d'una carpeta `Exempcions` dins de `app`. Crea el fixer `autoload.php` per a que busque en eixa carpeta. Posa un namesapce `BatBook` a totes les classes. Utilitza `use` per a importar les classes en `index.php` i `book.php`. Per a passar les proves hauràs de utilitzar els fitxers de prova de l'altra branca.
+328. Anem a utilitzar el autoload de les classes. 
+        * Canvia de branca `Second-Deliver`. 
+        * Posa tots els arxius de classes en una carpeta `app` i les exempcions dins d'una carpeta `Exempcions` dins de `app`.
+        * Crea el fixer `autoload.php` per a que busque en eixa carpeta. 
+        * Posa un namesapce `BatBook` a totes les classes. 
+        * Utilitza `use` per a importar les classes en `index.php` i `book.php`. 
 
 ``` php
 <?php
