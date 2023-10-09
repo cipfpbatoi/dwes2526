@@ -1116,7 +1116,7 @@ Utilitzarem el repositori que trobareu a l'aules per a treballar.
 !!! warning "Projecte no real"
     El següent projecte està pensat des d'un punt de vista formatiu. Algunes de les decisions que es prenen no s'han d'usar (com fer `echo` dins de les classes) o provar el codi comparant el resultat en el navegador.
 
-Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implementació, es mostra l'estructura UML del model i un fragment de codi per a provar les classes:
+Cada classe ha d'anar en un arxiu php separat. Els arxius que no contenen classes, com `index.php` han d'anar en l'arrel del projecte.
 
 320. Crea una classe per als llibres (`Book.php`).
     
@@ -1133,13 +1133,13 @@ Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implement
      * Crea el constructor que inicialitze les seues propietats. 
      * Crea el setters i els getters.
      * Crea un mètode per __toString() que mostre les dades de l'usuari dins d'un <div> amb la classe `user`.
-     * Crea un mètode per a gestionar la complexitat de la contrasenya. La contrasenya ha de tindre almenys 8 caràcters, una lletra majúscula, una minúscula i un número. Si no compleix aquestes condicions, llança una excepció.
+     * Crea un mètode per a gestionar la complexitat de la contrasenya. La contrasenya ha de tindre almenys 8 caràcters, una lletra majúscula, una minúscula i un número. Si no compleix aquestes condicions, llança una excepció `WeekPasswordException`.
 
 323. Crea un classe per als cicles (`Course.php`).
      * Afig els atributs `cycle`,`idFamily`,`vliteral`,`cliteral`
      * Crea el constructor que inicialitze les seues propietats. 
      * Crea el setters i els getters.
-     * Crea un mètode per __toString() que mostre les dades del cicle dins d'un <div> amb la classe `cycle` i que incloga els mòduls.
+     * Crea un mètode per __toString() que mostre les dades del cicle dins d'un <div> amb la classe `cycle`.
      * Crea un mètode per __toJson() que retorne un objecte JSON amb les dades del cicle.
      
 324. Crea un classe per al Modul (`Module.php`).
@@ -1150,7 +1150,19 @@ Cada classe ha d'anar en un arxiu php separat. Per a facilitar la seua implement
      * Crea un mètode per __toString() que mostre les dades del mòdul dins d'un <div> amb la classe `module`.
      * Crea un mètode per __toJson() que retorne un objecte JSON amb les dades del mòdul.
 
-325. Importa les classes anteriors en `index.php` i crea un array per a modules i courses. 
-326. Importa dels fitxers [`modulesBook`](recursos/modulesbook.csv) i [`coursesBook`](recursos/coursesbook.csv) i ompli els arrays corresponents, savent que el primer camp de cada entrada és la key de l'array. Si es produix una errada es llança una exempció per a mostrar un missatge però s'ha de continuar intentant important la resta.
+325. Importa les classes anteriors en `index.php` i crea un array associatiu per a totes les clases, on l'index de l'array serà l'equivalent a la key una taula.
+326. Importa dels fitxers [`modulesBook`](recursos/modulesbook.csv) i [`coursesBook`](recursos/coursesbook.csv) i ompli els arrays corresponents, savent que el primer camp de cada entrada és la key de l'array. Si es produix una errada es llança una exempció `InvalidFormatException` per a mostrar un missatge però s'ha de continuar intentant important la resta.
 326. Crea un usuari i un llibre d'eixe usuari. Mostra per pantalla el llibre i l'usuari.
-327. Crea un directori api i afegix un fitxer `book.php` i un altre `user.php` que acepte un paràmetre `id` i mostre el llibre o usuari corresponent en format JSON. Si no existeix, llança una excepció. 
+327. Crea un directori api i afegix un fitxer `book.php` que acepte un paràmetre `id` i mostre el llibre o usuari corresponent en format JSON. Si no existeix, llança una exempció `NotFoundException`.
+
+328. Anme a utilitzar el autoload de les classes. Posa tots els arxius de classes en una carpeta `app` i les exempcions dins d'una carpeta `Exempcions` dins de `app`. Crea el fixer `autoload.php` per a que busque en eixa carpeta. Posa un namesapce `BatBook` a totes les classes. Utilitza `use` per a importar les classes en `index.php` i `book.php`. Per a passar les proves hauràs de utilitzar els fitxers de prova de l'altra branca.
+
+``` php
+<?php
+spl_autoload_register( function( $nombreClase ) {
+    $ruta = $nombreClase.'.php';
+    $ruta = str_replace("BatBook", "app", $ruta); // Sustituimos las barras
+    $ruta = str_replace("\\", "/", $ruta); // Sustituimos las barras
+    include_once $ruta;
+} );
+```
