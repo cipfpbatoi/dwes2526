@@ -1151,7 +1151,7 @@ Cada classe ha d'anar en un arxiu php separat. Els arxius que no contenen classe
      * Crea un mètode per __toJson() que retorne un objecte JSON amb les dades del mòdul.
 
 325. Importa les classes anteriors en `index.php` i crea un array associatiu per a totes les clases, on l'index de l'array serà l'equivalent a la key una taula.
-326. Importa dels fitxers [`modulesBook`](recursos/modulesbook.csv) i [`coursesBook`](recursos/coursesbook.csv) i ompli els arrays corresponents, savent que el primer camp de cada entrada és la key de l'array. Si es produix una errada es llança una exempció `InvalidFormatException` per a mostrar un missatge però s'ha de continuar intentant important la resta.
+326. Importa dels fitxers [`modulesBook`](recursos/modulesbook.csv) i [`coursesBook`](recursos/coursesbook.csv) (pots mirar [ací](https://cipfpbatoi.github.io/dwes2324/05accesoDatos.html#acces-a-fitxers) com fer-ho, i ompli els arrays corresponents, savent que el primer camp de cada entrada és la key de l'array. Si es produix una errada es llança una exempció `InvalidFormatException` per a mostrar un missatge però s'ha de continuar intentant important la resta.
 326. Crea un usuari i un llibre d'eixe usuari. Mostra per pantalla el llibre i l'usuari.
 327. Crea un directori api i afegix un fitxer `book.php` que acepte un paràmetre `id` i mostre el llibre o usuari corresponent en format JSON. Si no existeix, llança una exempció `NotFoundException`.
 
