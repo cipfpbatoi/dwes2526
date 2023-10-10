@@ -1156,6 +1156,7 @@ Cada classe ha d'anar en un arxiu php separat. Els arxius que no contenen classe
 327. Crea un directori api i afegix un fitxer `book.php` que acepte un paràmetre `id` i mostre el llibre o usuari corresponent en format JSON. Si no existeix, llança una exempció `NotFoundException`.
 
 328. Anem a utilitzar el autoload de les classes. 
+
         * Canvia de branca `Second-Deliver`. 
         * Posa tots els arxius de classes en una carpeta `app` i les exempcions dins d'una carpeta `Exempcions` dins de `app`.
         * Crea el fixer `autoload.php` per a que busque en eixa carpeta. 
