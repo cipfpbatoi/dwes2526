@@ -514,18 +514,19 @@ header("Location: index.php");
 
 ## Exercicis
 
+400. [402.html](recursos/402.html) Treballa sobre este formulari.
+
 ### Activitat
+421. [newBook.php](recursos/newBook.php) Utilitzant este formulari completa-lo per a que ixca la llista amb els mòduls i el select amb l'estat del llibre. Mostra els valors carregats en un resumen.
 
-401. [newBook.php](recursos/newBook.php) Utilitzant este formulari completa-lo per a que ixca la llista amb els mòduls i el select amb l'estat del llibre. Mostra els valors carregats en un resumen.
-
-402. `newBook.php`: A partir del formulari anterior, introdueix validacions en php per tal que:
+422. `newBook.php`: A partir del formulari anterior, introdueix validacions en php per tal que:
      * el camps editorial, preu, pàgines siguen requerits i del tipus adient.
      * el camp mòdul i status siguen vàlids.
 
 !!! tip "Utilitza exempcions"
     Pots utilitzar exempcions per a tractar els errors.
 
-403. `newBook.php`: Separa la part html de la de php. Crea una vista /views/books/new.php que carregue el formulari. Crida'l amb un include des de `newBook.php`.
-404. `/views/books/new.php`: Modifica el formulari per a que mostre els errors i els valors introduïtsen el mateix formulari. Haurà de crear un funció `printError($errors,$field)` en una llibreria `/myHelpers/utils.php` que mostre el error d'un camp. 
-405. `newBook.php`: Si tot va bé, crea un objecte de la classe Book, introdueix el llibre creat pel formulari i mostra'l. 
+423. `newBook.php`: Separa la part html de la de php. Crea una vista /views/books/new.php que carregue el formulari. Crida'l amb un include des de `newBook.php`.
+424. `/views/books/new.php`: Modifica el formulari per a que mostre els errors i els valors introduïtsen el mateix formulari. Haurà de crear un funció `printError($errors,$field)` en una llibreria `/myHelpers/utils.php` que mostre el error d'un camp.
+425. `newBook.php`: Si tot va bé, crea un objecte de la classe Book, introdueix el llibre creat pel formulari i mostra'l. 
 
