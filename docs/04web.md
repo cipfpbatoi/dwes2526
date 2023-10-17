@@ -87,23 +87,6 @@ $par = $_POST["parametro"]
 
 A l'hora d'enviar un formulari, hem de tindre clar quan usar GET o POST. Per als següents apartats ens basarem en el següent exemple:
 
-``` html
-<form action="formulario.php" method="GET">
-    <p><label for="nombre">Nombre del alumno:</label>
-        <input type="text" name="nombre" id="nombre" value="" />
-    </p>
-
-    <p><input type="checkbox" name="modulos[]" id="modulosDWES" value="DWES" />
-        <label for="modulosDWES">Desarrollo web en entorno servidor</label>
-    </p>
-
-    <p><input type="checkbox" name="modulos[]" id="modulosDWEC" value="DWEC" />
-        <label for="modulosDWEC">Desarrollo web en entorno cliente</label>
-    </p>
-
-    <input type="submit" value="Enviar" name="enviar" />
-</form>
-```
 
 ### Validació
 
