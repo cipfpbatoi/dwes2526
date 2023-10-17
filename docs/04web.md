@@ -23,8 +23,8 @@ PHP emmagatzema la informació del servidor i de les peticions HTTP en sis array
 
 Si ens centrem en el array `$_SERVER` podem consultar les següents propietats:
 
-* `PHP_SELF`: nom del script executat, relatiu al document root (p.ej: `/tendisca/carret.php`)
-* `SERVER_PROGRAMARI`: (p.ej: Apatxe)
+* `PHP_SELF`: nom del script executat, relatiu al document root (p.ej: `/tenda/carret.php`)
+* `SERVER_SOFTWARE`: (p.ej: Apatxe)
 * `SERVER_NAME`: domini, àlies DNS (p.ej: `www.elche.es`)
 * `REQUEST_METHOD`: GET
 * `REQUEST_URI`: URI, sense el domini
@@ -46,10 +46,10 @@ echo $_SERVER["QUERY_STRING"]."<br>"; // heroe=Batman
 Altres propietats relacionades:
 
 * `PATH_INFO`: ruta extra després de la petició. Si la URL és `http://www.php.com/php/pathinfo.php/algo/cosa?foo=bar`, llavors `$_SERVER['PATH_INFO']` serà `/alguna cosa/cosa`.
-* `REMALNOM_HOST`: hostname que va fer la petició
-* `REMALNOM_ADDR`: IP del client
+* `REMOTE_HOST`: hostname que va fer la petició
+* `REMOTE_ADDR`: IP del client
 * `AUTH_TYPE`: tipus d'autenticació (p.ej: Basic)
-* `REMALNOM_USER`: nom de l'usuari autenticat
+* `REMOTE_USER`: nom de l'usuari autenticat
 
 Apatxe crea una clau per a cada capçalera HTTP, en majúscules i substituint els guions per subratllats:
 
@@ -110,7 +110,7 @@ A l'hora d'enviar un formulari, hem de tindre clar quan usar GET o POST. Per als
 Respecte a la validació, és convenient sempre fer *validació doble*:
 
 * En el client mitjançant JS
-* En servidor, abans de cridar a negoci, és convenient tornar a validar les dades.
+* En servidor, abans de cridar a la capa de negoci, és convenient tornar a validar les dades.
 
 ``` php
 <?php
@@ -456,7 +456,7 @@ if (isset($_POST['enviar'])) {
     }
 }
 ```
-Depenent de l'usuari que s'hi haja logueado, anirem a una vista o a una altra. Per exemple, en `main.php` tindríem:
+Depenent de l'usuari que s'hi haja loguejat, anirem a una vista o a una altra. Per exemple, en `main.php` tindríem:
 
 ``` html+php
 <?php
@@ -512,114 +512,20 @@ header("Location: index.php");
 * [Cookies en PHP](https://www.php.net/manual/es/features.cookies.php)
 * [Manejo de sesiones en PHP](https://www.php.net/manual/es/book.session.php)
 
-## Activitats
+## Exercicis
 
-401. `401.php`: igual que l'exemple vist en les anotacions, mostra els valors de `$_SERVER` en executar un script en el teu ordinador.
-     Prova a passar-li paràmetres per GET (i a no passar-li cap).
-     Prepara un formulari (`401.html`) que faça un enviament per POST i comprova'l de nou.
-     Crea una pàgina (`401enlace.html`) que tinga un enllaç a `401.php` i comprova el valor de `HTTP_REFERER`.
+### Activitat
 
-### Formularis
+401. [newBook.php](recursos/newBook.php) Utilitzant este formulari completa-lo per a que ixca la llista amb els mòduls i el select amb l'estat del llibre. Mostra els valors carregats en un resumen.
 
-402. [402.html](recursos/402.html) i `402.php`: Crea un formulari que sol·licite:
-
-       * Nom i cognoms.
-       * Email.
-       * URL pàgina personal.
-       * Sexe (ràdio).
-       * Aficions (caselles de selecció) – posar mínim 4 valors.
-       * Menú favorit (llesta selecció múltiple) – posar mínim 4 valors.
-
-    Mostra els valors carregats en un resumen.
-
-403. `402.php`: A partir del formulari anterior, introdueix validacions en php per tal que:
-     * el camps nom, cognoms,sexe, aficions i menu siguen requerits.
-     * el camp email siga vàlid
-
+402. `newBook.php`: A partir del formulari anterior, introdueix validacions en php per tal que:
+     * el camps editorial, preu, pàgines siguen requerits i del tipus adient.
+     * el camp mòdul i status siguen vàlids.
 
 !!! tip "Utilitza exempcions"
-    Pots utilitzar exempcions per a tractar els error. Investiga l'ús de la funció `filter_var` i utilitza-la per a validar l'email.
+    Pots utilitzar exempcions per a tractar els errors.
 
-404. `404.php`: Crea una pàgina amb el formulari de l'exercici 402 i fes que si la validació no és correcta
-      es torne a carregar el formulari amb les dades ja emplenades i amb el missatge d'error.
+403. `newBook.php`: Separa la part html de la de php. Crea una vista /views/books/new.php que carregue el formulari. Crida'l amb un include des de `newBook.php`.
+404. `/views/books/new.php`: Modifica el formulari per a que mostre els errors i els valors introduïtsen el mateix formulari. Haurà de crear un funció `printError($errors,$field)` en una llibreria `/myHelpers/utils.php` que mostre el error d'un camp. 
+405. `newBook.php`: Si tot va bé, crea un objecte de la classe Book, introdueix el llibre creat pel formulari i mostra'l. 
 
-405. `405.html` i `405.php`: Crea un formulari que permeta pujar un arxiu d'una imatge al servidor.
-     A més del fitxer, ha de demanar en el mateix formulari dos camps numèrics que sol·liciten l'amplària i l'altura. S'ha de comprovar que el tipus siga correcte. 
-     En el cas de pujar el tipus correcte, visualitzar la imatge amb la grandària d'amplària i altura rebut com a paràmetre.
-
-### Cookies i Sessió
-
-406. `406.php`: Mitjançant l'ús de cookies, informa l'usuari de si és la seua primera visita, o si no ho és, mostre el seu valor (valor d'un comptador).
-     A més, has de permetre que l'usuari reinicialitze el seu comptador de visites.
-
-407. `407.php`: Mitjançant l'ús de cookies, crea una pàgina amb un desplegable amb diversos colors, de manera que l'usuari puga canviar el color de fons de la pàgina (atribut `bgcolor`).
-     En tancar la pàgina, aquesta ha de recordar, almenys durant 24h, el color triat i la pròxima vegada que es carregue la pàgina, ho faça amb l'últim color seleccionat.
-
-408. `408.php`: Modifica l'exercici anterior per a emmagatzemar el color de fons en la sessió i no emprar cookies. A més, ha de contindre un enllaç per buidar la sessió.
-
-409. Fent ús de la sessió, dividirem el formulari de l'exercici `402.php` en 2 subformularis:
-
-     * `409.html` envia les dades (nom i cognoms, email, url i sexe) a `409.php`.
-     * `409.php` llig les dades i els fica en la sessió. A continuació, mostra la resta de camps del formulari a emplenar ( aficions i menú). Envia aquestes dades a `409b.php`.
-     * `409b.php` recull les dades enviades en el pas anterior i al costat dels quals ja estaven en la sessió, es mostren totes les dades.
-     
-### Autenticació
-
-En els següents exercicis muntarem una estructura d'inici de sessió similar a la vista en les anotacions.
-
-410. `410.html`: formulari d'inici de sessió
-411. `411.php`: fa de controlador, per la qual cosa ha de comprovar les dades rebudes (només permet l'entrada de `usuari/usuari` i si tot és correcte, cedir el control a la vista del següent exercici. No conté codi HTML.
-412. `412.php`: vista que mostra com a títol "Llistat de Pel·lícules", i una llista desordenada amb tres pel·lícules.
-413. `413.php`: buida la sessió i ens porta de nou al formulari d'inici de sessió. No conté codi HTML
-414. `414.php`: Afig un nova vista similar a `412.php` que mostra un "Llistat de Sèries" amb una llista desordenada amb tres sèries. Tant `412pelicuas.php` com la vista recien creades, han de tindre un xicotet menú (senzill, mitjançant enllaços) que permeta passar d'un llistat a un altre.
-     Comprova que si s'accedeix directament a qualsevol de les vistes sense tindre un usuari *loguejao* via URL del navegador, no es mostra el llistat.
-415. Modifica tant el controlador com les vistes perquè:
-     * les dades els obtinga el controlador (emmagatzema en la sessió un array de pel·lícules i un altre de sèries)
-     * col·loque les dades en la sessió
-     * En les vistes, les dades es recuperen de la sessió i es pinten* en la llista desordenada recorrent el array corresponent.
-
-### Projecte Videoclub 3.0
-
-420. Per al Videoclub, crearem una pàgina `index.php` amb un formulari que continga un formulari de login/password.
-     Es comprovaran les dades en `login.php`. Els possibles usuaris són admin/admin o usuari/usuari.
-
-     * Si l'usuari és correcte, en `main.php` mostrar un missatge de benvinguda amb el nom de l'usuari, al costat d'un enllaç per a tancar la sessió, que el portaria de nou al login.
-     * Si l'usuari és incorrecte, ha de tornar a carregar el formulari donant informació a l'usuari d'accés incorrecte.
-
-421. Si l'usuari és administrador, es carregaran en la sessió les dades de suports i clients del videoclub que teníem en les nostres proves (inici3.php)
-     En la següent unitat els obtindrem de la base de dades.
-     En `mainAdmin.php`, a més de la benvinguda, ha de mostrar:
-     * Llistat de clients
-     * Llistat de suports
-
-<figure style="float: right;">
- <img src="imagenes/04/04p423.png" width="400">
- <figcaption>Esquema navegació exercici 423</figcaption>
-</figure>
-
-422. Modificarem la classe `Client` per a emmagatzemar el `user` i la `password` de cada client. Si no ho explicitem el 'user' serà igual a la primera paraula de l'username en minúscules i el password '1234'.
-     Després de codificar els canvis, modificar el llistat de clients de `mainAdmin.php` per a afegir al llistat l'user (la password no eixirà).
-
-423. Si l'usuari que accedeix no és administrador i coincideix amb algun dels clients que tenim carregats després del login, ha de carregar `mainCliente.php` on es mostrarà un llistat dels lloguers del client.
-    Crea un mètode per a buscar socis en la clase videoclub per `username`. buscaSocio($username)
-
-Ara tornem a la part d'administració
-
-424. A més de mostrar el llistat de clients, oferirem l'opció de donar d'alta a un nou client en `formCreateCliente.php`.
-     Les dades s'enviaran mitjançant POST a `createCliente.php` que els introduirà en la sessió.
-     Una vegada creat el client, ha de tornar a carregar `mainAdmin.php` on es podrà veure el client inserit.
-     Si hi ha alguna dada incorrecta, ha de tornar a carregar el formulari d'alta.
-
-425. Crea en `formUpdateCliente.php` un formulari que permeta editar les dades d'un client.
-     Has de recollir les dades en `updateCliente.php`
-     Les dades de client s'han de poder modificar des de la pròpia pàgina d'un client, així com des del llistat de l'administrador.
-
-426. Des del llistat de clients de l'administrador has d'oferir la possibilitat d'esborrar un client.
-     En el navegador, abans de redirigir al servidor, l'usuari ha de confirmar mitjançant JS que realment desitja eliminar al client.
-     Finalment, en `removeCliente.php` elimina al client de la sessió.
-     Una vegada eliminat, ha de tornar al llistat de clients.
-
-<figure style="align: center;">
-    <img src="imagenes/04/04p426.png" width="600">
-    <figcaption>Esquema navegación Videoclub 3.0</figcaption>
-</figure>

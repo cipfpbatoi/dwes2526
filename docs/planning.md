@@ -19,14 +19,14 @@
 
 - [X] 6.- (M 3O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
 - [X] 7.- (J 5O) Herencia. Classes abstractas.Interfaces Activitats 308-312 - 5
-- [ ] 8.- (M 10O) Mètodos encadenats. Namespaces. Exempcions.Projecte BatoiBook. Activitats 320-323 - 8
-- [ ] 9.- (L 16O)  Projecte Batoi Book  - 11
+- [X] 8.- (M 10O) Mètodos encadenats. Namespaces. Exempcions.Projecte BatoiBook. Activitats 320-323 - 8
+- [X] 9.- (L 16O)  Projecte Batoi Book  - 11
 
 
 ## 4.- Programació Web (13h)
 
-- [ ] 1.- (M 17O) Formularis. Upload Activitats 401-404 - 3
-- [ ] 2.- (J 19O) Cookies.Sessió Activitats 405-409 - 5
+- [ ] 1.- (M 17O) Formularis. Upload Activitats 401-405 - 3
+- [ ] 2.- (J 19O) Cookies.Sessió Activitats 406-409 - 5
 - [ ] 3.- (L 23O) Gestió d'usuaris. Activitats 410-415 - 8
 - [ ] 4.- (M 24O) Projecte BatoiBook. Activitats 420-423 - 11 
 - [ ] 5.- (J 26O) Projecte BatoiBook. Activitats 424-426 - 13
