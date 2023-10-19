@@ -580,4 +580,9 @@ header("Location: index.php");
        * Es carregara des de la variable de sessio corresponent si existeix.
        * En cas contrari es crearà, s'inicialitzarà i s'emmagatzemarà en la variable de sessió corresponent.
        * Utilitza serialize i unserialize per a emmagatzemar els objectes en la sessió.
-
+427. [register.php](recursos/register.php) A partir d'aquest fitxer crear la vista `/views/user/register.php`
+428. `register.php`: Tracta el formulari per a 
+     * Valida el formulari de forma que els capms sigue obligatoris i les contrasenyes coincidisquen. Crea si calen noves exempcions.
+     * Opcional: Validar que ni el nick d'usuari ni el email estiga repetit en users.
+     * Crea un nou usuari i guardar-lo en la variable de sessió $users.
+     * Ves a index.php
