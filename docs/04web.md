@@ -378,6 +378,67 @@ echo "Otra vez, en el $instituto ";
 
 Més informació en la [documentació oficial](https://www.php.net/manual/es/session.configuration.php).
 
+### Serialització en PHP
+
+La serialització és el procés de convertir una estructura de dades o un objecte en una seqüència de caràcters que pot ser fàcilment emmagatzemada o transmesa i després reconstruïda. PHP proporciona dos funcions principals per a això: serialize() i unserialize().
+
+1. serialize()
+   La funció serialize() en PHP s'utilitza per a convertir una estructura de dades o un objecte en una representació de cadena.
+
+``` php
+$data = array("a", "b", "c");
+$serialized_data = serialize($data);
+echo $serialized_data;
+```
+Eixida 
+
+``` php
+a:3:{i:0;s:1:"a";i:1;s:1:"b";i:2;s:1:"c";}
+```
+
+2. unserialize()
+   La funció unserialize() en PHP s'utilitza per a convertir la representació de cadena serialitzada de nou en una estructura de dades o un objecte.
+
+``` php
+$original_data = unserialize($serialized_data);
+print_r($original_data);
+```
+
+Eixida
+
+``` php
+Array
+(
+    [0] => a
+    [1] => b
+    [2] => c
+)
+```
+
+#### Utilitzant amb Sessions
+Les sessions en PHP permeten emmagatzemar informació d'usuari per ser utilitzada en diverses pàgines. Pot ser útil serialitzar dades per a emmagatzemar-les en una sessió:
+
+Iniciant una sessió i emmagatzemant dades serialitzades:
+
+``` php
+session_start();
+
+$data = array("a", "b", "c");
+$_SESSION['data_serialitzada'] = serialize($data);
+``` 
+
+``` php
+session_start();
+
+if (isset($_SESSION['data_serialitzada'])) {
+$data = unserialize($_SESSION['data_serialitzada']);
+print_r($data);
+}
+```
+
+Consideracions de Seguretat:
+És crucial entendre que la funció unserialize() pot ser perillosa si s'usa amb dades que no són de confiança, ja que podria portar a l'execució de codi arbitrari. Per això, mai has de deserialitzar dades que vinguen d'una font desconeguda o no fiable sense validar-les prèviament.
+
 ## Autenticació d'usuaris
 
 Una sessió estableix una relació anònima amb un usuari particular, de manera que podem saber si és el mateix usuari entre dues peticions diferents. Si preparem un sistema de login, podrem saber qui utilitza la nostra aplicació.
@@ -512,4 +573,4 @@ header("Location: index.php");
 423. `newBook.php`: Separa la part html de la de php. Crea una vista /views/books/new.php que carregue el formulari. Crida'l amb un include des de `newBook.php`.
 424. `/views/books/new.php`: Modifica el formulari per a que mostre els errors i els valors introduïtsen el mateix formulari. Haurà de crear un funció `printError($errors,$field)` en una llibreria `/myHelpers/utils.php` que mostre el error d'un camp.
 425. `newBook.php`: Si tot va bé, crea un objecte de la classe Book, introdueix el llibre creat pel formulari i mostra'l. 
-
+426. 
