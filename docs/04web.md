@@ -573,4 +573,11 @@ header("Location: index.php");
 423. `newBook.php`: Separa la part html de la de php. Crea una vista /views/books/new.php que carregue el formulari. Crida'l amb un include des de `newBook.php`.
 424. `/views/books/new.php`: Modifica el formulari per a que mostre els errors i els valors introduïtsen el mateix formulari. Haurà de crear un funció `printError($errors,$field)` en una llibreria `/myHelpers/utils.php` que mostre el error d'un camp.
 425. `newBook.php`: Si tot va bé, crea un objecte de la classe Book, introdueix el llibre creat pel formulari i mostra'l. 
-426. 
+426. `load.php` : Anem a crear un fitxer load.php que importaran tots els fitxers (no les classes) de la web. El fitxer contindrà:
+     * El autoload 
+     * La creació de la sessió
+     * La inicialitació de les variables $users, $books, $modules, $courses, $statuses de la següent forma:
+       * Es carregara des de la variable de sessio corresponent si existeix.
+       * En cas contrari es crearà, s'inicialitzarà i s'emmagatzemarà en la variable de sessió corresponent.
+       * Utilitza serialize i unserialize per a emmagatzemar els objectes en la sessió.
+
