@@ -25,9 +25,9 @@
 
 ## 4.- Programació Web (13h)
 
-- [ ] 1.- (M 17O) Formularis. Upload Activitats 401-405 - 3
-- [ ] 2.- (J 19O) Cookies.Sessió Activitats 406-409 - 5
-- [ ] 3.- (L 23O) Gestió d'usuaris. Activitats 410-415 - 8
+- [X] 1.- (M 17O) Formularis. Upload Activitats 401-405 - 3
+- [X] 2.- (J 19O) Cookies.Sessió Activitats 406-409 - 5
+- [X] 3.- (L 23O) Gestió d'usuaris. Activitats 410-415 - 8
 - [ ] 4.- (M 24O) Projecte BatoiBook. Activitats 420-423 - 11 
 - [ ] 5.- (J 26O) Projecte BatoiBook. Activitats 424-426 - 13
 
