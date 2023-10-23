@@ -582,7 +582,17 @@ header("Location: index.php");
        * Utilitza serialize i unserialize per a emmagatzemar els objectes en la sessió.
 427. [register.php](recursos/register.php) A partir d'aquest fitxer crear la vista `/views/user/register.php`
 428. `register.php`: Tracta el formulari per a 
-     * Valida el formulari de forma que els capms sigue obligatoris i les contrasenyes coincidisquen. Crea si calen noves exempcions.
+     * Valida el formulari de forma que els camps sigue obligatoris i les contrasenyes coincidisquen. Crea si calen noves exempcions.
      * Opcional: Validar que ni el nick d'usuari ni el email estiga repetit en users.
      * Crea un nou usuari i guardar-lo en la variable de sessió $users.
-     * Ves a index.php
+     * Ves a index.php i mostra el nom de l'usuari registrat.
+429. [login.php](recursos/login.php): A partir d'aquest fitxer crear la vista `/views/user/login.php`
+430. `login.php`: Tracta el formulari per a
+     * Comprovar que l'usuari i la contrasenya siguen correctes. En cas contrari recuperar el formulari amb l'email introduït i amb un missatge d'error
+     * Ves a index.php i mostra el nom de l'usuari loguejat.
+431. `logout.php`: Crea un fitxer logout.php que tanque la sessió i redirigeix a index.php.
+432. `header.php` : Crea una capçalera on aparega:
+     * L'usuari loguejat i l'enllaç a newBook i a logout si hi ha usuari.
+     * L'enllaç a login o register en cas contrari.
+     * Fes que la capçalera es carregue en totes les pàgines.
+433. `newBook.php` : Fes que ningú no loguejat puga accedir a la pàgina i quan es guarde un llibre o faça amb l'id de l'usuari loguejat.
