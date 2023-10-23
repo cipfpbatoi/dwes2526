@@ -251,11 +251,20 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+// redirigimos a otra página
+header("Location: http://www.ejemplo.com/inicio.html");
+exit();
+// devolvemos un error 404
+header("HTTP/1.0 404 Not Found");
+// enviamos un archivo para descargar
+header("Content-Type: application/force-download");
+// enviamos un archivo json
+header("Content-Type: application/json");
 ```
 
 ## Gestió de l'estat
 
-HTTP és un protocol *stateless*, sense estat. Per això, se simula l'estat mitjançant l'ús de cookies, tokens o la sessió. L'estat és necessari per a processos com ara el carret de la compra, operacions associades a un usuari, etc...
+HTTP és un protocol **stateless**, sense estat. Per això, se simula l'estat mitjançant l'ús de cookies, tokens o la sessió. L'estat és necessari per a processos com ara el carret de la compra, operacions associades a un usuari, etc...
 El mecanisme de PHP per a gestionar la sessió empra cookies de manera interna.
 Les cookies s'emmagatzemen en el navegador, i la sessió en el servidor web.
 
@@ -288,7 +297,7 @@ if (isset($_COOKIE['accesos'])) { 
 ```
 
 !!! tip "Inspeccionant les cookies"
-    Si volem veure que contenen les cookies que tenim emmagatzemades en el navegador, es pot comprovar el seu valor en *Dev Tools --> Application --> Storage
+    Si volem veure que contenen les cookies que tenim emmagatzemades en el navegador, es pot comprovar el seu valor en Dev Tools --> Application --> Storage
 
 El temps de vida de les cookies pot ser tan llarg com el lloc web en el qual resideixen. Elles seguiran ací, fins i tot si el navegador està tancat o obert.
 
