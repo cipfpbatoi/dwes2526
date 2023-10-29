@@ -132,6 +132,111 @@ Posteriorment, hem de tornar a generar el *autoload* de *Composer* mitjançant l
 composer dump-autoload
 ```
 
+## Arxius PDF
+
+
+Amb PHP podem manejar tot tipus d'arxius com ja hem vist però, què passa si volem generar fitxers PDF amb dades tretes d'una base de dades?
+
+<div class="center img-small">
+    <img src="imagenes/06/06-pdf.png">
+</div>
+
+
+Gràcies a una classe escrita en PHP, podem generar arxius PDF sense necessitat d'instal·lar llibreries addicionals en el nostre servidor.
+
+Per a això, com tenim *composer* dins de la nostra imatge de *Docker*, usarem *composer* per a instal·lar aquesta dependència.
+
+Vegem un exemple de *Hello World* convertit a PDF
+
+```php
+<?php
+
+ob_end_clean();
+require('fpdf/fpdf.php');
+  
+// Instanciamos la clase
+// P = Portrait | mm = unidades en milímetros | A4 = formato
+$pdf = new FPDF('P','mm','A4');
+  
+// Añadimos una página
+$pdf->AddPage();
+  
+// Establecemos la fuente y el tamaño de letra
+$pdf->SetFont('Arial', 'B', 18);
+  
+// Imprimimos una celda con el texto que nosotros queramos
+$pdf->Cell(60,20,'Hello World!');
+  
+// Terminamos el PDF
+$pdf->Output();
+  
+?>
+```
+Hi ha molts exemples i tutorials, així com documentació de la classe *FPDF* en la pàgina oficial.
+
+Visita [la secció de tutorials i el manual](http://www.fpdf.org/) per a traure major partit a aquesta classe.
+
+```php
+<?php
+  
+require('fpdf/fpdf.php');
+  
+class PDF extends FPDF {
+  
+    // Cabecera
+    function Header() {
+          
+        // Añadimos un logotipo
+        $this->Image('logo.png',10,8,33);
+          
+        // establecemos la fuente y el tamaño
+        $this->SetFont('Arial','B',20);
+          
+        // Movemos el contenido un poco a la derecha
+        $this->Cell(80);
+          
+        // Pintamos la celda
+        $this->Cell(50,10,'Cabecera',1,0,'C');
+          
+        // Pasamos a la siguiente línea
+        $this->Ln(20);
+    }
+  
+    // Pie de página
+    function Footer() {
+          
+        // Nos posicionamos a 1.5 cm  desde abajo del todo de la página
+        $this->SetY(-15);
+          
+        // Arial italic 8
+        $this->SetFont('Arial','I',8);
+          
+        // Número de página
+        $this->Cell(0,10,'Página ' . 
+            $this->PageNo() . '/{nb}',0,0,'C');
+    }
+}
+  
+// Instanciamos la clase
+$pdf = new PDF();
+  
+// Definimos un alias para la numeración de páginas
+$pdf->AliasNbPages();
+
+$pdf->AddPage();
+$pdf->SetFont('Times','',14);
+  
+for($i = 1; $i <= 30; $i++)
+    $pdf->Cell(0, 10, 'Número de línea ' 
+            . $i, 0, 1);
+$pdf->Output();
+  
+?>
+```
+<div class="center img-large">
+    <img src="imagenes/06/06-pdf-output.gif">
+</div>
+
 ## Monolog
 
 Provarem *Composer* afegint la llibreria de [*Monolog*](https://github.com/seldaek/monolog) al nostre projecte. Es tracta d'un llibreria per a la gestió de logs de les nostres aplicacions, suportant diferents nivells (info, warning, etc...), eixides (fitxers, sockets, BBDD, Web Services, email, etc) i formats (text pla, HTML, JSON, etc...).

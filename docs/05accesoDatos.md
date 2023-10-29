@@ -98,19 +98,12 @@ Vegem-ho en un exemple real
     <img src="imagenes/06/06-bbdd-estructura.png">
 </div>
 
-## CholloSevero
-
-Al llarg d'aquesta unitat treballarem amb una base de dades que anirem confeccionant conforme avancem, on emmagatzemarem la informació relacionada amb ofertes que publiquen els usuaris i els llistarem en funció de diversos filtres; nous, més votats, més vistos, més comentats entre altres, al més pur estil **[*Chollometro](https://www.chollometro.com)**.
-
-<div class="center img-large">
-    <img src="imagenes/06/06-chollometro.gif">
-</div>
-
 ## SQL
 
 Aquest llenguatge de consulta estructurada (*Structured Query Language*) és el que utilitzarem per a realitzar les consultes a les nostres bases de dades per a mostrar el contingut en les diferents interfícies web que creem al llarg de la unitat. Si vols saber més detalls visita [Wiki SQL](https://es.wikipedia.org/wiki/sql)
 
 Exemple d'una sentència SQL on seleccionem totes les files i columnes de la nostra taula anomenada **'pais'**
+
 ``` sql
 SELECT * FROM pais
 ```
@@ -183,6 +176,7 @@ Per establir la connexió en la bbdd utilitzarem:
 ```
 
 A més, amb *PDO* podem usar les excepcions amb *try catch* per a gestionar els errors que es produïsquen en la nostra aplicació, per a això, com féiem abans, hem d'encapsular el codi entre blocs *try / catch*.
+
 ``` php
 <?php
 
@@ -201,10 +195,10 @@ En primer lloc, creem la connexió amb la base de dades a través del constructo
 
 En segon lloc, establim els paràmetres per a manejar les exempcions, en aquest cas hem utilitzat:
 
-- `*PDO::ATTR_ERRMODE*` indicant-li a PHP que volem un reporte d'errors.
-- `*PDO::ERRMODE_EXCEPTION*` amb aquest atribut obliguem al fet que llance exempcions, a més de ser l'opció més humana i llegible que hi ha a l'hora de controlar errors.
+- `PDO::ATTR_ERRMODE` indicant-li a PHP que volem un reporte d'errors.
+- `PDO::ERRMODE_EXCEPTION` amb aquest atribut obliguem al fet que llance exempcions, a més de ser l'opció més humana i llegible que hi ha a l'hora de controlar errors.
 
-Qualsevol error que es llance a través de *PDO^, el sistema llançarà una <span class="alert">**PDOException**</span>.
+Qualsevol error que es llance a través de **PDO**, el sistema llançarà una <span class="alert">**PDOException**</span>.
 
 ### Fitxer de configuració de la BD
 
@@ -226,13 +220,13 @@ De la mateixa manera que podem tenir el nostre arxiu de funcions `funciones.php`
 
 ```
 
-Aquest arxiu conté informació <span class="alert">**molt sensible**</span> així que no és recomanable que puges aquest arxiu a *git.
+Aquest arxiu conté informació <span class="alert">**molt sensible**</span> així que no és recomanable que puges aquest arxiu a **git**.
 
 ### Sentències preparades
 
 Es tracta de sentències que s'estableixen com si foren plantilles de la SQL que llançarem, acceptant paràmetres que són establits a posteriori de la declaració de la sentència preparada.
 
-Les sentències preparades eviten la *injecció* de SQL (SQL Injection) i milloren el rendiment de nostres *aplicacions* o pàgines web.
+Les sentències preparades eviten la **injecció** de SQL (SQL Injection) i milloren el rendiment de nostres *aplicacions* o pàgines web.
 
 ``` php
 <?php
@@ -241,10 +235,10 @@ Les sentències preparades eviten la *injecció* de SQL (SQL Injection) i millor
 
 Cada interrogant és un paràmetre que establirem després, unes quantes línies més a baix.
 
-Una vegada tenim la plantilla de la nostra consulta, hem de seguir amb la preparació juntament amb 3 mètodes més de *PHP* per a la seua completa execució:
+Una vegada tenim la plantilla de la nostra consulta, hem de seguir amb la preparació juntament amb 3 mètodes més de **PHP** per a la seua completa execució:
 
-- `prepare:` prepara la *sentencia* abans de ser executada.
-- `bind`: el tipus d'unió (*bind*) de dada que pot ser mitjançant ' ? ' o ' :parametre '
+- `prepare:` prepara la **sentencia** abans de ser executada.
+- `bind`: el tipus d'unió (**bind*^) de dada que pot ser mitjançant ' ? ' o ' :parametre '
 - `execute` s'executa la consulta unint la plantilla amb les *variables* o paràmetres que hem establit.
 
 ### Exemple paràmetros
@@ -693,191 +687,39 @@ echo $datos[9] . "<br>"; // Momento de última modificación, 1444138251
 
 Dona una ullada a [les funcions de directoris](https://www.php.net/manual/es/book.dir.php) que té *PHP, és molt interessant.
 
-### Arxius PDF
 
-
-Amb PHP podem manejar tot tipus d'arxius com ja hem vist però, què passa si volem generar fitxers PDF amb dades tretes d'una base de dades?
-
-<div class="center img-small">
-    <img src="imagenes/06/06-pdf.png">
-</div>
-
-
-Gràcies a una classe escrita en PHP, podem generar arxius PDF sense necessitat d'instal·lar llibreries addicionals en el nostre servidor.
-
-Per a això, com tenim *composer* dins de la nostra imatge de *Docker*, usarem *composer* per a instal·lar aquesta dependència.
-
-Vegem un exemple de *Hello World* convertit a PDF
-
-```php
-<?php
-
-ob_end_clean();
-require('fpdf/fpdf.php');
-  
-// Instanciamos la clase
-// P = Portrait | mm = unidades en milímetros | A4 = formato
-$pdf = new FPDF('P','mm','A4');
-  
-// Añadimos una página
-$pdf->AddPage();
-  
-// Establecemos la fuente y el tamaño de letra
-$pdf->SetFont('Arial', 'B', 18);
-  
-// Imprimimos una celda con el texto que nosotros queramos
-$pdf->Cell(60,20,'Hello World!');
-  
-// Terminamos el PDF
-$pdf->Output();
-  
-?>
-```
-Hi ha molts exemples i tutorials, així com documentació de la classe *FPDF* en la pàgina oficial.
-
-Visita [la secció de tutorials i el manual](http://www.fpdf.org/) per a traure major partit a aquesta classe.
-
-```php
-<?php
-  
-require('fpdf/fpdf.php');
-  
-class PDF extends FPDF {
-  
-    // Cabecera
-    function Header() {
-          
-        // Añadimos un logotipo
-        $this->Image('logo.png',10,8,33);
-          
-        // establecemos la fuente y el tamaño
-        $this->SetFont('Arial','B',20);
-          
-        // Movemos el contenido un poco a la derecha
-        $this->Cell(80);
-          
-        // Pintamos la celda
-        $this->Cell(50,10,'Cabecera',1,0,'C');
-          
-        // Pasamos a la siguiente línea
-        $this->Ln(20);
-    }
-  
-    // Pie de página
-    function Footer() {
-          
-        // Nos posicionamos a 1.5 cm  desde abajo del todo de la página
-        $this->SetY(-15);
-          
-        // Arial italic 8
-        $this->SetFont('Arial','I',8);
-          
-        // Número de página
-        $this->Cell(0,10,'Página ' . 
-            $this->PageNo() . '/{nb}',0,0,'C');
-    }
-}
-  
-// Instanciamos la clase
-$pdf = new PDF();
-  
-// Definimos un alias para la numeración de páginas
-$pdf->AliasNbPages();
-
-$pdf->AddPage();
-$pdf->SetFont('Times','',14);
-  
-for($i = 1; $i <= 30; $i++)
-    $pdf->Cell(0, 10, 'Número de línea ' 
-            . $i, 0, 1);
-$pdf->Output();
-  
-?>
-```
-<div class="center img-large">
-    <img src="imagenes/06/06-pdf-output.gif">
-</div>
-
-## Actividades
+## Exercisis
 
 ### PDO
 
-601. Crea una nova base de dades amb el nom `lol` i cotejamiento de dades `utf8mb4_unicode_ci`.
+601. Crea una nova base de dades amb el nom `batoiBook` i cotejamiento de dades `utf8mb4_unicode_ci`. Importa el fitxer [`batoiBook.sql`](recursos/) que trobaràs en la carpeta `sql` d'aquesta unitat.
 
-602. En la nostra base de dades `lol` que acabem de crear, crearem la taula `campio` amb els següents camps.
+602. Crea una carpeta config i dins d'ella un fitxer `database.inc.php` on establisques les constants de connexió amb la base de dades.
+603. Crea una classe Connection com a model de connexió amb la base de dades. Aquesta classe tindrà un mètode `__construct()` que inicialitzarà la connexió amb la base de dades i un mètode `getConection()` que retornà la connexió.
 
-- id [*]
-- nom
-- rol
-- dificultat
-- descripcio
+``` php
+<?php
+namespace batBook;
 
-Recorda't que [*] significa que és clau primària i no oblides posar el tipus de dades de cadascun dels camps.
+use PDO;
+use PDOException;
 
-603. Emplena la taula `campio` amb, almenys 5 registres, amb les dades que tu vulgues o si ho prefereixes, pots basar-te en la [pàgina oficial del joc](https://www.leagueoflegends.com/es-es/champions) però <span class="alert">** NO ET POSES A JUGAR !!**</span>
+include_once($_SERVER['DOCUMENT_ROOT']."/config/parametresBD.php");
 
-604. Crea l'arxiu `604.php` on llistes tots els campions del **LOL** que has ficat en la teua base de dades. Recorda't que per a això hauràs fer una connexió amb la base de dades i un `foreach` per a cada campió que tingues albergat en la taula `campio`.
+class Connection
+{
 
-605. Modifica l'arxiu `604.php` i guarda-ho com `605.php` però posa al costat de cadascun dels campions llistats un botó per a `editar` i un altre per a `esborrar`. Cadascun d'aqueixos botons farà la corresponent funció depenent de l'id del campió seleccionat.
+    private $connection;
 
-- En punxar a editar, l'usuari serà redirigit a l'arxiu `605editant.php` on mostrarà un formulari amb els camps farcits per les dades del campió seleccionat. En donar-li al botó de `guardar` les dades es guardaran en la base de dades i l'usuari serà redirigit a la llista de *campions* per a poder veure els canvis.
+    ...
 
-- En punxar a esborrar, l'usuari serà preguntat a través d'un missatge de JavaScript (prompt) si està segur que vol esborrar al campió seleccionat. En el missatge de confirmació ha d'aparéixer el **nom del campió seleccionat**. Si l'usuari punxa a `Acceptar` el campió serà eliminat de la base de dades i l'usuari serà redirigit novament al llistat de campions per a comprovar que, efectivament aquest campió s'ha eliminat de la llista.
+```
 
-### Filtres i comodins
+604. Anem a canviar la classe Module per a que carregue les dades des de la BD i no des de l'array:
 
-606. Modifica l'arxiu `605.php` i guarda-ho com `606.php` perquè es mostre com una taula amb les columnes de la pròpia taula de la base de dades, és a dir; id, nom, rol, dificultat, descripció. Al costat de cada nom de cada columna, posa 2 icones que siguen ˄ ˅ i que cadascun d'ells ordene el llistat en funció de quin s'haja punxat.
-
-- Si s'ha premut en Nom la icona de ˄, el llistat ha d'aparéixer ordenat per nom ascendent. Si per contra s'ha premut ˅ haurà d'ordenar-se per nom descendent.
-
-- Tingues en compte que cada icona ha de portar amb si un enllaç al llistat que continga paràmetres en la URL que satisfacen les opcions seleccionades així que feu ús de $_GET per a poder capturar-los i escriviu les consultes SQL que siguen necessàries per a fer cadascun dels filtres.
-
-- Pots usar [Font Awesome](https://fontawesome.com) per a les icones però és una cosa opcional
-
-607. Crea una taula nova dins de la base de dades `lol` que ja tens i crea un sistema de login amb usuaris. Introdueix en la base de dades almenys 3 usuaris diferents amb les seues contrasenyes diferents. Recorda que:
-
-- La taula nova ha de dir-se `usuari`
-
-- Els camps a crear en la nova taula han de ser
-
-- `id` [*]
-- `nom`
-- `usuari`
-- `password`
-- `email`
-
-- Les contrasenyes han de ser xifrades abans de guardar el dades en la base de dades.
-
-- Crea el formulari `607.php` on l'usuari introduïsca les dades de registre i vincula'l amb `607nuoUsuari.php` perquè reculla les dades mitjançant POST i els inserisca en la base de dades si tot ha anat bé.
-
-- Queda <span class="alert">**PROHIBIDÍSSIM**</span> accedir a `607nouUsuari.php` sense el formulari emplenat.
-
-- La sentència de **INSERT** ha d'estar controlada perquè no puga introduir-se cap dada en blanc. Tingues en compte que estàs modificant la base de dades i no volem camps mal emplenats.
-
-- Si tot ha anat bé, mostra un missatge per pantalla dient `L'usuari XXX ha sigut introduït en el sistema amb la contrasenya YYY`.
-
-### Fitxers
-
-609. Fica't en [loremipsum.com](https://www.lipsum.com/) i genera un text de 3 paràgrafs. Còpia el text generat i guarda'l en un arxiu nou anomenat `*609.txt`. Genera un arxiu php anomenat `609.php` i mostra per pantalla el text de l'arxiu txt que acabes de crear, la seua grandària en **Kilobytes** , la data de la seua última modificació i l'id d'usuari que va crear l'arxiu.
-
-610. Torna a carregar l'arxiu `606.php` i canvia-ho de nom a `610.php` però en comptes de mostrar la taula per pantalla, genera un arxiu CSV `610.csv` i un altre `610CSV.php` on mostres per pantalla el contingut de l'arxiu `610.csv`.
-
-### Projecte CholloSevero
-
-<div class="center img-large">
-    <img src="imagenes/06/06-chollometro.gif">
-</div>
-
-Anem A treballarem amb una base de dades on emmagatzemarem la informació relacionada amb ofertes que publiquen els usuaris i els llistarem en funció de diversos filtres; nous, més votats, més vistos, més comentats entre altres, al més pur estil **[Chollometro](https://www.chollometro.com/)**.
-
-615. Estructura el Projecte i pensa en les taules i bases de dades que necessiteu per a crear el Projecte. 
-
-616. Crea un sistema de login/password amb els rols `administrador` i `usuari`. De moment que es validen els usuaris correctament utilitzant encriptació en la contrasenya.
-
-- `Administrador`: Pot veure tots els usuaris registrats així com els administradors i les gangues creades en la base de dades.
-
-- `Usuari`: Pot veure les seues pròpies gangues, editar-los i esborrar-los, a més de crear nous.
-
-617. Crea la vista per a posar noves gangues i recorda <span class="alert">només poden entrar a aquesta vista usuaris registrats o administradors</span>.
-
-618. Crea la vista on es mostren totes les gangues creades. Aquesta vista pot veure-la qualsevol usuari, registrat o no en el sistema. Tingues en compte que aquesta vista serà la vista general de la web així que pots cridar-la `index.php` on després aplicarem filtres per $_GET.
+    * Eliminarem el constructor de la classe Module
+    * Afegim el mètode static `getModules()` que retornarà un array d'objectes del la classe Modules.
+            * Haurem de crear un objecte de la classe Connection.
+            * Utilitzarem sentencies preparades
+            * Utilitzarem  $sentence -> setFetchMode(PDO::FETCH_CLASS  , Module::class); per tal de retornar objectes de la classe Module.
+    * Modificarem el fitxer load per a que carregue la els modules des de el mètode getModules. No cal ja que el guarde en una variable de sessió.
