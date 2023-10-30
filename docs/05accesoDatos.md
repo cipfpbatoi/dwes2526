@@ -693,7 +693,6 @@ Dona una ullada a [les funcions de directoris](https://www.php.net/manual/es/boo
 ### PDO
 
 601. Crea una nova base de dades amb el nom `batoiBook` i cotejamiento de dades `utf8mb4_unicode_ci`. Importa el fitxer [`batoiBook.sql`](recursos/) que trobaràs en la carpeta `sql` d'aquesta unitat.
-
 602. Crea una carpeta config i dins d'ella un fitxer `database.inc.php` on establisques les constants de connexió amb la base de dades.
 603. Crea una classe Connection com a model de connexió amb la base de dades. Aquesta classe tindrà un mètode `__construct()` que inicialitzarà la connexió amb la base de dades i un mètode `getConection()` que retornà la connexió.
 
@@ -704,7 +703,7 @@ namespace batBook;
 use PDO;
 use PDOException;
 
-include_once($_SERVER['DOCUMENT_ROOT']."/config/parametresBD.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/config/database.inc.php");
 
 class Connection
 {
@@ -718,8 +717,26 @@ class Connection
 604. Anem a canviar la classe Module per a que carregue les dades des de la BD i no des de l'array:
 
     * Eliminarem el constructor de la classe Module
-    * Afegim el mètode static `getModules()` que retornarà un array d'objectes del la classe Modules.
-            * Haurem de crear un objecte de la classe Connection.
-            * Utilitzarem sentencies preparades
-            * Utilitzarem  $sentence -> setFetchMode(PDO::FETCH_CLASS  , Module::class); per tal de retornar objectes de la classe Module.
-    * Modificarem el fitxer load per a que carregue la els modules des de el mètode getModules. No cal ja que el guarde en una variable de sessió.
+    * Afegim el mètode static `getModulesInArray()` que retornarà un array associatiu d'objectes del la classe Modules, amb clau de l'array el camp Code de la tupla de la taula Modules.
+           
+        * Haurem de crear un objecte de la classe Connection.
+        * Utilitzarem sentencies preparades
+        * Utilitzarem  $sentence -> setFetchMode(PDO::FETCH_CLASS  , Module::class); per tal de retornar objectes de la classe Module.
+
+    * Modificarem el fitxer load per a llevar tota referència a la variable $modules. 
+    * Substituirem la crida a la funció `getModulesInArray()` per a que carregue les dades des de la BD en els llocs que abans utitlizaba la variable $modules.
+
+605. Anem a afegir un metode nou a la classe Book per tal de guardar les dades del llibre en la BD. Aquest metode tindrà el nom de `save()` i serà el responsable de guardar les dades del llibre en la BD. Per a això haurem de:
+
+    * Crear un objecte de la classe Connection.
+    * Utilitzar sentencies preparades.
+    * Utilitzar el metode `lastInsertId()` per a recuperar el codi del llibre que s'ha insertat.
+    * Utilitzar el metode `execute()` per a executar la sentencia preparada.
+  
+606. Anem a afegir métode nou a la classe Connection per a afegir una registre a una taula genèrica.
+
+    insert($table, $data) on data és un array associatiu amb els camps i valors a inserir.
+
+    Retornarà el codi de la fila inserida. 
+
+607. Utilitza'l per a afegir un registre a la taula Books.
