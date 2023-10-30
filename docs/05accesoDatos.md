@@ -735,8 +735,9 @@ class Connection
   
 606. Anem a afegir métode nou a la classe Connection per a afegir una registre a una taula genèrica.
 
-    insert($table, $data) on data és un array associatiu amb els camps i valors a inserir.
+    * insert($table, $data) on data és un array associatiu amb els camps i valors a inserir.
+    * Retornarà el codi de la fila inserida.
+    * Utilitza'l per a afegir un registre a la taula Books.
 
-    Retornarà el codi de la fila inserida. 
-
-607. Utilitza'l per a afegir un registre a la taula Books.
+607. Transforma el registre.php per a guardar les dades d'usuari en la BD.
+608. Transforma el login.php per a comprovar les dades d'usuari en la BD.

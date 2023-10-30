@@ -28,14 +28,14 @@
 - [X] 1.- (M 17O) Formularis. Upload Activitats 401-405 - 3
 - [X] 2.- (J 19O) Cookies.Sessió Activitats 406-409 - 5
 - [X] 3.- (L 23O) Gestió d'usuaris. Activitats 410-415 - 8
-- [ ] 4.- (M 24O) Projecte BatoiBook. Activitats 420-423 - 11 
-- [ ] 5.- (J 26O) Projecte BatoiBook. Activitats 424-426 - 13
+- [X] 4.- (M 24O) Projecte BatoiBook. Activitats 420-423 - 11 
+- [X] 5.- (J 26O) Projecte BatoiBook. Activitats 424-426 - 13
 
 ## 5.- Accès a Dades (16h)
 
 - [ ] 1.- (L 30O) SQL. Activitats 601 - 605 - 3
-- [ ] 2.- (M 31O) Filtres i comodins.PDO 606-608 - 6
-- [ ] 3.- (J 2N) Fitxers i PDF. Activitats 609 - 611 -8
+- [ ] 2.- (M 31O) SQL. Activitats 606-608 - 6
+- [ ] 3.- (J 2N) Projecte BatoiBook. Activitats 609 - 611 -8
 - [ ] 4.- (L 6N) Projecte BatoiBook. Activitats 615-618 - 11
 - [ ] 5.- (M 7N) Projecte BatoiBook. Activitats 615-618 - 14
 - [ ] 6.- (J 9N)  Projecte BatoiBook. Activitats 615-618 -16
