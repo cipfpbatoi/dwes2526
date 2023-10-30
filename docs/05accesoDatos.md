@@ -692,7 +692,7 @@ Dona una ullada a [les funcions de directoris](https://www.php.net/manual/es/boo
 
 ### PDO
 
-601. Crea una nova base de dades amb el nom `batoiBook` i cotejamiento de dades `utf8mb4_unicode_ci`. Importa el fitxer [`batoiBook.sql`](recursos/) que trobaràs en la carpeta `sql` d'aquesta unitat.
+601. Crea una nova base de dades amb el nom `batoiBook` i cotejamiento de dades `utf8mb4_unicode_ci`. Importa el fitxer [`batoiBook.sql`](recursos/batoiBook.sql) que trobaràs en la carpeta `sql` d'aquesta unitat.
 602. Crea una carpeta config i dins d'ella un fitxer `database.inc.php` on establisques les constants de connexió amb la base de dades.
 603. Crea una classe Connection com a model de connexió amb la base de dades. Aquesta classe tindrà un mètode `__construct()` que inicialitzarà la connexió amb la base de dades i un mètode `getConection()` que retornà la connexió.
 
