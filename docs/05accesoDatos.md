@@ -678,8 +678,9 @@ class QueryBuilder
     }
 
     // Aquesta funció serveix per a insertar una fila en una taula.
-    public static function insert($table, $values)
+    public static function insert($class, $values)
     {
+        $table = $class::$nameTable;
         $conn = Connection::get();
         $sql = "INSERT INTO $table (";
         foreach (array_keys($values) as $key => $id) {
@@ -707,8 +708,9 @@ class QueryBuilder
     }
 
     // Aquesta funció serveix per a actualitzar una fila en una taula.
-    public static function update($table, $values, $id)
+    public static function update($class, $values, $id)
     {
+        $table = $class::$nameTable;
         $conn = Connection::get();
         $sql = "UPDATE $table SET ";
         foreach (array_keys($values) as $key => $value) {
@@ -728,7 +730,7 @@ class QueryBuilder
     }
 
     // Aquesta funció serveix per a eliminar una fila en una taula basant-se en el seu ID.
-    public static function delete($table, $id)
+    public static function delete($class, $id)
     {
         //TODO
     }
@@ -875,7 +877,7 @@ echo $datos[9] . "<br>"; // Momento de última modificación, 1444138251
 ?>
 ```
 
-Dona una ullada a [les funcions de directoris](https://www.php.net/manual/es/book.dir.php) que té *PHP, és molt interessant.
+Dona una ullada a [les funcions de directoris](https://www.php.net/manual/es/book.dir.php) que té **PHP**, és molt interessant.
 
 
 ## Exercisis
@@ -935,6 +937,7 @@ class Connection
 610. Anem a crear la pàgina `myBooks.php` on es mostren els llibres que ha donat d'alta cada usuari. Per a aixó:
        
     * Crea la pàgina `myBooks.php` que mostrarà els llibres que ha donat d'alta l'usuari, en format taula.
+    * Fes que es mostre el nom del mòdul i no el codi.
     * El darrer element de cada fila seràn els botons per a vore, modificar i eliminar el llibre.
     * Crea un enllaç en la capçalera per anar a myBooks.php sempre que l'usuari estiga autenticat.
     * Protegueix la pàgina per a que sols es puga accedir si l'usuari està autenticat.
@@ -945,7 +948,12 @@ class Connection
     * Crea el mètode static `find($id)` en la classe Book
     * Crea la vista `views/book/show.view.php` que mostre el llibre, amb capçalera.
      
-613. Crea la pàgina `updateBook.php?id=` per a modificar les dades d'un llibre. Després redirigirà a myBooks.php.
+613. Crea la pàgina `editBook.php?id=` per a modificar les dades d'un llibre. Després redirigirà a myBooks.php.
+
+    * Modifica el mètode save() per a que actualitze les dades del llibre, si el llibre ja existeix
+    * Fes la vista `views/book/edit.view.php` que mostre el formulari amb les dades del llibre a modificar.
+    * Fes que el formulari redirisca a `updateBook.php` on s'actualitzen les dades del llibre. Si no es carrega foto quedarà la que hi ha.
+    * El id del llibre no es pot modificar (utilitza un camp ocult per passar-lo).
+
 614. Crea la pàgina `deleteBook.php?id=` per a eliminar un llibre. Després redirigirà a myBooks.php.
 615. Crea el directori errors i dins la pàgina `not-found.php`. Fes que quan no es trobe un llibre en les pàgines anteriors es redirisca a la pàgina `not-found.php`.
-616. 
