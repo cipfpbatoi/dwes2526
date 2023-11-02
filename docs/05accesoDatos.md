@@ -587,28 +587,28 @@ Un Query Builder (Constructor de Consultes) és una eina o classe que facilita l
 
 A continuació, detallo algunes de les principals avantatges i característiques d'un Query Builder com el que has compartit anteriorment:
 
-    * 1. **Abstracció de la Base de Dades**:
+    * 1. Abstracció de la Base de Dades:
     - El Query Builder proporciona una capa d'abstracció que permet interactuar amb diferents tipus de bases de dades (MySQL, PostgreSQL, SQLite, etc.) sense canviar el codi de la teva aplicació. Això facilita la portabilitat i l'escalabilitat del codi.
 
-    * 2. **Seguretat**:
+    * 2. Seguretat:
     - Prevé injeccions SQL: Gràcies a l'ús de sentències preparades i enllaçament de paràmetres, el Query Builder ajuda a prevenir atacs d'injecció SQL, una de les amenaces més comunes en desenvolupament web.
 
-    * 3. **Sintaxi Més Neta i Més Fàcil**:
+    * 3. Sintaxi Més Neta i Més Fàcil:
     - Els Query Builders solen proporcionar una sintaxi més neta i fàcil d'entendre que les cadenes SQL pures. Això fa que el codi sigui més llegible i fàcil de mantenir.
 
-    * 4. **Reutilització de Codi**:
+    * 4. Reutilització de Codi:
     - Les funcions del Query Builder es poden reutilitzar a tot el projecte, reduint la duplicació de codi i facilitant el manteniment.
 
-    * 5. **Flexibilitat**:
+    * 5. Flexibilitat:
     - Permet realitzar consultes complexes amb una sintaxi simplificada, facilitant l'adaptació del codi a canvis en els requeriments de l'aplicació.
 
-    * 6. **Desenvolupament Més Ràpid**:
+    * 6. Desenvolupament Més Ràpid:
     - Ajuda a accelerar el procés de desenvolupament, ja que els desenvolupadors no necessiten recordar la sintaxi SQL exacta per a cada tipus de base de dades.
 
-    * 7. **Fàcil de Depurar**:
+    * 7. Fàcil de Depurar:
     - El codi generat pel Query Builder és més fàcil de depurar en comparació amb les llargues cadenes SQL.
 
-    * 8. **Suport per a Operacions CRUD**:
+    * 8. Suport per a Operacions CRUD:
     - Els Query Builders solen incloure suport integrat per a operacions CRUD (Crear, Llegir, Actualitzar, Esborrar), fent més fàcil la manipulació de dades.
 
 En resum, un Query Builder serveix per simplificar la interacció amb bases de dades, proporcionant una interfície més segura, neta i fàcil d'utilitzar que les cadenes SQL pures. Ajuda a accelerar el desenvolupament, facilita el manteniment i millora la seguretat de l'aplicació.
@@ -736,6 +736,40 @@ class QueryBuilder
 ```
 
 En resum, aquesta classe proporciona funcions estàtiques per a la construcció i execució de consultes SQL bàsiques com SELECT, INSERT, UPDATE, i DELETE. Utilitza l'extensió PDO per a la connexió a bases de dades i la preparació de sentències SQL, la qual cosa ajuda a prevenir injeccions SQL. També permet la manipulació fàcil de files en bases de dades, tot retornant objectes de la classe especificada.
+
+### Respotes d'error
+
+Quan no trebem un recurs en al nostra web, podem mostrar a l'usuari una pàgina específica d'error utilitzant la funció header. Una típica seria:
+
+```php
+<!-- not-found.php -->
+<?php http_response_code(404); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No trobat</title>
+</head>
+<body>
+    <h1>404 - Pàgina no trobada</h1>
+    <p>Ho sentim, la pàgina que estàs buscant no s'ha pogut trobar.</p>
+    <a href="index.php">Torna a l'inici</a>
+</body>
+</html>
+```
+
+I per a utilitzar-la:
+
+```php
+<?php
+header("Location: not-found.php");
+exit;
+?>
+
+```
+
 
 ## Accès a fitxers
 
@@ -888,15 +922,10 @@ class Connection
     * Utilitzar sentencies preparades.
     * Utilitzar el metode `lastInsertId()` per a recuperar el codi del llibre que s'ha insertat.
     * Utilitzar el metode `execute()` per a executar la sentencia preparada.
-  
-606. Anem a afegir métode nou a la classe Connection per a afegir una registre a una taula genèrica.
 
-    * insert($table, $data) on data és un array associatiu amb els camps i valors a inserir.
-    * Retornarà el codi de la fila inserida.
-    * Utilitza'l per a afegir un registre a la taula Books.
-
-607. Transforma el registre.php per a guardar les dades d'usuari en la BD.
-608. Transforma el login.php per a comprovar les dades d'usuari en la BD.
+606. Transforma el registre.php per a guardar les dades d'usuari en la BD.
+607. Transforma el login.php per a comprovar les dades d'usuari en la BD.
+608. Crea la classe QueryBuilder i copia-la dels apunts. Modifica els exercicis anterior per tal d'utilitzar el QueryBuilder.
 
 
 ## Activitats
@@ -908,8 +937,9 @@ class Connection
     * Crea la pàgina `myBooks.php` que mostrarà els llibres que ha donat d'alta l'usuari, en format taula.
     * El darrer element de cada fila seràn els botons per a vore, modificar i eliminar el llibre.
 
-611. Crea la pàgina `showBook.php?id=` per a mostrar les dades d'un llibre. Aquesta pàgina tindrà un botó per a tornar a la pàgina `myBooks.php`.
-612. Crea la pàgina `updateBook.php?id=` per a modificar les dades d'un llibre. Després redirigirà a myBooks.php.
-613. Crea la pàgina `deleteBook.php?id=` per a eliminar un llibre. Després redirigirà a myBooks.php.
-614. Crea la classe `QueryBuilder.php` i completa els mètodes que falten. Modificar els exercisis anteriors per utilitzar el QueryBuilder.
-615. 
+611. Completa en el  `QueryBuilder.php` els mètodes que falten. Modificar els exercisis anteriors per utilitzar el QueryBuilder.
+612. Crea la pàgina `showBook.php?id=` per a mostrar les dades d'un llibre. Aquesta pàgina tindrà un botó per a tornar a la pàgina `myBooks.php`.
+613. Crea la pàgina `updateBook.php?id=` per a modificar les dades d'un llibre. Després redirigirà a myBooks.php.
+614. Crea la pàgina `deleteBook.php?id=` per a eliminar un llibre. Després redirigirà a myBooks.php.
+615. Crea el directori errors i dins la pàgina `not-found.php`. Fes que quan no es trobe un llibre en les pàgines anteriors es redirisca a la pàgina `not-found.php`.
+616. 
