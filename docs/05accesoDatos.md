@@ -936,9 +936,15 @@ class Connection
        
     * Crea la pàgina `myBooks.php` que mostrarà els llibres que ha donat d'alta l'usuari, en format taula.
     * El darrer element de cada fila seràn els botons per a vore, modificar i eliminar el llibre.
+    * Crea un enllaç en la capçalera per anar a myBooks.php sempre que l'usuari estiga autenticat.
+    * Protegueix la pàgina per a que sols es puga accedir si l'usuari està autenticat.
 
 611. Completa en el  `QueryBuilder.php` els mètodes que falten. Modificar els exercisis anteriors per utilitzar el QueryBuilder.
-612. Crea la pàgina `showBook.php?id=` per a mostrar les dades d'un llibre. Aquesta pàgina tindrà un botó per a tornar a la pàgina `myBooks.php`.
+612. Crea la pàgina `showBook.php?id=` per a mostrar les dades d'un llibre. 
+     
+    * Crea el mètode static `find($id)` en la classe Book
+    * Crea la vista `views/book/show.view.php` que mostre el llibre, amb capçalera.
+     
 613. Crea la pàgina `updateBook.php?id=` per a modificar les dades d'un llibre. Després redirigirà a myBooks.php.
 614. Crea la pàgina `deleteBook.php?id=` per a eliminar un llibre. Després redirigirà a myBooks.php.
 615. Crea el directori errors i dins la pàgina `not-found.php`. Fes que quan no es trobe un llibre en les pàgines anteriors es redirisca a la pàgina `not-found.php`.
