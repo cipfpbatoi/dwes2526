@@ -581,6 +581,162 @@ Ara que tenim l'usuari codificat i guardat en la base de dades, el recuperarem p
     }
 ```
 
+## QueryBuilder
+
+Un Query Builder (Constructor de Consultes) és una eina o classe que facilita la creació, execució i manipulació de consultes SQL en un programa. L'objectiu principal és proporcionar una interfície més intuïtiva i segura per interactuar amb bases de dades, sense haver d'escriure consultes SQL en brut.
+
+A continuació, detallo algunes de les principals avantatges i característiques d'un Query Builder com el que has compartit anteriorment:
+
+    * 1. **Abstracció de la Base de Dades**:
+    - El Query Builder proporciona una capa d'abstracció que permet interactuar amb diferents tipus de bases de dades (MySQL, PostgreSQL, SQLite, etc.) sense canviar el codi de la teva aplicació. Això facilita la portabilitat i l'escalabilitat del codi.
+
+    * 2. **Seguretat**:
+    - Prevé injeccions SQL: Gràcies a l'ús de sentències preparades i enllaçament de paràmetres, el Query Builder ajuda a prevenir atacs d'injecció SQL, una de les amenaces més comunes en desenvolupament web.
+
+    * 3. **Sintaxi Més Neta i Més Fàcil**:
+    - Els Query Builders solen proporcionar una sintaxi més neta i fàcil d'entendre que les cadenes SQL pures. Això fa que el codi sigui més llegible i fàcil de mantenir.
+
+    * 4. **Reutilització de Codi**:
+    - Les funcions del Query Builder es poden reutilitzar a tot el projecte, reduint la duplicació de codi i facilitant el manteniment.
+
+    * 5. **Flexibilitat**:
+    - Permet realitzar consultes complexes amb una sintaxi simplificada, facilitant l'adaptació del codi a canvis en els requeriments de l'aplicació.
+
+    * 6. **Desenvolupament Més Ràpid**:
+    - Ajuda a accelerar el procés de desenvolupament, ja que els desenvolupadors no necessiten recordar la sintaxi SQL exacta per a cada tipus de base de dades.
+
+    * 7. **Fàcil de Depurar**:
+    - El codi generat pel Query Builder és més fàcil de depurar en comparació amb les llargues cadenes SQL.
+
+    * 8. **Suport per a Operacions CRUD**:
+    - Els Query Builders solen incloure suport integrat per a operacions CRUD (Crear, Llegir, Actualitzar, Esborrar), fent més fàcil la manipulació de dades.
+
+En resum, un Query Builder serveix per simplificar la interacció amb bases de dades, proporcionant una interfície més segura, neta i fàcil d'utilitzar que les cadenes SQL pures. Ajuda a accelerar el desenvolupament, facilita el manteniment i millora la seguretat de l'aplicació.
+Ací en tenim un exemple de construcció casera:
+
+```php
+<?php
+
+namespace BatBook;
+
+use PDO;
+
+class QueryBuilder
+{
+    // Aquesta funció serveix per a construir i executar consultes SQL de tipus SELECT.
+    // Es pot filtrar per valors, limitar la quantitat de resultats i establir un offset.
+    public static function sql($class, $values=null, $limit = null, $offset = null)
+    {
+        // Obté el nom de la taula a partir de la propietat estàtica $nameTable de la classe passada com argument.
+        $table = $class::$nameTable;
+        
+        // Obté una connexió a la base de dades.
+        $conn = Connection::get();
+        
+        // Construeix la consulta SQL bàsica.
+        $sql = "SELECT * FROM $table";
+        
+        // Afegeix condicions WHERE si es proporcionen valors per a filtrar.
+        if ($values) {
+            $sql .= " WHERE ";
+            foreach (array_keys($values) as $key => $id) {
+                if ($key != 0) {
+                    $sql .= " AND $id=:$id";
+                } else {
+                    $sql .= "$id=:$id";
+                }
+            }
+        }
+        
+        // Afegeix les clàusules LIMIT i OFFSET si són necessàries.
+        if (isset($limit) && isset($offset)) {
+            $sql .= " LIMIT $limit OFFSET $offset";
+        }
+        
+        // Prepara la sentència SQL.
+        $sentence = $conn->prepare($sql);
+        
+        // Enllaça els valors a la sentència.
+        foreach ($values??[] as $key => $value) {
+            $sentence->bindValue(":$key", $value);
+        }
+        
+        // Estableix el mode de recuperació a objectes de la classe especificada.
+        $sentence -> setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE , $class);
+        
+        // Executa la consulta.
+        $sentence -> execute();
+        
+        // Retorna tots els resultats obtinguts.
+        return  $sentence->fetchAll();
+    }
+
+    // Aquesta funció serveix per a trobar una fila en una taula basant-se en el seu ID.
+    public static function find($class, $id)
+    {
+        //TODO
+    }
+
+    // Aquesta funció serveix per a insertar una fila en una taula.
+    public static function insert($table, $values)
+    {
+        $conn = Connection::get();
+        $sql = "INSERT INTO $table (";
+        foreach (array_keys($values) as $key => $id) {
+            if ($key != 0) {
+                $sql .= ','.$id;
+            } else {
+                $sql .= $id;
+            }
+        }
+        $sql .= ") VALUES (";
+        foreach (array_keys($values) as $key => $id) {
+            if ($key != 0) {
+                $sql .= ',:'.$id;
+            } else {
+                $sql .= ':'.$id;
+            }
+        }
+        $sql .= ")";
+        $sentence = $conn->prepare($sql);
+        foreach ($values as $key => $value) {
+            $sentence->bindValue(":$key", $value);
+        }
+        $sentence -> execute();
+        return $conn->lastInsertId();
+    }
+
+    // Aquesta funció serveix per a actualitzar una fila en una taula.
+    public static function update($table, $values, $id)
+    {
+        $conn = Connection::get();
+        $sql = "UPDATE $table SET ";
+        foreach (array_keys($values) as $key => $value) {
+            if ($key != 0) {
+                $sql .= ','.$value.'=:'.$value;
+            } else {
+                $sql .= $value.'=:'.$value;
+            }
+        }
+        $sql .= " WHERE id=:id";
+        $sentence = $conn->prepare($sql);
+        foreach ($values as $key => $value) {
+            $sentence->bindValue(":$key", $value);
+        }
+        $sentence -> execute();
+        return $id;
+    }
+
+    // Aquesta funció serveix per a eliminar una fila en una taula basant-se en el seu ID.
+    public static function delete($table, $id)
+    {
+        //TODO
+    }
+}
+```
+
+En resum, aquesta classe proporciona funcions estàtiques per a la construcció i execució de consultes SQL bàsiques com SELECT, INSERT, UPDATE, i DELETE. Utilitza l'extensió PDO per a la connexió a bases de dades i la preparació de sentències SQL, la qual cosa ajuda a prevenir injeccions SQL. També permet la manipulació fàcil de files en bases de dades, tot retornant objectes de la classe especificada.
+
 ## Accès a fitxers
 
 Gràcies a la funció fopen() des de PHP podem obrir arxius que es troben en els nostres servidor o una URL.
@@ -741,3 +897,19 @@ class Connection
 
 607. Transforma el registre.php per a guardar les dades d'usuari en la BD.
 608. Transforma el login.php per a comprovar les dades d'usuari en la BD.
+
+
+## Activitats
+
+### BatoiBook
+
+610. Anem a crear la pàgina `myBooks.php` on es mostren els llibres que ha donat d'alta cada usuari. Per a aixó:
+       
+    * Crea la pàgina `myBooks.php` que mostrarà els llibres que ha donat d'alta l'usuari, en format taula.
+    * El darrer element de cada fila seràn els botons per a vore, modificar i eliminar el llibre.
+
+611. Crea la pàgina `showBook.php?id=` per a mostrar les dades d'un llibre. Aquesta pàgina tindrà un botó per a tornar a la pàgina `myBooks.php`.
+612. Crea la pàgina `updateBook.php?id=` per a modificar les dades d'un llibre. Després redirigirà a myBooks.php.
+613. Crea la pàgina `deleteBook.php?id=` per a eliminar un llibre. Després redirigirà a myBooks.php.
+614. Crea la classe `QueryBuilder.php` i completa els mètodes que falten. Modificar els exercisis anteriors per utilitzar el QueryBuilder.
+615. 
