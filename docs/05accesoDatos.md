@@ -725,6 +725,7 @@ class QueryBuilder
         foreach ($values as $key => $value) {
             $sentence->bindValue(":$key", $value);
         }
+        $sentence->bindValue(":id", $id);  
         $sentence -> execute();
         return $id;
     }
