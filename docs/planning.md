@@ -33,12 +33,12 @@
 
 ## 5.- Accès a Dades (16h)
 
-- [ ] 1.- (L 30O) SQL. Activitats 601 - 605 - 3
-- [ ] 2.- (M 31O) SQL. Activitats 606-608 - 6
-- [ ] 3.- (J 2N) Projecte BatoiBook. Activitats 609 - 611 -8
-- [ ] 4.- (L 6N) Projecte BatoiBook. Activitats 615-618 - 11
-- [ ] 5.- (M 7N) Projecte BatoiBook. Activitats 615-618 - 14
-- [ ] 6.- (J 9N)  Projecte BatoiBook. Activitats 615-618 -16
+- [X] 1.- (L 30O) SQL. Activitats 601 - 605 - 3
+- [X] 2.- (M 31O) SQL. Activitats 606-608 - 6
+- [X] 3.- (J 2N) Projecte BatoiBook. Activitats 609 - 611 -8
+- [X] 4.- (L 6N) Projecte BatoiBook. Activitats 615-618 - 11
+- [X] 5.- (M 7N) Projecte BatoiBook. Activitats 615-618 - 14
+- [X] 6.- (J 9N)  Projecte BatoiBook. Activitats 615-618 -16
 
 
 ## 6.- Ferramentes Web (16h)
