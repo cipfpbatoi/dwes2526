@@ -958,3 +958,8 @@ class Connection
 
 614. Crea la pàgina `deleteBook.php?id=` per a eliminar un llibre. Després redirigirà a myBooks.php.
 615. Crea el directori errors i dins la pàgina `not-found.php`. Fes que quan no es trobe un llibre en les pàgines anteriors es redirisca a la pàgina `not-found.php`.
+616. Fes que el fitxer /api/books funcione correctament agafant les dades de la BD.
+617. Crea un /api/login que faça el procediment de login i retorne un token d'usuari. 
+
+        * Este token serà unic per usuari i se li assignarà quan es crea l'usuari. 
+        * El token es guardarà en la BD i es retornarà en el login. 
