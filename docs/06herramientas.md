@@ -967,17 +967,4 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 522. Fes que totes les exempcions que es llancen en la pàgina web es guarden en un fitxer `exceptions.log` en el directori `logs`.
 523. Crea un botó en la pàgina `myBooks.php` que genere un document pdf amb una taula amb els llibres de l'usuari.
 523. Documenta totes les classes.
-
-
-
-### Web Scraping
-
-531. A partir de les dades de <http://www.seleccionbaloncesto.es>, calcula l'altura i edat mitjana de l'equip de bàsquet masculí i mostra-los en la pàgina basket.php. Observa que tens les dades dins d'una taula davall de les notícies.
-
-532. Tornant al Videoclub, en `Suport` afig una propietat anomenada `metacritic` per a emmagatzemar la URL de cada suport. A continuació, modifica els mètodes `incluirXXX` de `Videoclub` perquè admeten com a últim paràmetre opcional aquesta URL. 
-     Després d'això, modifica el fitxer `inici3.php` per a passar-li la URL de cada video (per a això hauràs de consultar-los en Metacritic fent cerques manuals). Per exemple, en el cas de la pel·lícula Cazafantasmas, la seua URL és <https://www.metacritic.com/movie/ghostbusters>.
-
-533. Afig un mètode abstracte en `Suport` anomenat `getPuntuacion`, que fent ús de *Web Scraping* es connecte a *Metacritic* i obtinga la seua puntuació. Fes que quan mostre la informació d'un soport afegisca la seua puntuació.
-534. Fes els canvis necesaris per tal que si al donar d'alta un soport no se li passa metacritic, es connecte a la pàgina de metacritic per a fer una cerca per nom i aconseguir l'enllaç.
-     (Per a fer una cerca el metacritic gasta la següent url : https://www.metacritic.com/search/all/god%20of%20war/results)
-
+524. Fes que la api `books.php` retorne tots els llibre si no se li pasa una id.
