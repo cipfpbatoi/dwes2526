@@ -143,99 +143,83 @@ Amb PHP podem manejar tot tipus d'arxius com ja hem vist però, què passa si vo
 
 
 Gràcies a una classe escrita en PHP, podem generar arxius PDF sense necessitat d'instal·lar llibreries addicionals en el nostre servidor.
+Però anem a utilitzar una llibreria que permet transformar codi html en pdf.
 
-Per a això, com tenim *composer* dins de la nostra imatge de *Docker*, usarem *composer* per a instal·lar aquesta dependència.
+### DOMPDF
 
-Vegem un exemple de *Hello World* convertit a PDF
+Afegirem la llibreria de [*DOMPDF*](https://github.com/seldaek/monolog) al nostre projecte. Per a això, inclourem la llibreria en el nostre projecte amb:
+
+``` bash
+composer require dompdf/dompdf
+```
+Una vegada que DOMPDF està instal·lat, el procés per generar PDFs des de HTML és bastant directe. Els passos bàsics són:
+
+Pas 1: Incloent DOMPDF
+Primer, necessitarem incloure DOMPDF en el script PHP. Si estem utilitzant Composer, això es fa automàticament a través de l'auto-càrrega de Composer. Només cal afegir la següent línia al principi del'script:
 
 ```php
-<?php
-
-ob_end_clean();
-require('fpdf/fpdf.php');
-  
-// Instanciamos la clase
-// P = Portrait | mm = unidades en milímetros | A4 = formato
-$pdf = new FPDF('P','mm','A4');
-  
-// Añadimos una página
-$pdf->AddPage();
-  
-// Establecemos la fuente y el tamaño de letra
-$pdf->SetFont('Arial', 'B', 18);
-  
-// Imprimimos una celda con el texto que nosotros queramos
-$pdf->Cell(60,20,'Hello World!');
-  
-// Terminamos el PDF
-$pdf->Output();
-  
-?>
+require 'vendor/autoload.php';
 ```
-Hi ha molts exemples i tutorials, així com documentació de la classe *FPDF* en la pàgina oficial.
 
-Visita [la secció de tutorials i el manual](http://www.fpdf.org/) per a traure major partit a aquesta classe.
+Pas 2: Creació d'una Instància de DOMPDF
+A continuació, creem una nova instància de la classe DOMPDF:
 
 ```php
-<?php
-  
-require('fpdf/fpdf.php');
-  
-class PDF extends FPDF {
-  
-    // Cabecera
-    function Header() {
-          
-        // Añadimos un logotipo
-        $this->Image('logo.png',10,8,33);
-          
-        // establecemos la fuente y el tamaño
-        $this->SetFont('Arial','B',20);
-          
-        // Movemos el contenido un poco a la derecha
-        $this->Cell(80);
-          
-        // Pintamos la celda
-        $this->Cell(50,10,'Cabecera',1,0,'C');
-          
-        // Pasamos a la siguiente línea
-        $this->Ln(20);
-    }
-  
-    // Pie de página
-    function Footer() {
-          
-        // Nos posicionamos a 1.5 cm  desde abajo del todo de la página
-        $this->SetY(-15);
-          
-        // Arial italic 8
-        $this->SetFont('Arial','I',8);
-          
-        // Número de página
-        $this->Cell(0,10,'Página ' . 
-            $this->PageNo() . '/{nb}',0,0,'C');
-    }
-}
-  
-// Instanciamos la clase
-$pdf = new PDF();
-  
-// Definimos un alias para la numeración de páginas
-$pdf->AliasNbPages();
 
-$pdf->AddPage();
-$pdf->SetFont('Times','',14);
-  
-for($i = 1; $i <= 30; $i++)
-    $pdf->Cell(0, 10, 'Número de línea ' 
-            . $i, 0, 1);
-$pdf->Output();
-  
-?>
+use Dompdf\Dompdf;
+
+$dompdf = new Dompdf();
 ```
-<div class="center img-large">
-    <img src="imagenes/06/06-pdf-output.gif">
-</div>
+
+Pas 3: Carregar HTML
+Després, carregem l'HTML en l'objecte DOMPDF. Això es pot fer directament com una cadena o carregant un fitxer HTML:
+
+```php
+$html = "<html><body>Hola, això és una prova.</body></html>";
+$dompdf->loadHtml($html);
+```
+
+O bé carregar un fitxer HTML:
+
+```php
+$dompdf->loadHtml(file_get_contents('path/to/your/file.html'));
+```
+
+Pas 4: Configuració de la Mida del Paper i l'Orientació
+Podem configurar la mida del paper i l'orientació si és necessari:
+
+```php
+$dompdf->setPaper('A4', 'portrait'); // o 'landscape'
+```
+
+Pas 5: Renderització del PDF
+Ara, demanem a DOMPDF que renderitze el PDF:
+
+```php
+$dompdf->render();
+```
+
+Pas 6: Eixida del PDF
+Finalment, podem enviar el PDF al navegador, guardar-lo en un fitxer o fer amb ell el que necessitem:
+
+Per mostrar-lo al navegador:
+
+```php
+$dompdf->stream("document.pdf", array("Attachment" => false));
+```
+
+Per desar-lo en un fitxer:
+
+```php
+$output = $dompdf->output();
+file_put_contents('path/to/save/document.pdf', $output);
+```
+
+##### Consells Addicionals
+Cal assegurar-se que l'HTML és vàlid i ben format. DOMPDF intenta ser tolerant amb l'HTML, però l'HTML mal format pot causar problemes.
+El CSS que s'utilitze pot afectar significativament com es veu el PDF. DOMPDF suporta una bona part de CSS 2.1, però no tot.
+Si necessitem incloure imatges, cal assegurar-se que les rutes són absolutes i accessibles des del servidor on s'executa DOMPDF.
+Aquesta és una guia bàsica per començar amb DOMPDF. Per a casos d'ús més avançats i opcions de configuració, cal consultar la documentació oficial de DOMPDF.
 
 ## Monolog
 
@@ -979,26 +963,24 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
      * Afig una propietat denominada `hora`, la qual s'inicialitza únicament com a paràmetre del constructor. Si la `hora` és inferior a 0 o major de 24, ha d'escriure un log de *warning* amb un missatge apropiat.
      * Modifica els mètodes `saludar` i `acomiadar` per a fer-lo concorde a la propietat `hora` (bon dia, bona vesprada, fins demà, etc...)
 
-### Projecte Videoclub IV
+### Projecte Batoi/Book
 
-511. Com ja tenim *Composer* instal·lat:
-     * Inicialitza-ho dins del teu projecte Videoclub
-     * Inclou *Monolog* i *PhpUnit*, cadascuna en el seu lloc adequat.
-     * Afig el autoload a l'arxiu `composer.json`, i feix els canvis necessaris en les classes per a utilitzar el autoload de *Composer*.
+Exercicis 
 
-512. Modifica la classe `Client` per a introduir un `Logger` de *Monolog*.
-     * Afig el log com una propietat de la classe i inicialitza-ho en el constructor, amb el nom del canal `VideoclubLogger`.
-     * S'ha d'emmagatzemar en `logs/videoclub.log` mostrant tots els missatges des de *debug*.
-     * Abans de llançar qualsevol excepció, ha d'escriure un log de tipus *warning*.
-     * Substituir els `echo` que hi haja en el codi, que ara passaran pel log amb el nivell info, a excepció del mètode `muestraResumen` que continuarà fent `echo`.
+501. Instal.la el monolog i el dompdf en el projecte Book.
+502. Afegirem un canal per control·lar els accesos a la pàgina web de BatoiBooks.
+     * Afegirem el log al login i al register, amb el nom del canal `UserLogger`.
+     * S'ha d'emmagatzemar en `logs/user.log` mostrant tots els missatges des de *debug*.
+     * Dins de la classe User anem a :
+     
+       * Quan un usuari es logueja correctament, ha d'escriure un log de tipus *info*.
+       * Quan un usuari es deslogueja, ha d'escriure un log de tipus *info*.
+       * Quan un usuari fa un accés sense exit s'ha d'escriure un log de tipus *warning*.
+       * Quan un usuari es registra, s'ha d'escriure un log de tipus *info*.
+     
 
-513. Torna a fer el mateix que en l'exercici anterior, però ara amb la classe `Videoclub`. A més:
-     * Sempre que es cride a un mètode del log, se li passarà com a segon paràmetre la informació que disposem.
-     * Executa l'arxiu de prova i comprova que el log s'emplena correctament.
-
-514. REFACTORITZAREM el codi comú d'inicialització de *Monolog* que tenim repetits en els constructors a una factoria de *Monolog*, la qual col·locarem en `\Dwes\Videoclub\Util\LogFactory`. Comprova que continua funcionant correctament.
-
-515. Modifica la factoria perquè retorne `LogInterface` i comprova que continua funcionant. 
+503. Crea una classe MyLog per centralitzar la creació dels logs i utilitza-la amb els exercicis anteriors.
+504. Crea un enllaç en cada llibre de la pàgina de myBooks per imprimir un llibre en un PDF. 
 
 ### phpDocumentor
 
@@ -1017,43 +999,4 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 533. Afig un mètode abstracte en `Suport` anomenat `getPuntuacion`, que fent ús de *Web Scraping* es connecte a *Metacritic* i obtinga la seua puntuació. Fes que quan mostre la informació d'un soport afegisca la seua puntuació.
 534. Fes els canvis necesaris per tal que si al donar d'alta un soport no se li passa metacritic, es connecte a la pàgina de metacritic per a fer una cerca per nom i aconseguir l'enllaç.
      (Per a fer una cerca el metacritic gasta la següent url : https://www.metacritic.com/search/all/god%20of%20war/results)
-
-### phpUnit
-
-541. A partir de la classe `HolaMonolog`, modifica els mètodes perquè a més d'escriure en en log, retornen la salutació com una cadena.
-     Crea la classe `HolaMonologTest` i afig diferents casos de prova per a comprovar que les salutacions i comiats són concordes a l'hora amb la qual es crea la classe.
-
-542. Recordes que si l'hora és negativa o superior a 24 escrivíem en el log un *warning*?
-     Ara ha de llançar una excepció de tipus `InvalidArgumentException` (com l'excepció forma per a de PHP, cal posar la seua FQN: `\InvalidArgumentException`). Completa els teus casos de prova.
-
-### Ampliació videoclub (Opcional)
-
-L'objectiu dels següents exercicis és aconseguir de manera incremental una cobertura de proves superior al 95%.
-
-551. Crea proves dins de la carpeta `tests` per a les classes `Suport`, `CintaVideo`, `Dvd` i `Joc`.
-     Recorda respectar l'espai de noms.
-     Els mètodes `muestraResumen`, després de fer tire dels missatges, han de retornar una cadena amb el propi missatge.
-
-552. Crea proves per a la classe `Client`, aprofitant tot el codi que teníem per a comprovar la funcionalitat.
-     Utilitza proveïdors de dades per a afegir conjunts de dades majors que els empleats.
-     Comprova que funciona amb diferents contingents, que en intentar llogar un suport marcat com ja llogat ha de llançar una excepció, que no coincidisquen els ids dels suports, etc...
-
-553. Crea les proves per a la classe `Videoclub`. Tingues en compte els últims mètodes afegits que permetien llogar i retornar suports, tant de manera individual com mitjançant un array.
-
-554. Crea l'informe de cobertura. Una vegada creat, analitza les dades de cobertura (>= 90%) i comprova el valor de CRAP, de manera que sempre siga <= 5.
-     En cas de no complir-se, crea nous casos de prova i/o refactoritza el codi de la teua aplicació.
-
-
-561. Volem que en `Videoclub`, quan un client no existeix (tant en llogar com en retornar) es llance una nova excepció: `ClienteNoExisteException`.
-     A més, donat el nombre creixent d'excepcions, volem moure les excepcions al namespace `Dwes\Videoclub\Exception`.
-     Seguint TDD, primer crea les proves, i després modifica el codi d'aplicació.
-     Torna a generar l'informe de cobertura i comprova la qualitat de les nostres proves.
-
-562. Ningú s'ha adonat que en els Dvd no estem emmagatzemant la seua duració?
-     Fes tots els canvis necessaris, primer en les proves i després en el codi.
-
-563. Després d'anys lluitant contra la tecnologia, decidim introduir els Blu-ray en la nostra empresa.
-     Hem decidisc que `Bluray` herete de `Suport`.
-     A més del `títol` i la `duracion`, ens interessa emmagatzemar si `es4k`.
-     Fes tots els canvis necessaris, primer en les proves i després en el codi.
 
