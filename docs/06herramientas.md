@@ -964,7 +964,9 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 #### Activitats
  
 521. Guarda en books.log els llibres que s'ha donat d'alta en la pàgina web. Del llibre es vol guarda el ID, nombre del llibre i usuari que la donat d'alta.
-522. Fes que totes les exempcions que es llancen en la pàgina web es guarden en un fitxer `exceptions.log` en el directori `logs`.
+522. Fes que totes les exempcions que es llancen en la pàgina web es guarden en un fitxer `exceptions.log` en el directori `logs` i es pugen vore amb el FirePHP.
 523. Crea un botó en la pàgina `myBooks.php` que genere un document pdf amb una taula amb els llibres de l'usuari.
 523. Documenta totes les classes.
 524. Fes que la api `books.php` retorne tots els llibre si no se li pasa una id.
+
+https://www.mheducation.es/escolar/ciclos-formativos/familia-profesional-informatica
