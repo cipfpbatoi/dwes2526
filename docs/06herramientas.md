@@ -485,40 +485,36 @@ Així doncs, és un eina que facilita la documentació del codi PHP, creant un l
 
 Es basa en l'ús d'anotacions sobre els docblocks. Per a posar-ho en marxa, en el nostre cas ens decantarem per utilitzar la imatge que ja existeix de Docker.
 
-### Instal·lació com a binari
+### Instal·lació 
 
-Una altra opció és seguir els passos que recomana la [documentació oficial](https://www.phpdoc.org) per a instal·lar-ho com un executable, que són descarregar l'arxiu `phpDocumentor.phar` i donar-los permisos d'execució:
-
-``` bash
-wget https://phpdoc.org/phpDocumentor.phar
-chmod +x phpDocumentor.phar
-mv phpDocumentor.phar /usr/local/bin/phpdoc
-phpdoc --version
-```
-
-Una vegada instal·lat, des de l'arrel del projecte, suposant que tenim el nostre codi dins de `app` i que volem la documentació dins de `docs/api` executem:
+##### Pas 1: Instal·lació amb Docker
+Primer, cal assegurar-se tenir Docker instal·lat i funcionant al  sistema. Després, s'ha de descarregar i executar el contenidor de phpDocumentor utilitzant la següent comanda:
 
 ``` bash
-phpdoc -d ./app -t docs/api
+docker pull phpdoc/phpdoc
 ```
 
-### Ús en Docker
+#####  Pas 2: Generació de Documentació
+
+Un cop tinguem la imatge, podem utilitzar-la per generar la documentació. El procés bàsic implica muntar els fitxers de codi dins del contenidor Docker i executar phpDocumentor sobre aquests fitxers.
+
+Ací hi ha un exemple de com fer-ho:
 
 En el cas d'usar *Docker*, usarem el següent comando per a executar-lo (crea el contenidor, executa el comando que li demanem, i automàticament l'esborra):
 
 ``` bash
-docker run --rm -v "$(pwd)":/data phpdoc/phpdoc:3
+docker run --rm -v $(pwd):/data phpdoc/phpdoc:latest run -d /data/src -t /data/docs
 ```
+Aquesta comanda fa el següent:
 
-A aquest comando, li adjuntarem els diferents paràmetres que admet phpDocumentor, per exemple:
+--rm: Això elimina el contenidor després d'executar-lo, així no es queden contenidors inactius.
+-v $(pwd):/data: Munta el directori actual del teu sistema ($(pwd)) al directori /data dins del contenidor. Hauràs de reemplaçar $(pwd) amb el camí on està el teu codi font si no estàs executant aquesta comanda des del directori del teu projecte.
+-d /data/src: Especifica el directori dins del contenidor on es troba el teu codi font. Reemplaça /data/src amb el camí corresponent dins del contenidor si és diferent.
+-t /data/docs: Especifica on vols que es generi la documentació dins del contenidor. En aquest cas, es generarà dins de /data/docs.
 
-``` bash
-# Muestra la versión
-docker run --rm -v "$(pwd)":/data phpdoc/phpdoc:3 --version
-# Mediante -d se indica el origen a parsear
-# Mediante -t se indica el destino donde generar la documentación
-docker run --rm -v "$(pwd)":/data phpdoc/phpdoc:3 -d ./src/app -t ./docs/api
-```
+##### Pas 3: Accés a la Documentació Generada
+Una vegada generada, la documentació estarà dins del directori que especificat (en aquest cas, `docs` dins del directori docs de projecte). Pots obrir els fitxers HTML amb qualsevol navegador per veure la documentació.
+
 
 ### DocBlock
 
@@ -941,36 +937,15 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 * [PHP Monolog](https://zetcode.com/php/monolog/)
 * [Unit Testing con PHPUnit — Parte 1](https://medium.com/@emilianozublena/unit-testing-con-phpunit-parte-1-148c6d73e822), de Emiliano Zublena.
 
-## Activitats
-
-### Monolog
-
-501. Continuant amb el repositori d'exercicis:
-     * Inclou com a llibreria l'última versió de Monolog.
-     * Fes que el composer carrega les classes en el domini `Dwes`.
-     * Crea la classe `Dwes\Monologs\HolaMonolog`.
-     * Defineix una propietat privada nomenada `miLog` per a guardar el log.
-     * Defineix en el constructor un `RotatingFileHandler` que escriga en la carpeta `logs` del projecte, i que emmagatzeme els missatges a partir de *debug*.
-     * Crea els mètodes `saludar` i `acomiadar` que facen un log de tipus *info* amb l'acció corresponent.
-
-502. Seguint amb el projecte `Monologos`:
-     * Crea un arxiu anomenat `inici.php` que permeta provar `HolaMonolog`.
-     * Comprova que els missatges apareixen en el *log*.
-     * Canvia el nivell perquè el manejador només mostre els missatges a partir de *warning*.
-     * Torna a ejectuar `inici.php` i comprova l'arxiu de log.
-503. Modifica la classe `HolaMonolog`:
-     * En el constructor, afig a la pila el manejador FirePHPHandler i comprova que instal·lant el fireBug pots vore els missatges.
-     * Afig una propietat denominada `hora`, la qual s'inicialitza únicament com a paràmetre del constructor. Si la `hora` és inferior a 0 o major de 24, ha d'escriure un log de *warning* amb un missatge apropiat.
-     * Modifica els mètodes `saludar` i `acomiadar` per a fer-lo concorde a la propietat `hora` (bon dia, bona vesprada, fins demà, etc...)
 
 ### Projecte Batoi/Book
 
-Exercicis 
+#### Exercicis 
 
 501. Instal.la el monolog i el dompdf en el projecte Book.
 502. Afegirem un canal per control·lar els accesos a la pàgina web de BatoiBooks.
-     * Afegirem el log al login i al register, amb el nom del canal `UserLogger`.
-     * S'ha d'emmagatzemar en `logs/user.log` mostrant tots els missatges des de *debug*.
+     * Afegirem el log al login i al register, amb el nom del canal `AccesLogger`.
+     * S'ha d'emmagatzemar en `logs/acces.log` mostrant tots els missatges des de *debug*.
      * Dins de la classe User anem a :
      
        * Quan un usuari es logueja correctament, ha d'escriure un log de tipus *info*.
@@ -980,14 +955,20 @@ Exercicis
      
 
 503. Crea una classe MyLog per centralitzar la creació dels logs i utilitza-la amb els exercicis anteriors.
-504. Crea un enllaç en cada llibre de la pàgina de myBooks per imprimir un llibre en un PDF. 
+504. Crea un enllaç en cada llibre de la pàgina de myBooks per imprimir un llibre en un PDF.
+505. Instal·la el phpdocs utilitzant el composer
+506. Documenta la classe Book.
+507. Fes que la documentació del directori `app` es puga veure en la pàgina web en el directori `docs`.
 
-### phpDocumentor
 
-521. Comprova que en el contenidor de Docker funciona *phpDocumentor*.
-     Executa phpdoc sobre el teu projecte d'exercicis i comprova el api que es crea (tingues en compte els directoris a l'hora de crear la documentació)
-     Comenta la classe Employee i els seus mètodes, i posteriorment, torna a executar phpdoc.
-522. Documenta les classes del projecte *Videoclub*, i genera la documentació. Comença per les classes de `Suport` i els seus fills. Després segueix amb `Client` i finalment `Videoclub`.
+#### Activitats
+ 
+521. Guarda en books.log els llibres que s'ha donat d'alta en la pàgina web. Del llibre es vol guarda el ID, nombre del llibre i usuari que la donat d'alta.
+522. Fes que totes les exempcions que es llancen en la pàgina web es guarden en un fitxer `exceptions.log` en el directori `logs`.
+523. Crea un botó en la pàgina `myBooks.php` que genere un document pdf amb una taula amb els llibres de l'usuari.
+523. Documenta totes les classes.
+
+
 
 ### Web Scraping
 
