@@ -967,6 +967,11 @@ Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realit
 522. Fes que totes les exempcions que es llancen en la pàgina web es guarden en un fitxer `exceptions.log` en el directori `logs` i es pugen vore amb el FirePHP.
 523. Crea un botó en la pàgina `myBooks.php` que genere un document pdf amb una taula amb els llibres de l'usuari.
 523. Documenta totes les classes.
-524. Fes que la api `books.php` retorne tots els llibre si no se li pasa una id.
-
-https://www.mheducation.es/escolar/ciclos-formativos/familia-profesional-informatica
+524. Fes que la api `books.php` retorne tots els llibres si no se li pasa una id.
+525. L'editorial McGrawHill ha decidit donar un descompte del 10% al CIPFP Batoi a la familia d'Informàtica. La informació està a la pàgina https://www.mheducation.es/escolar/ciclos-formativos/familia-profesional-informatica.
+     
+     * Crea els llibres guardan la següent informació:
+       * El módul l'hauràs de buscar per la descripció en la BD.
+       * El preu amb el descompte.
+       * En observacions va el contingut del llibre.
+       * Les pàgines seran 200.
