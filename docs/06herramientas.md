@@ -697,7 +697,7 @@ $precioTotal = array_sum($precios);
 echo $precioTotal;
 ```
 
-## Proves amb PHPUnit
+## Proves amb Codeception
 
 El curs passat, dins del mòdul de Entorns de Desenvolupament*, estudiarieu la importància de la realització de proves, així com les proves unitàries mitjançant [JUnit](https://junit.org/junit5/).
 
@@ -712,7 +712,7 @@ Hui dia és de gran importància seguir una bona metodologia de proves, sent el 
 2. Escriure el codi d'aplicació perquè la prova funcione (verda).
 3. refactoritzar el codi de l'aplicació amb l'ajuda de la prova per a comprovar que no trenquem res (refactor).
 
-En el cas de PHP, l'eina que s'utilitza és *PHPUnit* (<https://phpunit.de/>), que com el seu nom indica, està basada en JUnit. La versió actual és la 9.0
+En el cas de PHP, l'eina que s'utilitza és *PHPUnit* (<https://phpunit.de/>), que com el seu nom indica, està basada en JUnit. La versió actual és la 9.0.
 També podem utilitzar *Codeception* (<https://codeception.com/>) que inclou *PHPUnit*.
 
 ### Introducció a Codeception
