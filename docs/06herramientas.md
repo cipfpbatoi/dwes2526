@@ -706,48 +706,54 @@ El curs passat, dins del mòdul de Entorns de Desenvolupament*, estudiarieu la i
     <figcaption>Test Driven Development</figcaption>
 </figure>
 
-Hui dia és de gran importància seguir una bona metodologia de proves, sent el desenvolupament dirigit per les proves (Test Driven Development* / TDD) un dels enfocaments més emprats, el qual consisteix en:
+Hui dia és de gran importància seguir una bona metodologia de proves, sent el desenvolupament dirigit per les proves (Test Driven Development / TDD) un dels enfocaments més emprats, el qual consisteix en:
 
 1. Escriure el test, i com no hi ha codi implementat, la prova falle (roig).
 2. Escriure el codi d'aplicació perquè la prova funcione (verda).
 3. refactoritzar el codi de l'aplicació amb l'ajuda de la prova per a comprovar que no trenquem res (refactor).
 
 En el cas de PHP, l'eina que s'utilitza és *PHPUnit* (<https://phpunit.de/>), que com el seu nom indica, està basada en JUnit. La versió actual és la 9.0
+També podem utilitzar *Codeception* (<https://codeception.com/>) que inclou *PHPUnit*.
 
-Es recomana consultar la seua documentació en <https://phpunit.readthedocs.io/es/latest/index.html>.
+### Introducció a Codeception
+Codeception és una eina de proves per a PHP que inclou suport per a proves unitàries, funcionals, d'acceptació i API. Per més informació, pots consultar la seua documentació oficial a Codeception.
 
-### Posada en marxa
-
-Col·locarem totes les proves en una carpeta `tests` en l'arrel del nostre projecte.
-
-En l'arxiu `composer.json`, afegim:
+#### Instal·lació i Configuració
+Per començar amb Codeception, afegeix-lo com a dependència de desenvolupament en el teu composer.json:
 
 ``` json
 "require-dev": {
-    "phpunit/phpunit": "^9"
+"codeception/codeception": "^4.0"
 },
 "scripts": {
-    "test": "phpunit --testdox --colors tests"
+"test": "codecept run --colors"
 }
 ```
 
-Si volguérem afegir la llibreria des d'un comando del terminal, també podríem executar:
-
+També pots instal·lar-lo directament des del terminal:
+    
 ``` bash
-composer require --dev phpunit/phpunit ^9
+composer require --dev codeception/codeception ^4.0
 ```
 
 !!! tip "Llibreries de desenvolupament"
-        Les llibreries que es col·loquen en `require-dev` són les de desenvolupament i *testing*, de manera que no s'instal·laran en un entorn de producció.
+Les llibreries que es col·loquen en `require-dev` són les de desenvolupament i *testing*, de manera que no s'instal·laran en un entorn de producció.
 
 
-Vasmos a realitzar la nostra primera prova:
+Una vegada instal·lat, executa vendor/bin/codecept bootstrap per inicialitzar la configuració bàsica.
+
+##### Estructura de Carpetes
+Codeception organitza les proves en diverses carpetes segons el tipus de prova: 
+tests/unit, tests/functional, tests/acceptance.
+
+##### Exemple de Prova Unitària
+A continuació, un exemple de com escriure una prova unitària en Codeception:
 
 ``` php
 <?php
-use PHPUnit\Framework\TestCase;
+namespace tests\unit;
 
-class PilaTest extends TestCase
+class PilaTest extends \Codeception\Test\Unit
 {
     public function testPushAndPop()
     {
@@ -764,14 +770,12 @@ class PilaTest extends TestCase
 }
 ```
 
-Tenim diferents maneres d'executar una prova:
+##### Execució de Proves
+Per executar les proves, pots utilitzar les comandes següents:
 
-``` bash
-./vendor/bin/phpunit tests/PilaTest.php
-./vendor/bin/phpunit tests
-./vendor/bin/phpunit --testdox tests
-./vendor/bin/phpunit --testdox --colors tests
-```
+vendor/bin/codecept run (executa totes les proves)
+vendor/bin/codecept run unit (executa només proves unitàries)
+vendor/bin/codecept run --testdox --colors (mostra els resultats en format més llegible)
 
 ### Dissenyant proves
 
@@ -836,29 +840,22 @@ class CintaVideoTest extends TestCase {
 }
 ```
 
-### Proveïdors de dades
 
-Quan tenim proves que només canvien respecte a les dades d'entrada i d'eixida, és útil utilitzar proveïdors de dades.
 
-Es declaren en el docblock mitjançant `@dataProvider nombreMetodo`, on s'indica el nom d'un mètode públic que retorna un array de arrays, on cada element és un cas de prova.
-
-La classe de prova rep com a paràmetres les dades a provar i el resultat de la prova com a últim paràmetre.
-
-El següent exemple comprova amb diferents dades el funcionament de `muestraResumen`:
+##### Proveïdors de Dades
+Codeception suporta proveïdors de dades de la mateixa manera que PHPUnit:
 
 ``` php
-<?php
 /**
  * @dataProvider cintasProvider
  */
 public function testMuestraResumenConProvider($titulo, $id, $precio, $duracion, $esperado)
 {
-    $cinta = new CintaVideo($titulo, $id, $precio, $duracion);
-    $this->expectOutputString($esperado);
-    $cinta->muestraResumen();
+    // El teu codi de prova va ací
 }
 
-public function cintasProvider() {
+public function cintasProvider()
+{
     return [
         "cazafantasmas" => ["Los cazafantasmas", 23, 3.5, 107, "<br>Película en VHS:<br>Los cazafantasmas<br>3.5 €(IVA no incluido)<br>Duración: 107 minutos"],
         "superman" => ["Superman", 24, 3, 188, "<br>Película en VHS:<br>Superman<br>3 € (IVA no incluido)<br>Duración: 188 minutos"],
@@ -895,40 +892,6 @@ public function testAlquilarCupoLleno() {
     $cliente1->alquilar($soporte4); 
 }
 ```
-
-### Cobertura de codi (NO)
-
-La cobertura de proves indica la quantitat de codi que les proves cobreixen, sent recomanable que cobrisquen entre el 95 i el 100%.
-
-Una de les mètriques associades als informes de cobertura és el CRAP (Anàlisi i Prediccions sobre el Risc en Canvis), el qual mesura la quantitat d'esforç, dolor i temps requerit per a mantindre una porció de codi. Aquesta mètrica ha de mantindre's amb un valor inferior a 5.
-
-!!! warning "Requeriment xdebug"
-            Encara que ja ve instal·lat dins de PHPUnit, perquè funcione la cobertura del codi, és necessari que el codi PHP s'execute amb XDEBUG, i i indicar-li a Apatxe que així és (col·locant en l'arxiu de configuració `php.ini`la directiva `xdebug.mode=coverage`).
-
-Afegim en `composer.json` un nou *script*:
-
-``` json
-"coverage": "phpunit --coverage-html coverage --coverage-filter app tests"
-```
-
-I posteriorment executem
-
-``` bash
-composer coverage
-```
-
-Per exemple, si accedim a la classe `CintaVideo` amb la prova que havíem realitzat anteriorment, podem observar la cobertura que té al 100% i que el seu CRAP és 2.
-
-<figure style="align: center;">
-    <img src="imagenes/05/coverage.png">
-    <figcaption>Informe de cobertura de la clase CintaVideo</figcaption>
-</figure>
-
-!!! warning "Temes pendents"
-            * Dependencia entre casos de prueba con el atributo `@depends`
-            * Completamente configurable mediante el archivo `phpxml.xml`: <https://phpunit.readthedocs.io/es/latest/configuration.html>
-            * Preparando las pruebas con `setUpBeforeClass()` y `tearDownAfterClass()`
-            * Objetos y pruebas *Mock* (dobles) con `createMock()`
 
 ## Referencias
 
