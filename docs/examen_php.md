@@ -15,16 +15,19 @@
 
 ## Exercici 1 (1,5p)
 
-Genera una matriu de números aleatoris entre 1 i 500 de 10x10 i mostra-los en una taula, afegint una fila i una columna on es mostre la suma de cada fila i de cada columna.
-Els numeros par estaran en blau i els senars en vermell. Calen, al meyns, les següent funcions: `generaMatriu(int $n,int $m): array` i `printCela(int $num): void`.
-L'estructura del html ha de ser completa i s'ha d'incorporar la capçalera del BatoiBook.
+Modifica la capçalera del batoiBook per tal que es mostre el següent:
+
+* Si és la primera vegada que visita index.php, li dira 'Benvingut/uda per primera vegada'.
+* En cas contrari li dira 'Benvingut/uda, la teua darrera visita va ser...', i la data amb format "Y-m-d H:i:s".
+* No cal autenticar-se per mostrar la informació, o siga no depen de l'usuari sinó de la sessió.
+* S'actulitzarà la data cada vegada que es visite la pàgina index.php.
 
 ## Exercici 2 (1,5p)
 
-Modifica la capçalera del batoiBook per tal que es mostre el següent:
-Si és la primera vegada que visita index.php, li dira 'Benvingut/uda per primera vegada'.
-En cas contrari li dira 'Benvingut/uda, la teua darrera visita va ser...', i la data amb format "Y-m-d H:i:s".
-No cal autenticar-se per mostrar la informació, o siga no depen de l'usuari sinó de la sessió.
+* Genera una matriu de números aleatoris entre 1 i 500 de 10x10 i mostra-los en una taula, afegint una fila i una columna on es mostre la suma de cada fila i de cada columna.
+* Els numeros par estaran en blau i els senars en vermell.
+* Calen, al meyns, les següent funcions: `generaMatriu(int $n,int $m): array` i `printCela(int $num): void`.
+* L'estructura del html ha de ser completa i s'ha d'incorporar la capçalera del BatoiBook.
 
 ## Exercici 3 (1,5p)
 
@@ -37,14 +40,7 @@ Crea la classe `sales` que gestione les transaccions entre usuaris. Aquesta clas
 * `delete():int` elimina la transacció de la base de dades.
 * `getSales($idUser):Array` retorna un array amb els llibres venuts per l'usuari passat per paràmetre.
 
-## Exercici 4 (1,5p)
-
-Crea la pàgina `api/sales.php` que gestione les peticions POST que li arriben y done d'alta la venda en la BBDD.
-Els paràmetres que li arriben a la petició POST són: `idBook` i `idUser`.
-S'han de gestionar els errors que pugen sorgir per tal que es retornen en format JSON (que no existisca l'usuari, el llibre no estiga disponible)
-Has de tenir en compte que el llibre pasarà a venut amb la data actual i deixarà d'estar disponible para venda. 
-
-## Exercici 5 (4p)
+## Exercici 4 (4p)
 
 Mostra una taula amb els cicles (courses) que hi ha a la base de dades.
 
@@ -63,3 +59,10 @@ Afegeix les operacions de :
 
 Afegix un camp `administrador` (boolean) a la taula users. Fes a un usuari administrador.
 Soles l'usuari administrador podrà fer el CRUD de cicles. Implementa'l.
+
+## Exercici 5 (1,5p)
+
+Crea la pàgina `api/sales.php` que gestione les peticions POST que li arriben y done d'alta la venda en la BBDD.
+Els paràmetres que li arriben a la petició POST són: `idBook` i `idUser`.
+S'han de gestionar els errors que pugen sorgir per tal que es retornen en format JSON (que no existisca l'usuari, el llibre no estiga disponible)
+Has de tenir en compte que el llibre pasarà a venut amb la data actual i deixarà d'estar disponible para venda. 
