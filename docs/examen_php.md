@@ -6,10 +6,10 @@
 * Els exercicis s'han de poder enllaçar des de la pàgina principal (index.php) del BatoiBook.
 * El lloc addient per fer-ho seria des de la capçalera del BatoiBook, tenint en compte que:
   
-  * En els exercicis 1,2,3,4 no cal estar loguejat per a accedir-hi.
-  * L'exercici 3 ha de tindre una pàgina on es prove la classe sales (que funcionen els mètodes)
-  * L'exercici 4 no cal que l'enllaçeu des de cap lloc, es una API.
-  * L'exercici 5 només l'eixirà l'enllaç a l'usuari que siga administrador.
+        * En els exercicis 1,2,3,4 no cal estar loguejat per a accedir-hi.
+        * L'exercici 3 ha de tindre una pàgina on es prove la classe sales (que funcionen els mètodes)
+        * L'exercici 4 no cal que l'enllaçeu des de cap lloc, es una API.
+        * L'exercici 5 només l'eixirà l'enllaç a l'usuari que siga administrador.
 
 [recursos](recursos/examen.zip) 
 
@@ -47,15 +47,17 @@ Has de tenir en compte que el llibre pasarà a venut amb la data actual i deixar
 ## Exercici 5 (4p)
 
 Mostra una taula amb els cicles (courses) que hi ha a la base de dades.
+
   * Els camps ha mostrar són: id, cycle, vliteral, cliteral.
 Afegeix les operacions de :
-  * Modificar un cicle.
-    * Els camps que es poden modificar son cycle, vliteral i cliteral. 
-    * No es pot modificar ni la familia ni el codi. 
-    * Hauràs de comprovar que la longitud dels camps es menor a la que està permesa en la base de dades.
-  * Eliminar un cicle.
-  * Mostrar un cicle.
-    * S'haurà de vore el literal de la familia.
+
+    * Modificar un cicle.
+            * Els camps que es poden modificar son cycle, vliteral i cliteral. 
+            * No es pot modificar ni la familia ni el codi. 
+            * Hauràs de comprovar que la longitud dels camps es menor a la que està permesa en la base de dades.
+    * Eliminar un cicle.
+    * Mostrar un cicle.
+            * S'haurà de vore el literal de la familia.
 
 Afegix un camp `administrador` (boolean) a la taula users. Fes a un usuari administrador.
 Soles l'usuari administrador podrà fer el CRUD de cicles. Implementa'l.
