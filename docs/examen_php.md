@@ -52,6 +52,7 @@ Afegeix les operacions de :
             Els camps que es poden modificar son cycle, vliteral i cliteral. 
             No es pot modificar ni la familia ni el codi. 
             Hauràs de comprovar que la longitud dels camps es menor a la que està permesa en la base de dades.
+    
     * Eliminar un cicle.
     * Mostrar un cicle.
     
