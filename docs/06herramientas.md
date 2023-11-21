@@ -779,12 +779,9 @@ vendor/bin/codecept run --testdox --colors (mostra els resultats en format més 
 
 ### Dissenyant proves
 
-Tal com hem vist en l'exemple, la classe de prova ha d'heretar de `TestCase`, i el nom de la classe ha d'acabar en `Test`, d'aquí ve que hàgem anomenat la classe de prova com `PilaTest`.
-
+Tal com hem vist en l'exemple, la classe de prova ha d'heretar de `\Codeception\Test\Unit`, i el nom de la classe ha d'acabar en `Test`, d'aquí ve que hàgem anomenat la classe de prova com `PilaTest`.
 Una prova implica un mètode de prova (públic) per cada funcionalitat a provar. Cada un dels mètodes se'ls associa un cas de prova.
-
 Els mètodes han de nomenar-se amb el prefix `test`, per exemple, `testPushAndPop`. És molt important que el nom siga molt clar i descriptiu del propòsit de la prova. (*camelCase*).
-
 En els casos de prova prepararem diverses assercions per a tota la casuística: rangs de valors, tipus de dades, excepcions, etc...
 
 ### Assercions
@@ -840,28 +837,34 @@ class CintaVideoTest extends TestCase {
 }
 ```
 
-
-
 ##### Proveïdors de Dades
-Codeception suporta proveïdors de dades de la mateixa manera que PHPUnit:
 
-``` php
-/**
- * @dataProvider cintasProvider
- */
-public function testMuestraResumenConProvider($titulo, $id, $precio, $duracion, $esperado)
-{
-    // El teu codi de prova va ací
-}
+Els providers en Codeception s'utilitzen principalment per a provar amb diferents conjunts de dades utilitzant el mateix test. Aquí tens una guia bàsica de com utilitzar-los:
 
-public function cintasProvider()
-{
-    return [
-        "cazafantasmas" => ["Los cazafantasmas", 23, 3.5, 107, "<br>Película en VHS:<br>Los cazafantasmas<br>3.5 €(IVA no incluido)<br>Duración: 107 minutos"],
-        "superman" => ["Superman", 24, 3, 188, "<br>Película en VHS:<br>Superman<br>3 € (IVA no incluido)<br>Duración: 188 minutos"],
-    ];
+Definir el Provider: Primer, has de definir una funció que retorni un array de dades. Aquesta funció és el teu provider. Per exemple:
+
+```php
+function myDataProvider() {
+return [
+['data1', 'result1'],
+['data2', 'result2']
+];
 }
 ```
+
+Utilitzar el Provider en un Test: Després, pots utilitzar aquest provider en un mètode de prova, passant el nom de la funció provider com a anotació. Per exemple:
+
+```php
+/**
+* @dataProvider myDataProvider
+  */
+  public function testMyFunction($input, $expected) {
+  $result = myFunction($input);
+  $this->assertEquals($expected, $result);
+  }
+```
+
+En aquest exemple, testMyFunction s'executarà múltiples vegades amb cada conjunt de dades proporcionat per myDataProvider. Això és especialment útil quan vols provar una funció o mètode amb diferents valors d'entrada i verificar si el resultat és el que esperes en cada cas.
 
 ### Provant excepcions
 
@@ -898,7 +901,7 @@ public function testAlquilarCupoLleno() {
 * [Tutorial de Composer](https://desarrolloweb.com/manuales/tutorial-composer.html)
 * [Web Scraping with PHP – How to Crawl Web Pages Using Open Source Tools](https://www.freecodecamp.org/news/web-scraping-with-php-crawl-web-pages/)
 * [PHP Monolog](https://zetcode.com/php/monolog/)
-* [Unit Testing con PHPUnit — Parte 1](https://medium.com/@emilianozublena/unit-testing-con-phpunit-parte-1-148c6d73e822), de Emiliano Zublena.
+* [Codeception](https://codeception.com/)
 
 
 ### Projecte Batoi/Book
@@ -938,3 +941,4 @@ public function testAlquilarCupoLleno() {
        * El preu amb el descompte.
        * En observacions va el contingut del llibre.
        * Les pàgines seran 200.
+526. 
