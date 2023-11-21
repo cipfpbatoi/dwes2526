@@ -43,9 +43,11 @@ Crea la classe `sales` que gestione les transaccions entre usuaris. Aquesta clas
 ## Exercici 4 (4p)
 
 Mostra una taula amb els cicles (courses) que hi ha a la base de dades.
+Afegeix un enllaç en la capçalera del BatoiBook que diga 'Cicles' per accedir-hi a esta pàgina.
 
-  * Els camps ha mostrar són: id, cycle, vliteral, cliteral.
-Afegeix les operacions de :
+  * Els camps ha mostrar en la taula són: id, cycle, vliteral, cliteral.
+
+  * Afegeix les operacions de :
 
     * Modificar un cicle.
   
@@ -59,11 +61,13 @@ Afegeix les operacions de :
             S'haurà de vore el literal de la familia.
 
 Afegix un camp `administrador` (boolean) a la taula users. Fes a un usuari administrador.
-Soles l'usuari administrador podrà fer el CRUD de cicles. Implementa'l.
+Soles l'usuari administrador li eixirà el manteniment de cicles en el menu.
+Soles l'usuari administrador podrà accedir a la pàgina de manteniment de cicles. 
 
 ## Exercici 5 (1,5p)
 
 Crea la pàgina `api/sales.php` que gestione les peticions POST que li arriben y done d'alta la venda en la BBDD.
-Els paràmetres que li arriben a la petició POST són: `idBook` i `idUser`.
-S'han de gestionar els errors que pugen sorgir per tal que es retornen en format JSON (que no existisca l'usuari, el llibre no estiga disponible)
-Has de tenir en compte que el llibre pasarà a venut amb la data actual i deixarà d'estar disponible para venda. 
+
+* Els paràmetres que li arriben a la petició POST són: `idBook` i `idUser`.
+* S'han de gestionar els errors que pugen sorgir per tal que es retornen en format JSON (que no existisca l'usuari, el llibre no estiga disponible)
+* Has de tenir en compte que el llibre pasarà a venut amb la data actual i deixarà d'estar disponible para venda. 
