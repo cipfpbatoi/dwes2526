@@ -495,6 +495,53 @@ al sufix de la vista).
 @endsection
 ```
 
+## Ús de Components Blade en Laravel
+
+Els components Blade són una funció poderosa en Laravel que permet als desenvolupadors crear elements d'interfície d'usuari reutilitzables. Aquests components poden ser personalitzats i inclosos en diverses vistes, oferint una manera eficient de gestionar elements comuns com formularis, botons, o panells d'informació.
+
+### Creació d'un Component Blade
+Per crear un component Blade, podeu utilitzar el comandament Artisan:
+
+```php
+php artisan make:component NomDelComponent
+```
+Això crearà una nova classe de component en app/View/Components i una vista associada en resources/views/components.
+
+### Definició del Component
+Dins de la classe del component, podeu definir propietats i mètodes que el component utilitzarà. Per exemple:
+
+```php
+namespace App\View\Components;
+
+use Illuminate\View\Component;
+
+class Alert extends Component
+{
+    public $type;
+
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
+    public function render()
+    {
+        return view('components.alert');
+    }
+}
+```
+
+### Utilització del Component en Vistes
+Per utilitzar el component, simplement afegiu-lo a la vostra vista Blade com si fos una etiqueta HTML:
+
+```php
+<x-alert type="danger">
+    Aquest és un missatge d'alerta!
+</x-alert>
+```
+
+Aquest enfocament manté el codi organitzat i promou la reutilització del codi, facilitant el manteniment i la lectura dels teus projectes Laravel.
+
 ## Enllaçant amb CSS i Javascript en el client
 
 Ara que ja tenim una visió bastant completa del que el motor de plantilles Blade pot oferir-nos, arriba el moment d'acabar de perfilar les nostres vistes. Fins ara no hem parlat res d'estils CSS, i això és una cosa que tota vista que es pree ha d'incloure. A més, també pot ser necessari en alguns casos incloure alguna llibreria Javascript en el costat del client per a uns certs processaments.
@@ -600,8 +647,7 @@ En cas contrari el mètode NO serà executat com una prova, la qual cosa és út
 
 #### Exercicis
 
-En el repositori anem a crear un Blog:
-Crea la rama v.1 per a pujar este exercici. 
+En el repositori nou anem a crear un Blog:
 
 701. Edita el fitxer routes/web.php i afig una nova [ruta](#rutes-simples) a la URL posts. En accedir a aquesta ruta (http://localhost/posts), haurem de veure un missatge amb el text “Llistat de posts”.
 
@@ -627,3 +673,6 @@ Fes que les rutes corresponents de routes/web.php que ja has definit [renderitze
 
 Edita l'arxiu **partials/nav.blade.php** per a modificar la barra de navegació i deixar-la amb un estil particular de tailwindcss. Pots consultar aquesta [pàgina](https://tailwindcss.com/docs/installation) per a prendre idees d'alguns dissenys que pots aplicar en la barra de navegació.
 Modificat l'arxiu welcome.blade.php  i canvia-ho perquè també herete de la plantilla base. Afig algun text introductori com a contingut. 
+
+### Activitats
+
