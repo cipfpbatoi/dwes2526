@@ -61,8 +61,8 @@ Afegeix un enllaç en la capçalera del BatoiBook que diga 'Cicles' per accedir-
             S'haurà de vore el literal de la familia.
 
 Afegix un camp `administrador` (boolean) a la taula users. Fes a un usuari administrador.
-Soles l'usuari administrador li eixirà el manteniment de cicles en el menu.
-Soles l'usuari administrador podrà accedir a la pàgina de manteniment de cicles. 
+Soles l'usuari administrador li eixirà el manteniment de cicles en el menu del header.
+
 
 ## Exercici 5 (1,5p)
 

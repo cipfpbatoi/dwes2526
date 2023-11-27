@@ -27,6 +27,13 @@
 ## Frameworks
 
 Un **framework** és una eina que proporciona una sèrie de mòduls que ajuden a organitzar i desenvolupar un producte programari. En el cas concret dels **frameworks PHP**, la majoria d'ells proporcionen una sèrie de comandos o eines per a crear projectes amb una estructura determinada (normalment, seguint el patró **MVC** que veurem després), de manera que ja donen una base de treball feta, i facilitats per a poder crear el model de dades, la connexió a la base de dades, les rutes de les diferents seccions de l'aplicació, etc.
+Els frameworks PHP com Laravel, Symfony, CodeIgniter, i CakePHP, ofereixen eines robustes per accelerar el desenvolupament web. Un framework ben dissenyat pot ajudar a :
+
+ * Evitar problemes comuns 
+ * Estandarditzar el codi 
+ * Facilitar el manteniment. 
+
+Entre aquests, Laravel destaca per les seves fortes funcionalitats, comunitat activa i constant evolució.
 
 ### Exemples de frameworks PHP
 
@@ -54,18 +61,20 @@ Cada framework pot estar millor orientat que un altre per a determinats tipus de
 
 #### Per què Laravel?
 
-Arribats a aquest punt... quines característiques té Laravel que ens hagen fet triar-ho per a aquest curs enfront d'altres frameworks? És un framework que ofereix bastants avantatges.
+###### Comparativa amb Altres Frameworks
+Comparat amb altres frameworks com Symfony o CodeIgniter, Laravel sobresurt per la seva sintaxi expressiva i elegant, una curva d'aprenentatge amigable i un ecosistema ric. Per exemple, mentre Symfony pot ser més adequat per a aplicacions d'alta complexitat, Laravel és sovint preferit per la seva facilitat d'ús i eficiència en el desenvolupament de projectes de diverses mides.
+###### Raons Específiques per Triar Laravel
+Laravel s'adapta bé a una àmplia gamma d'aplicacions, des de llocs web simples fins a aplicacions empresarials complexes. Destaca per la seva arquitectura MVC, suport natu per a APIs RESTful, i funcions com Eloquent ORM, que simplifiquen les operacions de bases de dades. A més, Laravel posseeix una gran documentació i una comunitat vibrant, facilitant l'aprenentatge i la resolució de problemes.
+###### Tendències Recents i Actualitzacions de Laravel
+En les versions recents, Laravel ha incorporat millores significatives en rendiment, seguretat i funcionalitats modernes. Això inclou l'actualització a les darreres versions de PHP, millorant la compatibilitat i rendiment. Es recomana estar atent a les últimes actualitzacions per aprofitar al màxim el potencial de Laravel.
+###### Exemples Pràctics i Estudis de Casos
+En el món real, Laravel s'ha utilitzat en una àmplia varietat de projectes, des de sistemes de gestió de continguts fins a aplicacions de comerç electrònic. Aquesta versatilitat és testimoni de la seva eficàcia com a eina de desenvolupament.Aquí teniu alguns exemples:
 
-És bastant popular hui dia, potser el que més, si atenem diferents webs estadístiques. Per exemple, si comparem les cerques en **Google Trends** dels principals frameworks PHP, observem que Laravel és el més destacat:
-
-![Comparativa frameworks PHP](imagenes/07/compFra.png)
-
-També és un dels frameworks PHP que més demanda laboral a nivell nacional segons  **InfoJobs**.
-
-Té una gran comunitat darrere, la qual cosa permet trobar fàcilment ajuda per a problemes que tinguem
-Té una bona documentació, tant per terceres parts com a través de la seua pròpia pàgina oﬁcial. Disposa d'algunes llibreries addicionals que permeten afegir funcionalitat molt interessant, com el motor de plantilles **Blade**, o el **ORM Eloquent**, que veurem més endavant, així com llibreries de terceres parts que podem incorporar als nostres projectes.
-
-En realitat, una vegada es coneix un d'aquests frameworks, és més senzill assimilar la resta, arribat el moment. Així que Laravel pot ser un bon punt de partida. En concret, durant el curs utilitzarem la versió 9 del framework, que es recolza en PHP 8 per a funcionar.
+* Laracasts: És una plataforma d'aprenentatge en línia enfocada a PHP i Laravel, i fa un ús extensiu de Laravel.
+* Vogue Archive: El lloc web de l'arxiu de Vogue, que ofereix accés a tots els números de la revista des de 1892, està construït amb Laravel.
+* MyRank: Una plataforma en línia per a l'educació i l'avaluació, MyRank utilitza Laravel per gestionar el seu contingut i les funcions interactives.
+* Alison: Un dels portals d'aprenentatge en línia més grans, Alison també fa ús de Laravel per a la seva infraestructura web.
+* Startups.co: Una plataforma per a emprenedors que busca ajuda amb la planificació, el finançament i la creixença dels seus negocis. Laravel és utilitzat per a mantenir la seva plataforma.
 
 ## Característiques Laravel
 
@@ -74,7 +83,7 @@ En realitat, una vegada es coneix un d'aquests frameworks, és més senzill assi
 Laravel facilita el desenvolupament simplificant el treball amb tasques comunes com l'autenticació, el enrutamiendo, gestió sessions, l'emmagatzematge en caché, etc. Algunes de les principals característiques i avantatges de Laravel són:
 
 * Esta dissenyat per a desenvolupar sota el patró **MVC** (model - vista - controlador), centrant-se en la correcta separació i modularització del codi. El que facilita el treball en equip, així com la claredat, el manteniment i la reutilització del codi.
-* Integra un sistema **ORM de mapeado de dades relacional** anomenat **Eloquent** encara que també permet la construcció de consultes directes a força de dades mitjançant la seua **Query Builder**.
+* Eloquent, el ORM de Laravel, fa que treballar amb bases de dades sigui més senzill i intuïtiu, especialment en la gestió de relacions complexes.
 * Permet la gestió de **bases de dades** i la manipulació de taules des de codi, mantenint un control de versions de les mateixes mitjançant el seu sistema de **Migracions**.
 * Utilitza un **sistema de plantilles** per a les vistes anomenat **Blade**, el qual fa ús de la cache per a donar-li major velocitat. Blade facilita la
   creació de **vistes** mitjançant l'ús de layouts, herència i seccions.
@@ -82,7 +91,11 @@ Laravel facilita el desenvolupament simplificant el treball amb tasques comunes 
   faciliten el desenvolupament d'una aplicació i ens estalvien molt temps de programació.
 * Incorpora un **intèrpret de línia de comandos** anomenat **Artisan** que ens ajudarà amb un munt de tasques rutinàries com la creació de
   diferents components de codi, treball amb la base de dades i migracions, gestió de rutes, cachés, cues, tasques programades, etc.
-
+* Laravel Jetstream ofereix una implementació robusta per a l'autenticació i la gestió de sessions. Laravel Sanctum es utilitza per a APIs tokenitzades, proporcionant una solució elegant per a la autenticació d'APIs.
+* Laravel inclou proteccions de seguretat com la protecció CSRF, xifrat segur de contrasenyes i defenses contra injeccions SQL, garantint un entorn segur per al desenvolupament d'aplicacions web.
+* Amb Laravel, és possible construir arquitectures de microserveis eficaces, utilitzant Laravel Lumen o integrant-se amb altres serveis i APIs.
+* Laravel facilita la creació d'APIs RESTful amb característiques com les API Resources i la integració amb Laravel Passport per l'autenticació OAuth.
+* La comunitat de Laravel és una de les més actives i de suport en el món PHP, amb recursos com Laracasts, paquets de tercers, i fòrums extensos.
 
 ## Primers passos amb Laravel
 
@@ -146,7 +159,7 @@ Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar
 
 5. **Instal·la totes les dependències requerides**
    
-    $ docker run --rm -v $(pwd):/opt -w /opt laravelsail/php81-composer:latest composer install
+    $ docker run --rm -v $(pwd):/opt -w /opt laravelsail/php82-composer:latest composer install
    
     NOTA: Això pot trigar una estona si aquesta és la primera vegada que s'instal·la com a contenidor.
 
