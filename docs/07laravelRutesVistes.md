@@ -674,6 +674,6 @@ Fes que les rutes corresponents de routes/web.php que ja has definit [renderitze
 Edita l'arxiu **partials/nav.blade.php** per a modificar la barra de navegació i deixar-la amb un estil particular de tailwindcss. Pots consultar aquesta [pàgina](https://tailwindcss.com/docs/installation) per a prendre idees d'alguns dissenys que pots aplicar en la barra de navegació.
 Modificat l'arxiu welcome.blade.php  i canvia-ho perquè també herete de la plantilla base. Afig algun text introductori com a contingut. 
 
-### Activitats
+## Activitats
 
-710. 
+705. Crea un plantilla per a la teua pàgina on inclogues un menú de navegació, un peu de pàgina i un contingut variable. Crea dues vistes que hereten d'aquesta plantilla i que mostren un llistat de llibres i la fitxa d'un llibre. Crea una ruta per a cada vista i enllaça-les des del menú de navegació. La llista i el llibre són inventats. Guarda-ho com a rama **activitat705**.

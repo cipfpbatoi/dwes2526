@@ -69,7 +69,7 @@ public function boot()
     }
 ```
 
-#### Unint totes les rutes dun controlador
+#### Unint totes les rutes d'un controlador
 
 Al final de tot el procés d'implementació d'un controlador (de recursos o de API) tindrem en l'arxiude rutes una dedicada a cada mètode del controlador (una per a index , una altra per a show , etc.).
 Aquestes rutes poden agrupar-se en una sola usant el mètode resource de la classe Route , en lloc de get, indicant-li com a paràmetres el nom base de la ruta, i el controlador que s'encarregarà d'ella:
