@@ -109,8 +109,16 @@ Per descomptat, podeu canviar "exemple-app" en aquest URL a qualsevol cosa que v
 
 La instal·lació del **Sail** pot trigar diversos minuts mentre els contenidors de l'aplicació del **sail** es construeixen a la vostra màquina local.
 
-Després de crear el projecte, podeu navegar al directori de l'aplicació i iniciar Laravel Sail. Laravel Sail proporciona una interfície senzilla de línia d'ordres per a interactuar amb la configuració predeterminada de l'acoblador Laravel:
+Després de crear el projecte, 
 
+Seria bó comprovar que el .env inclou la següent configuració:
+
+```php
+WWWUSER = 1000
+WWWGROUP = 1000
+```
+
+Ara podeu navegar al directori de l'aplicació i iniciar Laravel Sail. Laravel Sail proporciona una interfície senzilla de línia d'ordres per a interactuar amb la configuració predeterminada de l'acoblador Laravel:
 ```php
 cd exemple-app && ./vendor/bin/sail up &
 ```
@@ -129,8 +137,26 @@ I per a inicialitzar la base de dades des de dins del contenidor:
 php artisan migrate
 ```
 
-### Instal·lació des de repositori github
+##### phpmyadmin
 
+Si volem que funcione el phpmyadmin haurien d'afegir un altre contenidor docker, o farem incluint el següent codi en el docker-compose.yml
+
+```php
+myadmin:
+    image: 'phpmyadmin:latest'
+    ports:
+      - 8080:80
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+    links:
+      - "mysql:db"
+    depends_on:
+      - mysql
+    networks:
+      - sail
+```
+
+### Instal·lació des de repositori github
 
 Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar des de Github. Aquest és un exemple
 
@@ -152,10 +178,26 @@ Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar
    DB_CONNECTION=mysql
    DB_HOST=mysql
    DB_PORT=3306
-   DB_DATABASE=laravel
+   DB_DATABASE=batoiBook
    DB_USERNAME=root
    DB_PASSWORD=1234
-   ```
+   
+5. ** Afegix el phpmyadmin a docker-compose.yml**
+   
+   ```php
+   myadmin:
+       image: 'phpmyadmin:latest'
+       ports:
+         - 8080:80
+       environment:
+         MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+       links:
+         - "mysql:db"
+       depends_on:
+         - mysql
+       networks:
+         - sail
+    ```
 
 5. **Instal·la totes les dependències requerides**
    
@@ -167,7 +209,7 @@ Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar
    
     $ vendor/bin/sail up -d
 
-7. **Entra en el phpmyadmin (localhost:8080) i crea la base de dades laravel.**
+7. **Entra en el phpmyadmin (localhost:8080) i crea la base de dades batoiBook.**
 
 8. **Inicia el terminal del contenidor**
    

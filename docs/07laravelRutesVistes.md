@@ -676,3 +676,4 @@ Modificat l'arxiu welcome.blade.php  i canvia-ho perquè també herete de la pla
 
 ### Activitats
 
+710. 
