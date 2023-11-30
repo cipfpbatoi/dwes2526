@@ -52,6 +52,7 @@ Route::get('prueba', 'PruebaController@index')->name('listado_prueba');
 ```
 
 !!! note Per a que esta definició de rutes funcione correctament hem d'afegir un linea al app/providers/RouteServiceProvider per afegir el espai de noms dels control·ladors:
+
 ```php
 public function boot()
     {

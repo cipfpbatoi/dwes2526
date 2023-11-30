@@ -43,16 +43,16 @@
 
 ## 6.- Ferramentes Web (16h)
 
-- [ ] 1.- (L 13N) Composer. Introducció Monolog.  Manejadors. Us de logs amb *Monolog*. Activitats 501 - 503 - 3
-- [ ] 2.- (M 14N) Documentació amb **phpDocumentor**. Activitats 521 - 522.- 6
-- [ ] 3.- (J 16N) Webscrapping. Activitats 531 - 533. -8
-- [ ] 4.- (L 20N) Projecte BatoiBook. Activitats 541 - 543 - 11
-- [ ] 5.- (M 21N) Prova escrita - 14
-- [ ] 6.- (J 23N) Correcció prova - 16
+- [X] 1.- (L 13N) Composer. Introducció Monolog.  Manejadors. Us de logs amb *Monolog*. Activitats 501 - 503 - 3
+- [X] 2.- (M 14N) Documentació amb **phpDocumentor**. Activitats 521 - 522.- 6
+- [X] 3.- (J 16N) Webscrapping. Activitats 531 - 533. -8
+- [X] 4.- (L 20N) Projecte BatoiBook. Activitats 541 - 543 - 11
+- [X] 5.- (M 21N) Prova escrita - 14
+- [X] 6.- (J 23N) Correcció prova - 16
 
 ## 7.- Frameworks PHP (29h)
 
-- [ ] 1.- (L 27N) Introducció e Instal·lació de Laravel - 3 
+- [X] 1.- (L 27N) Introducció e Instal·lació de Laravel - 3 
 - [ ] 2.- (M 28N) Rutes i vistes. Activitats 701-703 - 6
 - [ ] 3.- (J 30N) Controladors. Activitats 704-705 - 8
 - [ ] 4.- (L 4D) Migraciones. Activitats 711-714 - 11
