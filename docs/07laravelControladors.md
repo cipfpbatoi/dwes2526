@@ -76,20 +76,20 @@ Al final de tot el procés d'implementació d'un controlador (de recursos o de A
 Aquestes rutes poden agrupar-se en una sola usant el mètode resource de la classe Route , en lloc de get, indicant-li com a paràmetres el nom base de la ruta, i el controlador que s'encarregarà d'ella:
 
 ```
-Route::resource('catalog', 'CatalogController');
+Route::resource('catalog', CatalogController::class);
 ```
 
 La ruta anterior definirà una ruta GET cap a /catalog , atesa pel mètode index del controlador,una altra ruta GET cap a /catalog/{id} atesa pel mètode show del controlador... etc.
 També podem utilitzar el mètode only per a indicar per a quins mètodes volem rutes:
 
 ```
-Route::resource('catalog', 'CatalogController')->only(['index', 'show']);
+Route::resource('catalog', CatalogController::class)->only(['index', 'show']);
 ```
 
 Des del costat oposat, tenim disponible el mètode **except** per a indicar que es generen totes les rutes excepte aquelles per als mètodes indicats:
 
 ```
-Route::resource('catalog', 'catalogController')->except(['update', 'edit']);
+Route::resource('catalog', CatalogController::class)->except(['update', 'edit']);
 ```
 
 
@@ -396,7 +396,7 @@ I com cada volta que toquen un fitxer de configuració executem
 
 #### Exercicis
 
-#### Exercisi 704.
+#### Exercisi 711.
 
 Sobre el projecte blog de la sessió anterior, afegirem aquests canvis:
 
@@ -407,14 +407,22 @@ Sobre el projecte blog de la sessió anterior, afegirem aquests canvis:
 * Fes els canvis addicionals que siguen convenients (per exemple, en el menú de navegació) perquè els enllaços continuen funcionant, i prova que les quatre rutes (llistat, fitxa, creació i edició) funcionen adequadament.
 * Afegix el nou post al menú de navegació
 * 
-#### Exercisi 705
+#### Exercisi 712
 
 Sobre el projecte blog anterior, afegirem aquests canvis:
 
 * Fes que la funció **edit** del controlador de posts, en lloc de mostrar un missatge de text pla indicant que ací va un formulari, redirigisquen a la pàgina d'inici, usant la instrucció [**redirect**](#utilitzar-la-resposta-per-fer-redireccions) .
-* Afig un [helper](#helperserviceprovider) al projecte que definisca una funció anomenada **fechaActual** . Rebrà com a paràmetre un format de data (per exemple, "d/m/Y") i traurà la data actual en aquest format. Utilitza-ho per a mostrar la data actual en format "d/m/Y" en la plantilla base alineada a la dreta de la barra de navegació.
+* Afig un [helper](#helperserviceprovider) al projecte que definisca una funció anomenada **fechaActual** . Rebrà com a paràmetre un format de data (per defecte, "d/m/Y") i traurà la data actual en aquest format. Utilitza-ho per a mostrar la data actual en format "d/m/Y" en la plantilla base alineada a la dreta de la barra de navegació.
 
+## Activitats
 
+### Activitat 715
+
+* Crea controladors de recursos per a **Book**.
+* Crea les vistes corresponents a cada acció del controlador, utilitzant la plantilla de l'exercici anterior.
+* Crea les rutes corresponents a cada acció del controlador, i els mètodes per a visualitzar les vistes.
+* Fes el mateix per als **cicles**.
+* Crea un fitxer de funciones i fes que un Provider ho carregue.
 
 
 
