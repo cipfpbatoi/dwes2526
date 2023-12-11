@@ -191,10 +191,6 @@ A més si volem comprovar l'estat de les migracions, per a veure les que ja esta
 
 	php artisan migrate:status
 
-### Migració inversa
-
-Si tenim la base de dades i volem crear les migracions a partir d'ella podem instal·lar el següent [component](https://github.com/oscarafdev/migrations-generator). Te un bug ,explicat en aquest [enllaç](https://github.com/Xethron/migrations-generator/issues/191).
-
 
 ### Schema Builder
 
@@ -630,7 +626,7 @@ public function destroy($id)
 }
 ```
 
-##### Sobre lesborrat des de les vistes
+##### Sobre l'esborrat des de les vistes
 
 El normal és que l'esborrat s'active fent clic en algun element d'una vista. Per exemple, fent
 clic en un botó o enllaç que pose "Esborrar". Tanmateix, si implementem això així:
@@ -1405,7 +1401,7 @@ Consulta [documentación](https://laravel.com/docs/9.x/eloquent-relationships)
 ## Exercicis 
 
 
-#### Exercisi 711 (Branca v2.1):
+#### Exercisi 721:
  
 Sobre el projecte blog de la sessió anterior, afegirem aquests canvis:
 	
@@ -1423,7 +1419,7 @@ credencials adequades.
 * Llança les migracions i comprova que es creen les taules corresponents amb els camps associats
 en la base de dades.	
 
-#### Exercisi 712 (Branca v2.2):
+#### Exercisi 722:
 
 Continuem amb el projecte blog anterior. Crea un nou [model](#definició-dun-model-de-dades) anomenat Post per als posts del nostre blog. Ha de quedar  juntament amb el model d'Usuari a la subcarpeta **App\Models** del projecte.
 Després, modifica els mètodes del controlador **PostController** creat en exercisis anteriors, d'aquesta manera:
@@ -1445,7 +1441,7 @@ X"). Pots emprar la funció **rand** de PHP per a generar aquests números aleat
 * En l'arxiu **routes/web.php** , recorda afegir dues noves rutes temporals de tipus **get** per a provar aquestes insercions i modificacions. La primera pot apuntar a **/nuevoPrueba** ,per exemple, i la segona a **/editarPrueba/{id}** . Recorda també eliminar o editar la restricció **only** de les rutes del controlador que vas establir la sessió anterior, perquè no sols permeta les rutes **index, show, create i edit**, i a més permeta la de destroy (o totes les possibles, si vols, ja que tard o d'hora les utilitzarem).
 
 
-#### Exercisi 713 (Branca v2.3):
+#### Exercisi 723:
 
 Sobre el projecte blog de la sessió anterior, afegirem aquests canvis:
 
@@ -1454,7 +1450,7 @@ Sobre el projecte blog de la sessió anterior, afegirem aquests canvis:
 
 * Modifica la vista posts/index.blade.php perquè, al costat del títol de cada post, entre parèntesi, aparega el **name** de l'usuari que el va crear.
 
-#### Exercisi 714 (Branca v2.4):
+#### Exercisi 724:
 
 Continuem amb el projecte blog anterior. Ara afegirem el següent:
 
@@ -1462,7 +1458,7 @@ Continuem amb el projecte blog anterior. Ara afegirem el següent:
 * Crea un altre seeder anomenat **PostsSeeder** amb un factory associat anomenat **PostFactory** . En el factory, defineix amb el faker títols aleatoris (frases) i continguts aleatoris (textos llargs). Usa el seeder per a crear 3 posts per a cadascun dels usuaris existents.
 * Utilitza l'opció **php artisan migrate:fresh --seed** per a esborrar tot contingut previ i poblar la base de dades amb aquests nous elements. Comprova després des de la pàgina del llistat de posts, i des de phpmyAdmin que la informació és correcta.
 
-#### Exercisi 715 (Branca v2.5):
+#### Exercisi 725:
 
 Afig al projecte blog un nou model anomenat Comentari , juntament amb la seua migració i controlador associats. Cada comentari tindrà com a camp el contingut del comentari, i estarà relacionat un a molts amb el model Usuari , de manera que un usuari pot tindre molts comentaris, i cada comentari pertany a un usuari. També tindrà una relació un a molts amb el model Post , de manera que un comentari pertany a un post, i un post pot tindre molts comentaris. Per tant, la
 migració dels comentaris haurà de tindre com a camps addicionals la relació amb l'usuari ( usuario_id ) i amb el post al qual pertany ( post_id ).

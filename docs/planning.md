@@ -53,8 +53,8 @@
 ## 7.- Frameworks PHP (29h)
 
 - [X] 1.- (L 27N) Introducció e Instal·lació de Laravel - 3 
-- [ ] 2.- (M 28N) Rutes i vistes. Activitats 701-703 - 6
-- [ ] 3.- (J 30N) Controladors. Activitats 704-705 - 8
+- [X] 2.- (M 28N) Rutes i vistes. Activitats 701-703 - 6
+- [X] 3.- (J 30N) Controladors. Activitats 704-705 - 8
 - [ ] 4.- (L 4D) Migraciones. Activitats 711-714 - 11
 - [ ] 5.- (M 5G) Models.Eloquent. Activitat 715 - 14 
 - [ ] 6.- (L 11D) Formularis, validacions i emmagetzenament. Activitat 721 - 23 - 16 

@@ -79,6 +79,7 @@ Duració estimada: 85 hores
      * [Controladors](07laravelControladors.md)
      * [Models i dades](07laravelModelsDades.md)
      * [Validacio i Autenticacio](07laravelValidacioAutenticacio.md)
+     * [Activitats](07laravelBatoiBook.md)
      
 
 8. [Serveis Web](08laravelRestFull.md) (16h)

@@ -15,6 +15,7 @@ nav:
   - "7.2- Controladors": "07laravelControladors.md"
   - "7.3- Models i Dades": "07laravelModelsDades.md"
   - "7.4- Validació i Autenticació": "07laravelValidacioAutenticacio.md"
+  - "7.5- Activitat Batoi Books": "07laravelBatoiBook.md"
   - "8.- Serveis Web": "08rest.md"
   - "9.- Webs Hibrides": "09websHibrides.md"
 

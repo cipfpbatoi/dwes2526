@@ -686,8 +686,5 @@ Modificat l'arxiu welcome.blade.php  i canvia-ho perquè també herete de la pla
 704. Crea un components Alert per a vore les alertes de l'aplicació. Aquest component tindrà un atribut type que pot ser success, error o warning. El component mostrarà un missatge d'alerta amb el text que li passem com a contingut i el tipus d'alerta que li passem com a atribut. El component tindrà un estil diferent per a cada tipus d'alerta. Els estils els pots trobar en la documentació de tailwindcss.
 705. Fes una pàgina d'error 404.blade i mostra un missatge mitjançant Alert. Aquesta pàgina s'ha de mostrar quan l'usuari accedix a una ruta que no existeix.
 
-## Activitats (rama #activitatVistes en  BatoiBookPro)
-710. Crea un plantilla per a la teua pàgina on inclogues un menú de navegació, un peu de pàgina i un contingut variable. Crea dues vistes que hereten d'aquesta plantilla i que mostren un llistat de llibres i la fitxa d'un llibre. Crea una ruta per a cada vista i enllaça-les des del menú de navegació. La llista i el llibre són inventats. 
-711. Copia el component Alert a la teua aplicació i utilitza'l per a mostrar una missatge d'alerta en la pàgina d'error 404.blade.
-712. Instal·la el tailwind CSS.
+
 
