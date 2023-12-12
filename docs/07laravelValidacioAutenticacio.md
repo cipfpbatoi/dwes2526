@@ -697,88 +697,9 @@ Defineix [missatges d'error](#mostrar-missatges-derror) personalitzats per a cad
 * Finalment, afig la funcionalitat que l'usuari autenticat només pot editar i esborrar els seus
   propis posts, però no els dels altres usuaris.
 
-725. Rols d'usuaris
+* Crea un nou [middleware](#definir-roles-ús-de-middleware) anomenat **EnsureUserIsAuthor** per fer-ho
 
-* Crea una nova migració que modifique la taula d'usuaris per a afegir un nou camp anomenat rol,
-  de tipus string. Assegura't que la migració siga de modificació, i no de creació de taula. Després,
-  executa-la per a crear el nou camp.
-
-* Fes que algun dels usuaris de la taula tinga un rol de **admin** (edita'l a mà des de phpMyAdmin),
-  i la resta seran de tipus editor.
-
-* Crea un nou [middleware](#definir-roles-ús-de-middleware) anomenat **RolCheck** , amb una funció que comprove si l'usuari té el
-  rol indicat, com en l'exemple vist abans en les anotacions. Registra-ho adequadament en l'arxiu
-  App/Http/Kernel.php , com s'ha explicat.
-
-* Modifica les vistes necessàries perquè, si l'usuari és de tipus **admin** puga veure els botons d'edició
-  i esborrat de qualsevol post, encara que no siguen seus.
-
-* Modifica els mètodes edit , update i destroy de PostController perquè redirigisquen a posts.index
-  si l'usuari no és administrador, o si no és el propietari del post a editar o esborrar.
-
-726. Idioma
+725. Idioma
 
 * Cerca el paquet de castellà o valencia i possa'l en la carpeta corresponent.
 * Canvia l'idioma de l'aplicació al paquet baixat.
-
-## Projecte cholloSevero
-
-La pàgina principal del lloc ha de ser un llistat amb totes les gangues disponibles
-  
-  * Configura la base de dades amb **Eloquent**, mitjançant migracions i seeders.
-
-  * La taula Ganga ha de contindre les següents columnes:
-    * id únic i **autoincremental**
-    * title: un títol per a la ganga
-    * description: descripció de la ganga
-    * url: un camp per a introduir la URL externa de la ganga
-    * category: albergarà la id de la categoria de les gangues
-    * likes: un nombre enter que indique els likes de la ganga
-    * unlikes: un nombre enter que indique els unlikes de la ganga
-    * price: per a albergar el preu de la ganga
-    * price_sale: per a albergar el nou preu
-    * available: disponible de tipus boolean
-    * user_id: id del usuari que ha creat la ganga qui ha creat la ganga
-    
-  * La tabla users i categories les pots fer semblants a l'exercici del tema anterior.
-  * Almenys, el lloc ha de contindre un controlador de Laravel; pots crear tants com cregues necessaris però mínim ha d'haver-hi un.
-    
-  * Elements estàtics Com ja hem vist, hi ha uns certs elements que sempre es mostren en totes les vistes del lloc web. A continuació es llisten els elements que han d'estar si o si en totes les plantilles que creeu.
-
-    * Logo del lloc i el títol Ganga ░▒▓ Severa
-    * Inici | Nous | Destacats
-    * Un **footer** amb el vostre nom i alguna dada copyright del tipus ©*CholloSevero 2023 on l'any ha de ser calculat a través de la data del servidor.
-      
-  * Pàgina principal
-    * A més del llistat de totes les gangues paginades de la base de dades ha de contindre l'enllaç al login:
-    * Cada ganga ha de ser accessible des d'aquest llistat
-    * Cada ganga ha de contindre una imatge que estarà guardada en /storage/app/public/img
-    * El nom de les imatges ha d'estar composta per la següent fórmula idChollo-ganga-severa.extension.Per exemple: 25-ganga-severa.jpg 
-    * La imatge de la ganga es puja a través del formulari de creació.
-    
-  * Pàgina privada de l'usuari loguejat
-    * Nomès eixiran les gangues creades per l'usuari en qüestió.
-      
-  * Pàgina de Ganga
-    * Quan punxem en un de les gangues del llistats hem de ser redirigits a aquesta vista on podrem veure tota la informació del taula ganga. Pots maquetar-la com vulgues i fins i tot pots basar-te en la web de CholloMetre. El camp disponible no és necessari que el mostres en aquesta vista.
-    * Cada ganga ha de contindre els seus botons d'editar i esborrar que faça les funcions que toquen si l'usuari està autoritzat a fer-ho. Pots utilitzar icones per a cadascun dels botons.
-
-  * Pàgina de Crear una ganga (només usuaris autenticats)
-    + Un formulari amb els camps necessaris per a poder crear una ganga nova. A més, has de tindre en compte que has de validar els camps, de tal manera que no es puga enviar el formulari si s'ha deixat algun camp en blanc o algun tipus no compatible amb la base de dades; aquestes validacions, a més d'afegir la propietat **required** d'HTML5 has de fer-ho amb **Laravel**.
-    * En cas que hi haja hagut algun error en el formulari has de mostrar un missatge en la part de dalt del mateix amb el missatge d'error (per exemple, si el camp està buit).
-
-  * Pàgina d'Editar una ganga (només usuaris autenticats)
-    * Molt semblant a la de Crear una ganga però que pugues editar una Ganga en funció de la seua id. Recorda't de la validació.
-
-  * Ampliació:
-    * Afegix un rol d'usuari per poder afegir usuaris administradors. Els administradors podran editar i esborrar totes les gangues
-    * Els administradors podran afegir, editar i esborrar les categories.
-    * Afegeix botons per a fer like o dislike en una ganga. Quan un usuari faça like/unlinke s'incrementarà en la base de dades.
-    * Només podran votar els usuaris loguejats. Un usuari sols podrà emetre un vot sobre un article, encara que podrà canviar el sentit del seu vot.
-    
-  * COSES A TINDRE EN COMPTE
-    * L'aplicació ha de quedar presentable 
-    * Els missatges d'error o d'informació han d'estar estilitzats perquè l'usuari puga veure'ls amb facilitat 
-    * Els elements estàtics han de ser presents en totes les vistes; incloses les d'editar i crear. 
-    * Aneu fent **commits** en funció de les tasques que vages acabant o que veges que el commit té sentit. No és bona pràctica pujar els canvis d'un arxiu i el següent **commit** tornar a pujar més canvis del mateix arxiu (llevat que ens hàgem saltat o equivocat en alguna cosa). 
-    * El projecte és individual i després es presentarà, d'un en un al professor perquè avalue tots els aspectes d'aquest. Es faran preguntes de com s'ha fet una certa cosa o per què s'ha determinat un cert flux de treball així que, no us copieu perquè s'avalua també la presentació del projecte.
