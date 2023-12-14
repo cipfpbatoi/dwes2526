@@ -2,6 +2,7 @@
 
 
 701. Crea les migracions per a les taules **books**, **courses**, **families**, **modules** i **sales**. 
+     * L'ordre per a crear les migracions depedrà de les claus alienes. Així en este cas hauria de ser (families,courses,modules,books,sales).
      * Mira de crear també les claus alienes
      * Tria el tipus de dades adequat per a cada camp.
      * Sigues curós en la nomenclatura de les claus aliènes.

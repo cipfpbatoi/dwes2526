@@ -263,12 +263,13 @@ Per a consultar tots els tipus de dades que podem utilitzar podeu consultar la d
 #### Afegir índexs
 Schema suporta els següents tipus d'índexs:
 
-| Comanament| Descripció|
-|--|--|
-|$table->primary('id');| Afegir una clau primària|
-|$table->primary(array('first', 'last'));| Definir una clau primària composta|
-|$table->unique('email');|  Definir el camp com UNIQUE|
-|$table->index('state');|Afegir un índex a una columna|
+| Comanament                               | Descripció|
+|------------------------------------------|--|
+| $table->id();                            |Afegir un clau primària id|
+| $table->primary('id');                   | Afegir una clau primària|
+| $table->primary(array('first', 'last')); | Definir una clau primària composta|
+| $table->unique('email');                 |  Definir el camp com UNIQUE|
+| $table->index('state');                  |Afegir un índex a una columna|
 
 En la taula s'especifica com afegir aquests índexs després de crear el camp, però també permet indicar aquests índexs alhora que es crea el camp:
 
@@ -277,22 +278,19 @@ En la taula s'especifica com afegir aquests índexs després de crear el camp, p
 ##### Claus alienes
 Amb Schema també podem definir claus alienes entre taules:
  
-	$table->integer('user_id')->unsigned();
-	$table->foreign('user_id')->references('id')->on('users');
+	$table->foreignId('module_id')->constrained('modules');
+
+	$table->foreign('module_id')->references('code')->on('modules');
 	
-En aquest exemple en primer lloc afegim la columna "user_id" de tipus UNSIGNED INTEGER (sempre haurem de crear primer la columna sobre la qual es va a aplicar la clau aliena). A continuació vam crear la clau aliena entre la columna "user_id" i la columna "id" de la taula "users".
+En el primer exemple, a més de crear el camp crea la rel·lacio, i serveix si la clau a la que faig referència s'ha creat utilitzant $table->id();
+
+En cas contrari he d'especificar el camp ja creat i on es rel·laciona.
 
 La columna amb la clau aliena ha de ser del **mateix tipus** que la columna a la qual apunta. Si per exemple vam crear una columna a un índex auto-incremental haurem d'especificar que la columna siga **unsigned** per que no es produïsquen errors.
 
 També podem especificar les accions que s'han de realitzar per a "**on delete**" i "**on update**":
 
 	$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-Per a eliminar una clau aliena, en el mètode down de la migració hem d'utilitzar el següent codi: 
-
-	$table->dropForeign('posts_user_id_foreign');
-
-Per a indicar la clau aliena a eliminar hem de seguir el següent patró per a especificar el nom **<tabla>_<columna>_foreign**. On "taula" és el nom de la taula actual i "columna" el nom de la columna sobre la qual es cree la clau aliena.
 
 
 ## [Models de dades mitjançant ORM](https://laravel.com/docs/9.x/eloquent)
