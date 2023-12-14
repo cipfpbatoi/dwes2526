@@ -1,13 +1,27 @@
 ## Activitats 
-701. Crea un plantilla per a la teua pàgina on inclogues un menú de navegació, un peu de pàgina i un contingut variable. Crea dues vistes que hereten d'aquesta plantilla i que mostren un llistat de llibres i la fitxa d'un llibre. Crea una ruta per a cada vista i enllaça-les des del menú de navegació. La llista i el llibre són inventats. 
-702. Copia el component Alert a la teua aplicació i utilitza'l per a mostrar una missatge d'alerta en la pàgina d'error 404.blade. 
-703. Instal·la el tailwind CSS. 
-704. Crea controladors de recursos per a **Book**. 
-705. Crea les vistes corresponents a cada acció del controlador, utilitzant la plantilla de l'exercici anterior. 
-706. Crea les rutes corresponents a cada acció del controlador, i els mètodes per a visualitzar les vistes. 
-707. Fes el mateix per als **cicles**. 
-708. Crea un fitxer de funcions i fes que un Provider ho carregue.
-709. Crea els models per al BatoiBook.
-710. Crea les migracions per al BatoiBook.
-711. Crea els seeders i els factorys per al BatoiBook.
-712. Crea les relacions entre models.
+
+
+701. Crea les migracions per a les taules **books**, **courses**, **families**, **modules** i **sales**. 
+     * Mira de crear també les claus alienes
+     * Tria el tipus de dades adequat per a cada camp.
+     * Sigues curós en la nomenclatura de les claus aliènes.
+     * Afegiex un camp administrador a la taula **users** per a saber si un usuari és administrador o no.
+
+702. Crea els models per a les taules **books**, **courses**, **families**, **modules** i **sales**. 
+     * Crea les relacions entre models.
+
+703. Crea els seeders i els factorys per a cada model.
+    * Per als models **courses**, **modules** i **families** fes-ho des del sql (no cal factory).
+    * Crea 100 usuaris registrats. Un ha de ser administrador.
+    * Crea 100 llibres amb un preu aleatori entre 10 i 100 i disponibles per a la venda.
+    * Crea 100 llibres més amb un preu aleatori entre 10 i 100 i no disponibles per a la venda, per que ja ho estan.
+    * Crea les 100 vendes per a eixos llibres.
+
+704. Crea les rutes corresponents a cada acció del controlador, i els mètodes per a visualitzar les vistes. 
+    * Crea un controlador de recursos per a **Book**, **Course**,  **Family** i **Module**. 
+
+705. Crea les vistes corresponents a cada acció del controlador. 
+706. Fes que la pàgina principal mostre la llista de llibres disponibles.
+707. Quan un usuari es logueja mostra-li la seua llista de llibres a la venda, amb el botons per modificar, esborrar i crear un llibre nou.
+708. Ha de tenir un enllaç per vore les seues vendes.
+709. L'administrador podrà veure la llista d'usuaris per a donar de baixa. Així mateix també podrà fer un manteniment de les taules modules, courses i families.
