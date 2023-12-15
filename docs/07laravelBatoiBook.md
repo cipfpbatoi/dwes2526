@@ -12,7 +12,14 @@
      * Crea les relacions entre models.
 
 703. Crea els seeders i els factorys per a cada model.
-    * Per als models **courses**, **modules** i **families** fes-ho des del sql (no cal factory).
+    * Per als models **courses**, **modules** i **families** fes-ho des del sql (**no cal factory**).
+
+!!! tip "Recomanació"
+     Hauràs de copiar els fitxers .json a la carpeta storage/app/public. Podràs accedir-hi amb l'instrucció **Storage::disk('public')->path('nomfitxer.json')**.
+
+!!! tip "Recomanació"
+     Una vegada que accedim al fitxer json, per a convertir-lo a un array associatiu, utilitzarem la funció **json_decode**. Després per a accedir a les dades utilitzarem la notació **$array[2]['data']**.
+
     * Crea 100 usuaris registrats. Un ha de ser administrador.
     * Crea 100 llibres amb un preu aleatori entre 10 i 100 i disponibles per a la venda.
     * Crea 100 llibres més amb un preu aleatori entre 10 i 100 i no disponibles per a la venda, per que ja ho estan.
