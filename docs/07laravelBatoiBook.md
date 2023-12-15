@@ -15,15 +15,24 @@
     * Per als models **courses**, **modules** i **families** fes-ho des del sql (**no cal factory**).
 
 !!! tip "Recomanació"
-     Hauràs de copiar els fitxers .json a la carpeta storage/app/public. Podràs accedir-hi amb l'instrucció **Storage::disk('public')->path('nomfitxer.json')**.
+        Hauràs de copiar els fitxers .json a la carpeta storage/app/public. Podràs accedir-hi amb l'instrucció **Storage::disk('public')->path('nomfitxer.json')**.
 
 !!! tip "Recomanació"
-     Una vegada que accedim al fitxer json, per a convertir-lo a un array associatiu, utilitzarem la funció **json_decode**. Després per a accedir a les dades utilitzarem la notació **$array[2]['data']**.
+        Una vegada que accedim al fitxer json, per a convertir-lo a un array associatiu, utilitzarem la funció **json_decode**. Després per a accedir a les dades utilitzarem la notació **$array[2]['data']**.
+
 
     * Crea 100 usuaris registrats. Un ha de ser administrador.
     * Crea 100 llibres amb un preu aleatori entre 10 i 100 i disponibles per a la venda.
-    * Crea 100 llibres més amb un preu aleatori entre 10 i 100 i no disponibles per a la venda, per que ja ho estan.
-    * Crea les 100 vendes per a eixos llibres.
+    * Crea les 100 vendes per a 100 llibres més.
+
+!!! tip "Recomanació"
+    Al crear el seeder de sales, pots crear primer el llibre i desprès vendre'l. Per això pots utilitzar el mètode **create** del model **Book**. Per exemple:
+    ```php
+    $book = Book::factory()->create([
+        'soldDate' => now()->subYear()->format('Y-m-d'), // Data de l'any passat
+    ]);
+    $book->sales()->save(Sale::factory()->make());
+    ```
 
 704. Crea les rutes corresponents a cada acció del controlador, i els mètodes per a visualitzar les vistes. 
     * Crea un controlador de recursos per a **Book**, **Course**,  **Family** i **Module**. 
