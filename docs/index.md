@@ -87,7 +87,7 @@ Duració estimada: 85 hores
     * Producció i consum.
     * *AJAX* amb *JSON*.
    
-9. [Webs Híbrides](09webshibrides.md) (16h)
+9. [Webs Híbrides](09mashup.md) (16h)
 
     * Reutilització de codi i dades.
     * OAuth2
