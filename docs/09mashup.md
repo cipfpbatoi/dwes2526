@@ -264,3 +264,116 @@ En el teu fitxer de configuració (per exemple, config/services.php), afegeix un
     'api_key' => env('OPENAI_API_KEY'),
 ]
 ```
+
+#### Creació d'un service per a OpenAI
+
+Per a això creem un directori Services i un fixer ChatGPTService.php
+
+```php
+<?php
+
+namespace App\Http\Services;
+
+use GuzzleHttp\Client;
+
+
+class ChatGTPService
+{
+    /**
+     * Register services.
+     */
+
+    protected $client;
+
+    public function __construct()
+    {
+        $this->client = new Client([
+            'base_uri' => 'https://api.openai.com/v1/',
+            'headers' => [
+                'Authorization' => 'Bearer ' . config('services.openai.api_key'),
+            ],
+        ]);
+    }
+
+    public function post(string $url, array $options = [])
+    {
+        return $this->client->post($url, $options);
+    }
+}
+
+
+#### Creació de Rutes i Controladors
+
+Crearem una ruta per provar el funcionament de l'API. Per a això, en el fitxer `routes/web.php` afegirem la següent ruta:
+
+```php
+// Rutes per a openai
+Route::get('/openai', [OpenAIController::class, 'index'])->name('openai.index');
+```
+
+I crearem el controlador `OpenAIController` amb la comanda:
+
+```console
+php artisan make:controller OpenAIController
+```
+
+I modificarem el fitxer `app/Http/Controllers/OpenAIController.php` de la següent manera:
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Services\ChatGTPService;
+
+class OpenAIController extends Controller
+{
+
+    protected $chatGPTClient;
+
+    public function __construct(ChatGTPService $chatGPTClient)
+    {
+        $this->chatGPTClient = $chatGPTClient;
+    }
+
+    public function index()
+    {
+
+        try {
+            $response = $this->chatGPTClient->post('chat/completions', [
+                'json' => [
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => [
+                        ['role' => 'system', 'content' => 'Ets un fan del Barça.'],
+                        ['role' => 'user', 'content' => 'Quina va ser la darrera copa de Europa que guanyà el Barça?'],
+                        // La resposta de l'assistant es genera automàticament, no cal proporcionar-la
+                        ['role' => 'user', 'content' => 'Qui va fer els gols?']
+                    ],
+                    'max_tokens' => 250,
+                ],
+            ]);
+
+            $body = $response->getBody();
+            $content = json_decode($body->getContents(), true);
+
+            print_r($content);
+        } catch (\Exception $e) {
+            // Gestiona l'error
+            echo "Error: " . $e->getMessage();
+        }
+    }
+}
+```
+
+Aquest fitxer PHP defineix un controlador OpenAIController en l'espai de noms App\Http\Controllers, el qual utilitza el servei ChatGTPService per a fer peticions a l'API d'OpenAI. Aquí tens una breu explicació de cada part:
+
+1. Espai de Noms i Importacions: El fitxer pertany a l'espai de noms App\Http\Controllers i importa ChatGTPService.
+
+2. Propietat chatGPTClient: El controlador té una propietat protegida $chatGPTClient que emmagatzema l'instància de ChatGTPService.
+
+3. Constructor: El constructor injecta ChatGTPService i l'assigna a la propietat $chatGPTClient.
+
+4. Mètode index: Aquest mètode realitza una petició a l'API d'OpenAI utilitzant el mètode post de ChatGTPService. La petició inclou un model, messages i max_tokens com a paràmetres.
+
+5. Tractament de Respostes i Errors: El mètode gestiona les respostes de l'API i captura qualsevol excepció que es produeixi durant la petició.
+
