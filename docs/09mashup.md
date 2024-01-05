@@ -300,7 +300,7 @@ class ChatGTPService
         return $this->client->post($url, $options);
     }
 }
-
+```
 
 #### Creació de Rutes i Controladors
 
@@ -377,3 +377,5 @@ Aquest fitxer PHP defineix un controlador OpenAIController en l'espai de noms Ap
 
 5. Tractament de Respostes i Errors: El mètode gestiona les respostes de l'API i captura qualsevol excepció que es produeixi durant la petició.
 
+A partir d'ahi hem de estudiar la [documentació de l'API](https://platform.openai.com/docs/api-reference) per a poder fer peticions i tractar les respostes.
+Al mateix temps crearem les rutes, les vistes i els metodes necessaries per incrementar la funcionalitat de la nostra aplicació.
