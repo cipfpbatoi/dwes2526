@@ -55,13 +55,13 @@
 - [X] 1.- (L 27N) Introducció e Instal·lació de Laravel - 3 
 - [X] 2.- (M 28N) Rutes i vistes. Activitats 701-703 - 6
 - [X] 3.- (J 30N) Controladors. Activitats 704-705 - 8
-- [ ] 4.- (L 4D) Migraciones. Activitats 711-714 - 11
-- [ ] 5.- (M 5G) Models.Eloquent. Activitat 715 - 14 
-- [ ] 6.- (L 11D) Formularis, validacions i emmagetzenament. Activitat 721 - 23 - 16 
-- [ ] 7.- (M 12D) Autenticació i autorització. Activitat 724- 25 - 19  
+- [X] 4.- (L 4D) Migraciones. Activitats 711-714 - 11
+- [X] 5.- (M 5G) Models.Eloquent. Activitat 715 - 14 
+- [X] 6.- (L 11D) Formularis, validacions i emmagetzenament. Activitat 721 - 23 - 16 
+- [X] 7.- (M 12D) Autenticació i autorització. Activitat 724- 25 - 19  
 - [ ] 8.- (J 14D) Notificacions, correu i cues - 21 
 - [ ] 9.- (L 18D) Tasques , events i websockets - 24
-- [ ] 10.- (M 19D) Projecte Batoi Book - 27
+- [X] 10.- (M 19D) Projecte Batoi Book - 27
 - [ ] 11.- (J 21D) Projecte Batoi Book - 29
  
 ## 8.- Serveis web  (16h)
