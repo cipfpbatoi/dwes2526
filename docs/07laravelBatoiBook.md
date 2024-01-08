@@ -37,9 +37,24 @@
 
 704. Crea les rutes corresponents a cada acció del controlador, i els mètodes per a visualitzar les vistes. 
     * Crea un controlador de recursos per a **Book**, **Course**,  **Family** i **Module**.
-705. Crea les vistes corresponents a cada acció del controlador bookController (per a crear les vistes pots utilitzar el chatGtp). 
-706. Fes que la pàgina principal (quan no s'estiga loguejat) mostre la llista de llibres disponibles(en modo fitxa, paginades de 10 en 10) (utilitza un component per a crear la fitxa del llibre).
+705. Crea les vistes corresponents a cada acció del controlador bookController (per a crear les vistes pots utilitzar el chatGtp).
+    * Es millor que create i edit siguen vistes diferents.
+    * Per a la vista show crea un component per a vore el llibre.
+     <x-book-card book="{{$book->id}}" />
+706. Fes que la pàgina principal (quan no s'estiga loguejat) mostre la llista de llibres disponibles - no venuts - (en modo fitxa, paginades de 10 en 10) 
+     * Uutilitza un el comonent que has creat abans.
 707. Quan un usuari es logueja mostra-li la seua llista de llibres a la venda, amb el botons per modificar, esborrar i crear un llibre nou.
-708. Ha de tenir un enllaç per vore les seues vendes.
-709. L'administrador podrà veure la llista d'usuaris per a donar de baixa. 
-710. Així mateix també podrà fer un manteniment de les taules modules, courses i families.
+708. Fes un enllaç per vore les seues vendes.
+709. L'administrador podrà veure la llista d'usuaris per a donar de baixa i la llista de totes les vendes.
+
+720. Afig un camp admes a la taula books
+     * El valor per defecte ha de ser false.
+     * Modifica els seeders per a que tots els llibres creat tinguen el camp admes a true.
+     * Quan un llibre es dona d'alta no ix en la pàgina principal fins que no és admés.
+721. Envia una notificació al usuari administrador quan un usuari done d'alta un llibre
+     * Amb un botó per admetre el llibre.
+     * Crear la ruta i el mètode per admetre el llibre.
+722. Crea un mailable PurchaseConfirmationMail que s'envie quan un usuari compre un llibre.
+     * Afegix un botó al component de book per poder comprar el llibre si l'usuari està autenticat.
+     * Fes que el botó faça tots el procediments de compra i al final envia el correu.
+    
