@@ -61,5 +61,5 @@
 723. Crea un comando send:regards que envia una felicitació a tots els usuaris que han fet vendes l'ultim any.
      * No cal programar-lo. L'enviarem amb l'artisan quan vulguem.
 
-724. Envia un missatge de benvinguda quan un usuari es registra en l'aplicació.
+724. Envia un correu de benvinguda quan un usuari es registra en l'aplicació.
     * Utilitza events i listeners.
