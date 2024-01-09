@@ -106,7 +106,7 @@ class UserRegistered
 En aquest exemple, l'esdeveniment UserRegistered s'utilitza per a anunciar que un usuari s'ha registrat.
 
 
-### Creació d'Oïdors**
+### Creació d'Oïdors
 
 ```bash
 php artisan make:listener NomOidor --event=NomEsdeveniment
