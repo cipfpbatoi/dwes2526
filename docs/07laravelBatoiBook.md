@@ -57,4 +57,10 @@
 722. Crea un mailable PurchaseConfirmationMail que s'envie quan un usuari compre un llibre.
      * Afegix un botó al component de book per poder comprar el llibre si l'usuari està autenticat.
      * Fes que el botó faça tots el procediments de compra i al final envia el correu.
-    
+   
+723. Crea un comando send:regards que envia una felicitació a tots els usuaris que han fet vendes l'ultim any.
+     * No cal programar-lo. L'enviarem amb l'artisan quan vulguem.
+     * Tracta de fer-ho utilitzant una cua.
+
+724. Envia un missatge de benvinguda quan un usuari es registra en l'aplicació.
+    * Utilitza events i listeners.
