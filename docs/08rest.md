@@ -41,6 +41,40 @@ Exemples de **APIs** gratuïtes:
 
 ## Els serveis REST
 
+### Consultar una API externa
+
+Per consultar una API externa com https://swapi.dev/ des de Laravel, pots utilitzar la biblioteca HTTP client de Laravel, que proporciona una interfície senzilla per a realitzar peticions HTTP. Ací tens un exemple de com fer una petició GET per a obtenir informació sobre personatges de "Star Wars":
+
+**Instal·la la Biblioteca HTTP Client:**
+Si no està ja instal·lat, pots afegir la biblioteca HTTP client de Laravel al teu projecte amb Composer:
+
+```bash
+composer require guzzlehttp/guzzle
+```
+
+**Realitza una Petició GET:**
+Després, pots utilitzar el facade Http per a realitzar una petició GET. Aquí tens un exemple de com consultar informació sobre personatges:
+
+```php
+use Illuminate\Support\Facades\Http;
+
+public function getStarWarsCharacters()
+{
+$response = Http::get('https://swapi.dev/api/people/');
+
+    if ($response->successful()) {
+        $data = $response->json();
+        // Manipula o mostra les dades com necessites
+    } else {
+        // Maneja l'error
+    }
+}
+```
+
+En aquest exemple, la petició GET a https://swapi.dev/api/people/ retorna informació sobre personatges de "Star Wars". La resposta es verifica per a comprovar si ha estat exitosa, i després es processen les dades JSON. Pots adaptar aquest codi per a fer altres tipus de consultes a l'API, depenent de la informació que necessites.
+
+
+
 ### REST
 
 Amb aquesta metodologia anomenada **REST** podrem construir *APIs* perquè des d'un client extern es puguen consumir.
@@ -48,7 +82,7 @@ Amb aquesta metodologia anomenada **REST** podrem construir *APIs* perquè des d
 Gràcies a aquest **standard** de l'arquitectura del programari podrem muntar una API que utilitze els mètodes standard GET, POST, PUT i DELETE.
 
 
-#### Construïnt una API/REST bàsica
+### Construïnt una API/REST bàsica
 
 [![](imagenes/ull.png)Video](https://youtu.be/1O8cvJKNhm8)
 
@@ -1177,21 +1211,21 @@ Us encomane a que vejau el video on està tot explicat perquè amb els apunt sol
 
 ## Exercicis
 
-801. Crea una api per al projecte cholloSevero amb les següents especificacions:
+801. Fes que el usersSeeder carregue els personatges d'starwars com a usuaris del sistema.
+
+Crea una api per al projecte batoiBook amb les següents especificacio
+
+802. Crea los endpoints per a consultar els elements totes les taules de BatoiBooks amb les següents especificacions:
+
+    * Les taules courses, families i modules seran retornades sense utilitar Resources , però si amb el codi de resposta.
+    * La taula users seguirà el mateix criteri però hauràs de tenir en compte que soles retornarem id, name, email i administrador.
+    * Per a la taula books crearem un apiResource per afegir el nom del propietari i el nom del mòdul, a més de canviar el noms del camps a un idioma oficial en l'estat Español.
+    * Per mostrar tots els llibres paginats crearem una Collection Resource per afegir l número de pàgina actual, el nombre total de pàgines, el nombre de registres per pàgina, i el total de registres disponibles, a més com l'estat de la resposta i un enllaç a la pàgina posterior i anterior.
+    * Farem el mateix per a la taula sales.
+
+803. Crea els endpoints per a crear,modificar i esborrar els elements de les taules de BatoiBooks següents: books i sales.
+804. Crear el endpoint per a loguejar-se en l'aplicació i proteguix les rutes POST, PUT i DELETE de les taules que ho implementen.
+
     
-     * Només has de crear els endPoint per a les gangues
-       * GET \api\gangas
-       * GET \api\gangas\{id}
-       * POST \api\gangas
-       * PUT \api\gangas\{id}
-       * DELETE \api\gangas\{id]
-     * Les ganges han de retornar els camps de la base de dades i el nom de l'usuari i de la categoria (utilitzar API RESOURCE)
-     * Opcional (Mira de paginar els resultats)
-     * El POST i el PUT es validaran amb el mateix Request que està en l'aplicació ja feta
-     * Crea les colecciones en el POSTMAN per a poder provar-ho tot.
-
-802. Protegix l'API mitjançant laravel sanctum (has de protegir les rutes POST,PUT I DELETE).
-     * Soles el propietari pot modificar o esborrar una ganga
-
-803. Crea la documentació per a els endpoints de l'aplicació de gangues.
-
+    
+    *        
