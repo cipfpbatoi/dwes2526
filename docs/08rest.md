@@ -673,8 +673,7 @@ El Sanctum només intentarà autenticar-se usant galetes quan la petició entran
 
 
 !!! note "Una autenticació"
-    Està molt bé utilitzar Sanctum només per a l'autenticació de tokens API o només per a l'autenticació de SPA. Només perquè utilitzeu Sanctum no vol dir que hàgiu d'utilitzar les dues característiques que ofereix.
-
+    Està molt bé utilitzar Sanctum només per a l'autenticació de tokens API o només per a l'autenticació de SPA. Només perquè utilitzeu Sanctum no vol dir que heu d'utilitzar les dues característiques que ofereix.
 
 
 ## Instal·lació
@@ -715,13 +714,24 @@ use App\Models\User;
 class LoginController extends Controller
 {
 	public function login(Request $request)
-    {
-        $usuario = User::where('email', $request->email)->first();
-        if (!$usuario || !Hash::check($request->password, $usuario->password)) {
-            return response()->json(['error' => 'Credenciales no válidas'], 401);
-        } else {
-            return response()->json(['token' => $usuario->createToken($usuario->email)->plainTextToken]);
+    { 
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
         }
+
+        $user = User::where('email', $request->email)->firstOrFail();
+
+        // Crear un token de Sanctum
+        $token = $user->createToken('api-token')->plainTextToken;
+
+        return response()->json(['token' => $token], 200);
     }
 }
 ```
@@ -1213,7 +1223,7 @@ Us encomane a que vejau el video on està tot explicat perquè amb els apunt sol
 
 801. Fes que el usersSeeder carregue els personatges d'starwars com a usuaris del sistema.
 
-Crea una api per al projecte batoiBook amb les següents especificacio
+### Crea una api per al projecte batoiBook amb les següents especificacions
 
 802. Crea los endpoints per a consultar els elements totes les taules de BatoiBooks amb les següents especificacions:
 
@@ -1224,6 +1234,7 @@ Crea una api per al projecte batoiBook amb les següents especificacio
     * Farem el mateix per a la taula sales.
 
 803. Crea els endpoints per a crear,modificar i esborrar els elements de les taules de BatoiBooks següents: books i sales.
+804. Fes que els missatges d'error siguen en format json.
 804. Crear el endpoint per a loguejar-se en l'aplicació i proteguix les rutes POST, PUT i DELETE de les taules que ho implementen.
 
     
