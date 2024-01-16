@@ -59,17 +59,17 @@
 - [X] 5.- (M 5G) Models.Eloquent. Activitat 715 - 14 
 - [X] 6.- (L 11D) Formularis, validacions i emmagetzenament. Activitat 721 - 23 - 16 
 - [X] 7.- (M 12D) Autenticació i autorització. Activitat 724- 25 - 19  
-- [ ] 8.- (J 14D) Notificacions, correu i cues - 21 
-- [ ] 9.- (L 18D) Tasques , events i websockets - 24
+- [X] 8.- (J 14D) Notificacions, correu i cues - 21 
+- [X] 9.- (L 18D) Tasques , events i websockets - 24
 - [X] 10.- (M 19D) Projecte Batoi Book - 27
-- [ ] 11.- (J 21D) Projecte Batoi Book - 29
+- [X] 11.- (J 21D) Projecte Batoi Book - 29
  
 ## 8.- Serveis web  (16h)
 
-- [ ] 1.- (L 8G) Tecnologies i protocols. Estandars i arquitectuures. Formats. Generacio d'un servei  GET  - 3
-- [ ] 2.- (M 9G) Obtindre dades de fonts públiques utilitzant curl.  - 6
-- [ ] 3.- (J 11G) Generació de serveis POST i PUT. POSTMAN - 8
-- [ ] 4.- (L 15G) Autenticació - 11
+- [X] 1.- (L 8G) Tecnologies i protocols. Estandars i arquitectuures. Formats. Generacio d'un servei  GET  - 3
+- [X] 2.- (M 9G) Obtindre dades de fonts públiques utilitzant curl.  - 6
+- [X] 3.- (J 11G) Generació de serveis POST i PUT. POSTMAN - 8
+- [X] 4.- (L 15G) Autenticació - 11
 - [ ] 5.- (M 16G) Documentació. OPEN API. Swagger per a Laravel - 14
 - [ ] 6.- (J 18G) Projecte Batoi Book - 16
 
