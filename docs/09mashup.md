@@ -537,7 +537,7 @@ Al mateix temps crearem les rutes, les vistes i els metodes necessaries per incr
 ## Gestió de pagaments
 
 La primera decisió que hem de pendre es triar la passarel·la de Pagament: Hi ha moltes opcions com Stripe, PayPal, PayU, Braintree, Square, Authorize.Net...
-Totes sole tindre entorn de proves(sanbox) on fer transaccions fictícies per a provar el funcionament de la passarel·la de pagament.
+Totes solen tindre entorn de proves(sanbox) on fer transaccions fictícies per a provar el funcionament de la passarel·la de pagament.
 
 ### PayPal
 
