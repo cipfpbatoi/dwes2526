@@ -1224,19 +1224,21 @@ Us encomane a que vejau el video on està tot explicat perquè amb els apunt sol
 801. **Inicialització de Dades amb usersSeeder**
 
     **Objectiu:** Utilitza el usersSeeder per a afegir personatges de Star Wars com a usuaris del nostre sistema.
+    
     **Tasca:** Modifica usersSeeder perquè carregue personatges de Star Wars en la base de dades, assignant-los com a usuaris del sistema.
 
 802. **Desenvolupament d'una API per a batoiBook**
-   **Objectiu:** Crea una API per al projecte batoiBook amb les següents especificacions:
+   
+    **Objectiu:** Crea una API per al projecte batoiBook amb les següents especificacions:
 
     **Endpoints per Consultar Taules:**
 
-    * Taules courses, families, i modules: Crea endpoints per aquestes taules. Les respostes hauran de retornar-se sense utilitzar Resources, però incloent el codi de resposta HTTP.
-    * Taula users: Similar als anteriors, però en aquest cas, retorna només id, name, email, i administrador en les respostes.
-    * Taula books:
+    * **Taules courses, families, i modules**: Crea endpoints per aquestes taules. Les respostes hauran de retornar-se sense utilitzar Resources, però incloent el codi de resposta HTTP.
+    * **Taula users**: Similar als anteriors, però en aquest cas, retorna només id, name, email, i administrador en les respostes.
+    * **Taula books**:
         * Utilitza un apiResource per a incloure el nom del propietari i el nom del mòdul en les respostes. Adapta els noms dels camps a un idioma oficial d'Espanya.
         * Per mostrar tots els llibres de manera paginada, crea una Collection Resource que afiga detalls com el número de pàgina actual, el nombre total de pàgines, el nombre de registres per pàgina, i el total de registres disponibles. Inclou també l'estat de la resposta i enllaços a les pàgines anterior i posterior.
-    * Taula sales: Segueix un procés similar al de la taula books per a mostrar les vendes paginades.
+    * **Taula sales**: Segueix un procés similar al de la taula books per a mostrar les vendes paginades.
     * Endpoints per a Creació, Modificació, i Esborrat:
         * Crea endpoints específics per a crear, modificar, i esborrar elements en les taules books i sales.
 
