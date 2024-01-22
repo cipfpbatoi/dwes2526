@@ -70,8 +70,8 @@
 - [X] 2.- (M 9G) Obtindre dades de fonts públiques utilitzant curl.  - 6
 - [X] 3.- (J 11G) Generació de serveis POST i PUT. POSTMAN - 8
 - [X] 4.- (L 15G) Autenticació - 11
-- [ ] 5.- (M 16G) Documentació. OPEN API. Swagger per a Laravel - 14
-- [ ] 6.- (J 18G) Projecte Batoi Book - 16
+- [No] 5.- (M 16G) Documentació. OPEN API. Swagger per a Laravel - 14
+- [X] 6.- (J 18G) Projecte Batoi Book - 16
 
 ## 9.- Webs hibrides (16 h)
 - [ ] 1.- (L 22G) Reutilizació de codi e informació. Característiques. Utilització de repositoris - 13

@@ -391,8 +391,6 @@ Echo.private('user.' + userId)
 Aquest codi JavaScript escoltarà l'esdeveniment BookSold en un canal privat associat amb l'usuari. Quan es dispara l'esdeveniment, es mostrarà una alerta (o qualsevol altra acció que vulgues realitzar).
 
 
-    
-
 ##  Integració amb ChatGPT API
 
 
@@ -534,3 +532,179 @@ Aquest fitxer PHP defineix un controlador OpenAIController en l'espai de noms Ap
 
 A partir d'ahi hem de estudiar la [documentació de l'API](https://platform.openai.com/docs/api-reference) per a poder fer peticions i tractar les respostes.
 Al mateix temps crearem les rutes, les vistes i els metodes necessaries per incrementar la funcionalitat de la nostra aplicació.
+
+
+## Gestió de pagaments
+
+La primera decisió que hem de pendre es triar la passarel·la de Pagament: Hi ha moltes opcions com Stripe, PayPal, PayU, Braintree, Square, Authorize.Net...
+Totes sole tindre entorn de proves(sanbox) on fer transaccions fictícies per a provar el funcionament de la passarel·la de pagament.
+
+### PayPal
+
+Per permetre que un usuari pague amb el seu compte PayPal Sandbox a un compte Business de Sandbox en una aplicació Laravel, hauràs de seguir una sèrie de passos. Aquests passos impliquen la configuració del teu entorn de Sandbox a PayPal i la integració amb la teva aplicació Laravel utilitzant el paquet paypal/rest-api-sdk-php o una altra biblioteca similar. Aquí tens una guia pas a pas:
+
+* Configura els Comptes Sandbox: Assegura't que tens dos comptes en PayPal Sandbox: un compte personal (que simula el comprador) i un compte Business (que simula el venedor).
+
+* Instal·la el Paquet de PayPal en Laravel: Utilitza Composer per instal·lar el paquet `paypal/rest-api-sdk-php` o una altra biblioteca de PayPal compatible amb Laravel.
+
+* Configura les Credencials de Sandbox en Laravel: Obté les credencials del teu compte Business de Sandbox (ID de client i secret) i configura-les en el teu projecte Laravel, normalment a través del fitxer .env. i configura el `services.php
+     
+```php
+'paypal' => [
+'client_id' => env('PAYPAL_CLIENT_ID'),
+'client_secret' => env('PAYPAL_CLIENT_SECRET'),
+],
+```  
+
+* Crea un Context d'API de PayPal: Utilitza les credencials del teu compte Business de Sandbox per crear un objecte ApiContext. Aquest objecte s'utilitzarà per a realitzar crides a l'API de PayPal.
+
+```php
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+
+// ...
+
+public function createPayment()
+{
+    $apiContext = new ApiContext(new OAuthTokenCredential(
+            env('PAYPAL_CLIENT_ID'),     // ClientID
+            env('PAYPAL_SECRET')         // ClientSecret
+        )
+    );
+
+    // Configura el `ApiContext` segons les teves necessitats
+    $apiContext->setConfig([
+        'mode' => 'sandbox', // Mode Sandbox per a proves
+        // Altres configuracions...
+    ]);
+
+    // Aquí va la resta de la teva lògica de pagament...
+}
+```
+
+* Implementa la Lògica de Pagament:
+
+        * Desenvolupa la lògica en els teus controladors Laravel per crear sol·licituds de pagament. Això inclou la creació d'objectes de pagament amb detalls com l'import, la moneda, i la descripció.
+        * Redirigeix l'Usuari a PayPal: Quan un usuari iniciï un pagament, redirigeix-lo a la pàgina de pagament de PayPal utilitzant l'URL proporcionada per la biblioteca. L'usuari iniciarà sessió amb el seu compte personal de Sandbox per completar el pagament.
+        * Gestiona la Resposta de PayPal: Després que l'usuari completi el pagament, serà redirigit de tornada a la teva aplicació. Necessitaràs gestionar aquesta resposta per confirmar la transacció.
+        * Prova el Procés de Pagament: Realitza proves utilitzant els teus comptes de Sandbox per assegurar-te que tot funciona com s'espera. Això inclou iniciar un pagament amb el compte personal de Sandbox i rebre el pagament en el compte Business de Sandbox.
+        * Revisa i Depura: Comprova que les transaccions es mostren correctament en els panells de control de Sandbox tant del comprador com del venedor. Depura qualsevol problema que puguis trobar.
+
+Exemple de creació d'un pagament amb el SDK de PayPal:
+
+```php
+use PayPal\Api\Amount;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+
+class PaymentController extends Controller
+{
+    private $apiContext;
+
+    public function __construct()
+    {
+        $this->apiContext = new ApiContext(
+            new OAuthTokenCredential(
+                env('PAYPAL_SANDBOX_CLIENT_ID'),     // ClientID
+                env('PAYPAL_SANDBOX_SECRET')         // ClientSecret
+            )
+        );
+        $this->apiContext->setConfig(['mode' => 'sandbox']);
+    }
+
+    public function createPayment()
+    {
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
+
+        $amount = new Amount();
+        $amount->setTotal('10.00');  // Defineix l'import del pagament
+        $amount->setCurrency('EUR'); // Defineix la moneda
+
+        $transaction = new Transaction();
+        $transaction->setAmount($amount);
+        $transaction->setDescription('Descripció del pagament');
+
+        $redirectUrls = new RedirectUrls();
+        $redirectUrls->setReturnUrl(url('/payment/success')) // URL de retorn en cas d'èxit
+                     ->setCancelUrl(url('/payment/cancel')); // URL de retorn en cas de cancel·lació
+
+        $payment = new Payment();
+        $payment->setIntent('sale')
+                ->setPayer($payer)
+                ->setTransactions([$transaction])
+                ->setRedirectUrls($redirectUrls);
+
+        try {
+            $payment->create($this->apiContext);
+            return redirect()->away($payment->getApprovalLink());
+        } catch (Exception $e) {
+            // Gestiona l'error aquí
+            return back()->with('error', 'Hi ha hagut un problema en processar el pagament');
+        }
+    }
+    
+    public function successPayment(Request $request)
+    {
+        $paymentId = $request->get('paymentId');
+        $payerId = $request->get('PayerID');
+    
+        if (empty($paymentId) || empty($payerId)) {
+            // Redirigeix a una pàgina d'error o mostra un missatge
+            return redirect('/')->with('error', "El pagament no s'ha pogut verificar.");
+        }
+    
+        $payment = Payment::get($paymentId, $this->apiContext);
+    
+        $execution = new PaymentExecution();
+        $execution->setPayerId($payerId);
+    
+        try {
+            // Executa el pagament
+            $result = $payment->execute($execution, $this->apiContext);
+    
+            // Comprova que el pagament s'ha completat amb èxit
+            if ($result->getState() == 'approved') {
+                // Aquí pots processar la informació de la transacció, 
+                // com ara actualitzar la base de dades, etc.
+                return redirect('/')->with('success', 'Pagament completat amb èxit.');
+            }
+        } catch (Exception $e) {
+            // Gestiona els errors aquí
+            return redirect('/')->with('error', 'Hi ha hagut un problema en processar el teu pagament.');
+        }
+    
+        return redirect('/')->with('error', "El pagament no s'ha pogut completar.");
+    }
+
+    // Aquí pots afegir els mètodes per gestionar la cancel·lació  del pagament
+}
+```
+Defineix les rutes
+    
+```php  
+Route::get('/payment/create', 'PaymentController@createPayment');
+Route::get('/payment/success', 'PaymentController@successPayment');
+Route::get('/payment/cancel', 'PaymentController@cancelPayment');
+```
+
+És important seguir aquests passos detalladament i referir-se a la documentació específica de la biblioteca que estàs utilitzant per obtenir instruccions detallades i exemples de codi. La clau està en la correcta configuració i integració de les credencials de PayPal Sandbox i la correcta gestió de les respostes de l'API de PayPal.
+
+**Notes Importants**
+Aquest exemple és molt bàsic i només per a fins educatius. En un entorn de producció, hauràs de gestionar molts altres aspectes com la verificació de seguretat, el maneig d'errors més detallat, i la integració amb la base de dades.
+Assegura't de provar aquest codi en l'entorn de Sandbox de PayPal abans de considerar la seva implementació en producció.
+Personalitza els imports del pagament (import, moneda, descripció) segons les necessitats del teu projecte.
+
+## Activitats
+
+901. Crea l'autenticació mitjançant google per a l'aplicació de BatoiBook
+
+Tria un: 
+
+902. Crea un canal de difusió per a l'aplicació de BatoiBook. Crea un esdeveniment que s'envie per aquest canal de difusió quan es realitze una venda
+903. Crea un chat per a l'API de ChatGPT en l'aplicació de BatoiBook.
+904. Crea una pasarela de pagament per a l'aplicació de BatoiBook.
