@@ -1221,22 +1221,34 @@ Us encomane a que vejau el video on està tot explicat perquè amb els apunt sol
 
 ## Exercicis
 
-801. Fes que el usersSeeder carregue els personatges d'starwars com a usuaris del sistema.
+801. **Inicialització de Dades amb usersSeeder**
 
-### Crea una api per al projecte batoiBook amb les següents especificacions
+    **Objectiu:** Utilitza el usersSeeder per a afegir personatges de Star Wars com a usuaris del nostre sistema.
+    **Tasca:** Modifica usersSeeder perquè carregue personatges de Star Wars en la base de dades, assignant-los com a usuaris del sistema.
 
-802. Crea los endpoints per a consultar els elements totes les taules de BatoiBooks amb les següents especificacions:
+802. **Desenvolupament d'una API per a batoiBook**
+   **Objectiu:** Crea una API per al projecte batoiBook amb les següents especificacions:
 
-    * Les taules courses, families i modules seran retornades sense utilitar Resources , però si amb el codi de resposta.
-    * La taula users seguirà el mateix criteri però hauràs de tenir en compte que soles retornarem id, name, email i administrador.
-    * Per a la taula books crearem un apiResource per afegir el nom del propietari i el nom del mòdul, a més de canviar el noms del camps a un idioma oficial en l'estat Español.
-    * Per mostrar tots els llibres paginats crearem una Collection Resource per afegir l número de pàgina actual, el nombre total de pàgines, el nombre de registres per pàgina, i el total de registres disponibles, a més com l'estat de la resposta i un enllaç a la pàgina posterior i anterior.
-    * Farem el mateix per a la taula sales.
+    **Endpoints per Consultar Taules:**
 
-803. Crea els endpoints per a crear,modificar i esborrar els elements de les taules de BatoiBooks següents: books i sales.
-804. Fes que els missatges d'error siguen en format json.
-804. Crear el endpoint per a loguejar-se en l'aplicació i proteguix les rutes POST, PUT i DELETE de les taules que ho implementen.
+    * Taules courses, families, i modules: Crea endpoints per aquestes taules. Les respostes hauran de retornar-se sense utilitzar Resources, però incloent el codi de resposta HTTP.
+    * Taula users: Similar als anteriors, però en aquest cas, retorna només id, name, email, i administrador en les respostes.
+    * Taula books:
+        * Utilitza un apiResource per a incloure el nom del propietari i el nom del mòdul en les respostes. Adapta els noms dels camps a un idioma oficial d'Espanya.
+        * Per mostrar tots els llibres de manera paginada, crea una Collection Resource que afiga detalls com el número de pàgina actual, el nombre total de pàgines, el nombre de registres per pàgina, i el total de registres disponibles. Inclou també l'estat de la resposta i enllaços a les pàgines anterior i posterior.
+    * Taula sales: Segueix un procés similar al de la taula books per a mostrar les vendes paginades.
+    * Endpoints per a Creació, Modificació, i Esborrat:
+        * Crea endpoints específics per a crear, modificar, i esborrar elements en les taules books i sales.
 
-    
-    
+804. **Gestió d'Errors**
+
+    **Objectiu**: Assegura que els missatges d'error es retornen en format JSON.
+
+804. **Endpoint per a Iniciar Sessió i Protecció de Rutes**
+
+    **Objectiu**: Implementa un sistema d'autenticació i seguretat per a l'API.
+
+    **Tasca**: Crea un endpoint per a iniciar sessió en l'aplicació. A més, protegeix les rutes POST, PUT, i DELETE en les taules que ho requereixen, assegurant que només usuaris autenticats puguen realitzar aquestes accions.
+
+
     *        
