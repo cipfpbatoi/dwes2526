@@ -448,68 +448,22 @@ class ChatGTPService
         ]);
     }
 
-    public function post(string $url, array $options = [])
-    {
-        return $this->client->post($url, $options);
-    }
-}
-```
-
-#### Creació de Rutes i Controladors
-
-Crearem una ruta per provar el funcionament de l'API. Per a això, en el fitxer `routes/web.php` afegirem la següent ruta:
-
-```php
-// Rutes per a openai
-Route::get('/openai', [OpenAIController::class, 'index'])->name('openai.index');
-```
-
-I crearem el controlador `OpenAIController` amb la comanda:
-
-```console
-php artisan make:controller OpenAIController
-```
-
-I modificarem el fitxer `app/Http/Controllers/OpenAIController.php` de la següent manera:
-
-```php
-<?php
-
-namespace App\Http\Controllers;
-
-use App\Http\Services\ChatGTPService;
-
-class OpenAIController extends Controller
-{
-
-    protected $chatGPTClient;
-
-    public function __construct(ChatGTPService $chatGPTClient)
-    {
-        $this->chatGPTClient = $chatGPTClient;
-    }
-
-    public function index()
-    {
-
+    public function response($question){
         try {
-            $response = $this->chatGPTClient->post('chat/completions', [
+            $response = $this->client->post('chat/completions', [
                 'json' => [
                     'model' => 'gpt-3.5-turbo',
                     'messages' => [
                         ['role' => 'system', 'content' => 'Ets un fan del Barça.'],
-                        ['role' => 'user', 'content' => 'Quina va ser la darrera copa de Europa que guanyà el Barça?'],
-                        // La resposta de l'assistant es genera automàticament, no cal proporcionar-la
-                        ['role' => 'user', 'content' => 'Qui va fer els gols?']
-                    ],
+                        ['role' => 'user', 'content' => $question],
+                   ],
                     'max_tokens' => 250,
                 ],
             ]);
 
             $body = $response->getBody();
             $content = json_decode($body->getContents(), true);
-
-            print_r($content);
+            return $content['choices'];
         } catch (\Exception $e) {
             // Gestiona l'error
             echo "Error: " . $e->getMessage();
@@ -518,17 +472,19 @@ class OpenAIController extends Controller
 }
 ```
 
-Aquest fitxer PHP defineix un controlador OpenAIController en l'espai de noms App\Http\Controllers, el qual utilitza el servei ChatGTPService per a fer peticions a l'API d'OpenAI. Aquí tens una breu explicació de cada part:
+Ara la forma de utilitzar-lo de forma bàsica és la següent:
 
-1. Espai de Noms i Importacions: El fitxer pertany a l'espai de noms App\Http\Controllers i importa ChatGTPService.
+```php
+    $chatService = new ChatGTPService();
+    $reply = $chatService->response($question);
+    $message = '';
+    foreach ($reply as $r){
+        if ($r['message']['role'] == 'assistant') {
+                $message .= $r['message']['content'];
+        }
+    }
+```        
 
-2. Propietat chatGPTClient: El controlador té una propietat protegida $chatGPTClient que emmagatzema l'instància de ChatGTPService.
-
-3. Constructor: El constructor injecta ChatGTPService i l'assigna a la propietat $chatGPTClient.
-
-4. Mètode index: Aquest mètode realitza una petició a l'API d'OpenAI utilitzant el mètode post de ChatGTPService. La petició inclou un model, messages i max_tokens com a paràmetres.
-
-5. Tractament de Respostes i Errors: El mètode gestiona les respostes de l'API i captura qualsevol excepció que es produeixi durant la petició.
 
 A partir d'ahi hem de estudiar la [documentació de l'API](https://platform.openai.com/docs/api-reference) per a poder fer peticions i tractar les respostes.
 Al mateix temps crearem les rutes, les vistes i els metodes necessaries per incrementar la funcionalitat de la nostra aplicació.
@@ -706,5 +662,17 @@ Personalitza els imports del pagament (import, moneda, descripció) segons les n
 Tria un: 
 
 902. Crea un canal de difusió per a l'aplicació de BatoiBook. Crea un esdeveniment que s'envie per aquest canal de difusió quan es realitze una venda
-903. Crea un chat per a l'API de ChatGPT en l'aplicació de BatoiBook.
+903. Crea un chat per a l'API de ChatGPT en l'aplicació de BatoiBook. Fes que al mostrar el llibre (soles en show) ixca un index del llibre generat per chatgtp.
 904. Crea una pasarela de pagament per a l'aplicació de BatoiBook.
+
+Investiga:
+
+905. Tria un e intenta intregrar en batoibooks:
+
+        * Integració de Google Maps API.
+        * Gestió d'Enviaments amb APIs de Logística.
+        * Integració de Passarel·les de Pagament.
+        * Ús de APIs de Xarxes Socials.
+        * Serveis Meteorològics Integrats.
+        * Recollida d'Opinions amb APIs de Ressenyes.
+
