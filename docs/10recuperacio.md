@@ -1,176 +1,147 @@
 # Exercicis de recuperació de PHP
 
-## Exercici 1
+## DAMERO
 
-### Part 1
+### Part 1. Pintar Tauler
 
-Crea la següent estructura de fitxers dins de la carpeta /src:
+#### Exercici 1.1 Pintar Tauler
 
-classes/
-views/
-config/
+Fes un programa que pinte un tauler de damas. El tauler ha de ser de 8x8 i ha de ser de colors. Pots utilitzar la següent taula de colors:
 
-### Part 2 
-
-Posa els [paràmetres de connexiò a la base de dades](06accesoDatos.md#fitxer-de-configuracio-de-la-bd) en un fitxer de configuració que es trobi a la carpeta /config. 
-
-### Part 3
-
-Crea una classe [Connection](03phpoo.md) que es trobi a la carpeta /classes i que continga en el constructor el codi per a fer la connexió a
-la base de dades amb el [paràmetres](02php.md#biblioteca-de-funcions) donats en la part2. Utiliza el [composer](05herramientas.md#composer) per a que eixa classe es puga importar amb use 
-
-Crea un mètode insert que reba com a paràmetres el nom de la taula i un array associatiu i que [inserte](06accesoDatos.md#sentencies-preparades) a la base de dades els valors del array
-
-### Part 4
-
-Crea una vista que continga un formulari amb el camps per a inserir un nou usuari a la base de dades.
-
-### Part 5
-
-Crea un fitxer [register.php](04web.md#formularis) que continga el codi per cridar a la vista i per a fer la connexió a la base de dades i que inserte un nou usuari.
-
-## Exercici 2
-
-### Part 1
-
-Crea una classe [User](03phpoo.md) que es trobe a la carpeta /classes i que continga els atributs i els mètodes necessaris per a gestionar els usuaris de la base de dades.
-
-### Part 2
-
-Crea un mètode login que reba com a paràmetres el nom d'usuari i la contrasenya i que [consulte](06accesoDatos.md#sentencies-preparades) a la base de dades si existeix un usuari amb aquests valors i que retorni un objecte User si existeix o null si no existeix.
-
-### Part 3
-
-Crea un fitxer [login.php] que mostra la vista de login i s'encarregue de gestionar la petició de l'usuari de la següent [manera](04web.md#autenticaci-dusuaris):
-   * Si les credencials d'usuari són correctes que guarde en una variable de [sessió](04web.md#sessio) l'objecte User que retorna el mètode login i vaja a index.php.
-   * Si les credencials no són correctes que torne a mostrar el login mantenint el nom possat [inicialment](04web.md#validacio).
-
-### Part 4
-
-Crea un fitxer [index.php] que continga el codi per a mostrar un missatge de benvinguda si l'usuari està loguejat o retorne a la pàgina de login si no ho està.
-
-## Exercici 3
-
-### Part 1
-
-Crea una classe [Product](03phpoo.md) que es trobe a la carpeta /classes i que continga els atributs i els mètodes necessaris per a gestionar els productes de la base de dades.
-
-### Part 2
-
-Crea un mètode getAll que [consulte](06accesoDatos.md#sentencies-preparades) a la base de dades tots els productes i que retorni un array d'objectes Product.
-
-### Part 3
-
-Crea un fitxer [products.php] que continga el codi per a mostrar tots els productes de la base de dades.
-
-### Part 4
-
-Crea un fitxer [product.php] que continga el codi per a mostrar un producte concret de la base de dades.
-
-### Part 5
-
-Crea un fitxer [newProduct.php] que continga el codi per a mostrar un formulari per a inserir un nou producte a la base de dades.
-
-## Exercici 4
-
-### Part 1
-
-Crea un fixert [updateProduct.php] que continga el codi per a mostrar un formulari i per a modificar un producte de la base de dades.
-
-### Part 2
-
-Crea un fitxer [deleteProduct.php] que continga el codi per a eliminar un producte de la base de dades.
-
-### Part 3
-
-Pagina els resultats de la consulta a la base de dades de manera que només es mostren 10 productes per pàgina. Ha d'haver també un enllaç per a anar a la pàgina següent i un altre per a anar a la pàgina anterior.
-
-### Part 4
-
-Crea un fitxer [logout.php] que continga el codi per a esborrar la variable de sessió i que redirigeixi a la pàgina de login.
-
-### Exercici 5
-
-### Part 1
-
-Anem a crear una pagina [api/book.php] que ens retorni un json amb tots els llibres de la base de dades. Pots utilitzar el següent exemple per a fer-ho:
-
-```php
-<?php
-
-// Executar consulta SELECT per obtenir totes les dades de la taula "books"
-$sql = "SELECT * FROM books";
-$result = mysqli_query($conn, $sql);
-
-// Crear un array per a les dades de tots els llibres
-$books = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $books[] = $row;
+```css
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
 }
 
-// Convertir les dades en format JSON i retornar-les com a resposta HTTP
-header('Content-Type: application/json');
-echo json_encode($books);
+.taula-de-dames {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+    gap: 2px;
+}
 
-?>
+.taula-de-dames div {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.negre {
+    background-color: #444;
+}
+
+.blanc {
+    background-color: #fff;
+}
 ```
+Guarda el fitxer com a `tauler.view.php` referència-lo des de `index.php`.
 
-### Part 2
+#### Exercici 1.2 Classe Tauler
 
-Anem a afegir a la pàgina [api/book.php] un paràmetre que ens permeti obtenir un llibre concret. Hauràs de comprovar l'existència de la variable per discernir si l'usuari vol obtenir tots els llibres o un llibre concret. 
+Crea una classe `Tauler` que siga capaç de pintar el tauler de la forma que s'ha indicat en l'exercici anterior. La classe ha de tindre un mètode `__toString` que pinte el tauler.
 
-### Part 3
+A més la classe tauler acceptarà el paràmetre `tamany` que per defecte serà 8. La classe anirà dins d'un  directori `classes`.
 
-Anem a afegir a la pàgina [api/book.php] els mètodes POST, PUT i DELETE per a poder afegir, modificar i eliminar llibres de la base de dades. Pots utilitzar el següent exemple per a fer-ho:
+Utilitza esta classe des de la vista tauler per a pintar el tauler.
+
+### Exercici 1.3 Classe casella
+
+Crea una classe `Casella` que represente una casella del tauler. La classe tindrà un atribut `color` que serà `blanc` o `negre` i un mètode `__toString` que pintarà la casella.
+A més tindrà un atribut  `ocupant` que serà `null` si està buida, o `jugador1`, `jugador2`.
+
+### Exercici 1.3 Posició inicial
+
+En la classe `Tauler`, crea un mètode `taulerInicial` per inicialitzar el tauler amb fitxes per als dos jugadors en les posicions correctes. 
+
+Hauras de crear un array en el constructor de la classe `Tauler` per a guardar les caselles.
 
 ```php
-<?php
+class Tauler {
+    private $tamany; // Tamany del tauler, típicament 8 per a dames
+    private $caselles;
 
-// Comprovar el mètode de petició HTTP
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Executar una consulta SELECT per obtenir les dades de la taula "books"
-    // i mostrar-les en una taula HTML
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    public function __construct($tamany = 8) {
+        $this->tamany = $tamany;
+        $this->inicialitzarCaselles();
+    }
+```
+Crea un mètode per obtenir les caselles del tauler.
+
+Utilitza aquest .css actualitzat.
+
+```css
+body {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background-color: #f0f0f0;
+}
+
+.taula-de-dames {
+display: grid;
+grid-template-columns: repeat(8, 60px); /* Ajusta la mida de les caselles */
+grid-template-rows: repeat(8, 60px);
+gap: 2px;
+}
+
+.negre {
+background-color: #769656; /* Color verd fosc per a les caselles jugables */
+}
+
+.blanc {
+background-color: #eeeed2; /* Color clar per a les caselles no jugables */
+}
+
+.taula-de-dames div.negre, .taula-de-dames div.blanc {
+width: 60px; /* Ajusta la mida de les caselles */
+height: 60px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative; /* Permet posicionament absolut dins */
+}
+
+.taula-de-dames div.negre::before, .taula-de-dames div.blanc::before {
+content: '';
+width: 80%; /* Ajusta la mida del marcador de la fitxa */
+height: 80%; /* Ajusta la mida del marcador de la fitxa */
+border-radius: 50%;
+position: absolute;
+}
+
+.taula-de-dames div.negre.fitxa-jugador1::before {
+background-color: #fff; /* Color de les fitxes del jugador 1 */
+box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.taula-de-dames div.negre.fitxa-jugador2::before {
+background-color: #000; /* Color de les fitxes del jugador 2 */
+box-shadow: 0 2px 4px rgba(255,255,255,0.3);
+}
+```
+
+### Exercici 1.4 Moviment de fitxes
+
+Crea un mètode `moureFitxa` en la classe `Tauler` que reba la posició inicial i la posició final de la fitxa a moure. El mètode comprovarà si el moviment és vàlid i si ho és, moure la fitxa.
+S'ha de comprovar que les coordenades estiguen dins del tauler i que la casella de destí estiga lliure.
+Podrem comprovar que funciona modificant el fitxer `index.php` de la següent manera:
     
-} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-       
-} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-        // Executar una consulta DELETE per esborrar un registre amb un determinat "id"
+```php
+$tauler = new Tauler();
+if ($tauler->moureFitxa(2, 1, 3, 0)) {
+    echo "Moviment realitzat amb èxit!";
+} else {
+    echo "Moviment invàlid.";
 }
+include_once './views/tauler.view.php';
+
+### 
 
 
-```
-
-### Part 4
-
-Canvia el que necessites per tal que quan es produïsca una errada es retorni un codi d'estat HTTP adequat.
-
-## Exercici 6
-
-### Part 1
-
-Possa validació als formularis de manera que no es puguin introduir valors no vàlids.
-
-### Part 2
-
-Fes que despres de una validació incorrecta es mostri el formulari amb els valors que ja havia introduït l'usuari.
-
-### Part 3
-
-Fes que despres de una validació incorrecta es mostri un missatge d'error.
-
-## Exercici 7
-
-### Part 1
-
-Crea un classe [Cart](03phpoo.md) que es trobe a la carpeta /classes i que continga els atributs i els mètodes necessaris per a gestionar el carret de la compra.
-
-### Part 2
-
-Crea un fitxer [cart.php] que continga el codi per a mostrar el contingut del carret de la compra de l'usuari validat.
-
-## Exercici 8
-
-### Part 1
-
-Crear els fitxers adients en la carpeta /api per a gestionar les peticions que utilitzes en la part de client.
