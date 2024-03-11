@@ -213,17 +213,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const caselles = document.querySelectorAll('.casella');
-    caselles.forEach(casella => {
-        casella.addEventListener('dragover', e => {
-            e.preventDefault(); // Permetre deixar anar
-        });
+    caselles.forEach(casella => { // Corregit per utilitzar forEach amb 'casella'
+        casella.addEventListener('dragover', e => e.preventDefault()); // Permetre drop
+        casella.addEventListener('drop', function(e) {
+            e.preventDefault();
+            if (!fitxaArrossegada) return; // Comprova si hi ha una fitxa arrossegada
 
-        casella.addEventListener('drop', e => {
-            e.preventDefault(); // Evitar comportament per defecte
-            if (!casella.querySelector('.fitxa') && fitxaArrossegada) {
-                casella.appendChild(fitxaArrossegada); // Moure la fitxa a la nova casella
-                fitxaArrossegada = null;
-            }
+            const origen = fitxaArrossegada.parentNode.dataset;
+            const destino = this.dataset; // Utilitza 'this' per referir-se a la casella sobre la qual es fa el drop
+
+            // Suposem que tens els inputs en el teu formulari per aquests valors
+            document.getElementById('origenFila').value = origen.fila;
+            document.getElementById('origenColumna').value = origen.columna;
+            document.getElementById('destinoFila').value = destino.fila;
+            document.getElementById('destinoColumna').value = destino.columna;
+
+            document.getElementById('movimentForm').submit(); // Envía el formulari
         });
     });
 });
@@ -237,7 +242,7 @@ public function __toString()
 
         $string =  "<div class='casella {$this->color}' data-fila='{$this->fila}' data-columna='{$this->columna}'>";
         if ($this->ocupant){
-            $classeOcupant = $this->ocupant ? " {$this->tipus}-{$this->ocupant}" : "";
+            $classeOcupant = $this->ocupant ? "fitxa-{$this->ocupant}" : "";
             $draggable = $this->ocupant ? 'draggable="true"' : '';
             $string .= "<div class='fitxa {$this->color} {$classeOcupant}' {$draggable}></div>";
         }
