@@ -231,6 +231,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 Afegeix `draggable="true"` al dibuixar les caselles ocupades.
 
+```php
+public function __toString()
+{
+
+        $string =  "<div class='casella {$this->color}' data-fila='{$this->fila}' data-columna='{$this->columna}'>";
+        if ($this->ocupant){
+            $classeOcupant = $this->ocupant ? " {$this->tipus}-{$this->ocupant}" : "";
+            $draggable = $this->ocupant ? 'draggable="true"' : '';
+            $string .= "<div class='fitxa {$this->color} {$classeOcupant}' {$draggable}></div>";
+        }
+        $string .= "</div>";
+        return $string;
+    }
+```
+
 ### Part 2. Pintar Tauler
 
 #### Exercici 2.1 Sessions i composer
