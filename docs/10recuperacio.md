@@ -201,7 +201,7 @@ Cal pintar-les baix i dalt, a la dreta i a l'esquerra.
 Afegix el següent javascript i enllaça-lo a tauler.view.php
 
 ```javascript
-document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
     const fitxes = document.querySelectorAll('.fitxa[draggable="true"]');
     let fitxaArrossegada = null;
 
@@ -285,48 +285,16 @@ Crea un formulari que permeti moure les fitxes del tauler. El formulari tindrà 
 
 El formulari estarà ocult i el procesarà el javascript en moure una fitxa.
 
-```javascript
- document.addEventListener('DOMContentLoaded', () => {
-    const fitxes = document.querySelectorAll('.fitxa[draggable="true"]');
-    let fitxaArrossegada = null;
 
-    fitxes.forEach(fitxa => {
-        fitxa.addEventListener('dragstart', e => {
-            fitxaArrossegada = fitxa;
-            e.dataTransfer.setData('text/plain', null); // Necessari per a alguns navegadors
-        });
-    });
 
-    const caselles = document.querySelectorAll('.casella');
-    caselles.forEach(casella => { // Corregit per utilitzar forEach amb 'casella'
-        casella.addEventListener('dragover', e => e.preventDefault()); // Permetre drop
-        casella.addEventListener('drop', function(e) {
-            e.preventDefault();
-            if (!fitxaArrossegada) return; // Comprova si hi ha una fitxa arrossegada
-
-            const origen = fitxaArrossegada.parentNode.dataset;
-            const destino = this.dataset; // Utilitza 'this' per referir-se a la casella sobre la qual es fa el drop
-
-            // Suposem que tens els inputs en el teu formulari per aquests valors
-            document.getElementById('origenFila').value = origen.fila;
-            document.getElementById('origenColumna').value = origen.columna;
-            document.getElementById('destinoFila').value = destino.fila;
-            document.getElementById('destinoColumna').value = destino.columna;
-
-            document.getElementById('movimentForm').submit(); // Envía el formulari
-        });
-    });
-});
-```
-
-Afegix el fitxer `processarMoviment.php` que processarà el moviment i el guardarà en la sessió.
+Modificat el fitxer `index.php` per a que processe el moviment i el guarde en la sessió.
 
 ```php  
     require_once $_SERVER['DOCUMENT_ROOT'].'/load.php';
    
     // TODO: Llegir el formulari
     // TODO : mourefitxa tauler
-    header('Location:index.php');
+    
 ```
 
 #### Exercici 2.3: Captura
@@ -342,6 +310,7 @@ Primer
         $filaCaptura = ($origenFila + $destiFila) / 2;
         $columnaCaptura = ($origenColumna + $destiColumna) / 2;
         $casellaCaptura = $this->caselles[$filaCaptura][$columnaCaptura];
+        $casellaOrigen = $this->caselles[$origenFila][$origenColumna];
 
         // Comprovar si la casella conté una fitxa de l'oponent
         if ($casellaCaptura->ocupant && $casellaCaptura->ocupant !== $casellaOrigen->ocupant) {
@@ -351,7 +320,7 @@ Primer
     }
 ```
 
-Extrau el codi que fa moure la fitxa de posició fora d'este procediment
+Extrau el codi que fa moure la fitxa de posició fora d'este procediment a un metode mou que pot utilitzar també el procediment de moureFitxa.
     
 ```php
     $casellaDesti->ocupant = $casellaOrigen->ocupant;

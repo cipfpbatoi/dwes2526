@@ -21,6 +21,7 @@ nav:
   - "8.- Serveis Web": "08rest.md"
   - "9.- Webs Hibrides": "09mashup.md"
   - "10.- Recuperació": "10recuperacio.md"
+  - "11.- Recuperació Laravel": "11recuperacioLaravel.md"
 
 
 theme:
