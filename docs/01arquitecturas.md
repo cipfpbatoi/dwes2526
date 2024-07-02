@@ -1,4 +1,4 @@
-# 1.Arquitectures Web
+# 1. Arquitectures Web
 
 ??? abstract "Duració i criteris d'avaluació"
 
@@ -111,8 +111,7 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
 
 
-
-## 2.Pàgines Web Estàtiques vs. Dinàmiques
+## 2. Pàgines Web Estàtiques vs. Dinàmiques
 
 Les pàgines web estàtiques són aquelles en què el contingut no canvia en funció de les accions de l'usuari. Estan construïdes amb HTML i CSS, i cada pàgina es carrega de manera independent des del servidor.
 
@@ -196,6 +195,11 @@ Exemple Pràctic (PHP)
 | **Actualització del Contingut** | Manual                         | Automàtica                           |
 | **Cost de Manteniment**     | Baix                               | Alt                                  |
 
+### Avantatges de la Generació Dinàmica de Pàgines
+- **Actualització en Temps Real:** Les pàgines dinàmiques poden mostrar contingut actualitzat en temps real, com notícies o resultats esportius.
+- **Personalització:** Permet personalitzar el contingut per a cada usuari basat en les seves preferències i dades.
+- **Interactivitat:** Les pàgines dinàmiques poden respondre a les accions dels usuaris, millorant l'experiència de l'usuari.
+
 
 <figure>
   <img src="imagenes/01/paginadinamica.png" />
@@ -213,9 +217,10 @@ Exemple Pràctic (PHP)
 #### Resum
 Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles. Les SPA ofereixen una experiència d'usuari molt rica però poden tenir desavantatges en termes de SEO i temps de càrrega inicial.
 
-## 3.Models d'Execució de Codi en el Client i en el Servidor
+## 3. Models d'Execució de Codi en el Client i en el Servidor
 
 Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
+
 
 ### Execució de Codi al Client (FrontEnd)
 
@@ -358,6 +363,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 | **SEO**                     | Mitjana                            | Alta                                 | Baixa                                |
 | **Temps de càrrega inicial**| Ràpid                              | Depèn de la complexitat              | Pot ser lent                         |
 
+
+
 #### Comparativa entre desenvolupadors
 
 | Perfil                   | Ferramenta          | Tecnologia
@@ -365,8 +372,15 @@ ReactDOM.render(<App />, document.getElementById('root'));
 | *Front-end* / client     | Navegador Web       | HTML + CSS + JavaScript
 | *Back-end* / servidor    | Servidor Web + BBDD | PHP, Python, Ruby, Java / JSP, .Net / .asp
 
+
+
 !!! tip "Perfil *Full-stack*"
     En les ofertes de treball quan fan referència a un **Full-stack developer**, estan buscant un perfil que domina tant el **front-end** com el **back-end**.
+
+#### Models d'Execució de Codi
+- **Model Client-Side:** El codi s'executa en el navegador del client, normalment utilitzant JavaScript. Exemple: Un formulari que valida les dades d'entrada abans de ser enviat.
+- **Model Server-Side:** El codi s'executa en el servidor, com ara PHP, Python o Node.js, i el servidor envia les pàgines generades al navegador del client. Exemple: Una pàgina que mostra els resultats d'una consulta a la base de dades.
+
 
 #### Recursos addicionals
 
@@ -377,6 +391,156 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 #### Resum
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
+
+## 4. Mecanismes d'Execució de Codi en Servidors Web
+
+### Interpreted Languages: PHP, Python
+
+  El codi es processa línia per línia en temps real, permetent una major flexibilitat durant el desenvolupament, ja que els canvis poden ser implementats i testats immediatament sense necessitat de recompilar tot el projecte.
+
+  ```php
+      <html>
+      <body>
+          <h1><?php echo "Hola, món!"; ?></h1>
+      </body>
+      </html>
+  ```
+  
+### Compiled Languages: Java
+
+  El codi es compila abans de ser executat, el que significa que és transformat en un format executable per la màquina abans de la seva execució. Això sol millorar el rendiment, ja que el codi compilat s'executa més ràpidament que el codi interpretat.
+
+  ```java
+    // Exemple simplificat d'un servlet Java
+    import java.io.*;
+    import javax.servlet.*;
+    import javax.servlet.http.*;
+    
+    public class HelloWorldServlet extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<h1>Hola, món!</h1>");
+        }
+    }
+  ```
+### Middleware: Node.js
+
+  Permet la programació asíncrona i escalable amb JavaScript, oferint la capacitat de gestionar moltes connexions simultànies de manera eficient. Això és especialment útil per a aplicacions que necessiten alta concurrència, com aplicacions en temps real.
+
+```javascript
+    const express = require('express');
+    const app = express();
+    
+    app.get('/', (req, res) => {
+    res.send('Hola, món!');
+    });
+    
+    app.listen(3000, () => {
+    console.log('Servidor escoltant a http://localhost:3000');
+});
+```
+
+## Servidors Web
+
+Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS, JavaScript, imatges i altres fitxers als clients a través del protocol HTTP o HTTPS. El servidor web gestiona les sol·licituds entrants dels clients (navegadors web) i retorna les respostes adequades.
+
+### Principals Funcionalitats dels Servidors Web
+
+#### Servei de Contingut Estàtic
+- **Descripció:** Proporciona fitxers estàtics com HTML, CSS, JavaScript, imatges i altres recursos directament als clients.
+- **Exemple:** Quan un usuari sol·licita una pàgina HTML, el servidor web envia el fitxer HTML corresponent al navegador de l'usuari.
+
+#### Gestió de Peticions HTTP
+- **Descripció:** Maneja sol·licituds HTTP de clients, com GET, POST, PUT, DELETE, i retorna les respostes adequades amb els codis d'estat corresponents.
+- **Exemple:** Un servidor web processa una sol·licitud GET per una pàgina web i retorna el contingut de la pàgina amb un codi d'estat 200 (OK).
+
+#### Redirecció i Reescriptura d'URLs
+- **Descripció:** Permet la redirecció de peticions a diferents URLs i la reescriptura d'URLs per millorar l'accessibilitat i la SEO.
+- **Exemple:** Reescriptura d'URLs amigables per als usuaris, com convertir `example.com/page?id=123` a `example.com/page/123`.
+
+#### Suport per a HTTPS
+- **Descripció:** Proporciona connexions segures utilitzant el protocol HTTPS, que xifra les dades entre el client i el servidor.
+- **Exemple:** Un servidor web configurat amb un certificat SSL/TLS que permet connexions segures a través de HTTPS.
+
+### Exemples de Servidors Web
+
+#### Apache HTTP Server
+- **Descripció:** Un servidor web de codi obert molt utilitzat, conegut per la seva flexibilitat i extensibilitat.
+- **Funcionalitats:** Suport per a mòduls que afegeixen funcionalitats com l'autenticació, la reescriptura d'URLs i la compressió de contingut.
+
+#### Nginx
+- **Descripció:** Un servidor web i servidor intermediari de codi obert, dissenyat per gestionar moltes connexions simultànies amb un ús eficient dels recursos.
+- **Funcionalitats:** Actua com a servidor proxy invers, equilibrador de càrrega i servidor de fitxers estàtics.
+
+#### Microsoft Internet Information Services (IIS)
+- **Descripció:** Un servidor web i d'aplicacions de Microsoft per a plataformes Windows.
+- **Funcionalitats:** Suport per a aplicacions ASP.NET, autenticació integrada i eines de gestió robustes.
+
+
+
+## 6. Funcionalitats dels Servidors d'Aplicacions
+
+Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplicacions web dinàmiques i gestionar la lògica de negoci d'una aplicació. Aquest servidor actua com una capa intermèdia entre el client (navegador web) i les bases de dades o altres serveis de backend, proporcionant un entorn d'execució per a aplicacions web.
+
+### Principals Funcionalitats dels Servidors d'Aplicacions
+
+#### Gestió de Sessions
+- **Descripció:** Manteniment de l'estat de l'usuari durant la seva interacció amb l'aplicació.
+- **Exemple:** Sessions PHP que emmagatzemen informació de l'usuari.
+
+#### Concurrència
+- **Descripció:** Capacitat per gestionar múltiples peticions simultànies de manera eficient.
+- **Exemple:** Node.js gestiona peticions de manera asíncrona.
+
+#### Seguretat
+- **Descripció:** Autenticació i autorització dels usuaris per accedir a diferents parts de l'aplicació.
+- **Exemple:** Utilització de JWT (JSON Web Tokens) per autenticar usuaris en una aplicació Node.js.
+
+### Relació entre Servidors Web i Servidors d'Aplicacions
+
+#### Integració i Col·laboració
+Els servidors web treballen conjuntament amb els servidors d'aplicacions per gestionar les sol·licituds de manera eficient. Mentre que el servidor web maneja les sol·licituds HTTP i serveix contingut estàtic, el servidor d'aplicacions processa la lògica de negoci i genera contingut dinàmic.
+
+#### Exemple de Configuració
+- **Servidor Web (Nginx):** Actua com a proxy invers, encaminant les sol·licituds dinàmiques al servidor d'aplicacions.
+- **Servidor d'Aplicacions (Node.js):** Gestiona les sol·licituds dinàmiques, executa la lògica de negoci i retorna les respostes al servidor web.
+
+Aquesta col·laboració permet una gestió eficient de les sol·licituds i una millor distribució de la càrrega, millorant el rendiment i l'escalabilitat de les aplicacions web.
+
+### Exemples de Servidors d'Aplicacions
+
+#### Apache Tomcat
+- **Descripció:** Un servidor d'aplicacions de codi obert per a aplicacions web Java.
+- **Funcionalitats:** Suporta servlets Java i JavaServer Pages (JSP), facilitant l'execució d'aplicacions Java.
+
+#### Microsoft Internet Information Services (IIS)
+- **Descripció:** Un servidor web i d'aplicacions de Microsoft per a plataformes Windows.
+- **Funcionalitats:** Suporta aplicacions ASP.NET, autenticació integrada, i eines de gestió robustes.
+
+#### JBoss EAP (Enterprise Application Platform)
+- **Descripció:** Un servidor d'aplicacions Java EE de codi obert desenvolupat per Red Hat.
+- **Funcionalitats:** Proporciona un entorn robust per a la implementació d'aplicacions empresarials amb suport per a diversos frameworks Java.
+
+#### Node.js
+- **Descripció:** Una plataforma per a l'execució de codi JavaScript en el servidor.
+- **Funcionalitats:** Permet la programació asíncrona, ideal per a aplicacions en temps real i escalables com xats i jocs multijugador.
+
+## 7. Llenguatges i Tecnologies de Programació Web en Entorn Servidor
+
+## PHP
+- **Descripció:** Popular per la seva facilitat d'ús i integració amb MySQL.
+- **Exemple:** Utilització de PHP per crear pàgines dinàmiques i accedir a bases de dades MySQL.
+
+## Node.js
+- **Descripció:** Utilitza JavaScript en el servidor, permetent una programació asíncrona i escalable.
+- **Exemple:** Aplicacions web en temps real utilitzant Socket.io.
+
+## Python (Django/Flask)
+- **Descripció:** Conegut per la seva sintaxi clara i biblioteques extensives.
+- **Exemple:** Desenvolupament d'aplicacions web amb Django, utilitzant el seu ORM per accedir a bases de dades.
+
 
 
 ## 4. MVC
