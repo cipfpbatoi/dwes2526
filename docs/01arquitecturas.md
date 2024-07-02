@@ -27,36 +27,120 @@ En les aplicacions web, els clients solen ser navegadors els que realitzen petic
 La noves arquitectures substitueixen el servidor per un balancejador de càrrega de manera que N servidors donen resposta a M clients.
 
 
-### Pàgina web dinàmica
+## Pàgines Web Estàtiques
 
-Si la pàgina web únicament conté HTML + CSS es considera una pàgina estàtica. Per a generar una pàgina dinàmica, on el contingut canvia, hui dia tenim dues alternatives:
+Les pàgines web estàtiques són aquelles en què el contingut no canvia en funció de les accions de l'usuari. Estan construïdes amb HTML i CSS, i cada pàgina es carrega de manera independent des del servidor.
 
-* Utilitzar un llenguatge de servidor que genere el contingut, ja siga mitjançant l'accés a una BD o serveis externs.
-* Utilitzar serveis REST de tercers invocats des de JS.
+### Avantatges
+- **Senzillesa:** Fàcils de crear i mantenir.
+- **Rendiment:** Temps de càrrega ràpid perquè no requereixen processament addicional.
+- **Seguretat:** Menys vulnerabilitats, ja que no hi ha lògica de servidor ni bases de dades.
+
+### Desavantatges
+- **Flexibilitat:** Difícils de modificar a gran escala sense eines automatitzades.
+- **Interactivitat:** Limitada, ja que no poden respondre a les accions de l'usuari de manera dinàmica.
+
+Exemple Pràctic
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pàgina Estàtica</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .content { margin: 20px; }
+    </style>
+</head>
+<body>
+<div class="content">
+    <h1>Benvingut!</h1>
+    <p>Aquesta és una pàgina web estàtica.</p>
+</div>
+</body>
+</html>
+```
+## Pàgines Web Dinàmiques
+
+Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en funció de les accions de l'usuari o altres factors. Utilitzen HTML, CSS, i JavaScript per al costat del client, i poden utilitzar llenguatges de servidor com PHP, Python, Node.js, entre altres, per generar contingut dinàmicament.
+
+### Avantatges
+- **Interactivitat:** Poden respondre a les accions de l'usuari i proporcionar una experiència més rica.
+- **Personalització:** El contingut es pot adaptar en funció de les necessitats de l'usuari.
+- **Actualització:** El contingut es pot actualitzar fàcilment sense canviar la pàgina completa.
+
+### Desavantatges
+- **Complexitat:** Més difícils de crear i mantenir, ja que requereixen programació tant al client com al servidor.
+- **Rendiment:** Poden ser més lentes a causa de la necessitat de processament al servidor.
+- **Seguretat:** Exposades a més vulnerabilitats, com injeccions SQL, si no es prenen les precaucions adequades.
+
+Exemple Pràctic (PHP)
+
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pàgina Dinàmica</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .content { margin: 20px; }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Benvingut!</h1>
+        <p>Aquesta pàgina ha estat generada a les <?php echo date('H:i:s'); ?>.</p>
+    </div>
+</body>
+</html>
+```
+### Comparativa entre Pàgines Web Estàtiques i Dinàmiques
+
+| Característica              | Pàgines Web Estàtiques             | Pàgines Web Dinàmiques               |
+|-----------------------------|------------------------------------|--------------------------------------|
+| **Contingut**               | Fix, no canvia                     | Variable, pot canviar                |
+| **Complexitat**             | Baixa                              | Alta                                 |
+| **Interactivitat**          | Limitada                           | Alta                                 |
+| **Rendiment**               | Alt                                | Pot ser baix                         |
+| **Seguretat**               | Alta                               | Depèn de la implementació            |
+| **Flexibilitat**            | Baixa                              | Alta                                 |
+
+
 
 <figure>
   <img src="imagenes/01/paginadinamica.png" />
   <figcaption>Pàgina web dinàmica</figcaption>
 </figure>
 
-### Models d'Execució de Codi en el Client i en el Servidor
+#### Recursos Addicionals
+- **Documentació de HTML:** [MDN HTML Guide](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- **Documentació de CSS:** [MDN CSS Guide](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- **Documentació de PHP:** [PHP Documentation](https://www.php.net/docs.php)
+- **Documentació de JavaScript (MDN):** [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+
+#### Resum
+Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles.
+
+## Models d'Execució de Codi en el Client i en el Servidor
 
 Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
 
-#### Execució de Codi al Client (FrontEnd)
+### Execució de Codi al Client (FrontEnd)
 
 L'execució de codi al client es realitza al navegador web de l'usuari. Els llenguatges utilitzats principalment per a l'execució al client són HTML, CSS i JavaScript.
 
-##### Avantatges
+#### Avantatges
+- **Interactivitat:** Permet la creació d'experiències d'usuari riques i interactives.
+- **Reducció de la càrrega del servidor:** El processament es fa al dispositiu de l'usuari, disminuint la càrrega del servidor.
+- **Actualització instantània:** Canvis en l'UI poden ser reflectits immediatament sense necessitat de recarregar la pàgina.
 
-    * Interactivitat: Permet la creació d'experiències d'usuari riques i interactives.
-    * Reducció de la càrrega del servidor: El processament es fa al dispositiu de l'usuari, disminuint la càrrega del servidor.
-    * Actualització instantània: Canvis en l'UI poden ser reflectits immediatament sense necessitat de recarregar la pàgina.
-
-##### Desavantatges
-
-    * Seguretat: El codi del client és visible i modificable pels usuaris, la qual cosa pot representar un risc de seguretat.
-    * Compatibilitat: Pot haver-hi diferències en la manera com diferents navegadors interpreten el codi.
+#### Desavantatges
+- **Seguretat:** El codi del client és visible i modificable pels usuaris, la qual cosa pot representar un risc de seguretat.
+- **Compatibilitat:** Pot haver-hi diferències en la manera com diferents navegadors interpreten el codi.
 
 Exemple de codi
 
@@ -88,19 +172,17 @@ Exemple de codi
 </html>
 ```
 
-#### Execució de Codi al Servidor
+### Execució de Codi al Servidor
 
 L'execució de codi al servidor es realitza al servidor web abans que els resultats es retornin al navegador del client. Els llenguatges habituals inclouen PHP, Python, Ruby, Node.js, entre altres.
 
-##### Avantatges
+#### Avantatges
+- ** Seguretat:** El codi del servidor no és accessible pels usuaris finals, la qual cosa augmenta la seguretat.
+- ** Potència:** Els servidors solen ser més potents que els dispositius dels usuaris, permetent processar operacions més complexes.
 
-    * Seguretat: El codi del servidor no és accessible pels usuaris finals, la qual cosa augmenta la seguretat.
-    * Potència: Els servidors solen ser més potents que els dispositius dels usuaris, permetent processar operacions més complexes.
-
-##### Desavantatges
-
-    * Latència: Les sol·licituds al servidor poden ser lentes a causa de la distància física i la càrrega del servidor.
-    * Escalabilitat: Pot ser necessari més esforç per escalar una aplicació a mesura que augmenta el nombre d'usuaris.    
+#### Desavantatges
+- ** Latència:** Les sol·licituds al servidor poden ser lentes a causa de la distància física i la càrrega del servidor.
+- ** Escalabilitat:** Pot ser necessari més esforç per escalar una aplicació a mesura que augmenta el nombre d'usuaris.    
 
 Exemple de codi
 ``` node.js
@@ -121,21 +203,21 @@ console.log(`El servidor s'està executant a http://${hostname}:${port}/`);
 });
 ```
 
-#### Single Page Application (SPA)
+### Single Page Application (SPA)
 
 Una Single Page Application (SPA) és un tipus d'aplicació web que carrega una única pàgina HTML i dinàmicament actualitza el contingut a mesura que l'usuari interactua amb l'aplicació, utilitzant JavaScript per a gestionar la lògica i les actualitzacions de la interfície d'usuari.
 
-##### Avantatges
+#### Avantatges
 - **Experiència d'usuari millorada:** Les SPA ofereixen una navegació més ràpida i fluida, similar a una aplicació d'escriptori.
 - **Menys càrrega del servidor:** Menys sol·licituds al servidor ja que només es carrega una pàgina inicialment.
 - **Desenvolupament modular:** Facilita la creació de components reutilitzables.
 
-##### Desavantatges
+#### Desavantatges
 - **SEO:** Les SPA poden ser menys amigables amb els motors de cerca.
 - **Carregada inicial:** Pot requerir una major càrrega inicial de recursos, afectant el temps de càrrega inicial.
 - **Gestió de l'estat complexa:** Pot ser més complicat gestionar l'estat de l'aplicació.
 
-##### Exemple Pràctic (React)
+Exemple Pràctic (React)
 
 ```jsx
 // index.html
@@ -175,7 +257,7 @@ function App() {
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-##### Comparativa entre Execució de Codi al Client,al Servidor i el SPA
+#### Comparativa entre Execució de Codi al Client,al Servidor i el SPA
 
 
 | Característica              | Execució al Client                 | Execució al Servidor                 | Single Page Application (SPA)        |
@@ -188,7 +270,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 | **SEO**                     | Mitjana                            | Alta                                 | Baixa                                |
 | **Temps de càrrega inicial**| Ràpid                              | Depèn de la complexitat              | Pot ser lent                         |
 
-##### Comparativa entre desenvolupadors
+#### Comparativa entre desenvolupadors
 
 | Perfil                   | Ferramenta          | Tecnologia
 | ---                       |---------------------| ---
@@ -198,14 +280,14 @@ ReactDOM.render(<App />, document.getElementById('root'));
 !!! tip "Perfil *Full-stack*"
     En les ofertes de treball quan fan referència a un **Full-stack developer**, estan buscant un perfil que domina tant el **front-end** com el **back-end**.
 
-##### Recursos addicionals
+#### Recursos addicionals
 
 - **Documentació de JavaScript (MDN):** [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
 - **Guia de Node.js:** [Node.js Documentation](https://nodejs.org/en/docs/)
 - **Documentació de React:** [React Documentation](https://reactjs.org/docs/getting-started.html)
 
 
-##### Resum
+#### Resum
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
 
 
