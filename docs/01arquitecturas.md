@@ -31,7 +31,10 @@ En aquest model, el client (generalment un navegador web) envia sol·licituds al
 
 **Diagrama:**
 
-Client <---> Servidor
+<figure>
+  <img src="imagenes/01/clienteservidor.png" />
+  <figcaption>Arquitectura Client Servidor</figcaption>
+</figure>
 
 **Característiques:**
 
@@ -47,10 +50,6 @@ Client <---> Servidor
 
 - Pot tenir problemes de rendiment amb moltes sol·licituds simultànies.
 
-<figure>
-  <img src="imagenes/01/clienteservidor.png" />
-  <figcaption>Arquitectura Client Servidor</figcaption>
-</figure>
 
 ### Arquitectura de Tres Capes
 Aquesta arquitectura divideix l'aplicació en tres nivells: la capa de presentació, la capa de lògica d'aplicació, i la capa de dades.
