@@ -392,57 +392,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 #### Resum
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
 
-## 4. Mecanismes d'Execució de Codi en Servidors Web
 
-### Interpreted Languages: PHP, Python
-
-  El codi es processa línia per línia en temps real, permetent una major flexibilitat durant el desenvolupament, ja que els canvis poden ser implementats i testats immediatament sense necessitat de recompilar tot el projecte.
-
-  ```php
-      <html>
-      <body>
-          <h1><?php echo "Hola, món!"; ?></h1>
-      </body>
-      </html>
-  ```
-  
-### Compiled Languages: Java
-
-  El codi es compila abans de ser executat, el que significa que és transformat en un format executable per la màquina abans de la seva execució. Això sol millorar el rendiment, ja que el codi compilat s'executa més ràpidament que el codi interpretat.
-
-  ```java
-    // Exemple simplificat d'un servlet Java
-    import java.io.*;
-    import javax.servlet.*;
-    import javax.servlet.http.*;
-    
-    public class HelloWorldServlet extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.println("<h1>Hola, món!</h1>");
-        }
-    }
-  ```
-### Middleware: Node.js
-
-  Permet la programació asíncrona i escalable amb JavaScript, oferint la capacitat de gestionar moltes connexions simultànies de manera eficient. Això és especialment útil per a aplicacions que necessiten alta concurrència, com aplicacions en temps real.
-
-```javascript
-    const express = require('express');
-    const app = express();
-    
-    app.get('/', (req, res) => {
-    res.send('Hola, món!');
-    });
-    
-    app.listen(3000, () => {
-    console.log('Servidor escoltant a http://localhost:3000');
-});
-```
-
-## Servidors Web
+## 4. Servidors Web
 
 Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS, JavaScript, imatges i altres fitxers als clients a través del protocol HTTP o HTTPS. El servidor web gestiona les sol·licituds entrants dels clients (navegadors web) i retorna les respostes adequades.
 
@@ -478,9 +429,72 @@ Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS
 - **Descripció:** Un servidor web i d'aplicacions de Microsoft per a plataformes Windows.
 - **Funcionalitats:** Suport per a aplicacions ASP.NET, autenticació integrada i eines de gestió robustes.
 
+### Mecanismes d'Execució de Codi en Servidors Web
+
+#### Llenguatges interpretats: PHP, Python
+
+El codi es processa línia per línia en temps real, permetent una major flexibilitat durant el desenvolupament, ja que els canvis poden ser implementats i testats immediatament sense necessitat de recompilar tot el projecte.
+
+  ```php
+      <html>
+      <body>
+          <h1><?php echo "Hola, món!"; ?></h1>
+      </body>
+      </html>
+  ```
+
+#### Llenguatges compilats: Java
+
+El codi es compila abans de ser executat, el que significa que és transformat en un format executable per la màquina abans de la seva execució. Això sol millorar el rendiment, ja que el codi compilat s'executa més ràpidament que el codi interpretat.
+
+  ```java
+    // Exemple simplificat d'un servlet Java
+    import java.io.*;
+    import javax.servlet.*;
+    import javax.servlet.http.*;
+    
+    public class HelloWorldServlet extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<h1>Hola, món!</h1>");
+        }
+    }
+  ```
+#### Intermediari: Node.js
+
+Permet la programació asíncrona i escalable amb JavaScript, oferint la capacitat de gestionar moltes connexions simultànies de manera eficient. Això és especialment útil per a aplicacions que necessiten alta concurrència, com aplicacions en temps real.
+
+```javascript
+    const express = require('express');
+    const app = express();
+    
+    app.get('/', (req, res) => {
+    res.send('Hola, món!');
+    });
+    
+    app.listen(3000, () => {
+    console.log('Servidor escoltant a http://localhost:3000');
+});
+```
+
+### Llenguatges i Tecnologies de Programació Web en Entorn Servidor
+
+#### PHP
+- **Descripció:** Popular per la seva facilitat d'ús i integració amb MySQL.
+- **Exemple:** Utilització de PHP per crear pàgines dinàmiques i accedir a bases de dades MySQL.
+
+#### Node.js
+- **Descripció:** Utilitza JavaScript en el servidor, permetent una programació asíncrona i escalable.
+- **Exemple:** Aplicacions web en temps real utilitzant Socket.io.
+
+#### Python (Django/Flask)
+- **Descripció:** Conegut per la seva sintaxi clara i biblioteques extensives.
+- **Exemple:** Desenvolupament d'aplicacions web amb Django, utilitzant el seu ORM per accedir a bases de dades.
 
 
-## 6. Funcionalitats dels Servidors d'Aplicacions
+## 5. Servidors d'Aplicacions
 
 Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplicacions web dinàmiques i gestionar la lògica de negoci d'una aplicació. Aquest servidor actua com una capa intermèdia entre el client (navegador web) i les bases de dades o altres serveis de backend, proporcionant un entorn d'execució per a aplicacions web.
 
@@ -526,20 +540,6 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 #### Node.js
 - **Descripció:** Una plataforma per a l'execució de codi JavaScript en el servidor.
 - **Funcionalitats:** Permet la programació asíncrona, ideal per a aplicacions en temps real i escalables com xats i jocs multijugador.
-
-## 7. Llenguatges i Tecnologies de Programació Web en Entorn Servidor
-
-## PHP
-- **Descripció:** Popular per la seva facilitat d'ús i integració amb MySQL.
-- **Exemple:** Utilització de PHP per crear pàgines dinàmiques i accedir a bases de dades MySQL.
-
-## Node.js
-- **Descripció:** Utilitza JavaScript en el servidor, permetent una programació asíncrona i escalable.
-- **Exemple:** Aplicacions web en temps real utilitzant Socket.io.
-
-## Python (Django/Flask)
-- **Descripció:** Conegut per la seva sintaxi clara i biblioteques extensives.
-- **Exemple:** Desenvolupament d'aplicacions web amb Django, utilitzant el seu ORM per accedir a bases de dades.
 
 
 
