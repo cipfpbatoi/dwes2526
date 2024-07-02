@@ -124,7 +124,7 @@ Les pàgines web estàtiques són aquelles en què el contingut no canvia en fun
 - **Flexibilitat:** Difícils de modificar a gran escala sense eines automatitzades.
 - **Interactivitat:** Limitada, ja que no poden respondre a les accions de l'usuari de manera dinàmica.
 
-Exemple Pràctic
+##### Exemple Pràctic
 
 ```html
 <!DOCTYPE html>
@@ -148,18 +148,44 @@ Exemple Pràctic
 ```
 
 Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en funció de les accions de l'usuari o altres factors. Utilitzen HTML, CSS, i JavaScript per al costat del client, i poden utilitzar llenguatges de servidor com PHP, Python, Node.js, entre altres, per generar contingut dinàmicament.
+La generació dinàmica de pàgines web permet crear contingut web en temps real basat en les interaccions de l'usuari i les dades de la base de dades. Això proporciona una experiència d'usuari més rica i interactiva.
 
-### Avantatges
-- **Interactivitat:** Poden respondre a les accions de l'usuari i proporcionar una experiència més rica.
-- **Personalització:** El contingut es pot adaptar en funció de les necessitats de l'usuari.
-- **Actualització:** El contingut es pot actualitzar fàcilment sense canviar la pàgina completa.
+#### Avantatges de la Generació Dinàmica de Pàgines
 
-### Desavantatges
+**Actualització en Temps Real**
+- **Descripció:** Les pàgines es poden actualitzar automàticament sense necessitat de recarregar tota la pàgina.
+- **Cas d'Ús:** Un portal de notícies que mostra articles nous sense necessitat de recarregar la pàgina.
+
+**Personalització del Contingut**
+- **Descripció:** Permet adaptar el contingut a les preferències i el comportament de l'usuari.
+- **Cas d'Ús:** Una botiga en línia que mostra recomanacions de productes basades en l'historial de navegació i compres de l'usuari.
+
+**Interactivitat Avançada**
+- **Descripció:** Facilita la creació d'aplicacions web interactives que poden respondre a les accions de l'usuari en temps real.
+- **Cas d'Ús:** Aplicacions de xarxes socials que mostren actualitzacions i notificacions en temps real.
+
+**Gestió Eficient de Contingut**
+- **Descripció:** Permet gestionar grans quantitats de contingut de manera més eficient, mostrant només el contingut rellevant en funció de la sol·licitud de l'usuari.
+- **Cas d'Ús:** Un sistema de gestió de continguts (CMS) que permet als administradors editar i publicar articles de manera dinàmica.
+
+
+#### Desavantatges
 - **Complexitat:** Més difícils de crear i mantenir, ja que requereixen programació tant al client com al servidor.
 - **Rendiment:** Poden ser més lentes a causa de la necessitat de processament al servidor.
 - **Seguretat:** Exposades a més vulnerabilitats, com injeccions SQL, si no es prenen les precaucions adequades.
 
-Exemple Pràctic (PHP)
+#### Impacte en Aplicacions Modernes
+
+**Millora de l'Experiència d'Usuari**
+- Les aplicacions modernes utilitzen la generació dinàmica de pàgines per oferir una experiència més fluida i responsiva. Per exemple, aplicacions com Gmail i Google Docs permeten als usuaris interactuar amb el contingut en temps real sense interrupcions.
+
+**Optimització del Rendiment**
+- La generació dinàmica de pàgines permet carregar només el contingut necessari, reduint la càrrega inicial i millorant el rendiment general de l'aplicació. Això és especialment útil en aplicacions complexes amb molta interactivitat.
+
+**Capacitat de Resposta a les Sol·licituds de l'Usuari**
+- Aplicacions com Facebook i Twitter utilitzen la generació dinàmica per actualitzar el feed en temps real, oferint als usuaris informació actualitzada immediatament.
+
+#### Exemple Pràctic (PHP)
 
 ```php
 <!DOCTYPE html>
@@ -181,7 +207,7 @@ Exemple Pràctic (PHP)
 </body>
 </html>
 ```
-### Comparativa entre Pàgines Web Estàtiques i Dinàmiques
+#### Comparativa entre Pàgines Web Estàtiques i Dinàmiques
 | Característica              | Pàgines Web Estàtiques             | Pàgines Web Dinàmiques               |
 |-----------------------------|------------------------------------|--------------------------------------|
 | **Contingut**               | Fix, no canvia                     | Variable, pot canviar                |
@@ -193,12 +219,9 @@ Exemple Pràctic (PHP)
 | **SEO**                     | Bona                               | Depèn de la implementació            |
 | **Temps de Desenvolupament**| Curt                               | Llarg                                |
 | **Actualització del Contingut** | Manual                         | Automàtica                           |
-| **Cost de Manteniment**     | Baix                               | Alt                                  |
+| **Cost de Manteniment**     | Baix       
 
-### Avantatges de la Generació Dinàmica de Pàgines
-- **Actualització en Temps Real:** Les pàgines dinàmiques poden mostrar contingut actualitzat en temps real, com notícies o resultats esportius.
-- **Personalització:** Permet personalitzar el contingut per a cada usuari basat en les seves preferències i dades.
-- **Interactivitat:** Les pàgines dinàmiques poden respondre a les accions dels usuaris, millorant l'experiència de l'usuari.
+#### Recursos Addicionals
 
 
 <figure>
@@ -207,6 +230,8 @@ Exemple Pràctic (PHP)
 </figure>
 
 #### Recursos Addicionals
+- [Article sobre els avantatges de les pàgines dinàmiques](https://www.example.com)
+- [Curs sobre generació dinàmica de pàgines web](https://www.example.com)
 - **Documentació de HTML:** [MDN HTML Guide](https://developer.mozilla.org/en-US/docs/Web/HTML)
 - **Documentació de CSS:** [MDN CSS Guide](https://developer.mozilla.org/en-US/docs/Web/CSS)
 - **Documentació de PHP:** [PHP Documentation](https://www.php.net/docs.php)
@@ -217,12 +242,12 @@ Exemple Pràctic (PHP)
 #### Resum
 Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles. Les SPA ofereixen una experiència d'usuari molt rica però poden tenir desavantatges en termes de SEO i temps de càrrega inicial.
 
-# 3. Models d'Execució de Codi en el Client i en el Servidor
+# 3. Models d'Execució
 
 Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
 
 
-### Execució de Codi al Client (FrontEnd)
+## Execució de Codi al Client (FrontEnd)
 
 L'execució de codi al client es realitza al navegador web de l'usuari. Els llenguatges utilitzats principalment per a l'execució al client són HTML, CSS i JavaScript.
 
@@ -265,7 +290,7 @@ Exemple de codi
 </html>
 ```
 
-### Execució de Codi al Servidor
+## Execució de Codi al Servidor (BackEnd)
 
 L'execució de codi al servidor es realitza al servidor web abans que els resultats es retornin al navegador del client. Els llenguatges habituals inclouen PHP, Python, Ruby, Node.js, entre altres.
 
@@ -296,7 +321,7 @@ console.log(`El servidor s'està executant a http://${hostname}:${port}/`);
 });
 ```
 
-### Single Page Application (SPA)
+## Single Page Application (SPA)
 
 Una Single Page Application (SPA) és un tipus d'aplicació web que carrega una única pàgina HTML i dinàmicament actualitza el contingut a mesura que l'usuari interactua amb l'aplicació, utilitzant JavaScript per a gestionar la lògica i les actualitzacions de la interfície d'usuari.
 
@@ -352,16 +377,21 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 #### Comparativa entre Execució de Codi al Client,al Servidor i el SPA
 
-
-| Característica              | Execució al Client                 | Execució al Servidor                 | Single Page Application (SPA)        |
-|-----------------------------|------------------------------------|--------------------------------------|--------------------------------------|
-| **Interactivitat**          | Alta                               | Mitjana                              | Molt Alta                            |
-| **Seguretat**               | Baixa                              | Alta                                 | Mitjana                              |
-| **Carrega del servidor**    | Baixa                              | Alta                                 | Baixa                                |
-| **Latència**                | Baixa                              | Pot ser alta                         | Baixa (després de la càrrega inicial)|
-| **Accés a recursos locals** | Limitat al navegador               | Complet accés al sistema del servidor| Limitat al navegador                 |
-| **SEO**                     | Mitjana                            | Alta                                 | Baixa                                |
-| **Temps de càrrega inicial**| Ràpid                              | Depèn de la complexitat              | Pot ser lent                         |
+| Característica               | Client-Side                         | Server-Side                         | Single Page Application (SPA)        |
+|------------------------------|-------------------------------------|-------------------------------------|--------------------------------------|
+| **Execució**                 | Navegador del client                | Servidor                            | Navegador del client                 |
+| **Llenguatges**              | JavaScript, HTML, CSS               | PHP, Node.js, Python, Java          | JavaScript, HTML, CSS                |
+| **Temps de Resposta**        | Immediata (després de la càrrega)   | Depèn de la comunicació amb el servidor | Baixa (després de la càrrega inicial)|
+| **Seguretat**                | Més exposat a vulnerabilitats       | Més controlat                       | Mitjana                              |
+| **Recursos**                 | Limitats pels recursos del client   | Recursos del servidor               | Limitats pels recursos del client    |
+| **Accés a Dades**            | No pot accedir directament a bases de dades | Accés directe a bases de dades    | Generalment via API                 |
+| **Interactivitat**           | Elevada, pot respondre ràpidament a les accions de l'usuari | Més difícil d'aconseguir sense Ajax o websockets | Molt Alta                            |
+| **Processament**             | Menys capacitat de procés           | Alta capacitat de procés            | Processament distribuit             |
+| **Carrega del servidor**     | Baixa                               | Alta                                | Baixa                                |
+| **Latència**                 | Baixa                               | Pot ser alta                        | Baixa (després de la càrrega inicial)|
+| **Accés a recursos locals**  | Limitat al navegador                | Complet accés al sistema del servidor | Limitat al navegador                 |
+| **SEO**                      | Mitjana                             | Alta                                | Baixa                                |
+| **Temps de càrrega inicial** | Ràpid                               | Depèn de la complexitat             | Pot ser lent                         |
 
 
 
@@ -377,9 +407,6 @@ ReactDOM.render(<App />, document.getElementById('root'));
 !!! tip "Perfil *Full-stack*"
     En les ofertes de treball quan fan referència a un **Full-stack developer**, estan buscant un perfil que domina tant el **front-end** com el **back-end**.
 
-#### Models d'Execució de Codi
-- **Model Client-Side:** El codi s'executa en el navegador del client, normalment utilitzant JavaScript. Exemple: Un formulari que valida les dades d'entrada abans de ser enviat.
-- **Model Server-Side:** El codi s'executa en el servidor, com ara PHP, Python o Node.js, i el servidor envia les pàgines generades al navegador del client. Exemple: Una pàgina que mostra els resultats d'una consulta a la base de dades.
 
 
 #### Recursos addicionals
@@ -481,32 +508,76 @@ Permet la programació asíncrona i escalable amb JavaScript, oferint la capacit
 
 ### Llenguatges i Tecnologies de Programació Web en Entorn Servidor
 
+Els mecanismes d'execució de codi en els servidors web permeten que les aplicacions generin contingut dinàmic, gestionin dades i interaccions d'usuaris de manera eficient. A continuació es descriuen diversos llenguatges i com funcionen en el context del servidor.
+
 #### PHP
-- **Descripció:** Popular per la seva facilitat d'ús i integració amb MySQL.
-- **Exemple:** Utilització de PHP per crear pàgines dinàmiques i accedir a bases de dades MySQL.
+- **Descripció:** PHP és un llenguatge interpretat popularment utilitzat per a la creació de pàgines web dinàmiques.
+- **Mecanisme:** El codi PHP s'incrusta dins dels fitxers HTML i es processa en temps real pel servidor web abans de ser enviat al client.
+
 
 #### Node.js
-- **Descripció:** Utilitza JavaScript en el servidor, permetent una programació asíncrona i escalable.
-- **Exemple:** Aplicacions web en temps real utilitzant Socket.io.
+- **Descripció:** Node.js permet la programació asíncrona i escalable amb JavaScript.
+- **Mecanisme:** Utilitza un model basat en esdeveniments que permet la gestió de moltes connexions simultànies sense bloquejar-se.
+
+
+#### Java (JSP/Servlets)
+- **Descripció:** Java s'utilitza per a aplicacions empresarials amb alta complexitat i escalabilitat.
+- **Mecanisme:** El codi Java es compila abans d'executar-se, millorant el rendiment. Els servlets i JSP gestionen les sol·licituds HTTP i generen contingut dinàmic.
 
 #### Python (Django/Flask)
-- **Descripció:** Conegut per la seva sintaxi clara i biblioteques extensives.
-- **Exemple:** Desenvolupament d'aplicacions web amb Django, utilitzant el seu ORM per accedir a bases de dades.
+- **Descripció:** Python és conegut per la seva sintaxi clara i les seves biblioteques extensives. Django i Flask són frameworks populars.
+- **Mecanisme:** Django utilitza un ORM per interactuar amb bases de dades, mentre que Flask és més lleuger i flexible.
 
-#### JSP
-- **Descripció:** La versió de Java per a la web. Li cal un contenidor web.
-- **Exemple:** Utilització de JSP per generar pàgines web dinàmiques en aplicacions Java.
+```python
+from flask import Flask
 
-#### ASP.NET
-- **Descripció:** Integrada en la plataforma de Microsoft .NET.
-- **Exemple:** Utilització d'ASP.NET per desenvolupar aplicacions web robustes en entorns Windows.
+app = Flask(__name__)
 
-#### Ruby
-- **Descripció:** Molt apreciat per els desenvolupadors web.
-- **Exemple:** Utilització de Ruby on Rails per desenvolupar aplicacions web de manera ràpida i eficient.
+@app.route('/')
+def hello_world():
+return 'Hola, món!'
+
+if __name__ == '__main__':
+app.run()
+```
+
+
+#### Ruby (Ruby on Rails)
+- **Descripció:** Ruby és apreciat per la seva elegància i facilitat d'ús. Ruby on Rails és un framework popular.
+- **Mecanisme:** Ruby on Rails segueix el patró MVC, facilitant el desenvolupament d'aplicacions web estructurades.
+
+
+```ruby
+class WelcomeController < ApplicationController
+def index
+render plain: "Hola, món!"
+end
+end
+```
+
 #### Go
-- **Descripció:** La versió de Google de Python.
-- **Exemple:** Utilització de Go per crear aplicacions web ràpides i escalables.
+- **Descripció:** Go és un llenguatge de programació desenvolupat per Google, conegut per la seva eficiència i concurrència.
+- **Mecanisme:** Go permet la creació de servidors web ràpids i escalables, utilitzant goroutines per gestionar múltiples connexions de manera eficient.
+
+
+```go
+package main
+
+import (
+"fmt"
+"net/http"
+)
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+fmt.Fprintf(w, "Hola, món!")
+}
+
+func main() {
+http.HandleFunc("/", helloHandler)
+http.ListenAndServe(":8080", nil)
+}
+```
+
 
 [Comparació de llenguatges](https://www.codementor.io/@iliawebdev/top-programming-languages-for-web-development-in-2021-1hzczfuoei)
 
@@ -538,6 +609,39 @@ Els servidors web treballen conjuntament amb els servidors d'aplicacions per ges
 #### Exemple de Configuració
 - **Servidor Web (Nginx):** Actua com a proxy invers, encaminant les sol·licituds dinàmiques al servidor d'aplicacions.
 - **Servidor d'Aplicacions (Node.js):** Gestiona les sol·licituds dinàmiques, executa la lògica de negoci i retorna les respostes al servidor web.
+
+**Configuració de Nginx com a Proxy Invers**
+```nginx
+server {
+   listen 80;
+   server_name example.com;
+
+   location / {
+       proxy_pass http://localhost:3000;
+       proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header X-Forwarded-Proto $scheme;
+   }
+}
+```
+
+**Configuració servidor d'aplicacions Node.js
+
+```javascript
+
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send('Hola, món!');
+});
+
+app.listen(3000, () => {
+    console.log('Servidor escoltant a http://localhost:3000');
+});  
+
+```
 
 Aquesta col·laboració permet una gestió eficient de les sol·licituds i una millor distribució de la càrrega, millorant el rendiment i l'escalabilitat de les aplicacions web.
 
