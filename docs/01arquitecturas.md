@@ -111,7 +111,7 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
 
 
-## 2. Pàgines Web Estàtiques vs. Dinàmiques
+# 2. Pàgines Web Estàtiques vs. Dinàmiques
 
 Les pàgines web estàtiques són aquelles en què el contingut no canvia en funció de les accions de l'usuari. Estan construïdes amb HTML i CSS, i cada pàgina es carrega de manera independent des del servidor.
 
@@ -217,7 +217,7 @@ Exemple Pràctic (PHP)
 #### Resum
 Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles. Les SPA ofereixen una experiència d'usuari molt rica però poden tenir desavantatges en termes de SEO i temps de càrrega inicial.
 
-## 3. Models d'Execució de Codi en el Client i en el Servidor
+# 3. Models d'Execució de Codi en el Client i en el Servidor
 
 Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
 
@@ -393,7 +393,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
 
 
-## 4. Servidors Web
+# 4. Servidors Web
 
 Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS, JavaScript, imatges i altres fitxers als clients a través del protocol HTTP o HTTPS. El servidor web gestiona les sol·licituds entrants dels clients (navegadors web) i retorna les respostes adequades.
 
@@ -512,7 +512,7 @@ Permet la programació asíncrona i escalable amb JavaScript, oferint la capacit
 
 [Criteris per apendre un llenguatge de programació](https://blog.educacionit.com/2018/04/10/4-criterios-para-elegir-tu-primer-lenguaje-de-programacion/)
 
-## 5. Servidors d'Aplicacions
+# 5. Servidors d'Aplicacions
 
 Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplicacions web dinàmiques i gestionar la lògica de negoci d'una aplicació. Aquest servidor actua com una capa intermèdia entre el client (navegador web) i les bases de dades o altres serveis de backend, proporcionant un entorn d'execució per a aplicacions web.
 
@@ -563,7 +563,7 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 Tant els servidors web com els servidors d'aplicacions s'estudien en el mòdul de "Desplegament d'Aplicacions Web".
 
 
-## 6. MVC (Model-View-Controller)
+# 6. MVC (Model-View-Controller)
 
 El patró MVC (Model-View-Controller) és un model d'arquitectura que separa la lògica de negoci, la interfície d'usuari i el control dels esdeveniments. Això permet una millor organització, manteniment i reutilització del codi.
 
