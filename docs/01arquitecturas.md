@@ -493,6 +493,24 @@ Permet la programació asíncrona i escalable amb JavaScript, oferint la capacit
 - **Descripció:** Conegut per la seva sintaxi clara i biblioteques extensives.
 - **Exemple:** Desenvolupament d'aplicacions web amb Django, utilitzant el seu ORM per accedir a bases de dades.
 
+#### JSP
+- **Descripció:** La versió de Java per a la web. Li cal un contenidor web.
+- **Exemple:** Utilització de JSP per generar pàgines web dinàmiques en aplicacions Java.
+
+#### ASP.NET
+- **Descripció:** Integrada en la plataforma de Microsoft .NET.
+- **Exemple:** Utilització d'ASP.NET per desenvolupar aplicacions web robustes en entorns Windows.
+
+#### Ruby
+- **Descripció:** Molt apreciat per els desenvolupadors web.
+- **Exemple:** Utilització de Ruby on Rails per desenvolupar aplicacions web de manera ràpida i eficient.
+#### Go
+- **Descripció:** La versió de Google de Python.
+- **Exemple:** Utilització de Go per crear aplicacions web ràpides i escalables.
+
+[Comparació de llenguatges](https://www.codementor.io/@iliawebdev/top-programming-languages-for-web-development-in-2021-1hzczfuoei)
+
+[Criteris per apendre un llenguatge de programació](https://blog.educacionit.com/2018/04/10/4-criterios-para-elegir-tu-primer-lenguaje-de-programacion/)
 
 ## 5. Servidors d'Aplicacions
 
@@ -545,100 +563,68 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 Tant els servidors web com els servidors d'aplicacions s'estudien en el mòdul de "Desplegament d'Aplicacions Web".
 
 
-## 4. MVC
+## 6. MVC (Model-View-Controller)
 
-![MVC](imagenes/01/mvc.png){align=right & width=500}
+El patró MVC (Model-View-Controller) és un model d'arquitectura que separa la lògica de negoci, la interfície d'usuari i el control dels esdeveniments. Això permet una millor organització, manteniment i reutilització del codi.
 
-*Model-View-Controller* o Model-Vista-Controlador és un model d'arquitectura que separa les dades i la lògica de negoci respecte a la interfície d'usuari i el component encarregat de gestionar els esdeveniments i les comunicacions.
+#### Components de MVC
 
-En separar els components en elements conceptuals permet reutilitzar el codi i millorar la seua organització i manteniment. Els seus elements són:
+- **Model:** Gestiona les dades i la lògica de negoci.
+- **Vista:** Presenta les dades a l'usuari.
+- **Controlador:** Gestiona la comunicació entre la vista i el model.
 
-* Model: representa la informació i gestiona tots els accessos a aquesta, tant consultes com actualitzacions provinents, normalment, d'una base de dades. S'accedeix via el controlador.
-* Controlador: Respon a les accions de l'usuari, i realitza peticions al model per a sol·licitar informació. Després de rebre la resposta del model, li envia les dades a la vista.
-* Vista: Presenta a l'usuari de manera visual el model i les dades preparades pel controlador. L'usuari interactua amb la vista i realitza noves peticions al controlador.
+### Exemple Pràctic de MVC
 
-L'estudiarem en més detall en aprofundir en l'ús dels **frameworks PHP**.
+```php
+// Model (User.php)
+class User {
+    public $id;
+    public $name;
+    
+    public static function find($id) {
+        // Simulació d'una consulta a la base de dades
+        return new User($id, "Example User");
+    }
+    
+    public function __construct($id, $name) {
+        $this->id = $id;
+        $this->name = $name;
+    }
+}
 
-## Decisions de disseny
+// Controlador (UserController.php)
+class UserController {
+    public function show($id) {
+        $user = User::find($id);
+        include 'views/user.php';
+    }
+}
 
-* Quina grandària té el projecte?
-* Quins llenguatges de programació conec? Val la pena l'esforç d'aprendre un nou?
-* Usaré eines de codi obert o eines propietàries? Quin és el cost d'utilitzar solucions comercials?
-* Programaré l'aplicació jo només o formaré part d'un grup de programadors?
-* Conte amb algun servidor web o gestor de base de dades disponible o puc decidir lliurement utilitzar el que crega necessari?
-* Quin tipus de llicència aplicaré a l'aplicació que desenvolupe?
+// Vista (views/user.php)
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+    <h1><?php echo $user->name; ?></h1>
+    <p>ID: <?php echo $user->id; ?></p>
+</body>
+</html>
+```
+### Avantatges de MVC
 
-## Ferramentes
+#### Separació de Responsabilitats
+Clarifica la divisió de tasques, facilitant el manteniment i escalabilitat.
 
-### Servidor Web
+#### Facilitat de Test
+Cada component es pot provar de manera independent.
 
-Programari que rep peticions HTTP (GET, POST, DELETE, ...). Retorna el recurs sol·licitat (HTML, CSS, JS, JSON, imatges, etc...)
+#### Reutilització de Codi
+Components del model i vista es poden reutilitzar en diferents parts de l'aplicació.
 
-El producte més implantant és **Apatxe Web Server** (<https://httpd.apache.org/>), creat en 1995.
 
-* Programari lliure i multiplataforma
-* Sistema de mòduls dinàmics → PHP, Python, Perl
-* Utilitza l'arxiu `.*htaccess` per a la seua configuració
-
-En l'actualitat, Apatxe està perdent mercat respecte a **Nginx** (<https://www.nginx.com>). Es tracta d'un producte més modern (2004) i que en determinats escenaris té millor rendiment que Apatxe.
-
-* Comparativa servidors web: <https://w3techs.com/technologies/history_overview/web_server/ms/q>
-
-### Servidor d'Aplicacions
-
-* Programari que ofereix serveis addicionals als d'un servidor web:
-  * Clustering
-  * Balanceig de càrrega
-  * Tolerància a fallades
-  * **Tomcat** (<http://tomcat.apache.org/>) és el servidor d'aplicacions **open source** i multiplataforma de referència per a una arquitectura Java.
-  * Contén un contenidor Web Java que interpreta **Servlets** i **JSP**.
-
-!!! info
-    Tant els servidors web com els servidors d'aplicacions s'estudien en el mòdul de "Desplegament d'Aplicacions Web".
-
-### Llenguatges en el servidor
-
-Les aplicacions que generen les pàgines web es programen en algun dels següents llenguatges:
-
-* PHP: El més estés. Normalment s'executa com un mòdul al servidor. Es fàcil i barat trobar allotjaments que l'oferisquen.
-* JSP: La versió de Java per a la web. Li cal un contenidor web.
-* ASP.NET: Integrada en la plataforma de microsoft .NET
-* Ruby: Molt apreciat per els desenvolupadors web.
-* GO: La versió de google de phyton.
-* Phyton: El més popular.
-* NodeJS: Utilitza Javascript.
-
-[Comparació de llenguatges](https://www.codementor.io/@iliawebdev/top-programming-languages-for-web-development-in-2021-1hzczfuoei)
-
-[Criteris per apendre un llenguatge de programació](https://blog.educacionit.com/2018/04/10/4-criterios-para-elegir-tu-primer-lenguaje-de-programacion/)
-
-#### JavaEE
-
-**Java Enterprise Edition** és la solució Java per al desenvolupament d'aplicacions *enterprise*. Ofereix una arquitectura molt completa i complexa, escalable i tolerant a fallades. Plantejada per a aplicacions per a grans sistemes.
-
-![JavaEE](imagenes/01/javaee.png)
-
-#### PHP
-
-* Llenguatge de propòsit general dissenyat per al desenvolupament de pàgines web dinàmiques
-* Al principi, llenguatge no tipat.
-* Actualment en la versió 8. Es recomana almenys utilitzar una versió superior a la 7.0.
-* Codi embegut en l'HTML
-* Instruccions entre etiquetes `<?php` y `?>`
-* Multitud de llibreries i frameworks:
-  
-      * Laravel, Symfony, Codeigniter, Zend
-
-La seua documentació és bastant completa: <https://www.php.net/manual/es/index.php>
-
-El següent mapa mental mostra un resum dels seus elements:
-
-<figure>
-  <img src="imagenes/01/php.jpg" />
-  <figcaption>Elements del llenguatge PHP</figcaption>
-</figure>
-
-Durant les següents unitats estudiarem PHP en profunditat.
 
 ## Posada en funcionament
 
