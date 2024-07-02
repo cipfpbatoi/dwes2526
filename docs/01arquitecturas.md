@@ -541,6 +541,8 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 - **Descripció:** Una plataforma per a l'execució de codi JavaScript en el servidor.
 - **Funcionalitats:** Permet la programació asíncrona, ideal per a aplicacions en temps real i escalables com xats i jocs multijugador.
 
+!!! info
+Tant els servidors web com els servidors d'aplicacions s'estudien en el mòdul de "Desplegament d'Aplicacions Web".
 
 
 ## 4. MVC
