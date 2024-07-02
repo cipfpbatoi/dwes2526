@@ -11,20 +11,82 @@
     | 1. Selecciona les arquitectures i tecnologies de programació web en entorn servidor, analitzant les seves capacitats i característiques pròpies. | a) S'han caracteritzat i diferenciat els models d'execució de codi en el servidor i en el client Web. <br/> b) S'han reconegut els avantatges que proporciona la generació dinàmica de pàgines Web i les seues diferències amb la inclusió de sentències de guions a l'interior de les pàgines Web. <br/> c) S'han identificat els mecanismes d'execució de codi en els servidors Web. <br/> d) S'han reconegut les funcionalitats que aporten els servidors d'aplicacions i la seua integració amb els servidors Web. <br/> e) S'han identificat i caracteritzat els principals llenguatges i tecnologies relacionats amb la programació Web en entorn servidor. <br/> f) S'han verificat els mecanismes d'integració dels llenguatges de marques amb els llenguatges de programació en entorn servidor. <br/> g) S'han reconegut i avaluat les eines de programació en entorn servidor. <br/> |
 
 
-Les arquitectures web defineixen la forma en què les pàgines d'un lloc web estan estructurades i enllaçades entre si. Les aplicacions web es basen en el model client-servidor.
+Una arquitectura web defineix la manera en què els components d'una aplicació web es comuniquen entre si i amb els usuaris finals. Això inclou la configuració del servidor, el client, les bases de dades i altres serveis externs.
 
-## Client / Servidor
+## Tipus d'Arquitectures Web
+
+### 1. Arquitectura Client-Servidor
+En aquest model, el client (generalment un navegador web) envia sol·licituds al servidor, que processa aquestes sol·licituds i envia les respostes corresponents.
+
+**Diagrama:**
+
+Client <---> Servidor
+
+**Característiques:**
+- El client és responsable de la interfície d'usuari.
+- El servidor maneja la lògica d'aplicació i l'accés a les dades.
+
+**Avantatges:**
+- Separació de responsabilitats.
+- Facilita el manteniment i la seguretat.
+
+**Desavantatges:**
+- Pot tenir problemes de rendiment amb moltes sol·licituds simultànies.
 
 <figure>
   <img src="imagenes/01/clienteservidor.png" />
   <figcaption>Arquitectura Client Servidor</figcaption>
 </figure>
 
-El client inicia el procés amb una sol·licitud al servidor que genera un missatge de resposta. Ambdos es comuniquen utilitzant un protocol comú.
+### 2. Arquitectura de Tres Capa
+Aquesta arquitectura divideix l'aplicació en tres nivells: la capa de presentació, la capa de lògica d'aplicació, i la capa de dades.
 
-En les aplicacions web, els clients solen ser navegadors els que realitzen peticions(**request** normalment mitjançant el protocol **GET** mitjançant el port 80/443), i estos responen(**response**) amb la pàgina web sol·licitada o amb un missatge d’error.
+**Diagrama:**
 
-La noves arquitectures substitueixen el servidor per un balancejador de càrrega de manera que N servidors donen resposta a M clients.
+Client <--> Servidor d'Aplicació <--> Base de Dades
+
+
+**Característiques:**
+- La capa de presentació gestiona la interfície d'usuari.
+- La capa de lògica d'aplicació processa les dades i executa la lògica de negoci.
+- La capa de dades emmagatzema i recupera la informació.
+
+**Avantatges:**
+- Facilita l'escalabilitat.
+- Millora la seguretat, ja que les dades no són directament accessibles des del client.
+
+**Desavantatges:**
+- Pot ser més complexa de desenvolupar i mantenir.
+
+### 3. Arquitectura de Microserveis
+Els microserveis descomponen una aplicació en una sèrie de serveis petits i independents, cadascun executant una funció específica.
+
+**Diagrama:**
+
+[Microservei A] <---> [Microservei B] <---> [Microservei C]
+
+
+**Característiques:**
+- Cada microservei es pot desplegar, actualitzar, i escalar independentment.
+- Utilitzen protocols lleugers com HTTP/REST o gRPC per comunicar-se.
+
+**Avantatges:**
+- Millora l'escalabilitat i la flexibilitat.
+- Facilita l'ús de diferents tecnologies per a diferents serveis.
+
+**Desavantatges:**
+- Pot ser complexa de gestionar i coordinar.
+- Requereix una infraestructura de desplegament i monitorització més robusta.
+
+## Recursos Addicionals
+- **Documentació sobre Arquitectures de Software:** [Software Architecture Guide](https://martinfowler.com/architecture/)
+- **Tutorial de Microserveis:** [Microservices Tutorial](https://www.tutorialspoint.com/microservice_architecture/index.htm)
+
+## Resum
+Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
+
+
+
 
 
 ## Pàgines Web Estàtiques
@@ -99,7 +161,6 @@ Exemple Pràctic (PHP)
 </html>
 ```
 ### Comparativa entre Pàgines Web Estàtiques i Dinàmiques
-
 | Característica              | Pàgines Web Estàtiques             | Pàgines Web Dinàmiques               |
 |-----------------------------|------------------------------------|--------------------------------------|
 | **Contingut**               | Fix, no canvia                     | Variable, pot canviar                |
@@ -108,7 +169,10 @@ Exemple Pràctic (PHP)
 | **Rendiment**               | Alt                                | Pot ser baix                         |
 | **Seguretat**               | Alta                               | Depèn de la implementació            |
 | **Flexibilitat**            | Baixa                              | Alta                                 |
-
+| **SEO**                     | Bona                               | Depèn de la implementació            |
+| **Temps de Desenvolupament**| Curt                               | Llarg                                |
+| **Actualització del Contingut** | Manual                         | Automàtica                           |
+| **Cost de Manteniment**     | Baix                               | Alt                                  |
 
 
 <figure>
@@ -121,9 +185,11 @@ Exemple Pràctic (PHP)
 - **Documentació de CSS:** [MDN CSS Guide](https://developer.mozilla.org/en-US/docs/Web/CSS)
 - **Documentació de PHP:** [PHP Documentation](https://www.php.net/docs.php)
 - **Documentació de JavaScript (MDN):** [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+- **Documentació de Node.js:** [Node.js Documentation](https://nodejs.org/en/docs/)
+- **Documentació de React:** [React Documentation](https://reactjs.org/docs/getting-started.html)
 
 #### Resum
-Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles.
+Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles. Les SPA ofereixen una experiència d'usuari molt rica però poden tenir desavantatges en termes de SEO i temps de càrrega inicial.
 
 ## Models d'Execució de Codi en el Client i en el Servidor
 
@@ -290,45 +356,6 @@ ReactDOM.render(<App />, document.getElementById('root'));
 #### Resum
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
 
-
-## Arquitectura de 3 capas
-
-Cal distingir entre capes **físiques** (*tier*) i capes **lògiques** (*layer*).
-
-### Tier
-
-Capa física d'una arquitectura suposa un nou element de maquinari separat físicament. Les capes físiques més allunyades del client estan més protegides, tant per **firewalls** com per **VPN**.
-
-Exemple d'arquitectura en tres capes físiques (3 **tier**):
-
-* Servidor Web
-* Servidor d'Aplicacions
-* Servidor de base de dades
-
-<figure>
-  <img src="imagenes/01/tier3.png" />
-  <figcaption>Arquitectura de tres capes físiques</figcaption>
-</figure>
-
-!!! warning "Cluster en tiers"
-    No confondre les capes amb la quantitat de servidors. Actualment es treballa amb arquitectures amb múltiples servidors en una mateixa capa física mitjançant un clúster, per a oferir tolerància a errors i escalabilitat horitzontal.
-
-### Layer
-
-![Arquitectura de tres capas físicas](imagenes/01/layer3.png){ align=right }
-
-En canvi, les capes lògiques (**layers**) organitzen el codi respecte a la seua funcionalitat:
-
-* Presentació
-* Negoci / Aplicació / Procés
-* Dades / Persistència
-
-Com s'observa, cadascuna de les capes es pot implementar amb diferents llenguatges de programació i/o eines.
-
-<figure>
-  <img src="imagenes/01/tierlayer.png" />
-  <figcaption>Arquitectura de tres capes físiques en tres lògiques</figcaption>
-</figure>
 
 ## MVC
 
