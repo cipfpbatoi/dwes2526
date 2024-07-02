@@ -2,7 +2,7 @@
 
 ??? abstract "Duració i criteris d'avaluació"
 
-    Duració estimada: 3 hores
+    Duració estimada: 4 hores
 
     <hr />
 
@@ -39,7 +39,156 @@ Si la pàgina web únicament conté HTML + CSS es considera una pàgina estàtic
   <figcaption>Pàgina web dinàmica</figcaption>
 </figure>
 
-Les tecnologies utlitzades (i els perfils de desenvolupament associats) per a la generació de pàgines dinàmiques són:
+### Models d'Execució de Codi en el Client i en el Servidor
+
+Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
+
+#### Execució de Codi al Client (FrontEnd)
+
+L'execució de codi al client es realitza al navegador web de l'usuari. Els llenguatges utilitzats principalment per a l'execució al client són HTML, CSS i JavaScript.
+
+##### Avantatges
+
+    * Interactivitat: Permet la creació d'experiències d'usuari riques i interactives.
+    * Reducció de la càrrega del servidor: El processament es fa al dispositiu de l'usuari, disminuint la càrrega del servidor.
+    * Actualització instantània: Canvis en l'UI poden ser reflectits immediatament sense necessitat de recarregar la pàgina.
+
+##### Desavantatges
+
+    * Seguretat: El codi del client és visible i modificable pels usuaris, la qual cosa pot representar un risc de seguretat.
+    * Compatibilitat: Pot haver-hi diferències en la manera com diferents navegadors interpreten el codi.
+
+Exemple de codi
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemple Client</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .content { margin: 20px; }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Hola, món!</h1>
+        <button onclick="mostrarMissatge()">Fes clic aquí</button>
+        <p id="missatge"></p>
+    </div>
+
+    <script>
+        function mostrarMissatge() {
+            document.getElementById('missatge').innerText = 'Has fet clic al botó!';
+        }
+    </script>
+</body>
+</html>
+```
+
+#### Execució de Codi al Servidor
+
+L'execució de codi al servidor es realitza al servidor web abans que els resultats es retornin al navegador del client. Els llenguatges habituals inclouen PHP, Python, Ruby, Node.js, entre altres.
+
+##### Avantatges
+
+    * Seguretat: El codi del servidor no és accessible pels usuaris finals, la qual cosa augmenta la seguretat.
+    * Potència: Els servidors solen ser més potents que els dispositius dels usuaris, permetent processar operacions més complexes.
+
+##### Desavantatges
+
+    * Latència: Les sol·licituds al servidor poden ser lentes a causa de la distància física i la càrrega del servidor.
+    * Escalabilitat: Pot ser necessari més esforç per escalar una aplicació a mesura que augmenta el nombre d'usuaris.    
+
+Exemple de codi
+``` node.js
+// server.js
+const http = require('http');
+
+const hostname = '127.0.0.1';
+const port = 3000;
+
+const server = http.createServer((req, res) => {
+res.statusCode = 200;
+res.setHeader('Content-Type', 'text/plain');
+res.end('Hola, món!\n');
+});
+
+server.listen(port, hostname, () => {
+console.log(`El servidor s'està executant a http://${hostname}:${port}/`);
+});
+```
+
+#### Single Page Application (SPA)
+
+Una Single Page Application (SPA) és un tipus d'aplicació web que carrega una única pàgina HTML i dinàmicament actualitza el contingut a mesura que l'usuari interactua amb l'aplicació, utilitzant JavaScript per a gestionar la lògica i les actualitzacions de la interfície d'usuari.
+
+##### Avantatges
+- **Experiència d'usuari millorada:** Les SPA ofereixen una navegació més ràpida i fluida, similar a una aplicació d'escriptori.
+- **Menys càrrega del servidor:** Menys sol·licituds al servidor ja que només es carrega una pàgina inicialment.
+- **Desenvolupament modular:** Facilita la creació de components reutilitzables.
+
+##### Desavantatges
+- **SEO:** Les SPA poden ser menys amigables amb els motors de cerca.
+- **Carregada inicial:** Pot requerir una major càrrega inicial de recursos, afectant el temps de càrrega inicial.
+- **Gestió de l'estat complexa:** Pot ser més complicat gestionar l'estat de l'aplicació.
+
+##### Exemple Pràctic (React)
+
+```jsx
+// index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemple SPA</title>
+    <script defer src="bundle.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
+
+// index.js
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+
+function App() {
+    const [message, setMessage] = useState('');
+
+    const handleClick = () => {
+        setMessage('Has fet clic al botó!');
+    };
+
+    return (
+        <div>
+            <h1>Hola, món!</h1>
+            <button onClick={handleClick}>Fes clic aquí</button>
+            <p>{message}</p>
+        </div>
+    );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+##### Comparativa entre Execució de Codi al Client,al Servidor i el SPA
+
+
+| Característica              | Execució al Client                 | Execució al Servidor                 | Single Page Application (SPA)        |
+|-----------------------------|------------------------------------|--------------------------------------|--------------------------------------|
+| **Interactivitat**          | Alta                               | Mitjana                              | Molt Alta                            |
+| **Seguretat**               | Baixa                              | Alta                                 | Mitjana                              |
+| **Carrega del servidor**    | Baixa                              | Alta                                 | Baixa                                |
+| **Latència**                | Baixa                              | Pot ser alta                         | Baixa (després de la càrrega inicial)|
+| **Accés a recursos locals** | Limitat al navegador               | Complet accés al sistema del servidor| Limitat al navegador                 |
+| **SEO**                     | Mitjana                            | Alta                                 | Baixa                                |
+| **Temps de càrrega inicial**| Ràpid                              | Depèn de la complexitat              | Pot ser lent                         |
+
+##### Comparativa entre desenvolupadors
 
 | Perfil                   | Ferramenta          | Tecnologia
 | ---                       |---------------------| ---
@@ -49,14 +198,16 @@ Les tecnologies utlitzades (i els perfils de desenvolupament associats) per a la
 !!! tip "Perfil *Full-stack*"
     En les ofertes de treball quan fan referència a un **Full-stack developer**, estan buscant un perfil que domina tant el **front-end** com el **back-end**.
 
-### Single Page Application
+##### Recursos addicionals
 
-Hui dia, gran part del desenvolupament web està mudant des d'una arquitectura web client-servidor clàssica on el client realitza una petició al **backend**, per una arquitectura SPA on el client guanya molt major pes i segueix una programació reactiva que accedeix a serveis remots **REST** que realitzen les operacions (comunicant-se mitjançant **JSON**).
+- **Documentació de JavaScript (MDN):** [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+- **Guia de Node.js:** [Node.js Documentation](https://nodejs.org/en/docs/)
+- **Documentació de React:** [React Documentation](https://reactjs.org/docs/getting-started.html)
 
-<figure>
-  <img src="imagenes/01/01spa.png" />
-  <figcaption>Arquitectura tradicional vs SPA</figcaption>
-</figure>
+
+##### Resum
+La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
+
 
 ## Arquitectura de 3 capas
 
