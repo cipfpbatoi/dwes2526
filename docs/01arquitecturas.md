@@ -23,10 +23,12 @@ En aquest model, el client (generalment un navegador web) envia sol·licituds al
 Client <---> Servidor
 
 **Característiques:**
+
 - El client és responsable de la interfície d'usuari.
 - El servidor maneja la lògica d'aplicació i l'accés a les dades.
 
 **Avantatges:**
+
 - Separació de responsabilitats.
 - Facilita el manteniment i la seguretat.
 
