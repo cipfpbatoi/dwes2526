@@ -1,4 +1,4 @@
-# Arquitectures Web
+# 1.Arquitectures Web
 
 ??? abstract "Duració i criteris d'avaluació"
 
@@ -15,7 +15,7 @@ Una arquitectura web defineix la manera en què els components d'una aplicació 
 
 ## Tipus d'Arquitectures Web
 
-### 1. Arquitectura Client-Servidor
+### Arquitectura Client-Servidor
 En aquest model, el client (generalment un navegador web) envia sol·licituds al servidor, que processa aquestes sol·licituds i envia les respostes corresponents.
 
 **Diagrama:**
@@ -33,6 +33,7 @@ Client <---> Servidor
 - Facilita el manteniment i la seguretat.
 
 **Desavantatges:**
+
 - Pot tenir problemes de rendiment amb moltes sol·licituds simultànies.
 
 <figure>
@@ -40,7 +41,7 @@ Client <---> Servidor
   <figcaption>Arquitectura Client Servidor</figcaption>
 </figure>
 
-### 2. Arquitectura de Tres Capa
+### Arquitectura de Tres Capa
 Aquesta arquitectura divideix l'aplicació en tres nivells: la capa de presentació, la capa de lògica d'aplicació, i la capa de dades.
 
 **Diagrama:**
@@ -49,18 +50,21 @@ Client <--> Servidor d'Aplicació <--> Base de Dades
 
 
 **Característiques:**
+
 - La capa de presentació gestiona la interfície d'usuari.
 - La capa de lògica d'aplicació processa les dades i executa la lògica de negoci.
 - La capa de dades emmagatzema i recupera la informació.
 
 **Avantatges:**
+
 - Facilita l'escalabilitat.
 - Millora la seguretat, ja que les dades no són directament accessibles des del client.
 
 **Desavantatges:**
+
 - Pot ser més complexa de desenvolupar i mantenir.
 
-### 3. Arquitectura de Microserveis
+### Arquitectura de Microserveis
 Els microserveis descomponen una aplicació en una sèrie de serveis petits i independents, cadascun executant una funció específica.
 
 **Diagrama:**
@@ -69,14 +73,17 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 
 
 **Característiques:**
+
 - Cada microservei es pot desplegar, actualitzar, i escalar independentment.
 - Utilitzen protocols lleugers com HTTP/REST o gRPC per comunicar-se.
 
 **Avantatges:**
+
 - Millora l'escalabilitat i la flexibilitat.
 - Facilita l'ús de diferents tecnologies per a diferents serveis.
 
 **Desavantatges:**
+
 - Pot ser complexa de gestionar i coordinar.
 - Requereix una infraestructura de desplegament i monitorització més robusta.
 
@@ -89,9 +96,7 @@ Les arquitectures web són fonamentals per al desenvolupament d'aplicacions efic
 
 
 
-
-
-## Pàgines Web Estàtiques
+## 2.Pàgines Web Estàtiques vs. Dinàmiques
 
 Les pàgines web estàtiques són aquelles en què el contingut no canvia en funció de les accions de l'usuari. Estan construïdes amb HTML i CSS, i cada pàgina es carrega de manera independent des del servidor.
 
@@ -126,7 +131,6 @@ Exemple Pràctic
 </body>
 </html>
 ```
-## Pàgines Web Dinàmiques
 
 Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en funció de les accions de l'usuari o altres factors. Utilitzen HTML, CSS, i JavaScript per al costat del client, i poden utilitzar llenguatges de servidor com PHP, Python, Node.js, entre altres, per generar contingut dinàmicament.
 
@@ -193,7 +197,7 @@ Exemple Pràctic (PHP)
 #### Resum
 Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles. Les SPA ofereixen una experiència d'usuari molt rica però poden tenir desavantatges en termes de SEO i temps de càrrega inicial.
 
-## Models d'Execució de Codi en el Client i en el Servidor
+## 3.Models d'Execució de Codi en el Client i en el Servidor
 
 Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
 
@@ -359,7 +363,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
 
 
-## MVC
+## 4. MVC
 
 ![MVC](imagenes/01/mvc.png){align=right & width=500}
 
