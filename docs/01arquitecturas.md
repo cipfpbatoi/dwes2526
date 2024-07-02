@@ -83,7 +83,10 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 
 **Diagrama:**
 
-[Microservei A] <---> [Microservei B] <---> [Microservei C]
+<figure>
+  <img src="imagenes/01/microserveis.png" />
+  <figcaption>Arquitectura Microserveis</figcaption>
+</figure>
 
 
 **Característiques:**
