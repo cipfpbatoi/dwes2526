@@ -177,12 +177,12 @@ Exemple de codi
 L'execució de codi al servidor es realitza al servidor web abans que els resultats es retornin al navegador del client. Els llenguatges habituals inclouen PHP, Python, Ruby, Node.js, entre altres.
 
 #### Avantatges
-- ** Seguretat:** El codi del servidor no és accessible pels usuaris finals, la qual cosa augmenta la seguretat.
-- ** Potència:** Els servidors solen ser més potents que els dispositius dels usuaris, permetent processar operacions més complexes.
+- **Seguretat:** El codi del servidor no és accessible pels usuaris finals, la qual cosa augmenta la seguretat.
+- **Potència:** Els servidors solen ser més potents que els dispositius dels usuaris, permetent processar operacions més complexes.
 
 #### Desavantatges
-- ** Latència:** Les sol·licituds al servidor poden ser lentes a causa de la distància física i la càrrega del servidor.
-- ** Escalabilitat:** Pot ser necessari més esforç per escalar una aplicació a mesura que augmenta el nombre d'usuaris.    
+- **Latència:** Les sol·licituds al servidor poden ser lentes a causa de la distància física i la càrrega del servidor.
+- **Escalabilitat:** Pot ser necessari més esforç per escalar una aplicació a mesura que augmenta el nombre d'usuaris.    
 
 Exemple de codi
 ``` node.js
