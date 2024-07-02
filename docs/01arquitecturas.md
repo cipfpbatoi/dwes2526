@@ -577,11 +577,34 @@ http.HandleFunc("/", helloHandler)
 http.ListenAndServe(":8080", nil)
 }
 ```
+#### Comparativa
+
+| Llenguatge | Avantatges | Desavantatges | Usos Comuns |
+|------------|------------|---------------|-------------|
+| **PHP**    | Amplament utilitzat, gran comunitat, fàcil d'aprendre | Seguretat (cal bones pràctiques), rendiment inferior a altres llenguatges | Aplicacions web, CMS com WordPress |
+| **Python** | Senzillesa i llegibilitat, gran quantitat de biblioteques, potent per a prototips | Rendiment inferior en algunes àrees, gestió de concurrència | Aplicacions web (Django, Flask), anàlisi de dades |
+| **Node.js**| Alta velocitat, no bloqueig (event-driven), gran ecosistema (NPM) | Pot ser complicat per a grans aplicacions, gestió de callbacks | Aplicacions en temps real, serveis web |
+| **Java**   | Rendiment elevat, robustesa, seguretat, escalabilitat | Verborrea, aprenentatge més complex | Aplicacions empresarials, sistemes grans, Android |
 
 
-[Comparació de llenguatges](https://www.codementor.io/@iliawebdev/top-programming-languages-for-web-development-in-2021-1hzczfuoei)
+#### Recursos Addicionals:
 
-[Criteris per apendre un llenguatge de programació](https://blog.educacionit.com/2018/04/10/4-criterios-para-elegir-tu-primer-lenguaje-de-programacion/)
+- [Client-side vs Server-side](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Introduction)
+- [Apache HTTP Server Documentation](https://httpd.apache.org/docs/)
+- [Nginx Official Documentation](https://nginx.org/en/docs/)
+- [Microsoft IIS Documentation](https://docs.microsoft.com/en-us/iis/)
+- [W3Schools: PHP Tutorial](https://www.w3schools.com/php/)
+- [Node.js Documentation](https://nodejs.org/en/docs/)
+- [Django Documentation](https://docs.djangoproject.com/en/stable/)
+- [Flask Documentation](https://flask.palletsprojects.com/en/2.0.x/)
+- [Ruby on Rails Guides](https://guides.rubyonrails.org/)
+- [Go Documentation](https://golang.org/doc/)
+- [Comparació de llenguatges](https://www.codementor.io/@iliawebdev/top-programming-languages-for-web-development-in-2021-1hzczfuoei)
+- [Criteris per apendre un llenguatge de programació](https://blog.educacionit.com/2018/04/10/4-criterios-para-elegir-tu-primer-lenguaje-de-programacion/)
+
+#### Resum
+
+Un servidor web serveix contingut estàtic com HTML, CSS, JavaScript i imatges als clients a través de HTTP o HTTPS. Gestiona sol·licituds entrants i retorna respostes adequades. Exemples de servidors web inclouen Apache, Nginx i Microsoft IIS, cadascun amb funcionalitats úniques com la redirecció d'URLs, suport per a HTTPS i gestió de peticions HTTP. A més, utilitzen llenguatges interpretats (PHP, Python), compilats (Java) i intermediaris (Node.js) per executar codi.
 
 # 5. Servidors d'Aplicacions
 
@@ -666,6 +689,17 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 !!! info
 Tant els servidors web com els servidors d'aplicacions s'estudien en el mòdul de "Desplegament d'Aplicacions Web".
 
+#### Recursos addicionals
+
+- [What is an Application Server?](https://www.redhat.com/en/topics/middleware/what-is-an-application-server)
+- [Apache Tomcat Documentation](https://tomcat.apache.org/tomcat-9.0-doc/)
+- [JBoss Documentation](https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/)
+- [GlassFish Documentation](https://javaee.github.io/glassfish/)
+- [Spring Framework Documentation](https://spring.io/projects/spring-framework)
+
+#### Resum
+
+Els servidors d'aplicacions executen aplicacions dinàmiques i proporcionen serveis empresarials. Es diferencien dels servidors web en què no només serveixen contingut estàtic, sinó que també processen lògica d'aplicació i interaccions de base de dades. Exemples inclouen Apache Tomcat, JBoss i GlassFish, utilitzats per a aplicacions Java. També donen suport a tecnologies com servlets, JSP, EJB i frameworks com Spring, facilitant la construcció d'aplicacions robustes i escalables.
 
 # 6. MVC (Model-View-Controller)
 
@@ -728,10 +762,15 @@ Cada component es pot provar de manera independent.
 #### Reutilització de Codi
 Components del model i vista es poden reutilitzar en diferents parts de l'aplicació.
 
-## Referències
 
-* Article [Arquitectures Web i sa evolució](https://www.arquitecturajava.com/arquitecturas-web-y-su-evolucion/)
+#### Recursos Addicionals
 
-## Videos
+- [Introduction to the Model-View-Controller (MVC) pattern](https://developer.mozilla.org/en-US/docs/Glossary/MVC)
+- [Ruby on Rails Guides](https://guides.rubyonrails.org/)
+- [Laravel Documentation](https://laravel.com/docs)
+- [Django Documentation](https://docs.djangoproject.com/en/stable/)
+- [ASP.NET MVC Documentation](https://docs.microsoft.com/en-us/aspnet/mvc/overview)
 
-* [Triar un llenguatge de programació](https://laracasts.com/series/php-for-beginners-2023-edition/episodes/1)
+#### Resum
+
+L'arquitectura MVC divideix una aplicació en tres components interconnectats: Model (gestió de dades), Vista (interfície d'usuari) i Controlador (lògica d'aplicació). Aquesta separació facilita la gestió del codi, la reutilització de components i la mantenibilitat. És àmpliament utilitzada en el desenvolupament web amb frameworks com Ruby on Rails, Laravel (PHP), Django (Python) i ASP.NET MVC.
