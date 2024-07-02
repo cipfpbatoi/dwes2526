@@ -52,7 +52,7 @@ Client <---> Servidor
   <figcaption>Arquitectura Client Servidor</figcaption>
 </figure>
 
-### Arquitectura de Tres Capa
+### Arquitectura de Tres Capes
 Aquesta arquitectura divideix l'aplicació en tres nivells: la capa de presentació, la capa de lògica d'aplicació, i la capa de dades.
 
 **Diagrama:**
