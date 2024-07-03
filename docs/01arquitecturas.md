@@ -28,6 +28,7 @@ Les arquitectures web són fonamentals en el desenvolupament d'aplicacions web m
 A continuació, es descriuen alguns dels principals tipus d'arquitectures web, cadascun amb les seves pròpies característiques, avantatges i desavantatges:
 
 ### Arquitectura Client-Servidor
+
 En aquest model, el client (generalment un navegador web) envia sol·licituds al servidor, que processa aquestes sol·licituds i envia les respostes corresponents.
 
 **Diagrama:**
@@ -107,10 +108,12 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 - Requereix una infraestructura de desplegament i monitorització més robusta.
 
 #### Recursos Addicionals
+
 - **Documentació sobre Arquitectures de Software:** [Software Architecture Guide](https://martinfowler.com/architecture/)
 - **Tutorial de Microserveis:** [Microservices Tutorial](https://www.tutorialspoint.com/microservice_architecture/index.htm)
 
 #### Resum
+
 Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
 
 
@@ -121,11 +124,13 @@ Les arquitectures web són fonamentals per al desenvolupament d'aplicacions efic
 Les pàgines web estàtiques són aquelles en què el contingut no canvia en funció de les accions de l'usuari. Estan construïdes amb HTML i CSS, i cada pàgina es carrega de manera independent des del servidor.
 
 #### Avantatges
+
 - **Senzillesa:** Fàcils de crear i mantenir.
 - **Rendiment:** Temps de càrrega ràpid perquè no requereixen processament addicional.
 - **Seguretat:** Menys vulnerabilitats, ja que no hi ha lògica de servidor ni bases de dades.
 
 #### Desavantatges
+
 - **Flexibilitat:** Difícils de modificar a gran escala sense eines automatitzades.
 - **Interactivitat:** Limitada, ja que no poden respondre a les accions de l'usuari de manera dinàmica.
 
@@ -177,6 +182,7 @@ La generació dinàmica de pàgines web permet crear contingut web en temps real
 
 
 #### Desavantatges
+
 - **Complexitat:** Més difícils de crear i mantenir, ja que requereixen programació tant al client com al servidor.
 - **Rendiment:** Poden ser més lentes a causa de la necessitat de processament al servidor.
 - **Seguretat:** Exposades a més vulnerabilitats, com injeccions SQL, si no es prenen les precaucions adequades.
@@ -215,6 +221,7 @@ La generació dinàmica de pàgines web permet crear contingut web en temps real
 </html>
 ```
 ### Comparativa entre Pàgines Web Estàtiques i Dinàmiques
+
 | Característica              | Pàgines Web Estàtiques             | Pàgines Web Dinàmiques               |
 |-----------------------------|------------------------------------|--------------------------------------|
 | **Contingut**               | Fix, no canvia                     | Variable, pot canviar                |
@@ -234,6 +241,7 @@ La generació dinàmica de pàgines web permet crear contingut web en temps real
 </figure>
 
 #### Recursos Addicionals
+
 - [Article sobre els avantatges de les pàgines dinàmiques](https://www.example.com)
 - [Curs sobre generació dinàmica de pàgines web](https://www.example.com)
 - **Documentació de HTML:** [MDN HTML Guide](https://developer.mozilla.org/en-US/docs/Web/HTML)
@@ -244,23 +252,25 @@ La generació dinàmica de pàgines web permet crear contingut web en temps real
 - **Documentació de React:** [React Documentation](https://reactjs.org/docs/getting-started.html)
 
 #### Resum
+
 Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles. Les SPA ofereixen una experiència d'usuari molt rica però poden tenir desavantatges en termes de SEO i temps de càrrega inicial.
 
 # Models d'Execució
 
 Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
 
-
 ## Execució de Codi al Client (FrontEnd)
 
 L'execució de codi al client es realitza al navegador web de l'usuari. Els llenguatges utilitzats principalment per a l'execució al client són HTML, CSS i JavaScript.
 
 #### Avantatges
+
 - **Interactivitat:** Permet la creació d'experiències d'usuari riques i interactives.
 - **Reducció de la càrrega del servidor:** El processament es fa al dispositiu de l'usuari, disminuint la càrrega del servidor.
 - **Actualització instantània:** Canvis en l'UI poden ser reflectits immediatament sense necessitat de recarregar la pàgina.
 
 #### Desavantatges
+
 - **Seguretat:** El codi del client és visible i modificable pels usuaris, la qual cosa pot representar un risc de seguretat.
 - **Compatibilitat:** Pot haver-hi diferències en la manera com diferents navegadors interpreten el codi.
 
@@ -299,10 +309,12 @@ Exemple de codi
 L'execució de codi al servidor es realitza al servidor web abans que els resultats es retornin al navegador del client. Els llenguatges habituals inclouen PHP, Python, Ruby, Node.js, entre altres.
 
 #### Avantatges
+
 - **Seguretat:** El codi del servidor no és accessible pels usuaris finals, la qual cosa augmenta la seguretat.
 - **Potència:** Els servidors solen ser més potents que els dispositius dels usuaris, permetent processar operacions més complexes.
 
 #### Desavantatges
+
 - **Latència:** Les sol·licituds al servidor poden ser lentes a causa de la distància física i la càrrega del servidor.
 - **Escalabilitat:** Pot ser necessari més esforç per escalar una aplicació a mesura que augmenta el nombre d'usuaris.    
 
@@ -330,11 +342,13 @@ console.log(`El servidor s'està executant a http://${hostname}:${port}/`);
 Una Single Page Application (SPA) és un tipus d'aplicació web que carrega una única pàgina HTML i dinàmicament actualitza el contingut a mesura que l'usuari interactua amb l'aplicació, utilitzant JavaScript per a gestionar la lògica i les actualitzacions de la interfície d'usuari.
 
 #### Avantatges
+
 - **Experiència d'usuari millorada:** Les SPA ofereixen una navegació més ràpida i fluida, similar a una aplicació d'escriptori.
 - **Menys càrrega del servidor:** Menys sol·licituds al servidor ja que només es carrega una pàgina inicialment.
 - **Desenvolupament modular:** Facilita la creació de components reutilitzables.
 
 #### Desavantatges
+
 - **SEO:** Les SPA poden ser menys amigables amb els motors de cerca.
 - **Carregada inicial:** Pot requerir una major càrrega inicial de recursos, afectant el temps de càrrega inicial.
 - **Gestió de l'estat complexa:** Pot ser més complicat gestionar l'estat de l'aplicació.
@@ -421,6 +435,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 
 #### Resum
+
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
 
 
@@ -431,32 +446,39 @@ Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS
 ## Funcionalitats dels Servidors Web
 
 #### Servei de Contingut Estàtic
+
 - **Descripció:** Proporciona fitxers estàtics com HTML, CSS, JavaScript, imatges i altres recursos directament als clients.
 - **Exemple:** Quan un usuari sol·licita una pàgina HTML, el servidor web envia el fitxer HTML corresponent al navegador de l'usuari.
 
 #### Gestió de Peticions HTTP
+
 - **Descripció:** Maneja sol·licituds HTTP de clients, com GET, POST, PUT, DELETE, i retorna les respostes adequades amb els codis d'estat corresponents.
 - **Exemple:** Un servidor web processa una sol·licitud GET per una pàgina web i retorna el contingut de la pàgina amb un codi d'estat 200 (OK).
 
 #### Redirecció i Reescriptura d'URLs
+
 - **Descripció:** Permet la redirecció de peticions a diferents URLs i la reescriptura d'URLs per millorar l'accessibilitat i la SEO.
 - **Exemple:** Reescriptura d'URLs amigables per als usuaris, com convertir `example.com/page?id=123` a `example.com/page/123`.
 
 #### Suport per a HTTPS
+
 - **Descripció:** Proporciona connexions segures utilitzant el protocol HTTPS, que xifra les dades entre el client i el servidor.
 - **Exemple:** Un servidor web configurat amb un certificat SSL/TLS que permet connexions segures a través de HTTPS.
 
 ### Exemples de Servidors Web
 
 #### Apache HTTP Server
+
 - **Descripció:** Un servidor web de codi obert molt utilitzat, conegut per la seva flexibilitat i extensibilitat.
 - **Funcionalitats:** Suport per a mòduls que afegeixen funcionalitats com l'autenticació, la reescriptura d'URLs i la compressió de contingut.
 
 #### Nginx
+
 - **Descripció:** Un servidor web i servidor intermediari de codi obert, dissenyat per gestionar moltes connexions simultànies amb un ús eficient dels recursos.
 - **Funcionalitats:** Actua com a servidor proxy invers, equilibrador de càrrega i servidor de fitxers estàtics.
 
 #### Microsoft Internet Information Services (IIS)
+
 - **Descripció:** Un servidor web i d'aplicacions de Microsoft per a plataformes Windows.
 - **Funcionalitats:** Suport per a aplicacions ASP.NET, autenticació integrada i eines de gestió robustes.
 
@@ -623,23 +645,28 @@ Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplica
 ## Principals Funcionalitats dels Servidors d'Aplicacions
 
 #### Gestió de Sessions
+
 - **Descripció:** Manteniment de l'estat de l'usuari durant la seva interacció amb l'aplicació.
 - **Exemple:** Sessions PHP que emmagatzemen informació de l'usuari.
 
 #### Concurrència
+
 - **Descripció:** Capacitat per gestionar múltiples peticions simultànies de manera eficient.
 - **Exemple:** Node.js gestiona peticions de manera asíncrona.
 
 #### Seguretat
+
 - **Descripció:** Autenticació i autorització dels usuaris per accedir a diferents parts de l'aplicació.
 - **Exemple:** Utilització de JWT (JSON Web Tokens) per autenticar usuaris en una aplicació Node.js.
 
 ## Relació entre Servidors Web i Servidors d'Aplicacions
 
 #### Integració i Col·laboració
+
 Els servidors web treballen conjuntament amb els servidors d'aplicacions per gestionar les sol·licituds de manera eficient. Mentre que el servidor web maneja les sol·licituds HTTP i serveix contingut estàtic, el servidor d'aplicacions processa la lògica de negoci i genera contingut dinàmic.
 
 #### Exemple de Configuració
+
 - **Servidor Web (Nginx):** Actua com a proxy invers, encaminant les sol·licituds dinàmiques al servidor d'aplicacions.
 - **Servidor d'Aplicacions (Node.js):** Gestiona les sol·licituds dinàmiques, executa la lògica de negoci i retorna les respostes al servidor web.
 
@@ -659,7 +686,7 @@ server {
 }
 ```
 
-**Configuració servidor d'aplicacions Node.js
+**Configuració servidor d'aplicacions Node.js**
 
 ```javascript
 
@@ -681,18 +708,22 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 ## Exemples de Servidors d'Aplicacions
 
 ### Apache Tomcat
+
 - **Descripció:** Un servidor d'aplicacions de codi obert per a aplicacions web Java.
 - **Funcionalitats:** Suporta servlets Java i JavaServer Pages (JSP), facilitant l'execució d'aplicacions Java.
 
 ### Microsoft Internet Information Services (IIS)
+
 - **Descripció:** Un servidor web i d'aplicacions de Microsoft per a plataformes Windows.
 - **Funcionalitats:** Suporta aplicacions ASP.NET, autenticació integrada, i eines de gestió robustes.
 
 ### JBoss EAP (Enterprise Application Platform)
+
 - **Descripció:** Un servidor d'aplicacions Java EE de codi obert desenvolupat per Red Hat.
 - **Funcionalitats:** Proporciona un entorn robust per a la implementació d'aplicacions empresarials amb suport per a diversos frameworks Java.
 
 ### Node.js
+
 - **Descripció:** Una plataforma per a l'execució de codi JavaScript en el servidor.
 - **Funcionalitats:** Permet la programació asíncrona, ideal per a aplicacions en temps real i escalables com xats i jocs multijugador.
 
@@ -711,76 +742,78 @@ Tant els servidors web com els servidors d'aplicacions s'estudien en el mòdul d
 
 Els servidors d'aplicacions executen aplicacions dinàmiques i proporcionen serveis empresarials. Es diferencien dels servidors web en què no només serveixen contingut estàtic, sinó que també processen lògica d'aplicació i interaccions de base de dades. Exemples inclouen Apache Tomcat, JBoss i GlassFish, utilitzats per a aplicacions Java. També donen suport a tecnologies com servlets, JSP, EJB i frameworks com Spring, facilitant la construcció d'aplicacions robustes i escalables.
 
-# MVC (Model-View-Controller)
+# Frameworks de Programació en Entorn Servidor
 
-El patró MVC (Model-View-Controller) és un model d'arquitectura que separa la lògica de negoci, la interfície d'usuari i el control dels esdeveniments. Això permet una millor organització, manteniment i reutilització del codi.
+## Què és un Framework?
 
-## Components de MVC
+Un framework és una plataforma de desenvolupament que proporciona una estructura estandarditzada per a la creació d'aplicacions web. Facilita i accelera el procés de desenvolupament oferint biblioteques de codi preescrit, components reutilitzables i un conjunt de bones pràctiques. Els frameworks ajuden els desenvolupadors a centrar-se en la funcionalitat de l'aplicació en lloc de preocupar-se pels aspectes bàsics i repetitius de la programació.
 
-- **Model:** Gestiona les dades i la lògica de negoci.
-- **Vista:** Presenta les dades a l'usuari.
-- **Controlador:** Gestiona la comunicació entre la vista i el model.
+## Principals Frameworks en Entorn Servidor
 
-#### Exemple Pràctic de MVC
+### Express.js
 
-```php
-// Model (User.php)
-class User {
-    public $id;
-    public $name;
-    
-    public static function find($id) {
-        // Simulació d'una consulta a la base de dades
-        return new User($id, "Example User");
-    }
-    
-    public function __construct($id, $name) {
-        $this->id = $id;
-        $this->name = $name;
-    }
-}
+- **Descripció:** Express.js és un framework web minimalista per a Node.js. Proporciona eines senzilles i flexibles per a la creació d'aplicacions web i API.
+- **Característiques:**
+    - Middleware per a gestionar peticions HTTP.
+    - Sistema d'enrutament senzill i modular.
+    - Suport per a motors de plantilles com Pug i EJS.
+- **Avantatges:**
+    - Lleuger i flexible.
+    - Gran comunitat de suport i moltes extensions disponibles.
+- **Inconvenients:**
+    - Requereix més configuració manual comparat amb frameworks més opinats.
 
-// Controlador (UserController.php)
-class UserController {
-    public function show($id) {
-        $user = User::find($id);
-        include 'views/user.php';
-    }
-}
+### Django
 
-// Vista (views/user.php)
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Profile</title>
-</head>
-<body>
-    <h1><?php echo $user->name; ?></h1>
-    <p>ID: <?php echo $user->id; ?></p>
-</body>
-</html>
-```
-## Avantatges de MVC
+- **Descripció:** Django és un framework de programació web d'alt nivell per a Python que permet un desenvolupament ràpid i un disseny net i pragmàtic.
+- **Característiques:**
+    - Inclou un ORM (Object-Relational Mapping) potent.
+    - Sistema d'administració automàtic.
+    - Seguretat integrada.
+- **Avantatges:**
+    - Promou les bones pràctiques de desenvolupament.
+    - Molt complet, amb moltes funcionalitats "out-of-the-box".
+- **Inconvenients:**
+    - Pot ser massa gran per a aplicacions petites.
 
-#### Separació de Responsabilitats
-Clarifica la divisió de tasques, facilitant el manteniment i escalabilitat.
+### Laravel
 
-#### Facilitat de Test
-Cada component es pot provar de manera independent.
+- **Descripció:** Laravel és un framework PHP elegant i expressiu que ofereix un conjunt complet d'eines i recursos per a construir aplicacions web.
+- **Característiques:**
+    - Sistema d'enrutament senzill i potent.
+    - Eloquent ORM per a una interacció fàcil amb bases de dades.
+    - Sistema de templates Blade.
+- **Avantatges:**
+    - Gran comunitat i abundant documentació.
+    - Facilitat per a desenvolupar aplicacions robustes i escalables.
+- **Inconvenients:**
+    - Pot tenir una corba d'aprenentatge per als nous desenvolupadors.
 
-#### Reutilització de Codi
-Components del model i vista es poden reutilitzar en diferents parts de l'aplicació.
+## Comparativa dels Frameworks
 
+| Característica                | Express.js                            | Django                             | Laravel                            |
+|-------------------------------|---------------------------------------|------------------------------------|------------------------------------|
+| **Idioma de programació**     | JavaScript                            | Python                             | PHP                                |
+| **ORM**                       | No integrat, però es pot utilitzar Sequelize o Mongoose | Sí (integrat)                      | Sí (integrat, Eloquent ORM)        |
+| **Sistema d'enrutament**      | Sí                                    | Sí                                 | Sí                                 |
+| **Motor de plantilles**       | Suport per Pug, EJS, etc.             | Sí (Django Templates)              | Sí (Blade)                         |
+| **Sistema d'administració**   | No                                    | Sí                                 | No                                 |
+| **Comunitat**                 | Gran                                  | Gran                               | Gran                               |
+| **Facilitat d'aprenentatge**  | Moderada                              | Moderada                           | Moderada                           |
+| **Documentació**              | Excel·lent                            | Excel·lent                         | Excel·lent                         |
+| **Seguretat**                 | Depèn de la configuració              | Alta, amb funcions integrades      | Alta, amb funcions integrades      |
 
-#### Recursos Addicionals
+## Com Trieu un Framework?
 
-- [Introduction to the Model-View-Controller (MVC) pattern](https://developer.mozilla.org/en-US/docs/Glossary/MVC)
-- [Ruby on Rails Guides](https://guides.rubyonrails.org/)
-- [Laravel Documentation](https://laravel.com/docs)
-- [Django Documentation](https://docs.djangoproject.com/en/stable/)
-- [ASP.NET MVC Documentation](https://docs.microsoft.com/en-us/aspnet/mvc/overview)
+La selecció del framework adequat per a un projecte depèn de diversos factors:
+- **Tipus de Projecte:** Aplicacions en temps real, aplicacions CRUD, aplicacions amb necessitats específiques de seguretat, etc.
+- **Idioma de Programació:** Si el teu equip està més familiaritzat amb JavaScript, Python o PHP, per exemple.
+- **Escalabilitat i Rendiment:** Alguns frameworks són més adequats per a aplicacions petites, mentre que altres gestionen millor aplicacions de gran escala.
+- **Ecosistema i Comunitat:** La disponibilitat de biblioteques, plugins i la mida de la comunitat poden influir en la decisió.
+- **Facilitat d'ús i Documentació:** Un bon framework ha de tenir una documentació clara i fàcil d'entendre, així com una corba d'aprenentatge adequada per al teu equip.
 
-#### Resum
-
-L'arquitectura MVC divideix una aplicació en tres components interconnectats: Model (gestió de dades), Vista (interfície d'usuari) i Controlador (lògica d'aplicació). Aquesta separació facilita la gestió del codi, la reutilització de components i la mantenibilitat. És àmpliament utilitzada en el desenvolupament web amb frameworks com Ruby on Rails, Laravel (PHP), Django (Python) i ASP.NET MVC.
+### Recursos Addicionals:
+- **Node.js Official Documentation:** [Node.js](https://nodejs.org/en/docs/)
+- **Express.js Official Documentation:** [Express.js](https://expressjs.com/)
+- **Django Official Documentation:** [Django](https://docs.djangoproject.com/en/stable/)
+- **Laravel Documentation:** [Laravel](https://laravel.com/docs)
