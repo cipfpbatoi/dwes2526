@@ -103,16 +103,17 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 - Pot ser complexa de gestionar i coordinar.
 - Requereix una infraestructura de desplegament i monitorització més robusta.
 
-## Recursos Addicionals
+#### Recursos Addicionals
 - **Documentació sobre Arquitectures de Software:** [Software Architecture Guide](https://martinfowler.com/architecture/)
 - **Tutorial de Microserveis:** [Microservices Tutorial](https://www.tutorialspoint.com/microservice_architecture/index.htm)
 
-## Resum
+#### Resum
 Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
 
 
 # Pàgines Web Estàtiques vs. Dinàmiques
 
+## Pàgines estàtiques
 Les pàgines web estàtiques són aquelles en què el contingut no canvia en funció de les accions de l'usuari. Estan construïdes amb HTML i CSS, i cada pàgina es carrega de manera independent des del servidor.
 
 ### Avantatges
@@ -124,7 +125,7 @@ Les pàgines web estàtiques són aquelles en què el contingut no canvia en fun
 - **Flexibilitat:** Difícils de modificar a gran escala sense eines automatitzades.
 - **Interactivitat:** Limitada, ja que no poden respondre a les accions de l'usuari de manera dinàmica.
 
-##### Exemple Pràctic
+#### Exemple Pràctic
 
 ```html
 <!DOCTYPE html>
@@ -147,10 +148,11 @@ Les pàgines web estàtiques són aquelles en què el contingut no canvia en fun
 </html>
 ```
 
+## Pàgines dinàmiques
 Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en funció de les accions de l'usuari o altres factors. Utilitzen HTML, CSS, i JavaScript per al costat del client, i poden utilitzar llenguatges de servidor com PHP, Python, Node.js, entre altres, per generar contingut dinàmicament.
 La generació dinàmica de pàgines web permet crear contingut web en temps real basat en les interaccions de l'usuari i les dades de la base de dades. Això proporciona una experiència d'usuari més rica i interactiva.
 
-#### Avantatges de la Generació Dinàmica de Pàgines
+### Avantatges
 
 **Actualització en Temps Real**
 - **Descripció:** Les pàgines es poden actualitzar automàticament sense necessitat de recarregar tota la pàgina.
@@ -220,9 +222,6 @@ La generació dinàmica de pàgines web permet crear contingut web en temps real
 | **Temps de Desenvolupament**| Curt                               | Llarg                                |
 | **Actualització del Contingut** | Manual                         | Automàtica                           |
 | **Cost de Manteniment**     | Baix       
-
-#### Recursos Addicionals
-
 
 <figure>
   <img src="imagenes/01/paginadinamica.png" />
@@ -294,11 +293,11 @@ Exemple de codi
 
 L'execució de codi al servidor es realitza al servidor web abans que els resultats es retornin al navegador del client. Els llenguatges habituals inclouen PHP, Python, Ruby, Node.js, entre altres.
 
-#### Avantatges
+### Avantatges
 - **Seguretat:** El codi del servidor no és accessible pels usuaris finals, la qual cosa augmenta la seguretat.
 - **Potència:** Els servidors solen ser més potents que els dispositius dels usuaris, permetent processar operacions més complexes.
 
-#### Desavantatges
+### Desavantatges
 - **Latència:** Les sol·licituds al servidor poden ser lentes a causa de la distància física i la càrrega del servidor.
 - **Escalabilitat:** Pot ser necessari més esforç per escalar una aplicació a mesura que augmenta el nombre d'usuaris.    
 
@@ -325,12 +324,12 @@ console.log(`El servidor s'està executant a http://${hostname}:${port}/`);
 
 Una Single Page Application (SPA) és un tipus d'aplicació web que carrega una única pàgina HTML i dinàmicament actualitza el contingut a mesura que l'usuari interactua amb l'aplicació, utilitzant JavaScript per a gestionar la lògica i les actualitzacions de la interfície d'usuari.
 
-#### Avantatges
+### Avantatges
 - **Experiència d'usuari millorada:** Les SPA ofereixen una navegació més ràpida i fluida, similar a una aplicació d'escriptori.
 - **Menys càrrega del servidor:** Menys sol·licituds al servidor ja que només es carrega una pàgina inicialment.
 - **Desenvolupament modular:** Facilita la creació de components reutilitzables.
 
-#### Desavantatges
+### Desavantatges
 - **SEO:** Les SPA poden ser menys amigables amb els motors de cerca.
 - **Carregada inicial:** Pot requerir una major càrrega inicial de recursos, afectant el temps de càrrega inicial.
 - **Gestió de l'estat complexa:** Pot ser més complicat gestionar l'estat de l'aplicació.
@@ -424,7 +423,7 @@ La decisió sobre si utilitzar l'execució de codi al client, al servidor o una 
 
 Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS, JavaScript, imatges i altres fitxers als clients a través del protocol HTTP o HTTPS. El servidor web gestiona les sol·licituds entrants dels clients (navegadors web) i retorna les respostes adequades.
 
-### Principals Funcionalitats dels Servidors Web
+## Funcionalitats dels Servidors Web
 
 #### Servei de Contingut Estàtic
 - **Descripció:** Proporciona fitxers estàtics com HTML, CSS, JavaScript, imatges i altres recursos directament als clients.
@@ -610,17 +609,17 @@ Un servidor web serveix contingut estàtic com HTML, CSS, JavaScript i imatges a
 
 Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplicacions web dinàmiques i gestionar la lògica de negoci d'una aplicació. Aquest servidor actua com una capa intermèdia entre el client (navegador web) i les bases de dades o altres serveis de backend, proporcionant un entorn d'execució per a aplicacions web.
 
-### Principals Funcionalitats dels Servidors d'Aplicacions
+## Principals Funcionalitats dels Servidors d'Aplicacions
 
-#### Gestió de Sessions
+### Gestió de Sessions
 - **Descripció:** Manteniment de l'estat de l'usuari durant la seva interacció amb l'aplicació.
 - **Exemple:** Sessions PHP que emmagatzemen informació de l'usuari.
 
-#### Concurrència
+### Concurrència
 - **Descripció:** Capacitat per gestionar múltiples peticions simultànies de manera eficient.
 - **Exemple:** Node.js gestiona peticions de manera asíncrona.
 
-#### Seguretat
+### Seguretat
 - **Descripció:** Autenticació i autorització dels usuaris per accedir a diferents parts de l'aplicació.
 - **Exemple:** Utilització de JWT (JSON Web Tokens) per autenticar usuaris en una aplicació Node.js.
 
@@ -705,7 +704,7 @@ Els servidors d'aplicacions executen aplicacions dinàmiques i proporcionen serv
 
 El patró MVC (Model-View-Controller) és un model d'arquitectura que separa la lògica de negoci, la interfície d'usuari i el control dels esdeveniments. Això permet una millor organització, manteniment i reutilització del codi.
 
-#### Components de MVC
+## Components de MVC
 
 - **Model:** Gestiona les dades i la lògica de negoci.
 - **Vista:** Presenta les dades a l'usuari.
