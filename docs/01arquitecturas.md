@@ -52,6 +52,7 @@ En aquest model, el client (generalment un navegador web) envia sol·licituds al
 
 
 ### Arquitectura de Tres Capes
+
 Aquesta arquitectura divideix l'aplicació en tres nivells: la capa de presentació, la capa de lògica d'aplicació, i la capa de dades.
 
 **Diagrama:**
@@ -78,6 +79,7 @@ Aquesta arquitectura divideix l'aplicació en tres nivells: la capa de presentac
 - Pot ser més complexa de desenvolupar i mantenir.
 
 ### Arquitectura de Microserveis
+
 Els microserveis descomponen una aplicació en una sèrie de serveis petits i independents, cadascun executant una funció específica.
 
 **Diagrama:**
@@ -114,14 +116,15 @@ Les arquitectures web són fonamentals per al desenvolupament d'aplicacions efic
 # Pàgines Web Estàtiques vs. Dinàmiques
 
 ## Pàgines estàtiques
+
 Les pàgines web estàtiques són aquelles en què el contingut no canvia en funció de les accions de l'usuari. Estan construïdes amb HTML i CSS, i cada pàgina es carrega de manera independent des del servidor.
 
-### Avantatges
+#### Avantatges
 - **Senzillesa:** Fàcils de crear i mantenir.
 - **Rendiment:** Temps de càrrega ràpid perquè no requereixen processament addicional.
 - **Seguretat:** Menys vulnerabilitats, ja que no hi ha lògica de servidor ni bases de dades.
 
-### Desavantatges
+#### Desavantatges
 - **Flexibilitat:** Difícils de modificar a gran escala sense eines automatitzades.
 - **Interactivitat:** Limitada, ja que no poden respondre a les accions de l'usuari de manera dinàmica.
 
@@ -149,10 +152,11 @@ Les pàgines web estàtiques són aquelles en què el contingut no canvia en fun
 ```
 
 ## Pàgines dinàmiques
+
 Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en funció de les accions de l'usuari o altres factors. Utilitzen HTML, CSS, i JavaScript per al costat del client, i poden utilitzar llenguatges de servidor com PHP, Python, Node.js, entre altres, per generar contingut dinàmicament.
 La generació dinàmica de pàgines web permet crear contingut web en temps real basat en les interaccions de l'usuari i les dades de la base de dades. Això proporciona una experiència d'usuari més rica i interactiva.
 
-### Avantatges
+#### Avantatges
 
 **Actualització en Temps Real**
 - **Descripció:** Les pàgines es poden actualitzar automàticament sense necessitat de recarregar tota la pàgina.
@@ -209,7 +213,7 @@ La generació dinàmica de pàgines web permet crear contingut web en temps real
 </body>
 </html>
 ```
-#### Comparativa entre Pàgines Web Estàtiques i Dinàmiques
+### Comparativa entre Pàgines Web Estàtiques i Dinàmiques
 | Característica              | Pàgines Web Estàtiques             | Pàgines Web Dinàmiques               |
 |-----------------------------|------------------------------------|--------------------------------------|
 | **Contingut**               | Fix, no canvia                     | Variable, pot canviar                |
@@ -293,11 +297,11 @@ Exemple de codi
 
 L'execució de codi al servidor es realitza al servidor web abans que els resultats es retornin al navegador del client. Els llenguatges habituals inclouen PHP, Python, Ruby, Node.js, entre altres.
 
-### Avantatges
+#### Avantatges
 - **Seguretat:** El codi del servidor no és accessible pels usuaris finals, la qual cosa augmenta la seguretat.
 - **Potència:** Els servidors solen ser més potents que els dispositius dels usuaris, permetent processar operacions més complexes.
 
-### Desavantatges
+#### Desavantatges
 - **Latència:** Les sol·licituds al servidor poden ser lentes a causa de la distància física i la càrrega del servidor.
 - **Escalabilitat:** Pot ser necessari més esforç per escalar una aplicació a mesura que augmenta el nombre d'usuaris.    
 
@@ -324,12 +328,12 @@ console.log(`El servidor s'està executant a http://${hostname}:${port}/`);
 
 Una Single Page Application (SPA) és un tipus d'aplicació web que carrega una única pàgina HTML i dinàmicament actualitza el contingut a mesura que l'usuari interactua amb l'aplicació, utilitzant JavaScript per a gestionar la lògica i les actualitzacions de la interfície d'usuari.
 
-### Avantatges
+#### Avantatges
 - **Experiència d'usuari millorada:** Les SPA ofereixen una navegació més ràpida i fluida, similar a una aplicació d'escriptori.
 - **Menys càrrega del servidor:** Menys sol·licituds al servidor ja que només es carrega una pàgina inicialment.
 - **Desenvolupament modular:** Facilita la creació de components reutilitzables.
 
-### Desavantatges
+#### Desavantatges
 - **SEO:** Les SPA poden ser menys amigables amb els motors de cerca.
 - **Carregada inicial:** Pot requerir una major càrrega inicial de recursos, afectant el temps de càrrega inicial.
 - **Gestió de l'estat complexa:** Pot ser més complicat gestionar l'estat de l'aplicació.
@@ -374,7 +378,7 @@ function App() {
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-#### Comparativa entre Execució de Codi al Client,al Servidor i el SPA
+### Comparativa entre Execució de Codi al Client,al Servidor i el SPA
 
 | Característica               | Client-Side                         | Server-Side                         | Single Page Application (SPA)        |
 |------------------------------|-------------------------------------|-------------------------------------|--------------------------------------|
@@ -394,7 +398,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 
 
-#### Comparativa entre desenvolupadors
+### Comparativa entre desenvolupadors
 
 | Perfil                   | Ferramenta          | Tecnologia
 | ---                       |---------------------| ---
@@ -455,9 +459,9 @@ Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS
 - **Descripció:** Un servidor web i d'aplicacions de Microsoft per a plataformes Windows.
 - **Funcionalitats:** Suport per a aplicacions ASP.NET, autenticació integrada i eines de gestió robustes.
 
-### Mecanismes d'Execució de Codi en Servidors Web
+## Mecanismes d'Execució de Codi en Servidors Web
 
-#### Llenguatges interpretats: PHP, Python
+### Llenguatges interpretats: PHP, Python
 
 El codi es processa línia per línia en temps real, permetent una major flexibilitat durant el desenvolupament, ja que els canvis poden ser implementats i testats immediatament sense necessitat de recompilar tot el projecte.
 
@@ -469,7 +473,7 @@ El codi es processa línia per línia en temps real, permetent una major flexibi
       </html>
   ```
 
-#### Llenguatges compilats: Java
+### Llenguatges compilats: Java
 
 El codi es compila abans de ser executat, el que significa que és transformat en un format executable per la màquina abans de la seva execució. Això sol millorar el rendiment, ja que el codi compilat s'executa més ràpidament que el codi interpretat.
 
@@ -488,7 +492,7 @@ El codi es compila abans de ser executat, el que significa que és transformat e
         }
     }
   ```
-#### Intermediari: Node.js
+### Intermediari: Node.js
 
 Permet la programació asíncrona i escalable amb JavaScript, oferint la capacitat de gestionar moltes connexions simultànies de manera eficient. Això és especialment útil per a aplicacions que necessiten alta concurrència, com aplicacions en temps real.
 
@@ -505,25 +509,29 @@ Permet la programació asíncrona i escalable amb JavaScript, oferint la capacit
 });
 ```
 
-### Llenguatges i Tecnologies de Programació Web en Entorn Servidor
+## Llenguatges i Tecnologies de Programació Web en Entorn Servidor
 
 Els mecanismes d'execució de codi en els servidors web permeten que les aplicacions generin contingut dinàmic, gestionin dades i interaccions d'usuaris de manera eficient. A continuació es descriuen diversos llenguatges i com funcionen en el context del servidor.
 
-#### PHP
+### PHP
+
 - **Descripció:** PHP és un llenguatge interpretat popularment utilitzat per a la creació de pàgines web dinàmiques.
 - **Mecanisme:** El codi PHP s'incrusta dins dels fitxers HTML i es processa en temps real pel servidor web abans de ser enviat al client.
 
 
-#### Node.js
+### Node.js
+
 - **Descripció:** Node.js permet la programació asíncrona i escalable amb JavaScript.
 - **Mecanisme:** Utilitza un model basat en esdeveniments que permet la gestió de moltes connexions simultànies sense bloquejar-se.
 
 
-#### Java (JSP/Servlets)
+### Java (JSP/Servlets)
+
 - **Descripció:** Java s'utilitza per a aplicacions empresarials amb alta complexitat i escalabilitat.
 - **Mecanisme:** El codi Java es compila abans d'executar-se, millorant el rendiment. Els servlets i JSP gestionen les sol·licituds HTTP i generen contingut dinàmic.
 
-#### Python (Django/Flask)
+### Python (Django/Flask)
+
 - **Descripció:** Python és conegut per la seva sintaxi clara i les seves biblioteques extensives. Django i Flask són frameworks populars.
 - **Mecanisme:** Django utilitza un ORM per interactuar amb bases de dades, mentre que Flask és més lleuger i flexible.
 
@@ -541,7 +549,8 @@ app.run()
 ```
 
 
-#### Ruby (Ruby on Rails)
+### Ruby (Ruby on Rails)
+
 - **Descripció:** Ruby és apreciat per la seva elegància i facilitat d'ús. Ruby on Rails és un framework popular.
 - **Mecanisme:** Ruby on Rails segueix el patró MVC, facilitant el desenvolupament d'aplicacions web estructurades.
 
@@ -554,7 +563,8 @@ end
 end
 ```
 
-#### Go
+### Go
+
 - **Descripció:** Go és un llenguatge de programació desenvolupat per Google, conegut per la seva eficiència i concurrència.
 - **Mecanisme:** Go permet la creació de servidors web ràpids i escalables, utilitzant goroutines per gestionar múltiples connexions de manera eficient.
 
@@ -576,7 +586,7 @@ http.HandleFunc("/", helloHandler)
 http.ListenAndServe(":8080", nil)
 }
 ```
-#### Comparativa
+### Comparativa
 
 | Llenguatge | Avantatges | Desavantatges | Usos Comuns |
 |------------|------------|---------------|-------------|
@@ -611,19 +621,19 @@ Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplica
 
 ## Principals Funcionalitats dels Servidors d'Aplicacions
 
-### Gestió de Sessions
+#### Gestió de Sessions
 - **Descripció:** Manteniment de l'estat de l'usuari durant la seva interacció amb l'aplicació.
 - **Exemple:** Sessions PHP que emmagatzemen informació de l'usuari.
 
-### Concurrència
+#### Concurrència
 - **Descripció:** Capacitat per gestionar múltiples peticions simultànies de manera eficient.
 - **Exemple:** Node.js gestiona peticions de manera asíncrona.
 
-### Seguretat
+#### Seguretat
 - **Descripció:** Autenticació i autorització dels usuaris per accedir a diferents parts de l'aplicació.
 - **Exemple:** Utilització de JWT (JSON Web Tokens) per autenticar usuaris en una aplicació Node.js.
 
-### Relació entre Servidors Web i Servidors d'Aplicacions
+## Relació entre Servidors Web i Servidors d'Aplicacions
 
 #### Integració i Col·laboració
 Els servidors web treballen conjuntament amb els servidors d'aplicacions per gestionar les sol·licituds de manera eficient. Mentre que el servidor web maneja les sol·licituds HTTP i serveix contingut estàtic, el servidor d'aplicacions processa la lògica de negoci i genera contingut dinàmic.
@@ -667,21 +677,21 @@ app.listen(3000, () => {
 
 Aquesta col·laboració permet una gestió eficient de les sol·licituds i una millor distribució de la càrrega, millorant el rendiment i l'escalabilitat de les aplicacions web.
 
-### Exemples de Servidors d'Aplicacions
+## Exemples de Servidors d'Aplicacions
 
-#### Apache Tomcat
+### Apache Tomcat
 - **Descripció:** Un servidor d'aplicacions de codi obert per a aplicacions web Java.
 - **Funcionalitats:** Suporta servlets Java i JavaServer Pages (JSP), facilitant l'execució d'aplicacions Java.
 
-#### Microsoft Internet Information Services (IIS)
+### Microsoft Internet Information Services (IIS)
 - **Descripció:** Un servidor web i d'aplicacions de Microsoft per a plataformes Windows.
 - **Funcionalitats:** Suporta aplicacions ASP.NET, autenticació integrada, i eines de gestió robustes.
 
-#### JBoss EAP (Enterprise Application Platform)
+### JBoss EAP (Enterprise Application Platform)
 - **Descripció:** Un servidor d'aplicacions Java EE de codi obert desenvolupat per Red Hat.
 - **Funcionalitats:** Proporciona un entorn robust per a la implementació d'aplicacions empresarials amb suport per a diversos frameworks Java.
 
-#### Node.js
+### Node.js
 - **Descripció:** Una plataforma per a l'execució de codi JavaScript en el servidor.
 - **Funcionalitats:** Permet la programació asíncrona, ideal per a aplicacions en temps real i escalables com xats i jocs multijugador.
 
@@ -710,7 +720,7 @@ El patró MVC (Model-View-Controller) és un model d'arquitectura que separa la 
 - **Vista:** Presenta les dades a l'usuari.
 - **Controlador:** Gestiona la comunicació entre la vista i el model.
 
-### Exemple Pràctic de MVC
+#### Exemple Pràctic de MVC
 
 ```php
 // Model (User.php)
@@ -750,7 +760,7 @@ class UserController {
 </body>
 </html>
 ```
-### Avantatges de MVC
+## Avantatges de MVC
 
 #### Separació de Responsabilitats
 Clarifica la divisió de tasques, facilitant el manteniment i escalabilitat.
