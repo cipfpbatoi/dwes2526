@@ -107,15 +107,14 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 - Pot ser complexa de gestionar i coordinar.
 - Requereix una infraestructura de desplegament i monitorització més robusta.
 
-#### Recursos Addicionals
+### Recursos Addicionals
 
 - **Documentació sobre Arquitectures de Software:** [Software Architecture Guide](https://martinfowler.com/architecture/)
 - **Tutorial de Microserveis:** [Microservices Tutorial](https://www.tutorialspoint.com/microservice_architecture/index.htm)
 
-#### Resum
+### Resum
 
 Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
-
 
 # Pàgines Web Estàtiques vs. Dinàmiques
 
@@ -728,7 +727,7 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 - **Funcionalitats:** Permet la programació asíncrona, ideal per a aplicacions en temps real i escalables com xats i jocs multijugador.
 
 !!! info
-Tant els servidors web com els servidors d'aplicacions s'estudien en el mòdul de "Desplegament d'Aplicacions Web".
+    Tant els servidors web com els servidors d'aplicacions s'estudien en el mòdul de "Desplegament d'Aplicacions Web".
 
 #### Recursos addicionals
 
@@ -761,7 +760,7 @@ Un framework és una plataforma de desenvolupament que proporciona una estructur
     - Lleuger i flexible.
     - Gran comunitat de suport i moltes extensions disponibles.
 - **Inconvenients:**
-    - Requereix més configuració manual comparat amb frameworks més opinats.
+    - Requereix més configuració manual comparat amb altres frameworks.
 
 ### Django
 
