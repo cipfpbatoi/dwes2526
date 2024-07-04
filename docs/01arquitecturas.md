@@ -817,7 +817,7 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 
 ## AutoAvaluació
 
-### Exercici 1: Model d'execució de codi
+### Exercici 1: Models d'execució de codi
 
 #### Pregunta:
 Explica les principals diferències entre el model d'execució de codi en client i en servidor.
@@ -890,25 +890,21 @@ function checkAnswer2() {
 }
 </script>
 
-### Exercici 3: Llenguatges i tecnologies en entorn servidor
+### Exercici 3: Mecanismes d'execució de codi en els servidors web
 
 #### Pregunta:
-Quins d'aquests llenguatges i tecnologies són comunament utilitzats en la programació web en entorn servidor?
+Quins dels següents són mecanismes d'execució de codi en els servidors web?
 
 #### Opcions:
 <form>
-  <input type="checkbox" id="opt1" name="question3" value="a">
-  <label for="opt1">a) HTML</label><br>
-  <input type="checkbox" id="opt2" name="question3" value="b">
-  <label for="opt2">b) PHP</label><br>
-  <input type="checkbox" id="opt3" name="question3" value="c">
-  <label for="opt3">c) CSS</label><br>
-  <input type="checkbox" id="opt4" name="question3" value="d">
-  <label for="opt4">d) JavaScript</label><br>
-  <input type="checkbox" id="opt5" name="question3" value="e">
-  <label for="opt5">e) Python</label><br>
-  <input type="checkbox" id="opt6" name="question3" value="f">
-  <label for="opt6">f) SQL</label><br><br>
+  <input type="radio" id="a" name="question3" value="a">
+  <label for="a">a) CGI (Common Gateway Interface).</label><br>
+  <input type="radio" id="b" name="question3" value="b">
+  <label for="b">b) API Gateway.</label><br>
+  <input type="radio" id="c" name="question3" value="c">
+  <label for="c">c) Servlets.</label><br>
+  <input type="radio" id="d" name="question3" value="d">
+  <label for="d">d) Totes les anteriors.</label><br><br>
   <input type="button" value="Comprovar" onclick="checkAnswer3()">
 </form>
 
@@ -916,8 +912,44 @@ Quins d'aquests llenguatges i tecnologies són comunament utilitzats en la progr
 
 <script>
 function checkAnswer3() {
-  var correctAnswers = ["b", "e", "f"];
-  var checkboxes = document.getElementsByName('question3');
+  var correctAnswer = "d";
+  var radios = document.getElementsByName('question3');
+  var userAnswer;
+  for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+      userAnswer = radios[i].value;
+      break;
+    }
+  }
+  var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és d) Totes les anteriors.";
+  document.getElementById('result3').innerText = resultText;
+}
+</script>
+
+### Exercici 4: Funcionalitats dels servidors d'aplicacions
+
+#### Pregunta:
+Quines són algunes de les funcionalitats proporcionades pels servidors d'aplicacions?
+
+#### Opcions:
+<form>
+  <input type="checkbox" id="opt1" name="question4" value="a">
+  <label for="opt1">a) Gestió de sessions.</label><br>
+  <input type="checkbox" id="opt2" name="question4" value="b">
+  <label for="opt2">b) Autenticació d'usuaris.</label><br>
+  <input type="checkbox" id="opt3" name="question4" value="c">
+  <label for="opt3">c) Generació de pàgines estàtiques.</label><br>
+  <input type="checkbox" id="opt4" name="question4" value="d">
+  <label for="opt4">d) Gestió de transaccions.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer4()">
+</form>
+
+<p id="result4"></p>
+
+<script>
+function checkAnswer4() {
+  var correctAnswers = ["a", "b", "d"];
+  var checkboxes = document.getElementsByName('question4');
   var userAnswers = [];
   for (var i = 0, length = checkboxes.length; i < length; i++) {
     if (checkboxes[i].checked) {
@@ -926,82 +958,122 @@ function checkAnswer3() {
   }
   var resultText = (userAnswers.length === correctAnswers.length && userAnswers.every((val, index) => val === correctAnswers[index])) 
                     ? "Correcte!" 
-                    : "Incorrecte. Les respostes correctes són b) PHP, e) Python, i f) SQL.";
-  document.getElementById('result3').innerText = resultText;
+                    : "Incorrecte. Les respostes correctes són a) Gestió de sessions, b) Autenticació d'usuaris, d) Gestió de transaccions.";
+  document.getElementById('result4').innerText = resultText;
 }
 </script>
 
-### Exercici 4: Sintaxi bàsica de PHP
+### Exercici 5: Llenguatges i tecnologies relacionades amb la programació web en entorn servidor
 
 #### Pregunta:
-Escriu una sentència en PHP que imprimeixi "Hola, món!".
+Quins dels següents llenguatges i tecnologies són utilitzats en la programació web en entorn servidor?
 
-#### Codi:
-<textarea id="code1" rows="4" cols="50"></textarea><br><br>
-<input type="button" value="Comprovar" onclick="checkCode1()">
+#### Opcions:
+<form>
+  <input type="checkbox" id="opt1" name="question5" value="a">
+  <label for="opt1">a) PHP.</label><br>
+  <input type="checkbox" id="opt2" name="question5" value="b">
+  <label for="opt2">b) SQL.</label><br>
+  <input type="checkbox" id="opt3" name="question5" value="c">
+  <label for="opt3">c) HTML.</label><br>
+  <input type="checkbox" id="opt4" name="question5" value="d">
+  <label for="opt4">d) JavaScript.</label><br>
+  <input type="checkbox" id="opt5" name="question5" value="e">
+  <label for="opt5">e) Java.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer5()">
+</form>
 
-<p id="resultCode1"></p>
+<p id="result5"></p>
 
 <script>
-function checkCode1() {
-  var userCode = document.getElementById('code1').value;
-  var correctCode = '<?php\necho "Hola, món!";\n?>';
-  var resultText = userCode.trim() === correctCode ? "Correcte!" : "Incorrecte. El codi correcte és:\n<?php\necho \"Hola, món!\";\n?>";
-  document.getElementById('resultCode1').innerText = resultText;
+function checkAnswer5() {
+  var correctAnswers = ["a", "b", "e"];
+  var checkboxes = document.getElementsByName('question5');
+  var userAnswers = [];
+  for (var i = 0, length = checkboxes.length; i < length; i++) {
+    if (checkboxes[i].checked) {
+      userAnswers.push(checkboxes[i].value);
+    }
+  }
+  var resultText = (userAnswers.length === correctAnswers.length && userAnswers.every((val, index) => val === correctAnswers[index])) 
+                    ? "Correcte!" 
+                    : "Incorrecte. Les respostes correctes són a) PHP, b) SQL, e) Java.";
+  document.getElementById('result5').innerText = resultText;
 }
 </script>
 
-### Exercici 5: Variables i operadors en PHP
+### Exercici 6: Integració dels llenguatges de marques amb els llenguatges de programació
 
 #### Pregunta:
-Defineix una variable `$nom` amb el valor "Maria" i una altra variable `$edat` amb el valor 25. Després, imprimeix un missatge que digui "Maria té 25 anys".
+Com s'integren els llenguatges de marques com HTML amb els llenguatges de programació com PHP?
 
-#### Codi:
-<textarea id="code2" rows="8" cols="50"></textarea><br><br>
-<input type="button" value="Comprovar" onclick="checkCode2()">
+#### Opcions:
+<form>
+  <input type="radio" id="a" name="question6" value="a">
+  <label for="a">a) Utilitzant etiquetes especials de PHP dins del codi HTML.</label><br>
+  <input type="radio" id="b" name="question6" value="b">
+  <label for="b">b) Convertint tot el codi HTML a PHP.</label><br>
+  <input type="radio" id="c" name="question6" value="c">
+  <label for="c">c) No es poden integrar.</label><br>
+  <input type="radio" id="d" name="question6" value="d">
+  <label for="d">d) Utilitzant un altre llenguatge de programació per connectar-los.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer6()">
+</form>
 
-<p id="resultCode2"></p>
+<p id="result6"></p>
 
 <script>
-function checkCode2() {
-  var userCode = document.getElementById('code2').value;
-  var correctCode = '<?php\n$nom = "Maria";\n$edat = 25;\necho "$nom té $edat anys";\n?>';
-  var resultText = userCode.trim() === correctCode ? "Correcte!" : "Incorrecte. El codi correcte és:\n<?php\n$nom = \"Maria\";\n$edat = 25;\necho \"$nom té $edat anys\";\n?>";
-  document.getElementById('resultCode2').innerText = resultText;
+function checkAnswer6() {
+  var correctAnswer = "a";
+  var radios = document.getElementsByName('question6');
+  var userAnswer;
+  for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+      userAnswer = radios[i].value;
+      break;
+    }
+  }
+  var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) Utilitzant etiquetes especials de PHP dins del codi HTML.";
+  document.getElementById('result6').innerText = resultText;
 }
 </script>
 
-### Exercici 6: Inclusió de codi PHP en HTML
+### Exercici 7: Eines i frameworks de programació en entorn servidor
 
 #### Pregunta:
-Escriu un codi HTML que incloga un bloc PHP que imprimeixi "Benvingut/da" seguit del valor de la variable `$nom`.
+Quines són algunes de les eines i frameworks més utilitzats en la programació web en entorn servidor?
 
-#### Codi:
-<textarea id="code3" rows="10" cols="50"></textarea><br><br>
-<input type="button" value="Comprovar" onclick="checkCode3()">
+#### Opcions:
+<form>
+  <input type="checkbox" id="opt1" name="question7" value="a">
+  <label for="opt1">a) Laravel.</label><br>
+  <input type="checkbox" id="opt2" name="question7" value="b">
+  <label for="opt2">b) Django.</label><br>
+  <input type="checkbox" id="opt3" name="question7" value="c">
+  <label for="opt3">c) React.</label><br>
+  <input type="checkbox" id="opt4" name="question7" value="d">
+  <label for="opt4">d) Node.js.</label><br>
+  <input type="checkbox" id="opt5" name="question7" value="e">
+  <label for="opt5">e) Spring Boot.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer7()">
+</form>
 
-<p id="resultCode3"></p>
+<p id="result7"></p>
 
 <script>
-function checkCode3() {
-  var userCode = document.getElementById('code3').value.trim();
-  var correctCode = `
-<!DOCTYPE html>
-<html>
-<head>
-<title>Benvinguda</title>
-</head>
-<body>
-<?php
-$nom = "Maria";
-echo "Benvingut/da $nom";
-?>
-</body>
-</html>`;
-  userCode = userCode.replace(/\r\n/g, "\n");
-  correctCode = correctCode.replace(/\r\n/g, "\n").trim();
-  
-  var resultText = userCode === correctCode ? "Correcte!" : "Incorrecte. El codi correcte és:\n" + correctCode;
-  document.getElementById('resultCode3').innerText = resultText;
+function checkAnswer7() {
+  var correctAnswers = ["a", "b", "d", "e"];
+  var checkboxes = document.getElementsByName('question7');
+  var userAnswers = [];
+  for (var i = 0, length = checkboxes.length; i < length; i++) {
+    if (checkboxes[i].checked) {
+      userAnswers.push(checkboxes[i].value);
+    }
+  }
+  var resultText = (userAnswers.length === correctAnswers.length && userAnswers.every((val, index) => val === correctAnswers[index])) 
+                    ? "Correcte!" 
+                    : "Incorrecte. Les respostes correctes són a) Laravel, b) Django, d) Node.js, e) Spring Boot.";
+  document.getElementById('result7').innerText = resultText;
 }
 </script>
+
