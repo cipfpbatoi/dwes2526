@@ -984,9 +984,24 @@ Escriu un codi HTML que incloga un bloc PHP que imprimeixi "Benvingut/da" seguit
 
 <script>
 function checkCode3() {
-  var userCode = document.getElementById('code3').value;
-  var correctCode = '<!DOCTYPE html>\n<html>\n<head>\n<title>Benvinguda</title>\n</head>\n<body>\n<?php\n$nom = "Maria";\necho "Benvingut/da $nom";\n?>\n</body>\n</html>';
-  var resultText = userCode.trim() === correctCode ? "Correcte!" : "Incorrecte. El codi correcte és:\n<!DOCTYPE html>\n<html>\n<head>\n<title>Benvinguda</title>\n</head>\n<body>\n<?php\n$nom = \"Maria\";\necho \"Benvingut/da $nom\";\n?>\n</body>\n</html>';
+  var userCode = document.getElementById('code3').value.trim();
+  var correctCode = `
+<!DOCTYPE html>
+<html>
+<head>
+<title>Benvinguda</title>
+</head>
+<body>
+<?php
+$nom = "Maria";
+echo "Benvingut/da $nom";
+?>
+</body>
+</html>`;
+  userCode = userCode.replace(/\r\n/g, "\n");
+  correctCode = correctCode.replace(/\r\n/g, "\n").trim();
+  
+  var resultText = userCode === correctCode ? "Correcte!" : "Incorrecte. El codi correcte és:\n" + correctCode;
   document.getElementById('resultCode3').innerText = resultText;
 }
 </script>
