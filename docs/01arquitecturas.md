@@ -817,12 +817,12 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 
 ## AutoAvaluació
 
-## Exercici 1: Model d'execució de codi
+### Exercici 1: Model d'execució de codi
 
-### Pregunta:
+#### Pregunta:
 Explica les principals diferències entre el model d'execució de codi en client i en servidor.
 
-### Opcions:
+#### Opcions:
 <form>
   <input type="radio" id="a" name="question1" value="a">
   <label for="a">a) El codi en client s'executa al servidor, mentre que el codi en servidor s'executa al navegador del client.</label><br>
@@ -850,5 +850,143 @@ function checkAnswer1() {
   }
   var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) El codi en client s'executa al navegador del client, mentre que el codi en servidor s'executa al servidor.";
   document.getElementById('result1').innerText = resultText;
+}
+</script>
+
+### Exercici 2: Avantatges de la generació dinàmica de pàgines
+
+#### Pregunta:
+Quins són els avantatges de la generació dinàmica de pàgines web? Selecciona totes les que apliquen.
+
+#### Opcions:
+<form>
+  <input type="checkbox" id="opt1" name="question2" value="a">
+  <label for="opt1">a) Reducció de la càrrega del servidor.</label><br>
+  <input type="checkbox" id="opt2" name="question2" value="b">
+  <label for="opt2">b) Personalització del contingut per usuari.</label><br>
+  <input type="checkbox" id="opt3" name="question2" value="c">
+  <label for="opt3">c) Major interactivitat amb l'usuari.</label><br>
+  <input type="checkbox" id="opt4" name="question2" value="d">
+  <label for="opt4">d) Menor temps de càrrega inicial de la pàgina.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer2()">
+</form>
+
+<p id="result2"></p>
+
+<script>
+function checkAnswer2() {
+  var correctAnswers = ["b", "c"];
+  var checkboxes = document.getElementsByName('question2');
+  var userAnswers = [];
+  for (var i = 0, length = checkboxes.length; i < length; i++) {
+    if (checkboxes[i].checked) {
+      userAnswers.push(checkboxes[i].value);
+    }
+  }
+  var resultText = (userAnswers.length === correctAnswers.length && userAnswers.every((val, index) => val === correctAnswers[index])) 
+                    ? "Correcte!" 
+                    : "Incorrecte. Les respostes correctes són b) Personalització del contingut per usuari i c) Major interactivitat amb l'usuari.";
+  document.getElementById('result2').innerText = resultText;
+}
+</script>
+
+### Exercici 3: Llenguatges i tecnologies en entorn servidor
+
+#### Pregunta:
+Quins d'aquests llenguatges i tecnologies són comunament utilitzats en la programació web en entorn servidor?
+
+#### Opcions:
+<form>
+  <input type="checkbox" id="opt1" name="question3" value="a">
+  <label for="opt1">a) HTML</label><br>
+  <input type="checkbox" id="opt2" name="question3" value="b">
+  <label for="opt2">b) PHP</label><br>
+  <input type="checkbox" id="opt3" name="question3" value="c">
+  <label for="opt3">c) CSS</label><br>
+  <input type="checkbox" id="opt4" name="question3" value="d">
+  <label for="opt4">d) JavaScript</label><br>
+  <input type="checkbox" id="opt5" name="question3" value="e">
+  <label for="opt5">e) Python</label><br>
+  <input type="checkbox" id="opt6" name="question3" value="f">
+  <label for="opt6">f) SQL</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer3()">
+</form>
+
+<p id="result3"></p>
+
+<script>
+function checkAnswer3() {
+  var correctAnswers = ["b", "e", "f"];
+  var checkboxes = document.getElementsByName('question3');
+  var userAnswers = [];
+  for (var i = 0, length = checkboxes.length; i < length; i++) {
+    if (checkboxes[i].checked) {
+      userAnswers.push(checkboxes[i].value);
+    }
+  }
+  var resultText = (userAnswers.length === correctAnswers.length && userAnswers.every((val, index) => val === correctAnswers[index])) 
+                    ? "Correcte!" 
+                    : "Incorrecte. Les respostes correctes són b) PHP, e) Python, i f) SQL.";
+  document.getElementById('result3').innerText = resultText;
+}
+</script>
+
+### Exercici 4: Sintaxi bàsica de PHP
+
+#### Pregunta:
+Escriu una sentència en PHP que imprimeixi "Hola, món!".
+
+#### Codi:
+<textarea id="code1" rows="4" cols="50"></textarea><br><br>
+<input type="button" value="Comprovar" onclick="checkCode1()">
+
+<p id="resultCode1"></p>
+
+<script>
+function checkCode1() {
+  var userCode = document.getElementById('code1').value;
+  var correctCode = '<?php\necho "Hola, món!";\n?>';
+  var resultText = userCode.trim() === correctCode ? "Correcte!" : "Incorrecte. El codi correcte és:\n<?php\necho \"Hola, món!\";\n?>";
+  document.getElementById('resultCode1').innerText = resultText;
+}
+</script>
+
+### Exercici 5: Variables i operadors en PHP
+
+#### Pregunta:
+Defineix una variable `$nom` amb el valor "Maria" i una altra variable `$edat` amb el valor 25. Després, imprimeix un missatge que digui "Maria té 25 anys".
+
+#### Codi:
+<textarea id="code2" rows="8" cols="50"></textarea><br><br>
+<input type="button" value="Comprovar" onclick="checkCode2()">
+
+<p id="resultCode2"></p>
+
+<script>
+function checkCode2() {
+  var userCode = document.getElementById('code2').value;
+  var correctCode = '<?php\n$nom = "Maria";\n$edat = 25;\necho "$nom té $edat anys";\n?>';
+  var resultText = userCode.trim() === correctCode ? "Correcte!" : "Incorrecte. El codi correcte és:\n<?php\n$nom = \"Maria\";\n$edat = 25;\necho \"$nom té $edat anys\";\n?>";
+  document.getElementById('resultCode2').innerText = resultText;
+}
+</script>
+
+### Exercici 6: Inclusió de codi PHP en HTML
+
+#### Pregunta:
+Escriu un codi HTML que incloga un bloc PHP que imprimeixi "Benvingut/da" seguit del valor de la variable `$nom`.
+
+#### Codi:
+<textarea id="code3" rows="10" cols="50"></textarea><br><br>
+<input type="button" value="Comprovar" onclick="checkCode3()">
+
+<p id="resultCode3"></p>
+
+<script>
+function checkCode3() {
+  var userCode = document.getElementById('code3').value;
+  var correctCode = '<!DOCTYPE html>\n<html>\n<head>\n<title>Benvinguda</title>\n</head>\n<body>\n<?php\n$nom = "Maria";\necho "Benvingut/da $nom";\n?>\n</body>\n</html>';
+  var resultText = userCode.trim() === correctCode ? "Correcte!" : "Incorrecte. El codi correcte és:\n<!DOCTYPE html>\n<html>\n<head>\n<title>Benvinguda</title>\n</head>\n<body>\n<?php\n$nom = \"Maria\";\necho \"Benvingut/da $nom\";\n?>\n</body>\n</html>';
+  document.getElementById('resultCode3').innerText = resultText;
 }
 </script>
