@@ -16,12 +16,12 @@ Una arquitectura web defineix l'estructura i el comportament dels components d'u
 
 Les arquitectures web són fonamentals en el desenvolupament d'aplicacions web modernes per diverses raons:
 
-- **Escalabilitat**:Les arquitectures ben dissenyades permeten que les aplicacions web gestionin un nombre creixent d'usuaris i dades sense sacrificar el rendiment. Per exemple, una arquitectura de microserveis facilita l'escalabilitat horitzontal, ja que cada servei es pot escalar independentment.
-- **Mantenibilitat**:Una bona arquitectura facilita el manteniment i l'actualització de les aplicacions. Mitjançant la separació de preocupacions (per exemple, en una arquitectura de tres capes), es poden fer canvis en una part del sistema sense afectar altres parts.
-- **Seguretat**:Les arquitectures web poden incorporar diverses capes de seguretat per protegir les dades i les comunicacions. Això inclou mesures com l'autenticació, l'autorització, la xifratge de dades, i la protecció contra atacs comuns com les injeccions SQL i el cross-site scripting (XSS).
-- **Rendiment**:L'arquitectura de l'aplicació web afecta directament el seu rendiment. Una arquitectura ben dissenyada optimitza el temps de resposta i la gestió de recursos, millorant l'experiència de l'usuari. L'ús de tècniques com la caché, el balanç de càrrega, i la compressió de contingut són exemples d'estratègies per millorar el rendiment.
-- **Flexibilitat i Adaptabilitat**:Les arquitectures modernes permeten l'ús de diverses tecnologies i eines per a diferents parts del sistema, proporcionant flexibilitat i permetent una adaptació ràpida als canvis tecnològics. Això és especialment rellevant amb l'adopció de pràctiques DevOps i l'ús de contenidors i orquestradors com Docker i Kubernetes.
-- **Col·laboració i Desplegament**:Un bon disseny arquitectònic facilita la col·laboració entre equips de desenvolupament, ja que clarifica les responsabilitats i els punts d'integració. També permet un desplegament més eficient i automatitzat, reduint els riscos d'errors i millorant el temps de lliurament.
+- **Escalabilitat**: Les arquitectures ben dissenyades permeten que les aplicacions web gestionin un nombre creixent d'usuaris i dades sense sacrificar el rendiment. Per exemple, una arquitectura de microserveis facilita l'escalabilitat horitzontal, ja que cada servei es pot escalar independentment.
+- **Mantenibilitat**: Una bona arquitectura facilita el manteniment i l'actualització de les aplicacions. Mitjançant la separació de preocupacions (per exemple, en una arquitectura de tres capes), es poden fer canvis en una part del sistema sense afectar altres parts.
+- **Seguretat**: Les arquitectures web poden incorporar diverses capes de seguretat per protegir les dades i les comunicacions. Això inclou mesures com l'autenticació, l'autorització, la xifratge de dades, i la protecció contra atacs comuns com les injeccions SQL i el cross-site scripting (XSS).
+- **Rendiment**: L'arquitectura de l'aplicació web afecta directament el seu rendiment. Una arquitectura ben dissenyada optimitza el temps de resposta i la gestió de recursos, millorant l'experiència de l'usuari. L'ús de tècniques com la caché, el balanç de càrrega, i la compressió de contingut són exemples d'estratègies per millorar el rendiment.
+- **Flexibilitat i Adaptabilitat**: Les arquitectures modernes permeten l'ús de diverses tecnologies i eines per a diferents parts del sistema, proporcionant flexibilitat i permetent una adaptació ràpida als canvis tecnològics. Això és especialment rellevant amb l'adopció de pràctiques DevOps i l'ús de contenidors i orquestradors com Docker i Kubernetes.
+- **Col·laboració i Desplegament**: Un bon disseny arquitectònic facilita la col·laboració entre equips de desenvolupament, ja que clarifica les responsabilitats i els punts d'integració. També permet un desplegament més eficient i automatitzat, reduint els riscos d'errors i millorant el temps de lliurament.
 
 ## Tipus d'Arquitectures Web
 
@@ -107,12 +107,12 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 - Pot ser complexa de gestionar i coordinar.
 - Requereix una infraestructura de desplegament i monitorització més robusta.
 
-### Recursos Addicionals
+#### Recursos Addicionals
 
 - **Documentació sobre Arquitectures de Software:** [Software Architecture Guide](https://martinfowler.com/architecture/)
 - **Tutorial de Microserveis:** [Microservices Tutorial](https://www.tutorialspoint.com/microservice_architecture/index.htm)
 
-### Resum
+#### Resum
 
 Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
 
@@ -156,7 +156,7 @@ Les pàgines web estàtiques són aquelles en què el contingut no canvia en fun
 </html>
 ```
 
-## Pàgines dinàmiques
+### Pàgines dinàmiques
 
 Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en funció de les accions de l'usuari o altres factors. Utilitzen HTML, CSS, i JavaScript per al costat del client, i poden utilitzar llenguatges de servidor com PHP, Python, Node.js, entre altres, per generar contingut dinàmicament.
 La generació dinàmica de pàgines web permet crear contingut web en temps real basat en les interaccions de l'usuari i les dades de la base de dades. Això proporciona una experiència d'usuari més rica i interactiva.
@@ -254,11 +254,11 @@ La generació dinàmica de pàgines web permet crear contingut web en temps real
 
 Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles. Les SPA ofereixen una experiència d'usuari molt rica però poden tenir desavantatges en termes de SEO i temps de càrrega inicial.
 
-# Models d'Execució
+## Models d'Execució
 
 Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
 
-## Execució de Codi al Client (FrontEnd)
+### Execució de Codi al Client (FrontEnd)
 
 L'execució de codi al client es realitza al navegador web de l'usuari. Els llenguatges utilitzats principalment per a l'execució al client són HTML, CSS i JavaScript.
 
@@ -303,7 +303,7 @@ Exemple de codi
 </html>
 ```
 
-## Execució de Codi al Servidor (BackEnd)
+### Execució de Codi al Servidor (BackEnd)
 
 L'execució de codi al servidor es realitza al servidor web abans que els resultats es retornin al navegador del client. Els llenguatges habituals inclouen PHP, Python, Ruby, Node.js, entre altres.
 
@@ -336,7 +336,7 @@ console.log(`El servidor s'està executant a http://${hostname}:${port}/`);
 });
 ```
 
-## Single Page Application (SPA)
+### Single Page Application (SPA)
 
 Una Single Page Application (SPA) és un tipus d'aplicació web que carrega una única pàgina HTML i dinàmicament actualitza el contingut a mesura que l'usuari interactua amb l'aplicació, utilitzant JavaScript per a gestionar la lògica i les actualitzacions de la interfície d'usuari.
 
@@ -438,11 +438,11 @@ ReactDOM.render(<App />, document.getElementById('root'));
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
 
 
-# Servidors Web
+## Servidors Web
 
 Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS, JavaScript, imatges i altres fitxers als clients a través del protocol HTTP o HTTPS. El servidor web gestiona les sol·licituds entrants dels clients (navegadors web) i retorna les respostes adequades.
 
-## Funcionalitats dels Servidors Web
+### Funcionalitats dels Servidors Web
 
 #### Servei de Contingut Estàtic
 
@@ -481,9 +481,9 @@ Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS
 - **Descripció:** Un servidor web i d'aplicacions de Microsoft per a plataformes Windows.
 - **Funcionalitats:** Suport per a aplicacions ASP.NET, autenticació integrada i eines de gestió robustes.
 
-## Mecanismes d'Execució de Codi en Servidors Web
+### Mecanismes d'Execució de Codi en Servidors Web
 
-### Llenguatges interpretats: PHP, Python
+#### Llenguatges interpretats: PHP, Python
 
 El codi es processa línia per línia en temps real, permetent una major flexibilitat durant el desenvolupament, ja que els canvis poden ser implementats i testats immediatament sense necessitat de recompilar tot el projecte.
 
@@ -495,7 +495,7 @@ El codi es processa línia per línia en temps real, permetent una major flexibi
       </html>
   ```
 
-### Llenguatges compilats: Java
+#### Llenguatges compilats: Java
 
 El codi es compila abans de ser executat, el que significa que és transformat en un format executable per la màquina abans de la seva execució. Això sol millorar el rendiment, ja que el codi compilat s'executa més ràpidament que el codi interpretat.
 
@@ -514,7 +514,7 @@ El codi es compila abans de ser executat, el que significa que és transformat e
         }
     }
   ```
-### Intermediari: Node.js
+#### Intermediari: Node.js
 
 Permet la programació asíncrona i escalable amb JavaScript, oferint la capacitat de gestionar moltes connexions simultànies de manera eficient. Això és especialment útil per a aplicacions que necessiten alta concurrència, com aplicacions en temps real.
 
@@ -531,28 +531,28 @@ Permet la programació asíncrona i escalable amb JavaScript, oferint la capacit
 });
 ```
 
-## Llenguatges i Tecnologies de Programació Web en Entorn Servidor
+### Llenguatges i Tecnologies de Programació Web en Entorn Servidor
 
 Els mecanismes d'execució de codi en els servidors web permeten que les aplicacions generin contingut dinàmic, gestionin dades i interaccions d'usuaris de manera eficient. A continuació es descriuen diversos llenguatges i com funcionen en el context del servidor.
 
-### PHP
+#### PHP
 
 - **Descripció:** PHP és un llenguatge interpretat popularment utilitzat per a la creació de pàgines web dinàmiques.
 - **Mecanisme:** El codi PHP s'incrusta dins dels fitxers HTML i es processa en temps real pel servidor web abans de ser enviat al client.
 
 
-### Node.js
+#### Node.js
 
 - **Descripció:** Node.js permet la programació asíncrona i escalable amb JavaScript.
 - **Mecanisme:** Utilitza un model basat en esdeveniments que permet la gestió de moltes connexions simultànies sense bloquejar-se.
 
 
-### Java (JSP/Servlets)
+#### Java (JSP/Servlets)
 
 - **Descripció:** Java s'utilitza per a aplicacions empresarials amb alta complexitat i escalabilitat.
 - **Mecanisme:** El codi Java es compila abans d'executar-se, millorant el rendiment. Els servlets i JSP gestionen les sol·licituds HTTP i generen contingut dinàmic.
 
-### Python (Django/Flask)
+#### Python (Django/Flask)
 
 - **Descripció:** Python és conegut per la seva sintaxi clara i les seves biblioteques extensives. Django i Flask són frameworks populars.
 - **Mecanisme:** Django utilitza un ORM per interactuar amb bases de dades, mentre que Flask és més lleuger i flexible.
@@ -571,7 +571,7 @@ app.run()
 ```
 
 
-### Ruby (Ruby on Rails)
+#### Ruby (Ruby on Rails)
 
 - **Descripció:** Ruby és apreciat per la seva elegància i facilitat d'ús. Ruby on Rails és un framework popular.
 - **Mecanisme:** Ruby on Rails segueix el patró MVC, facilitant el desenvolupament d'aplicacions web estructurades.
@@ -585,7 +585,7 @@ end
 end
 ```
 
-### Go
+#### Go
 
 - **Descripció:** Go és un llenguatge de programació desenvolupat per Google, conegut per la seva eficiència i concurrència.
 - **Mecanisme:** Go permet la creació de servidors web ràpids i escalables, utilitzant goroutines per gestionar múltiples connexions de manera eficient.
@@ -608,7 +608,7 @@ http.HandleFunc("/", helloHandler)
 http.ListenAndServe(":8080", nil)
 }
 ```
-### Comparativa
+### Comparativa entre llenguatges
 
 | Llenguatge | Avantatges | Desavantatges | Usos Comuns |
 |------------|------------|---------------|-------------|
@@ -637,11 +637,11 @@ http.ListenAndServe(":8080", nil)
 
 Un servidor web serveix contingut estàtic com HTML, CSS, JavaScript i imatges als clients a través de HTTP o HTTPS. Gestiona sol·licituds entrants i retorna respostes adequades. Exemples de servidors web inclouen Apache, Nginx i Microsoft IIS, cadascun amb funcionalitats úniques com la redirecció d'URLs, suport per a HTTPS i gestió de peticions HTTP. A més, utilitzen llenguatges interpretats (PHP, Python), compilats (Java) i intermediaris (Node.js) per executar codi.
 
-# Servidors d'Aplicacions
+## Servidors d'Aplicacions
 
 Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplicacions web dinàmiques i gestionar la lògica de negoci d'una aplicació. Aquest servidor actua com una capa intermèdia entre el client (navegador web) i les bases de dades o altres serveis de backend, proporcionant un entorn d'execució per a aplicacions web.
 
-## Principals Funcionalitats dels Servidors d'Aplicacions
+### Principals Funcionalitats dels Servidors d'Aplicacions
 
 #### Gestió de Sessions
 
@@ -658,7 +658,7 @@ Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplica
 - **Descripció:** Autenticació i autorització dels usuaris per accedir a diferents parts de l'aplicació.
 - **Exemple:** Utilització de JWT (JSON Web Tokens) per autenticar usuaris en una aplicació Node.js.
 
-## Relació entre Servidors Web i Servidors d'Aplicacions
+### Relació entre Servidors Web i Servidors d'Aplicacions
 
 #### Integració i Col·laboració
 
@@ -704,24 +704,24 @@ app.listen(3000, () => {
 
 Aquesta col·laboració permet una gestió eficient de les sol·licituds i una millor distribució de la càrrega, millorant el rendiment i l'escalabilitat de les aplicacions web.
 
-## Exemples de Servidors d'Aplicacions
+### Exemples de Servidors d'Aplicacions
 
-### Apache Tomcat
+#### Apache Tomcat
 
 - **Descripció:** Un servidor d'aplicacions de codi obert per a aplicacions web Java.
 - **Funcionalitats:** Suporta servlets Java i JavaServer Pages (JSP), facilitant l'execució d'aplicacions Java.
 
-### Microsoft Internet Information Services (IIS)
+#### Microsoft Internet Information Services (IIS)
 
 - **Descripció:** Un servidor web i d'aplicacions de Microsoft per a plataformes Windows.
 - **Funcionalitats:** Suporta aplicacions ASP.NET, autenticació integrada, i eines de gestió robustes.
 
-### JBoss EAP (Enterprise Application Platform)
+#### JBoss EAP (Enterprise Application Platform)
 
 - **Descripció:** Un servidor d'aplicacions Java EE de codi obert desenvolupat per Red Hat.
 - **Funcionalitats:** Proporciona un entorn robust per a la implementació d'aplicacions empresarials amb suport per a diversos frameworks Java.
 
-### Node.js
+#### Node.js
 
 - **Descripció:** Una plataforma per a l'execució de codi JavaScript en el servidor.
 - **Funcionalitats:** Permet la programació asíncrona, ideal per a aplicacions en temps real i escalables com xats i jocs multijugador.
@@ -741,15 +741,13 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 
 Els servidors d'aplicacions executen aplicacions dinàmiques i proporcionen serveis empresarials. Es diferencien dels servidors web en què no només serveixen contingut estàtic, sinó que també processen lògica d'aplicació i interaccions de base de dades. Exemples inclouen Apache Tomcat, JBoss i GlassFish, utilitzats per a aplicacions Java. També donen suport a tecnologies com servlets, JSP, EJB i frameworks com Spring, facilitant la construcció d'aplicacions robustes i escalables.
 
-# Frameworks de Programació en Entorn Servidor
-
-## Què és un Framework?
+## Frameworks de Programació en Entorn Servidor
 
 Un framework és una plataforma de desenvolupament que proporciona una estructura estandarditzada per a la creació d'aplicacions web. Facilita i accelera el procés de desenvolupament oferint biblioteques de codi preescrit, components reutilitzables i un conjunt de bones pràctiques. Els frameworks ajuden els desenvolupadors a centrar-se en la funcionalitat de l'aplicació en lloc de preocupar-se pels aspectes bàsics i repetitius de la programació.
 
-## Principals Frameworks en Entorn Servidor
+### Principals Frameworks en Entorn Servidor
 
-### Express.js
+#### Express.js
 
 - **Descripció:** Express.js és un framework web minimalista per a Node.js. Proporciona eines senzilles i flexibles per a la creació d'aplicacions web i API.
 - **Característiques:**
@@ -762,7 +760,7 @@ Un framework és una plataforma de desenvolupament que proporciona una estructur
 - **Inconvenients:**
     - Requereix més configuració manual comparat amb altres frameworks.
 
-### Django
+#### Django
 
 - **Descripció:** Django és un framework de programació web d'alt nivell per a Python que permet un desenvolupament ràpid i un disseny net i pragmàtic.
 - **Característiques:**
@@ -775,7 +773,7 @@ Un framework és una plataforma de desenvolupament que proporciona una estructur
 - **Inconvenients:**
     - Pot ser massa gran per a aplicacions petites.
 
-### Laravel
+#### Laravel
 
 - **Descripció:** Laravel és un framework PHP elegant i expressiu que ofereix un conjunt complet d'eines i recursos per a construir aplicacions web.
 - **Característiques:**
@@ -788,7 +786,7 @@ Un framework és una plataforma de desenvolupament que proporciona una estructur
 - **Inconvenients:**
     - Pot tenir una corba d'aprenentatge per als nous desenvolupadors.
 
-## Comparativa dels Frameworks
+### Comparativa dels Frameworks
 
 | Característica                | Express.js                            | Django                             | Laravel                            |
 |-------------------------------|---------------------------------------|------------------------------------|------------------------------------|
@@ -802,7 +800,7 @@ Un framework és una plataforma de desenvolupament que proporciona una estructur
 | **Documentació**              | Excel·lent                            | Excel·lent                         | Excel·lent                         |
 | **Seguretat**                 | Depèn de la configuració              | Alta, amb funcions integrades      | Alta, amb funcions integrades      |
 
-## Com Trieu un Framework?
+### Com Trieu un Framework?
 
 La selecció del framework adequat per a un projecte depèn de diversos factors:
 - **Tipus de Projecte:** Aplicacions en temps real, aplicacions CRUD, aplicacions amb necessitats específiques de seguretat, etc.
@@ -811,7 +809,7 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 - **Ecosistema i Comunitat:** La disponibilitat de biblioteques, plugins i la mida de la comunitat poden influir en la decisió.
 - **Facilitat d'ús i Documentació:** Un bon framework ha de tenir una documentació clara i fàcil d'entendre, així com una corba d'aprenentatge adequada per al teu equip.
 
-### Recursos Addicionals:
+#### Recursos Addicionals:
 - **Node.js Official Documentation:** [Node.js](https://nodejs.org/en/docs/)
 - **Express.js Official Documentation:** [Express.js](https://expressjs.com/)
 - **Django Official Documentation:** [Django](https://docs.djangoproject.com/en/stable/)
