@@ -817,41 +817,38 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 
 ## AutoAvaluació
 
-### Exercici 1: Model d'execució de codi
+## Exercici 1: Model d'execució de codi
 
-#### Pregunta:
+### Pregunta:
 Explica les principals diferències entre el model d'execució de codi en client i en servidor.
 
-#### Opcions:
-a) El codi en client s'executa al servidor, mentre que el codi en servidor s'executa al navegador del client.
-b) El codi en client s'executa al navegador del client, mentre que el codi en servidor s'executa al servidor.
-c) Ambdós s'executen al servidor.
-d) Ambdós s'executen al navegador del client.
+### Opcions:
+<form>
+  <input type="radio" id="a" name="question1" value="a">
+  <label for="a">a) El codi en client s'executa al servidor, mentre que el codi en servidor s'executa al navegador del client.</label><br>
+  <input type="radio" id="b" name="question1" value="b">
+  <label for="b">b) El codi en client s'executa al navegador del client, mentre que el codi en servidor s'executa al servidor.</label><br>
+  <input type="radio" id="c" name="question1" value="c">
+  <label for="c">c) Ambdós s'executen al servidor.</label><br>
+  <input type="radio" id="d" name="question1" value="d">
+  <label for="d">d) Ambdós s'executen al navegador del client.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer1()">
+</form>
 
-#### Resposta:
-<!-- La resposta correcta és b -->
-b) El codi en client s'executa al navegador del client, mentre que el codi en servidor s'executa al servidor.
+<p id="result1"></p>
 
-#### Autocorrecció:
-Si has seleccionat l'opció b, has respost correctament. Si no, revisa el concepte de models d'execució de codi.
-
-
-### Exercici 2: Avantatges de la generació dinàmica de pàgines
-
-#### Pregunta:
-Quins són els avantatges de la generació dinàmica de pàgines web? Selecciona totes les que apliquen.
-
-#### Opcions:
-a) Reducció de la càrrega del servidor.
-b) Personalització del contingut per usuari.
-c) Major interactivitat amb l'usuari.
-d) Menor temps de càrrega inicial de la pàgina.
-
-#### Resposta:
-<!-- Les respostes correctes són b i c -->
-b) Personalització del contingut per usuari.
-c) Major interactivitat amb l'usuari.
-
-#### Autocorrecció:
-Si has seleccionat les opcions b i c, has respost correctament. Si no, revisa els avantatges de la generació dinàmica de pàgines.
-
+<script>
+function checkAnswer1() {
+  var correctAnswer = "b";
+  var radios = document.getElementsByName('question1');
+  var userAnswer;
+  for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+      userAnswer = radios[i].value;
+      break;
+    }
+  }
+  var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) El codi en client s'executa al navegador del client, mentre que el codi en servidor s'executa al servidor.";
+  document.getElementById('result1').innerText = resultText;
+}
+</script>
