@@ -116,9 +116,9 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 
 Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
 
-# Pàgines Web Estàtiques vs. Dinàmiques
+## Pàgines Web Estàtiques vs. Dinàmiques
 
-## Pàgines estàtiques
+### Pàgines estàtiques
 
 Les pàgines web estàtiques són aquelles en què el contingut no canvia en funció de les accions de l'usuari. Estan construïdes amb HTML i CSS, i cada pàgina es carrega de manera independent des del servidor.
 
