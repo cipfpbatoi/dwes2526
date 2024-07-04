@@ -814,3 +814,44 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 - **Express.js Official Documentation:** [Express.js](https://expressjs.com/)
 - **Django Official Documentation:** [Django](https://docs.djangoproject.com/en/stable/)
 - **Laravel Documentation:** [Laravel](https://laravel.com/docs)
+
+## AutoAvaluació
+
+### Exercici 1: Model d'execució de codi
+
+#### Pregunta:
+Explica les principals diferències entre el model d'execució de codi en client i en servidor.
+
+#### Opcions:
+a) El codi en client s'executa al servidor, mentre que el codi en servidor s'executa al navegador del client.
+b) El codi en client s'executa al navegador del client, mentre que el codi en servidor s'executa al servidor.
+c) Ambdós s'executen al servidor.
+d) Ambdós s'executen al navegador del client.
+
+#### Resposta:
+<!-- La resposta correcta és b -->
+b) El codi en client s'executa al navegador del client, mentre que el codi en servidor s'executa al servidor.
+
+#### Autocorrecció:
+Si has seleccionat l'opció b, has respost correctament. Si no, revisa el concepte de models d'execució de codi.
+
+
+### Exercici 2: Avantatges de la generació dinàmica de pàgines
+
+#### Pregunta:
+Quins són els avantatges de la generació dinàmica de pàgines web? Selecciona totes les que apliquen.
+
+#### Opcions:
+a) Reducció de la càrrega del servidor.
+b) Personalització del contingut per usuari.
+c) Major interactivitat amb l'usuari.
+d) Menor temps de càrrega inicial de la pàgina.
+
+#### Resposta:
+<!-- Les respostes correctes són b i c -->
+b) Personalització del contingut per usuari.
+c) Major interactivitat amb l'usuari.
+
+#### Autocorrecció:
+Si has seleccionat les opcions b i c, has respost correctament. Si no, revisa els avantatges de la generació dinàmica de pàgines.
+
