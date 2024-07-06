@@ -513,3 +513,88 @@ Comentaris de diverses línies:
 #### Exercici 8: Combinació de funcions i arrays
 1. Crea una funció `afegir_element` que prengui un array i un element com a arguments, afegeixi l'element a l'array i retorni l'array modificat.
 2. Crea un fitxer `exercici8.php` on defineixis un array `$animals` amb els elements "gat" i "gos". Utilitza la funció `afegir_element` per afegir "conill" a l'array i imprimeix tots els elements.
+
+#### Exercici 9: Utilitzant `match` per a categoritzar
+
+=== "Enunciat"
+
+1. Crea un fitxer `categoritzar.php` que utilitzi la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
+     - Si la nota és 10, imprimir "Excel·lent".
+     - Si la nota és 8 o 9, imprimir "Molt bé".
+     - Si la nota és 5, 6 o 7, imprimir "Bé".
+     - Per qualsevol altra nota, imprimir "Insuficient".
+
+=== "Solució"
+
+```php
+$nota = 8;
+
+$resultat = match (true) {
+    $nota === 10 => 'Excel·lent',
+    $nota >= 8 && $nota <= 9 => 'Molt bé',
+    $nota >= 5 && $nota <= 7 => 'Bé',
+    default => 'Insuficient',
+};
+
+echo $resultat;  // Sortida: Molt bé
+```
+
+#### Exercici 10: Llista de preus amb `match`
+
+1. Crea un fitxer `preus.php` que utilitzi la instrucció `match` per assignar un preu a una variable `$producte`. Els productes i preus són:
+     - "pa" => 1.00
+     - "llet" => 0.80
+     - "formatge" => 2.50
+     - Qualsevol altre producte => 0.00
+
+```php
+$producte = 'formatge';
+
+$preu = match ($producte) {
+    'pa' => 1.00,
+    'llet' => 0.80,
+    'formatge' => 2.50,
+    default => 0.00,
+};
+
+echo "El preu de $producte és $preu euros.";  // Sortida: El preu de formatge és 2.5 euros.
+```
+
+#### Exercici 11: Calculadora simple amb `match`
+
+1. Crea un fitxer `calculadora.php` que utilitzi la instrucció `match` per fer operacions matemàtiques bàsiques (`+`, `-`, `*`, `/`). La variable `$operacio` ha de determinar l'operació a realitzar i les variables `$a` i `$b` seran els operands.
+
+```php
+$a = 10;
+$b = 5;
+$operacio = '+';
+
+$resultat = match ($operacio) {
+    '+' => $a + $b,
+    '-' => $a - $b,
+    '*' => $a * $b,
+    '/' => $a / $b,
+    default => 'Operació desconeguda',
+};
+
+echo "El resultat de $a $operacio $b és $resultat.";  // Sortida: El resultat de 10 + 5 és 15.
+```
+
+#### Exercici 12: Validació de formulari amb `match`
+
+1. Crea un fitxer `formulari.php` que utilitzi la instrucció `match` per validar un formulari amb camps per a nom, correu electrònic i edat. Si algun camp està buit, ha de retornar un missatge d'error corresponent.
+
+```php
+$nom = 'Joan';
+$correu = 'joan@example.com';
+$edat = '';
+
+$validacio = match (true) {
+    empty($nom) => 'El camp nom és obligatori.',
+    !filter_var($correu, FILTER_VALIDATE_EMAIL) => 'El correu electrònic no és vàlid.',
+    empty($edat) => 'El camp edat és obligatori.',
+    default => 'Formulari vàlid.',
+};
+
+echo $validacio;  // Sortida: El camp edat és obligatori.
+```
