@@ -517,9 +517,26 @@ Comentaris de diverses línies:
 1. Crea una funció `afegir_element` que prengui un array i un element com a arguments, afegeixi l'element a l'array i retorni l'array modificat.
 2. Crea un fitxer `exercici8.php` on defineixis un array `$animals` amb els elements "gat" i "gos". Utilitza la funció `afegir_element` per afegir "conill" a l'array i imprimeix tots els elements.
 
-#### Exercici 9: Utilitzant `match` per a categoritzar
+<details>
+<summary>Solució</summary>
+    
+    ```php
+    <?php
+    // Exercici 8
+    function afegir_element($array, $element) {
+        $array[] = $element;
+        return $array;
+    }
+    $animals = array("gat", "gos");
+    $animals = afegir_element($animals, "conill");
+    foreach ($animals as $animal) {
+        echo $animal . "<br>";
+    }
+    ?>
+    ```
+</details>
 
-=== "Enunciat"
+#### Exercici 9: Utilitzant `match` per a categoritzar
 
 Crea un fitxer `categoritzar.php` que utilitzi la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
      - Si la nota és 10, imprimir "Excel·lent".
@@ -527,7 +544,8 @@ Crea un fitxer `categoritzar.php` que utilitzi la instrucció `match` per catego
      - Si la nota és 5, 6 o 7, imprimir "Bé".
      - Per qualsevol altra nota, imprimir "Insuficient".
 
-=== "Solució"
+<details>
+<summary>Solució</summary>
 
 ```php
 $nota = 8;
@@ -541,11 +559,9 @@ $resultat = match (true) {
 
 echo $resultat;  // Sortida: Molt bé
 ```
-===
+</details>
 
 #### Exercici 10: Llista de preus amb `match`
-
-=== "Enunciat"
 
 Crea un fitxer `preus.php` que utilitzi la instrucció `match` per assignar un preu a una variable `$producte`. Els productes i preus són:
      - "pa" => 1.00
@@ -553,7 +569,8 @@ Crea un fitxer `preus.php` que utilitzi la instrucció `match` per assignar un p
      - "formatge" => 2.50
      - Qualsevol altre producte => 0.00
 
-=== "Solució"
+<details>
+<summary>Solució</summary>
 
 ```php
 $producte = 'formatge';
@@ -567,12 +584,14 @@ $preu = match ($producte) {
 
 echo "El preu de $producte és $preu euros.";  // Sortida: El preu de formatge és 2.5 euros.
 ```
-===
+</details>
 
 #### Exercici 11: Calculadora simple amb `match`
 
 Crea un fitxer `calculadora.php` que utilitzi la instrucció `match` per fer operacions matemàtiques bàsiques (`+`, `-`, `*`, `/`). La variable `$operacio` ha de determinar l'operació a realitzar i les variables `$a` i `$b` seran els operands.
 
+<details>
+<summary>Solució</summary>
 ```php
 $a = 10;
 $b = 5;
@@ -588,6 +607,8 @@ $resultat = match ($operacio) {
 
 echo "El resultat de $a $operacio $b és $resultat.";  // Sortida: El resultat de 10 + 5 és 15.
 ```
+</details>
+
 
 #### Exercici 12: Validació de formulari amb `match`
 
