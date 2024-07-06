@@ -19,7 +19,11 @@
 **PHP** (Hypertext Preprocessor) és un llenguatge de programació de codi obert, especialment dissenyat per al desenvolupament web del costat del servidor. Es pot incrustar fàcilment en codi HTML, cosa que el fa una opció popular per crear aplicacions web dinàmiques i interactives. PHP s'utilitza per gestionar el contingut dinàmic, les bases de dades, el seguiment de sessions i fins i tot per crear aplicacions completes.
 
 #### Història de PHP
-PHP va ser creat originalment per Rasmus Lerdorf el **1994**. Inicialment, PHP era una col·lecció d'eines CGI (Common Gateway Interface) escrites en C, utilitzades per rastrejar les visites a la seva pàgina web. Rasmus va anomenar aquestes eines "Personal Home Page Tools" (Eines per a la pàgina personal). Amb el temps, el llenguatge va evolucionar i es va convertir en una eina més robusta i potent per al desenvolupament web. El 1997, dues persones, Zeev Suraski i Andi Gutmans, van redissenyar completament el nucli de PHP, cosa que va donar lloc a **PHP 3**, la primera versió àmpliament utilitzada. Més tard, el 2000, **PHP 4** va ser llançat amb el motor Zend, el qual va millorar significativament el rendiment.
+### Història de PHP
+
+PHP (Hypertext Preprocessor) és un llenguatge de programació de codi obert creat l'any 1994 per Rasmus Lerdorf. La primera versió pública va ser PHP/FI (Personal Home Page/Forms Interpreter), que va evolucionar fins a convertir-se en PHP 3 el 1998, el qual va ser completament reescrit per Zeev Suraski i Andi Gutmans.
+
+Actualment, PHP és mantingut per The PHP Group i la versió estable més recent (a partir de juliol de 2024) és PHP 8.3. Aquesta versió inclou millores en el rendiment, noves funcions com les propietats llegibles i escriptibles per tipus, expressió `match`, i molt més.
 
 #### Importància en el desenvolupament web
 PHP és un dels llenguatges més utilitzats en el desenvolupament web per diverses raons:
@@ -335,8 +339,33 @@ foreach ($fruites as $fruita) {
     echo $fruita;
 }
 ```
+## 13. Com utilitzar les cometes en PHP
 
-## 13. Comentaris en el codi
+En PHP, les cometes dobles (`"`) i les cometes simples (`'`) s'utilitzen per definir cadenes de caràcters, però tenen comportaments diferents a l'hora de processar variables:
+
+- **Cometes dobles (`"`)**: Interpolen variables i seqüències d'escapament especials. És a dir, el contingut de la variable es mostrarà dins de la cadena.
+
+  ```php
+  $nom = "Maria";
+  echo "Hola, $nom!";  // Sortida: Hola, Maria!
+  ```
+
+- **Cometes simples (`'`)**: No interpolen variables ni seqüències d'escapament especials. La cadena es mostrarà exactament com es defineix.
+
+  ```php
+  $nom = "Maria";
+  echo 'Hola, $nom!';  // Sortida: Hola, $nom!
+  ```
+
+#### Exemple d'ús de cometes dobles per imprimir variables
+
+```php
+$color = "blau";
+$frase = "El meu color preferit és $color.";
+echo $frase;  // Sortida: El meu color preferit és blau.
+  ```
+
+## 14. Comentaris en el codi
 Comentaris d'una línia:
 ```php
 // Això és un comentari d'una línia
@@ -346,7 +375,6 @@ Comentaris de diverses línies:
 /* Això és un comentari
    de diverses línies */
 ```
-
 
 
 ## Referències
