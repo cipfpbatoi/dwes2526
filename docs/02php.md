@@ -156,54 +156,7 @@ function exemple() {
 }
 ```
 
-## 7. Sintaxi del llenguatge de programació (PHP)
-Comentaris:
-```php
-// Comentari d'una línia
-/* Comentari de diverses línies */
-```
-Estructures de control:
-```php
-// Condicions
-if ($condicio) {
-    // Codi si la condició és certa
-} elseif ($altra_condicio) {
-    // Codi si la segona condició és certa
-} else {
-    // Codi si cap de les condicions anteriors és certa
-}
-
-// Bucles
-for ($i = 0; $i < 10; $i++) {
-    echo $i;
-}
-
-$i = 0;
-while ($i < 10) {
-    echo $i;
-    $i++;
-}
-
-$matriu = array(1, 2, 3);
-foreach ($matriu as $valor) {
-    echo $valor;
-}
-```
-Funcions:
-```php
-function nom_de_la_funcio($parametre) {
-    // Codi
-}
-```
-Exemple:
-```php
-function saludar($nom) {
-    return "Hola, " . $nom;
-}
-echo saludar("Joan");
-```
-
-## 8. Directives per a modificar el comportament predeterminat del codi
+## 7. Directives per a modificar el comportament predeterminat del codi
 Include i require:
 ```php
 include 'fitxer.php';
@@ -230,7 +183,7 @@ saludar(); // Mostra "Hola!"
 ?>
 ```
 
-## 9. Sentències simples en PHP i els seus efectes
+## 8. Sentències simples en PHP i els seus efectes
 Eco i print:
 ```php
 echo "Hola, món!";
@@ -249,7 +202,7 @@ $nom = "Joan";
 echo "Benvingut, " . $nom;
 ```
 
-## 10. Àmbits de les variables (local, global, estàtic)
+## 9. Àmbits de les variables (local, global, estàtic)
 Local: dins d'una funció.
 Global: fora de qualsevol funció.
 Estàtic: persisteixen el seu valor entre crides a la funció.
@@ -271,7 +224,7 @@ contar(); // Mostra 1
 contar(); // Mostra 2
 ```
 
-## 11. Mecanismes de decisió (if, switch)
+## 10. Mecanismes de decisió (if, switch)
 If, else, elseif:
 ```php
 if ($condicio) {
@@ -310,7 +263,7 @@ switch ($dia) {
 }
 ```
 
-## 12. Bucles (for, while, foreach)
+## 11. Bucles (for, while, foreach)
 For:
 ```php
 for ($i = 0; $i < 10; $i++) {
@@ -339,7 +292,7 @@ foreach ($fruites as $fruita) {
     echo $fruita;
 }
 ```
-## 13. Com utilitzar les cometes en PHP
+## 12. Com utilitzar les cometes en PHP
 
 En PHP, les cometes dobles (`"`) i les cometes simples (`'`) s'utilitzen per definir cadenes de caràcters, però tenen comportaments diferents a l'hora de processar variables:
 
@@ -365,7 +318,7 @@ $frase = "El meu color preferit és $color.";
 echo $frase;  // Sortida: El meu color preferit és blau.
   ```
 
-## 14. Comentaris en el codi
+## 13. Comentaris en el codi
 Comentaris d'una línia:
 ```php
 // Això és un comentari d'una línia
