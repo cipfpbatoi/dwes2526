@@ -596,17 +596,22 @@ echo "El resultat de $a $operacio $b és $resultat.";  // Sortida: El resultat d
 
 1. Crea un fitxer `formulari.php` que utilitzi la instrucció `match` per validar un formulari amb camps per a nom, correu electrònic i edat. Si algun camp està buit, ha de retornar un missatge d'error corresponent.
 
+<details>
+<summary>
+
 ```php
 $nom = 'Joan';
 $correu = 'joan@example.com';
 $edat = '';
 
 $validacio = match (true) {
-    empty($nom) => 'El camp nom és obligatori.',
-    !filter_var($correu, FILTER_VALIDATE_EMAIL) => 'El correu electrònic no és vàlid.',
-    empty($edat) => 'El camp edat és obligatori.',
-    default => 'Formulari vàlid.',
+empty($nom) => 'El camp nom és obligatori.',
+!filter_var($correu, FILTER_VALIDATE_EMAIL) => 'El correu electrònic no és vàlid.',
+empty($edat) => 'El camp edat és obligatori.',
+default => 'Formulari vàlid.',
 };
 
 echo $validacio;  // Sortida: El camp edat és obligatori.
 ```
+</summary>
+</details>
