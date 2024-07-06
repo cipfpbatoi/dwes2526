@@ -486,36 +486,61 @@ Comentaris de diverses línies:
 ### Bateria d'Exercicis per a la Unitat de PHP
 
 #### Exercici 1: Introducció a PHP
-1. Crea un fitxer `hola.php` que imprimeixi "Hola, món!" a la pantalla.
-2. Modifica el fitxer `hola.php` per tal que imprimeixi el teu nom utilitzant una variable.
+1. Crea un fitxer  que imprimeixi "Hola, món!" a la pantalla.
+2. Modifica el fitxer per tal que imprimeixi el teu nom utilitzant una variable.
+
+<details>
+<summary>Solució</summary>
+    
+    ```php
+    <?php
+    // Exercici 1
+    $name = 'Ignasi':
+    echo "Hola, món!" . "Hola, " .$name;
+    ?>
+    ```
+</details>
 
 #### Exercici 2: Ús de cometes
-1. Crea un fitxer `cometes.php` que defineixi una variable `$nom` amb el teu nom i imprimeixi la frase "Hola, [nom]!" utilitzant cometes dobles.
-2. Modifica el fitxer `cometes.php` per utilitzar cometes simples i compara els resultats.
+1. Crea un fitxer que definisca una variable `$name` amb el teu nom i imprimeixi la frase "Hola, [nom]!" utilitzant cometes dobles.
+2. Fes-ho amb cometes simples i compara els resultats.
+
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <?php
+    // Exercici 1
+    $name = 'Ignasi':
+    echo "Hola, $name!";
+    echo 'Hola, $name!';
+    ?>
+    ```
+</details>
 
 #### Exercici 3: Funcions bàsiques
-1. Crea una funció `suma` que sumi dos números i retorni el resultat. Invoca la funció amb els números 5 i 3 i imprimeix el resultat.
+1. Crea una funció `suma` que sume dos números i retorni el resultat. Invoca la funció amb els números 5 i 3 i imprimeix el resultat.
 2. Crea una funció `multiplicacio` que multipliqui dos números i retorni el resultat. Invoca la funció amb els números 4 i 7 i imprimeix el resultat.
 
 #### Exercici 4: Control de flux - Condicionals
-1. Crea un fitxer `edat.php` que defineixi una variable `$edat`. Si `$edat` és major o igual a 18, imprimeix "Ets major d'edat"; en cas contrari, imprimeix "Ets menor d'edat".
+1. Crea un fitxer que definisca una variable `$edat`. Si `$edat` és major o igual a 18, imprimeix "Ets major d'edat"; en cas contrari, imprimeix "Ets menor d'edat".
 2. Modifica el fitxer `edat.php` per tal que imprimeixi "Edat invàlida" si `$edat` és un número negatiu.
 
 #### Exercici 5: Control de flux - Bucles
-1. Crea un fitxer `bucles.php` que utilitzi un bucle `for` per imprimir els números del 0 al 9.
-2. Modifica el fitxer `bucles.php` per utilitzar un bucle `while` que faci el mateix.
+1. Crea un fitxer que utilitzi un bucle `for` per imprimir els números del 0 al 9.
+2. Fes-ho també amb un bucle `while` que faci el mateix.
 
 #### Exercici 6: Treballar amb arrays
-1. Crea un fitxer `arrays.php` que defineixi un array `$fruites` amb tres elements: "poma", "plàtan" i "maduixa". Imprimeix el primer element de l'array.
+1. Crea un fitxer que definisca un array `$fruites` amb tres elements: "poma", "plàtan" i "maduixa". Imprimeix el primer element de l'array.
 2. Afegeix un quart element "taronja" a l'array i imprimeix tots els elements utilitzant un bucle `foreach`.
 
 #### Exercici 7: Cometes dobles i variables
-1. Crea un fitxer `cometes_dobles.php` que defineixi una variable `$color` amb el valor "blau". Utilitza cometes dobles per imprimir "El meu color preferit és [color]."
-2. Modifica el fitxer per imprimir "El meu color preferit és blau." utilitzant cometes simples i concatenació.
+1. Crea un fitxer que definisca una variable `$color` amb el valor "blau". Utilitza cometes dobles per imprimir "El meu color preferit és [color]."
+2. Ara,  utilitza cometes simples i concatenació.
 
 #### Exercici 8: Combinació de funcions i arrays
-1. Crea una funció `afegir_element` que prengui un array i un element com a arguments, afegeixi l'element a l'array i retorni l'array modificat.
-2. Crea un fitxer `exercici8.php` on defineixis un array `$animals` amb els elements "gat" i "gos". Utilitza la funció `afegir_element` per afegir "conill" a l'array i imprimeix tots els elements.
+1. Crea una funció `afegir_element` que prenga un array i un element com a arguments, afegeisca l'element a l'array i retorne l'array modificat.
+2. Crea un fitxer on defnisques un array `$animals` amb els elements "gat" i "gos". Utilitza la funció `afegir_element` per afegir "conill" a l'array i imprimeix tots els elements.
 
 <details>
 <summary>Solució</summary>
@@ -538,7 +563,7 @@ Comentaris de diverses línies:
 
 #### Exercici 9: Utilitzant `match` per a categoritzar
 
-Crea un fitxer `categoritzar.php` que utilitzi la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
+Crea un fitxer  que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
      - Si la nota és 10, imprimir "Excel·lent".
      - Si la nota és 8 o 9, imprimir "Molt bé".
      - Si la nota és 5, 6 o 7, imprimir "Bé".
@@ -563,7 +588,7 @@ echo $resultat;  // Sortida: Molt bé
 
 #### Exercici 10: Llista de preus amb `match`
 
-Crea un fitxer `preus.php` que utilitzi la instrucció `match` per assignar un preu a una variable `$producte`. Els productes i preus són:
+Crea un fitxer que utilitze la instrucció `match` per assignar un preu a una variable `$producte`. Els productes i preus són:
      - "pa" => 1.00
      - "llet" => 0.80
      - "formatge" => 2.50
@@ -588,10 +613,11 @@ echo "El preu de $producte és $preu euros.";  // Sortida: El preu de formatge �
 
 #### Exercici 11: Calculadora simple amb `match`
 
-Crea un fitxer `calculadora.php` que utilitzi la instrucció `match` per fer operacions matemàtiques bàsiques (`+`, `-`, `*`, `/`). La variable `$operacio` ha de determinar l'operació a realitzar i les variables `$a` i `$b` seran els operands.
+Crea un fitxer que utilitze la instrucció `match` per fer operacions matemàtiques bàsiques (`+`, `-`, `*`, `/`). La variable `$operacio` ha de determinar l'operació a realitzar i les variables `$a` i `$b` seran els operands.
 
 <details>
 <summary>Solució</summary>
+
 ```php
 $a = 10;
 $b = 5;
@@ -612,7 +638,7 @@ echo "El resultat de $a $operacio $b és $resultat.";  // Sortida: El resultat d
 
 #### Exercici 12: Validació de formulari amb `match`
 
-1. Crea un fitxer `formulari.php` que utilitzi la instrucció `match` per validar un formulari amb camps per a nom, correu electrònic i edat. Si algun camp està buit, ha de retornar un missatge d'error corresponent.
+1. Crea un fitxer que utilitze la instrucció `match` per validar un formulari amb camps per a nom, correu electrònic i edat. Si algun camp està buit, ha de retornar un missatge d'error corresponent.
 
 <details>
 <summary>Solució</summary>
