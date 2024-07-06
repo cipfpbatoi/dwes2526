@@ -21,23 +21,14 @@
 #### Història de PHP
 PHP va ser creat originalment per Rasmus Lerdorf el **1994**. Inicialment, PHP era una col·lecció d'eines CGI (Common Gateway Interface) escrites en C, utilitzades per rastrejar les visites a la seva pàgina web. Rasmus va anomenar aquestes eines "Personal Home Page Tools" (Eines per a la pàgina personal). Amb el temps, el llenguatge va evolucionar i es va convertir en una eina més robusta i potent per al desenvolupament web. El 1997, dues persones, Zeev Suraski i Andi Gutmans, van redissenyar completament el nucli de PHP, cosa que va donar lloc a **PHP 3**, la primera versió àmpliament utilitzada. Més tard, el 2000, **PHP 4** va ser llançat amb el motor Zend, el qual va millorar significativament el rendiment.
 
-#### Ús de PHP
-PHP s'utilitza principalment per a:
-
-* Generació de pàgines web dinàmiques: Permet que el servidor generi contingut HTML dinàmic basat en la lògica programada.
-* Interacció amb bases de dades: PHP es pot connectar fàcilment a diverses bases de dades com MySQL, PostgreSQL, SQLite, etc., cosa que facilita la creació d'aplicacions web amb capacitats d'emmagatzematge de dades.
-* Gestió de sessions: PHP proporciona una manera senzilla de gestionar sessions d'usuari, cosa que és essencial per a aplicacions que requereixen autenticació i autorització.
-* Manipulació de fitxers: PHP permet crear, llegir, escriure, eliminar i gestionar fitxers al servidor.
-* Enviament de correus electrònics: Amb PHP, es poden enviar correus electrònics des de l'aplicació web, cosa útil per a notificacions, confirmacions d'inscripció, etc.
-
 #### Importància en el desenvolupament web
 PHP és un dels llenguatges més utilitzats en el desenvolupament web per diverses raons:
 
-* Facilitat d'aprenentatge: PHP és relativament fàcil d'aprendre per als principiants en programació web. La seva sintaxi és senzilla i similar a altres llenguatges com C i Perl.
-* Gran comunitat i suport: PHP té una gran comunitat de desenvolupadors que proporcionen suport, biblioteques, extensions i eines. A més, hi ha nombrosos recursos en línia, tutorials i documentació.
-* Integració amb bases de dades: PHP es pot integrar fàcilment amb una àmplia varietat de bases de dades, cosa que el fa ideal per a aplicacions web basades en dades.
-* Flexibilitat i escalabilitat: PHP és altament flexible i es pot utilitzar per desenvolupar tant aplicacions petites com projectes grans i complexos. També és escalable, cosa que permet gestionar un gran volum de trànsit.
-* Cost efectiu: Com que és de codi obert, PHP és gratuït per utilitzar i distribuir. Això redueix els costos de desenvolupament per a les empreses i els desenvolupadors.
+* **Facilitat d'aprenentatge:** PHP és relativament fàcil d'aprendre per als principiants en programació web. La seva sintaxi és senzilla i similar a altres llenguatges com C i Perl.
+* **Gran comunitat i suport:** PHP té una gran comunitat de desenvolupadors que proporcionen suport, biblioteques, extensions i eines. A més, hi ha nombrosos recursos en línia, tutorials i documentació.
+* **Integració amb bases de dades:** PHP es pot integrar fàcilment amb una àmplia varietat de bases de dades, cosa que el fa ideal per a aplicacions web basades en dades.
+* **Flexibilitat i escalabilitat:** PHP és altament flexible i es pot utilitzar per desenvolupar tant aplicacions petites com projectes grans i complexos. També és escalable, cosa que permet gestionar un gran volum de trànsit.
+* **Cost efectiu:** Com que és de codi obert, PHP és gratuït per utilitzar i distribuir. Això redueix els costos de desenvolupament per a les empreses i els desenvolupadors.
 
 #### Exemple de codi PHP simple
 Aquí tens un exemple senzill de com funciona PHP:
@@ -57,6 +48,8 @@ echo "Hola, món!";
 </html>
 ```
 En aquest exemple, el codi PHP s'incrusta dins del codi HTML i es delimina amb <?php i ?>. Quan el servidor processa aquest fitxer, executa el codi PHP i envia el resultat al navegador, generant el contingut dinàmic "Hola, món!".
+Aquest és un altre exemple de com PHP pot generar HTML dinàmicament:
+
 
 ## 2. Llenguatges imbricats en HTML
 PHP permet incrustar codi dins de documents HTML, permetent la generació de contingut dinàmic. El codi PHP es delimita amb `<?php ... ?>`.
@@ -83,7 +76,7 @@ echo "</body></html>";
 !!! tip "Només etiquetes d'obertura"
     Si el nostre codi només contindrà codi PHP i res d'html, com per exemple, quan codifiquem classes o interfícies, només posarem l'etiqueta d'obertura, per a així indicar que és una arxiu de php pur.
 
-## 4. Etiquetes per a inserció de codi
+## 3. Etiquetes per a inserció de codi
 Per inserir codi PHP dins de HTML, utilitzem les etiquetes:
 ```php
 <?php
@@ -105,7 +98,7 @@ Exemple:
 </html>
 ```
 
-## 5. Tipus de dades. Conversions entre tipus de dades
+## 4. Tipus de dades. Conversions entre tipus de dades
 PHP té diversos tipus de dades: enter, flotant, cadena, booleà, matriu, objecte, nul.
 ```php
 $enter = 10; // Enter
@@ -127,7 +120,14 @@ Exemple:
 $cadena = "123";
 $enter = (int)$cadena; // Converteix la cadena "123" a l'enter 123
 ```
-
+## 5. Constants
+Les constants es defineixen amb la funció `define()` i no poden canviar el seu valor un cop assignades.
+```php
+define("PI", 3.14159);
+define("NOM_DE_LA_WEB", "El meu lloc web");
+echo PI; // Mostra 3.14159
+echo NOM_DE_LA_WEB; // Mostra "El meu lloc web"
+```
 ## 6. Variables. Operadors. Àmbits d'utilització
 Variables es defineixen amb $, per exemple:
 ```php
@@ -199,18 +199,7 @@ function saludar($nom) {
 echo saludar("Joan");
 ```
 
-## 8. Mecanismes de generació de pàgines web amb codi embegut
-PHP permet generar pàgines dinàmiques incrustant codi PHP en HTML. Exemple:
-```php
-<!DOCTYPE html>
-<html>
-<body>
-    <h1><?php echo "Hola, món!"; ?></h1>
-</body>
-</html>
-```
-
-## 9. Directives per a modificar el comportament predeterminat del codi
+## 8. Directives per a modificar el comportament predeterminat del codi
 Include i require:
 ```php
 include 'fitxer.php';
@@ -237,7 +226,7 @@ saludar(); // Mostra "Hola!"
 ?>
 ```
 
-## 10. Sentències simples en PHP i els seus efectes
+## 9. Sentències simples en PHP i els seus efectes
 Eco i print:
 ```php
 echo "Hola, món!";
@@ -256,7 +245,7 @@ $nom = "Joan";
 echo "Benvingut, " . $nom;
 ```
 
-## 11. Àmbits de les variables (local, global, estàtic)
+## 10. Àmbits de les variables (local, global, estàtic)
 Local: dins d'una funció.
 Global: fora de qualsevol funció.
 Estàtic: persisteixen el seu valor entre crides a la funció.
@@ -278,7 +267,7 @@ contar(); // Mostra 1
 contar(); // Mostra 2
 ```
 
-## 12. Mecanismes de decisió (if, switch)
+## 11. Mecanismes de decisió (if, switch)
 If, else, elseif:
 ```php
 if ($condicio) {
@@ -317,7 +306,7 @@ switch ($dia) {
 }
 ```
 
-## 13. Bucles (for, while, foreach)
+## 12. Bucles (for, while, foreach)
 For:
 ```php
 for ($i = 0; $i < 10; $i++) {
@@ -347,7 +336,7 @@ foreach ($fruites as $fruita) {
 }
 ```
 
-## 14. Comentaris en el codi
+## 13. Comentaris en el codi
 Comentaris d'una línia:
 ```php
 // Això és un comentari d'una línia
