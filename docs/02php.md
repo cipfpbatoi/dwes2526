@@ -35,10 +35,6 @@ PHP és un dels llenguatges més utilitzats en el desenvolupament web per divers
 #### Exemple de codi PHP simple
 Aquí tens un exemple senzill de com funciona PHP:
 
-=== "Enunciat"
-
-Crear un fitxer PHP que mostre Hola, món! en un navegador web.
-
 === "PHP" 
 
 ```php
@@ -55,7 +51,6 @@ echo "Hola, món!";
 </body>
 </html>
 ```
-=== "Comentari" 
 
 En aquest exemple, el codi PHP s'incrusta dins del codi HTML i es delimina amb <?php i ?>. Quan el servidor processa aquest fitxer, executa el codi PHP i envia el resultat al navegador, generant el contingut dinàmic "Hola, món!".
 Aquest és un altre exemple de com PHP pot generar HTML dinàmicament:
@@ -546,6 +541,7 @@ $resultat = match (true) {
 
 echo $resultat;  // Sortida: Molt bé
 ```
+===
 
 #### Exercici 10: Llista de preus amb `match`
 
@@ -571,6 +567,7 @@ $preu = match ($producte) {
 
 echo "El preu de $producte és $preu euros.";  // Sortida: El preu de formatge és 2.5 euros.
 ```
+===
 
 #### Exercici 11: Calculadora simple amb `match`
 
