@@ -35,11 +35,11 @@ PHP és un dels llenguatges més utilitzats en el desenvolupament web per divers
 #### Exemple de codi PHP simple
 Aquí tens un exemple senzill de com funciona PHP:
 
-=== Enunciat
+=== "Enunciat"
 
 Crear un fitxer PHP que mostre Hola, món! en un navegador web.
 
-=== Solució 
+=== "PHP" 
 
 ```php
 <!DOCTYPE html>
@@ -55,7 +55,7 @@ echo "Hola, món!";
 </body>
 </html>
 ```
-=== Comentari 
+=== "Comentari" 
 
 En aquest exemple, el codi PHP s'incrusta dins del codi HTML i es delimina amb <?php i ?>. Quan el servidor processa aquest fitxer, executa el codi PHP i envia el resultat al navegador, generant el contingut dinàmic "Hola, món!".
 Aquest és un altre exemple de com PHP pot generar HTML dinàmicament:
