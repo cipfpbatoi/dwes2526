@@ -478,7 +478,7 @@ Comentaris de diverses línies:
 * [Guía de Estilo - PSR](http://coppeldev.github.io/php/standards/coppel.html)
 * [PHP - La manera correcta](http://phpdevenezuela.github.io/php-the-right-way/)
 
-## Exercicis
+## Exercicis Solucionats
 
 ### Bateria d'Exercicis per a la Unitat de PHP
 
@@ -541,11 +541,15 @@ echo $resultat;  // Sortida: Molt bé
 
 #### Exercici 10: Llista de preus amb `match`
 
+=== "Enunciat"
+
 1. Crea un fitxer `preus.php` que utilitzi la instrucció `match` per assignar un preu a una variable `$producte`. Els productes i preus són:
      - "pa" => 1.00
      - "llet" => 0.80
      - "formatge" => 2.50
      - Qualsevol altre producte => 0.00
+
+=== "Solució"
 
 ```php
 $producte = 'formatge';
