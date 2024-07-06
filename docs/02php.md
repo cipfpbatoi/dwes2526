@@ -35,6 +35,12 @@ PHP és un dels llenguatges més utilitzats en el desenvolupament web per divers
 #### Exemple de codi PHP simple
 Aquí tens un exemple senzill de com funciona PHP:
 
+=== Enunciat
+
+Crear un fitxer PHP que mostre Hola, món! en un navegador web.
+
+=== Solució 
+
 ```php
 <!DOCTYPE html>
 <html>
@@ -49,6 +55,8 @@ echo "Hola, món!";
 </body>
 </html>
 ```
+=== Comentari 
+
 En aquest exemple, el codi PHP s'incrusta dins del codi HTML i es delimina amb <?php i ?>. Quan el servidor processa aquest fitxer, executa el codi PHP i envia el resultat al navegador, generant el contingut dinàmic "Hola, món!".
 Aquest és un altre exemple de com PHP pot generar HTML dinàmicament:
 
@@ -518,7 +526,7 @@ Comentaris de diverses línies:
 
 === "Enunciat"
 
-1. Crea un fitxer `categoritzar.php` que utilitzi la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
+Crea un fitxer `categoritzar.php` que utilitzi la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
      - Si la nota és 10, imprimir "Excel·lent".
      - Si la nota és 8 o 9, imprimir "Molt bé".
      - Si la nota és 5, 6 o 7, imprimir "Bé".
@@ -543,7 +551,7 @@ echo $resultat;  // Sortida: Molt bé
 
 === "Enunciat"
 
-1. Crea un fitxer `preus.php` que utilitzi la instrucció `match` per assignar un preu a una variable `$producte`. Els productes i preus són:
+Crea un fitxer `preus.php` que utilitzi la instrucció `match` per assignar un preu a una variable `$producte`. Els productes i preus són:
      - "pa" => 1.00
      - "llet" => 0.80
      - "formatge" => 2.50
@@ -566,7 +574,7 @@ echo "El preu de $producte és $preu euros.";  // Sortida: El preu de formatge �
 
 #### Exercici 11: Calculadora simple amb `match`
 
-1. Crea un fitxer `calculadora.php` que utilitzi la instrucció `match` per fer operacions matemàtiques bàsiques (`+`, `-`, `*`, `/`). La variable `$operacio` ha de determinar l'operació a realitzar i les variables `$a` i `$b` seran els operands.
+Crea un fitxer `calculadora.php` que utilitzi la instrucció `match` per fer operacions matemàtiques bàsiques (`+`, `-`, `*`, `/`). La variable `$operacio` ha de determinar l'operació a realitzar i les variables `$a` i `$b` seran els operands.
 
 ```php
 $a = 10;
