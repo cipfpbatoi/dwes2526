@@ -11,29 +11,73 @@
     | 2. Escriu sentències executables per un servidor Web reconeixent i aplicant procediments d'integració del codi en llenguatges de marques. | a) S'han reconegut els mecanismes de generació de pàgines Web a partir de llenguatges de marques amb codi embegut. <br/> b) S'han identificat les principals tecnologies associades.  <br/> c) S'han utilitzat etiquetes per a la inclusió de codi en el llenguatge de marques.  <br/> d) S'ha reconegut la sintaxi del llenguatge de programació que s'ha d'utilitzar.  <br/> e) S'han escrit sentències simples i s'ha comprovat els seus efectes en el document resultant.  <br/> f) S'han utilitzat directives per a modificar el comportament predeterminat.  <br/> g) S'han utilitzat els diferents tipus de variables i operadors disponibles en el llenguatge.  <br/> h) S'han identificat els àmbits d'utilització de les variables.  <br/> |
 
 
-# Introducció a PHP
+# Apunts per a la Unitat: Escriu sentències executables per un servidor web reconeixent i aplicant procediments d'integració del codi en llenguatges de marques
 
-## 1. Llenguatges imbricats en HTML
-PHP permet incrustar codi dins de documents HTML, permetent la generació de contingut dinàmic. El codi PHP es delimita amb `<?php ... ?>`.
+## 1. Introducció a PHP
 
-## 2. Tecnologies associades
-- **Servidors web:** Apache, Nginx.
-- **Llenguatges de programació:** PHP, JavaScript.
-- **Bases de dades:** MySQL, PostgreSQL.
-- **Protocols:** HTTP, HTTPS.
+#### Què és PHP?
+**PHP** (Hypertext Preprocessor) és un llenguatge de programació de codi obert, especialment dissenyat per al desenvolupament web del costat del servidor. Es pot incrustar fàcilment en codi HTML, cosa que el fa una opció popular per crear aplicacions web dinàmiques i interactives. PHP s'utilitza per gestionar el contingut dinàmic, les bases de dades, el seguiment de sessions i fins i tot per crear aplicacions completes.
 
-## 3. Obtenció del llenguatge de marques per a mostrar en el client
-El codi PHP s'executa al servidor, que envia l'HTML resultant al navegador del client. Exemple:
+#### Història de PHP
+PHP va ser creat originalment per Rasmus Lerdorf el **1994**. Inicialment, PHP era una col·lecció d'eines CGI (Common Gateway Interface) escrites en C, utilitzades per rastrejar les visites a la seva pàgina web. Rasmus va anomenar aquestes eines "Personal Home Page Tools" (Eines per a la pàgina personal). Amb el temps, el llenguatge va evolucionar i es va convertir en una eina més robusta i potent per al desenvolupament web. El 1997, dues persones, Zeev Suraski i Andi Gutmans, van redissenyar completament el nucli de PHP, cosa que va donar lloc a **PHP 3**, la primera versió àmpliament utilitzada. Més tard, el 2000, **PHP 4** va ser llançat amb el motor Zend, el qual va millorar significativament el rendiment.
+
+#### Ús de PHP
+PHP s'utilitza principalment per a:
+
+* Generació de pàgines web dinàmiques: Permet que el servidor generi contingut HTML dinàmic basat en la lògica programada.
+* Interacció amb bases de dades: PHP es pot connectar fàcilment a diverses bases de dades com MySQL, PostgreSQL, SQLite, etc., cosa que facilita la creació d'aplicacions web amb capacitats d'emmagatzematge de dades.
+* Gestió de sessions: PHP proporciona una manera senzilla de gestionar sessions d'usuari, cosa que és essencial per a aplicacions que requereixen autenticació i autorització.
+* Manipulació de fitxers: PHP permet crear, llegir, escriure, eliminar i gestionar fitxers al servidor.
+* Enviament de correus electrònics: Amb PHP, es poden enviar correus electrònics des de l'aplicació web, cosa útil per a notificacions, confirmacions d'inscripció, etc.
+
+#### Importància en el desenvolupament web
+PHP és un dels llenguatges més utilitzats en el desenvolupament web per diverses raons:
+
+* Facilitat d'aprenentatge: PHP és relativament fàcil d'aprendre per als principiants en programació web. La seva sintaxi és senzilla i similar a altres llenguatges com C i Perl.
+* Gran comunitat i suport: PHP té una gran comunitat de desenvolupadors que proporcionen suport, biblioteques, extensions i eines. A més, hi ha nombrosos recursos en línia, tutorials i documentació.
+* Integració amb bases de dades: PHP es pot integrar fàcilment amb una àmplia varietat de bases de dades, cosa que el fa ideal per a aplicacions web basades en dades.
+* Flexibilitat i escalabilitat: PHP és altament flexible i es pot utilitzar per desenvolupar tant aplicacions petites com projectes grans i complexos. També és escalable, cosa que permet gestionar un gran volum de trànsit.
+* Cost efectiu: Com que és de codi obert, PHP és gratuït per utilitzar i distribuir. Això redueix els costos de desenvolupament per a les empreses i els desenvolupadors.
+
+#### Exemple de codi PHP simple
+Aquí tens un exemple senzill de com funciona PHP:
+
 ```php
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Exemple</title>
-</head>
 <body>
-    <h1><?php echo "Hola, món!"; ?></h1>
+
+<h1>El meu primer script PHP</h1>
+
+<?php
+echo "Hola, món!";
+?>
+
 </body>
 </html>
+```
+En aquest exemple, el codi PHP s'incrusta dins del codi HTML i es delimina amb <?php i ?>. Quan el servidor processa aquest fitxer, executa el codi PHP i envia el resultat al navegador, generant el contingut dinàmic "Hola, món!".
+
+## 2. Llenguatges imbricats en HTML
+PHP permet incrustar codi dins de documents HTML, permetent la generació de contingut dinàmic. El codi PHP es delimita amb `<?php ... ?>`.
+És comú utilitzar codi PHP dins de HTML per generar contingut dinàmic. També es pot incloure HTML dins de fitxers PHP.
+```php
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Benvingut a la meva web</h1>
+    <p>La data d'avui és: <?= date('Y-m-d') ?></p>
+</body>
+</html>
+```
+El codi HTML pot ser generat dins d'instruccions PHP.
+```php
+<?php
+echo "<html><body>";
+echo "<h1>Benvingut a la meva web</h1>";
+echo "<p>La data d'avui és: " . date('Y-m-d') . "</p>";
+echo "</body></html>";
+?>
 ```
 
 !!! tip "Només etiquetes d'obertura"
@@ -48,7 +92,7 @@ Per inserir codi PHP dins de HTML, utilitzem les etiquetes:
 ```
 Per imprimir directament:
 ```php
-<?= \$variable ?>
+<?= $variable ?>
 ```
 Exemple:
 ```php
@@ -64,30 +108,30 @@ Exemple:
 ## 5. Tipus de dades. Conversions entre tipus de dades
 PHP té diversos tipus de dades: enter, flotant, cadena, booleà, matriu, objecte, nul.
 ```php
-\$enter = 10; // Enter
-\$flotant = 3.14; // Flotant
-\$cadena = "Hola, món!"; // Cadena
-\$boolea = true; // Booleà
-\$matriu = array(1, 2, 3); // Matriu
-\$objecte = new stdClass(); // Objecte
-\$nul = null; // Nul
+$enter = 10; // Enter
+$flotant = 3.14; // Flotant
+$cadena = "Hola, món!"; // Cadena
+$boolea = true; // Booleà
+$matriu = array(1, 2, 3); // Matriu
+$objecte = new stdClass(); // Objecte
+$nul = null; // Nul
 ```
 Conversions:
 ```php
-\$integer = (int) \$variable;
-\$float = (float) \$variable;
-\$string = (string) \$variable;
+$integer = (int) $variable;
+$float = (float) $variable;
+$string = (string) $variable;
 ```
 Exemple:
 ```php
-\$cadena = "123";
-\$enter = (int)\$cadena; // Converteix la cadena "123" a l'enter 123
+$cadena = "123";
+$enter = (int)$cadena; // Converteix la cadena "123" a l'enter 123
 ```
 
 ## 6. Variables. Operadors. Àmbits d'utilització
-Variables es defineixen amb \$, per exemple:
+Variables es defineixen amb $, per exemple:
 ```php
-\$variable = "valor";
+$variable = "valor";
 ```
 Operadors:
 - Aritmètics: `+`, `-`, `*`, `/`
@@ -101,10 +145,10 @@ Operadors:
 - **Estàtic:** persisteixen el seu valor entre crides a la funció.
 ```php
 function exemple() {
-    global \$variable_global;
-    static \$compte = 0;
-    \$compte++;
-    echo \$compte;
+    global $variable_global;
+    static $compte = 0;
+    $compte++;
+    echo $compte;
 }
 ```
 
@@ -117,40 +161,40 @@ Comentaris:
 Estructures de control:
 ```php
 // Condicions
-if (\$condicio) {
+if ($condicio) {
     // Codi si la condició és certa
-} elseif (\$altra_condicio) {
+} elseif ($altra_condicio) {
     // Codi si la segona condició és certa
 } else {
     // Codi si cap de les condicions anteriors és certa
 }
 
 // Bucles
-for (\$i = 0; \$i < 10; \$i++) {
-    echo \$i;
+for ($i = 0; $i < 10; $i++) {
+    echo $i;
 }
 
-\$i = 0;
-while (\$i < 10) {
-    echo \$i;
-    \$i++;
+$i = 0;
+while ($i < 10) {
+    echo $i;
+    $i++;
 }
 
-\$matriu = array(1, 2, 3);
-foreach (\$matriu as \$valor) {
-    echo \$valor;
+$matriu = array(1, 2, 3);
+foreach ($matriu as $valor) {
+    echo $valor;
 }
 ```
 Funcions:
 ```php
-function nom_de_la_funcio(\$parametre) {
+function nom_de_la_funcio($parametre) {
     // Codi
 }
 ```
 Exemple:
 ```php
-function saludar(\$nom) {
-    return "Hola, " . \$nom;
+function saludar($nom) {
+    return "Hola, " . $nom;
 }
 echo saludar("Joan");
 ```
@@ -201,15 +245,15 @@ print "Hola, món!";
 ```
 Variables i operacions:
 ```php
-\$a = 5;
-\$b = 10;
-\$suma = \$a + \$b;
-echo \$suma; // Mostra 15
+$a = 5;
+$b = 10;
+$suma = $a + $b;
+echo $suma; // Mostra 15
 ```
 Exemple:
 ```php
-\$nom = "Joan";
-echo "Benvingut, " . \$nom;
+$nom = "Joan";
+echo "Benvingut, " . $nom;
 ```
 
 ## 11. Àmbits de les variables (local, global, estàtic)
@@ -218,17 +262,17 @@ Global: fora de qualsevol funció.
 Estàtic: persisteixen el seu valor entre crides a la funció.
 ```php
 function exemple() {
-    static \$compte = 0;
-    \$compte++;
-    echo \$compte;
+    static $compte = 0;
+    $compte++;
+    echo $compte;
 }
 ```
 Exemple:
 ```php
 function contar() {
-    static \$vegades = 0;
-    \$vegades++;
-    echo \$vegades;
+    static $vegades = 0;
+    $vegades++;
+    echo $vegades;
 }
 contar(); // Mostra 1
 contar(); // Mostra 2
@@ -237,9 +281,9 @@ contar(); // Mostra 2
 ## 12. Mecanismes de decisió (if, switch)
 If, else, elseif:
 ```php
-if (\$condicio) {
+if ($condicio) {
     // Codi si la condició és certa
-} elseif (\$altra_condicio) {
+} elseif ($altra_condicio) {
     // Codi si la segona condició és certa
 } else {
     // Codi si cap de les condicions anteriors és certa
@@ -247,7 +291,7 @@ if (\$condicio) {
 ```
 Switch:
 ```php
-switch (\$variable) {
+switch ($variable) {
     case 1:
         // Codi per al cas 1
         break;
@@ -260,8 +304,8 @@ switch (\$variable) {
 ```
 Exemple:
 ```php
-\$dia = "dilluns";
-switch (\$dia) {
+$dia = "dilluns";
+switch ($dia) {
     case "dilluns":
         echo "Avui és dilluns";
         break;
@@ -276,30 +320,30 @@ switch (\$dia) {
 ## 13. Bucles (for, while, foreach)
 For:
 ```php
-for (\$i = 0; \$i < 10; \$i++) {
-    echo \$i;
+for ($i = 0; $i < 10; $i++) {
+    echo $i;
 }
 ```
 While:
 ```php
-\$i = 0;
-while (\$i < 10) {
-    echo \$i;
-    \$i++;
+$i = 0;
+while ($i < 10) {
+    echo $i;
+    $i++;
 }
 ```
 Foreach:
 ```php
-\$matriu = array(1, 2, 3);
-foreach (\$matriu as \$valor) {
-    echo \$valor;
+$matriu = array(1, 2, 3);
+foreach ($matriu as $valor) {
+    echo $valor;
 }
 ```
 Exemple:
 ```php
-\$fruites = array("poma", "plàtan", "maduixa");
-foreach (\$fruites as \$fruita) {
-    echo \$fruita;
+$fruites = array("poma", "plàtan", "maduixa");
+foreach ($fruites as $fruita) {
+    echo $fruita;
 }
 ```
 
