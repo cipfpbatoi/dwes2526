@@ -597,7 +597,7 @@ echo "El resultat de $a $operacio $b és $resultat.";  // Sortida: El resultat d
 1. Crea un fitxer `formulari.php` que utilitzi la instrucció `match` per validar un formulari amb camps per a nom, correu electrònic i edat. Si algun camp està buit, ha de retornar un missatge d'error corresponent.
 
 <details>
-<summary>
+<summary>Solució</summary>
 
 ```php
 $nom = 'Joan';
@@ -613,5 +613,5 @@ default => 'Formulari vàlid.',
 
 echo $validacio;  // Sortida: El camp edat és obligatori.
 ```
-</summary>
+
 </details>
