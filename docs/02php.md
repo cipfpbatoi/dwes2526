@@ -546,7 +546,7 @@ Comentaris de diverses línies:
 2. Modifica el fitxer `edat.php` per tal que imprimeixi "Edat invàlida" si `$edat` és un número negatiu.
 
 <details>
-<sumary>Solució</sumary>
+    <summary>Solució</summary>
 
     ```php
     <?php
