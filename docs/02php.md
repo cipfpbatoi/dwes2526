@@ -510,7 +510,7 @@ Comentaris de diverses línies:
 
     ```php
     <?php
-    // Exercici 1
+    // Exercici 2
     $name = 'Ignasi':
     echo "Hola, $name!";
     echo 'Hola, $name!';
@@ -522,21 +522,111 @@ Comentaris de diverses línies:
 1. Crea una funció `suma` que sume dos números i retorni el resultat. Invoca la funció amb els números 5 i 3 i imprimeix el resultat.
 2. Crea una funció `multiplicacio` que multipliqui dos números i retorni el resultat. Invoca la funció amb els números 4 i 7 i imprimeix el resultat.
 
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <?php
+    // Exercici 2
+    function suma($a, $b) {
+        return $a + $b;
+    }
+    function multiplicacio($a, $b) {
+        return $a * $b;
+    }
+    echo suma(5, 3);  // Sortida: 8
+    echo multiplicacio(4, 7);  // Sortida: 28
+    ?>
+    ```
+
+</details>
+
 #### Exercici 4: Control de flux - Condicionals
 1. Crea un fitxer que definisca una variable `$edat`. Si `$edat` és major o igual a 18, imprimeix "Ets major d'edat"; en cas contrari, imprimeix "Ets menor d'edat".
 2. Modifica el fitxer `edat.php` per tal que imprimeixi "Edat invàlida" si `$edat` és un número negatiu.
+
+<details>
+<sumary>Solució</sumary>
+
+    ```php
+    <?php
+    // Exercici 4
+    $edat = 20;
+    if ($edat < 0) {
+        echo "Edat invàlida";
+    } else{
+        if ($edat >= 18) {
+            echo "Ets major d'edat";
+        } else {
+            echo "Ets menor d'edat";
+        }
+    }
+    ?>
+    ```    
+</details>
 
 #### Exercici 5: Control de flux - Bucles
 1. Crea un fitxer que utilitzi un bucle `for` per imprimir els números del 0 al 9.
 2. Fes-ho també amb un bucle `while` que faci el mateix.
 
+<details>
+    <summary>Solució</summary>
+    
+        ```php
+            <?php
+            // Exercici 5
+            // Bucle for
+            for ($i = 0; $i < 10; $i++) {
+                echo $i . "<br>";
+            }
+            // Bucle while
+            $i = 0;
+            while ($i < 10) {
+                echo $i . "<br>";
+                $i++;
+            }
+            ?>
+        ```
+</details>
+
 #### Exercici 6: Treballar amb arrays
 1. Crea un fitxer que definisca un array `$fruites` amb tres elements: "poma", "plàtan" i "maduixa". Imprimeix el primer element de l'array.
 2. Afegeix un quart element "taronja" a l'array i imprimeix tots els elements utilitzant un bucle `foreach`.
 
+<details>
+    <summary>Solució</summary>
+        
+        ```php
+        <?php
+        // Exercici 6
+        // Punt 1
+        $fruites = array("poma", "plàtan", "maduixa");
+        echo $fruites[0] . "<br>";
+        // Punt 2
+        $fruites[] = "taronja";
+        foreach ($fruites as $fruita) {
+            echo $fruita . "<br>";
+        }
+        ?>
+        ```
+</details>
+
 #### Exercici 7: Cometes dobles i variables
 1. Crea un fitxer que definisca una variable `$color` amb el valor "blau". Utilitza cometes dobles per imprimir "El meu color preferit és [color]."
 2. Ara,  utilitza cometes simples i concatenació.
+
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <?php
+    // Exercici 7
+    $color = "blau";
+    echo "El meu color preferit és $color.";
+    echo 'El meu color preferit és ' . $color . '.';
+    ?>
+    ```
+</details>
 
 #### Exercici 8: Combinació de funcions i arrays
 1. Crea una funció `afegir_element` que prenga un array i un element com a arguments, afegeisca l'element a l'array i retorne l'array modificat.
