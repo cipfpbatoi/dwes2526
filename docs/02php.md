@@ -200,22 +200,47 @@ saludar(); // Mostra "Hola!"
 ```
 
 ## 8. Sentències simples en PHP i els seus efectes
-Eco i print:
+Assignacions
+```php
+$x = 5;
+$y = "Hola món";
+```
+Operacions aritmètiques
+```php
+$suma = $x + 10;  // Resulta en 15
+$producte = $x * 2;  // Resulta en 10
+```
+Operacions d'entrada i eixida:
 ```php
 echo "Hola, món!";
 print "Hola, món!";
 ```
-Variables i operacions:
-```php
-$a = 5;
-$b = 10;
-$suma = $a + $b;
-echo $suma; // Mostra 15
-```
-Exemple:
+Operacions amb cadenes:
 ```php
 $nom = "Joan";
-echo "Benvingut, " . $nom;
+$salutacio = $y . ", " . $nom;  // Resulta en "Hola món, Joan"
+```
+Exemple complet:
+```php
+<?php
+// Assignació de valors
+$x = 5;
+$y = "Hola món";
+
+// Operacions aritmètiques
+$suma = $x + 10;
+$producte = $x * 2;
+
+// Concatenació de cadenes
+$nom = "Joan";
+$salutacio = $y . ", " . $nom;
+
+// Impressió de resultats
+echo $y;  // Hola món
+echo $suma;  // 15
+echo $producte;  // 10
+echo $salutacio;  // Hola món, Joan
+?>
 ```
 
 ## 9. Àmbits de les variables (local, global, estàtic)
@@ -290,12 +315,13 @@ $result = match ($variable) {
 ```
 
 ** Diferències amb switch**
-1. **Comparació estricta**: `match` utilitza comparació estricta (===) per comparar els valors.
-2. **Retorna un valor**: `match` és una expressió, la qual cosa significa que retorna un valor.
-3. **No necessita break**: A diferència de `switch`, no es necessita l'ús de `break` per evitar la caiguda (fall-through).
-4. **Més concís**: Permet una sintaxi més neta i concisa.
 
-Exemple:
+    1. **Comparació estricta**: `match` utilitza comparació estricta (===) per comparar els valors.
+    2. **Retorna un valor**: `match` és una expressió, la qual cosa significa que retorna un valor.
+    3. **No necessita break**: A diferència de `switch`, no es necessita l'ús de `break` per evitar la caiguda (fall-through).
+    4. **Més concís**: Permet una sintaxi més neta i concisa.
+
+Exemple simple:
 ```php
 $color = 'roig';
 
@@ -481,9 +507,9 @@ Comentaris de diverses línies:
 * [Guía de Estilo - PSR](http://coppeldev.github.io/php/standards/coppel.html)
 * [PHP - La manera correcta](http://phpdevenezuela.github.io/php-the-right-way/)
 
-## Exercicis Solucionats
+## Exercicis 
 
-### Bateria d'Exercicis per a la Unitat de PHP
+### Bateria d'Exercicis Solucionats per a la Unitat de PHP
 
 #### Exercici 1: Introducció a PHP
 1. Crea un fitxer  que imprimeixi "Hola, món!" a la pantalla.
@@ -749,3 +775,28 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 ```
 
 </details>
+
+### Exercicis proposats
+
+#### Exercici 1: Manipulació de Variables i Operadors
+1. Assigna múltiples variables i utilitza operadors aritmètics i lògics. Mostra el resultat de cada operació.
+
+#### Exercici 2: Utilitzant `match` per a categoritzar
+1. Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
+    - Si la nota és 10, imprimir "Excel·lent".
+    - Si la nota és 8 o 9, imprimir "Molt bé".
+    - Si la nota és 5, 6 o 7, imprimir "Bé".
+    - Per qualsevol altra nota, imprimir "Insuficient".
+
+#### Exercici 3: Control de Flux amb Bucles
+1. Utilitza un bucle `for` per imprimir els números parells del 0 al 20.
+2. Fes-ho també amb un bucle `while`.
+
+#### Exercici 4: Treballar amb Arrays i Funcions
+1. Escriu una funció que prenga un array de números, calculi la mitjana i retorni el resultat. Utilitza aquesta funció per imprimir la mitjana d'un array de cinc números.
+
+#### Exercici 5: Manipulació de Strings
+1. Escriu un script que prenga una cadena de text i compti el nombre de vocals. Imprimeix el resultat.
+
+#### Exercici 6: Arrays Multidimensionals
+1. Crea un array multidimensional que represente una taula de multiplicar del 1 al 5 i imprimeix els resultats en forma de taula.
