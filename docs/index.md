@@ -42,16 +42,18 @@ Duració estimada: 75 hores
      * Condicions i bucles.
      * Arrays.
 
-3. [Orientació a objectes amb PHP](03phpoo.md) (11h)
 
-     * Classes i objectes 
-     * Namespaces
-     * Excepcions
    
-4. [Programació Web](04web.md) (13h)
+3. [Programació Web](03web.md) (13h)
 
      * Formularis.
      * Cookies i sessió.
+   
+4. [Orientació a objectes amb PHP](04phpoo.md) (11h)
+
+   * Classes i objectes
+   * Namespaces
+   * Excepcions
 
 5. [Accés a dades](05accesoDatos.md) (16h)
 
@@ -59,13 +61,7 @@ Duració estimada: 75 hores
      * PDO
      * Fitxers CSV i PDF.
 
-6. [Eines Web](06herramientas.md) (16h)
-
-       * *Composer*.
-       * Ús de logs amb *Monolog*.
-       * *Webscraping*.
-       * Documentació amb *phpDocumentor*.
-       * Proves amb *PhpUnit*.
+6. Projecte Integrador
 
 ### Segona avaluació
 
