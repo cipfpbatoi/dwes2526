@@ -497,7 +497,7 @@ Comentaris de diverses línies:
 /* Això és un comentari
    de diverses línies */
 ```
-## Variables de servidor
+## 16. Variables de servidor
 
 PHP emmagatzema la informació del servidor i de les peticions HTTP en sis arrays globals:
 
@@ -549,7 +549,7 @@ Apatxe crea una clau per a cada capçalera HTTP, en majúscules i substituint el
 echo $_SERVER["HTTP_USER_AGENT"]."<br>"; // Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36
 ```
 
-## Formularis
+## 17. Formularis
 
 A l'hora d'enviar un formulari, hem de tindre clar quan usar GET o POST
 
@@ -1119,6 +1119,115 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 ```
 
 </details>
+
+#### Exercici 15: Variables de servidor
+
+1. Mostra en un fitxer les variables de servidor que conegues
+
+<details>
+<summary>Solució</summary>
+    
+```php
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Informació del Servidor</title>
+</head>
+<body>
+    <h2>Informació del Servidor</h2>
+    <?php
+        echo "<p><strong>Nom del servidor:</strong> " . $_SERVER['SERVER_NAME'] . "</p>";
+        echo "<p><strong>Adreça IP del servidor:</strong> " . $_SERVER['SERVER_ADDR'] . "</p>";
+        echo "<p><strong>Software del servidor:</strong> " . $_SERVER['SERVER_SOFTWARE'] . "</p>";
+        echo "<p><strong>Agent d'usuari del client:</strong> " . $_SERVER['HTTP_USER_AGENT'] . "</p>";
+        echo "<p><strong>Mètode de la sol·licitud:</strong> " . $_SERVER['REQUEST_METHOD'] . "</p>";
+        echo "<p><strong>URL de la sol·licitud:</strong> " . $_SERVER['REQUEST_URI'] . "</p>";
+        echo "<p><strong>Referent:</strong> " . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'No disponible') . "</p>";
+        echo "<p><strong>Protocol utilitzat:</strong> " . $_SERVER['SERVER_PROTOCOL'] . "</p>";
+        echo "<p><strong>Port utilitzat:</strong> " . $_SERVER['SERVER_PORT'] . "</p>";
+    ?>
+</body>
+</html>
+```
+</details>
+
+#### Exercici 16: Pujar fitxers al servidor
+
+1. Crea un formulari en HTML que permeti als usuaris pujar un fitxer i seleccionar una opció d'un checkbox. Les opcions del checkbox han de ser carregades des d'un array predefinit en PHP. Després de l'enviament del formulari, el fitxer pujat ha de ser processat i mogut a una ubicació específica del servidor, i s'ha de mostrar la informació del fitxer i l'opció seleccionada.
+
+<details>
+<sumary>Solució</sumary>
+        
+```php
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Pujar Fitxer i Selecció d'Opció</title>
+</head>
+<body>
+    <?php
+    // Definim les opcions per al checkbox
+    $opcions = ["Opció 1", "Opció 2", "Opció 3"];
+
+    // Comprovem si el formulari ha estat enviat
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Comprovem si el fitxer ha estat pujat sense errors
+        if (isset($_FILES["fitxer"]) && $_FILES["fitxer"]["error"] == 0) {
+            $nom_fitxer = $_FILES["fitxer"]["name"];
+            $tipus_fitxer = $_FILES["fitxer"]["type"];
+            $mida_fitxer = $_FILES["fitxer"]["size"];
+            $ubicacio_temporal = $_FILES["fitxer"]["tmp_name"];
+
+            // Movem el fitxer a una ubicació permanent
+            $ubicacio_destinacio = "uploads/" . basename($nom_fitxer);
+            if (move_uploaded_file($ubicacio_temporal, $ubicacio_destinacio)) {
+                echo "<p>El fitxer <strong>$nom_fitxer</strong> ha estat pujat correctament.</p>";
+                echo "<p>Tipus de fitxer: $tipus_fitxer</p>";
+                echo "<p>Mida del fitxer: " . ($mida_fitxer / 1024) . " KB</p>";
+                echo "<p>Ubicació del fitxer: $ubicacio_destinacio</p>";
+            } else {
+                echo "<p>Error al moure el fitxer a la ubicació final.</p>";
+            }
+        } else {
+            echo "<p>Error al pujar el fitxer.</p>";
+        }
+
+        // Comprovem si una opció del checkbox ha estat seleccionada
+        if (isset($_POST['opcio'])) {
+            $opcio_seleccionada = $_POST['opcio'];
+            echo "<p>Has seleccionat: $opcio_seleccionada</p>";
+        } else {
+            echo "<p>No has seleccionat cap opció.</p>";
+        }
+    } else {
+        ?>
+        <h2>Formulari per Pujar Fitxer i Selecció d'Opció</h2>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+            <label for="fitxer">Selecciona un fitxer:</label>
+            <input type="file" id="fitxer" name="fitxer" required><br><br>
+
+            <label for="opcio">Selecciona una opció:</label><br>
+            <?php
+            foreach ($opcions as $opcio) {
+                echo '<input type="checkbox" id="' . $opcio . '" name="opcio" value="' . $opcio . '">';
+                echo '<label for="' . $opcio . '"> ' . $opcio . '</label><br>';
+            }
+            ?><br>
+
+            <input type="submit" value="Enviar">
+        </form>
+        <?php
+    }
+    ?>
+</body>
+</html>
+```
+</details>
+
+
 
 ### Exercicis proposats
 
