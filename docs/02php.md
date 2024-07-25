@@ -1001,8 +1001,102 @@ echo "El resultat de $a $operacio $b és $resultat.";  // Sortida: El resultat d
 ```
 </details>
 
+#### Exercici 12: Tractament de formulari
 
-#### Exercici 12: Validació de formulari amb `match`
+1. Crea un formulari en HTML que permeti als usuaris introduir el seu nom i edat. Després de l'enviament del formulari, mostra una pàgina PHP que processi les dades introduïdes i mostri un missatge de benvinguda personalitzat.
+
+<details>
+<summary>Solució</summary>
+
+```php
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulari de Benvinguda</title>
+</head>
+<body>
+    <h2>Formulari de Benvinguda</h2>
+    <form action="benvinguda.php" method="post">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required><br><br>
+        <label for="edat">Edat:</label>
+        <input type="number" id="edat" name="edat" required><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
+```
+
+```php
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Benvinguda</title>
+</head>
+<body>
+    <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nom = htmlspecialchars($_POST['nom']);
+            $edat = htmlspecialchars($_POST['edat']);
+            echo "<h2>Benvingut/da, $nom!</h2>";
+            echo "<p>Tens $edat anys.</p>";
+        } else {
+            echo "<p>Si us plau, completa el formulari.</p>";
+        }
+    ?>
+</body>
+</html>
+```
+</details>
+
+#### Exercici 13: Formulari en la mateixa pàgina
+
+1.  Crea un formulari en HTML que permeta als usuaris introduir la seva adreça de correu electrònic i un missatge. Després de l'enviament del formulari, crea una pàgina PHP que processe les dades introduïdes, comprove que l'adreça de correu electrònic és vàlida i mostre el missatge introduït per l'usuari.
+
+<details>
+<sumary>Solució</sumary>
+    
+```php
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulari de Contacte</title>
+</head>
+<body>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = htmlspecialchars($_POST['email']);
+        $missatge = htmlspecialchars($_POST['missatge']);
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo "<h2>Gràcies per contactar-nos!</h2>";
+            echo "<p>El teu correu electrònic: $email</p>";
+            echo "<p>El teu missatge: $missatge</p>";
+        } else {
+            echo "<p>Adreça de correu electrònic no vàlida. Si us plau, torna-ho a intentar.</p>";
+        }
+    } else {
+        ?>
+        <h2>Formulari de Contacte</h2>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <label for="email">Correu electrònic:</label>
+            <input type="email" id="email" name="email" required><br><br>
+            <label for="missatge">Missatge:</label><br>
+            <textarea id="missatge" name="missatge" rows="4" cols="50" required></textarea><br><br>
+            <input type="submit" value="Enviar">
+        </form>
+        <?php
+    }
+    ?>
+</body>
+</html>
+```
+</details>
+
+#### Exercici 14: Validació de formulari amb `match`
 
 1. Crea un fitxer que utilitze la instrucció `match` per validar un formulari amb camps per a nom, correu electrònic i edat. Si algun camp està buit, ha de retornar un missatge d'error corresponent.
 
