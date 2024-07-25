@@ -1160,12 +1160,11 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 <sumary>Solució</sumary>
         
 ```php
-
 <!DOCTYPE html>
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <title>Pujar Fitxer i Selecció d'Opció</title>
+    <title>Pujar Fitxer i Selecció Opció</title>
 </head>
 <body>
     <?php
@@ -1253,3 +1252,19 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 
 #### Exercici 6: Arrays Multidimensionals
 1. Crea un array multidimensional que represente una taula de multiplicar del 1 al 5 i imprimeix els resultats en forma de taula.
+
+#### Exercici 7: Validació de Formularis
+
+1. Crea un formulari en HTML que permetis als usuaris introduir el seu nom i correu electrònic. Després de l'enviament del formulari, valida que tots els camps han estat completats i que el correu electrònic és vàlid. Mostra un missatge d'error si alguna validació falla, i si tot és correcte, mostra un missatge confirmant que el formulari s'ha enviat correctament.
+
+#### Exercici 8: Processament de Formularis amb Select
+
+1. Crea un formulari en HTML que permetis als usuaris seleccionar el seu idioma preferit d'una llista desplegable (`select`) que conté les opcions: "Valencià", "Castellà", "Anglés" i "Francés". Després de l'enviament del formulari, mostra un missatge que indiqui l'idioma seleccionat per l'usuari.
+
+#### Exercici 9: Càlcul de la Mitjana
+
+1. Crea un formulari en HTML que permetis als usuaris introduir tres números. Després de l'enviament del formulari, processa els números introduïts per l'usuari en PHP i mostra la mitjana dels tres números.
+
+#### Exercici 10: Tractament de Dades amb Radio Buttons
+
+1. Crea un formulari en HTML que permetis als usuaris seleccionar el seu gènere utilitzant botons de ràdio (`radio buttons`) amb les opcions "Home" i "Dona". Després de l'enviament del formulari, processa les dades en PHP i mostra un missatge que indiqui el gènere seleccionat per l'usuari.
