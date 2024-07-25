@@ -1268,3 +1268,55 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 #### Exercici 10: Tractament de Dades amb Radio Buttons
 
 1. Crea un formulari en HTML que permetis als usuaris seleccionar el seu gènere utilitzant botons de ràdio (`radio buttons`) amb les opcions "Home" i "Dona". Després de l'enviament del formulari, processa les dades en PHP i mostra un missatge que indiqui el gènere seleccionat per l'usuari.
+
+## Enunciats dels Projectes
+
+### Projecte "L'Ofegat"
+
+**Enunciat:**
+Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El joc ha de permetre als jugadors endevinar les lletres d'una paraula predefinida i mostrar l'estat actual de les lletres endevinades. No és necessari mantenir l'estat del joc entre sol·licituds ni comprovar si s'han esgotat els intents en aquesta fase inicial.
+
+**Requisits:**
+1. **Paraula a Endevinar**:
+    - Defineix una paraula predefinida a endevinar.
+2. **Inicialització de les Lletres Endevinades**:
+    - Crea un array amb guions baixos per representar les lletres que l'usuari ha de trobar.
+3. **Comprovació d'Intents**:
+    - Comprova si la lletra introduïda per l'usuari forma part de la paraula.
+    - Substitueix els guions baixos per la lletra corresponent si és correcte.
+    - Mostra un missatge d'error si la lletra no és correcta.
+4. **Interfície d'Usuari**:
+    - Mostra les lletres endevinades fins al moment.
+    - Crea un formulari HTML que permeti als jugadors introduir una lletra.
+
+**Codi CSS Proporcionat**:
+
+```css
+.correct { color: green; }
+.incorrect { color: red; }
+```
+
+### Projecte "4 en Ratlla"
+
+**Enunciat:**
+Implementa una versió simplificada del joc "4 en Ratlla" utilitzant HTML i PHP. El joc ha de permetre als jugadors introduir els seus moviments i mostrar l'estat actual de la graella. No és necessari mantenir l'estat del joc entre sol·licituds ni comprovar si hi ha un guanyador en aquesta fase inicial.
+
+**Requisits:**
+1. **Inicialització de la Graella**:
+    - Crea una funció `inicialitzarGraella()` que inicialitzi una graella buida de 6 files i 7 columnes.
+2. **Pintar la Graella**:
+    - Crea una funció `pintarGraella($graella)` que pinti la graella en HTML. Utilitza diferents colors per a les fitxes dels jugadors.
+3. **Realitzar Moviments**:
+    - Crea una funció `ferMoviment(&$graella, $columna, $jugadorActual)` que realitzi un moviment en la columna especificada pel jugador actual.
+4. **Interfície d'Usuari**:
+    - Crea una taula HTML per mostrar l'estat actual de la graella.
+    - Crea un formulari HTML que permeti als jugadors introduir la columna on volen posar la seua fitxa. Aquest formulari ha de mantenir el jugador actual entre sol·licituds.
+
+**Codi CSS Proporcionat**:
+
+```css
+table { border-collapse: collapse; }
+td { width: 50px; height: 50px; text-align: center; vertical-align: middle; border: 1px solid black; }
+.player1 { background-color: red; }
+.player2 { background-color: yellow; }
+```
