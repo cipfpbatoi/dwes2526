@@ -2,13 +2,14 @@
 
 ??? abstract "Duració i criteris d'avaluació"
 
-    Duració estimada: 10 hores
+    Duració estimada: 20 hores
 
     <hr />
 
     | Resultat d'aprenentatge | Criteris d'avaluació|
     | -------                 | -------             |
     | 2. Escriu sentències executables per un servidor Web reconeixent i aplicant procediments d'integració del codi en llenguatges de marques. | a) S'han reconegut els mecanismes de generació de pàgines Web a partir de llenguatges de marques amb codi embegut. <br/> b) S'han identificat les principals tecnologies associades.  <br/> c) S'han utilitzat etiquetes per a la inclusió de codi en el llenguatge de marques.  <br/> d) S'ha reconegut la sintaxi del llenguatge de programació que s'ha d'utilitzar.  <br/> e) S'han escrit sentències simples i s'ha comprovat els seus efectes en el document resultant.  <br/> f) S'han utilitzat directives per a modificar el comportament predeterminat.  <br/> g) S'han utilitzat els diferents tipus de variables i operadors disponibles en el llenguatge.  <br/> h) S'han identificat els àmbits d'utilització de les variables.  <br/> |
+    | 3. Genera pàgines web de forma dinàmica seguint especificacions rebudes. | a) S'han identificat els mecanismes de separació de la lògica de negoci.<br/>b) S'han utilitzat tecnologies adequades per a la generació dinàmica de pàgines web.<br/>c) S'han utilitzat tècniques d'accés a dades.<br/>d) S'han generat pàgines web dinàmiques que compleixen amb les especificacions rebudes.<br/>e) S'ha comprovat el funcionament de les pàgines web generades.<br/>f) S'han seguit les convencions de format i codificació establertes. |
 
 
 
@@ -1056,7 +1057,7 @@ echo "El resultat de $a $operacio $b és $resultat.";  // Sortida: El resultat d
 1.  Crea un formulari en HTML que permeta als usuaris introduir la seva adreça de correu electrònic i un missatge. Després de l'enviament del formulari, crea una pàgina PHP que processe les dades introduïdes, comprove que l'adreça de correu electrònic és vàlida i mostre el missatge introduït per l'usuari.
 
 <details>
-<sumary>Solució</sumary>
+<summary>Solució</summary>
     
 ```php
 <!DOCTYPE html>
@@ -1233,30 +1234,30 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 
 Assigna múltiples variables i utilitza operadors aritmètics i lògics. Mostra el resultat de cada operació.
 
-#### Exercici 2: Utilitzant `match` per a categoritzar
-
-Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
-    - Si la nota és 10, imprimir "Excel·lent".
-    - Si la nota és 8 o 9, imprimir "Molt bé".
-    - Si la nota és 5, 6 o 7, imprimir "Bé".
-    - Per qualsevol altra nota, imprimir "Insuficient".
-
-#### Exercici 3: Control de Flux amb Bucles
+#### Exercici 2: Control de Flux amb Bucles
 
 Utilitza un bucle `for` per imprimir els números parells del 0 al 20.
 Fes-ho també amb un bucle `while`.
 
-#### Exercici 4: Treballar amb Arrays i Funcions
+#### Exercici 3: Treballar amb Arrays i Funcions
 
 Escriu una funció que prenga un array de números, calculi la mitjana i retorni el resultat. Utilitza aquesta funció per imprimir la mitjana d'un array de cinc números.
 
-#### Exercici 5: Manipulació de Strings
+#### Exercici 4: Manipulació de Strings
 
 Escriu un script que prenga una cadena de text i compti el nombre de vocals. Imprimeix el resultat.
 
-#### Exercici 6: Arrays Multidimensionals
+#### Exercici 5: Arrays Multidimensionals
 
 Crea un array multidimensional que represente una taula de multiplicar del 1 al 5 i imprimeix els resultats en forma de taula.
+
+#### Exercici 6: Utilitzant `match` per a categoritzar
+
+Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
+- Si la nota és 10, imprimir "Excel·lent".
+- Si la nota és 8 o 9, imprimir "Molt bé".
+- Si la nota és 5, 6 o 7, imprimir "Bé".
+- Per qualsevol altra nota, imprimir "Insuficient".
 
 #### Exercici 7: Validació de Formularis
 
@@ -1286,18 +1287,18 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 1. **Paraula a Endevinar:**
     - Defineix una paraula predefinida a endevinar.
 2. **Inicialització de les Lletres Endevinades:**
-   - Crea un array amb guions baixos per representar les lletres que l'usuari ha de trobar.
+    - Crea un array amb guions baixos per representar les lletres que l'usuari ha de trobar.
 3. **Funció per a Comprovar Intents:**
-   - Crea una funció en PHP que prengui la paraula a endevinar, la lletra introduïda per l'usuari i l'array de lletres endevinades (passat per referència).
-   - La funció ha de comprovar si la lletra introduïda per l'usuari forma part de la paraula.
-   - Si la lletra és correcta, la funció substituirà els guions baixos per la lletra corresponent.
-   - La funció retornarà un valor booleà que indiqui si la lletra és correcta o no.
+    - Crea una funció en PHP que prenga la paraula a endevinar, la lletra introduïda per l'usuari i l'array de lletres endevinades (passat per referència).
+    - La funció ha de comprovar si la lletra introduïda per l'usuari forma part de la paraula.
+    - Si la lletra és correcta, la funció substituirà els guions baixos per la lletra corresponent.
+    - La funció retornarà un valor booleà que indique si la lletra és correcta o no.
 4. **Comprovació d'Intents:**
-   - Utilitza la funció creada per comprovar si la lletra introduïda per l'usuari forma part de la paraula.
-   - Mostra un missatge d'error si la lletra no és correcta.
+    - Utilitza la funció creada per comprovar si la lletra introduïda per l'usuari forma part de la paraula.
+    - Mostra un missatge d'error si la lletra no és correcta.
 5. **Interfície d'Usuari:**
-   - Mostra les lletres endevinades fins al moment.
-   - Crea un formulari HTML que permeti als jugadors introduir una lletra.
+    - Mostra les lletres endevinades fins al moment.
+    - Crea un formulari HTML que permeta als jugadors introduir una lletra.
 
 **Codi CSS Proporcionat**:
 
