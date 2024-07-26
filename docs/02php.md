@@ -1157,7 +1157,7 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 1. Crea un formulari en HTML que permeti als usuaris pujar un fitxer i seleccionar una opció d'un checkbox. Les opcions del checkbox han de ser carregades des d'un array predefinit en PHP. Després de l'enviament del formulari, el fitxer pujat ha de ser processat i mogut a una ubicació específica del servidor, i s'ha de mostrar la informació del fitxer i l'opció seleccionada.
 
 <details>
-<sumary>Solució</sumary>
+<summary>Solució</summary>
 
 ```php
 
@@ -1231,47 +1231,48 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 
 #### Exercici 1: Manipulació de Variables i Operadors
 
-    Assigna múltiples variables i utilitza operadors aritmètics i lògics. Mostra el resultat de cada operació.
+Assigna múltiples variables i utilitza operadors aritmètics i lògics. Mostra el resultat de cada operació.
 
 #### Exercici 2: Utilitzant `match` per a categoritzar
-    Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
-        - Si la nota és 10, imprimir "Excel·lent".
-        - Si la nota és 8 o 9, imprimir "Molt bé".
-        - Si la nota és 5, 6 o 7, imprimir "Bé".
-        - Per qualsevol altra nota, imprimir "Insuficient".
+
+Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
+    - Si la nota és 10, imprimir "Excel·lent".
+    - Si la nota és 8 o 9, imprimir "Molt bé".
+    - Si la nota és 5, 6 o 7, imprimir "Bé".
+    - Per qualsevol altra nota, imprimir "Insuficient".
 
 #### Exercici 3: Control de Flux amb Bucles
 
-    Utilitza un bucle `for` per imprimir els números parells del 0 al 20.
-    Fes-ho també amb un bucle `while`.
+Utilitza un bucle `for` per imprimir els números parells del 0 al 20.
+Fes-ho també amb un bucle `while`.
 
 #### Exercici 4: Treballar amb Arrays i Funcions
 
-    Escriu una funció que prenga un array de números, calculi la mitjana i retorni el resultat. Utilitza aquesta funció per imprimir la mitjana d'un array de cinc números.
+Escriu una funció que prenga un array de números, calculi la mitjana i retorni el resultat. Utilitza aquesta funció per imprimir la mitjana d'un array de cinc números.
 
 #### Exercici 5: Manipulació de Strings
 
-    Escriu un script que prenga una cadena de text i compti el nombre de vocals. Imprimeix el resultat.
+Escriu un script que prenga una cadena de text i compti el nombre de vocals. Imprimeix el resultat.
 
 #### Exercici 6: Arrays Multidimensionals
 
-    Crea un array multidimensional que represente una taula de multiplicar del 1 al 5 i imprimeix els resultats en forma de taula.
+Crea un array multidimensional que represente una taula de multiplicar del 1 al 5 i imprimeix els resultats en forma de taula.
 
 #### Exercici 7: Validació de Formularis
 
-    Crea un formulari en HTML que permetis als usuaris introduir el seu nom i correu electrònic. Després de l'enviament del formulari, valida que tots els camps han estat completats i que el correu electrònic és vàlid. Mostra un missatge d'error si alguna validació falla, i si tot és correcte, mostra un missatge confirmant que el formulari s'ha enviat correctament.
+Crea un formulari en HTML que permetis als usuaris introduir el seu nom i correu electrònic. Després de l'enviament del formulari, valida que tots els camps han estat completats i que el correu electrònic és vàlid. Mostra un missatge d'error si alguna validació falla, i si tot és correcte, mostra un missatge confirmant que el formulari s'ha enviat correctament.
 
 #### Exercici 8: Processament de Formularis amb Select
 
-    Crea un formulari en HTML que permetis als usuaris seleccionar el seu idioma preferit d'una llista desplegable (`select`) que conté les opcions: "Valencià", "Castellà", "Anglés" i "Francés". Després de l'enviament del formulari, mostra un missatge que indiqui l'idioma seleccionat per l'usuari.
+Crea un formulari en HTML que permetis als usuaris seleccionar el seu idioma preferit d'una llista desplegable (`select`) que conté les opcions: "Valencià", "Castellà", "Anglés" i "Francés". Després de l'enviament del formulari, mostra un missatge que indiqui l'idioma seleccionat per l'usuari.
 
 #### Exercici 9: Càlcul de la Mitjana
 
-    Crea un formulari en HTML que permetis als usuaris introduir tres números. Després de l'enviament del formulari, processa els números introduïts per l'usuari en PHP i mostra la mitjana dels tres números.
+Crea un formulari en HTML que permetis als usuaris introduir tres números. Després de l'enviament del formulari, processa els números introduïts per l'usuari en PHP i mostra la mitjana dels tres números.
 
 #### Exercici 10: Tractament de Dades amb Radio Buttons
 
-    Crea un formulari en HTML que permetis als usuaris seleccionar el seu gènere utilitzant botons de ràdio (`radio buttons`) amb les opcions "Home" i "Dona". Després de l'enviament del formulari, processa les dades en PHP i mostra un missatge que indiqui el gènere seleccionat per l'usuari.
+Crea un formulari en HTML que permetis als usuaris seleccionar el seu gènere utilitzant botons de ràdio (`radio buttons`) amb les opcions "Home" i "Dona". Després de l'enviament del formulari, processa les dades en PHP i mostra un missatge que indiqui el gènere seleccionat per l'usuari.
 
 ## 20. Enunciats dels Projectes
 
