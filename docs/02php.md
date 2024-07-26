@@ -1282,25 +1282,25 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 
 **Requisits:**
 
-    1. **Paraula a Endevinar:**
-        - Defineix una paraula predefinida a endevinar.
+1. **Paraula a Endevinar:**
+    - Defineix una paraula predefinida a endevinar.
 
-    2. **Inicialització de les Lletres Endevinades:**
-       - Crea un array amb guions baixos per representar les lletres que l'usuari ha de trobar.
+2. **Inicialització de les Lletres Endevinades:**
+   - Crea un array amb guions baixos per representar les lletres que l'usuari ha de trobar.
 
-    3. **Funció per a Comprovar Intents:**
-       - Crea una funció en PHP que prengui la paraula a endevinar, la lletra introduïda per l'usuari i l'array de lletres endevinades (passat per referència).
-       - La funció ha de comprovar si la lletra introduïda per l'usuari forma part de la paraula.
-       - Si la lletra és correcta, la funció substituirà els guions baixos per la lletra corresponent.
-       - La funció retornarà un valor booleà que indiqui si la lletra és correcta o no.
+3. **Funció per a Comprovar Intents:**
+   - Crea una funció en PHP que prengui la paraula a endevinar, la lletra introduïda per l'usuari i l'array de lletres endevinades (passat per referència).
+   - La funció ha de comprovar si la lletra introduïda per l'usuari forma part de la paraula.
+   - Si la lletra és correcta, la funció substituirà els guions baixos per la lletra corresponent.
+   - La funció retornarà un valor booleà que indiqui si la lletra és correcta o no.
 
-    4. **Comprovació d'Intents:**
-       - Utilitza la funció creada per comprovar si la lletra introduïda per l'usuari forma part de la paraula.
-       - Mostra un missatge d'error si la lletra no és correcta.
+4. **Comprovació d'Intents:**
+   - Utilitza la funció creada per comprovar si la lletra introduïda per l'usuari forma part de la paraula.
+   - Mostra un missatge d'error si la lletra no és correcta.
 
-    5. **Interfície d'Usuari:**
-       - Mostra les lletres endevinades fins al moment.
-       - Crea un formulari HTML que permeti als jugadors introduir una lletra.
+5. **Interfície d'Usuari:**
+   - Mostra les lletres endevinades fins al moment.
+   - Crea un formulari HTML que permeti als jugadors introduir una lletra.
 
 **Codi CSS Proporcionat**:
 
@@ -1315,6 +1315,7 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 Implementa una versió simplificada del joc "4 en Ratlla" utilitzant HTML i PHP. El joc ha de permetre als jugadors introduir els seus moviments i mostrar l'estat actual de la graella. No és necessari mantenir l'estat del joc entre sol·licituds ni comprovar si hi ha un guanyador en aquesta fase inicial.
 
 **Requisits:**
+
 1. **Inicialització de la Graella**:
     - Crea una funció `inicialitzarGraella()` que inicialitze una graella buida de 6 files i 7 columnes.
 2. **Pintar la Graella**:
