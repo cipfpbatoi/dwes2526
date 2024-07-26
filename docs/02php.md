@@ -749,7 +749,7 @@ header("Content-Type: application/force-download");
 header("Content-Type: application/json");
 ```
 
-## Referències
+## 18. Referències
 
 * [Manual de PHP](https://www.php.net/manual/es/index.php)
 * [PHP en 2020](https://www.jesusamieiro.com/wp-content/uploads/2020/10/20201024-hacktoberday-PHP-en-2020.pdf), por Jesús Amieiro
@@ -757,7 +757,7 @@ header("Content-Type: application/json");
 * [Guía de Estilo - PSR](http://coppeldev.github.io/php/standards/coppel.html)
 * [PHP - La manera correcta](http://phpdevenezuela.github.io/php-the-right-way/)
 
-## Exercicis 
+## 19. Exercicis 
 
 ### Bateria d'Exercicis Solucionats per a la Unitat de PHP
 
@@ -1158,8 +1158,9 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 
 <details>
 <sumary>Solució</sumary>
-        
+
 ```php
+
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -1226,50 +1227,53 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 ```
 </details>
 
-
-
 ### Exercicis proposats
 
 #### Exercici 1: Manipulació de Variables i Operadors
-1. Assigna múltiples variables i utilitza operadors aritmètics i lògics. Mostra el resultat de cada operació.
+
+    Assigna múltiples variables i utilitza operadors aritmètics i lògics. Mostra el resultat de cada operació.
 
 #### Exercici 2: Utilitzant `match` per a categoritzar
-1. Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
-    - Si la nota és 10, imprimir "Excel·lent".
-    - Si la nota és 8 o 9, imprimir "Molt bé".
-    - Si la nota és 5, 6 o 7, imprimir "Bé".
-    - Per qualsevol altra nota, imprimir "Insuficient".
+    Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
+        - Si la nota és 10, imprimir "Excel·lent".
+        - Si la nota és 8 o 9, imprimir "Molt bé".
+        - Si la nota és 5, 6 o 7, imprimir "Bé".
+        - Per qualsevol altra nota, imprimir "Insuficient".
 
 #### Exercici 3: Control de Flux amb Bucles
-1. Utilitza un bucle `for` per imprimir els números parells del 0 al 20.
-2. Fes-ho també amb un bucle `while`.
+
+    Utilitza un bucle `for` per imprimir els números parells del 0 al 20.
+    Fes-ho també amb un bucle `while`.
 
 #### Exercici 4: Treballar amb Arrays i Funcions
-1. Escriu una funció que prenga un array de números, calculi la mitjana i retorni el resultat. Utilitza aquesta funció per imprimir la mitjana d'un array de cinc números.
+
+    Escriu una funció que prenga un array de números, calculi la mitjana i retorni el resultat. Utilitza aquesta funció per imprimir la mitjana d'un array de cinc números.
 
 #### Exercici 5: Manipulació de Strings
-1. Escriu un script que prenga una cadena de text i compti el nombre de vocals. Imprimeix el resultat.
+
+    Escriu un script que prenga una cadena de text i compti el nombre de vocals. Imprimeix el resultat.
 
 #### Exercici 6: Arrays Multidimensionals
-1. Crea un array multidimensional que represente una taula de multiplicar del 1 al 5 i imprimeix els resultats en forma de taula.
+
+    Crea un array multidimensional que represente una taula de multiplicar del 1 al 5 i imprimeix els resultats en forma de taula.
 
 #### Exercici 7: Validació de Formularis
 
-1. Crea un formulari en HTML que permetis als usuaris introduir el seu nom i correu electrònic. Després de l'enviament del formulari, valida que tots els camps han estat completats i que el correu electrònic és vàlid. Mostra un missatge d'error si alguna validació falla, i si tot és correcte, mostra un missatge confirmant que el formulari s'ha enviat correctament.
+    Crea un formulari en HTML que permetis als usuaris introduir el seu nom i correu electrònic. Després de l'enviament del formulari, valida que tots els camps han estat completats i que el correu electrònic és vàlid. Mostra un missatge d'error si alguna validació falla, i si tot és correcte, mostra un missatge confirmant que el formulari s'ha enviat correctament.
 
 #### Exercici 8: Processament de Formularis amb Select
 
-1. Crea un formulari en HTML que permetis als usuaris seleccionar el seu idioma preferit d'una llista desplegable (`select`) que conté les opcions: "Valencià", "Castellà", "Anglés" i "Francés". Després de l'enviament del formulari, mostra un missatge que indiqui l'idioma seleccionat per l'usuari.
+    Crea un formulari en HTML que permetis als usuaris seleccionar el seu idioma preferit d'una llista desplegable (`select`) que conté les opcions: "Valencià", "Castellà", "Anglés" i "Francés". Després de l'enviament del formulari, mostra un missatge que indiqui l'idioma seleccionat per l'usuari.
 
 #### Exercici 9: Càlcul de la Mitjana
 
-1. Crea un formulari en HTML que permetis als usuaris introduir tres números. Després de l'enviament del formulari, processa els números introduïts per l'usuari en PHP i mostra la mitjana dels tres números.
+    Crea un formulari en HTML que permetis als usuaris introduir tres números. Després de l'enviament del formulari, processa els números introduïts per l'usuari en PHP i mostra la mitjana dels tres números.
 
 #### Exercici 10: Tractament de Dades amb Radio Buttons
 
-1. Crea un formulari en HTML que permetis als usuaris seleccionar el seu gènere utilitzant botons de ràdio (`radio buttons`) amb les opcions "Home" i "Dona". Després de l'enviament del formulari, processa les dades en PHP i mostra un missatge que indiqui el gènere seleccionat per l'usuari.
+    Crea un formulari en HTML que permetis als usuaris seleccionar el seu gènere utilitzant botons de ràdio (`radio buttons`) amb les opcions "Home" i "Dona". Després de l'enviament del formulari, processa les dades en PHP i mostra un missatge que indiqui el gènere seleccionat per l'usuari.
 
-## Enunciats dels Projectes
+## 20. Enunciats dels Projectes
 
 ### Projecte "L'Ofegat"
 
@@ -1277,17 +1281,26 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El joc ha de permetre als jugadors endevinar les lletres d'una paraula predefinida i mostrar l'estat actual de les lletres endevinades. No és necessari mantenir l'estat del joc entre sol·licituds ni comprovar si s'han esgotat els intents en aquesta fase inicial.
 
 **Requisits:**
-1. **Paraula a Endevinar**:
-    - Defineix una paraula predefinida a endevinar.
-2. **Inicialització de les Lletres Endevinades**:
-    - Crea un array amb guions baixos per representar les lletres que l'usuari ha de trobar.
-3. **Comprovació d'Intents**:
-    - Comprova si la lletra introduïda per l'usuari forma part de la paraula.
-    - Substitueix els guions baixos per la lletra corresponent si és correcte.
-    - Mostra un missatge d'error si la lletra no és correcta.
-4. **Interfície d'Usuari**:
-    - Mostra les lletres endevinades fins al moment.
-    - Crea un formulari HTML que permeti als jugadors introduir una lletra.
+
+    1. **Paraula a Endevinar:**
+        - Defineix una paraula predefinida a endevinar.
+
+    2. **Inicialització de les Lletres Endevinades:**
+       - Crea un array amb guions baixos per representar les lletres que l'usuari ha de trobar.
+
+    3. **Funció per a Comprovar Intents:**
+       - Crea una funció en PHP que prengui la paraula a endevinar, la lletra introduïda per l'usuari i l'array de lletres endevinades (passat per referència).
+       - La funció ha de comprovar si la lletra introduïda per l'usuari forma part de la paraula.
+       - Si la lletra és correcta, la funció substituirà els guions baixos per la lletra corresponent.
+       - La funció retornarà un valor booleà que indiqui si la lletra és correcta o no.
+
+    4. **Comprovació d'Intents:**
+       - Utilitza la funció creada per comprovar si la lletra introduïda per l'usuari forma part de la paraula.
+       - Mostra un missatge d'error si la lletra no és correcta.
+
+    5. **Interfície d'Usuari:**
+       - Mostra les lletres endevinades fins al moment.
+       - Crea un formulari HTML que permeti als jugadors introduir una lletra.
 
 **Codi CSS Proporcionat**:
 
@@ -1303,14 +1316,14 @@ Implementa una versió simplificada del joc "4 en Ratlla" utilitzant HTML i PHP.
 
 **Requisits:**
 1. **Inicialització de la Graella**:
-    - Crea una funció `inicialitzarGraella()` que inicialitzi una graella buida de 6 files i 7 columnes.
+    - Crea una funció `inicialitzarGraella()` que inicialitze una graella buida de 6 files i 7 columnes.
 2. **Pintar la Graella**:
-    - Crea una funció `pintarGraella($graella)` que pinti la graella en HTML. Utilitza diferents colors per a les fitxes dels jugadors.
+    - Crea una funció `pintarGraella($graella)` que pinte la graella en HTML. Utilitza diferents colors per a les fitxes dels jugadors.
 3. **Realitzar Moviments**:
-    - Crea una funció `ferMoviment(&$graella, $columna, $jugadorActual)` que realitzi un moviment en la columna especificada pel jugador actual.
+    - Crea una funció `ferMoviment(&$graella, $columna, $jugadorActual)` que realitze un moviment en la columna especificada pel jugador actual.
 4. **Interfície d'Usuari**:
     - Crea una taula HTML per mostrar l'estat actual de la graella.
-    - Crea un formulari HTML que permeti als jugadors introduir la columna on volen posar la seua fitxa. Aquest formulari ha de mantenir el jugador actual entre sol·licituds.
+    - Crea un formulari HTML que permeta als jugadors introduir la columna on volen posar la seua fitxa. Aquest formulari ha de mantenir el jugador actual entre sol·licituds.
 
 **Codi CSS Proporcionat**:
 
