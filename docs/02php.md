@@ -314,8 +314,7 @@ $result = match ($variable) {
     default => valorPerDefecte,
 };
 ```
-
-** Diferències amb switch**
+**Diferències amb switch**
 
     1. **Comparació estricta**: `match` utilitza comparació estricta (===) per comparar els valors.
     2. **Retorna un valor**: `match` és una expressió, la qual cosa significa que retorna un valor.
@@ -396,7 +395,7 @@ foreach ($fruites as $fruita) {
 Per a emmagatzemar dades compostes, podem utilitzar tant arrays senzills com arrays associatius (similars a un mapa). En realitat tots els arrays són mapes ordenats compostos de parells clau-valor.
 
 !!! caution "Compte amb mesclar tipus"
-Com el tipat és dinàmic, nostres arrays poden contenir dades de diferents tipus. No es recomana mesclar els tipus.
+    Com el tipat és dinàmic, nostres arrays poden contenir dades de diferents tipus. No es recomana mesclar els tipus.
 
 De la mateixa manera que Java, es defineixen mitjançant claudàtors, són 0-index, i es pot assignar un valor a un posició determinada:
 
