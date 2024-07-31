@@ -2,13 +2,13 @@
 
 ??? abstract "Duració i criteris d'evaluació"
 
-    Duració estimada: 16 hores
+    Duració estimada: 10 hores
 
     <hr />
 
     | Resultat d'aprenentatge  | Criteris d'avaluació  |
     | ------                    | -----                |
-    | 4. Desenvolupa aplicacions Web embegudes en llenguatges de marques analitzant i incorporant funcionalitats segons especificacions     |  a) S'han identificat els mecanismes disponibles per al manteniment de la informació que concerneix a un client Web concret i s'han assenyalat els seus avantatges.<br /> b) S'han utilitzat sessions per a mantenir l'estat de les aplicacions Web. <br /> c) S'han utilitzat *cookies* per a emmagatzemar informació en el client Web i per a recuperar el seu contingut.  <br /> d) S'han identificat i caracteritzat els mecanismes disponibles per a l'autenticació d'usuaris. <br /> e) S'han escrit aplicacions que integren mecanismes d'autenticació d'usuaris.  <br /> f) S'han realitzat adaptacions a aplicacions Web existents com a gestors de continguts o unes altres.  <br /> g) S'han utilitzat eines i entorns per a facilitar la programació, prova i depuració del codi. |
+    | 4. Desenvolupa aplicacions Web embegudes en llenguatges de marques analitzant i incorporant funcionalitats segons especificacions | a) S'han identificat els mecanismes disponibles per al manteniment de la informació que concerneix un client web concret i s'han assenyalat els seus avantatges.<br /> b) S'han utilitzat mecanismes per a mantindre l'estat de les aplicacions web.<br /> c) S'han utilitzat mecanismes per a emmagatzemar informació en el client web i per a recuperar el seu contingut.<br /> d) S'han identificat i caracteritzat els mecanismes disponibles per a l'autenticació d'usuaris.<br /> e) S'han escrit aplicacions que integren mecanismes d'autenticació d'usuaris.<br /> f) S'han utilitzat eines i entorns per a facilitar la programació, prova i depuració del codi. |
 
 
 
@@ -199,6 +199,20 @@ Consideracions de Seguretat:
 És crucial entendre que la funció unserialize() pot ser perillosa si s'usa amb dades que no són de confiança, ja que podria portar a l'execució de codi arbitrari. Per això, mai has de deserialitzar dades que vinguen d'una font desconeguda o no fiable sense validar-les prèviament.
 
 ## Autenticació d'usuaris
+
+### Mecanismes d'Autenticació d'Usuaris
+
+| Mecanisme d'Autenticació | Característiques | Avantatges |
+| ------------------------- | ---------------- | ---------- |
+| **Bàsica (usuari/contrasenya)** | Es requereix un nom d'usuari i una contrasenya per accedir. | Fàcil d'implementar, àmpliament utilitzada. |
+| **Cookies** | Emmagatzema informació d'autenticació en el navegador de l'usuari. | Persistència d'inici de sessió, personalització d'experiència. |
+| **Sessions** | Manté l'estat d'autenticació en el servidor amb una identificació de sessió única. | Major seguretat, evita la necessitat d'emmagatzemar informació sensible al client. |
+| **OAuth** | Permet als usuaris accedir a recursos sense compartir les seves credencials. | Seguretat millorada, experiència d'usuari simplificada. |
+| **JWT (JSON Web Token)** | Utilitza tokens basats en JSON per a l'autenticació. | Lliure d'estat, fàcil de compartir entre diferents serveis. |
+| **SAML (Security Assertion Markup Language)** | Utilitza XML per a intercanviar dades d'autenticació entre l'usuari i el servei. | Integració amb sistemes d'autenticació empresarial, alt nivell de seguretat. |
+| **Autenticació multifactor (MFA)** | Requereix múltiples formes de verificació (per exemple, contrasenya + codi SMS). | Seguretat augmentada, redueix el risc de compromís de comptes. |
+
+#### Exemple amb sessions
 
 Una sessió estableix una relació anònima amb un usuari particular, de manera que podem saber si és el mateix usuari entre dues peticions diferents. Si preparem un sistema de login, podrem saber qui utilitza la nostra aplicació.
 
