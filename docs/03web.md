@@ -12,11 +12,142 @@
 
 
 
-## Gestió de l'estat
+## Mecanismes per al Manteniment de la Informació en Aplicacions Web
 
-HTTP és un protocol **stateless**, sense estat. Per això, se simula l'estat mitjançant l'ús de cookies, tokens o la sessió. L'estat és necessari per a processos com ara el carret de la compra, operacions associades a un usuari, etc...
-El mecanisme de PHP per a gestionar la sessió empra cookies de manera interna.
-Les cookies s'emmagatzemen en el navegador, i la sessió en el servidor web.
+HTTP és un protocol **stateless**, sense estat. En les aplicacions web modernes, és essencial gestionar l'estat del client per proporcionar una experiència d'usuari fluida i personalitzada.
+Per això, se simula l'estat mitjançant l'ús de cookies, tokens o la sessió. L'estat és necessari per a processos com ara el carret de la compra, operacions associades a un usuari, etc... 
+A continuació es detallen diversos mecanismes per mantenir aquesta informació, així com els seus avantatges i desavantatges.
+
+### Cookies
+
+Les **cookies** són petits fitxers de text emmagatzemats al navegador de l'usuari. Són àmpliament utilitzades per mantenir l'estat del client entre sol·licituds HTTP, ja que HTTP és un protocol sense estat.
+
+#### Avantatges de les Cookies
+
+- **Persistència**: Les cookies poden mantenir-se durant períodes llargs definits per l'atribut `expires` o `max-age`.
+- **Accessibilitat**: Es poden accedir des de qualsevol pàgina del mateix domini.
+- **Simplicitat**: Fàcils d'implementar i gestionar.
+
+#### Desavantatges de les Cookies
+
+- **Seguretat**: Poden ser objectiu d'atacs com **XSS (Cross-Site Scripting)** si no es gestionen correctament.
+- **Limitacions de mida**: Les cookies estan limitades a 4KB de dades.
+- **Privadesa**: Les dades de l'usuari poden ser vulnerables si no es protegeixen adequadament.
+
+#### Millors Pràctiques
+
+- Utilitzar l'atribut `HttpOnly` per evitar l'accés a les cookies des de JavaScript.
+- Configurar `SameSite` per prevenir atacs CSRF.
+- Emmagatzemar únicament informació essencial i no sensible.
+
+### Sessions
+
+Les **sessions** són un mecanisme que permet associar dades a un usuari durant una sessió específica. Aquestes dades s'emmagatzemen al servidor, mentre que el client només guarda un identificador de sessió.
+
+#### Avantatges de les Sessions
+
+- **Seguretat**: Les dades sensibles es mantenen al servidor.
+- **Capacitat d'emmagatzematge**: No limitades per la mida de les cookies.
+- **Compartició de dades**: Facilita la compartició d'estat entre diferents components d'una aplicació web.
+
+#### Desavantatges de les Sessions
+
+- **Escalabilitat**: Requereix memòria addicional al servidor, la qual cosa pot ser problemàtica amb molts usuaris.
+- **Persistència limitada**: Normalment només duren mentre el navegador està obert, tret que es configuri d'una altra manera.
+
+#### Millors Pràctiques
+
+- Emmagatzemar únicament referències o identificadors a la sessió.
+- Utilitzar eines com Redis per a una gestió eficient de sessions en entorns escalables.
+
+### Web Storage
+
+El **Web Storage** proporciona dos mecanismes per emmagatzemar dades al navegador del client: `localStorage` i `sessionStorage`.
+
+#### Avantatges del Web Storage
+
+- **Capacitat**: `localStorage` pot emmagatzemar fins a 5-10MB de dades.
+- **Persistència**: `localStorage` persisteix fins que s'elimina explícitament, mentre que `sessionStorage` persisteix durant la sessió de la pestanya.
+- **Facilitat d'ús**: API simple per emmagatzemar i recuperar dades.
+
+#### Desavantatges del Web Storage
+
+- **Seguretat**: Les dades emmagatzemades són accessibles per JavaScript, la qual cosa les fa vulnerables a atacs XSS.
+- **Compatibilitat**: No totes les característiques poden ser suportades per navegadors més antics.
+
+#### Millors Pràctiques
+
+- Utilitzar el `sessionStorage` per dades que no necessiten persistir entre pestanyes o sessions.
+- Minimitzar l'emmagatzematge de dades sensibles i xifrar-les si cal.
+
+### Tokens d'Autenticació
+
+Els **JSON Web Tokens (JWT)** són un estàndard obert que defineix una manera compacta i autònoma d'enviar informació entre dues parts de manera segura com a objecte JSON. S'utilitzen habitualment per a l'autenticació en aplicacions web.
+
+#### Avantatges dels JWT
+
+- **Estatut autònom**: Porten tota la informació necessària, eliminant la necessitat de mantenir sessions al servidor.
+- **Escalabilitat**: Milloren l'escalabilitat en aplicacions distribuïdes.
+- **Seguretat**: Es poden signar digitalment per assegurar la seva autenticitat.
+
+#### Desavantatges dels JWT
+
+- **Revocació complexa**: Una vegada emesos, és difícil revocar-los sense mantenir una llista negra.
+- **Sobrecarrega de dades**: Si els tokens són grans, poden afectar el rendiment, especialment en xarxes de baixa latència.
+
+#### Millors Pràctiques
+
+- Utilitzar signatura HS256 o RS256 per garantir la integritat del token.
+- No emmagatzemar dades sensibles directament al token.
+
+### Cache del Navegador
+
+El **cache del navegador** s'utilitza per emmagatzemar còpies temporals de recursos web per millorar el rendiment i reduir la càrrega del servidor.
+
+#### Avantatges del Cache
+
+- **Rendiment**: Redueix el temps de càrrega dels recursos.
+- **Optimització**: Disminueix l'ample de banda requerit.
+
+#### Desavantatges del Cache
+
+- **Consistència**: Pot servir dades obsoletes si no es gestiona correctament.
+- **Control**: Requereix configuració per evitar el caching indesitjat de dades dinàmiques.
+
+#### Millors Pràctiques
+
+- Configurar els encapçalaments HTTP correctament (`Cache-Control`, `ETag`) per gestionar l'actualització de recursos.
+
+### Sincronització Offline
+
+La **sincronització offline** es refereix a la capacitat d'una aplicació web de funcionar sense connexió a Internet, sincronitzant dades quan es recupera la connexió.
+
+#### Tècniques i Eines
+
+- **IndexedDB**: Emmagatzema grans volums de dades estructurades dins del navegador.
+- **Service Workers**: Gestionen peticions de xarxa, proporcionant funcionalitats offline i cache avançat.
+
+#### Millors Pràctiques
+
+- Gestionar conflictes de dades quan es torna a estar en línia.
+- Utilitzar estratègies de sincronització optimitzades per minimitzar l'ample de banda i el temps de sincronització.
+
+### Seguretat de les Cookies i Sessions
+
+La **seguretat** és fonamental en la gestió de cookies i sessions per protegir les dades dels usuaris de possibles atacs.
+
+#### Pràctiques de Seguretat
+
+- **CSRF**: Utilitzar tokens CSRF per validar sol·licituds d'accions sensibles.
+- **XSS**: Sanear les dades d'entrada i utilitzar capçaleres de seguretat (`Content-Security-Policy`) per prevenir XSS.
+- **Secure Flag**: Marcar les cookies amb l'atribut `Secure` perquè només s'enviïn a través de connexions HTTPS.
+
+#### Conclusió
+
+La selecció del mecanisme adequat per al manteniment de l'estat en una aplicació web depèn de les necessitats específiques de l'aplicació, el volum de dades, els requisits de seguretat i l'arquitectura del sistema. Avaluar cada tècnica pel que fa a avantatges i desavantatges ajudarà a prendre decisions informades i construir aplicacions web més segures i eficients.
+
+
+## Exemples de Cookies i Sessions en PHP
 
 ### Cookies
 
