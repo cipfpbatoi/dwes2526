@@ -184,7 +184,9 @@ Destacar que el nom no pot contindre espais ni el caràcter `;`. Respecte al con
 #### Consideracions de seguretat per a cookies:
 
 **HTTPOnly**: Assegura't que les cookies que contenen informació sensible no siguin accessibles per JavaScript utilitzant l'atribut HttpOnly.
+
 **Secure**: Utilitza l'atribut Secure per assegurar que les cookies només es transmeten en connexions HTTPS.
+
 **SameSite**: Defineix correctament l'atribut SameSite per a prevenir atacs CSRF (Cross-Site Request Forgery).
 
 
