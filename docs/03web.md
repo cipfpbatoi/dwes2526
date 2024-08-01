@@ -60,25 +60,31 @@ Les **sessions** són un mecanisme que permet associar dades a un usuari durant 
 - Emmagatzemar únicament referències o identificadors a la sessió.
 - Utilitzar eines com Redis per a una gestió eficient de sessions en entorns escalables.
 
-### Web Storage
+### Web Storage (Opcional)
 
-El **Web Storage** proporciona dos mecanismes per emmagatzemar dades al navegador del client: `localStorage` i `sessionStorage`.
+El **Web Storage** és una API del navegador que permet emmagatzemar dades al client de manera més senzilla i amb més capacitat que les cookies tradicionals. Inclou dos mecanismes principals: `localStorage` i `sessionStorage`.
 
-#### Avantatges del Web Storage
+#### Característiques del Web Storage
 
-- **Capacitat**: `localStorage` pot emmagatzemar fins a 5-10MB de dades.
-- **Persistència**: `localStorage` persisteix fins que s'elimina explícitament, mentre que `sessionStorage` persisteix durant la sessió de la pestanya.
-- **Facilitat d'ús**: API simple per emmagatzemar i recuperar dades.
+- **`localStorage`**: Permet emmagatzemar dades que persisteixen fins que s'elimina explícitament, fins i tot després de tancar el navegador.
+- **`sessionStorage`**: Les dades es mantenen només durant la sessió del navegador i s'esborren quan es tanca la pestanya o finestra.
 
-#### Desavantatges del Web Storage
+#### Avantatges
 
-- **Seguretat**: Les dades emmagatzemades són accessibles per JavaScript, la qual cosa les fa vulnerables a atacs XSS.
-- **Compatibilitat**: No totes les característiques poden ser suportades per navegadors més antics.
+- **Capacitat d'Emmagatzematge**: Ofereix més espai (fins a 5-10MB) que les cookies.
+- **API Simple**: Proporciona una interfície senzilla per emmagatzemar i recuperar dades.
 
-#### Millors Pràctiques
+#### Usos Comuns
 
-- Utilitzar el `sessionStorage` per dades que no necessiten persistir entre pestanyes o sessions.
-- Minimitzar l'emmagatzematge de dades sensibles i xifrar-les si cal.
+- **Manteniment de l'Estat del Client**: Pot guardar dades de sessió i preferències de l'usuari que no cal enviar al servidor.
+- **Sincronització amb l'Entorn Servidor**: Es pot utilitzar per emmagatzemar dades que després es sincronitzen amb el servidor, millorant el rendiment i l'experiència d'usuari.
+
+#### Consideracions de Seguretat
+
+- **Accessibilitat**: Les dades són accessibles per JavaScript, per la qual cosa s'ha de tenir cura amb les vulnerabilitats XSS.
+- **Dades Sensibles**: Evita emmagatzemar dades sensibles o confidencials.
+
+Tot i que **Web Storage** s'executa al costat del client, entendre les seves funcionalitats pot ajudar els desenvolupadors del servidor a dissenyar sistemes més robustos i eficaços, on la cooperació entre client i servidor maximitza l'eficiència de l'aplicació web.
 
 ### Tokens d'Autenticació
 
