@@ -216,96 +216,55 @@ Consideracions de Seguretat:
 
 Una sessió estableix una relació anònima amb un usuari particular, de manera que podem saber si és el mateix usuari entre dues peticions diferents. Si preparem un sistema de login, podrem saber qui utilitza la nostra aplicació.
 
-Per a això, preparem un senzill sistema d'autenticació:
-
-* Mostrar el formulari login/password
-* Comprovar les dades enviades
-* Afegir el login a la sessió
-* Comprovar el login en la sessió per a fer tasques específiques de l'usuari
-* Eliminar el login de la sessió quan l'usuari la tanca.
-
-Veurem en codi cada pas del procés. Comencem amb l'arxiu `index.php`:
-``` html
-<form action='login.php' method='post'>
-  <fieldset>
-    <legend>Login</legend>
-    <div><span class='error'><?php echo $error; ?></span></div>
-    <div class='fila'>
-        <label for='usuario'>Usuario:</label><br />
-        <input type='text' name='inputUsuario' id='usuario' maxlength="50" /><br />
-    </div>
-    <div class='fila'>
-        <label for='password'>Contraseña:</label><br />
-        <input type='password' name='inputPassword' id='password' maxlength="50" /><br />
-    </div>
-    <div class='fila'>
-        <input type='submit' name='enviar' value='Enviar' />
-    </div>
-  </fieldset>
-  </form>
-```
-
-En fer *submit* ens porta a `login.php`, el qual fa de controlador:
-
 ``` php
 <?php
-// Comprobamos si ya se ha enviado el formulario
-if (isset($_POST['enviar'])) {
-    $usuario = $_POST['inputUsuario'];
-    $password = $_POST['inputPassword'];
+// Llista d'usuaris predefinits amb contrasenyes en text pla
+$users = [
+    'user1@example.com' => 'password1',
+    'user2@example.com' => 'password2',
+];
 
-    // validamos que recibimos ambos parámetros
-    if (empty($usuario) || empty($password)) {
-        $error = "Debes introducir un usuario y contraseña";
-        include "index.php";
+// Convertir les contrasenyes a un format encriptat
+foreach ($users as $email => $password) {
+    $users[$email] = password_hash($password, PASSWORD_BCRYPT);
+}
+
+// Formulari d'autenticació
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    if (isset($users[$email]) && password_verify($password, $users[$email])) {
+        // L'usuari està autenticat
+        session_start();
+        $_SESSION['user'] = $email;
+        echo "Login successful. Welcome, " . $email;
     } else {
-        if ($usuario == "admin" && $password == "admin") {
-            // almacenamos el usuario en la sesión
-            session_start();
-            $_SESSION['usuario'] = $usuario;
-            // cargamos la página principal
-            include "main.php";
-        } else {
-            // Si las credenciales no son válidas, se vuelven a pedir
-            $error = "Usuario o contraseña no válidos!";
-            include "index.php";
-        }
+        // Credencials incorrectes
+        echo "Invalid email or password.";
     }
 }
-```
-Depenent de l'usuari que s'hi haja loguejat, anirem a una vista o a una altra. Per exemple, en `main.php` tindríem:
-
-``` html+php
-<?php
-    // Recuperamos la información de la sesión
-    if(!isset($_SESSION)) {
-        session_start();
-    }
-    
-    // Y comprobamos que el usuario se haya autentificado
-    if (!isset($_SESSION['usuario'])) {
-       die("Error - debe <a href='index.php'>identificarse</a>.<br />");
-    }
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de productos</title>
-</head>
-<body>
-    <h1>Bienvenido <?= $_SESSION['usuario'] ?></h1>
-    <p>Pulse <a href="logout.php">aquí</a> para salir</p>
-    <p>Volver al <a href="main.php">inicio</a></p>
-    <h2>Listado de productos</h2>
-    <ul>
-        <li>Producto 1</li>
-        <li>Producto 2</li>
-        <li>Producto 3</li>
-    </ul>
-</body>
-</html>
+<form method="post">
+    Email: <input type="email" name="email" required>
+    Password: <input type="password" name="password" required>
+    <button type="submit" name="login">Login</button>
+</form>
+```
+Aquest exemple mostra com mantenir l'estat de la sessió d'un usuari una vegada autenticat.
+    
+``` php
+<?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Mostra la pàgina només si l'usuari està autenticat
+echo "Welcome, " . $_SESSION['user'];
+?>
 ```
 
 Finalment, necessitem l'opció de tancar la sessió que col·loquem en `logout.php`:
@@ -323,6 +282,184 @@ header("Location: index.php");
 
 !!! warning "Autenticació en producció"
     En l'actualitat l'autenticació d'usuari no es realitza gestionant la sessió direcamente, sinó que es realitza mitjançant algun framekwork que abstrau tot el procés o la integració de mecanismes d'autenticació tipus *OAuth*, com estudiarem en l'última unitat mitjançant *Laravel*.
+
+#### Exemple amb cookies
+
+``` php
+<?php
+// Llista d'usuaris predefinits amb contrasenyes en text pla
+$users = [
+    'user1@example.com' => 'password1',
+    'user2@example.com' => 'password2',
+];
+
+// Convertir les contrasenyes a un format encriptat
+foreach ($users as $email => $password) {
+    $users[$email] = password_hash($password, PASSWORD_BCRYPT);
+}
+
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    if (isset($users[$email]) && password_verify($password, $users[$email])) {
+        // Establir una cookie d'autenticació
+        setcookie("user", $email, time() + (86400 * 30), "/"); // 86400 = 1 dia
+        echo "Login successful. Welcome, " . $email;
+    } else {
+        // Credencials incorrectes
+        echo "Invalid email or password.";
+    }
+}
+
+// Llegir la cookie
+if (isset($_COOKIE['user'])) {
+    echo "Welcome back, " . $_COOKIE['user'];
+}
+?>
+<form method="post">
+    Email: <input type="email" name="email" required>
+    Password: <input type="password" name="password" required>
+    <button type="submit" name="login">Login</button>
+</form>
+```
+
+!!! warning "Seguretat en cookies"
+    Les cookies són vulnerables a atacs com *Cross-Site Scripting (XSS)* i *Cross-Site Request Forgery (CSRF)*. Per a protegir-les, s'ha de configurar la cookie com a segura i només accessible a través de la web.
+
+#### Exemple amb JWT
+
+Aquest exemple mostra com generar i verificar un JWT per a l'autenticació.
+
+``` php
+<?php
+function base64UrlEncode($data) {
+    return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+}
+
+function base64UrlDecode($data) {
+    return base64_decode(strtr($data, '-_', '+/'));
+}
+
+function createJWT($header, $payload, $secret) {
+    $headerEncoded = base64UrlEncode(json_encode($header));
+    $payloadEncoded = base64UrlEncode(json_encode($payload));
+
+    $signature = hash_hmac('sha256', "$headerEncoded.$payloadEncoded", $secret, true);
+    $signatureEncoded = base64UrlEncode($signature);
+
+    return "$headerEncoded.$payloadEncoded.$signatureEncoded";
+}
+
+function verifyJWT($jwt, $secret) {
+    list($headerEncoded, $payloadEncoded, $signatureEncoded) = explode('.', $jwt);
+
+    $signature = base64UrlDecode($signatureEncoded);
+    $expectedSignature = hash_hmac('sha256', "$headerEncoded.$payloadEncoded", $secret, true);
+
+    if ($signature === $expectedSignature) {
+        return json_decode(base64UrlDecode($payloadEncoded));
+    }
+
+    return false;
+}
+
+// Exemples d'ús
+$header = ['alg' => 'HS256', 'typ' => 'JWT'];
+$payload = ['email' => 'user1@example.com', 'exp' => time() + 3600];
+$secret = 'your_secret_key';
+
+$jwt = createJWT($header, $payload, $secret);
+echo "JWT: " . $jwt . "\n";
+
+$decoded = verifyJWT($jwt, $secret);
+if ($decoded) {
+    echo "JWT valid: " . json_encode($decoded) . "\n";
+} else {
+    echo "Invalid JWT.\n";
+}
+?>
+
+```
+#### Exemple amb MFA
+
+Aquest exemple mostra com afegir una capa addicional d'autenticació amb un codi MFA.
+
+``` php
+<?php
+session_start();
+
+function sendMFACode() {
+    $code = rand(100000, 999999);
+    $_SESSION['mfa_code'] = $code;
+
+    // Simular enviament de codi via email o SMS
+    echo "Verification code: $code"; // En un entorn real, envia el codi per email o SMS.
+}
+
+function verifyMFACode($inputCode) {
+    return isset($_SESSION['mfa_code']) && $inputCode == $_SESSION['mfa_code'];
+}
+
+if (isset($_POST['send_code'])) {
+    sendMFACode();
+}
+
+if (isset($_POST['verify_code'])) {
+    if (verifyMFACode($_POST['mfa_code'])) {
+        echo "MFA successful.";
+    } else {
+        echo "Invalid verification code.";
+    }
+}
+?>
+<form method="post">
+    <button type="submit" name="send_code">Send MFA Code</button>
+</form>
+<form method="post">
+    MFA Code: <input type="text" name="mfa_code" required>
+    <button type="submit" name="verify_code">Verify MFA Code</button>
+</form>
+
+```
+
+#### Exemple amb OAuth
+
+Per a OAuth, es pot utilitzar un proveïdor extern com Google per autenticar els usuaris. Ho vorem més avant.
+
+``` php
+<?php
+require_once 'vendor/autoload.php';
+
+$provider = new League\OAuth2\Client\Provider\Google([
+    'clientId'     => 'your-client-id',
+    'clientSecret' => 'your-client-secret',
+    'redirectUri'  => 'your-redirect-url',
+]);
+
+if (!isset($_GET['code'])) {
+    $authUrl = $provider->getAuthorizationUrl();
+    $_SESSION['oauth2state'] = $provider->getState();
+    header('Location: ' . $authUrl);
+    exit;
+} elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+    unset($_SESSION['oauth2state']);
+    exit('Invalid state');
+} else {
+    $token = $provider->getAccessToken('authorization_code', [
+        'code' => $_GET['code']
+    ]);
+
+    $user = $provider->getResourceOwner($token);
+    $userData = $user->toArray();
+
+    // Mostra la informació de l'usuari
+    echo 'Hello, ' . $userData['name'];
+}
+?>
+```
+
+
 
 ## Referències
 
