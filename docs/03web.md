@@ -165,11 +165,28 @@ En PHP, per a crear una cookie s'utilitza la funció `setcookie`:
 
 ``` php
 <?php
-setcookie(nombre [, valor [, expira [, ruta [, dominio [, seguro [, httponly ]]]]]]);
-setcookie(nombre [, valor = "" [, opciones = [] ]] )
+setcookie(
+    'nom_cookie',
+    'valor_cookie',
+    [
+        'expires' => time() + 3600, // 1 hora
+        'path' => '/',
+        'domain' => '', // Domini actual
+        'secure' => true, // Només HTTPS
+        'httponly' => true, // Només accessible via HTTP
+        'samesite' => 'Lax' // o 'Strict' o 'None'
+    ]
+);
 ?>
 ```
 Destacar que el nom no pot contindre espais ni el caràcter `;`. Respecte al contingut de la cookie, no pot superar els 4 KB.
+
+#### Consideracions de seguretat per a cookies:
+
+**HTTPOnly**: Assegura't que les cookies que contenen informació sensible no siguin accessibles per JavaScript utilitzant l'atribut HttpOnly.
+**Secure**: Utilitza l'atribut Secure per assegurar que les cookies només es transmeten en connexions HTTPS.
+**SameSite**: Defineix correctament l'atribut SameSite per a prevenir atacs CSRF (Cross-Site Request Forgery).
+
 
 Per exemple, mitjançant *cookies* podem comprovar la quantitat de visites diferents que realitza un usuari:
 
@@ -240,26 +257,33 @@ session_destroy(); // destruye la sesión
 unset($_SESSION[clave]; // borrado
 ```
 
-Veurem mitjançant un exemple com podem inserir en un pàgina dades en la sessió per a posteriorment en una altra pàgina accedir a aqueixes dades. Per exemple, en `sesion1.php` tindríem
+Veurem mitjançant un exemple com podem inserir en un pàgina dades en la sessió per a posteriorment en una altra pàgina accedir a aqueixes dades. Per exemple, en `sesion.php` tindríem
 
 ``` php
 <?php
-session_start(); // inicializamos
-$_SESSION["ies"] = "IES Severo Ochoa"; // asignación
-$instituto = $_SESSION["ies"]; // recuperación
-echo "Estamos en el $instituto ";
+// Iniciar sessió
+session_start();
+
+// Establir valors de sessió
+$_SESSION['usuari'] = 'JohnDoe';
+$_SESSION['rol'] = 'admin';
+
 ?>
-<br />
-<a href="sesion2.php">Y luego</a>
+
 ```
 
-I posteriorment podem accedir a la sessió en `sesion2.php`:
+I posteriorment podem accedir a la sessió en `sesion1.php`:
 
 ``` php
 <?php
 session_start();
-$instituto = $_SESSION["ies"]; // recuperación
-echo "Otra vez, en el $instituto ";
+// Recuperar valors de sessió
+echo 'Usuari: ' . $_SESSION['usuari'] . '<br>';
+echo 'Rol: ' . $_SESSION['rol'] . '<br>';
+
+// Tancar sessió de forma segura
+session_unset();  // Eliminar totes les variables de sessió
+session_destroy();  // Destruir la sessió
 ?>
 ```
 
@@ -273,6 +297,17 @@ echo "Otra vez, en el $instituto ";
       * `session.cookie_lifetime`: temps de vida per defecte
 
 Més informació en la [documentació oficial](https://www.php.net/manual/es/session.configuration.php).
+
+#### Millors pràctiques per a la gestió de sessions:
+
+Emmagatzemament segur: Emmagatzema únicament la mínima informació necessària a les sessions i mai informació sensible com contrasenyes.
+Regeneració d'ID de sessió: Després d'un canvi significatiu com l'inici de sessió, és bona pràctica regenerar l'ID de sessió per prevenir atacs de segrest de sessió.
+
+``` php
+// Regenerar l'ID de sessió per seguretat
+session_regenerate_id(true);
+```
+
 
 ### Serialització en PHP
 
