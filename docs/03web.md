@@ -882,7 +882,7 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 
 </details>
 
-## Exercici 7: Aplicació de gestió de preferències amb cookies
+#### Exercici 7: Aplicació de gestió de preferències amb cookies
 
 1. Crea una aplicació PHP que permeta als usuaris seleccionar el seu color preferit, emmagatzemant aquesta informació en una cookie. La pàgina hauria de mostrar el color preferit de l'usuari en futures visites.
 
@@ -922,3 +922,66 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
     </html>
     ```
 </details>
+
+### Exercicis proposats
+
+#### Exercici 1: Sistema de Carret de Compres sense Base de Dades
+
+1. **Descripció:**
+
+   Desenvolupa una aplicació PHP que permeta als usuaris afegir productes a un carret de compres i mostrar el contingut del carret. Utilitza sessions per a mantindre l'estat del carret entre pàgines.
+
+2. **Requisits:**
+    - Crear una pàgina on l'usuari puga seleccionar productes.
+    - Afegir els productes seleccionats a un carret emmagatzemat en una sessió.
+    - Mostrar un resum del carret amb els productes afegits i les seues quantitats.
+    - Permetre que l'usuari elimine productes del carret.
+
+#### Exercici 2: Autenticació Bàsica d'Usuaris amb Sessions
+
+1. **Descripció:**
+
+   Crea una aplicació PHP que permeta als usuaris iniciar sessió mitjançant un formulari. Utilitza sessions per a mantindre l'estat d'autenticació de l'usuari i mostrar missatges personalitzats basats en aquest estat.
+
+2. **Requisits:**
+    - Crear un formulari d'inici de sessió que sol·licite el nom d'usuari i la contrasenya.
+    - Emmagatzemar l'estat d'autenticació en una sessió després de verificar les credencials.
+    - Mostrar una pàgina de benvinguda personalitzada per a l'usuari autenticat.
+    - Proporcionar un enllaç per a tancar sessió i destruir la sessió.
+
+#### Exercici 3: Recordatori d'Usuari amb Cookies
+
+1. **Descripció:**
+
+   Afig una funcionalitat de "recordar-me" a l'exercici anterior que emmagatzeme el nom d'usuari en una cookie i permeta a l'usuari ser recordat en futures visites al lloc web.
+
+2. **Requisits:**
+    - Afig una opció de "recordar-me" al formulari d'inici de sessió.
+    - Emmagatzemar el nom d'usuari en una cookie quan l'opció és seleccionada.
+    - Comprovar la cookie en futures visites i iniciar sessió automàticament si la cookie existeix.
+    - Assegurar que les cookies es configuren amb atributs de seguretat adequats (`HttpOnly`, `Secure`, `SameSite`).
+
+#### Exercici 4: Formulari de Contacte amb Protecció CSRF
+
+1. **Descripció:**
+
+   Desenvolupa un formulari de contacte que permeta als usuaris enviar missatges i implementa protecció CSRF per a assegurar que les sol·licituds siguen legítimes.
+
+2. **Requisits:**
+    - Crear un formulari de contacte amb camps per al nom, correu electrònic i missatge.
+    - Generar i emmagatzemar un token CSRF en una sessió quan es carrega el formulari.
+    - Incloure el token CSRF com a camp ocult en el formulari.
+    - Verificar el token CSRF quan s'envia el formulari i mostrar un missatge de confirmació si és vàlid.
+    - Mostrar un missatge d'error si el token CSRF no és vàlid o no existeix.
+
+#### Exercici 5: Seguiment d'Activitat de l'Usuari amb Sessions
+
+1. **Descripció:**
+
+   Crea un sistema que registre les pàgines visitades per l'usuari durant una sessió i mostre aquesta informació quan l'usuari visita una pàgina d'activitat.
+
+2. **Requisits:**
+    - Emmagatzemar una llista de pàgines visitades per l'usuari en una sessió.
+    - Actualitzar la llista de pàgines cada vegada que l'usuari visite una nova pàgina.
+    - Crear una pàgina que mostre l'historial de pàgines visitades durant la sessió actual.
+    - Assegurar que l'historial es restableix quan l'usuari tanca la sessió.
