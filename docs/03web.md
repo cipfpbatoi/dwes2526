@@ -12,7 +12,7 @@
 
 
 
-## Mecanismes per al Manteniment de la Informació en Aplicacions Web
+## 1.  Mecanismes per al Manteniment de la Informació en Aplicacions Web
 
 HTTP és un protocol **stateless**, sense estat. En les aplicacions web modernes, és essencial gestionar l'estat del client per proporcionar una experiència d'usuari fluida i personalitzada.
 Per això, se simula l'estat mitjançant l'ús de cookies, tokens o la sessió. L'estat és necessari per a processos com ara el carret de la compra, operacions associades a un usuari, etc... 
@@ -60,7 +60,7 @@ Les **sessions** són un mecanisme que permet associar dades a un usuari durant 
 - Emmagatzemar únicament referències o identificadors a la sessió.
 - Utilitzar eines com Redis per a una gestió eficient de sessions en entorns escalables.
 
-### Web Storage (Opcional)
+### Web Storage
 
 El **Web Storage** és una API del navegador que permet emmagatzemar dades al client de manera més senzilla i amb més capacitat que les cookies tradicionals. Inclou dos mecanismes principals: `localStorage` i `sessionStorage`.
 
@@ -153,7 +153,7 @@ La **seguretat** és fonamental en la gestió de cookies i sessions per protegir
 La selecció del mecanisme adequat per al manteniment de l'estat en una aplicació web depèn de les necessitats específiques de l'aplicació, el volum de dades, els requisits de seguretat i l'arquitectura del sistema. Avaluar cada tècnica pel que fa a avantatges i desavantatges ajudarà a prendre decisions informades i construir aplicacions web més segures i eficients.
 
 
-## Exemples de Cookies i Sessions en PHP
+## 2.Exemples de Cookies i Sessions en PHP
 
 ### Cookies
 
@@ -253,6 +253,7 @@ Les operacions que podem realitzar amb la sessió són:
 ``` php
 <?php
 session_start(); // carga la sesión
+session_regenerate_id(true); // regenera el id
 session_id() // devuelve el id
 $_SESSION[clave] = valor; // inserción
 session_destroy(); // destruye la sesión
@@ -265,6 +266,7 @@ Veurem mitjançant un exemple com podem inserir en un pàgina dades en la sessi�
 <?php
 // Iniciar sessió
 session_start();
+session_regenerate_id(true);
 
 // Establir valors de sessió
 $_SESSION['usuari'] = 'JohnDoe';
@@ -299,17 +301,6 @@ session_destroy();  // Destruir la sessió
       * `session.cookie_lifetime`: temps de vida per defecte
 
 Més informació en la [documentació oficial](https://www.php.net/manual/es/session.configuration.php).
-
-#### Millors pràctiques per a la gestió de sessions:
-
-Emmagatzemament segur: Emmagatzema únicament la mínima informació necessària a les sessions i mai informació sensible com contrasenyes.
-Regeneració d'ID de sessió: Després d'un canvi significatiu com l'inici de sessió, és bona pràctica regenerar l'ID de sessió per prevenir atacs de segrest de sessió.
-
-``` php
-// Regenerar l'ID de sessió per seguretat
-session_regenerate_id(true);
-```
-
 
 ### Serialització en PHP
 
@@ -355,6 +346,7 @@ Iniciant una sessió i emmagatzemant dades serialitzades:
 
 ``` php
 session_start();
+session_regenerate_id(true);
 
 $data = array("a", "b", "c");
 $_SESSION['data_serialitzada'] = serialize($data);
@@ -372,7 +364,7 @@ print_r($data);
 Consideracions de Seguretat:
 És crucial entendre que la funció unserialize() pot ser perillosa si s'usa amb dades que no són de confiança, ja que podria portar a l'execució de codi arbitrari. Per això, mai has de deserialitzar dades que vinguen d'una font desconeguda o no fiable sense validar-les prèviament.
 
-## Autenticació d'usuaris
+## 3.Autenticació d'usuaris
 
 ### Mecanismes d'Autenticació d'Usuaris
 
@@ -633,10 +625,300 @@ if (!isset($_GET['code'])) {
 ?>
 ```
 
+## 4. Referències Addicionals
 
+A continuació es presenten diverses referències que poden ajudar-te a aprofundir en el tema de la gestió de sessions i cookies en PHP, així com les millors pràctiques i novetats associades amb la versió 8.3.
 
-## Referències
+### Documentació Oficial de PHP
 
-* [Cookies en PHP](https://www.php.net/manual/es/features.cookies.php)
-* [Manejo de sesiones en PHP](https://www.php.net/manual/es/book.session.php)
+- **Sessions a PHP**: La documentació oficial de PHP proporciona informació detallada sobre l'ús de sessions, incloent-hi exemples pràctics i consells de millors pràctiques.
+    - [Sessions a PHP](https://www.php.net/manual/es/book.session.php)
 
+- **Cookies a PHP**: Trobaràs informació oficial sobre com treballar amb cookies en PHP, amb descripcions d'atributs com `HttpOnly`, `Secure` i `SameSite`.
+    - [Cookies a PHP](https://www.php.net/manual/es/function.setcookie.php)
+
+### Articles i Blocs Tècnics
+
+- **PHP Sessions: Tips & Tricks**: Aquest article discuteix tècniques avançades per gestionar sessions en PHP, amb exemples i millors pràctiques per a la seguretat.
+    - [PHP Sessions: Tips & Tricks](https://www.php.net/manual/en/features.sessions.php)
+
+- **Handling Cookies Securely in PHP**: Una guia sobre com manejar cookies de manera segura, destacant estratègies per protegir les dades de l'usuari.
+    - [Handling Cookies Securely in PHP](https://paragonie.com/blog/2015/04/secure-authentication-php-with-long-term-persistence)
+
+### Llibres sobre PHP
+
+- **"Modern PHP: New Features and Good Practices"** de Josh Lockhart: Aquest llibre cobreix les novetats de PHP i les millors pràctiques, incloent la seguretat de sessions i cookies.
+
+- **"PHP Objects, Patterns, and Practice"** de M. Zandstra: Proporciona una visió profunda sobre el disseny de programari amb PHP, incloent-hi aspectes de seguretat relacionats amb sessions i cookies.
+
+### Guies de Seguretat en Desenvolupament Web
+
+- **OWASP Secure Coding Practices**: Aquesta guia de OWASP ofereix una ràpida referència sobre les millors pràctiques de codificació segura, útils per a protegir les teves aplicacions web.
+    - [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)
+
+- **OWASP Cheat Sheet on Session Management**: Una fitxa de referència ràpida de OWASP sobre la gestió de sessions, proporcionant consells de seguretat essencials.
+    - [OWASP Cheat Sheet on Session Management](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+
+### Conferències i Vídeos Educatius
+
+- **PHP Conference YouTube Channel**: El canal de YouTube de PHP Conference ofereix vídeos de conferències i xerrades que cobreixen una varietat de temes, incloent sessions i seguretat.
+    - [PHP Conference YouTube Channel](https://www.youtube.com/user/phpvideos)
+
+- **Laracasts**: Ofereix vídeos d'alta qualitat sobre desenvolupament en PHP i Laravel, amb temes rellevants per a sessions i cookies.
+    - [Laracasts](https://laracasts.com/)
+
+### Tutorials Online i Plataformes Educatives
+
+- **Stack Overflow PHP Sessions Tag**: Un lloc de consulta on trobar respostes a preguntes freqüents sobre la gestió de sessions en PHP.
+    - [Stack Overflow PHP Sessions Tag](https://stackoverflow.com/questions/tagged/php+session)
+
+- **Cursos a Udemy sobre PHP**: Cursos que cobreixen des de conceptes bàsics fins a avançats de PHP, incloent-hi la gestió de sessions i cookies.
+    - [Cursos a Udemy sobre PHP](https://www.udemy.com/topic/php/)
+
+## 5.Exercicis
+
+### Bateria d'Exercicis Solucionats per a la Unitat de Programació web
+
+#### Exercici 1: Crear una sessió
+
+1.Crea una pàgina PHP que inicialitze una sessió i emmagatzeme el nom i el rol d'un usuari en variables de sessió. Mostra aquests valors a la pàgina web.
+
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <?php
+    // Iniciar sessió
+    session_start();
+    
+    // Emmagatzemar informació de l'usuari en la sessió
+    $_SESSION['nom'] = 'Joan';
+    $_SESSION['rol'] = 'Administrador';
+    
+    echo 'Benvingut, ' . $_SESSION['nom'] . '<br>';
+    echo 'Rol: ' . $_SESSION['rol'] . '<br>';
+    ?>
+    ```
+</details>
+
+#### Exercici 2: Regenerar l'ID de sessió
+
+1. Modifica l'exercici anterior per regenerar l'ID de sessió just després d'emmagatzemar la informació de l'usuari.
+
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <?php
+    // Iniciar sessió
+    session_start();
+    
+    // Emmagatzemar informació de l'usuari en la sessió
+    $_SESSION['nom'] = 'Joan';
+    $_SESSION['rol'] = 'Administrador';
+    
+    // Regenerar l'ID de sessió
+    session_regenerate_id(true);
+    
+    echo 'Benvingut, ' . $_SESSION['nom'] . '<br>';
+    echo 'Rol: ' . $_SESSION['rol'] . '<br>';
+    ?>
+    ```
+</details>
+
+#### Exercici 3: Tancar la sessió
+
+1. Escriu un script PHP que elimine totes les variables de sessió i destrueixi la sessió quan l'usuari tanqui sessió.
+
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <?php
+    // Iniciar sessió
+    session_start();
+    
+    // Eliminar totes les variables de sessió
+    session_unset();
+    
+    // Destruir la sessió
+    session_destroy();
+    ?>
+    ```
+</details>
+
+#### Exercici 4: Crear una cookie segura
+
+1. Escriu un script PHP per crear una cookie que emmagatzeme el nom d'usuari amb els atributs de seguretat `HttpOnly`, `Secure` i `SameSite`.
+
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <?php
+    // Crear una cookie segura
+    setcookie(
+        'nom_usuari',
+        'Joan',
+        [
+            'expires' => time() + 3600, // 1 hora
+            'path' => '/',
+            'domain' => '', // Domini actual
+            'secure' => true, // Només HTTPS
+            'httponly' => true, // Només accessible via HTTP
+            'samesite' => 'Lax' // o 'Strict' o 'None'
+        ]
+    );
+    ?>
+    ```
+</details>
+
+#### Exercici 5: Llegir i modificar una cookie
+
+1. Crea una pàgina PHP que llegeixca el valor d'una cookie anomenada `nom_usuari` i la modifique afegint un prefix de salutació.
+
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <?php
+    // Llegir el valor de la cookie
+    if (isset($_COOKIE['nom_usuari'])) {
+        $nomUsuari = $_COOKIE['nom_usuari'];
+        echo 'Hola, ' . $nomUsuari;
+    
+        // Modificar el valor de la cookie
+        $salutacio = 'Hola, ' . $nomUsuari;
+        setcookie('nom_usuari', $salutacio, time() + 3600, '/');
+    } else {
+        echo 'Cookie not found.';
+    }
+    ?>
+    ```
+</details>
+
+#### Exercici 6: Aplicació de gestió d'usuaris amb sessions
+
+1. Desenvolupa una aplicació PHP amb dos scripts: un per iniciar sessió i un altre per tancar sessió. L'aplicació ha de permetre que l'usuari introdueixca el seu nom d'usuari i vega un missatge de benvinguda una vegada haja iniciat sessió.
+
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <!-- login.php -->
+    <?php
+    session_start();
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nomUsuari = $_POST['nom_usuari'];
+    
+        // Emmagatzemar el nom d'usuari en la sessió
+        $_SESSION['nom_usuari'] = $nomUsuari;
+    
+        // Redireccionar a la pàgina de benvinguda
+        header('Location: welcome.php');
+        exit();
+    }
+    ?>
+    
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Iniciar Sessió</title>
+    </head>
+    <body>
+        <h2>Iniciar Sessió</h2>
+        <form method="post" action="login.php">
+            <label for="nom_usuari">Nom d'usuari:</label>
+            <input type="text" id="nom_usuari" name="nom_usuari" required>
+            <button type="submit">Iniciar Sessió</button>
+        </form>
+    </body>
+    </html>
+
+    ```
+
+    ```php
+    <!-- logout.php -->
+    <?php
+    session_start();
+
+    // Tancar sessió de forma segura
+    session_unset();
+    session_destroy();
+    
+    // Redireccionar a la pàgina de login
+    header('Location: login.php');
+    exit();
+    ?>
+    ```
+
+    ```php
+    <!-- wellcome.php -->
+    <?php
+    session_start();
+    
+    if (!isset($_SESSION['nom_usuari'])) {
+        // Redireccionar a la pàgina de login si no s'ha iniciat sessió
+        header('Location: login.php');
+        exit();
+    }
+    
+    $nomUsuari = $_SESSION['nom_usuari'];
+    ?>
+    
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Benvingut</title>
+    </head>
+    <body>
+        <h2>Benvingut, <?php echo htmlspecialchars($nomUsuari); ?>!</h2>
+        <p>Aquesta és la teva pàgina de benvinguda.</p>
+        <a href="logout.php">Tancar Sessió</a>
+    </body>
+    </html>
+    ```
+
+</details>
+
+## Exercici 7: Aplicació de gestió de preferències amb cookies
+
+1. Crea una aplicació PHP que permeta als usuaris seleccionar el seu color preferit, emmagatzemant aquesta informació en una cookie. La pàgina hauria de mostrar el color preferit de l'usuari en futures visites.
+
+<details>
+<summary>Solució</summary>
+
+    ```php
+    <?php
+    // Llegir el color preferit de la cookie
+    $colorPreferit = isset($_COOKIE['color_preferit']) ? $_COOKIE['color_preferit'] : 'blau';
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $colorPreferit = $_POST['color_preferit'];
+    
+        // Emmagatzemar el color preferit en una cookie
+        setcookie('color_preferit', $colorPreferit, time() + 3600, '/');
+    }
+    ?>
+    
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Preferències de Color</title>
+    </head>
+    <body style="background-color: <?php echo $colorPreferit; ?>">
+        <h2>Preferències de Color</h2>
+        <form method="post">
+            <label for="color_preferit">Color preferit:</label>
+            <select id="color_preferit" name="color_preferit">
+                <option value="blau" <?php if ($colorPreferit === 'blau') echo 'selected'; ?>>Blau</option>
+                <option value="vermell" <?php if ($colorPreferit === 'vermell') echo 'selected'; ?>>Vermell</option>
+                <option value="verd" <?php if ($colorPreferit === 'verd') echo 'selected'; ?>>Verd</option>
+            </select>
+            <button type="submit">Guardar</button>
+        </form>
+    </body>
+    </html>
+    ```
+</details>
