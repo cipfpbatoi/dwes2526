@@ -985,3 +985,117 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
     - Actualitzar la llista de pàgines cada vegada que l'usuari visite una nova pàgina.
     - Crear una pàgina que mostre l'historial de pàgines visitades durant la sessió actual.
     - Assegurar que l'historial es restableix quan l'usuari tanca la sessió.
+
+
+## 6. Enunciats dels projectes
+
+### Projecte Ofegat
+
+1. **Manteniment de l'Estat del Joc amb Sessions:**
+    - Utilitza sessions per a emmagatzemar l'estat actual del joc, incloent la paraula a endevinar, lletres endevinades, i el nombre d'intents restants.
+
+2. **Autenticació de Jugadors:**
+    - Implementa un sistema d'autenticació bàsic que permeta als jugadors iniciar sessió abans de començar el joc. Utilitza sessions per a mantindre l'estat d'autenticació.
+
+3. **Gestió de la Sessió del Joc:**
+    - Afegeix funcionalitats per a reiniciar el joc en qualsevol moment, reinicialitzant la sessió per a començar una nova partida.
+
+4. **Cookies per a Recordar Jugadors:**
+    - Implementa cookies per a recordar els jugadors entre visites, permetent que l'usuari siga recordat si selecciona una opció de "Recordar-me" durant l'inici de sessió.
+
+#### Consideracions Addicionals
+
+- **Resiliència del Joc:** Implementa la lògica necessària per a manejar intents invàlids i mostrar missatges d'error adequats.
+- **Millores d'Interfície:** Afegix un enllaç o botó per a tancar sessió i una opció per a reiniciar el joc.
+
+---
+
+### Projecte "4 en Ratlla"
+
+1. **Gestió de l'Estat de la Graella amb Sessions:**
+    - Utilitza sessions per a emmagatzemar l'estat actual de la graella i el torn del jugador. Això permet mantenir la partida entre sol·licituds.
+
+2. **Autenticació de Jugadors:**
+    - Implementa un sistema d'autenticació per als jugadors. Només els usuaris autenticats poden iniciar una partida.
+
+3. **Manteniment de la Sessió entre Jugadors:**
+    - Emmagatzema l'identificador de cada jugador en sessions per a assegurar que el torn actual siga persistent entre sol·licituds.
+
+4. **Cookies per a la Persistència d'Usuaris:**
+    - Permet l'ús de cookies per a recordar els jugadors entre visites si han seleccionat "Recordar-me". Utilitza cookies per a emmagatzemar l'últim jugador autenticat.
+
+#### Consideracions Addicionals
+
+- **Lògica de Torn de Jugadors:** Implementa la lògica necessària per a canviar de torn entre els jugadors utilitzant sessions.
+- **Reinici de Partida:** Afegeix una opció per a reiniciar el joc, que ha de restablir les sessions i permetre començar de nou.
+- **Interfície d'Usuari Amigable:** Assegura't que la interfície d'usuari és clara i proporciona indicacions visuals dels moviments i torns dels jugadors.
+
+### Rúbrica d'Avaluació
+
+| Criteri                      | Excel·lent (4)                                                 | Bé (3)                                                            | Adequat (2)                                                | Insuficient (1)                                           |
+|------------------------------|----------------------------------------------------------------|-------------------------------------------------------------------|------------------------------------------------------------|-----------------------------------------------------------|
+| **Funcionalitat del Joc**    | El joc està completament funcional i sense errors.             | El joc està majoritàriament funcional amb errors mínims.          | El joc és funcional, però conté errors significatius.      | El joc no és funcional o està incomplet.                 |
+| **Ús de Sessions**           | Sessions ben implementades per a mantenir l'estat del joc.     | Sessions utilitzades correctament amb alguns problemes menors.    | Sessions utilitzades, però amb deficiències importants.    | No s'han utilitzat sessions o són incorrectes.            |
+| **Ús de Cookies**            | Cookies ben utilitzades per a recordar els jugadors.           | Cookies utilitzades adequadament amb algunes millores possibles.  | Cookies utilitzades amb limitacions evidents.              | No s'han utilitzat cookies o són incorrectes.             |
+| **Autenticació d'Usuaris**   | Autenticació segura i efectiva implementada.                   | Autenticació implementada amb alguns problemes.                   | Autenticació present però amb deficiències notables.       | No s'ha implementat autenticació o és incorrecta.         |
+| **Interfície d'Usuari**      | Interfície atractiva i fàcil d'utilitzar.                      | Interfície clara amb algunes millores possibles.                  | Interfície funcional però poc intuïtiva.                   | Interfície confusa i difícil d'utilitzar.                 |
+| **Seguretat**                | Totes les mesures de seguretat implementades correctament.     | Seguretat adequada amb algunes millores possibles.                | Mesures de seguretat bàsiques implementades.               | No s'han tingut en compte mesures de seguretat.           |
+| **Comentaris i Codi**        | Codi ben comentat i fàcilment llegible.                        | Codi clar amb comentaris adequats.                                | Codi llegible però amb pocs comentaris.                    | Codi desordenat i sense comentaris.                       |
+| **Innovació i Creativitat**  | El projecte mostra innovació significativa.                    | Algunes idees creatives han estat implementades.                  | Alguna creativitat present, però limitada.                 | Cap creativitat o innovació en el projecte.               |
+
+## Explicació dels Criteris
+
+### Funcionalitat del Joc
+
+- **Excel·lent (4):** El joc funciona completament segons les especificacions, amb totes les funcionalitats implementades i sense errors. Els jugadors poden interaccionar amb el joc tal com s'esperava i totes les accions es realitzen correctament.
+
+- **Insuficient (1):** El joc no és funcional, falten parts importants del codi o el joc no es pot jugar correctament.
+
+### Ús de Sessions
+
+- **Excel·lent (4):** Les sessions s'utilitzen eficaçment per a mantenir l'estat del joc i de l'usuari entre sol·licituds. Les dades de la sessió es gestionen de manera adequada per a preservar l'experiència de l'usuari.
+
+- **Insuficient (1):** No s'han utilitzat sessions o la seva implementació és incorrecta, la qual cosa afecta negativament l'experiència de l'usuari.
+
+### Ús de Cookies
+
+- **Excel·lent (4):** Les cookies s'utilitzen de manera efectiva per a recordar els jugadors entre sessions, amb la configuració adequada d'atributs de seguretat (`HttpOnly`, `Secure`, `SameSite`).
+
+- **Insuficient (1):** No s'han utilitzat cookies o la seva implementació és incorrecta, amb una configuració de seguretat deficient.
+
+### Autenticació d'Usuaris
+
+- **Excel·lent (4):** L'autenticació dels usuaris és segura i eficient, amb mecanismes adequats per a validar les credencials i protegir la informació dels usuaris.
+
+- **Insuficient (1):** No s'ha implementat un sistema d'autenticació o el sistema present és insegur i defectuós.
+
+### Interfície d'Usuari
+
+- **Excel·lent (4):** La interfície d'usuari és atractiva, clara i fàcil de navegar, proporcionant una experiència d'usuari òptima.
+
+- **Insuficient (1):** La interfície és confusa, difícil d'utilitzar o inacabada.
+
+### Seguretat
+
+- **Excel·lent (4):** Totes les mesures de seguretat necessàries han estat implementades, incloent-hi la validació de dades d'entrada, protecció CSRF i altres pràctiques de seguretat recomanades.
+
+- **Insuficient (1):** No s'han tingut en compte mesures de seguretat, deixant el projecte vulnerable a possibles atacs.
+
+### Comentaris i Codi
+
+- **Excel·lent (4):** El codi està ben comentat, és llegible i segueix bones pràctiques de programació.
+
+- **Insuficient (1):** El codi està desordenat, difícil de llegir i manca de comentaris explicatius.
+
+### Innovació i Creativitat
+
+- **Excel·lent (4):** El projecte mostra un alt grau d'innovació i creativitat, oferint característiques o enfocaments únics que milloren el joc.
+
+- **Insuficient (1):** El projecte manca de creativitat o innovació, seguint únicament les instruccions bàsiques sense cap valor afegit.
+
+---
+
+### Notes Addicionals
+
+- **Consistència del Codi:** S'espera que el codi sigui consistent, utilitzant convencions de noms adequades i estructures de codi clares.
+- **Adaptació de les Necessitats:** Els criteris poden ser adaptats segons les necessitats específiques del curs o dels projectes individuals.
