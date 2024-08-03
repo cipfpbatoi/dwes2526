@@ -1099,3 +1099,262 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 
 - **Consistència del Codi:** S'espera que el codi sigui consistent, utilitzant convencions de noms adequades i estructures de codi clares.
 - **Adaptació de les Necessitats:** Els criteris poden ser adaptats segons les necessitats específiques del curs o dels projectes individuals.
+
+
+## 7. Autoavaluació: Gestió de Sessions i Cookies
+
+### Exercici 1: Funcions de les Cookies
+
+#### Pregunta:
+Quina és la funció principal de les cookies en el context del desenvolupament web?
+
+#### Opcions:
+<form>
+  <input type="radio" id="q1a" name="question1" value="a">
+  <label for="q1a">a) Guardar els fitxers de l'usuari al servidor.</label><br>
+  <input type="radio" id="q1b" name="question1" value="b">
+  <label for="q1b">b) Emmagatzemar informació del client per personalitzar l'experiència d'usuari.</label><br>
+  <input type="radio" id="q1c" name="question1" value="c">
+  <label for="q1c">c) Executar codi al servidor.</label><br>
+  <input type="radio" id="q1d" name="question1" value="d">
+  <label for="q1d">d) Controlar la velocitat de la connexió a Internet.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer1()">
+</form>
+
+<p id="result1"></p>
+
+<script>
+function checkAnswer1() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question1');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) Emmagatzemar informació del client per personalitzar l'experiència d'usuari.";
+    document.getElementById('result1').innerText = resultText;
+}
+</script>
+
+### Exercici 2: Seguretat de les Cookies
+
+#### Pregunta:
+Quins atributs de seguretat haurien de tindre les cookies per protegir-les contra atacs?
+
+#### Opcions:
+<form>
+  <input type="checkbox" id="q2a" name="question2" value="a">
+  <label for="q2a">a) Secure</label><br>
+  <input type="checkbox" id="q2b" name="question2" value="b">
+  <label for="q2b">b) HttpOnly</label><br>
+  <input type="checkbox" id="q2c" name="question2" value="c">
+  <label for="q2c">c) SameSite</label><br>
+  <input type="checkbox" id="q2d" name="question2" value="d">
+  <label for="q2d">d) CrossSite</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer2()">
+</form>
+
+<p id="result2"></p>
+
+<script>
+function checkAnswer2() {
+    var correctAnswers = ["a", "b", "c"];
+    var checkboxes = document.getElementsByName('question2');
+    var userAnswers = [];
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            userAnswers.push(checkboxes[i].value);
+        }
+    }
+    userAnswers.sort();
+    var resultText = (JSON.stringify(userAnswers) === JSON.stringify(correctAnswers))
+        ? "Correcte!"
+        : "Incorrecte. Les respostes correctes són a) Secure, b) HttpOnly, c) SameSite.";
+    document.getElementById('result2').innerText = resultText;
+}
+</script>
+
+### Exercici 3: Creació de Sessions en PHP
+
+#### Pregunta:
+Quin dels següents passos és necessari per iniciar una sessió en PHP?
+
+#### Opcions:
+<form>
+  <input type="radio" id="q3a" name="question3" value="a">
+  <label for="q3a">a) Cridar a la funció session_start().</label><br>
+  <input type="radio" id="q3b" name="question3" value="b">
+  <label for="q3b">b) Utilitzar la funció session_open().</label><br>
+  <input type="radio" id="q3c" name="question3" value="c">
+  <label for="q3c">c) Assignar un valor a la variable $_SESSION.</label><br>
+  <input type="radio" id="q3d" name="question3" value="d">
+  <label for="q3d">d) No es necessita cap funció especial.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer3()">
+</form>
+
+<p id="result3"></p>
+
+<script>
+function checkAnswer3() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question3');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) Cridar a la funció session_start().";
+    document.getElementById('result3').innerText = resultText;
+}
+</script>
+
+### Exercici 4: Manteniment d'Informació en Sessions
+
+#### Pregunta:
+Com es pot mantindre la informació d'un usuari durant la sessió d'una aplicació web?
+
+#### Opcions:
+<form>
+  <input type="radio" id="q4a" name="question4" value="a">
+  <label for="q4a">a) Utilitzant la variable global $GLOBALS.</label><br>
+  <input type="radio" id="q4b" name="question4" value="b">
+  <label for="q4b">b) Utilitzant la variable $_SESSION.</label><br>
+  <input type="radio" id="q4c" name="question4" value="c">
+  <label for="q4c">c) Utilitzant la variable $_COOKIE.</label><br>
+  <input type="radio" id="q4d" name="question4" value="d">
+  <label for="q4d">d) Utilitzant arxius temporals al servidor.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer4()">
+</form>
+
+<p id="result4"></p>
+
+<script>
+function checkAnswer4() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question4');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) Utilitzant la variable $_SESSION.";
+    document.getElementById('result4').innerText = resultText;
+}
+</script>
+
+### Exercici 5: Funcions de PHP per a Sessions
+
+#### Pregunta:
+Quina funció de PHP es fa servir per destruir una sessió?
+
+#### Opcions:
+<form>
+  <input type="radio" id="q5a" name="question5" value="a">
+  <label for="q5a">a) session_destroy()</label><br>
+  <input type="radio" id="q5b" name="question5" value="b">
+  <label for="q5b">b) session_unset()</label><br>
+  <input type="radio" id="q5c" name="question5" value="c">
+  <label for="q5c">c) session_delete()</label><br>
+  <input type="radio" id="q5d" name="question5" value="d">
+  <label for="q5d">d) session_end()</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer5()">
+</form>
+
+<p id="result5"></p>
+
+<script>
+function checkAnswer5() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question5');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) session_destroy().";
+    document.getElementById('result5').innerText = resultText;
+}
+</script>
+
+### Exercici 6: Avantatges de les Sessions
+
+#### Pregunta:
+Quins són els avantatges d'utilitzar sessions en lloc de cookies per a mantenir l'estat de l'usuari?
+
+#### Opcions:
+<form>
+  <input type="checkbox" id="q6a" name="question6" value="a">
+  <label for="q6a">a) Les sessions poden emmagatzemar més informació perquè es guarden al servidor.</label><br>
+  <input type="checkbox" id="q6b" name="question6" value="b">
+  <label for="q6b">b) Les sessions són més segures perquè no s'envien al client.</label><br>
+  <input type="checkbox" id="q6c" name="question6" value="c">
+  <label for="q6c">c) Les sessions redueixen la càrrega del servidor.</label><br>
+  <input type="checkbox" id="q6d" name="question6" value="d">
+  <label for="q6d">d) Les sessions no necessiten ser configurades amb atributs de seguretat.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer6()">
+</form>
+
+<p id="result6"></p>
+
+<script>
+function checkAnswer6() {
+    var correctAnswers = ["a", "b"];
+    var checkboxes = document.getElementsByName('question6');
+    var userAnswers = [];
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            userAnswers.push(checkboxes[i].value);
+        }
+    }
+    userAnswers.sort();
+    var resultText = (JSON.stringify(userAnswers) === JSON.stringify(correctAnswers))
+        ? "Correcte!"
+        : "Incorrecte. Les respostes correctes són a) Les sessions poden emmagatzemar més informació perquè es guarden al servidor, b) Les sessions són més segures perquè no s'envien al client.";
+    document.getElementById('result6').innerText = resultText;
+}
+</script>
+
+### Exercici 7: Autenticació d'Usuaris
+
+#### Pregunta:
+Quina és la pràctica recomanada per assegurar la identitat d'un usuari en una aplicació web?
+
+#### Opcions:
+<form>
+  <input type="radio" id="q7a" name="question7" value="a">
+  <label for="q7a">a) Utilitzar noms d'usuari i contrasenyes emmagatzemades com a cookies.</label><br>
+  <input type="radio" id="q7b" name="question7" value="b">
+  <label for="q7b">b) Utilitzar sessions per mantenir l'estat d'autenticació després d'iniciar sessió.</label><br>
+  <input type="radio" id="q7c" name="question7" value="c">
+  <label for="q7c">c) Emmagatzemar la contrasenya de l'usuari a la URL.</label><br>
+  <input type="radio" id="q7d" name="question7" value="d">
+  <label for="q7d">d) No utilitzar cap forma d'autenticació.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer7()">
+</form>
+
+<p id="result7"></p>
+
+<script>
+function checkAnswer7() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question7');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) Utilitzar sessions per mantenir l'estat d'autenticació després d'iniciar sessió.";
+    document.getElementById('result7').innerText = resultText;
+}
+</script>
