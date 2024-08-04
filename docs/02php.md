@@ -1346,3 +1346,264 @@ td { width: 50px; height: 50px; text-align: center; vertical-align: middle; bord
 | **Interfícies d'Usuari**           | 6               | Interfície correcta i funcional     | Interfície creada però amb errors | No s'ha creat la interfície        |
 | **Estil CSS**                      | 2               | CSS aplicat correctament            | CSS aplicat però amb errors       | No s'ha aplicat el CSS             |
 | **Comentaris i Claredat del Codi** | 1               | Codi ben comentat i clar            | Codi amb alguns comentaris        | Codi sense comentaris o desordenat |
+
+
+## 21. Autoavaluació: Conceptes Bàsics de PHP
+
+### Exercici 1: Sintaxi Bàsica de PHP
+
+#### Pregunta:
+Quina és la manera correcta d'iniciar i finalitzar un bloc de codi PHP dins d'un fitxer HTML?
+
+#### Opcions:
+<form>
+  <input type="radio" id="q1a" name="question1" value="a">
+  <label for="q1a">a) `<?php ... ?>`</label><br>
+  <input type="radio" id="q1b" name="question1" value="b">
+  <label for="q1b">b) `<php> ... </php>`</label><br>
+  <input type="radio" id="q1c" name="question1" value="c">
+  <label for="q1c">c) `<?php ?> ... <?php end ?>`</label><br>
+  <input type="radio" id="q1d" name="question1" value="d">
+  <label for="q1d">d) `<script php> ... </script>`</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer1()">
+</form>
+
+<p id="result1"></p>
+
+<script>
+function checkAnswer1() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question1');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) <?php ... ?>.";
+    document.getElementById('result1').innerText = resultText;
+}
+</script>
+
+### Exercici 2: Variables i Tipus de Dades
+
+#### Pregunta:
+Quina opció mostra el tipus de dades assignat a la variable `$nom`?
+
+#### Opcions:
+<form>
+  <input type="radio" id="q2a" name="question2" value="a">
+  <label for="q2a">a) `echo gettype($nom);`</label><br>
+  <input type="radio" id="q2b" name="question2" value="b">
+  <label for="q2b">b) `print datatype($nom);`</label><br>
+  <input type="radio" id="q2c" name="question2" value="c">
+  <label for="q2c">c) `echo typeof($nom);`</label><br>
+  <input type="radio" id="q2d" name="question2" value="d">
+  <label for="q2d">d) `print type($nom);`</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer2()">
+</form>
+
+<p id="result2"></p>
+
+<script>
+function checkAnswer2() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question2');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) echo gettype($nom);";
+    document.getElementById('result2').innerText = resultText;
+}
+</script>
+
+### Exercici 3: Estructures de Control
+
+#### Pregunta:
+Quina és la sortida de l'estructura de control següent?
+```php
+$numero = 10;
+if ($numero > 5) {
+    echo "Major que 5";
+} else {
+    echo "Menor o igual a 5";
+}
+```
+#### Opcions
+
+<form>
+  <input type="radio" id="q3a" name="question3" value="a">
+  <label for="q3a">a) Major que 5</label><br>
+  <input type="radio" id="q3b" name="question3" value="b">
+  <label for="q3b">b) Menor o igual a 5</label><br>
+  <input type="radio" id="q3c" name="question3" value="c">
+  <label for="q3c">c) No imprimeix res</label><br>
+  <input type="radio" id="q3d" name="question3" value="d">
+  <label for="q3d">d) Error de sintaxi</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer3()">
+</form>
+<p id="result3"></p>
+<script>
+function checkAnswer3() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question3');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) Major que 5.";
+    document.getElementById('result3').innerText = resultText;
+}
+</script>
+
+### Exercici 4: Operadors en PHP
+
+#### Pregunta:
+Quin serà el valor de `$resultat` després d'executar el següent codi?
+```php
+$resultat = 5 + 2 * 3;
+```
+#### Opcions:
+
+<form>
+  <input type="radio" id="q4a" name="question4" value="a">
+  <label for="q4a">a) 21</label><br>
+  <input type="radio" id="q4b" name="question4" value="b">
+  <label for="q4b">b) 11</label><br>
+  <input type="radio" id="q4c" name="question4" value="c">
+  <label for="q4c">c) 17</label><br>
+  <input type="radio" id="q4d" name="question4" value="d">
+  <label for="q4d">d) 13</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer4()">
+</form>
+<p id="result4"></p>
+<script>
+function checkAnswer4() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question4');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) 11.";
+    document.getElementById('result4').innerText = resultText;
+}
+</script>
+
+### Exercici 5: Arrays en PHP
+
+#### Pregunta:
+
+Com es pot afegir un element al final d'un array en PHP?
+
+#### Opcions:
+<form>
+  <input type="radio" id="q5a" name="question5" value="a">
+  <label for="q5a">a) `array_add($array, $element);`</label><br>
+  <input type="radio" id="q5b" name="question5" value="b">
+  <label for="q5b">b) `$array[] = $element;`</label><br>
+  <input type="radio" id="q5c" name="question5" value="c">
+  <label for="q5c">c) `append($array, $element);`</label><br>
+  <input type="radio" id="q5d" name="question5" value="d">
+  <label for="q5d">d) `add_to_array($array, $element);`</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer5()">
+</form>
+<p id="result5"></p>
+<script>
+function checkAnswer5() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question5');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) $array[] = $element;";
+    document.getElementById('result5').innerText = resultText;
+}
+</script>
+
+### Exercici 6: Funcions en PHP
+
+#### Pregunta:
+
+Com es defineix una funció en PHP?
+
+#### Opcions:
+
+<form>
+  <input type="radio" id="q6a" name="question6" value="a">
+  <label for="q6a">a) `function: myFunction() { ... }`</label><br>
+  <input type="radio" id="q6b" name="question6" value="b">
+  <label for="q6b">b) `def myFunction() { ... }`</label><br>
+  <input type="radio" id="q6c" name="question6" value="c">
+  <label for="q6c">c) `function myFunction() { ... }`</label><br>
+  <input type="radio" id="q6d" name="question6" value="d">
+  <label for="q6d">d) `fn myFunction() => { ... }`</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer6()">
+</form>
+<p id="result6"></p>
+<script>
+function checkAnswer6() {
+    var correctAnswer = "c";
+    var radios = document.getElementsByName('question6');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és c) function myFunction() { ... }";
+    document.getElementById('result6').innerText = resultText;
+}
+</script>
+
+### Exercici 7: Instrucció switch
+
+#### Pregunta:
+
+Quina instrucció s'utilitza per detenir l'execució d'un cas dins d'un switch en PHP?
+
+#### Opcions:
+
+<form>
+  <input type="radio" id="q7a" name="question7" value="a">
+  <label for="q7a">a) `stop`</label><br>
+  <input type="radio" id="q7b" name="question7" value="b">
+  <label for="q7b">b) `exit`</label><br>
+  <input type="radio" id="q7c" name="question7" value="c">
+  <label for="q7c">c) `halt`</label><br>
+  <input type="radio" id="q7d" name="question7" value="d">
+  <label for="q7d">d) `break`</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer7()">
+</form>
+<p id="result7"></p>
+<script>
+function checkAnswer7() {
+    var correctAnswer = "d";
+    var radios = document.getElementsByName('question7');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és d) break.";
+    document.getElementById('result7').innerText = resultText;
+}
+</script>
