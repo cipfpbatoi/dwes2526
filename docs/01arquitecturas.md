@@ -23,7 +23,7 @@ Les arquitectures web són fonamentals en el desenvolupament d'aplicacions web m
 - **Flexibilitat i Adaptabilitat**: Les arquitectures modernes permeten l'ús de diverses tecnologies i eines per a diferents parts del sistema, proporcionant flexibilitat i permetent una adaptació ràpida als canvis tecnològics. Això és especialment rellevant amb l'adopció de pràctiques DevOps i l'ús de contenidors i orquestradors com Docker i Kubernetes.
 - **Col·laboració i Desplegament**: Un bon disseny arquitectònic facilita la col·laboració entre equips de desenvolupament, ja que clarifica les responsabilitats i els punts d'integració. També permet un desplegament més eficient i automatitzat, reduint els riscos d'errors i millorant el temps de lliurament.
 
-## Tipus d'Arquitectures Web
+## 1.Tipus d'Arquitectures Web
 
 A continuació, es descriuen alguns dels principals tipus d'arquitectures web, cadascun amb les seves pròpies característiques, avantatges i desavantatges:
 
@@ -116,7 +116,7 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 
 Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
 
-## Pàgines Web Estàtiques vs. Dinàmiques
+## 2. Pàgines Web Estàtiques vs. Dinàmiques
 
 ### Pàgines estàtiques
 
@@ -254,7 +254,7 @@ La generació dinàmica de pàgines web permet crear contingut web en temps real
 
 Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles. Les SPA ofereixen una experiència d'usuari molt rica però poden tenir desavantatges en termes de SEO i temps de càrrega inicial.
 
-## Models d'Execució
+## 3. Models d'Execució
 
 Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
 
@@ -438,7 +438,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
 
 
-## Servidors Web
+## 4. Servidors Web
 
 Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS, JavaScript, imatges i altres fitxers als clients a través del protocol HTTP o HTTPS. El servidor web gestiona les sol·licituds entrants dels clients (navegadors web) i retorna les respostes adequades.
 
@@ -637,7 +637,7 @@ http.ListenAndServe(":8080", nil)
 
 Un servidor web serveix contingut estàtic com HTML, CSS, JavaScript i imatges als clients a través de HTTP o HTTPS. Gestiona sol·licituds entrants i retorna respostes adequades. Exemples de servidors web inclouen Apache, Nginx i Microsoft IIS, cadascun amb funcionalitats úniques com la redirecció d'URLs, suport per a HTTPS i gestió de peticions HTTP. A més, utilitzen llenguatges interpretats (PHP, Python), compilats (Java) i intermediaris (Node.js) per executar codi.
 
-## Servidors d'Aplicacions
+## 5. Servidors d'Aplicacions
 
 Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplicacions web dinàmiques i gestionar la lògica de negoci d'una aplicació. Aquest servidor actua com una capa intermèdia entre el client (navegador web) i les bases de dades o altres serveis de backend, proporcionant un entorn d'execució per a aplicacions web.
 
@@ -741,7 +741,7 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 
 Els servidors d'aplicacions executen aplicacions dinàmiques i proporcionen serveis empresarials. Es diferencien dels servidors web en què no només serveixen contingut estàtic, sinó que també processen lògica d'aplicació i interaccions de base de dades. Exemples inclouen Apache Tomcat, JBoss i GlassFish, utilitzats per a aplicacions Java. També donen suport a tecnologies com servlets, JSP, EJB i frameworks com Spring, facilitant la construcció d'aplicacions robustes i escalables.
 
-## Frameworks de Programació en Entorn Servidor
+## 6.Frameworks de Programació en Entorn Servidor
 
 Un framework és una plataforma de desenvolupament que proporciona una estructura estandarditzada per a la creació d'aplicacions web. Facilita i accelera el procés de desenvolupament oferint biblioteques de codi preescrit, components reutilitzables i un conjunt de bones pràctiques. Els frameworks ajuden els desenvolupadors a centrar-se en la funcionalitat de l'aplicació en lloc de preocupar-se pels aspectes bàsics i repetitius de la programació.
 
@@ -815,7 +815,54 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 - **Django Official Documentation:** [Django](https://docs.djangoproject.com/en/stable/)
 - **Laravel Documentation:** [Laravel](https://laravel.com/docs)
 
-## AutoAvaluació
+## 7. Referències
+
+### Llibres Recomanats
+1. **[Web Architecture: Core Concepts](https://www.amazon.com/Web-Architecture-Concepts-Richard-N-Taylor/dp/0134765048)** de Richard N. Taylor, Nenad Medvidovic i Eric Dashofy
+  - Aquest llibre ofereix una visió profunda sobre els conceptes bàsics i els principis fonamentals de les arquitectures web, incloent-hi patrons de disseny i les millors pràctiques.
+
+2. **[RESTful Web APIs](https://www.oreilly.com/library/view/restful-web-apis/9781449358063/)** de Leonard Richardson i Mike Amundsen
+  - Se centra en el disseny i la construcció d'APIs web RESTful, un component essencial de les arquitectures modernes basades en serveis web.
+
+3. **[Building Microservices: Designing Fine-Grained Systems](https://www.oreilly.com/library/view/building-microservices/9781491950340/)** de Sam Newman
+  - Explora el disseny de microserveis, una arquitectura emergent que permet crear aplicacions escalables i flexibles.
+
+### Documentació Oficial i Guies
+- **[The Twelve-Factor App](https://12factor.net/)**
+  - Una metodologia per construir aplicacions web modernes que són fàcilment escalables i mantenibles.
+
+- **[Documentació de l'Arquitectura de PWA (Progressive Web Apps)](https://web.dev/progressive-web-apps/)**
+  - Guia detallada sobre el disseny i la implementació d'aplicacions web progressives, que combinen el millor de les aplicacions web i mòbils.
+
+### Cursos en Línia
+- **[Coursera - Web Application Architectures](https://www.coursera.org/learn/web-app)**
+  - Curs que proporciona una visió general de les arquitectures d'aplicacions web, incloent-hi clients i servidors, HTTP, i serveis web.
+
+- **[Udacity - Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044)**
+  - Aquest programa cobreix temes com arquitectures de servidor, autenticació, i API RESTful.
+
+### Recursos Addicionals
+- **[Microservices.io](https://microservices.io/)**
+  - Recursos sobre patrons de microserveis, arquitectures i millors pràctiques per implementar microserveis amb èxit.
+
+- **[Martin Fowler's Blog](https://martinfowler.com/)**
+  - Un blog que cobreix diversos aspectes de l'arquitectura del programari, incloent-hi articles sobre disseny de microserveis i altres arquitectures emergents.
+
+### Exemples i Tutorials
+- **[DigitalOcean Community Tutorials](https://www.digitalocean.com/community/tutorials)**
+  - Ofereix tutorials pràctics sobre una àmplia gamma de temes relacionats amb l'arquitectura web, des de configuració de servidors fins a desplegament d'aplicacions.
+
+- **[Mozilla Developer Network (MDN) Web Docs](https://developer.mozilla.org/es/docs/Learn/Server-side)**
+  - Un recurs complet per aprendre sobre tecnologies del costat del servidor, protocols web, i altres conceptes clau de les arquitectures web.
+
+### Repositoris de Codi
+- **[Awesome Scalability](https://github.com/binhnguyennus/awesome-scalability)**
+  - Una col·lecció de recursos i exemples sobre escalabilitat, arquitectures web i disseny de sistemes distribuits.
+
+- **[GitHub Microservices Examples](https://github.com/search?q=microservices)**
+  - Repositoris de codi font en GitHub que il·lustren com implementar microserveis i altres arquitectures web modernes.
+
+## 8.AutoAvaluació
 
 ### Exercici 1: Models d'execució de codi
 
