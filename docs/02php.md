@@ -1510,13 +1510,13 @@ Com es pot afegir un element al final d'un array en PHP?
 #### Opcions:
 <form>
   <input type="radio" id="q5a" name="question5" value="a">
-  <label for="q5a">a) `array_add($array, $element);`</label><br>
+  <label for="q5a">a) array_add($array, $element);</label><br>
   <input type="radio" id="q5b" name="question5" value="b">
-  <label for="q5b">b) `$array[] = $element;`</label><br>
+  <label for="q5b">b) $array[] = $element;</label><br>
   <input type="radio" id="q5c" name="question5" value="c">
-  <label for="q5c">c) `append($array, $element);`</label><br>
+  <label for="q5c">c) append($array, $element);</label><br>
   <input type="radio" id="q5d" name="question5" value="d">
-  <label for="q5d">d) `add_to_array($array, $element);`</label><br><br>
+  <label for="q5d">d) add_to_array($array, $element);</label><br><br>
   <input type="button" value="Comprovar" onclick="checkAnswer5()">
 </form>
 <p id="result5"></p>
@@ -1546,13 +1546,13 @@ Com es defineix una funció en PHP?
 
 <form>
   <input type="radio" id="q6a" name="question6" value="a">
-  <label for="q6a">a) `function: myFunction() { ... }`</label><br>
+  <label for="q6a">a) function: myFunction() { ... }</label><br>
   <input type="radio" id="q6b" name="question6" value="b">
-  <label for="q6b">b) `def myFunction() { ... }`</label><br>
+  <label for="q6b">b) def myFunction() { ... }</label><br>
   <input type="radio" id="q6c" name="question6" value="c">
-  <label for="q6c">c) `function myFunction() { ... }`</label><br>
+  <label for="q6c">c) function myFunction() { ... }</label><br>
   <input type="radio" id="q6d" name="question6" value="d">
-  <label for="q6d">d) `fn myFunction() => { ... }`</label><br><br>
+  <label for="q6d">d) fn myFunction() => { ... }</label><br><br>
   <input type="button" value="Comprovar" onclick="checkAnswer6()">
 </form>
 <p id="result6"></p>
@@ -1582,13 +1582,13 @@ Quina instrucció s'utilitza per detenir l'execució d'un cas dins d'un switch e
 
 <form>
   <input type="radio" id="q7a" name="question7" value="a">
-  <label for="q7a">a) `stop`</label><br>
+  <label for="q7a">a) stop</label><br>
   <input type="radio" id="q7b" name="question7" value="b">
-  <label for="q7b">b) `exit`</label><br>
+  <label for="q7b">b) exit</label><br>
   <input type="radio" id="q7c" name="question7" value="c">
-  <label for="q7c">c) `halt`</label><br>
+  <label for="q7c">c) halt</label><br>
   <input type="radio" id="q7d" name="question7" value="d">
-  <label for="q7d">d) `break`</label><br><br>
+  <label for="q7d">d) break</label><br><br>
   <input type="button" value="Comprovar" onclick="checkAnswer7()">
 </form>
 <p id="result7"></p>

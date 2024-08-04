@@ -627,7 +627,7 @@ if (!isset($_GET['code'])) {
 
 ## 4. Referències Addicionals
 
-A continuació es presenten diverses referències que poden ajudar-te a aprofundir en el tema de la gestió de sessions i cookies en PHP, així com les millors pràctiques i novetats associades amb la versió 8.3.
+A continuació es presenten diverses referències que poden ajudar-te a aprofundir en el tema de la gestió de sessions i cookies en PHP.
 
 ### Documentació Oficial de PHP
 
@@ -1043,51 +1043,51 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 | **Comentaris i Codi**        | Codi ben comentat i fàcilment llegible.                        | Codi clar amb comentaris adequats.                                | Codi llegible però amb pocs comentaris.                    | Codi desordenat i sense comentaris.                       |
 | **Innovació i Creativitat**  | El projecte mostra innovació significativa.                    | Algunes idees creatives han estat implementades.                  | Alguna creativitat present, però limitada.                 | Cap creativitat o innovació en el projecte.               |
 
-## Explicació dels Criteris
+### Explicació dels Criteris
 
-### Funcionalitat del Joc
+#### Funcionalitat del Joc
 
 - **Excel·lent (4):** El joc funciona completament segons les especificacions, amb totes les funcionalitats implementades i sense errors. Els jugadors poden interaccionar amb el joc tal com s'esperava i totes les accions es realitzen correctament.
 
 - **Insuficient (1):** El joc no és funcional, falten parts importants del codi o el joc no es pot jugar correctament.
 
-### Ús de Sessions
+#### Ús de Sessions
 
 - **Excel·lent (4):** Les sessions s'utilitzen eficaçment per a mantenir l'estat del joc i de l'usuari entre sol·licituds. Les dades de la sessió es gestionen de manera adequada per a preservar l'experiència de l'usuari.
 
 - **Insuficient (1):** No s'han utilitzat sessions o la seva implementació és incorrecta, la qual cosa afecta negativament l'experiència de l'usuari.
 
-### Ús de Cookies
+#### Ús de Cookies
 
 - **Excel·lent (4):** Les cookies s'utilitzen de manera efectiva per a recordar els jugadors entre sessions, amb la configuració adequada d'atributs de seguretat (`HttpOnly`, `Secure`, `SameSite`).
 
 - **Insuficient (1):** No s'han utilitzat cookies o la seva implementació és incorrecta, amb una configuració de seguretat deficient.
 
-### Autenticació d'Usuaris
+#### Autenticació d'Usuaris
 
 - **Excel·lent (4):** L'autenticació dels usuaris és segura i eficient, amb mecanismes adequats per a validar les credencials i protegir la informació dels usuaris.
 
 - **Insuficient (1):** No s'ha implementat un sistema d'autenticació o el sistema present és insegur i defectuós.
 
-### Interfície d'Usuari
+#### Interfície d'Usuari
 
 - **Excel·lent (4):** La interfície d'usuari és atractiva, clara i fàcil de navegar, proporcionant una experiència d'usuari òptima.
 
 - **Insuficient (1):** La interfície és confusa, difícil d'utilitzar o inacabada.
 
-### Seguretat
+#### Seguretat
 
 - **Excel·lent (4):** Totes les mesures de seguretat necessàries han estat implementades, incloent-hi la validació de dades d'entrada, protecció CSRF i altres pràctiques de seguretat recomanades.
 
 - **Insuficient (1):** No s'han tingut en compte mesures de seguretat, deixant el projecte vulnerable a possibles atacs.
 
-### Comentaris i Codi
+#### Comentaris i Codi
 
 - **Excel·lent (4):** El codi està ben comentat, és llegible i segueix bones pràctiques de programació.
 
 - **Insuficient (1):** El codi està desordenat, difícil de llegir i manca de comentaris explicatius.
 
-### Innovació i Creativitat
+#### Innovació i Creativitat
 
 - **Excel·lent (4):** El projecte mostra un alt grau d'innovació i creativitat, oferint característiques o enfocaments únics que milloren el joc.
 
@@ -1095,7 +1095,7 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 
 ---
 
-### Notes Addicionals
+#### Notes Addicionals
 
 - **Consistència del Codi:** S'espera que el codi sigui consistent, utilitzant convencions de noms adequades i estructures de codi clares.
 - **Adaptació de les Necessitats:** Els criteris poden ser adaptats segons les necessitats específiques del curs o dels projectes individuals.
