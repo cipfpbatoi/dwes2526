@@ -751,11 +751,45 @@ header("Content-Type: application/json");
 
 ## 18. Referències
 
-* [Manual de PHP](https://www.php.net/manual/es/index.php)
-* [PHP en 2020](https://www.jesusamieiro.com/wp-content/uploads/2020/10/20201024-hacktoberday-PHP-en-2020.pdf), por Jesús Amieiro
-* [Apunts de PHP](https://www.mclibre.org/consultar/php/) de Bartolomé Sintes, profesor del IES Abastos de Valencia
-* [Guía de Estilo - PSR](http://coppeldev.github.io/php/standards/coppel.html)
-* [PHP - La manera correcta](http://phpdevenezuela.github.io/php-the-right-way/)
+### Llibres Recomanats
+1. **[PHP and MySQL Web Development](https://www.pearson.com/us/higher-education/program/Welling-PHP-and-My-SQL-Web-Development-5th-Edition/PGM335533.html)** de Luke Welling i Laura Thomson
+    - Aquest llibre proporciona una visió completa sobre el desenvolupament web amb PHP i MySQL, des de conceptes bàsics fins a tècniques avançades.
+
+2. **[Learning PHP, MySQL & JavaScript: With jQuery, CSS & HTML5](https://www.oreilly.com/library/view/learning-php-mysql/9781491918661/)** de Robin Nixon
+    - Ideal per a aquells que busquen una introducció pràctica al desenvolupament web modern utilitzant PHP juntament amb altres tecnologies web.
+
+3. **[Modern PHP: New Features and Good Practices](https://www.oreilly.com/library/view/modern-php/9781491905180/)** de Josh Lockhart
+    - Aquest llibre explora les novetats i bones pràctiques en les versions modernes de PHP, incloent-hi temes com la programació orientada a objectes i l'ús de frameworks.
+
+### Documentació Oficial
+- **[Documentació Oficial de PHP](https://www.php.net/manual/es/index.php)**
+    - La documentació oficial de PHP és una referència essencial per a qualsevol desenvolupador que utilitzi PHP. Inclou guies de llenguatge, referències de funcions i exemples de codi.
+
+### Cursos en Línia
+- **[Curso de PHP en W3Schools](https://www.w3schools.com/php/)**
+    - Un recurs en línia gratuït amb tutorials i exercicis interactius que cobreixen els conceptes bàsics i avançats de PHP.
+
+- **[PHP for Beginners - Become a PHP Master - CMS Project](https://www.udemy.com/course/php-for-complete-beginners-includes-msql-object-oriented/)** a Udemy
+    - Un curs complet de PHP en Udemy que inclou la creació d'un sistema de gestió de continguts (CMS) com a projecte final.
+
+### Recursos Addicionals
+- **[PHP: The Right Way](https://phptherightway.com/)**
+    - Un recurs comunitari que ofereix bones pràctiques, consells i pautes per al desenvolupament amb PHP.
+
+- **[Laravel Documentation](https://laravel.com/docs)**
+    - Documentació oficial de Laravel, un dels frameworks de PHP més populars per al desenvolupament web.
+
+### Exemples i Tutorials
+- **[TutorialsPoint PHP Tutorial](https://www.tutorialspoint.com/php/index.htm)**
+    - Proporciona una introducció detallada a PHP amb exemples de codi i explicacions pas a pas.
+
+- **[GeeksforGeeks PHP Tutorials](https://www.geeksforgeeks.org/php/)**
+    - Una col·lecció d'articles i tutorials sobre diversos temes relacionats amb PHP, des de conceptes bàsics fins a avançats.
+
+### Repositoris de Codi
+- **[GitHub PHP](https://github.com/search?q=PHP)**
+    - Una col·lecció de repositoris de codi font en PHP, on pots trobar projectes de codi obert i exemples pràctics.
+
 
 ## 19. Exercicis 
 
