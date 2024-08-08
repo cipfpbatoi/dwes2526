@@ -792,7 +792,28 @@ spl_autoload_register( function( $nombreClase ) {
 5. **Col·laboració**
     - Permet que desenvolupadors de backend i frontend treballen de manera independent en les seues àrees respectives.
 
-#### Exemple
+### Tecnologies i Mecanismes per a la Separació
+
+A continuació es presenten diverses tecnologies i mecanismes que faciliten la separació de la lògica de negoci i la presentació en una aplicació web:
+
+#### Frameworks PHP:
+Laravel: Framework que segueix el patró MVC (Model-View-Controller). Laravel facilita la creació de codi net i ben organitzat, separant clarament la lògica de negoci de la presentació.
+Symfony: Altres frameworks populars que també segueixen el patró MVC i ofereixen eines per a la separació de la lògica i la presentació.
+
+#### Patró MVC:
+Model-View-Controller: Patró de disseny que divideix una aplicació en tres components interconnectats:
+Model: Gestiona la lògica de negoci i les dades.
+Vista: Gestiona la presentació de la informació.
+Controlador: Gestiona la comunicació entre el Model i la Vista.
+
+#### Plantilles:
+Blade (Laravel): Motor de plantilles que permet separar el codi HTML de la lògica de negoci.
+Twig (Symfony): Motor de plantilles similar a Blade, utilitzat per separar la lògica de negoci del codi de presentació.
+
+#### API REST:
+Permet crear serveis web que exposen funcionalitats i dades a través de punts finals d'API, mantenint la lògica de negoci separada de la presentació.
+
+#### Exemple MVC
 
 ```php
 // Model: Product.php
@@ -835,12 +856,6 @@ class ProductController {
 </html>
 ```
 La separació de la lògica de negoci dels aspectes de presentació és crucial per al desenvolupament d'aplicacions web eficients, mantenibles i escalables.
-
-### Patró MVC
-
-Model: Representa la lògica de negoci i la gestió de dades.
-Vista: Gestiona la presentació de les dades.
-Controlador: Enllaça la lògica de negoci amb la presentació, actuant com a intermediari.
 
 
 ## Gestió d'Errors
