@@ -1,4 +1,4 @@
-# PHP Orientant a Objectes
+# Desenvolupament d'Aplicacions Web: POO, Separació de Lògica i Presentació, Gestió d'Errors i Proves
 
 ??? abstract "Duració i criteris d'avaluació"
 
@@ -11,7 +11,7 @@
     | 5. Desenvolupa aplicacions Web identificant i aplicant mecanismes per a separar el codi de presentació de la lògica de negoci.| a) S'han identificat els avantatges de separar la lògica de negoci dels aspectes de presentació de l'aplicació. <br/> b) S'han analitzat tecnologies i mecanismes que permeten realitzar aquesta separació i les seues característiques principals. <br/> c) S'han utilitzat objectes i controls en el servidor per a generar l'aspecte visual de l'aplicació Web en el client. <br/> d) S’han utilitzat formularis generats de forma dinàmica per a respondre als esdeveniments de l'aplicació Web. <br/> e) S'han identificat i aplicat els paràmetres relatius a la configuració de l'aplicació Web. <br/> f) S'han escrit aplicacions Web amb manteniment d'estat i separació de la lògica de negoci. <br/> g) S'han aplicat els principis de la programació orientada a objectes. <br/> g) S'ha provat i documentat el codi. |
 
 
-## Classes i Objectes
+## 1. Concepte de classes i Oobjectes
 
 PHP segueix un paradigma de programació orientada a objectes (POO) basada en classes.
 
@@ -80,7 +80,9 @@ $bruno->imprimir();
 
 Encara que es poden declarar diverses classes en el mateix arxiu, és una mala pràctica. Així doncs, cada fitxer contedrá una sola classe, i es nomenarà amb el nom de la classe.
 
-## Encapsulació
+## 2. Principis de la POO 
+
+### Encapsulació
 
 Les propietats es defineixen privades o protegides (si volem que les classes heretades puguen accedir).
 
@@ -117,7 +119,7 @@ class MayorMenor {
 }
 ```
 
-### Rebent i enviant objectes
+#### Rebent i enviant objectes
 
 És recomanable indicar-ho en la mena de paràmetres. Si l'objecte pot retornar nuls es posa `?` davant del nom de la classe.
 
@@ -142,7 +144,7 @@ echo "<br>Mayor: ".$resultado->getMayor();
 echo "<br>Menor: ".$resultado->getMenor();
 ```
 
-## Constructor
+#### Constructor
 
 El constructor dels objectes es defineix mitjançant el mètode màgic `__construct`.
 Pot o no tindre paràmetres, però només pot haver-hi un únic constructor.
@@ -166,7 +168,7 @@ $bruno = new Persona("Bruno Díaz");
 $bruno->imprimir();
 ```
 
-### Constructors en PHP 8
+##### Constructors en PHP 8
 
 Una de les grans novetats que ofereix PHP 8 és la simplificació dels constructors amb paràmetres, la qual cosa es coneix com a promoció de les propietats del constructor*.
 
@@ -225,7 +227,7 @@ class Punto {
     ?>
     ```
 
-## Classes estàtiques
+#### Classes estàtiques
 
 Són aquelles que tenen propietats i/o mètodes estàtics (també es coneixen com *de classe*, perquè el seu valor es comparteix entre totes les instàncies de la mateixa classe).
 
@@ -274,7 +276,7 @@ $prod3 = new Producto("Nintendo Switch");
 echo $prod3->mostrarResumen();
 ```
 
-## Introspecció
+#### Introspecció
 
 En treballar amb classes i objectes, existeixen un conjunt de funcions ja definides pel llenguatge que permeten obtindre informació sobre els objectes:
 
@@ -314,7 +316,7 @@ if ($p instanceof Producto) {
 
     Més informació en <https://www.php.net/manual/es/language.oop5.cloning.php>
 
-## Herència
+### Herència
 
 PHP suporta herència simple, de manera que una classe només pot heretar d'una altra, no de dues classes alhora. Per a això s'utilitza la paraula clau `extends`. Si volem que la classe A hereta de la classe B farem:
 
@@ -371,7 +373,7 @@ if (is_subclass_of($t, 'Producto')) {
 }
 ```
 
-### Sobreescriure mètodes
+### Polimorfisme
 
 Podem crear mètodes en els fills amb el mateix nom que el pare, canviant el seu comportament.
 Per a invocar als mètodes del pare -> `parent::nombreMetodo()`
@@ -389,7 +391,7 @@ class Tv extends Producto {
 }
 ```
 
-### Constructor en fills
+#### Constructor en fills
 
 En els fills no es crea cap constructor de manera automàtica. Pel que si no n'hi ha, s'invoca automàticament al del pare. En canvi, si el definim en el fill, hem d'invocar al del pare de manera explícita.
 
@@ -455,7 +457,7 @@ En els fills no es crea cap constructor de manera automàtica. Pel que si no n'h
     }
     ```
 
-## Classes abstractes
+### Abstracció
 
 Les classes abstractes obliguen a heretar d'una classe, ja que no es permet la seua instanciación. Es defineix mitjançant `abstract class NombreClase {`.
 Una classe abstracta pot contindre propietats i mètodes no-abstractes, i/o mètodes abstractes.
@@ -491,7 +493,7 @@ $t = new Tv();
 echo $t->getCodigo();
 ```
 
-## Classes finals
+#### Classes finals
 
 Són classes oposades a abstractes, ja que eviten que es puga heretar una classe o mètode per a sobreescriure-ho.
 
@@ -521,7 +523,7 @@ final class Microondas extends Producto {
 }
 ```
 
-## Interfícies
+#### Interfícies
 
 Permet definir un contracte amb les signatures dels mètodes a complir. Així doncs, només conté declaracions de funcions i totes han de ser públiques.
 
@@ -558,7 +560,7 @@ class Producto implements MostrableTodo, Facturable {
 }
 ```
 
-## Mètodes encadenats
+#### Mètodes encadenats
 
 Segueix el plantejament de la programació funcional, i també es coneix com *method chaining*. Planteja que sobre un objecte es realitzen diverses crides.
 
@@ -605,7 +607,7 @@ class Libro {
 }
 ```
 
-## Mètodes màgics
+#### Mètodes màgics
 
 Totes les classes PHP ofereixen un conjunt de mètodes, també coneguts com *magic methods* que es poden sobreescriure per a substituir el seu comportament. Alguns d'ells ja els hem utilitzats.
 
@@ -621,7 +623,7 @@ Els més destacables són:
 * `__sleep()`, `__wakeup()` → S'executen en recuperar (*unserialize^) o emmagatzemar un objecte que se serialitza (*serialize), i s'utilitzen per a permet definir quines propietats se serialitzen.
 * `__call()`, `__callStatic()` → S'executen en cridar a un mètode que no és públic. Permeten sobrecarreguen mètodes.
 
-## Espai de noms
+## 3. Espai de noms
 
 Des de PHP 5.3 i també coneguts com *Namespaces*, permeten organitzar les classes/interfícies, funcions i/o constants de manera similar als paquets a *Java*.
 
@@ -647,7 +649,7 @@ class Producte {
 }
 ```
 
-### Accés
+#### Accés
 
 Per a referenciar a un recurs que conté un namespace, primer hem de tindre'l disponible fent ús de `include` o `require`. Si el recurs està en el mateix *namespace*, es realitza un accés directe (es coneix com a accés sense qualificar).
 
@@ -672,7 +674,7 @@ $p2 = new Model\Producto(); // daría error, no existe el namespace Model. Es
 $p3 = new \Dwes\Ejemplos\Producto(); // \Dwes\Ejemplos\Producto
 ```
 
-### Accés
+#### Accés
 
 Per a evitar la referència qualificada podem declarar l'ús mitjançant `use` (similar a fer `import` a Java). Es fa en la capçalera, després del `namespace`:
 
@@ -699,7 +701,7 @@ $p1 = new Producte();
 !!! tip "To `use` or not to `use`"
     En resum, `use` permet accedir sense qualificar a recursos que estan en un altre *namespace*. Si estem en el mateix espai de nom, no necessitem `use`.
 
-### Organització
+#### Organització
 
 Tot projecte, conforme creix, necessita organitzar el seu codi font. Es planteja una organització en la qual els arxius que interactuan amb el navegador es col·loquen en l'arrel, i les classes que definim van dins d'un namespace (i dins de la seua pròpia carpeta `src` o `app`).
 
@@ -715,7 +717,7 @@ Tot projecte, conforme creix, necessita organitzar el seu codi font. Es planteja
     * Cada recurs ha d'incloure tots els altres recursos que referencie: la classe de la qual hereta, interfícies que implementa, classes utilitzades/rebudes com a paràmetres, etc...
     * Si els recursos estan en un espai de noms diferent al que estem, emprarem `use` amb la ruta completa per a després utilitzar referències sense qualificar.
 
-### Autoload
+#### Autoload
 
 No és tediós haver de fer el `include` de les classes? El autoload ve al rescat.
 
@@ -763,7 +765,7 @@ spl_autoload_register( function( $nombreClase ) {
     
     ```
 
-## Separar la lògica de negoci dels aspectes de presentació de l'aplicació
+## 4. Separar la lògica de negoci dels aspectes de presentació de l'aplicació
 
 #### Lògica de Negoci
 - Regles i procediments que defineixen el funcionament de l'aplicació.
@@ -792,7 +794,7 @@ spl_autoload_register( function( $nombreClase ) {
 5. **Col·laboració**
     - Permet que desenvolupadors de backend i frontend treballen de manera independent en les seues àrees respectives.
 
-### Tecnologies i Mecanismes per a la Separació
+## 5. Tecnologies i Mecanismes per a la Separació
 
 A continuació es presenten diverses tecnologies i mecanismes que faciliten la separació de la lògica de negoci i la presentació en una aplicació web:
 
@@ -858,7 +860,7 @@ class ProductController {
 La separació de la lògica de negoci dels aspectes de presentació és crucial per al desenvolupament d'aplicacions web eficients, mantenibles i escalables.
 
 
-## Gestió d'Errors
+## 6. Gestió d'Errors
 
 PHP classifica els errors que ocorren en diferents nivells. Cada nivell s'identifica amb una constant. Per exemple:
 
@@ -911,7 +913,7 @@ A continuació tenim un exemple mitjançant codi:
     Error de tipo Warning: Division by zero.
     ```
 
-## Excepcions
+### Exempcions
 
 La gestió d'excepcions forma part des de PHP 5. El seu funcionament és similar a Java*, fent ús d'un bloc `try / catch / finally`.
 Si detectem una situació anòmala i volem llançar una excepció, haurem de realitzar `throw new Exception` (adjuntant el missatge que l'ha provocat).
@@ -934,7 +936,7 @@ A partir d'un objecte `Exception`, podem accedir als mètodes `getMessage()`i `g
 
 El propi llenguatge ofereix un conjunt d'excepcions ja definides, les quals podem capturar (i llançar des de PHP 7). Es recomana la seua consulta en la [documentació oficial](https://www.php.net/manual/es/class.exception.php).
 
-### Creant excepcions
+#### Creant exempcions
 
 Per a crear una excepció, la forma més curta és crear una classe que únicament herete de `Exception`.
 
@@ -980,7 +982,7 @@ Si definim una excepció d'aplicació dins d'un *namespace*, quan referenciem a 
     class AppExcepcion extends Exception {}
     ```
 
-### Excepcions múltiples
+##### Exempcions múltiples
 
 Es poden usar excepcions múltiples per a comprovar diferents condicions. A l'hora de capturar-les, es fa de més específica a més general.
 
@@ -1060,7 +1062,7 @@ try {
 }
 ```
 
-### Rellançar excepcions
+#### Rellançar exempcions
 
 En les aplicacions reals, és molt comuna capturar una excepció de sistema i llançar una d'aplicació que hem definit nostros.
 També podem llançar les excepcions sense necessitat d'estar dins d'un `try/catch`.
@@ -1076,37 +1078,7 @@ try {
 }
 ```
 
-## SPL
-
-*Standard PHP Library* és el conjunt de funcions i utilitats que ofereix PHP, com:
-
-* Estructures de dades
-* Pila, cua, cua de prioritat, llista doblement enllaçada, etc...
-* Conjunt de iteradores dissenyats per a recórrer estructures agregades
-* arrays, resultats de bases de dades, arbres XML, llistats de directoris, etc.
-
-Podeu consultar la documentació en <https://www.php.net/manual/es/book.spl.php> o veure alguns exemples en <https://diego.com.es/tutorial-de-la-libreria-spl-de-php>
-
-També defineix un conjunt d'excepcions que podem utilitzar perquè les llancen les nostres aplicacions:
-
-* `LogicException` (`extends Exception`)
-    * `BadFunctionCallException`
-    * `BadMethodCallException`
-    * `DomainException`
-    * `InvalidArgumentException`
-    * `LengthException`
-    * `OutOfRangeException`
-* `RuntimeException` (`extends Exception`)
-    * `OutOfBoundsException`
-    * `OverflowException`
-    * `RangeException`
-    * `UnderflowException`
-    * `UnexpectedValueException`
-
-També podeu consultar la documentació d'aquestes excepcions en <https://www.php.net/manual/es/spl.exceptions.php>.
-
-
-## Composer
+## 7. Composer
 
 <figure style="float: right;">
     <img src="imagenes/05/logo-composer.png" width="200">
@@ -1225,97 +1197,7 @@ Posteriorment, hem de tornar a generar el *autoload* de *Composer* mitjançant l
 ``` bash
 composer dump-autoload
 ```
-
-## Arxius PDF
-
-
-Amb PHP podem manejar tot tipus d'arxius com ja hem vist però, què passa si volem generar fitxers PDF amb dades tretes d'una base de dades?
-
-<div class="center img-small">
-    <img src="imagenes/06/06-pdf.png">
-</div>
-
-
-Gràcies a una classe escrita en PHP, podem generar arxius PDF sense necessitat d'instal·lar llibreries addicionals en el nostre servidor.
-Però anem a utilitzar una llibreria que permet transformar codi html en pdf.
-
-### DOMPDF
-
-Afegirem la llibreria de [*DOMPDF*](https://github.com/seldaek/monolog) al nostre projecte. Per a això, inclourem la llibreria en el nostre projecte amb:
-
-``` bash
-composer require dompdf/dompdf
-```
-Una vegada que DOMPDF està instal·lat, el procés per generar PDFs des de HTML és bastant directe. Els passos bàsics són:
-
-Pas 1: Incloent DOMPDF
-Primer, necessitarem incloure DOMPDF en el script PHP. Si estem utilitzant Composer, això es fa automàticament a través de l'auto-càrrega de Composer. Només cal afegir la següent línia al principi del'script:
-
-```php
-require 'vendor/autoload.php';
-```
-
-Pas 2: Creació d'una Instància de DOMPDF
-A continuació, creem una nova instància de la classe DOMPDF:
-
-```php
-
-use Dompdf\Dompdf;
-
-$dompdf = new Dompdf();
-```
-
-Pas 3: Carregar HTML
-Després, carregem l'HTML en l'objecte DOMPDF. Això es pot fer directament com una cadena o carregant un fitxer HTML:
-
-```php
-$html = "<html><body>Hola, això és una prova.</body></html>";
-$dompdf->loadHtml($html);
-```
-
-O bé carregar un fitxer HTML:
-
-```php
-$dompdf->loadHtml(file_get_contents('path/to/your/file.html'));
-```
-
-Pas 4: Configuració de la Mida del Paper i l'Orientació
-Podem configurar la mida del paper i l'orientació si és necessari:
-
-```php
-$dompdf->setPaper('A4', 'portrait'); // o 'landscape'
-```
-
-Pas 5: Renderització del PDF
-Ara, demanem a DOMPDF que renderitze el PDF:
-
-```php
-$dompdf->render();
-```
-
-Pas 6: Eixida del PDF
-Finalment, podem enviar el PDF al navegador, guardar-lo en un fitxer o fer amb ell el que necessitem:
-
-Per mostrar-lo al navegador:
-
-```php
-$dompdf->stream("document.pdf", array("Attachment" => false));
-```
-
-Per desar-lo en un fitxer:
-
-```php
-$output = $dompdf->output();
-file_put_contents('path/to/save/document.pdf', $output);
-```
-
-##### Consells Addicionals
-Cal assegurar-se que l'HTML és vàlid i ben format. DOMPDF intenta ser tolerant amb l'HTML, però l'HTML mal format pot causar problemes.
-El CSS que s'utilitze pot afectar significativament com es veu el PDF. DOMPDF suporta una bona part de CSS 2.1, però no tot.
-Si necessitem incloure imatges, cal assegurar-se que les rutes són absolutes i accessibles des del servidor on s'executa DOMPDF.
-Aquesta és una guia bàsica per començar amb DOMPDF. Per a casos d'ús més avançats i opcions de configuració, cal consultar la documentació oficial de DOMPDF.
-
-## Monolog
+## 8. Logger amb Monolog
 
 Provarem *Composer* afegint la llibreria de [*Monolog*](https://github.com/seldaek/monolog) al nostre projecte. Es tracta d'un llibreria per a la gestió de logs de les nostres aplicacions, suportant diferents nivells (info, warning, etc...), eixides (fitxers, sockets, BBDD, Web Services, email, etc) i formats (text pla, HTML, JSON, etc...).
 
@@ -1474,7 +1356,7 @@ Alguns processadors coneguts són `IntrospectionProcessor` (mostren la línia, f
     [2020-11-26T13:35:31.078344+01:00] MiLogger.INFO: Esto es un mensaje de INFO [] {"file":"C:\\xampp\\htdocs\\log\\procesador.php","line":13,"class":null,"function":null}
     ```
 
-### Formateadores
+### Formatadors
 
 S'associen als manejadores amb `setFormatter`. Els formateadores més utilitzats són `LineFormatter`, `HtmlFormatter` o `JsonFormatter`.
 
@@ -1569,7 +1451,97 @@ class Cliente {
 }
 ```
 
-## Documentación con *phpDocumentor*
+## 9.  Generació de PDF amb DOMPDF
+
+
+Amb PHP podem manejar tot tipus d'arxius com ja hem vist però, què passa si volem generar fitxers PDF amb dades tretes d'una base de dades?
+
+<div class="center img-small">
+    <img src="imagenes/06/06-pdf.png">
+</div>
+
+
+Gràcies a una classe escrita en PHP, podem generar arxius PDF sense necessitat d'instal·lar llibreries addicionals en el nostre servidor.
+Però anem a utilitzar una llibreria que permet transformar codi html en pdf.
+
+### DOMPDF
+
+Afegirem la llibreria de [*DOMPDF*](https://github.com/seldaek/monolog) al nostre projecte. Per a això, inclourem la llibreria en el nostre projecte amb:
+
+``` bash
+composer require dompdf/dompdf
+```
+Una vegada que DOMPDF està instal·lat, el procés per generar PDFs des de HTML és bastant directe. Els passos bàsics són:
+
+Pas 1: Incloent DOMPDF
+Primer, necessitarem incloure DOMPDF en el script PHP. Si estem utilitzant Composer, això es fa automàticament a través de l'auto-càrrega de Composer. Només cal afegir la següent línia al principi del'script:
+
+```php
+require 'vendor/autoload.php';
+```
+
+Pas 2: Creació d'una Instància de DOMPDF
+A continuació, creem una nova instància de la classe DOMPDF:
+
+```php
+
+use Dompdf\Dompdf;
+
+$dompdf = new Dompdf();
+```
+
+Pas 3: Carregar HTML
+Després, carregem l'HTML en l'objecte DOMPDF. Això es pot fer directament com una cadena o carregant un fitxer HTML:
+
+```php
+$html = "<html><body>Hola, això és una prova.</body></html>";
+$dompdf->loadHtml($html);
+```
+
+O bé carregar un fitxer HTML:
+
+```php
+$dompdf->loadHtml(file_get_contents('path/to/your/file.html'));
+```
+
+Pas 4: Configuració de la Mida del Paper i l'Orientació
+Podem configurar la mida del paper i l'orientació si és necessari:
+
+```php
+$dompdf->setPaper('A4', 'portrait'); // o 'landscape'
+```
+
+Pas 5: Renderització del PDF
+Ara, demanem a DOMPDF que renderitze el PDF:
+
+```php
+$dompdf->render();
+```
+
+Pas 6: Eixida del PDF
+Finalment, podem enviar el PDF al navegador, guardar-lo en un fitxer o fer amb ell el que necessitem:
+
+Per mostrar-lo al navegador:
+
+```php
+$dompdf->stream("document.pdf", array("Attachment" => false));
+```
+
+Per desar-lo en un fitxer:
+
+```php
+$output = $dompdf->output();
+file_put_contents('path/to/save/document.pdf', $output);
+```
+
+##### Consells Addicionals
+Cal assegurar-se que l'HTML és vàlid i ben format. DOMPDF intenta ser tolerant amb l'HTML, però l'HTML mal format pot causar problemes.
+El CSS que s'utilitze pot afectar significativament com es veu el PDF. DOMPDF suporta una bona part de CSS 2.1, però no tot.
+Si necessitem incloure imatges, cal assegurar-se que les rutes són absolutes i accessibles des del servidor on s'executa DOMPDF.
+Aquesta és una guia bàsica per començar amb DOMPDF. Per a casos d'ús més avançats i opcions de configuració, cal consultar la documentació oficial de DOMPDF.
+
+
+## 10. Documentación con *phpDocumentor*
 
 
 
@@ -1690,7 +1662,7 @@ Si generem la documentació i obrim amb un navegador l'arxiu `docs/api/index.htm
 
 
 
-## Proves amb Codeception
+## 11. Proves amb Codeception
 
 El curs passat, dins del mòdul de Entorns de Desenvolupament*, estudiarieu la importància de la realització de proves, així com les proves unitàries mitjançant [JUnit](https://junit.org/junit5/).
 
