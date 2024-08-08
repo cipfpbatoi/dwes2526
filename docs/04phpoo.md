@@ -763,6 +763,86 @@ spl_autoload_register( function( $nombreClase ) {
     
     ```
 
+## Separar la lògica de negoci dels aspectes de presentació de l'aplicació
+
+#### Lògica de Negoci
+- Regles i procediments que defineixen el funcionament de l'aplicació.
+- Inclou processament de dades, càlculs, interaccions amb la base de dades, etc.
+
+#### Aspectes de Presentació
+- Manera en què es mostra la informació a l'usuari.
+- Inclou la interfície d'usuari, disseny, navegació, etc.
+
+### Avantatges
+
+1. **Mantenibilitat**
+    - Facilita la modificació de la lògica de negoci sense afectar la presentació.
+    - Permet actualitzar la interfície d'usuari sense modificar la lògica subjacent.
+
+2. **Reutilització**
+    - La lògica de negoci pot ser reutilitzada en diferents aplicacions amb interfícies variades.
+    - Els components de presentació poden ser reutilitzats amb diferents lògiques de negoci.
+
+3. **Escalabilitat**
+    - Ajuda a escalar l'aplicació separant les preocupacions, permetent millorar una part sense impactar l'altra.
+
+4. **Prova i Depuració**
+    - Facilita les proves unitàries i la depuració en permetre provar la lògica de negoci per separat de la interfície.
+
+5. **Col·laboració**
+    - Permet que desenvolupadors de backend i frontend treballen de manera independent en les seues àrees respectives.
+
+#### Exemple
+
+```php
+// Model: Product.php
+class Product {
+    private string $name;
+    private float $price;
+    
+    public function __construct(string $name, float $price) {
+        $this->name = $name;
+        $this->price = $price;
+    }
+    
+    public function getName(): string {
+        return $this->name;
+    }
+    
+    public function getPrice(): float {
+        return $this->price;
+    }
+}
+
+// Controller: ProductController.php
+class ProductController {
+    public function showProduct() {
+        $product = new Product("Laptop", 1200.00);
+        include 'views/productView.php';
+    }
+}
+
+// View: productView.php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Information</title>
+</head>
+<body>
+    <h1>Product: <?php echo htmlspecialchars($product->getName()); ?></h1>
+    <p>Price: $<?php echo htmlspecialchars($product->getPrice()); ?></p>
+</body>
+</html>
+```
+La separació de la lògica de negoci dels aspectes de presentació és crucial per al desenvolupament d'aplicacions web eficients, mantenibles i escalables.
+
+### Patró MVC
+
+Model: Representa la lògica de negoci i la gestió de dades.
+Vista: Gestiona la presentació de les dades.
+Controlador: Enllaça la lògica de negoci amb la presentació, actuant com a intermediari.
+
+
 ## Gestió d'Errors
 
 PHP classifica els errors que ocorren en diferents nivells. Cada nivell s'identifica amb una constant. Per exemple:
@@ -1010,63 +1090,6 @@ També defineix un conjunt d'excepcions que podem utilitzar perquè les llancen 
 
 També podeu consultar la documentació d'aquestes excepcions en <https://www.php.net/manual/es/spl.exceptions.php>.
 
-## Separar la lògica de negoci dels aspectes de presentació de l'aplicació
-
-#### Lògica de Negoci
-- Regles i procediments que defineixen el funcionament de l'aplicació.
-- Inclou processament de dades, càlculs, interaccions amb la base de dades, etc.
-
-#### Aspectes de Presentació
-- Manera en què es mostra la informació a l'usuari.
-- Inclou la interfície d'usuari, disseny, navegació, etc.
-
-### Avantatges
-
-1. **Mantenibilitat**
-    - Facilita la modificació de la lògica de negoci sense afectar la presentació.
-    - Permet actualitzar la interfície d'usuari sense modificar la lògica subjacent.
-
-2. **Reutilització**
-    - La lògica de negoci pot ser reutilitzada en diferents aplicacions amb interfícies variades.
-    - Els components de presentació poden ser reutilitzats amb diferents lògiques de negoci.
-
-3. **Escalabilitat**
-    - Ajuda a escalar l'aplicació separant les preocupacions, permetent millorar una part sense impactar l'altra.
-
-4. **Prova i Depuració**
-    - Facilita les proves unitàries i la depuració en permetre provar la lògica de negoci per separat de la interfície.
-
-5. **Col·laboració**
-    - Permet que desenvolupadors de backend i frontend treballen de manera independent en les seues àrees respectives.
-
-#### Exemple
-
-```php
-// Lògica de Negoci
-class Product {
-    private $name;
-    private $price;
-    
-    public function __construct($name, $price) {
-        $this->name = $name;
-        $this->price = $price;
-    }
-    
-    public function getName() {
-        return $this->name;
-    }
-    
-    public function getPrice() {
-        return $this->price;
-    }
-}
-
-// Presentació
-$product = new Product("Laptop", 1200);
-echo "Product: " . $product->getName() . "<br>";
-echo "Price: $" . $product->getPrice();
-```
-La separació de la lògica de negoci dels aspectes de presentació és crucial per al desenvolupament d'aplicacions web eficients, mantenibles i escalables.
 
 ## Composer
 
