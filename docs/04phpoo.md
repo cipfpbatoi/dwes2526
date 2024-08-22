@@ -1678,78 +1678,83 @@ Hui dia és de gran importància seguir una bona metodologia de proves, sent el 
 3. refactoritzar el codi de l'aplicació amb l'ajuda de la prova per a comprovar que no trenquem res (refactor).
 
 En el cas de PHP, l'eina que s'utilitza és *PHPUnit* (<https://phpunit.de/>), que com el seu nom indica, està basada en JUnit. La versió actual és la 9.0.
-També podem utilitzar *Codeception* (<https://codeception.com/>) que inclou *PHPUnit*.
 
-### Introducció a Codeception
-Codeception és una eina de proves per a PHP que inclou suport per a proves unitàries, funcionals, d'acceptació i API. Per més informació, pots consultar la seua documentació oficial a Codeception.
+### Introducció a PHPUnit
 
-#### Instal·lació i Configuració
-Per començar amb Codeception, afegeix-lo com a dependència de desenvolupament en el teu composer.json:
+PHPUnit és un framework de proves popular per a PHP que suporta tant proves unitàries com proves d'integració. És àmpliament utilitzat en la comunitat PHP per la seua simplicitat i eficàcia. Les proves unitàries es centren en provar components o mètodes individuals, mentre que les proves d'integració asseguren que les diferents parts del sistema funcionen conjuntament com s'espera.
 
-``` json
-"require-dev": {
-"codeception/codeception": "^4.0"
-},
-"scripts": {
-"test": "codecept run --colors"
-}
+#### Instal·lació
+
+Per començar a utilitzar PHPUnit, cal instal·lar-lo. La manera recomanada és a través de Composer. Executa la següent comanda en el terminal:
+
+```bash
+composer require --dev phpunit/phpunit
 ```
-
-També pots instal·lar-lo directament des del terminal:
-
-``` bash
-composer require --dev codeception/codeception ^4.0
-```
+ 
+Aquesta comanda afegirà PHPUnit com a dependència de desenvolupament en el teu projecte.
 
 !!! tip "Llibreries de desenvolupament"
 Les llibreries que es col·loquen en `require-dev` són les de desenvolupament i *testing*, de manera que no s'instal·laran en un entorn de producció.
 
+Una vegada instal·lat, podem configurar PHPUnit creant un fitxer phpunit.xml en l'arrel del projecte per especificar la configuració de les proves:
 
-Una vegada instal·lat, executa vendor/bin/codecept bootstrap per inicialitzar la configuració bàsica.
-
-##### Estructura de Carpetes
-Codeception organitza les proves en diverses carpetes segons el tipus de prova:
-tests/unit, tests/functional, tests/acceptance.
-
-##### Exemple de Prova Unitària
-A continuació, un exemple de com escriure una prova unitària en Codeception:
+```xml
+<phpunit bootstrap="vendor/autoload.php">
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
+```    
+ 
+####  Estructura d’un test
+Els tests en PHPUnit són classes PHP que hereten de PHPUnit\Framework\TestCase. Cada mètode dins d'aquestes classes que comence amb test serà executat com una prova.
 
 ``` php
 <?php
-namespace tests\unit;
 
-class PilaTest extends \Codeception\Test\Unit
-{
-    public function testPushAndPop()
-    {
-        $pila = [];
-        $this->assertSame(0, count($pila));
+use PHPUnit\Framework\TestCase;
 
-        array_push($pila, 'batman');
-        $this->assertSame('batman', $pila[count($pila)-1]);
-        $this->assertSame(1, count($pila));
-
-        $this->assertSame('batman', array_pop($pila));
-        $this->assertSame(0, count($pila));
+class CalculadoraTest extends TestCase {
+    public function testSuma() {
+        $calculadora = new Calculadora();
+        $resultat = $calculadora->suma(2, 3);
+        $this->assertEquals(5, $resultat);
     }
+}
+
+```
+
+#### Execució de Proves
+Per executar les proves, podem utilitzar la següent comanda:
+
+vendor/bin/phpunit
+
+Aquesta comanda cercarà els arxius de prova en el directori especificat (per defecte tests) i executarà totes les proves.
+
+
+#### Tipus de  proves
+
+Amb PHPUnit, podem realitzar diversos tipus de proves, entre elles:
+
+    **Proves Unitàries**: Verifiquen el funcionament d'una unitat de codi individual, com una funció o mètode.
+
+Exemple de prova unitària:
+    
+ ``` php
+public function testResta() {
+$calculadora = new Calculadora();
+$resultat = $calculadora->resta(5, 3);
+$this->assertEquals(2, $resultat);
 }
 ```
 
-##### Execució de Proves
-Per executar les proves, pots utilitzar les comandes següents:
+    **Proves Funcionals**: Verifiquen que un conjunt de mòduls funciona correctament conjuntament. Aquestes proves poden simular interaccions de l'usuari en un sistema web, encara que això es fa millor amb frameworks especialitzats per a proves funcionals.
+    **Proves d'Integració**: Comproven que diferents mòduls o serveis funcionen correctament quan es combinen.
 
-vendor/bin/codecept run (executa totes les proves)
-vendor/bin/codecept run unit (executa només proves unitàries)
-vendor/bin/codecept run --testdox --colors (mostra els resultats en format més llegible)
-
-### Dissenyant proves
-
-Tal com hem vist en l'exemple, la classe de prova ha d'heretar de `\Codeception\Test\Unit`, i el nom de la classe ha d'acabar en `Test`, d'aquí ve que hàgem anomenat la classe de prova com `PilaTest`.
-Una prova implica un mètode de prova (públic) per cada funcionalitat a provar. Cada un dels mètodes se'ls associa un cas de prova.
-Els mètodes han de nomenar-se amb el prefix `test`, per exemple, `testPushAndPop`. És molt important que el nom siga molt clar i descriptiu del propòsit de la prova. (*camelCase*).
-En els casos de prova prepararem diverses assercions per a tota la casuística: rangs de valors, tipus de dades, excepcions, etc...
-
-### Assercions
+ 
+#### Assercions
 
 Les assercions permeten comprovar el resultat dels mètodes que volem provar. Les assercions esperen que el predicat sempre siga vertader.
 
@@ -1758,6 +1763,7 @@ PHPUnit ofereix les següent assercions:
 * `assertTrue` / `assertFalse`: Comprova que la condició donada siga avaluada com true / false
 * `assertEquals` / `assertSame`: Comprova que dues variables siguen iguals
 * `assertNotEquals` / `assertNotSame`: Comprova que dues variables NO siguen iguals
+* `assertNull`: Comprova que un valor és null.
 * `Same` → comprova els tipus. Si no coincideixen els tipus i els valors, l'asserció fallarà
 * `Equals` → sense comprovació estricta
 * `assertArrayHasKey` / `assertArrayNotHasKey`: Comprova que un array posseïsca un *key* determinat / o NO ho posseïsca
@@ -1765,73 +1771,44 @@ PHPUnit ofereix les següent assercions:
 * `assertAttributeContains` / `assertAttributeNotContains`: Comprova que un atribut d'una classe continga una variable determinada / o NO continga una variable determinada
 * `assertAttributeEquals`: Comprova que un atribut d'una classe siga igual a una variable determinada.
 
-### Comparant l'eixida
+#### Proves amb dades
 
-Si els mètodes a provar generen contingut mitjançant `echo` o una instrucció similar, disposem de les següent expectatives:
-
-* `expectOutputString(salidaEsperada)`
-* `expectOutputRegex(expresionRegularEsperada)`
-
-Les expectatives difereixen de les assercions que informen del resultat que s'espera abans d'invocar al mètode. Després de definir l'expectativa, s'invoca al mètode que realitza el `echo`/`print`.
-
-``` php
-<?php
-namespace Dwes\Videoclub\Model;
-
-use PHPUnit\Framework\TestCase;
-use Dwes\Videoclub\Model\CintaVideo;
-
-class CintaVideoTest extends TestCase {
-    public function testConstructor()
-    {
-        $cinta = new CintaVideo("Los cazafantasmas", 23, 3.5, 107); 
-        $this->assertSame( $cinta->getNumero(), 23);
-    }
-
-    public function testMuestraResumen()
-    {
-        $cinta = new CintaVideo("Los cazafantasmas", 23, 3.5, 107);
-        $resultado = "<br>Película en VHS:";
-        $resultado .= "<br>Los cazafantasmas<br>3.5 (IVA no incluido)";
-        $resultado .= "<br>Duración: 107 minutos";
-        // definimos la expectativa
-        $this->expectOutputString($resultado);
-        // invocamos al método que hará echo
-        $cinta->muestraResumen();
-    }
-}
-```
-
-##### Proveïdors de Dades
-
-Els providers en Codeception s'utilitzen principalment per a provar amb diferents conjunts de dades utilitzant el mateix test. Aquí tens una guia bàsica de com utilitzar-los:
-
-Definir el Provider: Primer, has de definir una funció que retorni un array de dades. Aquesta funció és el teu provider. Per exemple:
-
-```php
-function myDataProvider() {
-return [
-['data1', 'result1'],
-['data2', 'result2']
-];
-}
-```
-
-Utilitzar el Provider en un Test: Després, pots utilitzar aquest provider en un mètode de prova, passant el nom de la funció provider com a anotació. Per exemple:
+Les proves en PHPUnit poden utilitzar data providers per executar el mateix test amb diferents dades:
 
 ```php
 /**
-* @dataProvider myDataProvider
-  */
-  public function testMyFunction($input, $expected) {
-  $result = myFunction($input);
-  $this->assertEquals($expected, $result);
-  }
+ * @dataProvider proveidorDeDades
+ */
+public function testMultiplica($a, $b, $esperat) {
+    $calculadora = new Calculadora();
+    $this->assertEquals($esperat, $calculadora->multiplica($a, $b));
+}
+
+public function proveidorDeDades() {
+    return [
+        [2, 3, 6],
+        [0, 5, 0],
+        [-1, 5, -5],
+    ];
+}
+
 ```
 
-En aquest exemple, testMyFunction s'executarà múltiples vegades amb cada conjunt de dades proporcionat per myDataProvider. Això és especialment útil quan vols provar una funció o mètode amb diferents valors d'entrada i verificar si el resultat és el que esperes en cada cas.
+#### Mocks
 
-### Provant excepcions
+Els mocks són objectes simulats que ens permeten aïllar la unitat de codi que estem provant. PHPUnit facilita la creació de mocks per a classes o interfícies.
+
+``` php
+$mock = $this->createMock(ServeiExtern::class);
+$mock->method('obtenirDades')->willReturn('Dades simulades');
+
+$calculadora = new Calculadora($mock);
+$resultat = $calculadora->processaDades();
+$this->assertEquals('Resultat esperat', $resultat);
+```
+
+
+#### Provant excepcions
 
 Les proves a més de comprovar que les classes funcionen com s'espera, han de cobrir tots els casos possibles. Així doncs, hem de poder fer proves que esperen que es llance una excepció (i que el missatge continga una certa informació):
 
@@ -1845,32 +1822,423 @@ De la mateixa manera que abans, primer es posa l'expectativa, i després es prov
 
 ``` php
 <?php
-public function testAlquilarCupoLleno() {
-    $soporte1 = new CintaVideo("Los cazafantasmas", 23, 3.5, 107); 
-    $soporte2 = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1);
-    $soporte3 = new Dvd("Origen", 24, 15, "es,en,fr", "16:9"); 
-    $soporte4 = new Dvd("El Imperio Contraataca", 4, 3, "es,en","16:9"); 
+public function testExcepcio() {
+    $this->expectException(InvalidArgumentException::class);
 
-    $cliente1 = new Cliente("Bruce Wayne", 23); 
-    $cliente1->alquilar($soporte1); 
-    $cliente1->alquilar($soporte2); 
-    $cliente1->alquilar($soporte3); 
-
-    $this->expectException(CupoSuperadoException::class);
-    $cliente1->alquilar($soporte4); 
+    $calculadora = new Calculadora();
+    $calculadora->divideix(5, 0);
 }
+```
+#### Conclusió
+
+Les proves són crucials per a assegurar que el nostre codi PHP és fiable i manté la seua funcionalitat al llarg del temps. Utilitzar PHPUnit ens proporciona les eines necessàries per a escriure proves eficaces i mantenir el nostre projecte en un estat saludable.
+
+
+## 12. Referències Bibliogràfiques  
+
+### Programació Orientada a Objectes en PHP
+
+- **"PHP Objects, Patterns, and Practice"**  
+  per M. Zandstra. Apress, 2017. ISBN: 978-1-4842-1361-3. Aquest llibre és un recurs essencial per entendre els fonaments de la programació orientada a objectes en PHP, així com patrons de disseny.
+
+- **"Learning PHP, MySQL & JavaScript: With jQuery, CSS & HTML5"**  
+  per Robin Nixon. O'Reilly Media, 2018. ISBN: 978-1-4919-2070-2. Ofereix una introducció completa a la programació amb PHP, incloent-hi el model d'objectes de PHP.
+
+### Constructors i Destructors
+
+- **PHP Manual: Constructors and Destructors**  
+  Documentació oficial de PHP sobre constructors i destructors en la programació orientada a objectes. Disponible a [https://www.php.net/manual/en/language.oop5.decon.php](https://www.php.net/manual/en/language.oop5.decon.php).
+
+### Encapsulació i Visibilitat
+
+- **PHP Manual: Visibility**  
+  Secció del manual oficial de PHP que explica les paraules clau `public`, `protected`, i `private`, així com el concepte d'encapsulació. Accessible a [https://www.php.net/manual/en/language.oop5.visibility.php](https://www.php.net/manual/en/language.oop5.visibility.php).
+
+### Herència i Polimorfisme
+
+- **"Programming PHP"**  
+  per Kevin Tatroe, Peter MacIntyre, i Rasmus Lerdorf. O'Reilly Media, 2013. ISBN: 978-1-4493-5053-6. Aquest llibre cobreix àmpliament els conceptes d'herència i polimorfisme en PHP, proporcionant exemples pràctics.
+
+- **PHP Manual: Inheritance**  
+  Documentació oficial de PHP que tracta sobre l'herència en classes, incloent el polimorfisme. Disponible a [https://www.php.net/manual/en/language.oop5.inheritance.php](https://www.php.net/manual/en/language.oop5.inheritance.php).
+
+### Classes Abstractes i Interfícies
+
+- **PHP Manual: Interfaces and Abstract Classes**  
+  Explicació oficial de les classes abstractes i les interfícies en PHP. Disponible a [https://www.php.net/manual/en/language.oop5.interfaces.php](https://www.php.net/manual/en/language.oop5.interfaces.php).
+
+### Nombres màgics i Metodes màgics
+
+- **PHP Manual: Magic Methods**  
+  Guia completa sobre els mètodes màgics en PHP, com `__construct()`, `__destruct()`, `__get()`, `__set()`, entre altres. Disponible a [https://www.php.net/manual/en/language.oop5.magic.php](https://www.php.net/manual/en/language.oop5.magic.php).
+
+### Trait en PHP
+
+- **PHP Manual: Traits**  
+  Documentació sobre traits en PHP, que permeten reutilitzar codi entre diferents classes. Disponible a [https://www.php.net/manual/en/language.oop5.traits.php](https://www.php.net/manual/en/language.oop5.traits.php).
+
+### Excepcions en PHP
+
+- **"The Pragmatic Programmer: Your Journey to Mastery"**  
+  per David Thomas i Andrew Hunt. Addison-Wesley Professional, 2019. ISBN: 978-0-1359-5202-8. Inclou bones pràctiques per a la gestió d'excepcions, aplicables també a PHP.
+
+- **PHP Manual: Exceptions**  
+  Secció del manual de PHP dedicada a les excepcions, explicant com llençar i capturar excepcions en PHP. Accessible a [https://www.php.net/manual/en/language.exceptions.php](https://www.php.net/manual/en/language.exceptions.php).
+
+### Proves amb PHPUnit
+
+- **"Modern PHP: New Features and Good Practices"**  
+  per Josh Lockhart. O'Reilly Media, 2015. ISBN: 978-1-4919-2904-0. Aquest llibre inclou una secció sobre proves amb PHPUnit.
+
+- **PHPUnit Documentation**  
+  Documentació oficial de PHPUnit, que cobreix com escriure i executar proves unitàries en PHP. Accessible a [https://phpunit.de/documentation.html](https://phpunit.de/documentation.html).
+
+### Eines de Desenvolupament i Autocàrrega
+
+- **Composer Documentation**  
+  Accessible des de [https://getcomposer.org/doc/](https://getcomposer.org/doc/). Composer és l'eina estàndard per a la gestió de dependències en PHP, i inclou suport per a l'autocàrrega de classes.
+
+- **PHP Manual: Autoloading Classes**  
+  Guia sobre el mecanisme d'autocàrrega en PHP, que facilita la inclusió automàtica de classes en els teus projectes. Disponible a [https://www.php.net/manual/en/language.oop5.autoload.php](https://www.php.net/manual/en/language.oop5.autoload.php).
+
+### POO Avançada: Patrons de Disseny
+
+- **"Head First Design Patterns"**  
+  per Eric Freeman i Elisabeth Robson. O'Reilly Media, 2020. ISBN: 978-1-4919-7175-9. Un recurs excel·lent per aprendre patrons de disseny aplicables a PHP.
+
+- **"PHP Design Patterns"**  
+  per Stephan Schmidt. Publicat per Packt Publishing, 2008. ISBN: 978-1-84719-255-3. Aquest llibre explora com aplicar patrons de disseny en projectes PHP.
+
+### Webs de Referència Addicionals
+
+- **PHP: The Right Way**  
+  [https://phptherightway.com/](https://phptherightway.com/). Una guia per a desenvolupar aplicacions PHP seguint les millors pràctiques de la indústria.
+
+- **Stack Overflow**  
+  [https://stackoverflow.com/questions/tagged/php](https://stackoverflow.com/questions/tagged/php). Una font d'informació valuosa per resoldre problemes específics de PHP i discutir amb altres desenvolupadors.
+
+---
+
+
+## 13.Exercicis
+
+### Bateria d'Exercicis Solucionats per a la Unitat de Programació Orientada a Objectes
+
+#### Exercici 1: Crear una Classe Bàsica .
+Crea una classe `Cotxe` que tinga les propietats `marca` i `model`. Afegeix un mètode `mostraInformacio` que retorne un string amb la marca i el model del cotxe.
+Crea una instància de la classe `Cotxe`, assigna-li una marca i un model, i mostra la informació utilitzant el mètode `mostraInformacio`.
+
+```php
+<?php
+class Cotxe {
+    public $marca;
+    public $model;
+
+    public function mostraInformacio() {
+        return "Marca: " . $this->marca . ", Model: " . $this->model;
+    }
+}
+ 
+$cotxe = new Cotxe();
+$cotxe->marca = "Toyota";
+$cotxe->model = "Corolla";
+echo $cotxe->mostraInformacio(); // Output: Marca: Toyota, Model: Corolla
+``` 
+ 
+### Exercici 2. Afegir un Constructor i desctructor
+Modifica la classe `Cotxe` per afegir un constructor que prenga com a paràmetres la `marca` i el `model`, i que establisca aquestes propietats automàticament.
+ Afegeix un destructor a la classe `Cotxe` que mostre un missatge quan l'objecte és destruït. Crea un objecte i permet que es destruïsca al final del programa.
+
+```php
+<?php
+class Cotxe {
+    public $marca;
+    public $model;
+
+    public function __construct($marca, $model) {
+        $this->marca = $marca;
+        $this->model = $model;
+    }
+    public function __destruct() {
+        echo "L'objecte Cotxe ha estat destruït.\n";
+    }
+
+    public function mostraInformacio() {
+        return "Marca: " . $this->marca . ", Model: " . $this->model;
+    }
+}
+```
+## Exercici 3. Encapsulació de Propietats
+ Modifica la classe `Cotxe` per a que les propietats `marca` i `model` siguen privades. Afegeix mètodes públics `getMarca`, `setMarca`, `getModel`, i `setModel` per accedir i modificar aquestes propietats.
+
+```php
+<?php
+class Cotxe {
+    private $marca;
+    private $model;
+
+    public function __construct($marca, $model) {
+        $this->marca = $marca;
+        $this->model = $model;
+    }
+
+    public function getMarca() {
+        return $this->marca;
+    }
+
+    public function setMarca($marca) {
+        $this->marca = $marca;
+    }
+
+    public function getModel() {
+        return $this->model;
+    }
+
+    public function setModel($model) {
+        $this->model = $model;
+    }
+
+    public function mostraInformacio() {
+        return "Marca: " . $this->getMarca() . ", Model: " . $this->getModel();
+    }
+}
+
+$cotxe = new Cotxe("Ford", "Fiesta");
+echo $cotxe->mostraInformacio(); // Output: Marca: Ford, Model: Fiesta
+```
+
+## Exercici 4. Herència i Polimorfisme
+ 
+Crea una classe `Vehicle` amb una propietat `tipus`. A continuació, crea una classe `Motocicleta` que herete de `Vehicle` i tinga una propietat `cilindrada`. Afegeix un mètode a `Motocicleta` que retorne el tipus i la cilindrada.
+ Crea una funció `mostraDetallsVehicle` que accepte un objecte de tipus `Vehicle` i mostre les seues propietats. Prova aquesta funció amb objectes de `Cotxe` i `Motocicleta`.
+
+```php
+<?php
+class Vehicle {
+    protected $tipus;
+
+    public function __construct($tipus) {
+        $this->tipus = $tipus;
+    }
+
+    public function mostraDetalls() {
+        return "Tipus: " . $this->tipus;
+    }
+}
+
+class Cotxe extends Vehicle {
+    private $marca;
+    private $model;
+
+    public function __construct($marca, $model) {
+        parent::__construct("Cotxe");
+        $this->marca = $marca;
+        $this->model = $model;
+    }
+
+    public function mostraDetalls() {
+        return parent::mostraDetalls() . ", Marca: " . $this->marca . ", Model: " . $this->model;
+    }
+}
+
+class Motocicleta extends Vehicle {
+    private $cilindrada;
+
+    public function __construct($cilindrada) {
+        parent::__construct("Motocicleta");
+        $this->cilindrada = $cilindrada;
+    }
+
+    public function mostraDetalls() {
+        return parent::mostraDetalls() . ", Cilindrada: " . $this->cilindrada;
+    }
+}
+
+function mostraDetallsVehicle(Vehicle $vehicle) {
+    echo $vehicle->mostraDetalls() . "\n";
+}
+
+$cotxe = new Cotxe("Toyota", "Corolla");
+$moto = new Motocicleta(600);
+
+mostraDetallsVehicle($cotxe); // Output: Tipus: Cotxe, Marca: Toyota, Model: Corolla
+mostraDetallsVehicle($moto);  // Output: Tipus: Motocicleta, Cilindrada: 600
+```
+
+## Exercici 5. Classes Abstractes i Interfícies
+ 
+Crea una classe abstracta `Figura` amb un mètode abstracte `calculaArea`. Després, crea classes `Cercle` i `Rectangle` que estiguen basades en `Figura` i implementen el mètode `calculaArea`.
+ Defineix una interfície `OperacionsBàsiques` amb els mètodes `suma` i `resta`. Implementa aquesta interfície en una classe `CalculadoraSimple`.
+
+```php
+<?php
+abstract class Figura {
+    abstract public function calculaArea();
+}
+
+class Cercle extends Figura {
+    private $radi;
+
+    public function __construct($radi) {
+        $this->radi = $radi;
+    }
+
+    public function calculaArea() {
+        return pi() * $this->radi * $this->radi;
+    }
+}
+
+class Rectangle extends Figura {
+    private $ample;
+    private $llarg;
+
+    public function __construct($ample, $llarg) {
+        $this->ample = $ample;
+        $this->llarg = $llarg;
+    }
+
+    public function calculaArea() {
+        return $this->ample * $this->llarg;
+    }
+}
+
+$cercle = new Cercle(5);
+$rectangle = new Rectangle(4, 6);
+
+echo "Àrea del cercle: " . $cercle->calculaArea() . "\n"; // Output: Àrea del cercle: 78.5398
+echo "Àrea del rectangle: " . $rectangle->calculaArea() . "\n"; // Output: Àrea del rectangle: 24
+
+``` 
+
+```php
+<?php
+interface OperacionsBàsiques {
+    public function suma($a, $b);
+    public function resta($a, $b);
+}
+
+class CalculadoraSimple implements OperacionsBàsiques {
+    public function suma($a, $b) {
+        return $a + $b;
+    }
+
+    public function resta($a, $b) {
+        return $a - $b;
+    }
+}
+
+$calculadora = new CalculadoraSimple();
+echo "Suma: " . $calculadora->suma(5, 3) . "\n"; // Output: Suma: 8
+echo "Resta: " . $calculadora->resta(5, 3) . "\n"; // Output: Resta: 2
 ```
 
 
-## Referències
+## Exercici 6.  Utilitzar Traits
+Crea un trait `Informacio` amb un mètode `mostraInformacio`. Inclou aquest trait en les classes `Cotxe` i `Motocicleta`, i utilitza'l per mostrar informació addicional.
 
-* [Manual de PHP](https://www.php.net/manual/es/index.php)
-* [Manual de OO en PHP - www.desarrolloweb.com](https://desarrolloweb.com/manuales/manual-php.html#manual68)
+```php
+<?php
+trait Informacio {
+    public function mostraInformacio() {
+        return "Aquest és un objecte de tipus " . get_class($this);
+    }
+}
 
-## Exercicis
+class Cotxe {
+    use Informacio;
+}
 
-### Objectes
+class Motocicleta {
+    use Informacio;
+}
 
+$cotxe = new Cotxe();
+$moto = new Motocicleta();
+
+echo $cotxe->mostraInformacio() . "\n"; // Output: Aquest és un objecte de tipus Cotxe
+echo $moto->mostraInformacio() . "\n"; // Output: Aquest és un objecte de tipus Motocicleta
+```
+
+## Exercici 7.  Gestionar Excepcions
+Escriu una funció `divideix` que prenga dos nombres com a paràmetres i retorne el resultat de la divisió. Si el segon nombre és zero, llença una excepció amb un missatge adequat. Captura aquesta excepció quan crides a la funció i mostra un missatge d'error.
+
+```php
+<?php
+function divideix($a, $b) {
+    if ($b == 0) {
+        throw new Exception("No es pot dividir per zero.");
+    }
+    return $a / $b;
+}
+
+try {
+    echo divideix(10, 2) . "\n"; // Output: 5
+    echo divideix(10, 0) . "\n"; // Aquesta línia llançarà una excepció
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n"; // Output: Error: No es pot dividir per zero.
+}
+```
+
+## 8. Proves amb PHPUnit
+ 
+Crea una classe `Calculadora` amb els mètodes `suma` i `resta`. Escriu una prova unitària amb PHPUnit per verificar que aquests mètodes funcionen correctament.
+ Afegeix un mètode `divideix` a la classe `Calculadora` que llance una excepció quan es divideix per zero. Escriu una prova unitària que assegure que aquesta excepció es llança correctament.
+ 
+```php
+<?php
+// Arxiu: tests/CalculadoraTest.php
+use PHPUnit\Framework\TestCase;
+
+class Calculadora {
+    public function suma($a, $b) {
+        return $a + $b;
+    }
+
+    public function resta($a, $b) {
+        return $a - $b;
+    }
+}
+
+class CalculadoraTest extends TestCase {
+    public function testSuma() {
+        $calculadora = new Calculadora();
+        $resultat = $calculadora->suma(2, 3);
+        $this->assertEquals(5, $resultat);
+    }
+
+    public function testResta() {
+        $calculadora = new Calculadora();
+        $resultat = $calculadora->resta(5, 3);
+        $this->assertEquals(2, $resultat);
+    }
+}
+```
+ ```php
+<?php
+// Arxiu: tests/CalculadoraTest.php
+use PHPUnit\Framework\TestCase;
+
+class Calculadora {
+    public function divideix($a, $b) {
+        if ($b == 0) {
+            throw new InvalidArgumentException("No es pot dividir per zero.");
+        }
+        return $a / $b;
+    }
+}
+
+class CalculadoraTest extends TestCase {
+    public function testDivideix() {
+        $this->expectException(InvalidArgumentException::class);
+        
+        $calculadora = new Calculadora();
+        $calculadora->divideix(5, 0);
+    }
+}
+```
+
+### Exercicis proposats
+ 
 301. `Persona.php`: Crea una classe `Persona` amb el seu nom, cognoms i edat.
      Encapsula les propietats mitjançant *getters/setters* i afig mètodes per a: (**Pissarra**)
      * Obtindre el seu nom complet → `getNombreCompleto(): string`
@@ -1960,67 +2328,4 @@ public function testAlquilarCupoLleno() {
   * Modifica totes les classes perquè implementen la interfície creada.
 
 
-## Activitat
-
-En la següent activitat simularem una web d'intercanvi de llibres entre els usuaris de Batoi, el qual realitzarem mitjançant un desenvolupament incremental.
-Utilitzarem el repositori que trobareu a l'aules per a treballar. 
-
-!!! warning "Projecte no real"
-    El següent projecte està pensat des d'un punt de vista formatiu. Algunes de les decisions que es prenen no s'han d'usar (com fer `echo` dins de les classes) o provar el codi comparant el resultat en el navegador.
-
-Cada classe ha d'anar en un arxiu php separat. Els arxius que no contenen classes, com `index.php` han d'anar en l'arrel del projecte.
-
-320. Crea una classe per als llibres (`Book.php`).
-    
-     * Afig els atributs `idUser`, `idModule` , `publisher`, `price`,`pages`,`status`,`photo`,`comments`,`soldDate`.
-     * Crea el constructor que inicialitze les seues propietats. 
-     * Crea el setters i els getters.
-     * Crea un mètode per __toString() que mostre les dades del llibre dins d'un <div> amb la classe `book`.
-     * Crea un mètode __toJson() que retorne un objecte JSON amb les dades del llibre.
-     * Crea un mètode per a marcar el llibre com a venut.
-
-321. Crea un classe per als usuaris (`User.php`).
-    
-     * Afig els atributs  `email`, `password`, `nick`.
-     * Crea el constructor que inicialitze les seues propietats. 
-     * Crea el setters i els getters.
-     * Crea un mètode per __toString() que mostre les dades de l'usuari dins d'un <div> amb la classe `user`.
-     * Crea un mètode per a gestionar la complexitat de la contrasenya. La contrasenya ha de tindre almenys 8 caràcters, una lletra majúscula, una minúscula i un número. Si no compleix aquestes condicions, llança una excepció `WeekPasswordException`.
-
-323. Crea un classe per als cicles (`Course.php`).
-     * Afig els atributs `cycle`,`idFamily`,`vliteral`,`cliteral`
-     * Crea el constructor que inicialitze les seues propietats. 
-     * Crea el setters i els getters.
-     * Crea un mètode per __toString() que mostre les dades del cicle dins d'un <div> amb la classe `cycle`.
-     * Crea un mètode per __toJson() que retorne un objecte JSON amb les dades del cicle.
-     
-324. Crea un classe per al Modul (`Module.php`).
-    
-     * Afig els atributs `code`,`cliteral`,`vliteral`,`idCycle`
-     * Crea el constructor que inicialitze les seues propietats. 
-     * Crea el setters i els getters.
-     * Crea un mètode per __toString() que mostre les dades del mòdul dins d'un <div> amb la classe `module`.
-     * Crea un mètode per __toJson() que retorne un objecte JSON amb les dades del mòdul.
-
-325. Importa les classes anteriors en `index.php` i crea un array associatiu per a totes les clases, on l'index de l'array serà l'equivalent a la key una taula.
-326. Importa dels fitxers [`modulesBook`](recursos/modulesbook.csv) i [`coursesBook`](recursos/coursesbook.csv) (pots mirar [ací](https://cipfpbatoi.github.io/dwes2324/05accesoDatos.html#acces-a-fitxers) com fer-ho, i ompli els arrays corresponents, savent que el primer camp de cada entrada és la key de l'array. Si es produix una errada es llança una exempció `InvalidFormatException` per a mostrar un missatge però s'ha de continuar intentant important la resta.
-326. Crea un usuari i un llibre d'eixe usuari. Mostra per pantalla el llibre i l'usuari.
-327. Crea un directori api i afegix un fitxer `book.php` que acepte un paràmetre `id` i mostre el llibre o usuari corresponent en format JSON. Si no existeix, llança una exempció `NotFoundException`.
-
-328. Anem a utilitzar el autoload de les classes. 
-
-        * Canvia de branca `Second-Deliver`. 
-        * Posa tots els arxius de classes en una carpeta `app` i les exempcions dins d'una carpeta `Exempcions` dins de `app`.
-        * Crea el fixer `autoload.php` per a que busque en eixa carpeta. 
-        * Posa un namesapce `BatBook` a totes les classes. 
-        * Utilitza `use` per a importar les classes en `index.php` i `book.php`. 
-
-``` php
-<?php
-spl_autoload_register( function( $nombreClase ) {
-    $ruta = $nombreClase.'.php';
-    $ruta = str_replace("BatBook", "app", $ruta); // Sustituimos las barras
-    $ruta = str_replace("\\", "/", $ruta); // Sustituimos las barras
-    include_once $ruta;
-} );
-```
+ 
