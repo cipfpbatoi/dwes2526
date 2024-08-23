@@ -2718,7 +2718,7 @@ $dompdf->stream("informe_productes.pdf");
 
 ### Explicació dels Criteris
 
-### **1 punt: Insuficient**
+#### **1 punt: Insuficient**
 - **POO**: Les classes no segueixen els principis bàsics de la programació orientada a objectes. Hi ha problemes greus com la falta d'encapsulació, l'ús inadequat de l'herència o mètodes que no funcionen correctament.
 - **Composer i Autoloading**: No s'ha configurat Composer o l'autoloading. Si estan configurats, no funcionen correctament.
 - **Proves amb PHPUnit**: Les proves estan absents o són mínimes, i no verifiquen adequadament la funcionalitat del projecte.
@@ -2726,7 +2726,7 @@ $dompdf->stream("informe_productes.pdf");
 - **Documentació amb PHPDoc**: Falta documentació essencial, o la que existeix és insuficient per a entendre el codi.
 - **Qualitat del Codi**: El codi és desorganitzat, amb molts errors de sintaxi i no segueix les bones pràctiques de programació.
 
-### **2 punts: Adequat**
+#### **2 punts: Adequat**
 - **POO**: Les classes estan creades, però poden contindre errors o una estructura confusa. L'aplicació de la POO és bàsica, amb alguns problemes de disseny.
 - **Composer i Autoloading**: Composer s'ha utilitzat, però l'estructura de projectes o l'autoloading no són òptims, presentant configuracions bàsiques o incorrectes.
 - **Proves amb PHPUnit**: Es presenten proves bàsiques que cobreixen parcialment les funcionalitats requerides.
@@ -2734,7 +2734,7 @@ $dompdf->stream("informe_productes.pdf");
 - **Documentació amb PHPDoc**: La documentació amb PHPDoc és bàsica, amb algunes omisions o descripcions poc clares.
 - **Qualitat del Codi**: El codi és funcional però presenta problemes d'estructura, estil inconsistent o incompliment parcial de bones pràctiques.
 
-### **3 punts: Bé**
+#### **3 punts: Bé**
 - **POO**: Les classes estan correctament estructurades i són funcionalment completes. Es fa un ús adequat de l'encapsulació, l'herència i el polimorfisme.
 - **Composer i Autoloading**: Composer i l'autoloading estan configurats correctament, amb una estructura de projectes ben definida.
 - **Proves amb PHPUnit**: Les proves unitàries estan completes i cobreixen la majoria dels casos, incloent-hi la gestió de sessions i la lògica del joc.
@@ -2742,7 +2742,7 @@ $dompdf->stream("informe_productes.pdf");
 - **Documentació amb PHPDoc**: La documentació amb PHPDoc és completa per a totes les classes i mètodes, amb descripcions clares i detallades.
 - **Qualitat del Codi**: El codi està ben escrit, seguint les convencions de nomenclatura i les bones pràctiques de desenvolupament.
 
-### **4 punts: Excel·lent**
+#### **4 punts: Excel·lent**
 - **POO**: El disseny de classes està ben organitzat, és reutilitzable i implementa clarament els principis de la programació orientada a objectes. El codi és elegant i eficient.
 - **Composer i Autoloading**: S'utilitza Composer de manera excel·lent, amb una configuració avançada de l'autoloading i una estructura de projecte organitzada i modular.
 - **Proves amb PHPUnit**: Les proves són exhaustives, cobrint totes les funcionalitats i considerant casos límit, amb ús de mocks quan necessari.
