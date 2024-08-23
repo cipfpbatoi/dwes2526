@@ -2248,6 +2248,8 @@ class CalculadoraTest extends TestCase {
         $this->assertEquals(2, $resultat);
     }
 }
+``` 
+```php
  
 // Arxiu: tests/CalculadoraTest.php
 use PHPUnit\Framework\TestCase;
@@ -2298,6 +2300,9 @@ class Usuari {
         return $this->nom . " " . $this->cognom;
     }
 }
+``` 
+```php
+
 // Arxiu: index.php
 require 'vendor/autoload.php';
 
