@@ -1920,7 +1920,7 @@ Les proves són crucials per a assegurar que el nostre codi PHP és fiable i man
 ---
 
 
-## 13.Exercicis
+## 13. Exercicis
 
 ### Bateria d'Exercicis Solucionats per a la Unitat de Programació Orientada a Objectes
 
@@ -2632,3 +2632,121 @@ $dompdf->stream("informe_productes.pdf");
 * Modifica les classes `Persona`, `Empleado`, i `Empresa` per implementar aquesta interfície. Assegura't que les propietats privades es puguen serialitzar correctament.
 
 * Escriu mètodes per deserialitzar un objecte a partir d'una cadena JSON o d'una cadena serialitzada. Prova aquests mètodes amb PHPUnit per assegurar-te que la deserialització funciona correctament.
+
+## 14. Enunciat dels projectes
+
+### Projecte "Ofegat"
+
+#### 1. Refactorització amb Programació Orientada a Objectes (POO)
+- **Crear una Classe `JocOfegat`**: Refactoritza la lògica principal del joc en una classe `JocOfegat` que gestione l'estat del joc, la paraula a endevinar, les lletres endevinades, i el nombre d'intents restants.
+- **Mètodes Principals**:
+    - `iniciarJoc($paraula): void` – Inicia una nova partida amb la paraula donada.
+    - `endevinaLletra($lletra): bool` – Comprova si la lletra és part de la paraula i actualitza l'estat del joc.
+    - `estaAcabat(): bool` – Retorna `true` si el joc ha acabat, ja siga per guanyar o per perdre.
+    - `obteEstat(): array` – Retorna l'estat actual del joc, incloent les lletres encertades, intents restants, etc.
+
+#### 2. Integració de Composer i Autoloading
+- **Configuració de Composer**: Utilitza Composer per gestionar les dependències del projecte. Defineix l'autoloading per carregar automàticament les classes de `JocOfegat`.
+- **Estructura del Projecte**:
+    - Organitza el codi en directoris com `src/Models` per a les classes del joc, i `src/Services` per a la gestió de sessions i autenticació.
+    - Defineix un `composer.json` per configurar l'autoloading PSR-4.
+
+#### 3. Proves amb PHPUnit
+- **Escriu Proves Unitàries**: Crea proves unitàries per a la classe `JocOfegat` utilitzant PHPUnit. Les proves poden incloure:
+    - Prova per assegurar que una paraula es configura correctament.
+    - Prova per verificar que una lletra encertada actualitza l'estat correctament.
+    - Prova per assegurar que el joc detecta correctament quan s'ha guanyat o perdut.
+- **Prova de Gestió de Sessions**: Afig proves per a la gestió de sessions, comprovant que l'estat del joc es guarda i es recupera correctament.
+
+#### 4. Logger amb Monolog
+- **Configuració de Logger**: Utilitza `Monolog` per registrar esdeveniments importants, com quan s'inicia un nou joc, quan un jugador endevina una lletra o quan es produeixen errors.
+- **Diversos Handlers**:
+    - Registra missatges a un fitxer `game.log` per a esdeveniments generals.
+    - Afig un handler per registrar errors greus, com intents invàlids o problemes de sessió, en un fitxer d'errors separat.
+
+### Projecte "4 en Ratlla"
+
+#### 1. Refactorització amb Programació Orientada a Objectes (POO)
+- **Classe `Joc4enRatlla`**: Refactoritza la lògica del joc en una classe `Joc4enRatlla` que gestione la graella, el torn del jugador, i la lògica per determinar el guanyador.
+- **Mètodes Principals**:
+    - `iniciarPartida(): void` – Inicia una nova partida.
+    - `ferMoviment($columna): bool` – Permet que un jugador faça un moviment en una columna determinada.
+    - `comprovaGuanyador(): ?int` – Comprova si hi ha un guanyador després d'un moviment.
+    - `obteEstatGraella(): array` – Retorna l'estat actual de la graella.
+
+#### 2. Integració de Composer i Autoloading
+- **Configuració de Composer**: Defineix un `composer.json` per al projecte, configurant l'autoloading PSR-4 per carregar automàticament les classes de `Joc4enRatlla`.
+- **Estructura del Projecte**:
+    - Organitza el codi en directoris com `src/Models` per a les classes del joc i `src/Controllers` per a la gestió del flux del joc.
+    - Configura Composer per gestionar les dependències del projecte.
+
+#### 3. Proves amb PHPUnit
+- **Escriu Proves Unitàries**: Crea proves unitàries per a la classe `Joc4enRatlla` utilitzant PHPUnit. Les proves poden incloure:
+    - Verificació de la configuració inicial de la graella.
+    - Proves per assegurar que un moviment s'aplica correctament a la graella.
+    - Proves per assegurar que el joc detecta correctament un guanyador o un empat.
+- **Proves de Gestió de Sessions**: Afig proves per assegurar que l'estat del joc i el torn del jugador es mantenen correctament a través de les sessions.
+
+#### 4. Logger amb Monolog
+- **Configuració de Logger**: Utilitza `Monolog` per registrar esdeveniments importants del joc, com quan un jugador fa un moviment, quan s'inicia una nova partida, o quan es produeixen errors.
+- **Diversos Handlers**:
+    - Registra els moviments dels jugadors i els resultats del joc en un fitxer `game.log`.
+    - Registra errors greus o problemes amb les sessions en un fitxer d'errors separat.
+
+### Consideracions Addicionals per a Ambdós Projectes
+
+#### 1. Documentació amb PHPDoc
+- **Documentació Completa**: Documenta totes les classes i mètodes amb comentaris PHPDoc. Això inclou les descripcions dels paràmetres i els valors de retorn per a cada mètode.
+- **Generació Automàtica**: Utilitza `phpDocumentor` o una eina similar per generar la documentació automàticament. Afig la documentació generada al projecte per facilitar el manteniment i la comprensió del codi.
+
+#### 2. Implementació d'Interfícies
+- **Interfície `JocInterface`**: Crea una interfície que definisca els mètodes bàsics que qualsevol joc (com Ofegat o 4 en Ratlla) ha de tindre (`iniciarJoc`, `ferMoviment`, `comprovaGuanyador`, etc.). Assegura't que les classes `JocOfegat` i `Joc4enRatlla` implementen aquesta interfície.
+
+#### 3. Serialització i Persistència
+- **Serialització de l'Estat del Joc**: Implementa funcionalitats per serialitzar l'estat del joc (usant JSON o `serialize()`) i deserialitzar-lo per mantenir la persistència entre sessions o guardar l'estat per a reprendre la partida posteriorment.
+
+### Rúbrica d'Avaluació per als Projectes "Ofegat" i "4 en Ratlla"
+
+| **Criteri**                                                 | ** Insuficient (1 punt)**                                                                                   | ** Adequat (2 punts)**                                                                                                                          | ** Bé (3 punts)**                                                                                                      | ** Excel·lent (4 punts)**                                                                                                 |
+|-------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| **Implementació de Programació Orientada a Objectes (POO)** | Les classes no estan ben dissenyades, falta encapsulació, ús incorrecte d'herència, o mètodes no funcional. | Les classes estan creades però poden tindre errors o una estructura confusa. S'aplica la POO de manera bàsica, però hi ha problemes de disseny. | Classes correctament estructurades i funcionalment completes. Ús adequat d'encapsulació, herència i polimorfisme.      | Disseny de classes ben organitzat, reutilitzable i amb una implementació clara dels principis de POO.                     |
+| **Integració de Composer i Autoloading**                    | No s'ha configurat Composer o l'autoloading, o està mal configurat i no funciona correctament.              | Composer s'ha utilitzat, però amb una estructura de projectes i autoloading bàsics o incorrectes.                                               | Composer i l'autoloading estan configurats correctament amb una estructura de projectes ben definida.                  | Ús excel·lent de Composer amb una configuració avançada d'autoloading i una estructura de projecte organitzada i modular. |
+| **Implementació de Proves amb PHPUnit**                     | No s'han creat proves, o les proves creades són mínimes i no adequades per a verificar la funcionalitat.    | Es presenten proves bàsiques amb PHPUnit, però cobreixen parcialment les funcionalitats requerides.                                             | Proves unitàries completes que cobreixen la majoria dels casos, incloent proves de gestió de sessions i lògica de joc. | Proves exhaustives que cobreixen totes les funcionalitats i consideren casos límit, amb ús de mocks quan necessari.       |
+| **Ús de Logger amb Monolog**                                | No s'ha implementat el logger o no s'utilitza de manera efectiva per registrar esdeveniments importants.    | Logger implementat, però amb ús limitat o incorrecte en la registració d'esdeveniments i errors.                                                | Logger ben implementat, amb esdeveniments i errors registrats adequadament en diferents fitxers o canals.              | Ús avançat de logger amb diferents handlers per registrar informació, errors, i seguiment detallat del flux del joc.      |
+| **Documentació amb PHPDoc**                                 | Falta documentació o és insuficient per comprendre les classes i mètodes del projecte.                      | Documentació bàsica amb PHPDoc, però amb omisions o descripcions poc clares.                                                                    | Documentació completa amb PHPDoc per a totes les classes i mètodes, amb descripcions clares i detallades.              | Documentació excel·lent amb PHPDoc, ben estructurada i completa, facilitant la comprensió i manteniment del projecte.     |
+| **Qualitat del Codi i Bones Pràctiques**                    | Codi desorganitzat, amb molts errors de sintaxi, mala nomenclatura, o sense bones pràctiques de codi.       | Codi funcional però amb problemes d'estructura, estil inconsistent o incompliment parcial de bones pràctiques.                                  | Codi ben escrit, seguint les convencions de nomenclatura i bones pràctiques de desenvolupament.                        | Codi de qualitat professional, net, ben organitzat, i seguint rigorosament les millors pràctiques de programació.         |
+
+### Explicació dels Criteris
+
+### **1 punt: Insuficient**
+- **POO**: Les classes no segueixen els principis bàsics de la programació orientada a objectes. Hi ha problemes greus com la falta d'encapsulació, l'ús inadequat de l'herència o mètodes que no funcionen correctament.
+- **Composer i Autoloading**: No s'ha configurat Composer o l'autoloading. Si estan configurats, no funcionen correctament.
+- **Proves amb PHPUnit**: Les proves estan absents o són mínimes, i no verifiquen adequadament la funcionalitat del projecte.
+- **Logger amb Monolog**: El logger no s'ha implementat, o si està present, no s'utilitza de manera efectiva per registrar esdeveniments importants.
+- **Documentació amb PHPDoc**: Falta documentació essencial, o la que existeix és insuficient per a entendre el codi.
+- **Qualitat del Codi**: El codi és desorganitzat, amb molts errors de sintaxi i no segueix les bones pràctiques de programació.
+
+### **2 punts: Adequat**
+- **POO**: Les classes estan creades, però poden contindre errors o una estructura confusa. L'aplicació de la POO és bàsica, amb alguns problemes de disseny.
+- **Composer i Autoloading**: Composer s'ha utilitzat, però l'estructura de projectes o l'autoloading no són òptims, presentant configuracions bàsiques o incorrectes.
+- **Proves amb PHPUnit**: Es presenten proves bàsiques que cobreixen parcialment les funcionalitats requerides.
+- **Logger amb Monolog**: El logger està implementat, però l'ús és limitat o incorrecte en la registració d'esdeveniments i errors.
+- **Documentació amb PHPDoc**: La documentació amb PHPDoc és bàsica, amb algunes omisions o descripcions poc clares.
+- **Qualitat del Codi**: El codi és funcional però presenta problemes d'estructura, estil inconsistent o incompliment parcial de bones pràctiques.
+
+### **3 punts: Bé**
+- **POO**: Les classes estan correctament estructurades i són funcionalment completes. Es fa un ús adequat de l'encapsulació, l'herència i el polimorfisme.
+- **Composer i Autoloading**: Composer i l'autoloading estan configurats correctament, amb una estructura de projectes ben definida.
+- **Proves amb PHPUnit**: Les proves unitàries estan completes i cobreixen la majoria dels casos, incloent-hi la gestió de sessions i la lògica del joc.
+- **Logger amb Monolog**: El logger està ben implementat, amb esdeveniments i errors registrats adequadament en diferents fitxers o canals.
+- **Documentació amb PHPDoc**: La documentació amb PHPDoc és completa per a totes les classes i mètodes, amb descripcions clares i detallades.
+- **Qualitat del Codi**: El codi està ben escrit, seguint les convencions de nomenclatura i les bones pràctiques de desenvolupament.
+
+### **4 punts: Excel·lent**
+- **POO**: El disseny de classes està ben organitzat, és reutilitzable i implementa clarament els principis de la programació orientada a objectes. El codi és elegant i eficient.
+- **Composer i Autoloading**: S'utilitza Composer de manera excel·lent, amb una configuració avançada de l'autoloading i una estructura de projecte organitzada i modular.
+- **Proves amb PHPUnit**: Les proves són exhaustives, cobrint totes les funcionalitats i considerant casos límit, amb ús de mocks quan necessari.
+- **Logger amb Monolog**: S'utilitza el logger de manera avançada, amb diferents handlers per registrar informació, errors, i fer un seguiment detallat del flux del joc.
+- **Documentació amb PHPDoc**: La documentació amb PHPDoc és excel·lent, ben estructurada i completa, facilitant la comprensió i el manteniment del projecte.
+- **Qualitat del Codi**: El codi és de qualitat professional, net, ben organitzat, i segueix rigorosament les millors pràctiques de programació.
+
