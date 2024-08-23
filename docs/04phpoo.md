@@ -2569,8 +2569,9 @@ $dompdf->stream("informe_productes.pdf");
 #### Exercici 1. Creació de la Classe Bàsica i Gestió de Propietats
 
 * Crea una classe `Persona` amb les propietats privades `nom`, `cognoms`, i `edat`. Encapsula aquestes propietats mitjançant getters i setters. Afig els següents mètodes:
-- `getNomComplet(): string` – Retorna el nom complet de la persona.
-- `estaJubilat(): bool` – Retorna `true` si l'edat és major o igual a 65, `false` en cas contrari.
+ 
+      - `getNomComplet(): string` – Retorna el nom complet de la persona.
+      - `estaJubilat(): bool` – Retorna `true` si l'edat és major o igual a 65, `false` en cas contrari.
 
 * Modifica la classe `Persona` afegint un constructor que assigna nom i cognoms. Si es proporciona un tercer paràmetre, assigna l'edat; en cas contrari, assigna una edat per defecte de 25 anys.
 
@@ -2579,12 +2580,13 @@ $dompdf->stream("informe_productes.pdf");
 #### Exercici 2. Herència i Polimorfisme
 
 * Crea una classe `Empleado` que herete de `Persona`. Afig les següents propietats i mètodes:
-  - `private float $sou`
-  - `private array $telefons`
-  - `anyadirTelefono(int $telefon): void` – Afig un número de telèfon a l'array.
-  - `listarTelefonos(): string` – Retorna els números de telèfon separats per comes.
-  - `vaciarTelefonos(): void` – Buida l'array de telèfons.
-  - `debePagarImpuestos(): bool` – Retorna `true` si el sou és superior a 3333€, `false` en cas contrari.
+ 
+    - `private float $sou`
+    - `private array $telefons`
+    - `anyadirTelefono(int $telefon): void` – Afig un número de telèfon a l'array.
+    - `listarTelefonos(): string` – Retorna els números de telèfon separats per comes.
+    - `vaciarTelefonos(): void` – Buida l'array de telèfons.
+    - `debePagarImpuestos(): bool` – Retorna `true` si el sou és superior a 3333€, `false` en cas contrari.
 
 * Afig un mètode estàtic `toHtml(Empleado $emp): string` que genere un codi HTML que mostre el nom complet de l'empleat dins d'un paràgraf i els seus telèfons dins d'una llista ordenada.
 * Afig un mètode estàtic `toHtml(Persona $p)` a la classe Persona que mostre el nom complet de la persona dins d'un paràgraf. Modifica el mètode `toHtml` de `Empleado` per rebre una `Persona` com a paràmetre i comprovar si es tracta d'un `Empleado` amb `instanceof`.
@@ -2593,9 +2595,10 @@ $dompdf->stream("informe_productes.pdf");
 #### Exercici 3. Integració d'Espais de Noms, Autoloading, i Composer
 
 * Crea una classe `Empresa` que incloga una propietat amb un array de `Workers`, ja siguen `Employees` o `Managers`. Implementa:
-  - `public function addWorker(Worker $t)`
-  - `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
-  - `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
+ 
+    - `public function addWorker(Worker $t)`
+    - `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
+    - `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
  
 * Configura un projecte PHP amb Composer que utilitze l'autoloading PSR-4. Afig un fitxer `composer.json` i defineix l'estructura de directoris `src/Models`, `src/Services`, etc. Crea una classe `Producte` dins de `src/Models` i verifica que l'autoloading funcione correctament instanciant la classe en un fitxer separat.
 
@@ -2622,8 +2625,9 @@ $dompdf->stream("informe_productes.pdf");
 #### 6. Serialització i JSON
 
 * Crea una interfície `JSerializable` que incloga els mètodes:
-  - `toJSON(): string` – Converteix l'objecte a un JSON utilitzant `json_encode()`.
-  - `toSerialize(): string` – Serialitza l'objecte utilitzant `serialize()`.
+   
+    - `toJSON(): string` – Converteix l'objecte a un JSON utilitzant `json_encode()`.
+    - `toSerialize(): string` – Serialitza l'objecte utilitzant `serialize()`.
 
 * Modifica les classes `Persona`, `Empleado`, i `Empresa` per implementar aquesta interfície. Assegura't que les propietats privades es puguen serialitzar correctament.
 
