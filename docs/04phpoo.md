@@ -1924,9 +1924,13 @@ Les proves són crucials per a assegurar que el nostre codi PHP és fiable i man
 
 ### Bateria d'Exercicis Solucionats per a la Unitat de Programació Orientada a Objectes
 
-#### Exercici 1: Crear una Classe Bàsica .
-Crea una classe `Cotxe` que tinga les propietats `marca` i `model`. Afegeix un mètode `mostraInformacio` que retorne un string amb la marca i el model del cotxe.
-Crea una instància de la classe `Cotxe`, assigna-li una marca i un model, i mostra la informació utilitzant el mètode `mostraInformacio`.
+#### Exercici 1: Crear una Classe Bàsica
+
+1. Crea una classe `Cotxe` que tinga les propietats `marca` i `model`. Afegeix un mètode `mostraInformacio` que retorne un string amb la marca i el model del cotxe.
+2. Crea una instància de la classe `Cotxe`, assigna-li una marca i un model, i mostra la informació utilitzant el mètode `mostraInformacio`.
+
+<details>
+<summary>Solució</summary>
 
 ```php
 <?php
@@ -1944,10 +1948,15 @@ $cotxe->marca = "Toyota";
 $cotxe->model = "Corolla";
 echo $cotxe->mostraInformacio(); // Output: Marca: Toyota, Model: Corolla
 ``` 
+</details>
  
-### Exercici 2. Afegir un Constructor i desctructor
-Modifica la classe `Cotxe` per afegir un constructor que prenga com a paràmetres la `marca` i el `model`, i que establisca aquestes propietats automàticament.
- Afegeix un destructor a la classe `Cotxe` que mostre un missatge quan l'objecte és destruït. Crea un objecte i permet que es destruïsca al final del programa.
+### Exercici 2. Afegir un Constructor i destructor
+
+1. Modifica la classe `Cotxe` per afegir un constructor que prenga com a paràmetres la `marca` i el `model`, i que establisca aquestes propietats automàticament.
+2. Afegeix un destructor a la classe `Cotxe` que mostre un missatge quan l'objecte és destruït. Crea un objecte i permet que es destruïsca al final del programa.
+
+<details>
+<summary>Solució</summary>
 
 ```php
 <?php
@@ -1968,8 +1977,14 @@ class Cotxe {
     }
 }
 ```
-## Exercici 3. Encapsulació de Propietats
- Modifica la classe `Cotxe` per a que les propietats `marca` i `model` siguen privades. Afegeix mètodes públics `getMarca`, `setMarca`, `getModel`, i `setModel` per accedir i modificar aquestes propietats.
+</details>
+
+### Exercici 3. Encapsulació de Propietats
+ 
+1. Modifica la classe `Cotxe` per a que les propietats `marca` i `model` siguen privades. Afegeix mètodes públics `getMarca`, `setMarca`, `getModel`, i `setModel` per accedir i modificar aquestes propietats.
+
+<details>
+<summary>Solució</summary>
 
 ```php
 <?php
@@ -2006,11 +2021,15 @@ class Cotxe {
 $cotxe = new Cotxe("Ford", "Fiesta");
 echo $cotxe->mostraInformacio(); // Output: Marca: Ford, Model: Fiesta
 ```
-
-## Exercici 4. Herència i Polimorfisme
+</details>
  
-Crea una classe `Vehicle` amb una propietat `tipus`. A continuació, crea una classe `Motocicleta` que herete de `Vehicle` i tinga una propietat `cilindrada`. Afegeix un mètode a `Motocicleta` que retorne el tipus i la cilindrada.
- Crea una funció `mostraDetallsVehicle` que accepte un objecte de tipus `Vehicle` i mostre les seues propietats. Prova aquesta funció amb objectes de `Cotxe` i `Motocicleta`.
+### Exercici 4. Herència i Polimorfisme
+ 
+1. Crea una classe `Vehicle` amb una propietat `tipus`. A continuació, crea una classe `Motocicleta` que herete de `Vehicle` i tinga una propietat `cilindrada`. Afegeix un mètode a `Motocicleta` que retorne el tipus i la cilindrada.
+2. Crea una funció `mostraDetallsVehicle` que accepte un objecte de tipus `Vehicle` i mostre les seues propietats. Prova aquesta funció amb objectes de `Cotxe` i `Motocicleta`.
+
+<details>
+<summary>Solució</summary>
 
 ```php
 <?php
@@ -2064,11 +2083,15 @@ $moto = new Motocicleta(600);
 mostraDetallsVehicle($cotxe); // Output: Tipus: Cotxe, Marca: Toyota, Model: Corolla
 mostraDetallsVehicle($moto);  // Output: Tipus: Motocicleta, Cilindrada: 600
 ```
+</details>
 
-## Exercici 5. Classes Abstractes i Interfícies
+### Exercici 5. Classes Abstractes i Interfícies
  
-Crea una classe abstracta `Figura` amb un mètode abstracte `calculaArea`. Després, crea classes `Cercle` i `Rectangle` que estiguen basades en `Figura` i implementen el mètode `calculaArea`.
- Defineix una interfície `OperacionsBàsiques` amb els mètodes `suma` i `resta`. Implementa aquesta interfície en una classe `CalculadoraSimple`.
+1. Crea una classe abstracta `Figura` amb un mètode abstracte `calculaArea`. Després, crea classes `Cercle` i `Rectangle` que estiguen basades en `Figura` i implementen el mètode `calculaArea`.
+2. Defineix una interfície `OperacionsBàsiques` amb els mètodes `suma` i `resta`. Implementa aquesta interfície en una classe `CalculadoraSimple`.
+
+<details>
+<summary>Solució</summary>
 
 ```php
 <?php
@@ -2131,10 +2154,14 @@ $calculadora = new CalculadoraSimple();
 echo "Suma: " . $calculadora->suma(5, 3) . "\n"; // Output: Suma: 8
 echo "Resta: " . $calculadora->resta(5, 3) . "\n"; // Output: Resta: 2
 ```
+</details>
 
+### Exercici 6.  Utilitzar Traits
 
-## Exercici 6.  Utilitzar Traits
-Crea un trait `Informacio` amb un mètode `mostraInformacio`. Inclou aquest trait en les classes `Cotxe` i `Motocicleta`, i utilitza'l per mostrar informació addicional.
+1. Crea un trait `Informacio` amb un mètode `mostraInformacio`. Inclou aquest trait en les classes `Cotxe` i `Motocicleta`, i utilitza'l per mostrar informació addicional.
+
+<details>
+<summary>Solució</summary>
 
 ```php
 <?php
@@ -2158,9 +2185,14 @@ $moto = new Motocicleta();
 echo $cotxe->mostraInformacio() . "\n"; // Output: Aquest és un objecte de tipus Cotxe
 echo $moto->mostraInformacio() . "\n"; // Output: Aquest és un objecte de tipus Motocicleta
 ```
+</details>
 
-## Exercici 7.  Gestionar Excepcions
-Escriu una funció `divideix` que prenga dos nombres com a paràmetres i retorne el resultat de la divisió. Si el segon nombre és zero, llença una excepció amb un missatge adequat. Captura aquesta excepció quan crides a la funció i mostra un missatge d'error.
+### Exercici 7.  Gestionar Excepcions
+
+1. Escriu una funció `divideix` que prenga dos nombres com a paràmetres i retorne el resultat de la divisió. Si el segon nombre és zero, llença una excepció amb un missatge adequat. Captura aquesta excepció quan crides a la funció i mostra un missatge d'error.
+
+<details>
+<summary>Solució</summary>
 
 ```php
 <?php
@@ -2178,12 +2210,16 @@ try {
     echo "Error: " . $e->getMessage() . "\n"; // Output: Error: No es pot dividir per zero.
 }
 ```
+</details>
 
-## 8. Proves amb PHPUnit
+### 8. Proves amb PHPUnit
  
-Crea una classe `Calculadora` amb els mètodes `suma` i `resta`. Escriu una prova unitària amb PHPUnit per verificar que aquests mètodes funcionen correctament.
- Afegeix un mètode `divideix` a la classe `Calculadora` que llance una excepció quan es divideix per zero. Escriu una prova unitària que assegure que aquesta excepció es llança correctament.
- 
+1. Crea una classe `Calculadora` amb els mètodes `suma` i `resta`. Escriu una prova unitària amb PHPUnit per verificar que aquests mètodes funcionen correctament.
+2. Afegeix un mètode `divideix` a la classe `Calculadora` que llance una excepció quan es divideix per zero. Escriu una prova unitària que assegure que aquesta excepció es llança correctament.
+
+<details>
+<summary>Solució</summary>
+
 ```php
 <?php
 // Arxiu: tests/CalculadoraTest.php
@@ -2236,6 +2272,7 @@ class CalculadoraTest extends TestCase {
     }
 }
 ```
+</details>
 
 ### Exercicis proposats
  
