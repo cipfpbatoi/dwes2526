@@ -2576,30 +2576,30 @@ $dompdf->stream("informe_productes.pdf");
 
 * Modifica la classe `Persona` per utilitzar una constant `LIMITE_EDAT` amb el valor de 66 anys i utilitza-la en el mètode `estaJubilat`.
 
-## Exercici 2. Herència i Polimorfisme
+#### Exercici 2. Herència i Polimorfisme
 
 * Crea una classe `Empleado` que herete de `Persona`. Afig les següents propietats i mètodes:
-- `private float $sou`
-- `private array $telefons`
-- `anyadirTelefono(int $telefon): void` – Afig un número de telèfon a l'array.
-- `listarTelefonos(): string` – Retorna els números de telèfon separats per comes.
-- `vaciarTelefonos(): void` – Buida l'array de telèfons.
-- `debePagarImpuestos(): bool` – Retorna `true` si el sou és superior a 3333€, `false` en cas contrari.
+  - `private float $sou`
+  - `private array $telefons`
+  - `anyadirTelefono(int $telefon): void` – Afig un número de telèfon a l'array.
+  - `listarTelefonos(): string` – Retorna els números de telèfon separats per comes.
+  - `vaciarTelefonos(): void` – Buida l'array de telèfons.
+  - `debePagarImpuestos(): bool` – Retorna `true` si el sou és superior a 3333€, `false` en cas contrari.
 
 * Afig un mètode estàtic `toHtml(Empleado $emp): string` que genere un codi HTML que mostre el nom complet de l'empleat dins d'un paràgraf i els seus telèfons dins d'una llista ordenada.
 * Afig un mètode estàtic `toHtml(Persona $p)` a la classe Persona que mostre el nom complet de la persona dins d'un paràgraf. Modifica el mètode `toHtml` de `Empleado` per rebre una `Persona` com a paràmetre i comprovar si es tracta d'un `Empleado` amb `instanceof`.
 * Transforma `Persona` en una classe abstracta. Redefineix el mètode estàtic `toHtml(Persona $p)` en totes les seues subclasses. Afig una classe `Worker` que siga també abstracta i que emmagatzeme els `telefonos`. Crea mètodes per calcular el sou en `Empleado` i `Gerent`, segons la descripció.
 
-## Exercici 3. Integració d'Espais de Noms, Autoloading, i Composer
+#### Exercici 3. Integració d'Espais de Noms, Autoloading, i Composer
 
 * Crea una classe `Empresa` que incloga una propietat amb un array de `Workers`, ja siguen `Employees` o `Managers`. Implementa:
-- `public function addWorker(Worker $t)`
-- `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
-- `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
+  - `public function addWorker(Worker $t)`
+  - `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
+  - `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
  
 * Configura un projecte PHP amb Composer que utilitze l'autoloading PSR-4. Afig un fitxer `composer.json` i defineix l'estructura de directoris `src/Models`, `src/Services`, etc. Crea una classe `Producte` dins de `src/Models` i verifica que l'autoloading funcione correctament instanciant la classe en un fitxer separat.
 
-## Exercici 4. Logger i Documentació
+#### Exercici 4. Logger i Documentació
 
 * Utilitza la llibreria `Monolog` per configurar un logger que escriga missatges a un fitxer `app.log`. Afig funcionalitat perquè el logger registre missatges d'informació i d'error en diferents arxius segons la gravetat.
     
@@ -2611,7 +2611,7 @@ $dompdf->stream("informe_productes.pdf");
 
 * Escriu una prova unitària que comprove que el logger està registrant correctament els missatges d'error a l'arxiu corresponent. Utilitza un mock per assegurar-te que el logger funciona sense necessitat d'escriure en un fitxer real durant la prova.
 
-## Exercici 5. Generació de PDFs amb DomPDF
+#### Exercici 5. Generació de PDFs amb DomPDF
 
 * Instal·la la llibreria `dompdf/dompdf` amb Composer. Crea un script PHP que genere un PDF senzill amb un títol i un paràgraf de text.
 
@@ -2619,11 +2619,11 @@ $dompdf->stream("informe_productes.pdf");
 
 * Utilitzant la classe `Empresa` i `Empleado`, genera un informe en PDF amb la llista de treballadors i el seu sou. Utilitza DomPDF per generar aquest informe.
 
-## 6. Serialització i JSON
+#### 6. Serialització i JSON
 
 * Crea una interfície `JSerializable` que incloga els mètodes:
-- `toJSON(): string` – Converteix l'objecte a un JSON utilitzant `json_encode()`.
-- `toSerialize(): string` – Serialitza l'objecte utilitzant `serialize()`.
+  - `toJSON(): string` – Converteix l'objecte a un JSON utilitzant `json_encode()`.
+  - `toSerialize(): string` – Serialitza l'objecte utilitzant `serialize()`.
 
 * Modifica les classes `Persona`, `Empleado`, i `Empresa` per implementar aquesta interfície. Assegura't que les propietats privades es puguen serialitzar correctament.
 
