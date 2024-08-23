@@ -2248,9 +2248,7 @@ class CalculadoraTest extends TestCase {
         $this->assertEquals(2, $resultat);
     }
 }
-```
- ```php
-<?php
+ 
 // Arxiu: tests/CalculadoraTest.php
 use PHPUnit\Framework\TestCase;
 
@@ -2273,6 +2271,293 @@ class CalculadoraTest extends TestCase {
 }
 ```
 </details>
+
+### Exercici 9. Espais de Noms (Namespaces)
+
+1. Crea un espai de noms `App\Models` i defineix una classe `Usuari` dins d'aquest espai de noms. Afegeix un mètode `getNomComplet` que retorne el nom complet de l'usuari.
+2. En un fitxer separat, importa la classe `Usuari` de l'espai de noms `App\Models` i crea una instància d'aquesta classe. Utilitza el mètode `getNomComplet` per mostrar el nom complet d'un usuari.
+
+<details>
+<summary>Solució</summary>
+
+```php
+<?php
+// Arxiu: src/Models/Usuari.php
+namespace App\Models;
+
+class Usuari {
+    private $nom;
+    private $cognom;
+
+    public function __construct($nom, $cognom) {
+        $this->nom = $nom;
+        $this->cognom = $cognom;
+    }
+
+    public function getNomComplet() {
+        return $this->nom . " " . $this->cognom;
+    }
+}
+// Arxiu: index.php
+require 'vendor/autoload.php';
+
+use App\Models\Usuari;
+
+$usuari = new Usuari("Joan", "Garcia");
+echo $usuari->getNomComplet(); // Output: Joan Garcia
+```
+</details>
+
+### Exercici 10. Autoloading i Composer
+
+1. Configura un projecte PHP amb Composer que utilitze l'autoloading PSR-4. Crea l'estructura de directoris `src/Models` i col·loca una classe `Producte` dins de `src/Models`. Verifica que l'autoloading funcione correctament instanciant la classe `Producte` en un fitxer separat.
+2. Afegeix la llibreria `monolog/monolog` al projecte utilitzant Composer. Crea una instància de `Logger` i afegeix una entrada al registre de logs.
+
+<details>
+<summary>Solució</summary>
+
+1. Crea l'estructura de directoris src/Models i col·loca el següent codi a src/Models/Producte.php:
+
+```php
+<?php
+namespace App\Models;
+
+class Producte {
+    private $nom;
+
+    public function __construct($nom) {
+        $this->nom = $nom;
+    }
+
+    public function getNom() {
+        return $this->nom;
+    }
+}
+```
+
+2. Configura l'autoloading en composer.json:
+
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
+```
+
+3. Executa composer dump-autoload per generar els fitxers d'autoload.
+4. Utilitza la classe producte:
+
+```php
+<?php
+// Arxiu: index.php
+require 'vendor/autoload.php';
+
+use App\Models\Producte;
+
+$producte = new Producte("Ordinador");
+echo $producte->getNom(); // Output: Ordinador
+```
+5. Afegeix Monolog a composer.json:
+
+```bash
+composer require monolog/monolog
+```
+6. Utilitza Monolog per crear un logger:
+
+```php
+<?php
+require 'vendor/autoload.php';
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger('nom_aplicacio');
+$log->pushHandler(new StreamHandler('app.log', Logger::WARNING));
+
+// Afegeix una entrada al log
+$log->warning('Aquesta és una entrada d'advertència');
+$log->error('Aquesta és una entrada d'error');
+
+```
+</details>
+ 
+### Exercici 11. Logger
+
+1. Utilitzant la llibreria `Monolog`, crea un logger que escriga missatges a un fitxer `app.log`. Configura el logger per registrar missatges d'informació i d'error.
+2. Configura un logger que escriga missatges de registre tant a un fitxer com a la consola. Prova el logger registrant missatges d'error.
+
+<details>
+<summary>Solució</summary>
+
+```php
+<?php
+require 'vendor/autoload.php';
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger('nom_aplicacio');
+$log->pushHandler(new StreamHandler('app.log', Logger::INFO));
+$log->pushHandler(new StreamHandler('app.log', Logger::ERROR));
+
+// Registra missatges d'informació i d'error
+$log->info('Aquesta és una entrada d’informació');
+$log->error('Aquesta és una entrada d’error');
+
+```
+
+```php
+<?php
+require 'vendor/autoload.php';
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\ErrorLogHandler;
+
+$log = new Logger('nom_aplicacio');
+$log->pushHandler(new StreamHandler('app.log', Logger::WARNING));
+$log->pushHandler(new ErrorLogHandler());
+
+// Registra missatges d’error al fitxer i a la consola
+$log->error('Aquesta és una entrada d’error');
+
+```
+
+</details>
+
+### Exercici 12. Documentació
+
+1. Documenta la classe `Producte` creada en l'exercici anterior utilitzant comentaris PHPDoc. Assegura't d'incloure la descripció de la classe, les propietats, i els mètodes.
+2. Utilitza una eina com `phpDocumentor` per generar la documentació automàtica del codi PHP del projecte, incloent-hi la classe `Producte`.
+
+<details>
+<summary>Solució</summary>
+
+```php
+<?php
+namespace App\Models;
+
+/**
+ * Classe Producte
+ *
+ * Representa un producte amb un nom.
+ */
+class Producte {
+    /**
+     * @var string El nom del producte
+     */
+    private $nom;
+
+    /**
+     * Constructor de la classe Producte
+     *
+     * @param string $nom El nom del producte
+     */
+    public function __construct($nom) {
+        $this->nom = $nom;
+    }
+
+    /**
+     * Obté el nom del producte
+     *
+     * @return string El nom del producte
+     */
+    public function getNom() {
+        return $this->nom;
+    }
+}
+```
+
+1. Instal·la phpDocumentor globalment o com a dependència de desenvolupament:
+
+```bash
+composer require --dev phpdocumentor/phpdocumentor
+```
+
+2. Genera la documentació:
+
+```bash
+vendor/bin/phpdoc -d src -t docs
+```
+
+Aquest comandament generarà la documentació a la carpeta docs.
+ 
+</details>
+
+### Exercici 13. Generació de PDFs amb DomPDF
+
+1. Instal·la la llibreria `dompdf/dompdf` amb Composer. Crea un script PHP que genere un PDF senzill amb un títol i un paràgraf de text.
+2. Crea un PDF utilitzant DomPDF que incloga una taula amb dades i una imatge. Assegura't que el PDF es renderitze correctament i que la imatge s'incloga en el document.
+
+<details>
+<summary>Solució</summary>
+
+1. Instal·la DomPDF amb Composer:
+
+```bash
+composer require dompdf/dompdf
+```
+
+2. Crea un script PHP que generi un PDF senzill:
+
+```php
+<?php
+require 'vendor/autoload.php';
+
+use Dompdf\Dompdf;
+
+$dompdf = new Dompdf();
+$html = '<h1>Informe de Vendes</h1><p>Aquest és un informe de les vendes.</p>';
+
+$dompdf->loadHtml($html);
+$dompdf->setPaper('A4', 'landscape');
+$dompdf->render();
+$dompdf->stream('informe.pdf');
+```
+
+3. Crea un PDF amb una taula i una imatge:
+
+```php
+<?php
+require 'vendor/autoload.php';
+
+use Dompdf\Dompdf;
+
+$dompdf = new Dompdf();
+$html = '
+    <h1>Informe de Productes</h1>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Producte</th>
+                <th>Preu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ordinador</td>
+                <td>500€</td>
+            </tr>
+            <tr>
+                <td>Teclat</td>
+                <td>20€</td>
+            </tr>
+        </tbody>
+    </table>
+    <img src="https://example.com/imatge.png" alt="Imatge de Producte" />
+';
+
+$dompdf->loadHtml($html);
+$dompdf->setPaper('A4', 'portrait');
+$dompdf->render();
+$dompdf->stream("informe_productes.pdf");
+```
+
+</details>
+
 
 ### Exercicis proposats
  
