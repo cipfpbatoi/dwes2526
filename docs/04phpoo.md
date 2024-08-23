@@ -2566,93 +2566,65 @@ $dompdf->stream("informe_productes.pdf");
 
 ### Exercicis proposats
  
-301. `Persona.php`: Crea una classe `Persona` amb el seu nom, cognoms i edat.
-     Encapsula les propietats mitjançant *getters/setters* i afig mètodes per a: (**Pissarra**)
-     * Obtindre el seu nom complet → `getNombreCompleto(): string`
-     * Saver si està jubilat o no → `estaJubilado(): bool`
-302. `Persona7.php`: Còpia la classe persona i modifica-la. Afig el constructor de manera que assignem nom i cognoms mitjançant el constructor (utilitza la sintaxi de PHP7).
-     Si el constructor rep un tercer paràmetre, serà l'edat de la `Persona`. Si no, se li assignarà 25 anys com a edat. 
-303. `Persona8.php`: Copia la classe persona i modifica la classe per a utilitzar la sintaxi de PHP 8 de promoció de les propietats del constructor. 
-304. `Persona8.php`: Modifica la classe de l'exercici anterior per afegir una constant `LIMITE_EDAT` amb el valor de la edat jubilació, i modifica el codi per a utilitzar la constant. Posa la constant en 66.
-305. `Persona8.php`: Modifica la classe de l'exercici anterior, canviant la constant per una variable estàtica `limite_edat`, de manera que mitjançant la funció estatica *modificaLimite()* pugues modificar el seu valor. Per defecte se li assignarà la constant `LIMITE_EDAT`
-306. `Empleado.php`: Crea un classe que herete de l'anterior i afig una propietat privada que emmagatzeme el sou i un array de nombres de telèfons.
-          Afig els següents mètodes:
-    * `public function anyadirTelefono(int $telefono) : void` → Afig un telèfon al array (**pissarra**)
-    * `public function listarTelefonos(): string` → Mostra els telèfons separats per comes
-    * `public function vaciarTelefonos(): void` → Elimina tots els telèfons
-    * `public debePagarImpuestos(): bool`Que retorne un booleà indicant si deu o no pagar impostos (es paguen quan el sou és superior a 3333€)
-307. `Empleado.php`: Completa-la el següent mètode amb una cadena HTML que mostre el nom complet d'un empleat dins d'un paràgraf i tots els telèfons mitjançant una llista ordenada (per a això, hauràs de crear un *getter* per als telèfons):
-     * `public static function toHtml(Empleado $emp): string`
- <figure style="float: right;">
-     <img src="imagenes/03/03p307.png">
-     <figcaption>Ejercicio 307</figcaption>
- </figure>
+#### Exercici 1. Creació de la Classe Bàsica i Gestió de Propietats
 
-308. `Persona8.php`: Crea en `Persona` el mètode estàtic `toHtml(Persona $p)` que mostrarà el nom complet de la persona dins d'un paragraf, i modifica en `Empleado` el mateix mètode `toHtml(Persona $p)`, però canvia la signatura perquè reba una `Persona` com a paràmetre.
-     Per a accedir a les propietats de l'empleat amb la persona que rebem com a paràmetre, comprovarem el seu tipus:
+* Crea una classe `Persona` amb les propietats privades `nom`, `cognoms`, i `edat`. Encapsula aquestes propietats mitjançant getters i setters. Afig els següents mètodes:
+- `getNomComplet(): string` – Retorna el nom complet de la persona.
+- `estaJubilat(): bool` – Retorna `true` si l'edat és major o igual a 65, `false` en cas contrari.
 
-    ``` php
-    <?php
-    class EmpleadoTelefono extends Empleado {
-        /// resto del código
+* Modifica la classe `Persona` afegint un constructor que assigna nom i cognoms. Si es proporciona un tercer paràmetre, assigna l'edat; en cas contrari, assigna una edat per defecte de 25 anys.
 
+* Modifica la classe `Persona` per utilitzar una constant `LIMITE_EDAT` amb el valor de 66 anys i utilitza-la en el mètode `estaJubilat`.
 
-        public static function toHtml(Persona $p): string {
-            if ($p instanceof Empleado) {
-                // Aqui ya podemos acceder a las propiedades y métodos de Empleado
-            }
-        }
-    }
-    ```
+## Exercici 2. Herència i Polimorfisme
 
-309. `Persona8.php i Empleado.php`: 
-     Afig nous mètodes que facen una representació de totes les propietats de les classes `Persona` i `Empleado`, de manera similar als realitzats en HTML, però sense que siguen estàtics, de manera que  obtinga les dades mitjançant `$this`.
-     * `function public __toString(): string`
+* Crea una classe `Empleado` que herete de `Persona`. Afig les següents propietats i mètodes:
+- `private float $sou`
+- `private array $telefons`
+- `anyadirTelefono(int $telefon): void` – Afig un número de telèfon a l'array.
+- `listarTelefonos(): string` – Retorna els números de telèfon separats per comes.
+- `vaciarTelefonos(): void` – Buida l'array de telèfons.
+- `debePagarImpuestos(): bool` – Retorna `true` si el sou és superior a 3333€, `false` en cas contrari.
 
-!!! tip "*Magic methods*"
-    El mètode `__toString()` és un mètode màgic que s'invoca automàticament quan volem obtindre la representació en cadena d'un objecte.
+* Afig un mètode estàtic `toHtml(Empleado $emp): string` que genere un codi HTML que mostre el nom complet de l'empleat dins d'un paràgraf i els seus telèfons dins d'una llista ordenada.
+* Afig un mètode estàtic `toHtml(Persona $p)` a la classe Persona que mostre el nom complet de la persona dins d'un paràgraf. Modifica el mètode `toHtml` de `Empleado` per rebre una `Persona` com a paràmetre i comprovar si es tracta d'un `Empleado` amb `instanceof`.
+* Transforma `Persona` en una classe abstracta. Redefineix el mètode estàtic `toHtml(Persona $p)` en totes les seues subclasses. Afig una classe `Worker` que siga també abstracta i que emmagatzeme els `telefonos`. Crea mètodes per calcular el sou en `Empleado` i `Gerent`, segons la descripció.
 
-310.`Worker.php`: Copia classes i canvia el nom(Person,Worker,Employee,Manager).
+## Exercici 3. Integració d'Espais de Noms, Autoloading, i Composer
 
-* Transforma `Person` a una classe abstracta on el seu mètode estàtic `toHtml(Persona $p)` haja de ser redefinit en tots els seus fills.
-  * Canvia l'estructura de classes conforme al gràfic respectant tots els mètodes que ja estan fets
-  * `Worker` és una classe abstracta que ara emmagatzema els `telefonos` i on `calcularSueldo` és un mètode abstracte de manera que:
-    * El sou d'un `Empleat` es calcula a partir de les hores treballades i el que cobra per hora.
-    * Per als `Gerents`, el seu sou s'incrementa percentualment sobre la base de la seua edat: `salari + salari*edat/100`
-
-<figure>
-   <img src="imagenes/03/03p312.png">
-   <figcaption>Ejercicio 312</figcaption>
-</figure>
-
-311.`Enterprise.php`: Utilitzant les classes dels exercicis anteriors.
-
-* Crea una classe `Enterprise` que a més del nom i la direcció, continga una propietat amb un array de `Workers`, ja siguen Employees o Managers. 
-  * Afig *getters/setters* per al nom i direcció.
-  * Afig mètodes per a afegir i llistar els treballadors.
-     * `public function addWorker(Worker $t)`
-     * `public function listWorkersHtml() : string` -> utilitza `Worker::toHtml(Person $p)`
-  * Afig un mètode per a obtindre el cost total en nòmines.
-     * `public function getCosteNominas(): float` -> recorre els treballadors i invoca al mètode `calcularSueldo()`.
-
-312.`JSerializable.php`: Crea una interfície JSerializable, de manera que oferisca els mètodes:
-       
-* `toJSON(): string` → utilitza la funció [`json_encode(mixed)`](https://www.php.net/manual/es/function.json-encode.php). Tingues en compte que com tenim les propietats dels objectes privats, has de recórrer les propietats i col·locar-les en un mapa. Per exemple:        
-
-``` php
-   <?php
-       public function toJSON(): string {
-            $mapa = array()
-           foreach ($this as $clave => $valor) {
-               $mapa[$clave] = $valor;
-           }
-           return json_encode($mapa);
-       }
-    ?>
-```
-
-  * `toSerialize(): string` → utilitza la funció [`serialize(mixed)`](https://www.php.net/manual/es/function.serialize.php)
-  * Modifica totes les classes perquè implementen la interfície creada.
-
-
+* Crea una classe `Empresa` que incloga una propietat amb un array de `Workers`, ja siguen `Employees` o `Managers`. Implementa:
+- `public function addWorker(Worker $t)`
+- `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
+- `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
  
+* Configura un projecte PHP amb Composer que utilitze l'autoloading PSR-4. Afig un fitxer `composer.json` i defineix l'estructura de directoris `src/Models`, `src/Services`, etc. Crea una classe `Producte` dins de `src/Models` i verifica que l'autoloading funcione correctament instanciant la classe en un fitxer separat.
+
+## Exercici 4. Logger i Documentació
+
+* Utilitza la llibreria `Monolog` per configurar un logger que escriga missatges a un fitxer `app.log`. Afig funcionalitat perquè el logger registre missatges d'informació i d'error en diferents arxius segons la gravetat.
+    
+* Configura un logger que escriga missatges de registre tant a un fitxer com a la consola. Prova el logger registrant missatges d'error i advertència.
+   
+* Documenta la classe `Producte` creada en exercicis anteriors utilitzant comentaris PHPDoc. Inclou la descripció de la classe, les propietats, i els mètodes. Utilitza una eina com `phpDocumentor` per generar documentació automàtica.
+
+* Escriu proves unitàries per als mètodes de les classes `Persona`, `Empleado`, i `Empresa` utilitzant PHPUnit. Prova els mètodes `getNomComplet`, `estaJubilat`, `addWorker`, i `getCosteNominas`. Assegura't que les proves cobreixen diferents escenaris, incloent errors potencials.
+
+* Escriu una prova unitària que comprove que el logger està registrant correctament els missatges d'error a l'arxiu corresponent. Utilitza un mock per assegurar-te que el logger funciona sense necessitat d'escriure en un fitxer real durant la prova.
+
+## Exercici 5. Generació de PDFs amb DomPDF
+
+* Instal·la la llibreria `dompdf/dompdf` amb Composer. Crea un script PHP que genere un PDF senzill amb un títol i un paràgraf de text.
+
+* Crea un PDF utilitzant DomPDF que incloga una taula amb dades i una imatge. Assegura't que el PDF es renderitze correctament i que la imatge s'incloga en el document.
+
+* Utilitzant la classe `Empresa` i `Empleado`, genera un informe en PDF amb la llista de treballadors i el seu sou. Utilitza DomPDF per generar aquest informe.
+
+## 6. Serialització i JSON
+
+* Crea una interfície `JSerializable` que incloga els mètodes:
+- `toJSON(): string` – Converteix l'objecte a un JSON utilitzant `json_encode()`.
+- `toSerialize(): string` – Serialitza l'objecte utilitzant `serialize()`.
+
+* Modifica les classes `Persona`, `Empleado`, i `Empresa` per implementar aquesta interfície. Assegura't que les propietats privades es puguen serialitzar correctament.
+
+* Escriu mètodes per deserialitzar un objecte a partir d'una cadena JSON o d'una cadena serialitzada. Prova aquests mètodes amb PHPUnit per assegurar-te que la deserialització funciona correctament.
