@@ -2085,6 +2085,136 @@ mostraDetallsVehicle($moto);  // Output: Tipus: Motocicleta, Cilindrada: 600
 ```
 </details>
 
+### Exercici 5. Implementació del Patró MVC amb Vehicles
+ 
+Continuant amb l'exercici anterior on has creat les classes `Vehicle`, `Cotxe`, i `Motocicleta`, ara refactoritzaràs el codi per seguir el patró Model-Vista-Controlador (MVC). El teu objectiu és separar la lògica de negoci (models) de la presentació (vistes) i gestionar la interacció entre aquestes capes mitjançant un controlador.
+   
+1.  **Crear el Model**:
+    - Refactoritza les classes `Vehicle`, `Cotxe`, i `Motocicleta` perquè representen el model de negoci i només contenen la lògica relacionada amb la gestió de vehicles.
+    - Assegura't que els models no contenen cap codi de presentació.
+
+2. **Crear les Vistes**:
+    - Crea vistes separades per mostrar els detalls dels vehicles:
+        - Una vista HTML que mostre la informació dels vehicles en format HTML.
+        - Una vista en text simple que mostre els detalls dels vehicles en un format de text senzill.
+
+3. **Crear el Controlador**:
+    - Implementa un controlador que gestione la interacció entre els models i les vistes.
+    - El controlador ha de ser capaç de rebre una sol·licitud per mostrar un vehicle i triar la vista adequada per mostrar-ne els detalls.
+
+<details>
+<summary>Solució</summary>
+
+```php
+<?php
+// Models
+
+class Vehicle {
+    protected $tipus;
+
+    public function __construct($tipus) {
+        $this->tipus = $tipus;
+    }
+
+    public function getTipus() {
+        return $this->tipus;
+    }
+}
+
+class Cotxe extends Vehicle {
+    private $marca;
+    private $model;
+
+    public function __construct($marca, $model) {
+        parent::__construct("Cotxe");
+        $this->marca = $marca;
+        $this->model = $model;
+    }
+
+    public function getMarca() {
+        return $this->marca;
+    }
+
+    public function getModel() {
+        return $this->model;
+    }
+}
+
+class Motocicleta extends Vehicle {
+    private $cilindrada;
+
+    public function __construct($cilindrada) {
+        parent::__construct("Motocicleta");
+        $this->cilindrada = $cilindrada;
+    }
+
+    public function getCilindrada() {
+        return $this->cilindrada;
+    }
+}
+
+// Vistes
+
+class VehicleView {
+    public function renderHtml(Vehicle $vehicle) {
+        $output = "<p>Tipus: " . $vehicle->getTipus() . "</p>";
+        if ($vehicle instanceof Cotxe) {
+            $output .= "<p>Marca: " . $vehicle->getMarca() . "</p>";
+            $output .= "<p>Model: " . $vehicle->getModel() . "</p>";
+        } elseif ($vehicle instanceof Motocicleta) {
+            $output .= "<p>Cilindrada: " . $vehicle->getCilindrada() . " cc</p>";
+        }
+        return $output;
+    }
+
+    public function renderText(Vehicle $vehicle) {
+        $output = "Tipus: " . $vehicle->getTipus() . "\n";
+        if ($vehicle instanceof Cotxe) {
+            $output .= "Marca: " . $vehicle->getMarca() . "\n";
+            $output .= "Model: " . $vehicle->getModel() . "\n";
+        } elseif ($vehicle instanceof Motocicleta) {
+            $output .= "Cilindrada: " . $vehicle->getCilindrada() . " cc\n";
+        }
+        return $output;
+    }
+}
+
+// Controlador
+
+class VehicleController {
+    private $view;
+
+    public function __construct(VehicleView $view) {
+        $this->view = $view;
+    }
+
+    public function mostrarVehicle(Vehicle $vehicle, $format = 'html') {
+        if ($format === 'html') {
+            echo $this->view->renderHtml($vehicle);
+        } else {
+            echo $this->view->renderText($vehicle);
+        }
+    }
+}
+
+// Exemple d'ús
+
+$view = new VehicleView();
+$controller = new VehicleController($view);
+
+$cotxe = new Cotxe("Toyota", "Corolla");
+$moto = new Motocicleta(600);
+
+// Mostrar en HTML
+$controller->mostrarVehicle($cotxe, 'html');
+$controller->mostrarVehicle($moto, 'html');
+
+// Mostrar en Text
+$controller->mostrarVehicle($cotxe, 'text');
+$controller->mostrarVehicle($moto, 'text');
+```
+</details>
+
 ### Exercici 5. Classes Abstractes i Interfícies
  
 1. Crea una classe abstracta `Figura` amb un mètode abstracte `calculaArea`. Després, crea classes `Cercle` i `Rectangle` que estiguen basades en `Figura` i implementen el mètode `calculaArea`.
@@ -2569,7 +2699,7 @@ $dompdf->stream("informe_productes.pdf");
 #### Exercici 1. Creació de la Classe Bàsica i Gestió de Propietats
 
 * Crea una classe `Persona` amb les propietats privades `nom`, `cognoms`, i `edat`. Encapsula aquestes propietats mitjançant getters i setters. Afig els següents mètodes:
- 
+
       - `getNomComplet(): string` – Retorna el nom complet de la persona.
       - `estaJubilat(): bool` – Retorna `true` si l'edat és major o igual a 65, `false` en cas contrari.
 
@@ -2580,7 +2710,7 @@ $dompdf->stream("informe_productes.pdf");
 #### Exercici 2. Herència i Polimorfisme
 
 * Crea una classe `Empleado` que herete de `Persona`. Afig les següents propietats i mètodes:
- 
+
     - `private float $sou`
     - `private array $telefons`
     - `anyadirTelefono(int $telefon): void` – Afig un número de telèfon a l'array.
@@ -2595,19 +2725,19 @@ $dompdf->stream("informe_productes.pdf");
 #### Exercici 3. Integració d'Espais de Noms, Autoloading, i Composer
 
 * Crea una classe `Empresa` que incloga una propietat amb un array de `Workers`, ja siguen `Employees` o `Managers`. Implementa:
- 
+
     - `public function addWorker(Worker $t)`
     - `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
     - `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
- 
+
 * Configura un projecte PHP amb Composer que utilitze l'autoloading PSR-4. Afig un fitxer `composer.json` i defineix l'estructura de directoris `src/Models`, `src/Services`, etc. Crea una classe `Producte` dins de `src/Models` i verifica que l'autoloading funcione correctament instanciant la classe en un fitxer separat.
 
 #### Exercici 4. Logger i Documentació
 
 * Utilitza la llibreria `Monolog` per configurar un logger que escriga missatges a un fitxer `app.log`. Afig funcionalitat perquè el logger registre missatges d'informació i d'error en diferents arxius segons la gravetat.
-    
+
 * Configura un logger que escriga missatges de registre tant a un fitxer com a la consola. Prova el logger registrant missatges d'error i advertència.
-   
+
 * Documenta la classe `Producte` creada en exercicis anteriors utilitzant comentaris PHPDoc. Inclou la descripció de la classe, les propietats, i els mètodes. Utilitza una eina com `phpDocumentor` per generar documentació automàtica.
 
 * Escriu proves unitàries per als mètodes de les classes `Persona`, `Empleado`, i `Empresa` utilitzant PHPUnit. Prova els mètodes `getNomComplet`, `estaJubilat`, `addWorker`, i `getCosteNominas`. Assegura't que les proves cobreixen diferents escenaris, incloent errors potencials.
@@ -2622,10 +2752,10 @@ $dompdf->stream("informe_productes.pdf");
 
 * Utilitzant la classe `Empresa` i `Empleado`, genera un informe en PDF amb la llista de treballadors i el seu sou. Utilitza DomPDF per generar aquest informe.
 
-#### 6. Serialització i JSON
+#### Exercici 6. Serialització i JSON
 
 * Crea una interfície `JSerializable` que incloga els mètodes:
-   
+
     - `toJSON(): string` – Converteix l'objecte a un JSON utilitzant `json_encode()`.
     - `toSerialize(): string` – Serialitza l'objecte utilitzant `serialize()`.
 
@@ -2633,6 +2763,46 @@ $dompdf->stream("informe_productes.pdf");
 
 * Escriu mètodes per deserialitzar un objecte a partir d'una cadena JSON o d'una cadena serialitzada. Prova aquests mètodes amb PHPUnit per assegurar-te que la deserialització funciona correctament.
 
+#### Exercici 7. Separació del Model de Negoci i la Presentació (MVC)
+ 
+Fins ara, has creat diverses classes que gestionen la lògica del joc i les dades (models), com `Persona`, `Empleado`, i `Empresa`, i has generat sortides HTML i PDFs amb DomPDF. Ara és el moment de refactoritzar la teua aplicació per assegurar una separació clara entre la lògica del negoci i la presentació, seguint el patró Model-Vista-Controlador (MVC).
+  
+* **Crear el Model**:
+    - Refactoritza les classes `Persona`, `Empleado`, i `Empresa` per assegurar que només gestionen la lògica de negoci (per exemple, càlcul de nòmines, gestió d'empleats, etc.).
+    - Assegura't que aquestes classes no contenen codi relacionat amb la presentació (HTML o PDF).
+
+* **Crear les Vistes**:
+    - Crea vistes separades per presentar la informació als usuaris:
+        - Una vista HTML per mostrar la informació de `Empleado` i `Empresa` com a llistats.
+        - Una vista PDF per generar informes amb DomPDF, basant-se en les dades proporcionades pel model.
+
+* **Crear el Controlador**:
+    - Implementa un controlador que reba les sol·licituds dels usuaris, interactue amb el model (`Persona`, `Empleado`, `Empresa`), i tria la vista adequada per mostrar els resultats (HTML o PDF).
+    - El controlador ha d'encapsular tota la lògica necessària per a gestionar la interacció entre la vista i el model, assegurant que el model no estiga lligat a la capa de presentació.
+
+### Exercici 8. Creació de Proves Unitàries per al Patró MVC
+
+Després de refactoritzar l'aplicació per separar la lògica del negoci de la presentació seguint el patró Model-Vista-Controlador (MVC), és fonamental assegurar-se que tots els components funcionen correctament i que la interacció entre ells es realitza tal com s'espera. Per això, has de crear una sèrie de proves unitàries utilitzant PHPUnit per verificar el funcionament del model, les vistes i els controladors.
+  
+* **Proves del Model**:
+    - Escriu proves unitàries per verificar el funcionament dels mètodes de les classes `Persona`, `Empleado`, i `Empresa`.
+    - Assegura't que els mètodes funcionen correctament, com ara:
+        - `getNomComplet()`
+        - `debePagarImpuestos()`
+        - `addWorker()` i `getCosteNominas()`
+    - Prova que els càlculs es realitzen correctament i que les dades es gestionen segons el que s'espera.
+
+* **Proves del Controlador**:
+    - Escriu proves unitàries per assegurar-te que els controladors interactuen correctament amb els models i que seleccionen la vista adequada per a cada situació.
+    - Prova que les dades es passen correctament del model a la vista a través del controlador.
+    - Implementa proves per verificar que el controlador respon correctament a diferents sol·licituds de l'usuari, per exemple:
+        - Mostrar una llista d'empleats en HTML.
+        - Generar un informe en PDF utilitzant DomPDF.
+
+* **Proves de les Vistes**:
+    - Escriu proves unitàries per comprovar que les vistes reben i mostren correctament la informació proporcionada pel controlador.
+    - Prova que la generació de contingut HTML o PDF es realitza correctament a partir de les dades proporcionades pel model.
+ 
 ## 14. Enunciat dels projectes
 
 ### Projecte "Ofegat"
@@ -2644,21 +2814,26 @@ $dompdf->stream("informe_productes.pdf");
     - `endevinaLletra($lletra): bool` – Comprova si la lletra és part de la paraula i actualitza l'estat del joc.
     - `estaAcabat(): bool` – Retorna `true` si el joc ha acabat, ja siga per guanyar o per perdre.
     - `obteEstat(): array` – Retorna l'estat actual del joc, incloent les lletres encertades, intents restants, etc.
+#### 2. Separació del Model de Negoci de la Presentació
+- **Model-Vista-Controlador (MVC)**: 
+   - **Model**: La classe JocOfegat actua com a model, gestionant la lògica del joc i mantenint l'estat. Aquest model ha d'estar completament separat de qualsevol codi que gestione la presentació (HTML, CSS).
+   - **Vista**: Crea vistes que s'encarreguen exclusivament de mostrar la informació a l'usuari. Aquestes vistes poden utilitzar plantilles HTML i accedir al model a través de controladors.
+   - **Controlador**: El controlador serà responsable de rebre les entrades de l'usuari (com l'endevinació d'una lletra), interactuar amb el model (JocOfegat) per actualitzar l'estat del joc, i seleccionar la vista adequada per a mostrar els resultats a l'usuari.
 
-#### 2. Integració de Composer i Autoloading
+#### 3. Integració de Composer i Autoloading
 - **Configuració de Composer**: Utilitza Composer per gestionar les dependències del projecte. Defineix l'autoloading per carregar automàticament les classes de `JocOfegat`.
 - **Estructura del Projecte**:
     - Organitza el codi en directoris com `src/Models` per a les classes del joc, i `src/Services` per a la gestió de sessions i autenticació.
     - Defineix un `composer.json` per configurar l'autoloading PSR-4.
 
-#### 3. Proves amb PHPUnit
+#### 4. Proves amb PHPUnit
 - **Escriu Proves Unitàries**: Crea proves unitàries per a la classe `JocOfegat` utilitzant PHPUnit. Les proves poden incloure:
     - Prova per assegurar que una paraula es configura correctament.
     - Prova per verificar que una lletra encertada actualitza l'estat correctament.
     - Prova per assegurar que el joc detecta correctament quan s'ha guanyat o perdut.
 - **Prova de Gestió de Sessions**: Afig proves per a la gestió de sessions, comprovant que l'estat del joc es guarda i es recupera correctament.
 
-#### 4. Logger amb Monolog
+#### 5. Logger amb Monolog
 - **Configuració de Logger**: Utilitza `Monolog` per registrar esdeveniments importants, com quan s'inicia un nou joc, quan un jugador endevina una lletra o quan es produeixen errors.
 - **Diversos Handlers**:
     - Registra missatges a un fitxer `game.log` per a esdeveniments generals.
@@ -2674,20 +2849,26 @@ $dompdf->stream("informe_productes.pdf");
     - `comprovaGuanyador(): ?int` – Comprova si hi ha un guanyador després d'un moviment.
     - `obteEstatGraella(): array` – Retorna l'estat actual de la graella.
 
-#### 2. Integració de Composer i Autoloading
+#### 2. Separació del Model de Negoci de la Presentació
+- **Model-Vista-Controlador (MVC)**:
+    - **Model**: La classe Joc4enRatlla representa el model, que s'encarrega de tota la lògica del joc, incloent la gestió de la graella i la determinació del guanyador.
+    - **Vista**: Les vistes presenten la graella del joc, el torn actual del jugador, i els resultats finals (guanyador o empat). Aquestes vistes han d'estar separades del model i només han de mostrar la informació proporcionada pel controlador.
+    - **Controlador**: El controlador gestiona les interaccions de l'usuari, com els moviments en la graella. Aquest component comunica el model amb les vistes, assegurant-se que els canvis en l'estat del joc es reflectisquen correctament en la presentació.
+
+#### 3. Integració de Composer i Autoloading
 - **Configuració de Composer**: Defineix un `composer.json` per al projecte, configurant l'autoloading PSR-4 per carregar automàticament les classes de `Joc4enRatlla`.
 - **Estructura del Projecte**:
     - Organitza el codi en directoris com `src/Models` per a les classes del joc i `src/Controllers` per a la gestió del flux del joc.
     - Configura Composer per gestionar les dependències del projecte.
 
-#### 3. Proves amb PHPUnit
+#### 4. Proves amb PHPUnit
 - **Escriu Proves Unitàries**: Crea proves unitàries per a la classe `Joc4enRatlla` utilitzant PHPUnit. Les proves poden incloure:
     - Verificació de la configuració inicial de la graella.
     - Proves per assegurar que un moviment s'aplica correctament a la graella.
     - Proves per assegurar que el joc detecta correctament un guanyador o un empat.
 - **Proves de Gestió de Sessions**: Afig proves per assegurar que l'estat del joc i el torn del jugador es mantenen correctament a través de les sessions.
 
-#### 4. Logger amb Monolog
+#### 5. Logger amb Monolog
 - **Configuració de Logger**: Utilitza `Monolog` per registrar esdeveniments importants del joc, com quan un jugador fa un moviment, quan s'inicia una nova partida, o quan es produeixen errors.
 - **Diversos Handlers**:
     - Registra els moviments dels jugadors i els resultats del joc en un fitxer `game.log`.
@@ -2710,6 +2891,7 @@ $dompdf->stream("informe_productes.pdf");
 | **Criteri**                                                 | ** Insuficient (1 punt)**                                                                                   | ** Adequat (2 punts)**                                                                                                                          | ** Bé (3 punts)**                                                                                                      | ** Excel·lent (4 punts)**                                                                                                 |
 |-------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
 | **Implementació de Programació Orientada a Objectes (POO)** | Les classes no estan ben dissenyades, falta encapsulació, ús incorrecte d'herència, o mètodes no funcional. | Les classes estan creades però poden tindre errors o una estructura confusa. S'aplica la POO de manera bàsica, però hi ha problemes de disseny. | Classes correctament estructurades i funcionalment completes. Ús adequat d'encapsulació, herència i polimorfisme.      | Disseny de classes ben organitzat, reutilitzable i amb una implementació clara dels principis de POO.                     |
+| **Separació del Model de Negoci de la Presentació (MVC)**      | No s'ha implementat la separació de model i presentació; el codi de lògica i presentació està mesclat.      | Hi ha una separació parcial, però algunes parts de la lògica del negoci es barregen amb la presentació o a l'inrevés.                           | La separació entre model, vista i controlador està ben implementada, però podria millorar en alguns aspectes.          | Excel·lent separació entre el model, vista i controlador, seguint els principis del patró MVC i mantenint un codi net.   |
 | **Integració de Composer i Autoloading**                    | No s'ha configurat Composer o l'autoloading, o està mal configurat i no funciona correctament.              | Composer s'ha utilitzat, però amb una estructura de projectes i autoloading bàsics o incorrectes.                                               | Composer i l'autoloading estan configurats correctament amb una estructura de projectes ben definida.                  | Ús excel·lent de Composer amb una configuració avançada d'autoloading i una estructura de projecte organitzada i modular. |
 | **Implementació de Proves amb PHPUnit**                     | No s'han creat proves, o les proves creades són mínimes i no adequades per a verificar la funcionalitat.    | Es presenten proves bàsiques amb PHPUnit, però cobreixen parcialment les funcionalitats requerides.                                             | Proves unitàries completes que cobreixen la majoria dels casos, incloent proves de gestió de sessions i lògica de joc. | Proves exhaustives que cobreixen totes les funcionalitats i consideren casos límit, amb ús de mocks quan necessari.       |
 | **Ús de Logger amb Monolog**                                | No s'ha implementat el logger o no s'utilitza de manera efectiva per registrar esdeveniments importants.    | Logger implementat, però amb ús limitat o incorrecte en la registració d'esdeveniments i errors.                                                | Logger ben implementat, amb esdeveniments i errors registrats adequadament en diferents fitxers o canals.              | Ús avançat de logger amb diferents handlers per registrar informació, errors, i seguiment detallat del flux del joc.      |
@@ -2720,6 +2902,7 @@ $dompdf->stream("informe_productes.pdf");
 
 #### **1 punt: Insuficient**
 - **POO**: Les classes no segueixen els principis bàsics de la programació orientada a objectes. Hi ha problemes greus com la falta d'encapsulació, l'ús inadequat de l'herència o mètodes que no funcionen correctament.
+- **MVC**: No s'ha implementat la separació del model de negoci i la presentació. El codi de la lògica del negoci està mesclat amb la presentació (HTML, CSS), cosa que dificulta el manteniment i l'escalabilitat del projecte.
 - **Composer i Autoloading**: No s'ha configurat Composer o l'autoloading. Si estan configurats, no funcionen correctament.
 - **Proves amb PHPUnit**: Les proves estan absents o són mínimes, i no verifiquen adequadament la funcionalitat del projecte.
 - **Logger amb Monolog**: El logger no s'ha implementat, o si està present, no s'utilitza de manera efectiva per registrar esdeveniments importants.
@@ -2728,6 +2911,7 @@ $dompdf->stream("informe_productes.pdf");
 
 #### **2 punts: Adequat**
 - **POO**: Les classes estan creades, però poden contindre errors o una estructura confusa. L'aplicació de la POO és bàsica, amb alguns problemes de disseny.
+- **MVC**: Hi ha una separació parcial entre el model de negoci i la presentació. No obstant això, encara hi ha parts del codi on la lògica del negoci està barrejada amb la presentació o a l'inrevés, cosa que indica una comprensió bàsica però incompleta del patró MVC.
 - **Composer i Autoloading**: Composer s'ha utilitzat, però l'estructura de projectes o l'autoloading no són òptims, presentant configuracions bàsiques o incorrectes.
 - **Proves amb PHPUnit**: Es presenten proves bàsiques que cobreixen parcialment les funcionalitats requerides.
 - **Logger amb Monolog**: El logger està implementat, però l'ús és limitat o incorrecte en la registració d'esdeveniments i errors.
@@ -2736,6 +2920,7 @@ $dompdf->stream("informe_productes.pdf");
 
 #### **3 punts: Bé**
 - **POO**: Les classes estan correctament estructurades i són funcionalment completes. Es fa un ús adequat de l'encapsulació, l'herència i el polimorfisme.
+- **MVC**: La separació entre el model, vista i controlador està ben implementada, seguint majoritàriament els principis del patró MVC. El codi és clar i estructurat, amb algunes àrees que podrien millorar-se per aconseguir una millor modularitat i mantenibilitat.
 - **Composer i Autoloading**: Composer i l'autoloading estan configurats correctament, amb una estructura de projectes ben definida.
 - **Proves amb PHPUnit**: Les proves unitàries estan completes i cobreixen la majoria dels casos, incloent-hi la gestió de sessions i la lògica del joc.
 - **Logger amb Monolog**: El logger està ben implementat, amb esdeveniments i errors registrats adequadament en diferents fitxers o canals.
@@ -2744,6 +2929,7 @@ $dompdf->stream("informe_productes.pdf");
 
 #### **4 punts: Excel·lent**
 - **POO**: El disseny de classes està ben organitzat, és reutilitzable i implementa clarament els principis de la programació orientada a objectes. El codi és elegant i eficient.
+- **MVC**: Excel·lent separació entre el model, vista i controlador, seguint rigorosament els principis del patró MVC. El codi està ben organitzat, modular i fàcil de mantenir, cosa que facilita l'escalabilitat del projecte. Hi ha una clara distinció de responsabilitats entre les diferents capes.
 - **Composer i Autoloading**: S'utilitza Composer de manera excel·lent, amb una configuració avançada de l'autoloading i una estructura de projecte organitzada i modular.
 - **Proves amb PHPUnit**: Les proves són exhaustives, cobrint totes les funcionalitats i considerant casos límit, amb ús de mocks quan necessari.
 - **Logger amb Monolog**: S'utilitza el logger de manera avançada, amb diferents handlers per registrar informació, errors, i fer un seguiment detallat del flux del joc.
