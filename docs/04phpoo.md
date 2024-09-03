@@ -2342,7 +2342,7 @@ try {
 ```
 </details>
 
-### 8. Proves amb PHPUnit
+### Exercici 8. Proves amb PHPUnit
  
 1. Crea una classe `Calculadora` amb els mètodes `suma` i `resta`. Escriu una prova unitària amb PHPUnit per verificar que aquests mètodes funcionen correctament.
 2. Afegeix un mètode `divideix` a la classe `Calculadora` que llance una excepció quan es divideix per zero. Escriu una prova unitària que assegure que aquesta excepció es llança correctament.
@@ -2780,7 +2780,7 @@ Fins ara, has creat diverses classes que gestionen la lògica del joc i les dade
     - Implementa un controlador que reba les sol·licituds dels usuaris, interactue amb el model (`Persona`, `Empleado`, `Empresa`), i tria la vista adequada per mostrar els resultats (HTML o PDF).
     - El controlador ha d'encapsular tota la lògica necessària per a gestionar la interacció entre la vista i el model, assegurant que el model no estiga lligat a la capa de presentació.
 
-### Exercici 8. Creació de Proves Unitàries per al Patró MVC
+#### Exercici 8. Creació de Proves Unitàries per al Patró MVC
 
 Després de refactoritzar l'aplicació per separar la lògica del negoci de la presentació seguint el patró Model-Vista-Controlador (MVC), és fonamental assegurar-se que tots els components funcionen correctament i que la interacció entre ells es realitza tal com s'espera. Per això, has de crear una sèrie de proves unitàries utilitzant PHPUnit per verificar el funcionament del model, les vistes i els controladors.
   
