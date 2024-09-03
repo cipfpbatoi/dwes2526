@@ -1384,12 +1384,12 @@ td { width: 50px; height: 50px; text-align: center; vertical-align: middle; bord
 
 ## 21. Autoavaluació: Conceptes Bàsics de PHP
 
-### Exercici 1: Sintaxi Bàsica de PHP
+#### Exercici 1: Sintaxi Bàsica de PHP
 
-#### Pregunta:
+##### Pregunta:
 Quina és la manera correcta d'iniciar i finalitzar un bloc de codi PHP dins d'un fitxer HTML?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q1a" name="question1" value="a">
   <label for="q1a">a) `<?php ... ?>`</label><br>
@@ -1420,12 +1420,12 @@ function checkAnswer1() {
 }
 </script>
 
-### Exercici 2: Variables i Tipus de Dades
+#### Exercici 2: Variables i Tipus de Dades
 
-#### Pregunta:
+##### Pregunta:
 Quina opció mostra el tipus de dades assignat a la variable `$nom`?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q2a" name="question2" value="a">
   <label for="q2a">a) `echo gettype($nom);`</label><br>
@@ -1456,9 +1456,9 @@ function checkAnswer2() {
 }
 </script>
 
-### Exercici 3: Estructures de Control
+#### Exercici 3: Estructures de Control
 
-#### Pregunta:
+##### Pregunta:
 Quina és la sortida de l'estructura de control següent?
 ```php
 $numero = 10;
@@ -1468,7 +1468,7 @@ if ($numero > 5) {
     echo "Menor o igual a 5";
 }
 ```
-#### Opcions
+##### Opcions
 
 <form>
   <input type="radio" id="q3a" name="question3" value="a">
@@ -1498,14 +1498,14 @@ function checkAnswer3() {
 }
 </script>
 
-### Exercici 4: Operadors en PHP
+#### Exercici 4: Operadors en PHP
 
-#### Pregunta:
+##### Pregunta:
 Quin serà el valor de `$resultat` després d'executar el següent codi?
 ```php
 $resultat = 5 + 2 * 3;
 ```
-#### Opcions:
+##### Opcions:
 
 <form>
   <input type="radio" id="q4a" name="question4" value="a">
@@ -1535,13 +1535,13 @@ function checkAnswer4() {
 }
 </script>
 
-### Exercici 5: Arrays en PHP
+#### Exercici 5: Arrays en PHP
 
-#### Pregunta:
+##### Pregunta:
 
 Com es pot afegir un element al final d'un array en PHP?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q5a" name="question5" value="a">
   <label for="q5a">a) array_add($array, $element);</label><br>
@@ -1570,13 +1570,13 @@ function checkAnswer5() {
 }
 </script>
 
-### Exercici 6: Funcions en PHP
+#### Exercici 6: Funcions en PHP
 
-#### Pregunta:
+##### Pregunta:
 
 Com es defineix una funció en PHP?
 
-#### Opcions:
+##### Opcions:
 
 <form>
   <input type="radio" id="q6a" name="question6" value="a">
@@ -1606,13 +1606,13 @@ function checkAnswer6() {
 }
 </script>
 
-### Exercici 7: Instrucció switch
+#### Exercici 7: Instrucció switch
 
-#### Pregunta:
+##### Pregunta:
 
 Quina instrucció s'utilitza per detenir l'execució d'un cas dins d'un switch en PHP?
 
-#### Opcions:
+##### Opcions:
 
 <form>
   <input type="radio" id="q7a" name="question7" value="a">
