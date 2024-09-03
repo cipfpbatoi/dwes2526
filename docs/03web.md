@@ -1103,12 +1103,12 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 
 ## 7. Autoavaluació: Gestió de Sessions i Cookies
 
-### Exercici 1: Funcions de les Cookies
+#### Exercici 1: Funcions de les Cookies
 
-#### Pregunta:
+##### Pregunta:
 Quina és la funció principal de les cookies en el context del desenvolupament web?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q1a" name="question1" value="a">
   <label for="q1a">a) Guardar els fitxers de l'usuari al servidor.</label><br>
@@ -1139,12 +1139,12 @@ function checkAnswer1() {
 }
 </script>
 
-### Exercici 2: Seguretat de les Cookies
+#### Exercici 2: Seguretat de les Cookies
 
-#### Pregunta:
+##### Pregunta:
 Quins atributs de seguretat haurien de tindre les cookies per protegir-les contra atacs?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="checkbox" id="q2a" name="question2" value="a">
   <label for="q2a">a) Secure</label><br>
@@ -1177,12 +1177,12 @@ function checkAnswer2() {
 }
 </script>
 
-### Exercici 3: Creació de Sessions en PHP
+#### Exercici 3: Creació de Sessions en PHP
 
-#### Pregunta:
+##### Pregunta:
 Quin dels següents passos és necessari per iniciar una sessió en PHP?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q3a" name="question3" value="a">
   <label for="q3a">a) Cridar a la funció session_start().</label><br>
@@ -1213,12 +1213,12 @@ function checkAnswer3() {
 }
 </script>
 
-### Exercici 4: Manteniment d'Informació en Sessions
+#### Exercici 4: Manteniment d'Informació en Sessions
 
-#### Pregunta:
+##### Pregunta:
 Com es pot mantindre la informació d'un usuari durant la sessió d'una aplicació web?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q4a" name="question4" value="a">
   <label for="q4a">a) Utilitzant la variable global $GLOBALS.</label><br>
@@ -1249,12 +1249,12 @@ function checkAnswer4() {
 }
 </script>
 
-### Exercici 5: Funcions de PHP per a Sessions
+#### Exercici 5: Funcions de PHP per a Sessions
 
-#### Pregunta:
+##### Pregunta:
 Quina funció de PHP es fa servir per destruir una sessió?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q5a" name="question5" value="a">
   <label for="q5a">a) session_destroy()</label><br>
@@ -1285,12 +1285,12 @@ function checkAnswer5() {
 }
 </script>
 
-### Exercici 6: Avantatges de les Sessions
+#### Exercici 6: Avantatges de les Sessions
 
-#### Pregunta:
+##### Pregunta:
 Quins són els avantatges d'utilitzar sessions en lloc de cookies per a mantenir l'estat de l'usuari?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="checkbox" id="q6a" name="question6" value="a">
   <label for="q6a">a) Les sessions poden emmagatzemar més informació perquè es guarden al servidor.</label><br>
@@ -1323,12 +1323,12 @@ function checkAnswer6() {
 }
 </script>
 
-### Exercici 7: Autenticació d'Usuaris
+#### Exercici 7: Autenticació d'Usuaris
 
-#### Pregunta:
+##### Pregunta:
 Quina és la pràctica recomanada per assegurar la identitat d'un usuari en una aplicació web?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q7a" name="question7" value="a">
   <label for="q7a">a) Utilitzar noms d'usuari i contrasenyes emmagatzemades com a cookies.</label><br>
