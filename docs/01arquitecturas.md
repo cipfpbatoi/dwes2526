@@ -864,12 +864,12 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 
 ## 8.AutoAvaluació
 
-### Exercici 1: Models d'execució de codi
+#### Exercici 1: Models d'execució de codi
 
-#### Pregunta:
+##### Pregunta:
 Explica les principals diferències entre el model d'execució de codi en client i en servidor.
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="a" name="question1" value="a">
   <label for="a">a) El codi en client s'executa al servidor, mentre que el codi en servidor s'executa al navegador del client.</label><br>
@@ -900,12 +900,12 @@ function checkAnswer1() {
 }
 </script>
 
-### Exercici 2: Avantatges de la generació dinàmica de pàgines
+#### Exercici 2: Avantatges de la generació dinàmica de pàgines
 
-#### Pregunta:
+##### Pregunta:
 Quins són els avantatges de la generació dinàmica de pàgines web? Selecciona totes les que apliquen.
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="checkbox" id="opt1" name="question2" value="a">
   <label for="opt1">a) Reducció de la càrrega del servidor.</label><br>
@@ -937,12 +937,12 @@ function checkAnswer2() {
 }
 </script>
 
-### Exercici 3: Mecanismes d'execució de codi en els servidors web
+#### Exercici 3: Mecanismes d'execució de codi en els servidors web
 
-#### Pregunta:
+##### Pregunta:
 Quins dels següents són mecanismes d'execució de codi en els servidors web?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="a" name="question3" value="a">
   <label for="a">a) CGI (Common Gateway Interface).</label><br>
@@ -973,12 +973,12 @@ function checkAnswer3() {
 }
 </script>
 
-### Exercici 4: Funcionalitats dels servidors d'aplicacions
+#### Exercici 4: Funcionalitats dels servidors d'aplicacions
 
-#### Pregunta:
+##### Pregunta:
 Quines són algunes de les funcionalitats proporcionades pels servidors d'aplicacions?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="checkbox" id="opt1" name="question4" value="a">
   <label for="opt1">a) Gestió de sessions.</label><br>
@@ -1010,12 +1010,12 @@ function checkAnswer4() {
 }
 </script>
 
-### Exercici 5: Llenguatges i tecnologies relacionades amb la programació web en entorn servidor
+#### Exercici 5: Llenguatges i tecnologies relacionades amb la programació web en entorn servidor
 
-#### Pregunta:
+##### Pregunta:
 Quins dels següents llenguatges i tecnologies són utilitzats en la programació web en entorn servidor?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="checkbox" id="opt1" name="question5" value="a">
   <label for="opt1">a) PHP.</label><br>
@@ -1049,12 +1049,12 @@ function checkAnswer5() {
 }
 </script>
 
-### Exercici 6: Integració dels llenguatges de marques amb els llenguatges de programació
+#### Exercici 6: Integració dels llenguatges de marques amb els llenguatges de programació
 
-#### Pregunta:
+##### Pregunta:
 Com s'integren els llenguatges de marques com HTML amb els llenguatges de programació com PHP?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="a" name="question6" value="a">
   <label for="a">a) Utilitzant etiquetes especials de PHP dins del codi HTML.</label><br>
@@ -1085,12 +1085,12 @@ function checkAnswer6() {
 }
 </script>
 
-### Exercici 7: Eines i frameworks de programació en entorn servidor
+#### Exercici 7: Eines i frameworks de programació en entorn servidor
 
-#### Pregunta:
+##### Pregunta:
 Quines són algunes de les eines i frameworks més utilitzats en la programació web en entorn servidor?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="checkbox" id="opt1" name="question7" value="a">
   <label for="opt1">a) Laravel.</label><br>
