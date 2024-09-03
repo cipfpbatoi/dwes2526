@@ -1924,7 +1924,7 @@ Les proves són crucials per a assegurar que el nostre codi PHP és fiable i man
 
 ### Bateria d'Exercicis Solucionats per a la Unitat de Programació Orientada a Objectes
 
-#### Exercici 1: Crear una Classe Bàsica
+##### Exercici 1: Crear una Classe Bàsica
 
 1. Crea una classe `Cotxe` que tinga les propietats `marca` i `model`. Afegeix un mètode `mostraInformacio` que retorne un string amb la marca i el model del cotxe.
 2. Crea una instància de la classe `Cotxe`, assigna-li una marca i un model, i mostra la informació utilitzant el mètode `mostraInformacio`.
@@ -1950,7 +1950,7 @@ echo $cotxe->mostraInformacio(); // Output: Marca: Toyota, Model: Corolla
 ``` 
 </details>
  
-### Exercici 2. Afegir un Constructor i destructor
+##### Exercici 2. Afegir un Constructor i destructor
 
 1. Modifica la classe `Cotxe` per afegir un constructor que prenga com a paràmetres la `marca` i el `model`, i que establisca aquestes propietats automàticament.
 2. Afegeix un destructor a la classe `Cotxe` que mostre un missatge quan l'objecte és destruït. Crea un objecte i permet que es destruïsca al final del programa.
@@ -1979,7 +1979,7 @@ class Cotxe {
 ```
 </details>
 
-### Exercici 3. Encapsulació de Propietats
+##### Exercici 3. Encapsulació de Propietats
  
 1. Modifica la classe `Cotxe` per a que les propietats `marca` i `model` siguen privades. Afegeix mètodes públics `getMarca`, `setMarca`, `getModel`, i `setModel` per accedir i modificar aquestes propietats.
 
@@ -2023,7 +2023,7 @@ echo $cotxe->mostraInformacio(); // Output: Marca: Ford, Model: Fiesta
 ```
 </details>
  
-### Exercici 4. Herència i Polimorfisme
+##### Exercici 4. Herència i Polimorfisme
  
 1. Crea una classe `Vehicle` amb una propietat `tipus`. A continuació, crea una classe `Motocicleta` que herete de `Vehicle` i tinga una propietat `cilindrada`. Afegeix un mètode a `Motocicleta` que retorne el tipus i la cilindrada.
 2. Crea una funció `mostraDetallsVehicle` que accepte un objecte de tipus `Vehicle` i mostre les seues propietats. Prova aquesta funció amb objectes de `Cotxe` i `Motocicleta`.
@@ -2085,7 +2085,7 @@ mostraDetallsVehicle($moto);  // Output: Tipus: Motocicleta, Cilindrada: 600
 ```
 </details>
 
-### Exercici 5. Implementació del Patró MVC amb Vehicles
+##### Exercici 5. Implementació del Patró MVC amb Vehicles
  
 Continuant amb l'exercici anterior on has creat les classes `Vehicle`, `Cotxe`, i `Motocicleta`, ara refactoritzaràs el codi per seguir el patró Model-Vista-Controlador (MVC). El teu objectiu és separar la lògica de negoci (models) de la presentació (vistes) i gestionar la interacció entre aquestes capes mitjançant un controlador.
    
@@ -2215,7 +2215,7 @@ $controller->mostrarVehicle($moto, 'text');
 ```
 </details>
 
-### Exercici 5. Classes Abstractes i Interfícies
+#### Exercici 5. Classes Abstractes i Interfícies
  
 1. Crea una classe abstracta `Figura` amb un mètode abstracte `calculaArea`. Després, crea classes `Cercle` i `Rectangle` que estiguen basades en `Figura` i implementen el mètode `calculaArea`.
 2. Defineix una interfície `OperacionsBàsiques` amb els mètodes `suma` i `resta`. Implementa aquesta interfície en una classe `CalculadoraSimple`.
@@ -2286,7 +2286,7 @@ echo "Resta: " . $calculadora->resta(5, 3) . "\n"; // Output: Resta: 2
 ```
 </details>
 
-### Exercici 6.  Utilitzar Traits
+#### Exercici 6.  Utilitzar Traits
 
 1. Crea un trait `Informacio` amb un mètode `mostraInformacio`. Inclou aquest trait en les classes `Cotxe` i `Motocicleta`, i utilitza'l per mostrar informació addicional.
 
@@ -2317,7 +2317,7 @@ echo $moto->mostraInformacio() . "\n"; // Output: Aquest és un objecte de tipus
 ```
 </details>
 
-### Exercici 7.  Gestionar Excepcions
+#### Exercici 7.  Gestionar Excepcions
 
 1. Escriu una funció `divideix` que prenga dos nombres com a paràmetres i retorne el resultat de la divisió. Si el segon nombre és zero, llença una excepció amb un missatge adequat. Captura aquesta excepció quan crides a la funció i mostra un missatge d'error.
 
@@ -2342,7 +2342,7 @@ try {
 ```
 </details>
 
-### Exercici 8. Proves amb PHPUnit
+#### Exercici 8. Proves amb PHPUnit
  
 1. Crea una classe `Calculadora` amb els mètodes `suma` i `resta`. Escriu una prova unitària amb PHPUnit per verificar que aquests mètodes funcionen correctament.
 2. Afegeix un mètode `divideix` a la classe `Calculadora` que llance una excepció quan es divideix per zero. Escriu una prova unitària que assegure que aquesta excepció es llança correctament.
@@ -2404,7 +2404,7 @@ class CalculadoraTest extends TestCase {
 ```
 </details>
 
-### Exercici 9. Espais de Noms (Namespaces)
+#### Exercici 9. Espais de Noms (Namespaces)
 
 1. Crea un espai de noms `App\Models` i defineix una classe `Usuari` dins d'aquest espai de noms. Afegeix un mètode `getNomComplet` que retorne el nom complet de l'usuari.
 2. En un fitxer separat, importa la classe `Usuari` de l'espai de noms `App\Models` i crea una instància d'aquesta classe. Utilitza el mètode `getNomComplet` per mostrar el nom complet d'un usuari.
@@ -2443,7 +2443,7 @@ echo $usuari->getNomComplet(); // Output: Joan Garcia
 ```
 </details>
 
-### Exercici 10. Autoloading i Composer
+#### Exercici 10. Autoloading i Composer
 
 1. Configura un projecte PHP amb Composer que utilitze l'autoloading PSR-4. Crea l'estructura de directoris `src/Models` i col·loca una classe `Producte` dins de `src/Models`. Verifica que l'autoloading funcione correctament instanciant la classe `Producte` en un fitxer separat.
 2. Afegeix la llibreria `monolog/monolog` al projecte utilitzant Composer. Crea una instància de `Logger` i afegeix una entrada al registre de logs.
@@ -2519,7 +2519,7 @@ $log->error('Aquesta és una entrada d'error');
 ```
 </details>
  
-### Exercici 11. Logger
+#### Exercici 11. Logger
 
 1. Utilitzant la llibreria `Monolog`, crea un logger que escriga missatges a un fitxer `app.log`. Configura el logger per registrar missatges d'informació i d'error.
 2. Configura un logger que escriga missatges de registre tant a un fitxer com a la consola. Prova el logger registrant missatges d'error.
@@ -2563,7 +2563,7 @@ $log->error('Aquesta és una entrada d’error');
 
 </details>
 
-### Exercici 12. Documentació
+#### Exercici 12. Documentació
 
 1. Documenta la classe `Producte` creada en l'exercici anterior utilitzant comentaris PHPDoc. Assegura't d'incloure la descripció de la classe, les propietats, i els mètodes.
 2. Utilitza una eina com `phpDocumentor` per generar la documentació automàtica del codi PHP del projecte, incloent-hi la classe `Producte`.
@@ -2622,7 +2622,7 @@ Aquest comandament generarà la documentació a la carpeta docs.
  
 </details>
 
-### Exercici 13. Generació de PDFs amb DomPDF
+#### Exercici 13. Generació de PDFs amb DomPDF
 
 1. Instal·la la llibreria `dompdf/dompdf` amb Composer. Crea un script PHP que genere un PDF senzill amb un títol i un paràgraf de text.
 2. Crea un PDF utilitzant DomPDF que incloga una taula amb dades i una imatge. Assegura't que el PDF es renderitze correctament i que la imatge s'incloga en el document.
@@ -2694,7 +2694,7 @@ $dompdf->stream("informe_productes.pdf");
 </details>
 
 
-### Exercicis proposats
+##  Exercicis proposats
  
 #### Exercici 1. Creació de la Classe Bàsica i Gestió de Propietats
 
@@ -2938,12 +2938,12 @@ Després de refactoritzar l'aplicació per separar la lògica del negoci de la p
 
 ## 15. Autoavaluació: Programació Orientada a Objectes en PHP
 
-### Exercici 1: Constructors en PHP
+#### Exercici 1: Constructors en PHP
 
-#### Pregunta:
+##### Pregunta:
 Quina és la funció principal d'un constructor en una classe PHP?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q1a" name="question1" value="a">
   <label for="q1a">a) Destruir els objectes de la classe quan ja no són necessaris.</label><br>
@@ -2974,12 +2974,12 @@ function checkAnswer1() {
 }
 </script>
 
-### Exercici 2: Herència en PHP
+#### Exercici 2: Herència en PHP
 
-#### Pregunta:
+##### Pregunta:
 Quina és l'avantatge principal de l'herència en la programació orientada a objectes?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q2a" name="question2" value="a">
   <label for="q2a">a) Permet reutilitzar codi definint classes noves basades en classes existents.</label><br>
@@ -3010,12 +3010,12 @@ function checkAnswer2() {
 }
 </script>
 
-### Exercici 3: Polimorfisme
+#### Exercici 3: Polimorfisme
 
-#### Pregunta:
+##### Pregunta:
 Què permet el polimorfisme en el context de la POO?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q3a" name="question3" value="a">
   <label for="q3a">a) Permet que una funció tinga múltiples implementacions depenent de l'objecte que la cride.</label><br>
@@ -3046,12 +3046,12 @@ function checkAnswer3() {
 }
 </script>
 
-### Exercici 4: Espais de Noms
+#### Exercici 4: Espais de Noms
 
-#### Pregunta:
+##### Pregunta:
 Per a què s'utilitzen els espais de noms (namespaces) en PHP?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q4a" name="question4" value="a">
   <label for="q4a">a) Per executar codi PHP de forma asincrònica.</label><br>
@@ -3082,12 +3082,12 @@ function checkAnswer4() {
 }
 </script>
 
-### Exercici 5: Traits en PHP
+#### Exercici 5: Traits en PHP
 
-#### Pregunta:
+##### Pregunta:
 Quin avantatge ofereixen els traits en PHP?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q5a" name="question5" value="a">
   <label for="q5a">a) Permet escriure codi reutilitzable que es pot incloure en múltiples classes, independentment de la jerarquia d'herència.</label><br>
@@ -3118,12 +3118,12 @@ function checkAnswer5() {
 }
 </script>
 
-### Exercici 6: Excepcions en PHP
+#### Exercici 6: Excepcions en PHP
 
-#### Pregunta:
+##### Pregunta:
 Quina és la finalitat d'utilitzar excepcions en PHP?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q6a" name="question6" value="a">
   <label for="q6a">a) Evitar l'execució de codi mal format.</label><br>
@@ -3154,12 +3154,12 @@ function checkAnswer6() {
 }
 </script>
 
-### Exercici 7: Autoloading en PHP
+#### Exercici 7: Autoloading en PHP
 
-#### Pregunta:
+##### Pregunta:
 Quin avantatge ofereix l'autoloading en PHP?
 
-#### Opcions:
+##### Opcions:
 <form>
   <input type="radio" id="q7a" name="question7" value="a">
   <label for="q7a">a) Permet que les classes es carreguen automàticament quan s'utilitzen, sense necessitat de fer incloure manualment cada fitxer.</label><br>
