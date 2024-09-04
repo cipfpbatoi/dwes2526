@@ -1,4 +1,4 @@
-# Accès a dades
+# Desenvolupament d'aplicacions web: Accés a Dades.
 
 ??? abstract "Duració i criteris d'avaluació"
 
@@ -19,7 +19,27 @@ A través de les diferents capes o nivells, de les quals 2 d'elles ja coneixem (
     <img src="imagenes/06/06-bbdd-arquitectura-3-niveles.png">
 </div>
 
-## Instal·lació
+## 1. Introducció a les tecnologies per accedir a dades
+
+### Bases de dades relacionals (SQL)
+Les bases de dades relacionals utilitzen llenguatge SQL per emmagatzemar i recuperar dades de taules relacionades. En PHP, les tecnologies més utilitzades per accedir-hi són **PDO** i **MySQLi**. **PDO** suporta múltiples sistemes de bases de dades (MySQL, PostgreSQL, etc.), mentre que **MySQLi** està dissenyat específicament per a MySQL.
+
+### Bases de dades NoSQL
+Les bases de dades NoSQL, com **MongoDB** o **Firebase**, emmagatzemen dades en formats no estructurats, com JSON. Aquestes són ideals per a aplicacions que gestionen grans volums de dades o dades no estructurades. **MongoDB** és un sistema orientat a documents, mentre que **Firebase** és conegut per les seves capacitats en temps real.
+
+### Accés a APIs
+Les **APIs REST** permeten accedir a dades de serveis web externs utilitzant sol·licituds HTTP i respostes en formats com JSON o XML. **GraphQL** és una alternativa moderna que permet sol·licituds més específiques, només retornant les dades necessàries, en contrast amb les sol·licituds REST, que poden ser més generals.
+
+### Web Scraping
+El **web scraping** és el procés d'extracció automàtica de dades de pàgines web. Aquesta tècnica es pot utilitzar per recuperar informació d'una pàgina web quan no hi ha una API disponible. En PHP, es poden utilitzar diverses biblioteques per descarregar i analitzar contingut HTML, com ara **cURL** i **DOMDocument**.
+
+### Consideracions de seguretat
+És fonamental garantir la seguretat quan es treballa amb l'accés a dades. Això inclou protegir les aplicacions contra vulnerabilitats comunes, com les **injeccions SQL**, i assegurar les connexions utilitzant **SSL/TLS** quan es comuniqui amb bases de dades remotes o APIs externes.
+
+
+## 2. Bases de dades relacionals (SQL)
+
+### Instal·lació
 A través de **XAMPP** és molt senzill, simplement ens descarregaríem el programa i l'activaríem. Per a descarregar XAMPP [prem ací](https://www.apachefriends.org/es/download.html).
 
 Amb ***Docker*** utilitzarem un altre  repositori que inclou el mysql i el phpMyAdmin i llancem
@@ -43,7 +63,7 @@ usuario: root
 contraseña: 1234
 ```
 
-## Estructura d'una base de dades
+### Estructura d'una base de dades
 
 Sabem que una base de dades té molts camps amb els seus noms i valors, però a més sabem que la base de dades ha de tindre un nom. per tant tindríem la següent estructura per a una base de dades:
     
@@ -87,7 +107,7 @@ Vegem-ho en un exemple real
     <img src="imagenes/06/06-bbdd-estructura.png">
 </div>
 
-## SQL
+### SQL
 
 Aquest llenguatge de consulta estructurada (*Structured Query Language*) és el que utilitzarem per a realitzar les consultes a les nostres bases de dades per a mostrar el contingut en les diferents interfícies web que creem al llarg de la unitat. Si vols saber més detalls visita [Wiki SQL](https://es.wikipedia.org/wiki/sql)
 
@@ -108,7 +128,7 @@ Las sentencias SQL también las podemos usar dentro de nuestro código php, de t
 ?>
 ```
 
-## phpMyAdmin
+### phpMyAdmin
 
 <div class="center img-medium">
     <img src="imagenes/06/06-bbdd-phpMyAdmin-logo.png">
@@ -116,7 +136,7 @@ Las sentencias SQL también las podemos usar dentro de nuestro código php, de t
 
 Aquest programari funciona sota Ngingx i PHP i és més que res una interfície web per a gestionar les bases de dades que tinguem disponibles en el nostre servidor local. Molts **hostings* ofereixen aquesta eina per defecte per a poder gestionar les BBDD que tinguem configurades sota el nostre compte.
 
-### Creant una base de dades dins de phpMyAdmin
+#### Creant una base de dades dins de phpMyAdmin
 
 <div class="center img-large">
     <img src="imagenes/06/06-bbdd-phpMyAdmin.gif">
@@ -135,7 +155,7 @@ El sistema generarà el codi SQL per a crear tot el que li hem posat i crearà l
 CREATE TABLE `persona`. ( `id` INT NOT NULL AUTO_INCREMENT , `nombre` TINYTEXT NOT NULL , `apellidos` TEXT NOT NULL , `telefono` TINYTEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 ```
 
-### Opcions en phpMyAdmin
+#### Opcions en phpMyAdmin
 
 Quan seleccionem una base de dades de la llista, el sistema ens mostra diverses pestanyes amb les quals interactuar amb la base de dades en qüestió:
 
@@ -153,7 +173,7 @@ Quan seleccionem una base de dades de la llista, el sistema ens mostra diverses 
 
 No aprofundirem en la resta d'opcions però, en la pestanya **Més** existeix l'opció **Dissenyador** per a poder editar les relacions entre taules d'una manera gràfica (punxant i arrossegant) que veurem més endavant.
 
-## PHP Data Objects :: PDO
+## 3. PHP Data Objects :: PDO
 
 *PHP Data Objects* (o *PDO*) és un *driver* de *PHP* que s'utilitza per a treballar sota una interfície d'objectes amb la base de dades. Hui dia és el que més s'utilitza per a manejar informació des d'una base de dades, ja siga relacional o no relacional.
 
