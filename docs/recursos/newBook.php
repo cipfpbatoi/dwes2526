@@ -35,10 +35,8 @@
     </div>
     <div>
         <label for="status">Estat:</label>
-        <select id="status" name="status">
-            <!-- Opcions d'estat aquí -->
-        </select>
-        <span class="error"><!-- Missatge d'error per a l'estat aquí --></span>
+        <input type="radio" name="status" value=" " />  <br />
+         <span class="error"><!-- Missatge d'error per a l'estat aquí --></span>
     </div>
     <div>
         <label for="photo">Foto:</label>

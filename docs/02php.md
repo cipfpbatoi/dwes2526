@@ -1294,19 +1294,15 @@ Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable
 
 #### Exercici 7: Validació de Formularis
 
-Crea un formulari en HTML que permetis als usuaris introduir el seu nom i correu electrònic. Després de l'enviament del formulari, valida que tots els camps han estat completats i que el correu electrònic és vàlid. Mostra un missatge d'error si alguna validació falla, i si tot és correcte, mostra un missatge confirmant que el formulari s'ha enviat correctament.
+Crea un formulari en HTML que permetis als usuaris introduir el seu nom, el correu electrònic i un password (dues vegades). Després de l'enviament del formulari, valida que tots els camps han estat completats i que el correu electrònic és vàlid, que el password tinga complexitat i que coincidixen. Mostra un missatge d'error si alguna validació falla, i si tot és correcte, mostra un missatge confirmant que l'usuari s'ha registrat correctament.
 
-#### Exercici 8: Processament de Formularis amb Select
+#### Exercici 8: Processament de Formularis amb Select i Radio Buttons
 
-Crea un formulari en HTML que permetis als usuaris seleccionar el seu idioma preferit d'una llista desplegable (`select`) que conté les opcions: "Valencià", "Castellà", "Anglés" i "Francés". Després de l'enviament del formulari, mostra un missatge que indiqui l'idioma seleccionat per l'usuari.
+A partir del formulari [newBook.php](recursos/newBook.php), fes que el mòdul i el estat els agafe de valors introduïts en arrays. Mostra el resultat en una taula.  
+ 
+#### Exercici 9: Pujar imatges des de formulari
 
-#### Exercici 9: Càlcul de la Mitjana
-
-Crea un formulari en HTML que permetis als usuaris introduir tres números. Després de l'enviament del formulari, processa els números introduïts per l'usuari en PHP i mostra la mitjana dels tres números.
-
-#### Exercici 10: Tractament de Dades amb Radio Buttons
-
-Crea un formulari en HTML que permetis als usuaris seleccionar el seu gènere utilitzant botons de ràdio (`radio buttons`) amb les opcions "Home" i "Dona". Després de l'enviament del formulari, processa les dades en PHP i mostra un missatge que indiqui el gènere seleccionat per l'usuari.
+A partir del formulari anterior fes que es puga pujar una imatge. Mostra la imatge en la taula.
 
 ## 20. Enunciats dels Projectes
 
