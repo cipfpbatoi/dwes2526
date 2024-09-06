@@ -992,13 +992,203 @@ echo $precioTotal;
 ```
 
 
-## Exercisis
+## 8. Exercisis
 
-### PDO
+### Bateria d'exercicis solucionats 
+ 
+##### Exercici 1. Connexió bàsica
 
-601. Crea una nova base de dades amb el nom `batoiBook` i cotejamiento de dades `utf8mb4_unicode_ci`. Importa el fitxer [`batoiBook.sql`](recursos/batoiBook.sql) que trobaràs en la carpeta `sql` d'aquesta unitat.
-602. Crea una carpeta config i dins d'ella un fitxer `database.inc.php` on establisques les constants de connexió amb la base de dades.
-603. Crea una classe Connection com a model de connexió amb la base de dades. Aquesta classe tindrà un mètode `__construct()` que inicialitzarà la connexió amb la base de dades i un mètode `getConection()` que retornà la connexió.
+1. Crea un fitxer PHP que faça una connexió a una base de dades MySQL utilitzant PDO.
+
+<details>
+<summary>Solució</summary>
+
+``` php
+<?php
+try {
+    $dsn = 'mysql:host=localhost;dbname=test';
+    $usuari = 'usuari';
+    $contrasenya = 'contrasenya';
+    $pdo = new PDO($dsn, $usuari, $contrasenya);
+    echo "Connexió establerta!";
+} catch (PDOException $e) {
+    echo "Error de connexió: " . $e->getMessage();
+}
+ 
+```
+</details>
+
+
+##### Exercici 2. Inserir un registre
+
+1. Escriu una funció que insereixi un nou usuari a la taula `users` amb el nom i correu electrònic passats per paràmetre.
+
+<details>
+<summary>Solució</summary>
+
+``` php
+<?php
+function inserirUsuari($nom, $correu) {
+    global $pdo;
+    $sql = "INSERT INTO users (nom, correu) VALUES (:nom, :correu)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':nom' => $nom, ':correu' => $correu]);
+    echo "Usuari inserit!";
+}
+```
+
+</details>
+
+##### Exericici 3. Recuperar dades
+ 
+1. Fes una consulta SQL que mostri tots els usuaris registrats a la taula `users` i mostra'ls en una taula HTML.
+
+<details>
+<summary>Solució</summary>
+
+``` php
+<?php
+function mostrarUsuaris() {
+    global $pdo;
+    $sql = "SELECT * FROM users";
+    $stmt = $pdo->query($sql);
+    echo "<table>";
+    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo "<tr><td>{$fila['nom']}</td><td>{$fila['correu']}</td></tr>";
+    }
+    echo "</table>";
+}
+```
+
+</details>
+
+##### Exercici 4. Actualitzar dades
+
+1. Escriu una funció que actualitzi el correu electrònic d'un usuari segons el seu identificador (`id`).
+
+<details>
+<summary>Solució</summary>
+
+``` php
+<?php
+function actualitzarCorreu($id, $nouCorreu) {
+    global $pdo;
+    $sql = "UPDATE users SET correu = :correu WHERE id = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':correu' => $nouCorreu, ':id' => $id]);
+    echo "Correu actualitzat!";
+}
+```
+
+</details>
+
+##### Exercici 5. Eliminar un registre
+
+1. Implementa un script que esborri un usuari per identificador (`id`).
+
+<details>
+<summary>Solució</summary>
+
+``` php
+<?php
+function eliminarUsuari($id) {
+    global $pdo;
+    $sql = "DELETE FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':id' => $id]);
+    echo "Usuari eliminat!";
+}
+```
+</details>
+
+##### Exercici 6. Ús de sentències preparades
+
+1. Refactoritza els exercicis anteriors per utilitzar sentències preparades per evitar injecció SQL.
+
+<details>
+<summary>Solució</summary>
+
+``` php
+<?php
+function inserirAmbPreparada($nom, $correu) {
+    global $pdo;
+    $sql = "INSERT INTO users (nom, correu) VALUES (:nom, :correu)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':correu', $correu);
+    $stmt->execute();
+    echo "Usuari inserit amb sentència preparada!";
+}
+```
+
+</details>
+
+##### Exercici 7. Tractament d'errors
+
+1. Modifica el codi anterior per gestionar els errors amb `try-catch` i mostrar missatges d'error clars.
+
+<details>
+<summary>Solució</summary>
+
+``` php
+<?php
+ try {
+    actualitzarCorreu(5, 'noucorreu@example.com');
+} catch (PDOException $e) {
+    echo "Error en actualitzar: " . $e->getMessage();
+}
+```
+</details>
+
+##### Exercici 8. Ús de Query Builder
+
+1. Utilitza un Query Builder per fer consultes a la base de dades de manera més fàcil i segura sense escriure SQL explícitament.
+
+<details>
+<summary>Solució</summary>
+
+``` php
+<?php
+#  Ús de Query Builder (amb Laravel com a exemple)
+use Illuminate\Support\Facades\DB;
+
+function obtenirUsuaris() {
+    $usuaris = DB::table('users')->get();
+    foreach ($usuaris as $usuari) {
+        echo $usuari->nom . ' - ' . $usuari->correu . "<br>";
+    }
+}
+```
+</details>
+
+##### Exercici 9. Tractament de fitxers
+
+1. Crea un script que llegeixi un fitxer CSV i insereixi les dades en una taula de la base de dades.
+
+<details>
+<summary>Solució</summary>
+
+``` php
+<?php
+ 
+function llegirCSV($fitxerCSV) {
+    global $pdo;
+    if (($gestor = fopen($fitxerCSV, "r")) !== FALSE) {
+        while (($dades = fgetcsv($gestor, 1000, ",")) !== FALSE) {
+            $sql = "INSERT INTO users (nom, correu) VALUES (:nom, :correu)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':nom' => $dades[0], ':correu' => $dades[1]]);
+        }
+        fclose($gestor);
+        echo "Dades inserides des del CSV!";
+    }
+}
+
+```
+</details>
+
+
+ 603. Crea una classe Connection com a model de connexió amb la base de dades. Aquesta classe tindrà un mètode `__construct()` que inicialitzarà la connexió amb la base de dades i un mètode `getConection()` que retornà la connexió.
 
 ``` php
 <?php

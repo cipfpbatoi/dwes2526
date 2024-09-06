@@ -1662,7 +1662,7 @@ Si generem la documentació i obrim amb un navegador l'arxiu `docs/api/index.htm
 
 
 
-## 11. Proves amb Codeception
+## 11. Proves amb PHPUNIT
 
 El curs passat, dins del mòdul de Entorns de Desenvolupament*, estudiarieu la importància de la realització de proves, així com les proves unitàries mitjançant [JUnit](https://junit.org/junit5/).
 
