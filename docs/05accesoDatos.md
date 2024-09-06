@@ -535,7 +535,7 @@ Per a utilitzar el comodí *LIKE* o altres comodins, hem d'associar-lo a la dada
 
 Teniu una llista d'exemples molt completa en la [documentació oficial](https://phpdelusions.net/pdo/objects).
 
-## Login & Password
+## 4. Login & Password
 
 <div class="center img-medium">
     <img src="imagenes/06/06-login-password.gif">
@@ -590,7 +590,7 @@ Ara que tenim l'usuari codificat i guardat en la base de dades, el recuperarem p
     }
 ```
 
-## QueryBuilder
+## 5. QueryBuilder
 
 Un Query Builder (Constructor de Consultes) és una eina o classe que facilita la creació, execució i manipulació de consultes SQL en un programa. L'objectiu principal és proporcionar una interfície més intuïtiva i segura per interactuar amb bases de dades, sense haver d'escriure consultes SQL en brut.
 
@@ -782,8 +782,7 @@ exit;
 
 ```
 
-
-## Accès a fitxers
+## 6. Accès a fitxers
 
 Gràcies a la funció fopen() des de PHP podem obrir arxius que es troben en els nostres servidor o una URL.
 
@@ -889,7 +888,7 @@ echo $datos[9] . "<br>"; // Momento de última modificación, 1444138251
 
 Dona una ullada a [les funcions de directoris](https://www.php.net/manual/es/book.dir.php) que té **PHP**, és molt interessant.
 
-## *Web Scraping*
+## 7. Web Scraping 
 
 Consisteix a navegar a una pàgina web i extraure informació automàticament, a partir del codi HTML generat, i organitzar la informació pública disponible en Internet.
 Aquesta pràctica requereix l'ús d'una llibreria que facilite la descàrrega de la informació desitjada imitant la interacció d'un navegador web. Aquest "robot" pot accedir a diverses pàgines simultàniament.
