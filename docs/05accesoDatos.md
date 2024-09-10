@@ -1032,7 +1032,8 @@ function inserirUsuari($nom, $correu) {
     global $pdo;
     $sql = "INSERT INTO users (nom, correu) VALUES (:nom, :correu)";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([':nom' => $nom, ':correu' => $correu]);
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':correu', $
     echo "Usuari inserit!";
 }
 ```
