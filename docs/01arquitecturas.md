@@ -837,9 +837,7 @@ Així i tot, tindriem les següents desaventatges:
 * A l'instal·lar una maquina virtual sencera ocupa recursos del sistema.
 * La màquina instal·la més coses de les necessàries habitualment.
 * No reprodueix l'entorn de producció.
-
-Pot ser molt útil, per exemple, quan la fem servir per desenvolupar en un framework, que ja ve configurat per fer-lo funcionar inmediatament i amb totes les característiques instal·lades.
-
+ 
 La tercera opció té les següents característiques:
 
 * Al principi és més difícil de possar en funcionamet ja que calen coneixements de docker.
@@ -877,61 +875,18 @@ Per a això és necessari tindre instal·lat **Docker Desktop** (<https://www.do
 Al llarg del curs anirem creant diferents contenidors amb els serveis necessaris, de manera que cada vegada només treballem amb el programari mínim.
 
 !!! caution "Versions"
-Al llarg del curs usarem PHP `8.1`. Respecte a *Docker*, per a escriure les anotacions hem utilitzat la versio `20.10` i la versio `2.19` de **docker compose**. Finalment, la versió de *Docker Desktop* que hem utilitzat és la `4.0`.
+Al llarg del curs usarem PHP `8.3`.  
 
-#### Instal·lació de docker
- 
-La instal·lació de docker dependrà del sistema operatiu que estem utilitzant. Ací anem a vore la que efecturan els que utilitzen linux, amb el sistema operatiu linux-mint o ubuntu , que és el que ve instal·lat en les imatges suministrades. Per a mac o windows s'haurà de mirar la pàgina web de [docker](https://www.docker.com/get-started)
 
-Ens donem privilegis
-
-~~~
-sudo su
-~~~
-
-Utilitzant els repositoris de docker l'instal·lem:
-
-~~~
-echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" | tee /etc/apt/sources.list.d/docker.list
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-
-apt update
-
-apt install docker-ce docker-ce-cli containerd.io pigz
-~~~
-
-Donem permisos a l'usuari afegint-lo al grup de docker
-
-~~~
-usermod -aG docker $USER
-~~~
-On $USER és el teu usuari.
-
-També haurem d'instal·lar el docker-compose
-~~~
-curl -SL "https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-chmod +x /usr/local/bin/docker-compose
-~~~
-
-I provem
-
-~~~
-docker --version
-~~~
-
-Faltarà engegar el servei de docker per a poder executar contenidors
-
-~~~
-sudo systemctl start docker.service
-~~~
-
-#### Plantilla Servidor Web + PHP
+#### Plantilla Servidor Web + PHP + MySQL + phpMyAdmin
 
 **Docker** es basa en l'ús d'imatges per a crear contenidors. *Docker Compose* simplifica el treball amb múltiples contenidors, i per això, per a facilitar l'arranc, ens centrarem en *Docker Compose* utilitzant una plantilla que únicament contindrà com a serveis Nginx i PHP.
-Per a facilitar la posada en marxa, us facilite un repositori en [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/hrZehkpi) disponible per a la seua descàrrega. **L'haureu de possar en un directori fàcilment localitzable i amb un nom significatiu, ja que serà el vostre directori de treball**.
+Per a facilitar la posada en marxa, us facilite un repositori en 
 
+  - Grup A: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/y5FOCalw) 
+  - Grup B: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/hrZehkpi)
+
+Disponibles per a la seua descàrrega. **L'haureu de possar en un directori fàcilment localitzable i amb un nom significatiu, ja que serà el vostre directori de treball**.
 Dins d'este repositori, el fitxer **'docker-compose.yaml'** indica quines màquines ha de montar i té el següent aspecte
 
 === "Nginx i PHP"
@@ -1006,27 +961,15 @@ En el mòdul de Desplegament d'aplicacions estudiareu en profunditat, a més de 
 
 #### Tot funciona
 
-Heu de comprovar que a l'accedir a `http://localhost` en el vostre navegador se us obre una pàgina de salutació.
+Heu de comprovar que a l'accedir a `http://localhost/phpinfo.php` en el vostre navegador se us obre una pàgina amb la configuració de php.
+També si accediu a `http://localhost:8000` veureu la pàgina d'accès a phpmyadmin.
 
+Si us fixeu en les carpetes que us ha creat el repositori veureu que les pàgines que pot executar (directori arrel de la nostra web) es troba a php/src. Les pàgines que anem a crear , de moment, les haureu de ficar ahí.
 
 ### Entorn de desenvolupament
 
-En este curso utilitzarem [**PHP Storm**](<https://www.jetbrains.com/phpstorm/>) com a entorn de desenvolupament. Existixen altres alternatives, com [**Visual Studio Code**](<https://code.visualstudio.com>).
-
-#### Instal·lació
-Podem fer-ho de manera automàtica utilitzant snap. Per fer-ho amb linux-mint
-
-``` console
-sudo rm /etc/apt/preferences.d/nosnap.pref
-sudo apt update
-sudo apt install snapd
-sudo snap install phpstorm --classic
-```
-També es pot instal·lar baixant-se el paquet de la pàgina web.
-
-##### Llicència
-Podeu sol·licitar una llicència a i.gomismullor@edu.gva.es
-
+En este curso utilitzarem [**Visual Studio Code**](<https://code.visualstudio.com>) com a entorn de desenvolupament. Existixen altres alternatives, com  [**PHP Storm**](<https://www.jetbrains.com/phpstorm/>).
+ 
 ### GitHub Classroom
 
 Us podeu [registrar](https://classroom.github.com/)
@@ -1043,9 +986,7 @@ Us podeu [registrar](https://classroom.github.com/)
 * Quan l'alumne finalitza la tasca, genera una últim pull request
 * El profesor revisa la pull request i opcionalment fa comentaris.
 
-
  
-
 ## 8. Referències
 
 ### Llibres Recomanats
