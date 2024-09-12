@@ -884,7 +884,7 @@ Al llarg del curs usarem PHP `8.3`.
 Per a facilitar la posada en marxa, us facilite un repositori en 
 
   - Grup A: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/y5FOCalw) 
-  - Grup B: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/hrZehkpi)
+  - Grup B: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/k_osQPW4)
 
 Disponibles per a la seua descàrrega. **L'haureu de possar en un directori fàcilment localitzable i amb un nom significatiu, ja que serà el vostre directori de treball**.
 Dins d'este repositori, el fitxer **'docker-compose.yaml'** indica quines màquines ha de montar i té el següent aspecte
