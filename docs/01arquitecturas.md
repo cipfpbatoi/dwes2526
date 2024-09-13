@@ -807,13 +807,15 @@ Un framework és una plataforma de desenvolupament que proporciona una estructur
 ### Com Trieu un Framework?
 
 La selecció del framework adequat per a un projecte depèn de diversos factors:
-- **Tipus de Projecte:** Aplicacions en temps real, aplicacions CRUD, aplicacions amb necessitats específiques de seguretat, etc.
-- **Idioma de Programació:** Si el teu equip està més familiaritzat amb JavaScript, Python o PHP, per exemple.
-- **Escalabilitat i Rendiment:** Alguns frameworks són més adequats per a aplicacions petites, mentre que altres gestionen millor aplicacions de gran escala.
-- **Ecosistema i Comunitat:** La disponibilitat de biblioteques, plugins i la mida de la comunitat poden influir en la decisió.
-- **Facilitat d'ús i Documentació:** Un bon framework ha de tenir una documentació clara i fàcil d'entendre, així com una corba d'aprenentatge adequada per al teu equip.
+
+    - **Tipus de Projecte:** Aplicacions en temps real, aplicacions CRUD, aplicacions amb necessitats específiques de seguretat, etc.
+    - **Idioma de Programació:** Si el teu equip està més familiaritzat amb JavaScript, Python o PHP, per exemple.
+    - **Escalabilitat i Rendiment:** Alguns frameworks són més adequats per a aplicacions petites, mentre que altres gestionen millor aplicacions de gran escala.
+    - **Ecosistema i Comunitat:** La disponibilitat de biblioteques, plugins i la mida de la comunitat poden influir en la decisió.
+    - **Facilitat d'ús i Documentació:** Un bon framework ha de tenir una documentació clara i fàcil d'entendre, així com una corba d'aprenentatge adequada per al teu equip.
 
 #### Recursos Addicionals:
+
 - **Node.js Official Documentation:** [Node.js](https://nodejs.org/en/docs/)
 - **Express.js Official Documentation:** [Express.js](https://expressjs.com/)
 - **Django Official Documentation:** [Django](https://docs.djangoproject.com/en/stable/)
