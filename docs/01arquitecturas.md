@@ -16,7 +16,7 @@ Una arquitectura web defineix l'estructura i el comportament dels components d'u
 
 Les arquitectures web són fonamentals en el desenvolupament d'aplicacions web modernes per diverses raons:
 
-- **Escalabilitat**: Les arquitectures ben dissenyades permeten que les aplicacions web gestionin un nombre creixent d'usuaris i dades sense sacrificar el rendiment. Per exemple, una arquitectura de microserveis facilita l'escalabilitat horitzontal, ja que cada servei es pot escalar independentment.
+- **Escalabilitat**: Les arquitectures ben dissenyades permeten que les aplicacions web gestionen un nombre creixent d'usuaris i dades sense sacrificar el rendiment. Per exemple, una arquitectura de microserveis facilita l'escalabilitat horitzontal, ja que cada servei es pot escalar independentment.
 - **Mantenibilitat**: Una bona arquitectura facilita el manteniment i l'actualització de les aplicacions. Mitjançant la separació de preocupacions (per exemple, en una arquitectura de tres capes), es poden fer canvis en una part del sistema sense afectar altres parts.
 - **Seguretat**: Les arquitectures web poden incorporar diverses capes de seguretat per protegir les dades i les comunicacions. Això inclou mesures com l'autenticació, l'autorització, la xifratge de dades, i la protecció contra atacs comuns com les injeccions SQL i el cross-site scripting (XSS).
 - **Rendiment**: L'arquitectura de l'aplicació web afecta directament el seu rendiment. Una arquitectura ben dissenyada optimitza el temps de resposta i la gestió de recursos, millorant l'experiència de l'usuari. L'ús de tècniques com la caché, el balanç de càrrega, i la compressió de contingut són exemples d'estratègies per millorar el rendiment.
@@ -164,20 +164,24 @@ La generació dinàmica de pàgines web permet crear contingut web en temps real
 #### Avantatges
 
 **Actualització en Temps Real**
-- **Descripció:** Les pàgines es poden actualitzar automàticament sense necessitat de recarregar tota la pàgina.
-- **Cas d'Ús:** Un portal de notícies que mostra articles nous sense necessitat de recarregar la pàgina.
+
+    - **Descripció:** Les pàgines es poden actualitzar automàticament sense necessitat de recarregar tota la pàgina.
+    - **Cas d'Ús:** Un portal de notícies que mostra articles nous sense necessitat de recarregar la pàgina.
 
 **Personalització del Contingut**
-- **Descripció:** Permet adaptar el contingut a les preferències i el comportament de l'usuari.
-- **Cas d'Ús:** Una botiga en línia que mostra recomanacions de productes basades en l'historial de navegació i compres de l'usuari.
+
+    - **Descripció:** Permet adaptar el contingut a les preferències i el comportament de l'usuari.
+    - **Cas d'Ús:** Una botiga en línia que mostra recomanacions de productes basades en l'historial de navegació i compres de l'usuari.
 
 **Interactivitat Avançada**
-- **Descripció:** Facilita la creació d'aplicacions web interactives que poden respondre a les accions de l'usuari en temps real.
-- **Cas d'Ús:** Aplicacions de xarxes socials que mostren actualitzacions i notificacions en temps real.
+
+    - **Descripció:** Facilita la creació d'aplicacions web interactives que poden respondre a les accions de l'usuari en temps real.
+    - **Cas d'Ús:** Aplicacions de xarxes socials que mostren actualitzacions i notificacions en temps real.
 
 **Gestió Eficient de Contingut**
-- **Descripció:** Permet gestionar grans quantitats de contingut de manera més eficient, mostrant només el contingut rellevant en funció de la sol·licitud de l'usuari.
-- **Cas d'Ús:** Un sistema de gestió de continguts (CMS) que permet als administradors editar i publicar articles de manera dinàmica.
+
+    - **Descripció:** Permet gestionar grans quantitats de contingut de manera més eficient, mostrant només el contingut rellevant en funció de la sol·licitud de l'usuari.
+    - **Cas d'Ús:** Un sistema de gestió de continguts (CMS) que permet als administradors editar i publicar articles de manera dinàmica.
 
 
 #### Desavantatges
