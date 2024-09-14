@@ -3,91 +3,128 @@ title: Arquitectures Web en Entorn Servidor
 author: [Ignasi Gomis Mullor]
 date: 2024
 ---
+ 
+# Diapositiva 1: Què és una Arquitectura Web?
 
-# Introducció a les Arquitectures Web
+- **Definició**: Estructura d'un sistema dissenyada per a servir aplicacions web.
+- **Components clau**:
+  - **Client**: Dispositiu de l'usuari final (navegador).
+  - **Servidor**: Processa les dades i envia respostes al client.
+  - **Base de dades**: Emmagatzema informació rellevant.
 
-- **Client-Servidor**: Model tradicional de comunicació.
+---
+
+# Diapositiva 2: Diferències entre Client i Servidor
+
 - **Execució del codi**:
-    - **Client**: JavaScript, HTML, CSS
-    - **Servidor**: PHP, Python, Node.js
-- **Flux de dades**:
-    - Peticions del client → Respostes del servidor
+  - **Client**: HTML, CSS, JavaScript executats en el navegador.
+  - **Servidor**: PHP, Python, Node.js executats en el servidor.
+- **Funcions del client**:
+  - Mostrar contingut, interactivitat amb l'usuari.
+- **Funcions del servidor**:
+  - Processar sol·licituds, gestionar dades.
 
 ---
 
-# Generació Dinàmica de Pàgines Web
+# Diapositiva 3: Model de Pàgines Estàtiques vs Dinàmiques
 
-- **Definició**: Pàgines web que es generen sobre la marxa en resposta a peticions del client.
+- **Pàgines estàtiques**:
+  - Serveixen fitxers HTML fixes.
+  - Cada usuari veu el mateix contingut.
+- **Pàgines dinàmiques**:
+  - El contingut es genera al moment basant-se en la sol·licitud.
+  - Pot canviar segons l'usuari o l'estat de l'aplicació.
+
+---
+
+# Diapositiva 4: Tipus de Processament: Servidor vs Client
+
+- **Processament en el servidor**:
+  - El servidor gestiona totes les sol·licituds i retorna pàgines HTML al client.
+  - Avantatges: Millor control de la lògica de negoci i seguretat.
+- **Processament en el client**:
+  - El client executa part de la lògica utilitzant JavaScript.
+  - Avantatges: Respostes més ràpides i menor càrrega al servidor.
+
+---
+
+# Diapositiva 5: Arquitectura de 2 Capes
+
+- **Definició**: Model bàsic on el client i el servidor interactuen directament.
+- **Components**:
+  - **Client**: Navegador que fa sol·licituds HTTP.
+  - **Servidor**: Processa les sol·licituds i retorna pàgines HTML o dades JSON.
+- **Limitacions**: Escalabilitat limitada, dependència directa de la capacitat del servidor.
+
+---
+
+# Diapositiva 6: Arquitectura de 3 Capes
+
+- **Cap de presentació**: Navegador o client que interactua amb l'usuari.
+- **Cap de lògica de negoci**: Processa les regles de negoci (servidor d'aplicacions).
+- **Cap de dades**: Emmagatzema i gestiona les dades (bases de dades).
 - **Avantatges**:
-    - Contingut personalitzat per l'usuari.
-    - Interacció amb bases de dades.
-    - Millor manteniment del codi.
-- **Comparació** amb la inclusió de scripts:
-    - Scripts: Es poden incloure directament a HTML.
-    - Generació dinàmica: Major flexibilitat i escalabilitat.
+  - Millor separació de responsabilitats.
+  - Major escalabilitat i flexibilitat.
 
 ---
 
-# Execució de Codi en Servidors Web
+# Diapositiva 7: Arquitectura de Microserveis
 
-- **Serveis Web**:
-    - **Apache**, **Nginx**, **IIS**: Exemples de servidors web.
-- **Mecanismes d'execució**:
-    - **PHP**: Codi interpretat en temps real.
-    - **Node.js**: Basat en esdeveniments asíncrons.
-    - **ASP.NET**: Integrat amb serveis Windows.
-
----
-
-# Serveis i Servidors d'Aplicacions
-
-- **Funcionalitats dels servidors d'aplicacions**:
-    - Processament d'aplicacions web complexes.
-    - Gestió de sessions i autenticació d'usuaris.
-    - Comunicació entre bases de dades i aplicacions web.
-- **Exemples**:
-    - **Tomcat**: Servidor d'aplicacions Java.
-    - **WildFly**: Suport per a aplicacions Java EE.
+- **Definició**: Arquitectura composta de múltiples serveis petits i independents.
+- **Cada servei**:
+  - Realitza una funció específica (ex. gestió de pagaments, clients, etc.).
+  - És autònom i pot ser desenvolupat i desplegat de forma independent.
+- **Avantatges**:
+  - Facilitat d'escalabilitat.
+  - Millor manteniment i desplegament independent de components.
 
 ---
 
-# Llenguatges i Tecnologies del Servidor
+# Diapositiva 8: Tecnologies per a la Programació Web en Entorn Servidor
 
-- **Principals llenguatges**:
-    - **PHP**: Popular per aplicacions web dinàmiques.
-    - **Node.js**: Basat en JavaScript, ideal per aplicacions asíncrones.
-    - **ASP.NET**: Utilitzat amb llenguatge C# en entorns Microsoft.
-    - **Ruby on Rails**: Facilita el desenvolupament ràpid d'aplicacions.
-- **Comparativa**:
-    - PHP: Facilitat d'ús.
-    - Node.js: Ràpid i lleuger.
-    - ASP.NET: Integració robusta amb Windows.
-
----
-
-# Eines i Frameworks de Desenvolupament
-
-- **Frameworks per a Servidor**:
-    - **Laravel**: Framework PHP amb arquitectura MVC.
-    - **Express.js**: Minimalista per a aplicacions amb Node.js.
-    - **Django**: Framework Python amb seguretat integrada.
-- **Avantatges d'utilitzar frameworks**:
-    - Estandardització de codi.
-    - Millor organització i escalabilitat.
-    - Funcionalitats de seguretat integrades.
+- **Llenguatges comuns**:
+  - **PHP**: Utilitzat en WordPress, Laravel.
+  - **Node.js**: Asíncron, ideal per a aplicacions en temps real.
+  - **Python**: Frameworks com Django i Flask.
+  - **Java**: Utilitzat en entorns empresarials amb frameworks com Spring.
+- **Funcions bàsiques**:
+  - Processament de sol·licituds HTTP.
+  - Interacció amb bases de dades.
+  - Generació de contingut dinàmic.
 
 ---
 
-# Integració de Llenguatges de Marques i Llenguatges del Servidor
+# Diapositiva 9: Frameworks per a Servidors Web
 
-- **HTML + Llenguatge de Programació del Servidor**:
-    - Inclusió dinàmica de contingut dins de pàgines HTML.
-    - **Exemple en PHP**:
-      ```php
-      <?php
-        echo "<h1>Benvingut a la nostra web!</h1>";
-      ?>
-      ```
-- **Eines per a la integració**:
-    - **Blade**: Motor de plantilles en Laravel.
-    - **Jinja**: Motor de plantilles en Django.
+- **Laravel (PHP)**:
+  - MVC, eina robusta per al desenvolupament web.
+- **Express.js (Node.js)**:
+  - Minimalista, lleuger, per a aplicacions web i APIs.
+- **Django (Python)**:
+  - Eina completa i segura per a aplicacions de gran escala.
+- **Spring Boot (Java)**:
+  - Utilitzat per a aplicacions empresarials.
+
+---
+
+# Diapositiva 10: Integració HTML amb Llenguatges de Programació en Servidor
+
+- **Llenguatges de marques (HTML)**:
+  - Generen la presentació de les pàgines.
+  - Integració amb llenguatges de servidor per incloure contingut dinàmic.
+- **Motors de plantilles**:
+  - **Blade** (Laravel), **Jinja** (Django) per separar lògica de negoci i presentació.
+
+---
+
+# Diapositiva 11: Avantatges dels Frameworks de Programació
+
+- **Organització del codi**:
+  - Millor separació de responsabilitats (MVC).
+  - Facilita el manteniment i l'escalabilitat.
+- **Funcionalitats comunes**:
+  - Gestió d'autenticació, validació de formularis, interacció amb bases de dades.
+- **Exemple de frameworks**:
+  - **Laravel (PHP)**: Facilitat d'ús, estructura clara.
+  - **Django (Python)**: Seguretat i integració ràpida de funcionalitats.
