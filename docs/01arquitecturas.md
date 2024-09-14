@@ -821,7 +821,30 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 - **Django Official Documentation:** [Django](https://docs.djangoproject.com/en/stable/)
 - **Laravel Documentation:** [Laravel](https://laravel.com/docs)
 
-## 7. Entorn de desenvolupament
+## 7. Entorn de treball
+
+### Entorn de desenvolupament integrat (IDE)
+
+En este curso utilitzarem [**Visual Studio Code**](<https://code.visualstudio.com>) com a editor  de codi. Existixen altres alternatives, com  [**PHP Storm**](<https://www.jetbrains.com/phpstorm/>).
+
+### GitHub Classroom
+
+Us haureu de [registrar](https://classroom.github.com/) ja que l'utilitzarem durant el curs per la còpia  de repositoris i entrega de treballs.
+
+**Metodologia de treball amb el github classroom**
+
+* Se proporcionarà a l'alumnat un enllaç amb la invitació.
+* Accedint a l'enllaç a cada alumne se li crearà un repositori individual en l'organització.
+* L'alumnat treballa en el seu repositori assignat. Se'l pot baixar per treballar en local.
+* Inicialment, l'alumne crea una branca nova sobre la que va a treballar.
+* Quan vullga sol.licitar ajuda o revisió del professor, l'alumne genera una pull request a la branca principal del seu repositori en la que cita al professor per tal que reba una notificació.
+* El profesor proporciona retroalimentació mitjançant comentaris en la pull request o en un determinat commit individual.
+* Opcionalment es poden utilitzar els issues y les cites d'usuari per sol·licitar la intervenció del profesor.
+* Quan l'alumne finalitza la tasca, genera una últim pull request
+* El profesor revisa la pull request i opcionalment fa comentaris.
+
+
+### Entorns de desenvolupament local
 
 Pera fer correr les aplicacions de servidor ens cal, com a mínim, un **servidor web**, l'interpret de **php** i un **motor de base de dades**. Hem de distinguir l'**entorn de desenvolupament**, on anem a programar i mantindre la nostra aplicació, de l'**entorn de producció**, on anem a executar-la.
 Normalment el primer depén de nosaltres mentre que el segon pot dependre de l'empresa on s'allotjarà la nostra web. Per a preparar el nostre entorn de desenvolupament podem optar per:
@@ -858,7 +881,7 @@ La tercera opció té les següents característiques:
 XAMPP (https://www.apachefriends.org/es/index.html) és una distribució composta amb el programari necessari per a desenvolupar en entorn servidor. Es compon de les següents eines sobre la base de les seues sigles:
 Des de la pròpia pàgina es pot descarregar l'arxiu executable per al sistema operatiu del nostre ordinador. Es recomana llegir la FAQ de cada sistema operatiu amb instruccions per a la seua posada en marxa.
 
-!!! note  
+!!! note "Acrònim"  
     * X per al sistema operatiu (d'aquí ve que es conega altrament com LAMP o WAMP).
     * A per a Apatxe.
     * M per a MySQL / MariaDB. També inclou phpMyAdmin per a l'administració de la base de dades des d'una interfície web.
@@ -872,28 +895,28 @@ Des de la pròpia pàgina es pot descarregar l'arxiu executable per al sistema o
 ### Docker
 
 Docker (<https://www.docker.com>) és un gestor de contenidors, considerant un contenidor com un mètode de virtualització del sistema operatiu.
-
 L'ús de contenidors requereix menys recursos que una màquina virtual, per tant, el seu llançament i detenció són més ràpids que les màquines virtuals.
 
 Així doncs, *Docker* permet crear, provar i implementar aplicacions ràpidament, a partir d'una sèrie de plantilles que es coneixen com a **imatges** de *Docker*.
 
-Per a això és necessari tindre instal·lat **Docker Desktop** (<https://www.docker.com/products/docker-desktop>) en els nostres entorns de desenvolupament (el qual ja inclou en **nucli** de *Docker* i l'eina **docker compose**). Per a instal·lar-ho en Windows, és necessari instal·lar prèviament **WSL 2**, el qual és un subsistema de *Linux* dins de *Windows*.
+Per a això, instal·larem **Docker Desktop** (<https://www.docker.com/products/docker-desktop>) en els nostres entorns de desenvolupament (el qual ja inclou en **nucli** de *Docker* i l'eina **docker compose**).
 
 Al llarg del curs anirem creant diferents contenidors amb els serveis necessaris, de manera que cada vegada només treballem amb el programari mínim.
 
-!!! caution "Versions"
-    Al llarg del curs usarem PHP `8.3`.  
+!!! note "Docker en windows"
+    Per a instal·lar-ho en Windows, és necessari instal·lar prèviament **WSL 2**, el qual és un subsistema de *Linux* dins de *Windows*.
 
 
-#### Plantilla Servidor Web + PHP + MySQL + phpMyAdmin
+#### Plantilla Inicial : Servidor Web nginx + PHP + MySQL + phpMyAdmin
 
 **Docker** es basa en l'ús d'imatges per a crear contenidors. *Docker Compose* simplifica el treball amb múltiples contenidors, i per això, per a facilitar l'arranc, ens centrarem en *Docker Compose* utilitzant una plantilla que únicament contindrà com a serveis Nginx i PHP.
-Per a facilitar la posada en marxa, us facilite un repositori en 
-
+Per a facilitar la posada en marxa, us facilite un repositori, disponible per a la seua descarrega mitjançant el **git clone**.
+ 
   - Grup A: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/y5FOCalw) 
   - Grup B: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/k_osQPW4)
 
-Disponibles per a la seua descàrrega. **L'haureu de possar en un directori fàcilment localitzable i amb un nom significatiu, ja que serà el vostre directori de treball**.
+ 
+**L'haureu de possar en un directori fàcilment localitzable i amb un nom significatiu, ja que serà el vostre directori de treball**.
 Dins d'este repositori, el fitxer **'docker-compose.yaml'** indica quines màquines ha de montar i té el següent aspecte
 
 === "Nginx i PHP"
@@ -957,34 +980,13 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 !!! question "Però vull saver com funciona..."
     En el mòdul de Desplegament d'aplicacions estudiareu en profunditat, a més de Docker, Apatxe i altres serveis que ens serviran d'ajuda per al desenvolupament en entorn servidor.
 
-#### Tot funciona
+!!! note "Tot funciona"
+    Heu de comprovar que a l'accedir a `http://localhost/phpinfo.php` en el vostre navegador se us obre una pàgina amb la configuració de php.
+    També si accediu a `http://localhost:8000` veureu la pàgina d'accès a phpmyadmin.
 
-Heu de comprovar que a l'accedir a `http://localhost/phpinfo.php` en el vostre navegador se us obre una pàgina amb la configuració de php.
-També si accediu a `http://localhost:8000` veureu la pàgina d'accès a phpmyadmin.
+!!! important "Directoris de php"
+    Si us fixeu en les carpetes que us ha creat el repositori veureu que les pàgines que pot executar (directori arrel de la nostra web) es troba a php/src. Les pàgines que anem a crear , de moment, les haureu de ficar ahí.
 
-Si us fixeu en les carpetes que us ha creat el repositori veureu que les pàgines que pot executar (directori arrel de la nostra web) es troba a php/src. Les pàgines que anem a crear , de moment, les haureu de ficar ahí.
-
-### Entorn de desenvolupament
-
-En este curso utilitzarem [**Visual Studio Code**](<https://code.visualstudio.com>) com a entorn de desenvolupament. Existixen altres alternatives, com  [**PHP Storm**](<https://www.jetbrains.com/phpstorm/>).
- 
-### GitHub Classroom
-
-Us podeu [registrar](https://classroom.github.com/)
-
-**Metodologia de treball amb el github classroom**
-
-* Se proporcionarà a l'alumnat un enllaç amb la invitació.
-* Accedint a l'enllaç a cada alumne se li crearà un repositori individual en l'organització.
-* L'alumnat treballa en el seu repositori assignat. Se'l pot baixar per treballar en local.
-* Inicialment, l'alumne crea una branca nova sobre la que va a treballar.
-* Quan vullga sol.licitar ajuda o revisió del professor, l'alumne genera una pull request a la branca principal del seu repositori en la que cita al professor per tal que reba una notificació.
-* El profesor proporciona retroalimentació mitjançant comentaris en la pull request o en un determinat commit individual.
-* Opcionalment es poden utilitzar els issues y les cites d'usuari per sol·licitar la intervenció del profesor.
-* Quan l'alumne finalitza la tasca, genera una últim pull request
-* El profesor revisa la pull request i opcionalment fa comentaris.
-
- 
 ## 8. Referències
 
 ### Llibres Recomanats
