@@ -856,14 +856,15 @@ La tercera opció té les següents característiques:
 ### XAMPP
 
 XAMPP (https://www.apachefriends.org/es/index.html) és una distribució composta amb el programari necessari per a desenvolupar en entorn servidor. Es compon de les següents eines sobre la base de les seues sigles:
-
-* X per al sistema operatiu (d'aquí ve que es conega altrament com LAMP o WAMP).
-* A per a Apatxe.
-* M per a MySQL / MariaDB. També inclou phpMyAdmin per a l'administració de la base de dades des d'una interfície web.
-* P per a PHP.
-* P per a Perl.
-
 Des de la pròpia pàgina es pot descarregar l'arxiu executable per al sistema operatiu del nostre ordinador. Es recomana llegir la FAQ de cada sistema operatiu amb instruccions per a la seua posada en marxa.
+
+!!! note  
+    * X per al sistema operatiu (d'aquí ve que es conega altrament com LAMP o WAMP).
+    * A per a Apatxe.
+    * M per a MySQL / MariaDB. També inclou phpMyAdmin per a l'administració de la base de dades des d'una interfície web.
+    * P per a PHP.
+    * P per a Perl.
+
 
 !!! note "XAMPP en Windows"
     Si treballes amb el teu propi ordinador, XAMPP és una solució més senzilla que Docker, sobretot si treballes amb Windows com a sistema operatiu.
@@ -951,7 +952,7 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 </figure>
 
 !!! tip "Docker stack"
-    Existeixen diverses opcions mitjançant Docker que ofereixen solucions completes i empaquetes per a tot el stack de desenvolupament. En posteriors sessions utilitzarem tant *Devilbox* (<http://devilbox.org>) com *Laradock* (<https://laradock.io>)
+    Existeixen diverses opcions mitjançant Docker que ofereixen solucions completes i empaquetes per a tot el stack de desenvolupament. Com a exemple tenim  *Devilbox* (<http://devilbox.org>) i *Laradock* (<https://laradock.io>)
 
 !!! question "Però vull saver com funciona..."
     En el mòdul de Desplegament d'aplicacions estudiareu en profunditat, a més de Docker, Apatxe i altres serveis que ens serviran d'ajuda per al desenvolupament en entorn servidor.
