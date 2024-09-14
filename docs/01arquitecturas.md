@@ -967,6 +967,10 @@ Altres comandos que podem arribar a utilitzar són:
 * `docker start nombreContenedor`: Arrancar un contenidor
 * `docker images`: Veure les imatges que tenim descarregades
 
+
+!!! tip "Docker stack"
+    Existeixen diverses opcions mitjançant Docker que ofereixen solucions completes i empaquetes per a tot el stack de desenvolupament. Com a exemple tenim  *Devilbox* (<http://devilbox.org>) i *Laradock* (<https://laradock.io>)
+
 Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-los una vegada creats és utilitzar la interfície gràfica que ofereix Docker Desktop:
 
 <figure>
@@ -974,12 +978,7 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
   <figcaption>Arranc de contenidor mitjançant Docker Desktop</figcaption>
 </figure>
 
-!!! tip "Docker stack"
-    Existeixen diverses opcions mitjançant Docker que ofereixen solucions completes i empaquetes per a tot el stack de desenvolupament. Com a exemple tenim  *Devilbox* (<http://devilbox.org>) i *Laradock* (<https://laradock.io>)
-
-!!! question "Però vull saver com funciona..."
-    En el mòdul de Desplegament d'aplicacions estudiareu en profunditat, a més de Docker, Apatxe i altres serveis que ens serviran d'ajuda per al desenvolupament en entorn servidor.
-
+ 
 !!! note "Tot funciona"
     Heu de comprovar que a l'accedir a `http://localhost/phpinfo.php` en el vostre navegador se us obre una pàgina amb la configuració de php.
     També si accediu a `http://localhost:8000` veureu la pàgina d'accès a phpmyadmin.
