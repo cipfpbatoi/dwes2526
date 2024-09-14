@@ -808,11 +808,11 @@ Un framework és una plataforma de desenvolupament que proporciona una estructur
 
 La selecció del framework adequat per a un projecte depèn de diversos factors:
 
-    - **Tipus de Projecte:** Aplicacions en temps real, aplicacions CRUD, aplicacions amb necessitats específiques de seguretat, etc.
-    - **Idioma de Programació:** Si el teu equip està més familiaritzat amb JavaScript, Python o PHP, per exemple.
-    - **Escalabilitat i Rendiment:** Alguns frameworks són més adequats per a aplicacions petites, mentre que altres gestionen millor aplicacions de gran escala.
-    - **Ecosistema i Comunitat:** La disponibilitat de biblioteques, plugins i la mida de la comunitat poden influir en la decisió.
-    - **Facilitat d'ús i Documentació:** Un bon framework ha de tenir una documentació clara i fàcil d'entendre, així com una corba d'aprenentatge adequada per al teu equip.
+  - **Tipus de Projecte:** Aplicacions en temps real, aplicacions CRUD, aplicacions amb necessitats específiques de seguretat, etc.
+  - **Idioma de Programació:** Si el teu equip està més familiaritzat amb JavaScript, Python o PHP, per exemple.
+  - **Escalabilitat i Rendiment:** Alguns frameworks són més adequats per a aplicacions petites, mentre que altres gestionen millor aplicacions de gran escala.
+  - **Ecosistema i Comunitat:** La disponibilitat de biblioteques, plugins i la mida de la comunitat poden influir en la decisió.
+  - **Facilitat d'ús i Documentació:** Un bon framework ha de tenir una documentació clara i fàcil d'entendre, així com una corba d'aprenentatge adequada per al teu equip.
 
 #### Recursos Addicionals:
 
@@ -861,12 +861,12 @@ XAMPP (https://www.apachefriends.org/es/index.html) és una distribució compost
 * A per a Apatxe.
 * M per a MySQL / MariaDB. També inclou phpMyAdmin per a l'administració de la base de dades des d'una interfície web.
 * P per a PHP.
-* l'última P per a Perl.
+* P per a Perl.
 
 Des de la pròpia pàgina es pot descarregar l'arxiu executable per al sistema operatiu del nostre ordinador. Es recomana llegir la FAQ de cada sistema operatiu amb instruccions per a la seua posada en marxa.
 
 !!! note "XAMPP en Windows"
-Si treballes amb el teu propi ordinador, XAMPP és una solució més senzilla que Docker, sobretot si treballes amb Windows com a sistema operatiu.
+    Si treballes amb el teu propi ordinador, XAMPP és una solució més senzilla que Docker, sobretot si treballes amb Windows com a sistema operatiu.
 
 ### Docker
 
@@ -881,7 +881,7 @@ Per a això és necessari tindre instal·lat **Docker Desktop** (<https://www.do
 Al llarg del curs anirem creant diferents contenidors amb els serveis necessaris, de manera que cada vegada només treballem amb el programari mínim.
 
 !!! caution "Versions"
-Al llarg del curs usarem PHP `8.3`.  
+    Al llarg del curs usarem PHP `8.3`.  
 
 
 #### Plantilla Servidor Web + PHP + MySQL + phpMyAdmin
