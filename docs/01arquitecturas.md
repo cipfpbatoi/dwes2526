@@ -922,16 +922,7 @@ Dins d'este repositori, el fitxer **'docker-compose.yaml'** indica quines màqui
       - ./src:/var/www/php
       - ./.docker/php/conf.d/Xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./.docker/php/conf.d/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
-
-    # Más info en
-    # https://tech.osteel.med/posts/docker-for-local-web-development-part-1-a-basic-lemp-stack
-
-    # Lanzar con
-    # docker-compose up -d
-
-    # Ver los logs con
-    # docker-compose logs -f
-    
+  
     ```
 Per arrencar les màquines o podem fer des de la consola amb
 
@@ -960,10 +951,10 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 </figure>
 
 !!! tip "Docker stack"
-Existeixen diverses opcions mitjançant Docker que ofereixen solucions completes i empaquetes per a tot el stack de desenvolupament. En posteriors sessions utilitzarem tant *Devilbox* (<http://devilbox.org>) com *Laradock* (<https://laradock.io>)
+    Existeixen diverses opcions mitjançant Docker que ofereixen solucions completes i empaquetes per a tot el stack de desenvolupament. En posteriors sessions utilitzarem tant *Devilbox* (<http://devilbox.org>) com *Laradock* (<https://laradock.io>)
 
 !!! question "Però vull saver com funciona..."
-En el mòdul de Desplegament d'aplicacions estudiareu en profunditat, a més de Docker, Apatxe i altres serveis que ens serviran d'ajuda per al desenvolupament en entorn servidor.
+    En el mòdul de Desplegament d'aplicacions estudiareu en profunditat, a més de Docker, Apatxe i altres serveis que ens serviran d'ajuda per al desenvolupament en entorn servidor.
 
 #### Tot funciona
 
