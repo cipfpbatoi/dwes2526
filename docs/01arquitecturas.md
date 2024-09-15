@@ -1001,38 +1001,38 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
   - Explora el disseny de microserveis, una arquitectura emergent que permet crear aplicacions escalables i flexibles.
 
 ### Documentació Oficial i Guies
-- **[The Twelve-Factor App](https://12factor.net/)**
+1. **[The Twelve-Factor App](https://12factor.net/)**
   - Una metodologia per construir aplicacions web modernes que són fàcilment escalables i mantenibles.
 
-- **[Documentació de l'Arquitectura de PWA (Progressive Web Apps)](https://web.dev/progressive-web-apps/)**
+2. **[Documentació de l'Arquitectura de PWA (Progressive Web Apps)](https://web.dev/progressive-web-apps/)**
   - Guia detallada sobre el disseny i la implementació d'aplicacions web progressives, que combinen el millor de les aplicacions web i mòbils.
 
 ### Cursos en Línia
-- **[Coursera - Web Application Architectures](https://www.coursera.org/learn/web-app)**
+1. **[Coursera - Web Application Architectures](https://www.coursera.org/learn/web-app)**
   - Curs que proporciona una visió general de les arquitectures d'aplicacions web, incloent-hi clients i servidors, HTTP, i serveis web.
 
-- **[Udacity - Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044)**
+2. **[Udacity - Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044)**
   - Aquest programa cobreix temes com arquitectures de servidor, autenticació, i API RESTful.
 
 ### Recursos Addicionals
-- **[Microservices.io](https://microservices.io/)**
+1. **[Microservices.io](https://microservices.io/)**
   - Recursos sobre patrons de microserveis, arquitectures i millors pràctiques per implementar microserveis amb èxit.
 
-- **[Martin Fowler's Blog](https://martinfowler.com/)**
+2. **[Martin Fowler's Blog](https://martinfowler.com/)**
   - Un blog que cobreix diversos aspectes de l'arquitectura del programari, incloent-hi articles sobre disseny de microserveis i altres arquitectures emergents.
 
 ### Exemples i Tutorials
-- **[DigitalOcean Community Tutorials](https://www.digitalocean.com/community/tutorials)**
+1. **[DigitalOcean Community Tutorials](https://www.digitalocean.com/community/tutorials)**
   - Ofereix tutorials pràctics sobre una àmplia gamma de temes relacionats amb l'arquitectura web, des de configuració de servidors fins a desplegament d'aplicacions.
 
-- **[Mozilla Developer Network (MDN) Web Docs](https://developer.mozilla.org/es/docs/Learn/Server-side)**
+2. **[Mozilla Developer Network (MDN) Web Docs](https://developer.mozilla.org/es/docs/Learn/Server-side)**
   - Un recurs complet per aprendre sobre tecnologies del costat del servidor, protocols web, i altres conceptes clau de les arquitectures web.
 
 ### Repositoris de Codi
-- **[Awesome Scalability](https://github.com/binhnguyennus/awesome-scalability)**
+1. **[Awesome Scalability](https://github.com/binhnguyennus/awesome-scalability)**
   - Una col·lecció de recursos i exemples sobre escalabilitat, arquitectures web i disseny de sistemes distribuits.
 
-- **[GitHub Microservices Examples](https://github.com/search?q=microservices)**
+2. **[GitHub Microservices Examples](https://github.com/search?q=microservices)**
   - Repositoris de codi font en GitHub que il·lustren com implementar microserveis i altres arquitectures web modernes.
 
 ## 9.AutoAvaluació
