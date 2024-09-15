@@ -155,7 +155,7 @@ Les pàgines web estàtiques són aquelles en què el contingut no canvia en fun
 </body>
 </html>
 ```
-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
+ 
 ### Pàgines dinàmiques
 
 Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en funció de les accions de l'usuari o altres factors. Utilitzen **llenguatges de guions** o d'scripting. Els llenguatges de guions sovint s’utilitzen per ampliar les prestacions que ofereix un altre llenguatge, entorn o aplicació. En aquest sentit són molt utilitzats en el desenvolupament d’aplicacions web:
