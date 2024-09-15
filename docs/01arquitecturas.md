@@ -992,48 +992,61 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 
 ### Llibres Recomanats
 1. **[Web Architecture: Core Concepts](https://www.amazon.com/Web-Architecture-Concepts-Richard-N-Taylor/dp/0134765048)** de Richard N. Taylor, Nenad Medvidovic i Eric Dashofy
-  - Aquest llibre ofereix una visió profunda sobre els conceptes bàsics i els principis fonamentals de les arquitectures web, incloent-hi patrons de disseny i les millors pràctiques.
+
+- Aquest llibre ofereix una visió profunda sobre els conceptes bàsics i els principis fonamentals de les arquitectures web, incloent-hi patrons de disseny i les millors pràctiques.
 
 2. **[RESTful Web APIs](https://www.oreilly.com/library/view/restful-web-apis/9781449358063/)** de Leonard Richardson i Mike Amundsen
-  - Se centra en el disseny i la construcció d'APIs web RESTful, un component essencial de les arquitectures modernes basades en serveis web.
+
+- Se centra en el disseny i la construcció d'APIs web RESTful, un component essencial de les arquitectures modernes basades en serveis web.
 
 3. **[Building Microservices: Designing Fine-Grained Systems](https://www.oreilly.com/library/view/building-microservices/9781491950340/)** de Sam Newman
-  - Explora el disseny de microserveis, una arquitectura emergent que permet crear aplicacions escalables i flexibles.
+
+- Explora el disseny de microserveis, una arquitectura emergent que permet crear aplicacions escalables i flexibles.
 
 ### Documentació Oficial i Guies
 1. **[The Twelve-Factor App](https://12factor.net/)**
-  - Una metodologia per construir aplicacions web modernes que són fàcilment escalables i mantenibles.
+
+- Una metodologia per construir aplicacions web modernes que són fàcilment escalables i mantenibles.
 
 2. **[Documentació de l'Arquitectura de PWA (Progressive Web Apps)](https://web.dev/progressive-web-apps/)**
-  - Guia detallada sobre el disseny i la implementació d'aplicacions web progressives, que combinen el millor de les aplicacions web i mòbils.
+
+- Guia detallada sobre el disseny i la implementació d'aplicacions web progressives, que combinen el millor de les aplicacions web i mòbils.
 
 ### Cursos en Línia
 1. **[Coursera - Web Application Architectures](https://www.coursera.org/learn/web-app)**
-  - Curs que proporciona una visió general de les arquitectures d'aplicacions web, incloent-hi clients i servidors, HTTP, i serveis web.
+
+- Curs que proporciona una visió general de les arquitectures d'aplicacions web, incloent-hi clients i servidors, HTTP, i serveis web.
 
 2. **[Udacity - Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd0044)**
-  - Aquest programa cobreix temes com arquitectures de servidor, autenticació, i API RESTful.
+
+- Aquest programa cobreix temes com arquitectures de servidor, autenticació, i API RESTful.
 
 ### Recursos Addicionals
 1. **[Microservices.io](https://microservices.io/)**
-  - Recursos sobre patrons de microserveis, arquitectures i millors pràctiques per implementar microserveis amb èxit.
+
+- Recursos sobre patrons de microserveis, arquitectures i millors pràctiques per implementar microserveis amb èxit.
 
 2. **[Martin Fowler's Blog](https://martinfowler.com/)**
-  - Un blog que cobreix diversos aspectes de l'arquitectura del programari, incloent-hi articles sobre disseny de microserveis i altres arquitectures emergents.
+
+- Un blog que cobreix diversos aspectes de l'arquitectura del programari, incloent-hi articles sobre disseny de microserveis i altres arquitectures emergents.
 
 ### Exemples i Tutorials
 1. **[DigitalOcean Community Tutorials](https://www.digitalocean.com/community/tutorials)**
-  - Ofereix tutorials pràctics sobre una àmplia gamma de temes relacionats amb l'arquitectura web, des de configuració de servidors fins a desplegament d'aplicacions.
+
+- Ofereix tutorials pràctics sobre una àmplia gamma de temes relacionats amb l'arquitectura web, des de configuració de servidors fins a desplegament d'aplicacions.
 
 2. **[Mozilla Developer Network (MDN) Web Docs](https://developer.mozilla.org/es/docs/Learn/Server-side)**
-  - Un recurs complet per aprendre sobre tecnologies del costat del servidor, protocols web, i altres conceptes clau de les arquitectures web.
+
+- Un recurs complet per aprendre sobre tecnologies del costat del servidor, protocols web, i altres conceptes clau de les arquitectures web.
 
 ### Repositoris de Codi
 1. **[Awesome Scalability](https://github.com/binhnguyennus/awesome-scalability)**
-  - Una col·lecció de recursos i exemples sobre escalabilitat, arquitectures web i disseny de sistemes distribuits.
+
+- Una col·lecció de recursos i exemples sobre escalabilitat, arquitectures web i disseny de sistemes distribuits.
 
 2. **[GitHub Microservices Examples](https://github.com/search?q=microservices)**
-  - Repositoris de codi font en GitHub que il·lustren com implementar microserveis i altres arquitectures web modernes.
+
+- Repositoris de codi font en GitHub que il·lustren com implementar microserveis i altres arquitectures web modernes.
 
 ## 9.AutoAvaluació
 
