@@ -155,33 +155,35 @@ Les pàgines web estàtiques són aquelles en què el contingut no canvia en fun
 </body>
 </html>
 ```
-
+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
 ### Pàgines dinàmiques
 
-Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en funció de les accions de l'usuari o altres factors. Utilitzen HTML, CSS, i JavaScript per al costat del client, i poden utilitzar llenguatges de servidor com PHP, Python, Node.js, entre altres, per generar contingut dinàmicament.
-La generació dinàmica de pàgines web permet crear contingut web en temps real basat en les interaccions de l'usuari i les dades de la base de dades. Això proporciona una experiència d'usuari més rica i interactiva.
+Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en funció de les accions de l'usuari o altres factors. Utilitzen **llenguatges de guions** o d'scripting. Els llenguatges de guions sovint s’utilitzen per ampliar les prestacions que ofereix un altre llenguatge, entorn o aplicació. En aquest sentit són molt utilitzats en el desenvolupament d’aplicacions web:
 
+- **Scripts de navegadors web.** S’utilitzen per ampliar les capacitats de l’HTML i per inserir accions en pàgines web. Permeten crear efectes especials i aporten interactivitat. Els scripts són interpretats i executats en la màquina client pel navegador web, el qual ha d’incorporar l’intèrpret del llenguatge. Un exemple de llenguatge d’aquest tipus molt utilitzat és JavaScript.
+- **Scripts de servidor.** Són programes que permeten donar funcionalitats a les pàgines web que no es poden resoldre només amb els scripts de navegador. Els scripts de servidor permeten dotar de certa “intel·ligència” els llocs web, la qual cosa fa que generin pàgines diferents segons les circumstàncies. Exemples de llenguatges de servidor són PHP, Python, Node.js, entre altres.
+ 
 #### Avantatges
 
 **Actualització en Temps Real**
 
-    - **Descripció:** Les pàgines es poden actualitzar automàticament sense necessitat de recarregar tota la pàgina.
-    - **Cas d'Ús:** Un portal de notícies que mostra articles nous sense necessitat de recarregar la pàgina.
+- **Descripció:** Les pàgines es poden actualitzar automàticament sense necessitat de recarregar tota la pàgina.
+- **Cas d'Ús:** Un portal de notícies que mostra articles nous sense necessitat de recarregar la pàgina.
 
 **Personalització del Contingut**
 
-    - **Descripció:** Permet adaptar el contingut a les preferències i el comportament de l'usuari.
-    - **Cas d'Ús:** Una botiga en línia que mostra recomanacions de productes basades en l'historial de navegació i compres de l'usuari.
+- **Descripció:** Permet adaptar el contingut a les preferències i el comportament de l'usuari.
+- **Cas d'Ús:** Una botiga en línia que mostra recomanacions de productes basades en l'historial de navegació i compres de l'usuari.
 
 **Interactivitat Avançada**
 
-    - **Descripció:** Facilita la creació d'aplicacions web interactives que poden respondre a les accions de l'usuari en temps real.
-    - **Cas d'Ús:** Aplicacions de xarxes socials que mostren actualitzacions i notificacions en temps real.
+- **Descripció:** Facilita la creació d'aplicacions web interactives que poden respondre a les accions de l'usuari en temps real.
+- **Cas d'Ús:** Aplicacions de xarxes socials que mostren actualitzacions i notificacions en temps real.
 
 **Gestió Eficient de Contingut**
 
-    - **Descripció:** Permet gestionar grans quantitats de contingut de manera més eficient, mostrant només el contingut rellevant en funció de la sol·licitud de l'usuari.
-    - **Cas d'Ús:** Un sistema de gestió de continguts (CMS) que permet als administradors editar i publicar articles de manera dinàmica.
+- **Descripció:** Permet gestionar grans quantitats de contingut de manera més eficient, mostrant només el contingut rellevant en funció de la sol·licitud de l'usuari.
+- **Cas d'Ús:** Un sistema de gestió de continguts (CMS) que permet als administradors editar i publicar articles de manera dinàmica.
 
 
 #### Desavantatges

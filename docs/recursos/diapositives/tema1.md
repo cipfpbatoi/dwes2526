@@ -2,6 +2,10 @@
 title: Arquitectures Web en Entorn Servidor
 author: [Ignasi Gomis Mullor]
 date: 2024
+revealOptions:
+  backgroundTransition: slide
+  transition: fade
+  backgroundImage: url('fons.jpg')
 ---
  
 # Diapositiva 1: Què és una Arquitectura Web?
