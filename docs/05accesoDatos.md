@@ -1189,79 +1189,52 @@ function llegirCSV($fitxerCSV) {
 </details>
 
 
- 603. Crea una classe Connection com a model de connexió amb la base de dades. Aquesta classe tindrà un mètode `__construct()` que inicialitzarà la connexió amb la base de dades i un mètode `getConection()` que retornà la connexió.
+##### Exercici 10. Web Scraping
 
-``` php
-<?php
-namespace batBook;
+1. Utilitza Goutte per a fer web scraping a la pàgina `https://books.toscrape.com/` i extreu el títol i preu de tots els llibres de la categoria `Classics`.
+2. Mostra els resultats en una taula HTML.
+3. Suma tots els preus i mostra el preu total.
+4. Modifica el codi per a recórrer totes les pàgines de resultats.
+ 
 
-use PDO;
-use PDOException;
+<details>
+<summary>Solució</summary>
+    
+    ``` php    
+    <?php
+require '../vendor/autoload.php';
 
-include_once($_SERVER['DOCUMENT_ROOT']."/config/database.inc.php");
 
-class Connection
-{
+use Goutte\Client;
+use Symfony\Component\HttpClient\HttpClient;
 
-    private $connection;
+$client = new Client(HttpClient::create(['timeout' => 60]));
+$crawler = $client->request('GET', 'https://books.toscrape.com/catalogue/category/books/classics_6/index.html');
 
-    ...
+$salir = false;
 
+$precios = [];
+while (!$salir) {
+    $crawler->filter('.row li article div.product_price p.price_color')->each(
+        function ($node) use (&$precios) {
+            $texto = $node->text();
+            $cantidad = substr($texto, 2); // Le quitamos las libras ¿2 posiciones?
+            $precios[] = floatval($cantidad);
+        }
+    );
+
+    $enlace = $crawler->selectLink('next');
+    if ($enlace->count() != 0) {
+        // el enlace next existe
+        $sigPag = $crawler->selectLink('next')->link();
+        $crawler = $client->click($sigPag); // hacemos click
+    } else {
+        // ya no hay enlace next
+        $salir = true;
+    }
+}    
+
+$precioTotal = array_sum($precios);
+echo $precioTotal;
 ```
-
-604. Anem a canviar la classe Module per a que carregue les dades des de la BD i no des de l'array:
-
-    * Eliminarem el constructor de la classe Module
-    * Afegim el mètode static `getModulesInArray()` que retornarà un array associatiu d'objectes del la classe Modules, amb clau de l'array el camp Code de la tupla de la taula Modules.
-           
-        * Haurem de crear un objecte de la classe Connection.
-        * Utilitzarem sentencies preparades
-        * Utilitzarem  $sentence -> setFetchMode(PDO::FETCH_CLASS  , Module::class); per tal de retornar objectes de la classe Module.
-
-    * Modificarem el fitxer load per a llevar tota referència a la variable $modules. 
-    * Substituirem la crida a la funció `getModulesInArray()` per a que carregue les dades des de la BD en els llocs que abans utitlizaba la variable $modules.
-
-605. Anem a afegir un metode nou a la classe Book per tal de guardar les dades del llibre en la BD. Aquest metode tindrà el nom de `save()` i serà el responsable de guardar les dades del llibre en la BD. Per a això haurem de:
-
-    * Crear un objecte de la classe Connection.
-    * Utilitzar sentencies preparades.
-    * Utilitzar el metode `lastInsertId()` per a recuperar el codi del llibre que s'ha insertat.
-    * Utilitzar el metode `execute()` per a executar la sentencia preparada.
-
-606. Transforma el registre.php per a guardar les dades d'usuari en la BD.
-607. Transforma el login.php per a comprovar les dades d'usuari en la BD.
-608. Crea la classe QueryBuilder i copia-la dels apunts. Modifica els exercicis anterior per tal d'utilitzar el QueryBuilder.
-
-
-## Activitats
-
-### BatoiBook
-
-610. Anem a crear la pàgina `myBooks.php` on es mostren els llibres que ha donat d'alta cada usuari. Per a aixó:
-       
-    * Crea la pàgina `myBooks.php` que mostrarà els llibres que ha donat d'alta l'usuari, en format taula.
-    * Fes que es mostre el nom del mòdul i no el codi.
-    * El darrer element de cada fila seràn els botons per a vore, modificar i eliminar el llibre.
-    * Crea un enllaç en la capçalera per anar a myBooks.php sempre que l'usuari estiga autenticat.
-    * Protegueix la pàgina per a que sols es puga accedir si l'usuari està autenticat.
-
-611. Completa en el  `QueryBuilder.php` els mètodes que falten. Modificar els exercisis anteriors per utilitzar el QueryBuilder.
-612. Crea la pàgina `showBook.php?id=` per a mostrar les dades d'un llibre. 
-     
-    * Crea el mètode static `find($id)` en la classe Book
-    * Crea la vista `views/book/show.view.php` que mostre el llibre, amb capçalera.
-     
-613. Crea la pàgina `editBook.php?id=` per a modificar les dades d'un llibre. Després redirigirà a myBooks.php.
-
-    * Modifica el mètode save() per a que actualitze les dades del llibre, si el llibre ja existeix
-    * Fes la vista `views/book/edit.view.php` que mostre el formulari amb les dades del llibre a modificar.
-    * Fes que el formulari redirisca a `updateBook.php` on s'actualitzen les dades del llibre. Si no es carrega foto quedarà la que hi ha.
-    * El id del llibre no es pot modificar (utilitza un camp ocult per passar-lo).
-
-614. Crea la pàgina `deleteBook.php?id=` per a eliminar un llibre. Després redirigirà a myBooks.php.
-615. Crea el directori errors i dins la pàgina `not-found.php`. Fes que quan no es trobe un llibre en les pàgines anteriors es redirisca a la pàgina `not-found.php`.
-616. Fes que el fitxer /api/books funcione correctament agafant les dades de la BD.
-617. Crea un /api/login que faça el procediment de login i retorne un token d'usuari. 
-
-        * Este token serà unic per usuari i se li assignarà quan es crea l'usuari. 
-        * El token es guardarà en la BD i es retornarà en el login. 
+</details>
