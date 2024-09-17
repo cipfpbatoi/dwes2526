@@ -182,7 +182,7 @@ contar(); // Mostra 1,1,11
 contar(); // Mostra 1,2,12
 ```
 
-## 9. Sentències simples en PHP i els seus efectes
+## 7. Sentències simples en PHP i els seus efectes
 
 Assignacions
 ```php
@@ -224,7 +224,7 @@ echo $y;  // Hola món
 echo $suma;  // 15
 echo $producte;  // 10
 echo $salutacio;  // Hola món, Joan
-?>
+ 
 ```
 
 ## 8. Funcions 
