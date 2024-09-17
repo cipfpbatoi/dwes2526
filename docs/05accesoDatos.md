@@ -1195,46 +1195,123 @@ function llegirCSV($fitxerCSV) {
 2. Mostra els resultats en una taula HTML.
 3. Suma tots els preus i mostra el preu total.
 4. Modifica el codi per a recórrer totes les pàgines de resultats.
- 
-
+  
 <details>
 <summary>Solució</summary>
     
-    ``` php    
-    <?php
-require '../vendor/autoload.php';
-
-
-use Goutte\Client;
-use Symfony\Component\HttpClient\HttpClient;
-
-$client = new Client(HttpClient::create(['timeout' => 60]));
-$crawler = $client->request('GET', 'https://books.toscrape.com/catalogue/category/books/classics_6/index.html');
-
-$salir = false;
-
-$precios = [];
-while (!$salir) {
-    $crawler->filter('.row li article div.product_price p.price_color')->each(
-        function ($node) use (&$precios) {
-            $texto = $node->text();
-            $cantidad = substr($texto, 2); // Le quitamos las libras ¿2 posiciones?
-            $precios[] = floatval($cantidad);
-        }
-    );
-
-    $enlace = $crawler->selectLink('next');
-    if ($enlace->count() != 0) {
-        // el enlace next existe
-        $sigPag = $crawler->selectLink('next')->link();
-        $crawler = $client->click($sigPag); // hacemos click
-    } else {
-        // ya no hay enlace next
-        $salir = true;
-    }
-}    
-
-$precioTotal = array_sum($precios);
-echo $precioTotal;
+``` php    
+<?php
+     require '../vendor/autoload.php';
+     
+     
+     use Goutte\Client;
+     use Symfony\Component\HttpClient\HttpClient;
+     
+     $client = new Client(HttpClient::create(['timeout' => 60]));
+     $crawler = $client->request('GET', 'https://books.toscrape.com/catalogue/category/books/classics_6/index.html');
+     
+     $salir = false;
+     
+     $precios = [];
+     while (!$salir) {
+         $crawler->filter('.row li article div.product_price p.price_color')->each(
+             function ($node) use (&$precios) {
+                 $texto = $node->text();
+                 $cantidad = substr($texto, 2); // Le quitamos las libras ¿2 posiciones?
+                 $precios[] = floatval($cantidad);
+             }
+         );
+     
+         $enlace = $crawler->selectLink('next');
+         if ($enlace->count() != 0) {
+             // el enlace next existe
+             $sigPag = $crawler->selectLink('next')->link();
+             $crawler = $client->click($sigPag); // hacemos click
+         } else {
+             // ya no hay enlace next
+             $salir = true;
+         }
+     }    
+     
+     $precioTotal = array_sum($precios);
+     echo $precioTotal;
 ```
+
 </details>
+ 
+### Exercicis proposats
+
+#### Exercici 1: Creació d'una base de dades
+
+1. **Descripció:**
+   Crea una base de dades amb una taula `empleats` que tinga els camps `id`, `nom`, `cognom` i `sou`.
+
+2. **Requisits:**
+    - Crear la base de dades i la taula.
+    - Definir els tipus de dades adequats per als camps.
+
+#### Exercici 2: Llistat d'empleats
+
+1. **Descripció:**
+   Crea un script PHP que mostre tots els empleats de la taula `empleats` en una taula HTML.
+
+2. **Requisits:**
+    - Connectar-se a la base de dades.
+    - Recuperar els empleats i mostrar-los en una taula HTML.
+
+#### Exercici 3: Formulari per a afegir empleats
+
+1. **Descripció:**
+   Afegeix un formulari HTML que permeta afegir nous empleats a la taula `empleats`.
+
+2. **Requisits:**
+    - Crear un formulari per a introduir el `nom`, `cognom` i `sou` de l'empleat.
+    - Crear un script PHP per a gestionar la inserció de nous empleats en la taula.
+
+#### Exercici 4: Formulari per a actualitzar el sou d'un empleat
+
+1. **Descripció:**
+   Afegeix un formulari per a modificar el sou d'un empleat existent.
+
+2. **Requisits:**
+    - Crear un formulari per a seleccionar l'empleat i introduir el nou sou.
+    - Escriure un script PHP per a actualitzar el sou en la base de dades.
+
+#### Exercici 5: Formulari per a eliminar un empleat
+
+1. **Descripció:**
+   Afegeix un formulari per a eliminar un empleat de la taula `empleats`.
+
+2. **Requisits:**
+    - Crear un formulari per a seleccionar l'empleat a eliminar.
+    - Escriure un script PHP per a eliminar l'empleat de la base de dades.
+
+#### Exercici 6: Creació de la classe `Empleat`
+
+1. **Descripció:**
+   Crea una classe `Empleat` en PHP amb els atributs `id`, `nom`, `cognom` i `sou` i utilitza-la per a representar els empleats.
+
+2. **Requisits:**
+    - Definir la classe `Empleat` amb els seus atributs.
+    - Modificar els exercicis anteriors per a utilitzar aquesta classe en lloc de variables simples.
+
+#### Exercici 7: Ús d'un Query Builder
+
+1. **Descripció:**
+   Modifica els exercicis anteriors per a utilitzar un Query Builder per a fer les consultes a la base de dades.
+
+2. **Requisits:**
+    - Implementar el Query Builder en les operacions de consulta, inserció, actualització i eliminació.
+
+#### Exercici 8: Poblar la taula amb dades de webscraping
+
+1. **Descripció:**
+   Modifica l'exercici de webscraping per a poblar una taula de la base de dades amb els llibres de la categoria `Classics` de la pàgina `https://books.toscrape.com/`.
+
+2. **Requisits:**
+    - Realitzar el webscraping de la pàgina esmentada.
+    - Inserir els llibres en una taula de la base de dades.
+
+## 9. Enunciat dels projectes
+
+

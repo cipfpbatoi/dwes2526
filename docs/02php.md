@@ -143,7 +143,7 @@ echo PI, " ", IVA; // No se pone el símbolo dolar
 * Es declaren sempre en MAJÚSCULES
 * Hi ha un conjunt de constants ja predefinides, també conegudes com *magic constants*: <https://www.php.net/manual/es/language.constants.predefined.php>
 
-## 6. Variables. Operadors. Àmbits d'utilització
+## 6. Variables. Operadors.  Àmbits de les variables
 
 * No és necessari declarar-les prèviament.
 * Comencen per `$`, per exemple `$nom`. Després del `$`, el següent caràcter ha de ser una lletra en minúscula (recomanació) o guió baix `_`. Després ja es poden posar números.
@@ -160,47 +160,30 @@ Operadors:
 - Lògics: `&&`, `||`, `!`
 - Concatenació: `.`
 
-Àmbits d'utilització:
-- **Local:** dins d'una funció.
-- **Global:** fora de qualsevol funció.
-- **Estàtic:** persisteixen el seu valor entre crides a la funció.
-```php
-function exemple() {
-    global $variable_global;
-    static $compte = 0;
-    $compte++;
-    echo $compte;
-}
-```
+Els àmbits d'utilització d'una variable són:
 
-## 7. Directives per a modificar el comportament predeterminat del codi
-Include i require:
-```php
-include 'fitxer.php';
-require 'fitxer.php';
-```
-Include_once i require_once:
-```php
-include_once 'fitxer.php';
-require_once 'fitxer.php';
-```
+Local: dins d'una funció.
+Global: fora de qualsevol funció.
+Estàtic: persisteixen el seu valor entre crides a la funció.
+
+ 
 Exemple:
 ```php
-// contingut de fitxer.php
-<?php
-function saludar() {
-    echo "Hola!";
+$global = 10; // Variable global    
+function contar() {
+    static $vegades = 0;
+    $local = 0; // Variable local
+    $local++;
+    $vegades++;
+    $global++;
+    echo $local,$vegades,$global;
 }
-?>
-
-// contingut de principal.php
-<?php
-include 'fitxer.php';
-saludar(); // Mostra "Hola!"
-?>
+contar(); // Mostra 1,1,11
+contar(); // Mostra 1,2,12
 ```
 
-## 8. Sentències simples en PHP i els seus efectes
+## 9. Sentències simples en PHP i els seus efectes
+
 Assignacions
 ```php
 $x = 5;
@@ -244,28 +227,94 @@ echo $salutacio;  // Hola món, Joan
 ?>
 ```
 
-## 9. Àmbits de les variables (local, global, estàtic)
-Local: dins d'una funció.
-Global: fora de qualsevol funció.
-Estàtic: persisteixen el seu valor entre crides a la funció.
+## 8. Funcions 
+
+1. **Sintaxi bàsica**:
+    - La paraula clau `function` es fa servir per a definir la funció.
+    - Després segueix el nom de la funció, que pot contenir lletres, nombres i guions baixos (però no pot començar amb un nombre).
+    - Entre els parèntesis es poden passar arguments (opcionals).
+    - El cos de la funció es defineix entre claudàtors `{}`.
+
 ```php
-function exemple() {
-    static $compte = 0;
-    $compte++;
-    echo $compte;
+function nomFuncio() {
+    // Codi de la funció
 }
+```
+
+2. **Amb arguments**:
+    - Els arguments es passen entre els parèntesis i poden ser utilitzats dins de la funció.
+
+```php
+function saluda($nom) {
+    echo "Hola, $nom!";
+}
+
+saluda("Maria");  // Mostra "Hola, Maria!"
+```
+
+3. **Amb valor de retorn**:
+    - La paraula clau `return` permet retornar un valor des de la funció. Es pot retornar qualsevol tipus de dades (enter, string, array, etc.).
+
+```php
+function suma($a, $b) {
+    return $a + $b;
+}
+
+$resultat = suma(5, 3);  // $resultat conté 8
+```
+
+
+4. **Funcions amb valors per defecte**:
+    - Si no es passa cap argument, la funció pot utilitzar un valor per defecte.
+
+```php
+function saludar($nom = "amic") {
+    echo "Hola, " . $nom;
+}
+
+saludar();  // Mostra "Hola, amic"
+saludar("Maria");  // Mostra "Hola, Maria"
+```
+
+5. **Tipus de dades en arguments i retorn** (des de PHP 7):
+    - És possible especificar el tipus de dades dels arguments i el tipus de retorn. Això ajuda a assegurar que la funció rep i retorna els tipus esperats.
+
+```php
+function sumar(int $a, int $b): int {
+    return $a + $b;
+}
+
+$resultat = sumar(5, 3);  // $resultat conté 8
+```
+
+
+## 9. Directives per a modificar el comportament predeterminat del codi
+Include i require:
+```php
+include 'fitxer.php';
+require 'fitxer.php';
+```
+Include_once i require_once:
+```php
+include_once 'fitxer.php';
+require_once 'fitxer.php';
 ```
 Exemple:
 ```php
-function contar() {
-    static $vegades = 0;
-    $vegades++;
-    echo $vegades;
+// contingut de fitxer.php
+<?php
+function saludar() {
+    echo "Hola!";
 }
-contar(); // Mostra 1
-contar(); // Mostra 2
-```
+?>
 
+// contingut de principal.php
+<?php
+include 'fitxer.php';
+saludar(); // Mostra "Hola!"
+?>
+```
+ 
 ## 10. Mecanismes de decisió (if, switch)
 If, else, elseif:
 ```php
