@@ -1314,4 +1314,87 @@ function llegirCSV($fitxerCSV) {
 
 ## 9. Enunciat dels projectes
 
+### Projecte "Ofegat" i "4 en Ratlla"
 
+#### 1. Autenticació d'Usuaris i Gestió de Partides Guardades
+
+1. **Registre d'Usuari:**
+   - Crea un formulari de registre perquè nous usuaris es puguen registrar.
+   - **Validació del registre**: Comprova que el nom d'usuari no estiga duplicat i que la contrasenya complisca certs requisits.
+   - Emmagatzema la contrasenya de l'usuari en forma de **hash** utilitzant `password_hash()` per garantir la seguretat.
+
+2. **Inici de Sessió (Login):**
+   - Crea un formulari d’inici de sessió (nom d’usuari i contrasenya).
+   - Autentica l’usuari comprovant el nom d’usuari i la contrasenya amb `password_verify()`.
+   - Si l'autenticació és correcta, inicialitza una sessió per a l'usuari i guarda l'**ID de l’usuari** en la sessió.
+
+3. **Gestió de Partides Guardades:**
+   - Quan l'usuari inicia sessió, comprova si té una partida guardada:
+      - Si té una partida guardada, ofereix l’opció de **reprendre** la partida.
+      - Si no té cap partida guardada, permet iniciar una **nova partida**.
+   - Si l'usuari decideix iniciar una nova partida, la partida guardada anteriorment es **sobrescriu**.
+
+4. **Opcions per als Usuaris:**
+   - **Iniciar nova partida**: L’usuari pot començar una nova partida. Aquesta acció esborrarà la partida anterior guardada.
+   - **Reprendre partida**: Si l’usuari té una partida guardada, pot continuar-la des d’on ho va deixar.
+   - **Tancar sessió**: Afig una opció perquè l’usuari puga tancar sessió i finalitzar la seua sessió activa.
+
+5. **Manteniment de la Sessió de Joc:**
+   - Una vegada que l'usuari ha iniciat sessió, guarda l’estat del joc a la sessió.
+   - Quan l'usuari finalitza la sessió o vol guardar el seu progrés, emmagatzema l’estat actual de la partida a la base de dades.
+
+#### 2. Requisits Específics per a Cada Joc
+
+##### **Ofegat:**
+1. **Guardar i carregar partida:**
+   - Desa l'estat de la partida a la base de dades: la paraula a endevinar, les lletres encertades, els intents restants, i l’estat de la partida (en curs, guanyada o perduda).
+   - Permet que l'usuari reprenga la partida guardada quan torna a iniciar sessió.
+
+2. **Lògica de la Partida:**
+   - Gestiona el joc amb sessions mentre l'usuari juga activament. La base de dades només s’utilitza per guardar o carregar una partida guardada.
+
+##### **4 en Ratlla:**
+1. **Guardar i carregar partida:**
+   - Desa l'estat de la partida a la base de dades: l’estat de la graella, el torn del jugador actual, i l’estat de la partida (en curs, guanyada o empatada).
+   - Quan l’usuari reprén la partida, carrega l'estat de la graella i continua des del torn correcte.
+
+2. **Lògica de la Partida:**
+   - La graella es manté en la sessió durant el joc actiu. Només es guarda a la base de dades quan es desitja interrompre la partida i es carrega al reprendre-la.
+
+#### 3. Consideracions Addicionals
+
+1. **Seguretat:**
+   - Utilitza **hashing** de contrasenyes amb `password_hash()` per emmagatzemar-les de forma segura.
+   - Gestiona les **sessions** i les **cookies** de manera segura per evitar robatoris de sessió.
+
+2. **Millores de la Interfície d'Usuari:**
+   - Proporciona missatges clars d'error en cas de contrasenyes incorrectes o usuaris inexistents.
+   - Implementa una navegació senzilla per iniciar una nova partida o continuar una partida guardada.
+
+3. **Proves:**
+   - Realitza proves per assegurar que l’autenticació d’usuaris funciona correctament.
+   - Verifica que les partides es guarden i es recuperen adequadament.
+
+---
+
+### **Exemple d'Estructura de la Base de Dades:**
+
+```sql
+CREATE TABLE usuaris (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom_usuari VARCHAR(50) UNIQUE NOT NULL,
+    contrasenya VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE partides (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuari_id INT NOT NULL,
+    paraula VARCHAR(100), -- Només per al joc Ofegat
+    lletres_encertades VARCHAR(100), -- Només per al joc Ofegat
+    intents_restants INT, -- Només per al joc Ofegat
+    graella TEXT, -- Només per al joc 4 en Ratlla
+    torn_actual INT, -- Només per al joc 4 en Ratlla
+    estat_partida ENUM('en_curs', 'guanyada', 'perduda') NOT NULL,
+    FOREIGN KEY (usuari_id) REFERENCES usuaris(id) ON DELETE CASCADE
+);
+```
