@@ -1366,11 +1366,13 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
     - Defineix una paraula predefinida a endevinar.
 2. **Inicialització de les Lletres Endevinades:**
     - Crea un array amb guions baixos per representar les lletres que l'usuari ha de trobar.
+    - Crea una funció per imprimir este array i que serà el que ens mostre el progres del joc. **(les funcions aniran en un fitxer a part)**
 3. **Funció per a Comprovar Intents:**
     - Crea una funció en PHP que prenga la paraula a endevinar, la lletra introduïda per l'usuari i l'array de lletres endevinades (passat per referència).
     - La funció ha de comprovar si la lletra introduïda per l'usuari forma part de la paraula.
     - Si la lletra és correcta, la funció substituirà els guions baixos per la lletra corresponent.
     - La funció retornarà un valor booleà que indique si la lletra és correcta o no.
+    - Fes proves de la funció per comprovar que funciona correctament.
 4. **Comprovació d'Intents:**
     - Utilitza la funció creada per comprovar si la lletra introduïda per l'usuari forma part de la paraula.
     - Mostra un missatge d'error si la lletra no és correcta.
