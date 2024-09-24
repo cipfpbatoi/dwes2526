@@ -1397,11 +1397,10 @@ Implementa una versió simplificada del joc "4 en Ratlla" utilitzant HTML i PHP.
 1. **Inicialització de la Graella**:
     - Crea una funció `inicialitzarGraella()` que inicialitze una graella buida de 6 files i 7 columnes.
 2. **Pintar la Graella**:
-    - Crea una funció `pintarGraella($graella)` que pinte la graella en HTML. Utilitza diferents colors per a les fitxes dels jugadors.
+    - Crea una funció `pintarGraella($graella)` que pinte la graella en HTML. Utilitza diferents colors per a les fitxes dels jugadors, aplicant el CSS adjunt.
 3. **Realitzar Moviments**:
     - Crea una funció `ferMoviment(&$graella, $columna, $jugadorActual)` que realitze un moviment en la columna especificada pel jugador actual.
 4. **Interfície d'Usuari**:
-    - Crea una taula HTML per mostrar l'estat actual de la graella.
     - Crea un formulari HTML que permeta als jugadors introduir la columna on volen posar la seua fitxa. Aquest formulari ha de mantenir el jugador actual entre sol·licituds.
 
 **Codi CSS Proporcionat**:
@@ -1422,6 +1421,10 @@ td {
 }
 .player2 {
     background-color: yellow; /* Color groc per l'altre jugador */
+}
+.buid {
+    background-color: white; /* Color blanc per cercles buits */
+    border-color: #000; /* Puntes negres per millor visibilitat */
 }
 
 ```
