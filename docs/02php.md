@@ -1408,9 +1408,22 @@ Implementa una versió simplificada del joc "4 en Ratlla" utilitzant HTML i PHP.
 
 ```css
 table { border-collapse: collapse; }
-td { width: 50px; height: 50px; text-align: center; vertical-align: middle; border: 1px solid black; }
-.player1 { background-color: red; }
-.player2 { background-color: yellow; }
+td {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 10px dotted #fff; /* Cercle amb punts blancs */
+    background-color: #000; /* Fons negre o pot ser un altre color */
+    display: inline-block;
+    margin: 10px;
+}
+.player1 {
+    background-color: red; /* Color vermell per un dels jugadors */
+}
+.player2 {
+    background-color: yellow; /* Color groc per l'altre jugador */
+}
+
 ```
 
 ### Rúbrica
