@@ -989,18 +989,27 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 
 ## 6. Enunciats dels projectes
 
-### Projecte Ofegat
+### Per als dos projectes 
+
+1. **Autenticació de Jugadors:**
+    - Implementa un sistema d'autenticació bàsic que permeta als jugadors iniciar sessió abans de començar el joc. Utilitza sessions per a mantindre l'estat d'autenticació.
+    - Ha de servir per als dos jocs, "Penjat" i "4 en Ratlla".
+    - Fes que una vegada autenticar l'usuari puga triar a quin joc vol jugar (en la mateix pàgina).
+    - Protegeix els jocs per tal que no es puga jugar en cas de no estar autenticat.
+
+
+### Projecte Penjat
 
 1. **Manteniment de l'Estat del Joc amb Sessions:**
     - Utilitza sessions per a emmagatzemar l'estat actual del joc, incloent la paraula a endevinar, lletres endevinades, i el nombre d'intents restants.
+  
+2. **Gestió de la Sessió del Joc:**
+    - Afegeix funcionalitats per a reiniciar el joc en qualsevol moment, reinicialitzant les variables de sessió per a començar una nova partida.
+    - Afegeix una opció per a tancar sessió i finalitzar la partida actual.
+    - Afegeix un funció per a saver si el joc ha acabat, ja siga perquè s'han endevinat totes les lletres o s'haguen arribat al màxim número d'intents permesos.
+    - Controla el final del joc
 
-2. **Autenticació de Jugadors:**
-    - Implementa un sistema d'autenticació bàsic que permeta als jugadors iniciar sessió abans de començar el joc. Utilitza sessions per a mantindre l'estat d'autenticació.
-
-3. **Gestió de la Sessió del Joc:**
-    - Afegeix funcionalitats per a reiniciar el joc en qualsevol moment, reinicialitzant la sessió per a començar una nova partida.
-
-4. **Cookies per a Recordar Jugadors:**
+3. **Cookies per a Recordar Jugadors:**
     - Implementa cookies per a recordar els jugadors entre visites, permetent que l'usuari siga recordat si selecciona una opció de "Recordar-me" durant l'inici de sessió.
 
 #### Consideracions Addicionals
@@ -1015,13 +1024,14 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 1. **Gestió de l'Estat de la Graella amb Sessions:**
     - Utilitza sessions per a emmagatzemar l'estat actual de la graella i el torn del jugador. Això permet mantenir la partida entre sol·licituds.
 
-2. **Autenticació de Jugadors:**
-    - Implementa un sistema d'autenticació per als jugadors. Només els usuaris autenticats poden iniciar una partida.
-
-3. **Manteniment de la Sessió entre Jugadors:**
+2. **Manteniment de la Sessió entre Jugadors:**
     - Emmagatzema l'identificador de cada jugador en sessions per a assegurar que el torn actual siga persistent entre sol·licituds.
-
-4. **Cookies per a la Persistència d'Usuaris:**
+    - Afegeix funcionalitats per a reiniciar el joc en qualsevol moment, reinicialitzant les variables de sessió per a començar una nova partida.
+    - Afegeix una opció per a tancar sessió i finalitzar la partida actual.
+    - Afegeix un funció per a saver si el joc ha acabat, ja siga perquè s'ha fet 4 en ratlla  o s'haja completat el tauler.
+    - Controla el final del joc.
+ 
+3. **Cookies per a la Persistència d'Usuaris:**
     - Permet l'ús de cookies per a recordar els jugadors entre visites si han seleccionat "Recordar-me". Utilitza cookies per a emmagatzemar l'últim jugador autenticat.
 
 #### Consideracions Addicionals

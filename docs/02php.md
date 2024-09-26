@@ -1371,13 +1371,14 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
     - Crea una funció en PHP que prenga la paraula a endevinar, la lletra introduïda per l'usuari i l'array de lletres endevinades (passat per referència).
     - La funció ha de comprovar si la lletra introduïda per l'usuari forma part de la paraula.
     - Si la lletra és correcta, la funció substituirà els guions baixos per la lletra corresponent.
-    - La funció retornarà un valor booleà que indique si la lletra és correcta o no.
+    - La funció retornarà un valor booleà que indique si la lletra és errònia o no.
     - Fes proves de la funció per comprovar que funciona correctament.
 4. **Comprovació d'Intents:**
     - Utilitza la funció creada per comprovar si la lletra introduïda per l'usuari forma part de la paraula.
     - Mostra un missatge d'error si la lletra no és correcta.
 5. **Interfície d'Usuari:**
-    - Mostra les lletres endevinades fins al moment.
+    - Mostra les lletres introduïdes per l'usuari fins al moment en color verd si són encertades o roig si són errades.
+    - Mostra les errades de l'usuari.
     - Crea un formulari HTML que permeta als jugadors introduir una lletra.
 
 **Codi CSS Proporcionat**:
@@ -1415,6 +1416,10 @@ td {
     background-color: #000; /* Fons negre o pot ser un altre color */
     display: inline-block;
     margin: 10px;
+    color: white;
+    font-size: 2rem;
+    text-align: center ;
+    vertical-align: middle;
 }
 .player1 {
     background-color: red; /* Color vermell per un dels jugadors */
