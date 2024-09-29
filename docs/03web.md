@@ -937,6 +937,31 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
     - Mostrar un resum del carret amb els productes afegits i les seues quantitats.
     - Permetre que l'usuari elimine productes del carret.
 
+
+```html
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Selecció de productes</title>
+</head>
+<body>
+    <h1>Afegir productes al carret</h1>
+    <form action="carret.php" method="POST">
+        <label for="producte">Tria un producte:</label>
+        <select name="producte" id="producte">
+            <option value="Poma">Poma</option>
+            <option value="Plàtan">Plàtan</option>
+            <option value="Taronja">Taronja</option>
+        </select>
+        <input type="submit" value="Afegir al carret">
+    </form>
+    <a href="carret.php">Veure carret</a>
+</body>
+</html>
+```
+
+
 #### Exercici 2: Autenticació Bàsica d'Usuaris amb Sessions
 
 1. **Descripció:**
@@ -948,7 +973,7 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
     - Emmagatzemar l'estat d'autenticació en una sessió després de verificar les credencials.
     - Mostrar una pàgina de benvinguda personalitzada per a l'usuari autenticat.
     - Proporcionar un enllaç per a tancar sessió i destruir la sessió.
-
+ 
 #### Exercici 3: Recordatori d'Usuari amb Cookies
 
 1. **Descripció:**
