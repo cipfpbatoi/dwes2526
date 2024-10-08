@@ -1038,6 +1038,11 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 3. **Cookies per a Recordar Jugadors:**
     - Implementa cookies per a recordar els jugadors entre visites, permetent que l'usuari siga recordat si selecciona una opció de "Recordar-me" durant l'inici de sessió.
 
+4. **Seguretat i Autenticació:**
+    - Implementa un sistema d'autenticació bàsic per a garantir que només els jugadors autenticats puguen accedir al joc.
+    - Utilitza sessions per a mantenir l'estat d'autenticació i controlar l'accés a les funcionalitats del joc.
+     
+
 #### Consideracions Addicionals
 
 - **Resiliència del Joc:** Implementa la lògica necessària per a manejar intents invàlids i mostrar missatges d'error adequats.
@@ -1060,6 +1065,15 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 3. **Cookies per a la Persistència d'Usuaris:**
     - Permet l'ús de cookies per a recordar els jugadors entre visites si han seleccionat "Recordar-me". Utilitza cookies per a emmagatzemar l'últim jugador autenticat.
 
+4. **Seguretat i Autenticació:**
+    - Implementa un sistema d'autenticació bàsic per a garantir que només els jugadors autenticats puguen accedir al joc.
+    - Utilitza sessions per a mantenir l'estat d'autenticació i controlar l'accés a les funcionalitats del joc.
+
+5. **Addicional**
+    - Implementa la lògica per tal que el segon jugador siga la màquina (pots utilitzar chatgtp per a fer l'algorisme de la màquina).
+    - Controla el joc per a que no es puga seguir jugant una vegada acabat.
+    - Implementa un sistema de puntuació que otorgue 2 punts al guanyador i 1 a cadascú en cas d'empat.
+
 #### Consideracions Addicionals
 
 - **Lògica de Torn de Jugadors:** Implementa la lògica necessària per a canviar de torn entre els jugadors utilitzant sessions.
@@ -1068,17 +1082,18 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
 
 ### Rúbrica d'Avaluació
 
-| Criteri                      | Excel·lent (4)                                                 | Bé (3)                                                            | Adequat (2)                                                | Insuficient (1)                                           |
-|------------------------------|----------------------------------------------------------------|-------------------------------------------------------------------|------------------------------------------------------------|-----------------------------------------------------------|
-| **Funcionalitat del Joc**    | El joc està completament funcional i sense errors.             | El joc està majoritàriament funcional amb errors mínims.          | El joc és funcional, però conté errors significatius.      | El joc no és funcional o està incomplet.                 |
-| **Ús de Sessions**           | Sessions ben implementades per a mantenir l'estat del joc.     | Sessions utilitzades correctament amb alguns problemes menors.    | Sessions utilitzades, però amb deficiències importants.    | No s'han utilitzat sessions o són incorrectes.            |
-| **Ús de Cookies**            | Cookies ben utilitzades per a recordar els jugadors.           | Cookies utilitzades adequadament amb algunes millores possibles.  | Cookies utilitzades amb limitacions evidents.              | No s'han utilitzat cookies o són incorrectes.             |
-| **Autenticació d'Usuaris**   | Autenticació segura i efectiva implementada.                   | Autenticació implementada amb alguns problemes.                   | Autenticació present però amb deficiències notables.       | No s'ha implementat autenticació o és incorrecta.         |
-| **Interfície d'Usuari**      | Interfície atractiva i fàcil d'utilitzar.                      | Interfície clara amb algunes millores possibles.                  | Interfície funcional però poc intuïtiva.                   | Interfície confusa i difícil d'utilitzar.                 |
-| **Seguretat**                | Totes les mesures de seguretat implementades correctament.     | Seguretat adequada amb algunes millores possibles.                | Mesures de seguretat bàsiques implementades.               | No s'han tingut en compte mesures de seguretat.           |
-| **Comentaris i Codi**        | Codi ben comentat i fàcilment llegible.                        | Codi clar amb comentaris adequats.                                | Codi llegible però amb pocs comentaris.                    | Codi desordenat i sense comentaris.                       |
-| **Innovació i Creativitat**  | El projecte mostra innovació significativa.                    | Algunes idees creatives han estat implementades.                  | Alguna creativitat present, però limitada.                 | Cap creativitat o innovació en el projecte.               |
-
+| Criteri                     | Excel·lent (4)                                             | Bé (3)                                                           | Adequat (2)                                             | Insuficient (1)                                   |
+|-----------------------------|------------------------------------------------------------|------------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------|
+| **Funcionalitat del Joc**   | El joc està completament funcional i sense errors.         | El joc està majoritàriament funcional amb errors mínims.         | El joc és funcional, però conté errors significatius.   | El joc no és funcional o està incomplet.          |
+| **Ús de Sessions**          | Sessions ben implementades per a mantenir l'estat del joc. | Sessions utilitzades correctament amb alguns problemes menors.   | Sessions utilitzades, però amb deficiències importants. | No s'han utilitzat sessions o són incorrectes.    |
+| **Ús de Cookies**           | Cookies ben utilitzades per a recordar els jugadors.       | Cookies utilitzades adequadament amb algunes millores possibles. | Cookies utilitzades amb limitacions evidents.           | No s'han utilitzat cookies o són incorrectes.     |
+| **Autenticació d'Usuaris**  | Autenticació segura i efectiva implementada.               | Autenticació implementada amb alguns problemes.                  | Autenticació present però amb deficiències notables.    | No s'ha implementat autenticació o és incorrecta. |
+| **Interfície d'Usuari**     | Interfície atractiva i fàcil d'utilitzar.                  | Interfície clara amb algunes millores possibles.                 | Interfície funcional però poc intuïtiva.                | Interfície confusa i difícil d'utilitzar.         |
+| **Seguretat**               | Totes les mesures de seguretat implementades correctament. | Seguretat adequada amb algunes millores possibles.               | Mesures de seguretat bàsiques implementades.            | No s'han tingut en compte mesures de seguretat.   |
+| **Comentaris i Codi**       | Codi ben comentat i fàcilment llegible.                    | Codi clar amb comentaris adequats.                               | Codi llegible però amb pocs comentaris.                 | Codi desordenat i sense comentaris.               |
+| **Innovació i Creativitat** | El projecte mostra innovació significativa.                | Algunes idees creatives han estat implementades.                 | Alguna creativitat present, però limitada.              | Cap creativitat o innovació en el projecte.       |
+| **Punts addicionals**       | 1 punt per cadascúna aconseguida.                          |                                                                  |                                                         |                                                   |
+  
 ### Explicació dels Criteris
 
 #### Funcionalitat del Joc
