@@ -580,3 +580,362 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ## Tema 3: Programació Web
 
+#### Exercici 1: Sistema de Carret de Compres sense Base de Dades
+
+1. **Descripció:**
+
+   Desenvolupa una aplicació PHP que permeta als usuaris afegir productes a un carret de compres i mostrar el contingut del carret. Utilitza sessions per a mantindre l'estat del carret entre pàgines.
+
+2. **Requisits:**
+    - Crear una pàgina on l'usuari puga seleccionar productes.
+    - Afegir els productes seleccionats a un carret emmagatzemat en una sessió.
+    - Mostrar un resum del carret amb els productes afegits i les seues quantitats.
+    - Permetre que l'usuari elimine productes del carret.
+
+
+```html
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Selecció de productes</title>
+</head>
+<body>
+    <h1>Afegir productes al carret</h1>
+    <form action="carret.php" method="POST">
+        <label for="producte">Tria un producte:</label>
+        <select name="producte" id="producte">
+            <option value="Poma">Poma</option>
+            <option value="Plàtan">Plàtan</option>
+            <option value="Taronja">Taronja</option>
+        </select>
+        <input type="submit" value="Afegir al carret">
+    </form>
+    <a href="carret.php">Veure carret</a>
+</body>
+</html>
+```
+
+```php
+<?php
+session_start();
+
+// Inicialitzar el carret si no existeix
+if (!isset($_SESSION['carret'])) {
+    $_SESSION['carret'] = [];
+}
+
+// Afegir producte al carret si s'ha enviat un producte
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['producte'])) {
+    $producte = $_POST['producte'];
+    if (isset($_SESSION['carret'][$producte])) {
+        $_SESSION['carret'][$producte]++;
+    } else {
+        $_SESSION['carret'][$producte] = 1;
+    }
+}
+
+// Eliminar producte del carret si s'ha enviat un producte a eliminar
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar'])) {
+    $producte = $_POST['eliminar'];
+    unset($_SESSION['carret'][$producte]);
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Carret de la compra</title>
+</head>
+<body>
+    <h1>Carret de la compra</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Producte</th>
+                <th>Quantitat</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($_SESSION['carret'] as $producte => $quantitat): ?>
+                <tr>
+                    <td><?php echo $producte; ?></td>
+                    <td><?php echo $quantitat; ?></td>
+                    <td>
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                            <input type="hidden" name="eliminar" value="<?php echo $producte; ?>">
+                            <input type="submit" value="Eliminar">
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <a href="index.php">Tornar a la selecció de productes</a>
+</body>
+</html>
+```
+
+#### Exercici 2: Autenticació Bàsica d'Usuaris amb Sessions
+
+1. **Descripció:**
+
+   Crea una aplicació PHP que permeta als usuaris iniciar sessió mitjançant un formulari. Utilitza sessions per a mantindre l'estat d'autenticació de l'usuari i mostrar missatges personalitzats basats en aquest estat.
+
+2. **Requisits:**
+    - Crear un formulari d'inici de sessió que sol·licite el nom d'usuari i la contrasenya.
+    - Emmagatzemar l'estat d'autenticació en una sessió després de verificar les credencials.
+    - Mostrar una pàgina de benvinguda personalitzada per a l'usuari autenticat.
+    - Proporcionar un enllaç per a tancar sessió i destruir la sessió.
+
+```php
+<?php
+session_start();
+
+// Inicialitzar variables d'error i missatge de benvinguda
+$error = "";
+$welcomeMessage = "";
+
+// Comprovar si l'usuari ha enviat el formulari
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Comprovar les credencials de l'usuari
+    if ($_POST['username'] == 'usuari' && $_POST['password'] == 'contrasenya') {
+        // Iniciar sessió i emmagatzemar l'estat d'autenticació
+        $_SESSION['authenticated'] = true;
+        $welcomeMessage = "Benvingut, " . $_POST['username'] . "!";
+    } else {
+        $error = "Credencials incorrectes. Si us plau, intenta-ho de nou.";
+    }
+}
+
+// Tancar sessió si s'ha enviat la sol·licitud
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Inici de sessió</title>
+</head>
+<body>
+    <h1>Inici de sessió</h1>
+    <?php if ($_SESSION['authenticated']): ?>
+        <p><?php echo $welcomeMessage; ?></p>
+        <a href="index.php?logout=true">Tancar sessió</a>
+    <?php else: ?>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <label for="username">Nom d'usuari:</label>
+            <input type="text" id="username" name="username">
+            <br>
+            <label for="password">Contrasenya:</label>
+            <input type="password" id="password" name="password">
+            <br>
+            <input type="submit" value="Iniciar sessió">
+        </form>
+        <p style="color: red;"><?php echo $error; ?></p>
+    <?php endif; ?>
+</body>
+</html>
+```
+     
+#### Exercici 3: Recordatori d'Usuari amb Cookies
+
+1. **Descripció:**
+
+   Afig una funcionalitat de "recordar-me" a l'exercici anterior que emmagatzeme el nom d'usuari en una cookie i permeta a l'usuari ser recordat en futures visites al lloc web.
+
+2. **Requisits:**
+    - Afig una opció de "recordar-me" al formulari d'inici de sessió.
+    - Emmagatzemar el nom d'usuari en una cookie quan l'opció és seleccionada.
+    - Comprovar la cookie en futures visites i iniciar sessió automàticament si la cookie existeix.
+    - Assegurar que les cookies es configuren amb atributs de seguretat adequats (`HttpOnly`, `Secure`, `SameSite`).
+
+
+```php
+<?php
+session_start();
+
+// Inicialitzar variables d'error i missatge de benvinguda
+$error = "";
+$welcomeMessage = "";
+
+// Comprovar si l'usuari ha enviat el formulari
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Comprovar les credencials de l'usuari
+    if ($_POST['username'] == 'usuari' && $_POST['password'] == 'contrasenya') {
+        // Iniciar sessió i emmagatzemar l'estat d'autenticació
+        $_SESSION['authenticated'] = true;
+        $welcomeMessage = "Benvingut, " . $_POST['username'] . "!";
+
+        // Emmagatzemar el nom d'usuari en una cookie si s'ha seleccionat "recordar-me"
+        if (isset($_POST['remember'])) {
+            setcookie('username', $_POST['username'], time() + 3600 * 24 * 30, '/', '', true, true);
+        }
+    } else {
+        $error = "Credencials incorrectes. Si us plau, intenta-ho de nou.";
+    }
+}
+
+// Comprovar la cookie de recordatori i iniciar sessió automàticament si existeix
+if (!$_SESSION['authenticated'] && isset($_COOKIE['username'])) {
+    $_SESSION['authenticated'] = true;
+    $welcomeMessage = "Benvingut, " . $_COOKIE['username'] . "!";
+}
+
+// Tancar sessió si s'ha enviat la sol·licitud
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Inici de sessió</title>
+</head>
+<body>
+    <h1>Inici de sessió</h1>
+    <?php if ($_SESSION['authenticated']): ?>
+        <p><?php echo $welcomeMessage; ?></p>
+        <a href="index.php?logout=true">Tancar sessió</a>
+    <?php else: ?>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <label for="username">Nom d'usuari:</label>
+            <input type="text" id="username" name="username" value="<?php echo $_COOKIE['username'] ?? ''; ?>">
+            <br>
+            <label for="password">Contrasenya:</label>
+            <input type="password" id="password" name="password">
+            <br>
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Recorda'm</label>
+            <br>
+            <input type="submit" value="Iniciar sessió">
+        </form>
+        <p style="color: red;"><?php echo $error; ?></p>
+    <?php endif; ?>
+</body>
+</html>
+```
+ 
+#### Exercici 4: Formulari de Contacte amb Protecció CSRF
+
+1. **Descripció:**
+
+   Desenvolupa un formulari de contacte que permeta als usuaris enviar missatges i implementa protecció CSRF per a assegurar que les sol·licituds siguen legítimes.
+
+2. **Requisits:**
+    - Crear un formulari de contacte amb camps per al nom, correu electrònic i missatge.
+    - Generar i emmagatzemar un token CSRF en una sessió quan es carrega el formulari.
+    - Incloure el token CSRF com a camp ocult en el formulari.
+    - Verificar el token CSRF quan s'envia el formulari i mostrar un missatge de confirmació si és vàlid.
+    - Mostrar un missatge d'error si el token CSRF no és vàlid o no existeix.
+
+
+```php
+<?php
+session_start();
+
+// Generar un token CSRF si no existeix
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Comprovar si l'usuari ha enviat el formulari
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Comprovar el token CSRF
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Error CSRF");
+    }
+
+    // Processar el formulari
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
+    $successMessage = "Missatge enviat per $name ($email): $message";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulari de contacte</title>
+</head>
+<body>
+    <h1>Formulari de contacte</h1>
+    <?php if (isset($successMessage)): ?>
+        <p><?php echo $successMessage; ?></p>
+    <?php else: ?>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+            <label for="name">Nom:</label>
+            <input type="text" id="name" name="name">
+            <br>
+            <label for="email">Correu electrònic:</label>
+            <input type="email" id="email" name="email">
+            <br>
+            <label for="message">Missatge:</label>
+            <textarea id="message" name="message"></textarea>
+            <br>
+            <input type="submit" value="Enviar">
+        </form>
+    <?php endif; ?>
+</body>
+</html>
+```
+
+
+#### Exercici 5: Seguiment d'Activitat de l'Usuari amb Sessions
+
+1. **Descripció:**
+
+   Crea un sistema que registre les pàgines visitades per l'usuari durant una sessió i mostre aquesta informació quan l'usuari visita una pàgina d'activitat.
+
+2. **Requisits:**
+    - Emmagatzemar una llista de pàgines visitades per l'usuari en una sessió.
+    - Actualitzar la llista de pàgines cada vegada que l'usuari visite una nova pàgina.
+    - Crear una pàgina que mostre l'historial de pàgines visitades durant la sessió actual.
+    - Assegurar que l'historial es restableix quan l'usuari tanca la sessió.
+
+```php
+<?php
+session_start();
+
+// Inicialitzar la llista de pàgines visitades si no existeix
+if (!isset($_SESSION['pages'])) {
+    $_SESSION['pages'] = [];
+}
+
+// Afegir la pàgina actual a la llista de pàgines visitades
+$_SESSION['pages'][] = $_SERVER['REQUEST_URI'];
+?>
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Activitat de l'usuari</title>
+</head>
+<body>
+    <h1>Activitat de l'usuari</h1>
+    <ul>
+        <?php foreach ($_SESSION['pages'] as $page): ?>
+            <li><?php echo $page; ?></li>
+        <?php endforeach; ?>
+    </ul>
+</body>
+</html>
+```
+
+
