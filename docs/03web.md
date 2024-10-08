@@ -1011,6 +1011,7 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
     - Crear una pàgina que mostre l'historial de pàgines visitades durant la sessió actual.
     - Assegurar que l'historial es restableix quan l'usuari tanca la sessió.
 
+### [Solucions](10solucions.html#Tema 3: Programació Web)
 
 ## 6. Enunciats dels projectes
 

@@ -1310,7 +1310,7 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 ```
 </details>
 
-### Exercicis proposats [Solucions](10solucions.html#Tema 2: Introducció a PHP)
+### Exercicis proposats 
 
 #### Exercici 1: Manipulació de Variables i Operadors
 
@@ -1352,6 +1352,8 @@ A partir del formulari [newBook.php](recursos/newBook.php), fes que el mòdul i 
 #### Exercici 9: Pujar imatges des de formulari
 
 A partir del formulari anterior fes que es puga pujar una imatge. Mostra la imatge en la taula.
+
+### [Solucions](10solucions.html#Tema 2: Introducció a PHP)
 
 ## 20. Enunciats dels Projectes
 
