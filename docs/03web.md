@@ -1011,7 +1011,7 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
     - Crear una pàgina que mostre l'historial de pàgines visitades durant la sessió actual.
     - Assegurar que l'historial es restableix quan l'usuari tanca la sessió.
 
-### [Solucions](10solucions.html#Tema 3: Programació Web)
+### [Solucions](10solucions.html#tema-3-programacio-web)
 
 ## 6. Enunciats dels projectes
 
@@ -1070,9 +1070,58 @@ A continuació es presenten diverses referències que poden ajudar-te a aprofund
     - Utilitza sessions per a mantenir l'estat d'autenticació i controlar l'accés a les funcionalitats del joc.
 
 5. **Addicional**
-    - Implementa la lògica per tal que el segon jugador siga la màquina (pots utilitzar chatgtp per a fer l'algorisme de la màquina).
+    - Implementa la lògica per tal que el segon jugador siga la màquina (pots adaptar i/o millorar l'algorisme de baix).
     - Controla el joc per a que no es puga seguir jugant una vegada acabat.
     - Implementa un sistema de puntuació que otorgue 2 punts al guanyador i 1 a cadascú en cas d'empat.
+
+```php    
+ 
+function jugar(&$graella,$jugadorActual){
+
+       $opponent = $jugadorActual === 1 ? 2 : 1;
+   
+       // Comprovar si pots guanyar
+       for ($col = 1; $col <= COLUMNES; $col++) {
+           if (isValidMove($graella, $col)) {
+               $tempBoard = $graella;
+               $coord = ferMoviment($tempBoard, $col, $jugadorActual);
+               
+               if (fi_joc($tempBoard, $coord)) {
+                   return ferMoviment($graella,$col,$jugadorActual); // Guanyar immediatament
+               }
+           }
+       }
+   
+       // Comprovar si l'oponent pot guanyar i bloquejar
+       for ($col = 1; $col <= COLUMNES; $col++) {
+           if (isValidMove($graella, $col)) {
+               $tempBoard = $graella;
+               $coord = ferMoviment($tempBoard, $col, $opponent);
+               if (fi_joc($tempBoard, $coord )) {
+                   return ferMoviment($graella,$col,$jugadorActual); // Bloquejar
+               }
+           }
+       }
+   
+       // Estratègia: buscar el millor moviment
+       // Podem afegir més lògica aquí per seleccionar el millor moviment
+       $possibles = array();
+       for ($col = 1; $col <= COLUMNES; $col++) {
+           if (isValidMove($graella, $col)) {
+               $possibles[] = $col; 
+           }
+       }
+       if (count($possibles)>2) {
+           $random = rand(-1,1);
+       }
+       $middle = (int) (count($possibles) / 2)+$random;
+       $inthemiddle = $possibles[$middle];
+       return ferMoviment($graella, $inthemiddle, $jugadorActual); 
+   
+       return -1; // Totes les columnes estan plenes
+}
+
+```
 
 #### Consideracions Addicionals
 
