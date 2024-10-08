@@ -19,9 +19,7 @@ nav:
   - "7.7- Activitat Batoi Books": "07laravelBatoiBook.md"
   - "8.- Serveis Web": "08rest.md"
   - "9.- Webs Hibrides": "09mashup.md"
-  - "10.- Recuperació": "10recuperacio.md"
-  - "11.- Recuperació Laravel": "11recuperacioLaravel.md"
-
+  - "10.- Solucions Exercicis propossats": "10solucions.md"
 
 theme:
   language: ca

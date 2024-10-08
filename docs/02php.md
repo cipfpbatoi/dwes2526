@@ -1310,7 +1310,7 @@ echo $validacio;  // Sortida: El camp edat és obligatori.
 ```
 </details>
 
-### Exercicis proposats
+### Exercicis proposats [Solucions](10solucions.html#Tema 2: Introducció a PHP)
 
 #### Exercici 1: Manipulació de Variables i Operadors
 
