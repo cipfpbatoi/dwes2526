@@ -938,4 +938,133 @@ $_SESSION['pages'][] = $_SERVER['REQUEST_URI'];
 </html>
 ```
 
+## Tema 4: POO
 
+#### Exercici 1. Creació de la Classe Bàsica i Gestió de Propietats
+
+* Crea una classe `Persona` amb les propietats privades `nom`, `cognoms`, i `edat`. Encapsula aquestes propietats mitjançant getters i setters. Afig els següents mètodes:
+
+      - `getNomComplet(): string` – Retorna el nom complet de la persona.
+      - `estaJubilat(): bool` – Retorna `true` si l'edat és major o igual a 65, `false` en cas contrari.
+
+* Modifica la classe `Persona` afegint un constructor que assigna nom i cognoms. Si es proporciona un tercer paràmetre, assigna l'edat; en cas contrari, assigna una edat per defecte de 25 anys.
+
+* Modifica la classe `Persona` per utilitzar una constant `LIMITE_EDAT` amb el valor de 66 anys i utilitza-la en el mètode `estaJubilat`.
+
+```php
+<?php
+<?php 
+abstract class Persona {
+    private $nom;
+    private $cognoms;
+    private $edat;
+    const LIMITE_EDAT = 66;
+
+    public function __construct($nom, $cognoms, $edat = 25) {
+        $this->nom = $nom;
+        $this->cognoms = $cognoms;
+        $this->edat = $edat;
+    }
+
+    public function getNom() {
+        return $this->nom;
+    }
+
+    public function getCognoms() {
+        return $this->cognoms;
+    }
+
+    public function getEdat() {
+        return $this->edat;
+    }
+
+    public function setNom($nom) {
+        $this->nom = $nom;
+    }
+
+    public function setCognoms($cognoms) {
+        $this->cognoms = $cognoms;
+    }
+
+    public function setEdat($edat) {
+        $this->edat = $edat;
+    }
+
+    public function getNomComplet() {
+        return $this->nom . ' ' . $this->cognoms;
+    }
+
+    public function estaJubilat() {
+        return $this->edat >= self::LIMITE_EDAT;
+    }
+
+    public static function toHtml(Persona $p) {
+        return '<p>' . htmlspecialchars($p->getNomComplet()) . '</p>';
+    }
+}
+
+
+```
+
+#### Exercici 2. Herència i Polimorfisme
+
+* Crea una classe `Empleado` que herete de `Persona`. Afig les següents propietats i mètodes:
+
+    - `private float $sou`
+    - `private array $telefons`
+    - `anyadirTelefono(int $telefon): void` – Afig un número de telèfon a l'array.
+    - `listarTelefonos(): string` – Retorna els números de telèfon separats per comes.
+    - `vaciarTelefonos(): void` – Buida l'array de telèfons.
+    - `debePagarImpuestos(): bool` – Retorna `true` si el sou és superior a 3333€, `false` en cas contrari.
+
+* Afig un mètode estàtic `toHtml(Empleado $emp): string` que genere un codi HTML que mostre el nom complet de l'empleat dins d'un paràgraf i els seus telèfons dins d'una llista ordenada.
+* Afig un mètode estàtic `toHtml(Persona $p)` a la classe Persona que mostre el nom complet de la persona dins d'un paràgraf. Modifica el mètode `toHtml` de `Empleado` per rebre una `Persona` com a paràmetre i comprovar si es tracta d'un `Empleado` amb `instanceof`.
+* Transforma `Persona` en una classe abstracta. Redefineix el mètode estàtic `toHtml(Persona $p)` en totes les seues subclasses. 
+
+```php
+class Empleado extends Persona {
+    private $sou;
+    private $telefons = [];
+
+    public function __construct($nom, $cognoms, $sou, $edat = 25) {
+        parent::__construct($nom, $cognoms, $edat);
+        $this->sou = $sou;
+    }
+
+    public function getSou() {
+        return $this->sou;
+    }
+
+    public function setSou($sou) {
+        $this->sou = $sou;
+    }
+
+    public function anyadirTelefono($telefon) {
+        $this->telefons[] = $telefon;
+    }
+
+    public function listarTelefonos() {
+        return implode(', ', $this->telefons);
+    }
+
+    public function vaciarTelefonos() {
+        $this->telefons = [];
+    }
+
+    public function debePagarImpuestos() {
+        return $this->sou > 3333;
+    }
+
+    public static function toHtml(Persona $p) {
+        $html = '<p>' . htmlspecialchars($p->getNomComplet()) . '</p>';
+        if ($p instanceof Empleado) {
+            $html .= '<ol>';
+            foreach ($p->listarTelefonos() as $telefon) {
+                $html .= '<li>' . htmlspecialchars($telefon) . '</li>';
+            }
+            $html .= '</ol>';
+        }
+        return $html;
+    }
+}
+```
