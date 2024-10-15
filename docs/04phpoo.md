@@ -2720,13 +2720,13 @@ $dompdf->stream("informe_productes.pdf");
 
 * Afig un mètode estàtic `toHtml(Empleado $emp): string` que genere un codi HTML que mostre el nom complet de l'empleat dins d'un paràgraf i els seus telèfons dins d'una llista ordenada.
 * Afig un mètode estàtic `toHtml(Persona $p)` a la classe Persona que mostre el nom complet de la persona dins d'un paràgraf. Modifica el mètode `toHtml` de `Empleado` per rebre una `Persona` com a paràmetre i comprovar si es tracta d'un `Empleado` amb `instanceof`.
-* Transforma `Persona` en una classe abstracta. Redefineix el mètode estàtic `toHtml(Persona $p)` en totes les seues subclasses. Afig una classe `Worker` que siga també abstracta i que emmagatzeme els `telefonos`. Crea mètodes per calcular el sou en `Empleado` i `Gerent`, segons la descripció.
-
+* Transforma `Persona` en una classe abstracta. Redefineix el mètode estàtic `toHtml(Persona $p)` en totes les seues subclasses. 
+ 
 #### Exercici 3. Integració d'Espais de Noms, Autoloading, i Composer
 
-* Crea una classe `Empresa` que incloga una propietat amb un array de `Workers`, ja siguen `Employees` o `Managers`. Implementa:
+* Crea una classe `Empresa` que incloga una propietat amb un array de `Empleados` . Implementa:
 
-    - `public function addWorker(Worker $t)`
+    - `public function addWorker(Empleado $t)`
     - `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
     - `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
 
