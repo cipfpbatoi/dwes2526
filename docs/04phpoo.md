@@ -2730,7 +2730,7 @@ $dompdf->stream("informe_productes.pdf");
     - `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
     - `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
 
-* Configura un projecte PHP amb Composer que utilitze l'autoloading PSR-4. Afig un fitxer `composer.json` i defineix l'estructura de directoris `src/Models`, `src/Services`, etc. Crea una classe `Producte` dins de `src/Models` i verifica que l'autoloading funcione correctament instanciant la classe en un fitxer separat.
+* Configura el projecte PHP amb Composer que utilitze l'autoloading PSR-4.  
 
 #### Exercici 4. Logger i Documentació
 
