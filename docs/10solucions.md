@@ -1067,4 +1067,31 @@ class Empleado extends Persona {
         return $html;
     }
 }
+
+
+<?php
+namespace App\Models;
+
+class Empresa {
+    private $workers = [];
+
+    public function addWorker(Empleado $t) {
+        $this->workers[] = $t;
+    }
+
+    public function getWorkers(){
+        return $this->workers;
+    }
+
+
+    public function getCosteNominas() {
+        $total = 0;
+        foreach ($this->workers as $worker) {
+            if ($worker instanceof Empleado) {
+                $total += $worker->getSou();
+            }
+        }
+        return $total;
+    }
+}
 ```
