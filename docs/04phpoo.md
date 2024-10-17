@@ -2804,50 +2804,23 @@ Després de refactoritzar l'aplicació per separar la lògica del negoci de la p
     - Prova que la generació de contingut HTML o PDF es realitza correctament a partir de les dades proporcionades pel model.
  
 ## 14. Enunciat dels projectes
-
-### Projecte "Ofegat"
-
-#### 1. Refactorització amb Programació Orientada a Objectes (POO)
-- **Crear una Classe `JocOfegat`**: Refactoritza la lògica principal del joc en una classe `JocOfegat` que gestione l'estat del joc, la paraula a endevinar, les lletres endevinades, i el nombre d'intents restants.
-- **Mètodes Principals**:
-    - `iniciarJoc($paraula): void` – Inicia una nova partida amb la paraula donada.
-    - `endevinaLletra($lletra): bool` – Comprova si la lletra és part de la paraula i actualitza l'estat del joc.
-    - `estaAcabat(): bool` – Retorna `true` si el joc ha acabat, ja siga per guanyar o per perdre.
-    - `obteEstat(): array` – Retorna l'estat actual del joc, incloent les lletres encertades, intents restants, etc.
-#### 2. Separació del Model de Negoci de la Presentació
-- **Model-Vista-Controlador (MVC)**: 
-   - **Model**: La classe JocOfegat actua com a model, gestionant la lògica del joc i mantenint l'estat. Aquest model ha d'estar completament separat de qualsevol codi que gestione la presentació (HTML, CSS).
-   - **Vista**: Crea vistes que s'encarreguen exclusivament de mostrar la informació a l'usuari. Aquestes vistes poden utilitzar plantilles HTML i accedir al model a través de controladors.
-   - **Controlador**: El controlador serà responsable de rebre les entrades de l'usuari (com l'endevinació d'una lletra), interactuar amb el model (JocOfegat) per actualitzar l'estat del joc, i seleccionar la vista adequada per a mostrar els resultats a l'usuari.
-
-#### 3. Integració de Composer i Autoloading
-- **Configuració de Composer**: Utilitza Composer per gestionar les dependències del projecte. Defineix l'autoloading per carregar automàticament les classes de `JocOfegat`.
-- **Estructura del Projecte**:
-    - Organitza el codi en directoris com `src/Models` per a les classes del joc, i `src/Services` per a la gestió de sessions i autenticació.
-    - Defineix un `composer.json` per configurar l'autoloading PSR-4.
-
-#### 4. Proves amb PHPUnit
-- **Escriu Proves Unitàries**: Crea proves unitàries per a la classe `JocOfegat` utilitzant PHPUnit. Les proves poden incloure:
-    - Prova per assegurar que una paraula es configura correctament.
-    - Prova per verificar que una lletra encertada actualitza l'estat correctament.
-    - Prova per assegurar que el joc detecta correctament quan s'ha guanyat o perdut.
-- **Prova de Gestió de Sessions**: Afig proves per a la gestió de sessions, comprovant que l'estat del joc es guarda i es recupera correctament.
-
-#### 5. Logger amb Monolog
-- **Configuració de Logger**: Utilitza `Monolog` per registrar esdeveniments importants, com quan s'inicia un nou joc, quan un jugador endevina una lletra o quan es produeixen errors.
-- **Diversos Handlers**:
-    - Registra missatges a un fitxer `game.log` per a esdeveniments generals.
-    - Afig un handler per registrar errors greus, com intents invàlids o problemes de sessió, en un fitxer d'errors separat.
-
+   
 ### Projecte "4 en Ratlla"
 
 #### 1. Refactorització amb Programació Orientada a Objectes (POO)
-- **Classe `Joc4enRatlla`**: Refactoritza la lògica del joc en una classe `Joc4enRatlla` que gestione la graella, el torn del jugador, i la lògica per determinar el guanyador.
+- **Classe  `Jugador`**: Crea una classe `Jugador` per representar els jugadors del joc, amb propietats com el nom, el color de les fitxes, forma de jugar (automàtica/manual).
+
+- **Classe `Joc4enRatlla`**: Refactoritza la lògica del joc en una classe `Joc4enRatlla` que gestione la graella, el torn del jugador, i la lògica per determinar el guanyador, la puntuació.
 - **Mètodes Principals**:
     - `iniciarPartida(): void` – Inicia una nova partida.
     - `ferMoviment($columna): bool` – Permet que un jugador faça un moviment en una columna determinada.
     - `comprovaGuanyador(): ?int` – Comprova si hi ha un guanyador després d'un moviment.
     - `obteEstatGraella(): array` – Retorna l'estat actual de la graella.
+    - `obteTornJugador(): string` – Retorna el nom del jugador actual.
+    - `finalitzaPartida(): void` – Finalitza la partida i actualitza la puntuació dels jugadors.
+    - `reiniciaPartida(): void` – Reinicia la partida actual sense reiniciar la puntuació.
+    - `obtePuntuacio(): array` – Retorna la puntuació actual dels jugadors.
+    - `obteGuanyador(): ?string` – Retorna el nom del guanyador de la partida actual.
 
 #### 2. Separació del Model de Negoci de la Presentació
 - **Model-Vista-Controlador (MVC)**:
@@ -2874,19 +2847,19 @@ Després de refactoritzar l'aplicació per separar la lògica del negoci de la p
     - Registra els moviments dels jugadors i els resultats del joc en un fitxer `game.log`.
     - Registra errors greus o problemes amb les sessions en un fitxer d'errors separat.
 
-### Consideracions Addicionals per a Ambdós Projectes
+### Consideracions Addicionals per al  Projecte 
 
 #### 1. Documentació amb PHPDoc
 - **Documentació Completa**: Documenta totes les classes i mètodes amb comentaris PHPDoc. Això inclou les descripcions dels paràmetres i els valors de retorn per a cada mètode.
 - **Generació Automàtica**: Utilitza `phpDocumentor` o una eina similar per generar la documentació automàticament. Afig la documentació generada al projecte per facilitar el manteniment i la comprensió del codi.
 
 #### 2. Implementació d'Interfícies
-- **Interfície `JocInterface`**: Crea una interfície que definisca els mètodes bàsics que qualsevol joc (com Ofegat o 4 en Ratlla) ha de tindre (`iniciarJoc`, `ferMoviment`, `comprovaGuanyador`, etc.). Assegura't que les classes `JocOfegat` i `Joc4enRatlla` implementen aquesta interfície.
+- **Interfície `JocInterface`**: Crea una interfície que definisca els mètodes bàsics que qualsevol joc  ha de tindre (`iniciarJoc`, `ferMoviment`, `comprovaGuanyador`, etc.). Assegura't que la  `Joc4enRatlla` implemente  aquesta interfície.
 
 #### 3. Serialització i Persistència
 - **Serialització de l'Estat del Joc**: Implementa funcionalitats per serialitzar l'estat del joc (usant JSON o `serialize()`) i deserialitzar-lo per mantenir la persistència entre sessions o guardar l'estat per a reprendre la partida posteriorment.
 
-### Rúbrica d'Avaluació per als Projectes "Ofegat" i "4 en Ratlla"
+### Rúbrica d'Avaluació per als Projectes  
 
 | **Criteri**                                                 | ** Insuficient (1 punt)**                                                                                   | ** Adequat (2 punts)**                                                                                                                          | ** Bé (3 punts)**                                                                                                      | ** Excel·lent (4 punts)**                                                                                                 |
 |-------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
