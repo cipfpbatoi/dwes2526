@@ -1222,7 +1222,11 @@ A continuació vam mostrar els diferents nivells de menys a més restrictiu:
 
     * debug -100: Informació detallada amb propòsits de debug. No usar en entorns de producció.
     * info - 200: Esdeveniments interessants com l'inici de sessió d'usuaris.
-    * notice - 250: Esdeveniments normals però significatius.
+    * notice - 250: Esdeveniments normals però sig
+### Manejadors
+
+ Si no s'indica cap, se li assigna un per defecte. L'últim manejador inserit serà el primer a executar-se.
+Després es van executant conforme a la pila.nificatius.
     * warning - 300: Ocurrències excepcionals que no arriben a ser error.
     * error - 400: Errors d'execució que permeten continuar amb l'execució de l'aplicació però que han de ser monitorats.
     * critical - 500: Situacions importants on es generen excepcions no esperades o no hi ha disponible un component.
@@ -2775,6 +2779,60 @@ Fins ara, has creat diverses classes que gestionen la lògica del joc i les dade
 * **Crear el Controlador**:
     - Implementa un controlador que reba les sol·licituds dels usuaris, interactue amb el model (`Persona`, `Empleado`, `Empresa`), i tria la vista adequada per mostrar els resultats (HTML o PDF).
     - El controlador ha d'encapsular tota la lògica necessària per a gestionar la interacció entre la vista i el model, assegurant que el model no estiga lligat a la capa de presentació.
+
+```php
+<?php
+namespace App\Controllers;
+
+use App\Models\Empleado;
+
+class EmpleadoController {
+
+    public function listAll(){
+        $persona1 = new Empleado('Ignasi','Gomis Mullor',50);
+        $persona2 = new Empleado('Juan','Segura Vasco',50);
+        $persona1->setSou(2500);
+        $persona2->setSou(2500);
+
+        $empleados = [$persona1, $persona2];
+
+        
+        include $_SERVER['DOCUMENT_ROOT'].'/views/empleado.view.php';
+        
+
+    }
+}
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleado</title>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>Nom</th><th>Telefons</th><th>Sou</th>
+    </tr>
+    <?php foreach ($empleados as $empleado): ?>
+    <tr>
+        <td><?= $empleado ?></td><td><?= $empleado->listarTelefonos() ?></td><td><?= $empleado->getSou() ?></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+</body>
+</html>
+
+<?php
+include_once __DIR__ .'/../vendor/autoload.php';
+
+use App\Controllers\EmpleadoController;
+
+$controller = new EmpleadoController();
+$controller->listAll();
+
+```
 
 #### Exercici 8. Creació de Proves Unitàries per al Patró MVC
 
