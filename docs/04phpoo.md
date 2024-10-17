@@ -2780,6 +2780,9 @@ Fins ara, has creat diverses classes que gestionen la lògica del joc i les dade
     - Implementa un controlador que reba les sol·licituds dels usuaris, interactue amb el model (`Persona`, `Empleado`, `Empresa`), i tria la vista adequada per mostrar els resultats (HTML o PDF).
     - El controlador ha d'encapsular tota la lògica necessària per a gestionar la interacció entre la vista i el model, assegurant que el model no estiga lligat a la capa de presentació.
 
+
+
+EmpleadoController
 ```php
 <?php
 namespace App\Controllers;
@@ -2802,6 +2805,11 @@ class EmpleadoController {
 
     }
 }
+```
+
+empleado.view.php
+```html
+
 
 <!DOCTYPE html>
 <html lang="ca">
@@ -2823,6 +2831,11 @@ class EmpleadoController {
 </table>
 </body>
 </html>
+```
+
+
+index.php
+```php
 
 <?php
 include_once __DIR__ .'/../vendor/autoload.php';
