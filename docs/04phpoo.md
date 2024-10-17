@@ -1267,10 +1267,6 @@ Cada instància `Logger` té un nom de canal i una pila de manejadores (*handler
 Cada missatge que manem al log travessa la pila de manejadores, i cadascun decideix si ha de registrar la informació, i si es dona el cas, finalitzar la propagació.
 Per exemple, un `StreamHandler` en el fons de la pila que ho escriga tot en disc, i en el topall afig un `MailHandler` que envie un mail només quan hi haja un error.
 
-### Manejadors
-
-Cada manejador tambien té un formatejador (`Formatter`). Si no s'indica cap, se li assigna un per defecte. L'últim manejador inserit serà el primer a executar-se.
-Després es van executant conforme a la pila.
 
 Els manejadores més utilitzats són:
 
