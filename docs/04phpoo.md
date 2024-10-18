@@ -1166,6 +1166,9 @@ function miFuncion(tipo $miArgumento)
 {
 }
 ```
+!!! tip "Visual Studio Code"
+    Per tal que us ajude a documentar podeu utilitzar l'extensió  PHP DocBlocker.
+
 ### Documentant el codi
 
 En tots els elements, ademas del sumari i/o descripció, posarem:
@@ -1485,7 +1488,7 @@ try {
 
 ## 10. Proves amb PHPUNIT
 
-El curs passat, dins del mòdul de Entorns de Desenvolupament*, estudiarieu la importància de la realització de proves, així com les proves unitàries mitjançant [JUnit](https://junit.org/junit5/).
+El curs passat, dins del mòdul de Entorns de Desenvolupament, estudiarieu la importància de la realització de proves, així com les proves unitàries mitjançant [JUnit](https://junit.org/junit5/).
 
 <figure style="float: right;">
     <img src="imagenes/05/tdd.png" width="300">
@@ -1498,7 +1501,7 @@ Hui dia és de gran importància seguir una bona metodologia de proves, sent el 
 2. Escriure el codi d'aplicació perquè la prova funcione (verda).
 3. refactoritzar el codi de l'aplicació amb l'ajuda de la prova per a comprovar que no trenquem res (refactor).
 
-En el cas de PHP, l'eina que s'utilitza és *PHPUnit* (<https://phpunit.de/>), que com el seu nom indica, està basada en JUnit. La versió actual és la 9.0.
+En el cas de PHP, l'eina que s'utilitza és **PHPUnit** (<https://phpunit.de/>), que com el seu nom indica, està basada en JUnit. La versió actual és la 11.
 
 ### Introducció a PHPUnit
 
@@ -1515,7 +1518,7 @@ composer require --dev phpunit/phpunit
 Aquesta comanda afegirà PHPUnit com a dependència de desenvolupament en el teu projecte.
 
 !!! tip "Llibreries de desenvolupament"
-Les llibreries que es col·loquen en `require-dev` són les de desenvolupament i *testing*, de manera que no s'instal·laran en un entorn de producció.
+    Les llibreries que es col·loquen en `require-dev` són les de desenvolupament i *testing*, de manera que no s'instal·laran en un entorn de producció.
 
 Una vegada instal·lat, podem configurar PHPUnit creant un fitxer phpunit.xml en l'arrel del projecte per especificar la configuració de les proves:
 
@@ -1523,7 +1526,7 @@ Una vegada instal·lat, podem configurar PHPUnit creant un fitxer phpunit.xml en
 <phpunit bootstrap="vendor/autoload.php">
     <testsuites>
         <testsuite name="Application Test Suite">
-            <directory>./tests</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
@@ -1533,17 +1536,56 @@ Una vegada instal·lat, podem configurar PHPUnit creant un fitxer phpunit.xml en
 Els tests en PHPUnit són classes PHP que hereten de PHPUnit\Framework\TestCase. Cada mètode dins d'aquestes classes que comence amb test serà executat com una prova.
 
 ``` php
-<?php
-
 use PHPUnit\Framework\TestCase;
+use App\Models\Empleado;
 
-class CalculadoraTest extends TestCase {
-    public function testSuma() {
-        $calculadora = new Calculadora();
-        $resultat = $calculadora->suma(2, 3);
-        $this->assertEquals(5, $resultat);
+
+class EmpleadoTest extends TestCase {
+    private $empleado;
+
+    protected function setUp(): void {
+        $this->empleado = new Empleado('John', 'Doe', 4000, 30);
+    }
+
+    public function testGetSou() {
+        $this->assertEquals(4000, $this->empleado->getSou());
+    }
+
+    public function testSetSou() {
+        $this->empleado->setSou(4500);
+        $this->assertEquals(4500, $this->empleado->getSou());
+    }
+
+    public function testGetTelefonos() {
+        $this->assertIsArray($this->empleado->getTelefonos());
+        $this->assertEmpty($this->empleado->getTelefonos());
+    }
+
+    public function testSetTelefono() {
+        $this->empleado->setTelefono('123456789');
+        $this->assertCount(1, $this->empleado->getTelefonos());
+        $this->assertEquals('123456789', $this->empleado->getTelefonos()[0]);
+    }
+
+    public function testListarTelefonos() {
+        $this->empleado->setTelefono('123456789');
+        $this->empleado->setTelefono('987654321');
+        $this->assertEquals('123456789, 987654321', $this->empleado->listarTelefonos());
+    }
+
+    public function testVaciarTelefonos() {
+        $this->empleado->setTelefono('123456789');
+        $this->empleado->vaciarTelefonos();
+        $this->assertEmpty($this->empleado->getTelefonos());
+    }
+
+    public function testDebePagarImpuestos() {
+        $this->assertTrue($this->empleado->debePagarImpuestos());
+        $this->empleado->setSou(3000);
+        $this->assertFalse($this->empleado->debePagarImpuestos());
     }
 }
+
 
 ```
 
@@ -1559,21 +1601,20 @@ Aquesta comanda cercarà els arxius de prova en el directori especificat (per de
 
 Amb PHPUnit, podem realitzar diversos tipus de proves, entre elles:
 
-    **Proves Unitàries**: Verifiquen el funcionament d'una unitat de codi individual, com una funció o mètode.
+* Proves Unitàries : Verifiquen el funcionament d'una unitat de codi individual, com una funció o mètode.
+* Proves Funcionals: Verifiquen que un conjunt de mòduls funciona correctament conjuntament. Aquestes proves poden simular interaccions de l'usuari en un sistema web, encara que això es fa millor amb frameworks especialitzats per a proves funcionals.
+* Proves d'Integració*: Comproven que diferents mòduls o serveis funcionen correctament quan es combinen.
+
 
 Exemple de prova unitària:
     
- ``` php
+ ```php
 public function testResta() {
 $calculadora = new Calculadora();
 $resultat = $calculadora->resta(5, 3);
 $this->assertEquals(2, $resultat);
 }
 ```
-
-    **Proves Funcionals**: Verifiquen que un conjunt de mòduls funciona correctament conjuntament. Aquestes proves poden simular interaccions de l'usuari en un sistema web, encara que això es fa millor amb frameworks especialitzats per a proves funcionals.
-    **Proves d'Integració**: Comproven que diferents mòduls o serveis funcionen correctament quan es combinen.
-
  
 #### Assercions
 
@@ -1631,7 +1672,7 @@ $this->assertEquals('Resultat esperat', $resultat);
 
 #### Provant excepcions
 
-Les proves a més de comprovar que les classes funcionen com s'espera, han de cobrir tots els casos possibles. Així doncs, hem de poder fer proves que esperen que es llance una excepció (i que el missatge continga una certa informació):
+Les proves a més de comprovar que les classes funcionen com s'espera, han de cobrir tots els casos possibles. Així doncs, hem de poder fer proves que esperen que es llance una exempció (i que el missatge continga una certa informació):
 
 Per a això, s'utilitzen les següent expectatives:
 
@@ -1639,7 +1680,7 @@ Per a això, s'utilitzen les següent expectatives:
 * `expectExceptionCode(codigoExcepcion)`
 * `expectExceptionMessage(missatge)`
 
-De la mateixa manera que abans, primer es posa l'expectativa, i després es provoca que es llance l'excepció:
+De la mateixa manera que abans, primer es posa l'expectativa, i després es provoca que es llance l'exempció:
 
 ``` php
 <?php
