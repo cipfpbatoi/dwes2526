@@ -1210,11 +1210,11 @@ composer require monolog/monolog
 Monolog 2 requereix almenys PHP 7.2, compleix amb el estandar de logging PSR-3, i és la llibreria emprada per *Laravel* i *Symfony* per a la gestió de logs.
 
 !!! info "Quan utilitzar un log"
-* Seguir les acciones/moviments dels usuaris
-* Registrar les transaccions
-* Rastrejar els errors d'usuari
-* Fallades/avisos a nivell de sistema
-* Interpretar i col·leccionar dades per a posterior investigació de patrons
+    * Seguir les acciones/moviments dels usuaris
+    * Registrar les transaccions
+    * Rastrejar els errors d'usuari
+    * Fallades/avisos a nivell de sistema
+    * Interpretar i col·leccionar dades per a posterior investigació de patrons
 
 ### Nivells
 
@@ -1289,8 +1289,8 @@ $log->pushHandler(new StreamHandler("php://stderr", Logger::DEBUG));
 ```
 
 !!! tip "FirePHP"
-Per exemple, mitjançant `FirePHPHandler`, podem utilitzar `FirePHP`, la qual és una eina per a fer debug en la consola de Firefox*.
-Després d'instal·lar l'extensió en Firefox, habilitar les opcions i configurar el *Handler*, podem veure els missatges acolorits amb les seues dades:
+    Per exemple, mitjançant `FirePHPHandler`, podem utilitzar `FirePHP`, la qual és una eina per a fer debug en la consola de Firefox*.
+    Després d'instal·lar l'extensió en Firefox, habilitar les opcions i configurar el **Handler**, podem veure els missatges acolorits amb les seues dades:
 
     ``` php
     <?php
@@ -1378,78 +1378,8 @@ S'associen als manejadores amb `setFormatter`. Els formateadores més utilitzats
     ```
 
 !!! tip "Més informació"
-Més informació sobre manejadores, formateadores i processadors en <https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md>
+    Més informació sobre manejadores, formateadores i processadors en <https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md>
 
-### Ús de Factories
-
-En comptes de instanciar un log en cada classe, és convenient crear una factoria (per exemple, seguint la idea del patró de disseny [*Factory Method*](https://refactoring.guru/és/design-patterns/factory-method)).
-
-Per al següent exemple, suposarem que creguem la factoria en el *namespace* `Dwes\Exemples\Util`.
-
-``` php
-<?php
-namespace Dwes\Ejemplos\Util
-
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
-class LogFactory {
-
-    public static function getLogger(string $canal = "miApp") : Logger {
-        $log = new Logger($canal);
-        $log->pushHandler(new StreamHandler("logs/miApp.log", Logger::DEBUG));
-
-        return $log;
-    }
-}
-```
-
-Si en comptes de retornar un `Monolog\Logger` utilitzem la interfície de PSR, si en el futur canviem la implementació del log, no haurem de modificar nostre codi. Així doncs, la factoria ara retornarà `Psr\Log\LoggerInterface`:
-
-``` php
-<?php
-namespace Dwes\Ejemplos\Util
-
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Psr\Log\LoggerInterface;
-
-class LogFactory {
-
-    public static function getLogger(string $canal = "miApp") : LoggerInterface {
-        $log = new Logger($canal);
-        $log->pushHandler(new StreamHandler("log/miApp.log", Logger::DEBUG));
-
-        return $log;
-    }
-}
-```
-
-Finalment, per a utilitzar la factoria, només canviem el codi que teníem en el constructor de les classes que usen el log, quedant alguna cosa asi:
-
-``` php
-<?php
-
-namespace Dwes\Ejemplos\Model;
-
-use Dwes\Ejemplos\Util\LogFactory;
-use Monolog\Logger;
-
-class Cliente {
-
-    private $codigo; 
-
-    private Logger $log;
-
-    function __construct($codigo){ 
-        $this->codigo=$codigo; 
-
-        $this->log = LogFactory::getLogger();
-    }
-
-    /// ... resto del código
-}
-```
 
 ## 9.  Generació de PDF amb DOMPDF
 
