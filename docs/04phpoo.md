@@ -1222,11 +1222,7 @@ A continuació vam mostrar els diferents nivells de menys a més restrictiu:
 
     * debug -100: Informació detallada amb propòsits de debug. No usar en entorns de producció.
     * info - 200: Esdeveniments interessants com l'inici de sessió d'usuaris.
-    * notice - 250: Esdeveniments normals però sig
-### Manejadors
-
- Si no s'indica cap, se li assigna un per defecte. L'últim manejador inserit serà el primer a executar-se.
-Després es van executant conforme a la pila.nificatius.
+    * notice - 250: Esdeveniments normals però significatius.
     * warning - 300: Ocurrències excepcionals que no arriben a ser error.
     * error - 400: Errors d'execució que permeten continuar amb l'execució de l'aplicació però que han de ser monitorats.
     * critical - 500: Situacions importants on es generen excepcions no esperades o no hi ha disponible un component.
@@ -1234,19 +1230,21 @@ Després es van executant conforme a la pila.nificatius.
       Caiguda completa de la web, base de dades no disponible, etc... A més, se solen enviar missatges per email.
     * emergency - 600: És l'error més greu i indica que tot el sistema està inutilitzable.
 
+    
 ### Hola Monolog
 
-Per exemple, en l'arxiu `pruebaLog.php` que col·locaríem en l'arrel, primer incloem el *autoload*, importem els classes a utilitzar per a finalment usar els mètodes de *Monolog*:
+Per exemple, en l'arxiu `pruebaLog.php` que col·locaríem en l'arrel, primer incloem el **autoload**, importem els classes a utilitzar per a finalment usar els mètodes de **Monolog**:
 
 ``` php
 <?php
 include __DIR__ ."/vendor/autoload.php";
 
+use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 $log = new Logger("MiLogger");
-$log->pushHandler(new StreamHandler("logs/milog.log", Logger::DEBUG));
+$log->pushHandler(new StreamHandler("logs/milog.log", Level::Debug));
 
 $log->debug("Esto es un mensaje de DEBUG");
 $log->info("Esto es un mensaje de INFO");
@@ -1267,7 +1265,7 @@ $log->warning("Producto no encontrado", ["datos" => $producto]);
 
 ### Funcionament
 
-Cada instància `Logger` té un nom de canal i una pila de manejadores (*handler*).
+Cada instància `Logger` té un nom de canal i una pila de manejadores (**handler**).
 Cada missatge que manem al log travessa la pila de manejadores, i cadascun decideix si ha de registrar la informació, i si es dona el cas, finalitzar la propagació.
 Per exemple, un `StreamHandler` en el fons de la pila que ho escriga tot en disc, i en el topall afig un `MailHandler` que envie un mail només quan hi haja un error.
 
@@ -1279,13 +1277,13 @@ Els manejadores més utilitzats són:
 * `NativeMailerHandler(para, asunto, desde, nivel)`
 * `FirePHPHandler(nivel)`
 
-Si volem que els missatges de l'aplicació isquen pel log del servidor,
-en el nostre cas l'arxiu `error.log` de Apatxe* utilitzarem com a ruta l'eixida d'error:
+Per exemple: Si volem que els missatges de l'aplicació isquen pel log del servidor,
+en el nostre cas l'arxiu `error.log` de **Apatxe** utilitzarem com a ruta l'eixida d'error:
 
 ``` php
 <?php
 // error.log
-$log->pushHandler(new StreamHandler("php://stderr", Logger::DEBUG));
+$log->pushHandler(new StreamHandler("php://stderr", Level::Debug));
 ```
 
 !!! tip "FirePHP"
@@ -1295,7 +1293,7 @@ $log->pushHandler(new StreamHandler("php://stderr", Logger::DEBUG));
     ``` php
     <?php
     $log = new Logger("MiFirePHPLogger");
-    $log->pushHandler(new FirePHPHandler(Logger::INFO));
+    $log->pushHandler(new FirePHPHandler(Level::INFO));
 
     $datos = ["real" => "Bruce Wayne", "personaje" => "Batman"];
     $log->debug("Esto es un mensaje de DEBUG", $datos);
@@ -1309,26 +1307,12 @@ $log->pushHandler(new StreamHandler("php://stderr", Logger::DEBUG));
         <figcaption>Ejemplo de uso de FirePHP</figcaption>
     </figure>
 
-### Canals
 
-Se'ls assigna en crear el `Logger`. En grans aplicacions, es crea un canal per cada subsistema: vendes, comptabilitat, magatzem.
-No és una bona pràctica usar el nom de la classe com a canal, això es fa amb un processador.
+### Manejadors
 
-Per al seu ús, és recomane assignar el log a una propietat privada a Logger, i posteriorment, en el constructor de la classe, assignar el canal, manejadors i format.
+ Si no s'indica cap, se li assigna un per defecte. L'últim manejador inserit serà el primer a executar-se.
+Després es van executant conforme a la pila.
 
-``` php
-<?php
-$this->log = new Logger("MiApp");
-$this->log->pushHandler(new StreamHandler("logs/milog.log", Logger::DEBUG));
-$this->log->pushHandler(new FirePHPHandler(Logger::DEBUG));
-```
-
-I dins dels mètodes per a escriure en el log:
-
-``` php
-<?php
-$this->log->warning("Producto no encontrado", [$producto]);
-```
 
 ### Processadors
 
@@ -1342,9 +1326,9 @@ Alguns processadors coneguts són `IntrospectionProcessor` (mostren la línia, f
     ``` php
     <?php
     $log = new Logger("MiLogger");
-    $log->pushHandler(new RotatingFileHandler("logs/milog.log", 0, Logger::DEBUG));
+    $log->pushHandler(new RotatingFileHandler("logs/milog.log", 0, Level::DEBUG));
     $log->pushProcessor(new IntrospectionProcessor());
-    $log->pushHandler(new StreamHandler("php://stderr", Logger::WARNING));
+    $log->pushHandler(new StreamHandler("php://stderr", Level::WARNING));
     // no usa Introspection pq lo hemos apilado después, le asigno otro
     $log->pushProcessor(new WebProcessor());
     ```
@@ -1365,7 +1349,7 @@ S'associen als manejadores amb `setFormatter`. Els formateadores més utilitzats
     ``` php
     <?php
     $log = new Logger("MiLogger");
-    $rfh = new RotatingFileHandler("logs/milog.log", Logger::DEBUG);
+    $rfh = new RotatingFileHandler("logs/milog.log", Level::Debug);
     $rfh->setFormatter(new JsonFormatter());
     $log->pushHandler($rfh);
     ```
