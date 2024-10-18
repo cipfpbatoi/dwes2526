@@ -721,364 +721,9 @@ Tot projecte, conforme creix, necessita organitzar el seu codi font. Es planteja
 
 No és tediós haver de fer el `include` de les classes? El autoload ve al rescat.
 
-Així doncs, permet carregar les classes (no les constants ni les funcions) que s'utilitzaran i evitar haver de fer el `include_once` de cadascuna d'elles. Per a això, s'utilitza la funció `spl_autoload_register`
+Així doncs, permet carregar les classes (no les constants ni les funcions) que s'utilitzaran i evitar haver de fer el `include_once` de cadascuna d'elles. Per a això, es pot utilitzar el composer.
 
-``` php
-<?php
-spl_autoload_register( function( $nombreClase ) {
-    include_once $nombreClase.'.php';
-} );
-?>
-```
-
-!!! question "Per què es diuen autoload?"
-    Perquè abans es realitzava mitjançant el mètode màgic `__autoload()`, el qual està *deprecated* des de PHP 7.2
-
-I com organitzem ara el nostre codi aprofitant el autoload?
-
-<figure style="float: right;">
-    <img src="imagenes/03/03autoload.png" width="600">
-    <figcaption>Organització amb autoload</figcaption>
-</figure>
-
-Per a facilitar la cerca dels recursos a incloure, és recomanable col·locar totes les classes dins d'una mateixa carpeta. Nosaltres la col·locarem dins de `app` (més endavant, quan estudiem *Laravel* veurem el motiu d'aquesta decisió). Altres carpetes que podem crear són `test` per a col·locar les proves *PhpUnit* que després realitzarem, o la carpeta `vendor` on s'emmagatzemaran les llibreries del projecte (aquesta carpeta és un estándard dins de PHP, ja que *Composer* la crea automàticament).
-
-Com hem col·locat tots els nostres recursos dins de `app`, ara nostre `autoload.php` (el qual col·loquem en la carpeta arrel) només buscarà dins d'aqueixa carpeta:
-
-``` php
-<?php
-spl_autoload_register( function( $nombreClase ) {
-    include_once "app/".$nombreClase.'.php';
-} );
-
-```
-
-!!! tip "autoload i rutes errònies"
-    En *Ubuntu* en fer el *include* de la classe que rep com a paràmetre, les barres dels namespace (`\`) són diferents a les de les rutes (`/`). Per això, és millor que utilitzem el fitxer autoload:
-    ``` php
-    <?php
-    spl_autoload_register( function( $nombreClase ) {
-        $ruta = "app\\".$nombreClase.'.php';
-        $ruta = str_replace("\\", "/", $ruta); // Sustituimos las barras
-        include_once $_SERVER['DOCUMENT_ROOT'].'/'.$ruta;
-    } );
-    
-    ```
-
-## 4. Separar la lògica de negoci dels aspectes de presentació de l'aplicació
-
-#### Lògica de Negoci
-- Regles i procediments que defineixen el funcionament de l'aplicació.
-- Inclou processament de dades, càlculs, interaccions amb la base de dades, etc.
-
-#### Aspectes de Presentació
-- Manera en què es mostra la informació a l'usuari.
-- Inclou la interfície d'usuari, disseny, navegació, etc.
-
-### Avantatges
-
-1. **Mantenibilitat**
-    - Facilita la modificació de la lògica de negoci sense afectar la presentació.
-    - Permet actualitzar la interfície d'usuari sense modificar la lògica subjacent.
-
-2. **Reutilització**
-    - La lògica de negoci pot ser reutilitzada en diferents aplicacions amb interfícies variades.
-    - Els components de presentació poden ser reutilitzats amb diferents lògiques de negoci.
-
-3. **Escalabilitat**
-    - Ajuda a escalar l'aplicació separant les preocupacions, permetent millorar una part sense impactar l'altra.
-
-4. **Prova i Depuració**
-    - Facilita les proves unitàries i la depuració en permetre provar la lògica de negoci per separat de la interfície.
-
-5. **Col·laboració**
-    - Permet que desenvolupadors de backend i frontend treballen de manera independent en les seues àrees respectives.
-
-## 5. Tecnologies i Mecanismes per a la Separació
-
-A continuació es presenten diverses tecnologies i mecanismes que faciliten la separació de la lògica de negoci i la presentació en una aplicació web:
-
-#### Frameworks PHP:
-Laravel: Framework que segueix el patró MVC (Model-View-Controller). Laravel facilita la creació de codi net i ben organitzat, separant clarament la lògica de negoci de la presentació.
-Symfony: Altres frameworks populars que també segueixen el patró MVC i ofereixen eines per a la separació de la lògica i la presentació.
-
-#### Patró MVC:
-Model-View-Controller: Patró de disseny que divideix una aplicació en tres components interconnectats:
-Model: Gestiona la lògica de negoci i les dades.
-Vista: Gestiona la presentació de la informació.
-Controlador: Gestiona la comunicació entre el Model i la Vista.
-
-#### Plantilles:
-Blade (Laravel): Motor de plantilles que permet separar el codi HTML de la lògica de negoci.
-Twig (Symfony): Motor de plantilles similar a Blade, utilitzat per separar la lògica de negoci del codi de presentació.
-
-#### API REST:
-Permet crear serveis web que exposen funcionalitats i dades a través de punts finals d'API, mantenint la lògica de negoci separada de la presentació.
-
-#### Exemple MVC
-
-```php
-// Model: Product.php
-class Product {
-    private string $name;
-    private float $price;
-    
-    public function __construct(string $name, float $price) {
-        $this->name = $name;
-        $this->price = $price;
-    }
-    
-    public function getName(): string {
-        return $this->name;
-    }
-    
-    public function getPrice(): float {
-        return $this->price;
-    }
-}
-
-// Controller: ProductController.php
-class ProductController {
-    public function showProduct() {
-        $product = new Product("Laptop", 1200.00);
-        include 'views/productView.php';
-    }
-}
-
-// View: productView.php
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Product Information</title>
-</head>
-<body>
-    <h1>Product: <?php echo htmlspecialchars($product->getName()); ?></h1>
-    <p>Price: $<?php echo htmlspecialchars($product->getPrice()); ?></p>
-</body>
-</html>
-```
-La separació de la lògica de negoci dels aspectes de presentació és crucial per al desenvolupament d'aplicacions web eficients, mantenibles i escalables.
-
-
-## 6. Gestió d'Errors
-
-PHP classifica els errors que ocorren en diferents nivells. Cada nivell s'identifica amb una constant. Per exemple:
-
-* `E_ERROR`: errors fatals, no recuperables. S'interromp el script.
-* `E_WARNING`: advertiments en temps d'execució. El script no s'interromp.
-* `E_NOTICE`: avisos en temps d'execució.
-
-Podeu comprovar el llistat complet de constants de <https://www.php.net/manual/es/errorfunc.constants.php>
-
-Per a la configuració dels errors podem fer-ho de dues formes:
-
-* A nivell de `php.ini`:
-  * `error_reporting`: indica els nivells d'errors a notificar
-    * `error_reporting = E_ALL & ~E_NOTICE` -> Tots els errors menys els avisos en temps d'execució.
-  * `display_errors`: indica si mostrar o no els errors per pantalla. En entorns de producció és comuna posar-ho a `off`
-  * mitjançant codi amb les següents funcions:
-    * `error_reporting(codigo)` -> Controla quins errors notificar
-    * `set_error_handler(nombreManejador)` -> Indica que funció s'invocarà cada vegada que es trobe un error. El manejador rep com a paràmetres el nivell de l'error i el missatge
-
-A continuació tenim un exemple mitjançant codi:
-
-=== "Funcions per a la gestió d'errors"
-
-    ``` php
-    <?php
-    error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-    $resultado = $dividendo / $divisor;
-
-    error_reporting(E_ALL & ~E_NOTICE);
-    set_error_handler("miManejadorErrores");
-    $resultado = $dividendo / $divisor;
-    restore_error_handler(); // vuelve al anterior
-
-    function miManejadorErrores($nivel, $mensaje) {
-        switch($nivel) {
-            case E_WARNING:
-                echo "<strong>Warning</strong>: $mensaje.<br/>";
-                break;
-            default:
-                echo "Error de tipo no especificado: $mensaje.<br/>";
-        }
-    }
-    ```
-
-=== "Consola"
-
-    ```
-    Error de tipo no especificado: Undefined variable: dividendo.
-    Error de tipo no especificado: Undefined variable: divisor.
-    Error de tipo Warning: Division by zero.
-    ```
-
-### Exempcions
-
-La gestió d'excepcions forma part des de PHP 5. El seu funcionament és similar a Java*, fent ús d'un bloc `try / catch / finally`.
-Si detectem una situació anòmala i volem llançar una excepció, haurem de realitzar `throw new Exception` (adjuntant el missatge que l'ha provocat).
-
-``` php
-<?php
-try {
-    if ($divisor == 0) {
-        throw new Exception("División por cero.");
-    }
-    $resultado = $dividendo / $divisor;
-} catch (Exception $e) {
-    echo "Se ha producido el siguiente error: ".$e->getMessage();
-}
-```
-
-La classe `Exception` és la classe pare de totes les excepcions. El seu constructor rep `missatge[,codigoError][,excepcionPrevia]`.
-
-A partir d'un objecte `Exception`, podem accedir als mètodes `getMessage()`i `getCode()` per a obtindre el missatge i el codi d'error de l'excepció capturada.
-
-El propi llenguatge ofereix un conjunt d'excepcions ja definides, les quals podem capturar (i llançar des de PHP 7). Es recomana la seua consulta en la [documentació oficial](https://www.php.net/manual/es/class.exception.php).
-
-#### Creant exempcions
-
-Per a crear una excepció, la forma més curta és crear una classe que únicament herete de `Exception`.
-
-``` php
-<?php
-class HolaExcepcion extends Exception {}
-```
-
-Si volem, i és recomanable depenent dels requisits, podem sobrecarregar els mètodes màgics, per exemple, sobrecarregant el constructor i cridant al constructor del pare, o reescriure el mètode `__toString` per a canviar el seu missatge:
-
-``` php
-<?php
-class MiExcepcion extends Exception {
-    public function __construct($msj, $codigo = 0, Exception $previa = null) {
-        // código propio
-        parent::__construct($msj, $codigo, $previa);
-    }
-    public function __toString() {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
-    }
-    public function miFuncion() {
-        echo "Una función personalizada para este tipo de excepción\n";
-    }
-}
-```
-
-Si definim una excepció d'aplicació dins d'un *namespace*, quan referenciem a `Exception`, haurem de referenciar-la mitjançant el seu nom totalment qualificat (`\Exception`), o utilitzant `use`:
-
-=== "Mitjançant nom totalment qualificat"
-    ``` php
-    <?php
-    namespace \Dwes\Ejemplos;
-
-    class AppExcepcion extends \Exception {}
-    ```
-=== "Mitjançant `use`"
-    ``` php
-    <?php
-    namespace \Dwes\Ejemplos;
-
-    use Exception;
-
-    class AppExcepcion extends Exception {}
-    ```
-
-##### Exempcions múltiples
-
-Es poden usar excepcions múltiples per a comprovar diferents condicions. A l'hora de capturar-les, es fa de més específica a més general.
-
-``` php
-<?php
-$email = "ejemplo@ejemplo.com";
-try {
-    // Comprueba si el email es válido
-    if(filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE) {
-        throw new MiExcepcion($email);
-    }
-    // Comprueba la palabra ejemplo en la dirección email
-    if(strpos($email, "ejemplo") !== FALSE) {
-        throw new Exception("$email es un email de ejemplo no válido");
-    }
-} catch (MiExcepcion $e) {
-    echo $e->miFuncion();
-} catch(Exception $e) {
-    echo $e->getMessage();
-}
-```
-
-!!! question "Autoevaluación"
-    ¿Qué pasaría al ejectuar el siguiente código?
-    ``` php
-    <?php
-    class MainException extends Exception {}
-    class SubException extends MainException {}
-
-    try {
-        throw new SubException("Lanzada SubException");
-    } catch (MainException $e) {
-        echo "Capturada MainException " . $e->getMessage();
-    } catch (SubException $e) {
-        echo "Capturada SubException " . $e->getMessage();
-    } catch (Exception $e) {
-        echo "Capturada Exception " . $e->getMessage();
-    }
-    ```
-
-Si en el mateix `catch` volem capturar diverses excepcions, hem d'utilitzar l'operador `|`:
-
-``` php
-<?php
-class MainException extends Exception {}
-class SubException extends MainException {}
-
-try {
-    throw new SubException("Lanzada SubException");
-} catch (MainException | SubException $e ) {
-    echo "Capturada Exception " . $e->getMessage();
-}
-```
-
-Des de PHP 7, existeix el tipus `Throwable`, el qual és una interfície que implementen tant els errors com les excepcions, i ens permet capturar els dos tipus alhora:
-
-``` php
-<?php
-try {
-    // tu codigo
-} catch (Throwable $e) {
-    echo 'Forma de capturar errores y excepciones a la vez';
-}
-```
-
-Si només volem capturar els errors fatals, podem fer ús de la classe `Error`:
-
-``` php
-<?php
-try {
-    // Genera una notificación que no se captura
-    echo $variableNoAsignada;
-    // Error fatal que se captura
-    funcionQueNoExiste();
-} catch (Error $e) {
-    echo "Error capturado: " . $e->getMessage();
-}
-```
-
-#### Rellançar exempcions
-
-En les aplicacions reals, és molt comuna capturar una excepció de sistema i llançar una d'aplicació que hem definit nostros.
-També podem llançar les excepcions sense necessitat d'estar dins d'un `try/catch`.
-
-``` php
-<?php
-class AppException extends Exception {}
-
-try {
-    // Código de negocio que falla
-} catch (Exception $e) {
-    throw new AppException("AppException: ".$e->getMessage(), $e->getCode(), $e);
-}
-```
-
-## 7. Composer
+## 4. Composer
 
 <figure style="float: right;">
     <img src="imagenes/05/logo-composer.png" width="200">
@@ -1197,7 +842,9 @@ Posteriorment, hem de tornar a generar el *autoload* de *Composer* mitjançant l
 ``` bash
 composer dump-autoload
 ```
-## 8. Logger amb Monolog
+
+
+## 5. Logger amb Monolog
 
 Provarem *Composer* afegint la llibreria de [*Monolog*](https://github.com/seldaek/monolog) al nostre projecte. Es tracta d'un llibreria per a la gestió de logs de les nostres aplicacions, suportant diferents nivells (info, warning, etc...), eixides (fitxers, sockets, BBDD, Web Services, email, etc) i formats (text pla, HTML, JSON, etc...).
 
@@ -1365,7 +1012,7 @@ S'associen als manejadores amb `setFormatter`. Els formateadores més utilitzats
     Més informació sobre manejadores, formateadores i processadors en <https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md>
 
 
-## 9.  Generació de PDF amb DOMPDF
+## 6.  Generació de PDF amb DOMPDF
 
 
 Amb PHP podem manejar tot tipus d'arxius com ja hem vist però, què passa si volem generar fitxers PDF amb dades tretes d'una base de dades?
@@ -1455,11 +1102,11 @@ Si necessitem incloure imatges, cal assegurar-se que les rutes són absolutes i 
 Aquesta és una guia bàsica per començar amb DOMPDF. Per a casos d'ús més avançats i opcions de configuració, cal consultar la documentació oficial de DOMPDF.
 
 
-## 10. Documentación con *phpDocumentor*
+## 7. Documentación con **phpDocumentor**
 
 
 
-[phpDocumentor](https://www.phpdoc.org/) és l'eina per a documentar el codi PHP. És similar en propòsit i funcionament a *Javadoc*.
+[phpDocumentor](https://www.phpdoc.org/) és l'eina per a documentar el codi PHP. És similar en propòsit i funcionament a **Javadoc**.
 
 Així doncs, és un eina que facilita la documentació del codi PHP, creant un lloc web amb l'API de l'aplicació.
 
@@ -1483,14 +1130,15 @@ Ací hi ha un exemple de com fer-ho:
 En el cas d'usar *Docker*, usarem el següent comando per a executar-lo (crea el contenidor, executa el comando que li demanem, i automàticament l'esborra):
 
 ``` bash
-docker run --rm -v $(pwd):/data phpdoc/phpdoc:latest run -d /data/src -t /data/docs
+docker run --rm -v $(pwd):/data phpdoc/phpdoc:latest run -d /data/src -t /data/src/docs
+
 ```
 Aquesta comanda fa el següent:
 
---rm: Això elimina el contenidor després d'executar-lo, així no es queden contenidors inactius.
--v $(pwd):/data: Munta el directori actual del teu sistema ($(pwd)) al directori /data dins del contenidor. Hauràs de reemplaçar $(pwd) amb el camí on està el teu codi font si no estàs executant aquesta comanda des del directori del teu projecte.
--d /data/src: Especifica el directori dins del contenidor on es troba el teu codi font. Reemplaça /data/src amb el camí corresponent dins del contenidor si és diferent.
--t /data/docs: Especifica on vols que es generi la documentació dins del contenidor. En aquest cas, es generarà dins de /data/docs.
+        * -rm: Això elimina el contenidor després d'executar-lo, així no es queden contenidors inactius.
+        * -v $(pwd):/data: Munta el directori actual del teu sistema ($(pwd)) al directori /data dins del contenidor. Hauràs de reemplaçar $(pwd) amb el camí on està el teu codi font si no estàs executant aquesta comanda des del directori del teu projecte.
+        * -d /data/src: Especifica el directori dins del contenidor on es troba el teu codi font. Reemplaça /data/src amb el camí corresponent dins del contenidor si és diferent.
+        * -t /data/src/docs: Especifica on vols que es generi la documentació dins del contenidor. En aquest cas, es generarà dins de /data/docs.
 
 ##### Pas 3: Accés a la Documentació Generada
 Una vegada generada, la documentació estarà dins del directori que especificat (en aquest cas, `docs` dins del directori docs de projecte). Pots obrir els fitxers HTML amb qualsevol navegador per veure la documentació.
@@ -1574,9 +1222,268 @@ Si generem la documentació i obrim amb un navegador l'arxiu `docs/api/index.htm
     <figcaption>phpDocumentor de Cliente</figcaption>
 </figure>
 
+## 8. Separar la lògica de negoci dels aspectes de presentació de l'aplicació
+
+#### Lògica de Negoci
+- Regles i procediments que defineixen el funcionament de l'aplicació.
+- Inclou processament de dades, càlculs, interaccions amb la base de dades, etc.
+
+#### Aspectes de Presentació
+- Manera en què es mostra la informació a l'usuari.
+- Inclou la interfície d'usuari, disseny, navegació, etc.
+
+### Avantatges
+
+1. **Mantenibilitat**
+    - Facilita la modificació de la lògica de negoci sense afectar la presentació.
+    - Permet actualitzar la interfície d'usuari sense modificar la lògica subjacent.
+
+2. **Reutilització**
+    - La lògica de negoci pot ser reutilitzada en diferents aplicacions amb interfícies variades.
+    - Els components de presentació poden ser reutilitzats amb diferents lògiques de negoci.
+
+3. **Escalabilitat**
+    - Ajuda a escalar l'aplicació separant les preocupacions, permetent millorar una part sense impactar l'altra.
+
+4. **Prova i Depuració**
+    - Facilita les proves unitàries i la depuració en permetre provar la lògica de negoci per separat de la interfície.
+
+5. **Col·laboració**
+    - Permet que desenvolupadors de backend i frontend treballen de manera independent en les seues àrees respectives.
+
+### Tecnologies i Mecanismes per a la Separació
+
+A continuació es presenten diverses tecnologies i mecanismes que faciliten la separació de la lògica de negoci i la presentació en una aplicació web:
+
+#### Frameworks PHP:
+Laravel: Framework que segueix el patró MVC (Model-View-Controller). Laravel facilita la creació de codi net i ben organitzat, separant clarament la lògica de negoci de la presentació.
+Symfony: Altres frameworks populars que també segueixen el patró MVC i ofereixen eines per a la separació de la lògica i la presentació.
+
+#### Patró MVC:
+Model-View-Controller: Patró de disseny que divideix una aplicació en tres components interconnectats:
+Model: Gestiona la lògica de negoci i les dades.
+Vista: Gestiona la presentació de la informació.
+Controlador: Gestiona la comunicació entre el Model i la Vista.
+
+#### Plantilles:
+Blade (Laravel): Motor de plantilles que permet separar el codi HTML de la lògica de negoci.
+Twig (Symfony): Motor de plantilles similar a Blade, utilitzat per separar la lògica de negoci del codi de presentació.
+
+#### API REST:
+Permet crear serveis web que exposen funcionalitats i dades a través de punts finals d'API, mantenint la lògica de negoci separada de la presentació.
+
+### Exemple MVC
+
+```php
+// Model: Product.php
+class Product {
+    private string $name;
+    private float $price;
+    
+    public function __construct(string $name, float $price) {
+        $this->name = $name;
+        $this->price = $price;
+    }
+    
+    public function getName(): string {
+        return $this->name;
+    }
+    
+    public function getPrice(): float {
+        return $this->price;
+    }
+}
+
+// Controller: ProductController.php
+class ProductController {
+    public function showProduct() {
+        $product = new Product("Laptop", 1200.00);
+        include 'views/productView.php';
+    }
+}
+
+// View: productView.php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Information</title>
+</head>
+<body>
+    <h1>Product: <?php echo htmlspecialchars($product->getName()); ?></h1>
+    <p>Price: $<?php echo htmlspecialchars($product->getPrice()); ?></p>
+</body>
+</html>
+```
+La separació de la lògica de negoci dels aspectes de presentació és crucial per al desenvolupament d'aplicacions web eficients, mantenibles i escalables.
 
 
-## 11. Proves amb PHPUNIT
+## 9. Gestió d'Exempcions
+
+
+La gestió d'excepcions forma part des de PHP 5. El seu funcionament és similar a Java*, fent ús d'un bloc `try / catch / finally`.
+Si detectem una situació anòmala i volem llançar una excepció, haurem de realitzar `throw new Exception` (adjuntant el missatge que l'ha provocat).
+
+``` php
+<?php
+try {
+    if ($divisor == 0) {
+        throw new Exception("División por cero.");
+    }
+    $resultado = $dividendo / $divisor;
+} catch (Exception $e) {
+    echo "Se ha producido el siguiente error: ".$e->getMessage();
+}
+```
+
+La classe `Exception` és la classe pare de totes les excepcions. El seu constructor rep `missatge[,codigoError][,excepcionPrevia]`.
+
+A partir d'un objecte `Exception`, podem accedir als mètodes `getMessage()`i `getCode()` per a obtindre el missatge i el codi d'error de l'excepció capturada.
+
+El propi llenguatge ofereix un conjunt d'excepcions ja definides, les quals podem capturar (i llançar des de PHP 7). Es recomana la seua consulta en la [documentació oficial](https://www.php.net/manual/es/class.exception.php).
+
+#### Creant exempcions
+
+Per a crear una excepció, la forma més curta és crear una classe que únicament herete de `Exception`.
+
+``` php
+<?php
+class HolaExcepcion extends Exception {}
+```
+
+Si volem, i és recomanable depenent dels requisits, podem sobrecarregar els mètodes màgics, per exemple, sobrecarregant el constructor i cridant al constructor del pare, o reescriure el mètode `__toString` per a canviar el seu missatge:
+
+``` php
+<?php
+class MiExcepcion extends Exception {
+    public function __construct($msj, $codigo = 0, Exception $previa = null) {
+        // código propio
+        parent::__construct($msj, $codigo, $previa);
+    }
+    public function __toString() {
+        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+    }
+    public function miFuncion() {
+        echo "Una función personalizada para este tipo de excepción\n";
+    }
+}
+```
+
+Si definim una excepció d'aplicació dins d'un *namespace*, quan referenciem a `Exception`, haurem de referenciar-la mitjançant el seu nom totalment qualificat (`\Exception`), o utilitzant `use`:
+
+=== "Mitjançant nom totalment qualificat"
+    ``` php
+    <?php
+    namespace \Dwes\Ejemplos;
+
+    class AppExcepcion extends \Exception {}
+    ```
+=== "Mitjançant `use`"
+    ``` php
+    <?php
+    namespace \Dwes\Ejemplos;
+
+    use Exception;
+
+    class AppExcepcion extends Exception {}
+    ```
+
+##### Exempcions múltiples
+
+Es poden usar excepcions múltiples per a comprovar diferents condicions. A l'hora de capturar-les, es fa de més específica a més general.
+
+``` php
+<?php
+$email = "ejemplo@ejemplo.com";
+try {
+    // Comprueba si el email es válido
+    if(filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE) {
+        throw new MiExcepcion($email);
+    }
+    // Comprueba la palabra ejemplo en la dirección email
+    if(strpos($email, "ejemplo") !== FALSE) {
+        throw new Exception("$email es un email de ejemplo no válido");
+    }
+} catch (MiExcepcion $e) {
+    echo $e->miFuncion();
+} catch(Exception $e) {
+    echo $e->getMessage();
+}
+```
+
+!!! question "Autoevaluación"
+    ¿Qué pasaría al ejectuar el siguiente código?
+    ``` php
+    <?php
+    class MainException extends Exception {}
+    class SubException extends MainException {}
+
+    try {
+        throw new SubException("Lanzada SubException");
+    } catch (MainException $e) {
+        echo "Capturada MainException " . $e->getMessage();
+    } catch (SubException $e) {
+        echo "Capturada SubException " . $e->getMessage();
+    } catch (Exception $e) {
+        echo "Capturada Exception " . $e->getMessage();
+    }
+    ```
+
+Si en el mateix `catch` volem capturar diverses excepcions, hem d'utilitzar l'operador `|`:
+
+``` php
+<?php
+class MainException extends Exception {}
+class SubException extends MainException {}
+
+try {
+    throw new SubException("Lanzada SubException");
+} catch (MainException | SubException $e ) {
+    echo "Capturada Exception " . $e->getMessage();
+}
+```
+
+Des de PHP 7, existeix el tipus `Throwable`, el qual és una interfície que implementen tant els errors com les excepcions, i ens permet capturar els dos tipus alhora:
+
+``` php
+<?php
+try {
+    // tu codigo
+} catch (Throwable $e) {
+    echo 'Forma de capturar errores y excepciones a la vez';
+}
+```
+
+Si només volem capturar els errors fatals, podem fer ús de la classe `Error`:
+
+``` php
+<?php
+try {
+    // Genera una notificación que no se captura
+    echo $variableNoAsignada;
+    // Error fatal que se captura
+    funcionQueNoExiste();
+} catch (Error $e) {
+    echo "Error capturado: " . $e->getMessage();
+}
+```
+
+#### Rellançar exempcions
+
+En les aplicacions reals, és molt comuna capturar una excepció de sistema i llançar una d'aplicació que hem definit nostros.
+També podem llançar les excepcions sense necessitat d'estar dins d'un `try/catch`.
+
+``` php
+<?php
+class AppException extends Exception {}
+
+try {
+    // Código de negocio que falla
+} catch (Exception $e) {
+    throw new AppException("AppException: ".$e->getMessage(), $e->getCode(), $e);
+}
+```
+
+## 10. Proves amb PHPUNIT
 
 El curs passat, dins del mòdul de Entorns de Desenvolupament*, estudiarieu la importància de la realització de proves, així com les proves unitàries mitjançant [JUnit](https://junit.org/junit5/).
 
