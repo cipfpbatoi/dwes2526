@@ -2740,11 +2740,18 @@ Després de refactoritzar l'aplicació per separar la lògica del negoci de la p
 
 - Dins de php crear les carpetes App,Views i Helpers.
 - Dins de la carpeta App crea les carpetes Models, Controllers i Services. 
-- Configuració de Composer: Defineix un `composer.json` per al projecte, configurant l'autoloading PSR-4 per carregar automàticament les classes de `Joc4enRatlla`.
-- Fes que el namespace de les classes siga `Joc4enRatlla\Models` i `Joc4enRatlla\Controllers`.
-- Dins de la carpeta src tindrem el index.php i el css.
+ - Dins de la carpeta src tindrem el index.php i el css.
 
-#### 2. Refactorització amb Programació Orientada a Objectes (POO) i amb MVC 
+
+
+#### 2. Integració de Composer i Autoloading
+- **Configuració de Composer**: Defineix un `composer.json` per al projecte, configurant l'autoloading PSR-4 per carregar automàticament les classes de `Joc4enRatlla`.
+- **Estructura del Projecte**:
+    - Organitza el codi en directoris com `App/Models` per a les classes del joc i `App/Controllers` per a la gestió del flux del joc.
+    - Configura Composer per gestionar les dependències del projecte.
+
+
+#### 3. Refactorització amb Programació Orientada a Objectes (POO) i amb MVC 
 
 ##### Models
 
@@ -3012,22 +3019,16 @@ use Joc4enRatlla\Controllers\GameController;
 $gameController = new GameController($_POST??null);
     
 ``` 
-   
  
-#### 2. Integració de Composer i Autoloading
-- **Configuració de Composer**: Defineix un `composer.json` per al projecte, configurant l'autoloading PSR-4 per carregar automàticament les classes de `Joc4enRatlla`.
-- **Estructura del Projecte**:
-    - Organitza el codi en directoris com `App/Models` per a les classes del joc i `App/Controllers` per a la gestió del flux del joc.
-    - Configura Composer per gestionar les dependències del projecte.
 
-#### 3. Proves amb PHPUnit
+#### 4. Proves amb PHPUnit
 - **Escriu Proves Unitàries**: Crea proves unitàries per a la classe `Joc4enRatlla` utilitzant PHPUnit. Les proves poden incloure:
     - Verificació de la configuració inicial de la graella.
     - Proves per assegurar que un moviment s'aplica correctament a la graella.
     - Proves per assegurar que el joc detecta correctament un guanyador o un empat.
 - **Proves de Gestió de Sessions**: Afig proves per assegurar que l'estat del joc i el torn del jugador es mantenen correctament a través de les sessions.
 
-#### 4. Logger amb Monolog
+#### 5. Logger amb Monolog
 - **Configuració de Logger**: Utilitza `Monolog` per registrar esdeveniments importants del joc, com quan un jugador fa un moviment, quan s'inicia una nova partida, o quan es produeixen errors.
 - **Diversos Handlers**:
     - Registra els moviments dels jugadors i els resultats del joc en un fitxer `game.log`.
