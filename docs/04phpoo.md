@@ -2739,7 +2739,7 @@ Després de refactoritzar l'aplicació per separar la lògica del negoci de la p
 #### 1. Crear l'entorn del 4 en ratlla
 
 - Dins de php crear les carpetes App,Views i Helpers.
-- Dins de la carpeta App crea les carpetes Models, Controllers i Services. 
+- Dins de la carpeta App crea les carpetes Models, Controllers , Services i Exceptions. 
  - Dins de la carpeta src tindrem el index.php i el css.
 
 
@@ -2809,7 +2809,7 @@ class Player {
 
 ```
  
-  - **Classe `Joc4enRatlla`**: Refactoritza la lògica del joc en una classe `Joc4enRatlla` que gestione la graella, el torn del jugador, i la lògica per determinar el guanyador, la puntuació.
+  - **Classe `Game`**: Refactoritza la lògica del joc en una classe `Game` que gestione la graella, el torn del jugador, i la lògica per determinar el guanyador, la puntuació.
    
 ```php
 
@@ -2829,14 +2829,7 @@ class Game
     public function __construct( Player $jugador1, Player $jugador2)
      
     // getters i setters
-    
- 
-    public function getPlayer( ): Player //Obté el jugador actual
-    {
-        return $this->players[$this->nextPlayer];
-    }
-
-      
+       
     public function reset(): void //Reinicia el joc
     public function play($columna)  //Realitza un moviment
     public function playAutomatic(){
@@ -2995,14 +2988,16 @@ i la funció `loadView` en un fitxer de funcions
     </style>
 </head>
 <body>
-
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+<?php include_once $_SERVER['DOCUMENT_ROOT'].'/../Views/partials/error.view.php'  ?>
+ <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <?php include_once $_SERVER['DOCUMENT_ROOT'].'/../Views/partials/board.view.php'  ?>
      <input type="submit" name="reset" value="Reiniciar joc">
+     <input type="submit" name="exit" value="Acabar joc">
 </form>
-<?php include_once $_SERVER['DOCUMENT_ROOT'].'/../Views/partials/panel.view.php'  ?>
+ <?php include_once $_SERVER['DOCUMENT_ROOT'].'/../Views/partials/panel.view.php'  ?>
 </body>
 </html>
+
 ```
 
 ##### SPA
@@ -3020,7 +3015,6 @@ $gameController = new GameController($_POST??null);
     
 ``` 
  
-
 #### 4. Proves amb PHPUnit
 - **Escriu Proves Unitàries**: Crea proves unitàries per a la classe `Joc4enRatlla` utilitzant PHPUnit. Les proves poden incloure:
     - Verificació de la configuració inicial de la graella.
@@ -3046,15 +3040,23 @@ $gameController = new GameController($_POST??null);
 #### 3. Serialització i Persistència
 - **Serialització de l'Estat del Joc**: Implementa funcionalitats per serialitzar l'estat del joc (usant JSON o `serialize()`) i deserialitzar-lo per mantenir la persistència entre sessions o guardar l'estat per a reprendre la partida posteriorment.
 
+#### 4. Exempcions
+- **Gestió d'Excepcions**: Utilitza excepcions per gestionar el que un jugador jugue una columna que ja estiga plena. Afig el missatge  d'error al jocs.
+   
+#### 5. Fes que el jugador puga triar nom i color
+
+- **Triar Nom i Color**: Permet als jugadors triar el seu nom i el color de les fitxes al començar una partida. Aquesta informació ha de ser guardada en les sessions i mostrada en la vista del joc.
 
 | **Criteri**                                                 | ** Insuficient (1 punt)**                                                                                   | ** Adequat (2 punts)**                                                                                                                          | ** Bé (3 punts)**                                                                                                      | ** Excel·lent (4 punts)**                                                                                                 |
 |-------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| **Funcionalitat del programa **                             | No es funcional.                                                                                            | Es funcional però falten funcionalitats.                                                                                                        | Es funcional però falten detalls.                                                                                      | Totalment funcional.                                                                                                      | 
 | **Implementació de Programació Orientada a Objectes (POO)** | Les classes no estan ben dissenyades, falta encapsulació, ús incorrecte d'herència, o mètodes no funcional. | Les classes estan creades però poden tindre errors o una estructura confusa. S'aplica la POO de manera bàsica, però hi ha problemes de disseny. | Classes correctament estructurades i funcionalment completes. Ús adequat d'encapsulació, herència i polimorfisme.      | Disseny de classes ben organitzat, reutilitzable i amb una implementació clara dels principis de POO.                     |
-| **Separació del Model de Negoci de la Presentació (MVC)**      | No s'ha implementat la separació de model i presentació; el codi de lògica i presentació està mesclat.      | Hi ha una separació parcial, però algunes parts de la lògica del negoci es barregen amb la presentació o a l'inrevés.                           | La separació entre model, vista i controlador està ben implementada, però podria millorar en alguns aspectes.          | Excel·lent separació entre el model, vista i controlador, seguint els principis del patró MVC i mantenint un codi net.   |
+| **Separació del Model de Negoci de la Presentació (MVC)**   | No s'ha implementat la separació de model i presentació; el codi de lògica i presentació està mesclat.      | Hi ha una separació parcial, però algunes parts de la lògica del negoci es barregen amb la presentació o a l'inrevés.                           | La separació entre model, vista i controlador està ben implementada, però podria millorar en alguns aspectes.          | Excel·lent separació entre el model, vista i controlador, seguint els principis del patró MVC i mantenint un codi net.    |
 | **Integració de Composer i Autoloading**                    | No s'ha configurat Composer o l'autoloading, o està mal configurat i no funciona correctament.              | Composer s'ha utilitzat, però amb una estructura de projectes i autoloading bàsics o incorrectes.                                               | Composer i l'autoloading estan configurats correctament amb una estructura de projectes ben definida.                  | Ús excel·lent de Composer amb una configuració avançada d'autoloading i una estructura de projecte organitzada i modular. |
 | **Implementació de Proves amb PHPUnit**                     | No s'han creat proves, o les proves creades són mínimes i no adequades per a verificar la funcionalitat.    | Es presenten proves bàsiques amb PHPUnit, però cobreixen parcialment les funcionalitats requerides.                                             | Proves unitàries completes que cobreixen la majoria dels casos, incloent proves de gestió de sessions i lògica de joc. | Proves exhaustives que cobreixen totes les funcionalitats i consideren casos límit, amb ús de mocks quan necessari.       |
 | **Ús de Logger amb Monolog**                                | No s'ha implementat el logger o no s'utilitza de manera efectiva per registrar esdeveniments importants.    | Logger implementat, però amb ús limitat o incorrecte en la registració d'esdeveniments i errors.                                                | Logger ben implementat, amb esdeveniments i errors registrats adequadament en diferents fitxers o canals.              | Ús avançat de logger amb diferents handlers per registrar informació, errors, i seguiment detallat del flux del joc.      |
 | **Documentació amb PHPDoc**                                 | Falta documentació o és insuficient per comprendre les classes i mètodes del projecte.                      | Documentació bàsica amb PHPDoc, però amb omisions o descripcions poc clares.                                                                    | Documentació completa amb PHPDoc per a totes les classes i mètodes, amb descripcions clares i detallades.              | Documentació excel·lent amb PHPDoc, ben estructurada i completa, facilitant la comprensió i manteniment del projecte.     |
+| **Exempcions**                                              | No hi ha.                                                                                                   | Si hi ha però no es mostra missatge d'error.                                                                                                    | Es tracta perfectament i hi ha missatge d'error .                                                                      |                                                                                                                           |
 | **Qualitat del Codi i Bones Pràctiques**                    | Codi desorganitzat, amb molts errors de sintaxi, mala nomenclatura, o sense bones pràctiques de codi.       | Codi funcional però amb problemes d'estructura, estil inconsistent o incompliment parcial de bones pràctiques.                                  | Codi ben escrit, seguint les convencions de nomenclatura i bones pràctiques de desenvolupament.                        | Codi de qualitat professional, net, ben organitzat, i seguint rigorosament les millors pràctiques de programació.         |
 
 ### Explicació dels Criteris
