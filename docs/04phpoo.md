@@ -2736,33 +2736,288 @@ Després de refactoritzar l'aplicació per separar la lògica del negoci de la p
    
 ### Projecte "4 en Ratlla"
 
-#### 1. Refactorització amb Programació Orientada a Objectes (POO)
-- **Classe  `Jugador`**: Crea una classe `Jugador` per representar els jugadors del joc, amb propietats com el nom, el color de les fitxes, forma de jugar (automàtica/manual).
+#### 1. Crear l'entorn del 4 en ratlla
 
-- **Classe `Joc4enRatlla`**: Refactoritza la lògica del joc en una classe `Joc4enRatlla` que gestione la graella, el torn del jugador, i la lògica per determinar el guanyador, la puntuació.
-- **Mètodes Principals**:
-    - `iniciarPartida(): void` – Inicia una nova partida.
-    - `ferMoviment($columna): bool` – Permet que un jugador faça un moviment en una columna determinada.
-    - `comprovaGuanyador(): ?int` – Comprova si hi ha un guanyador després d'un moviment.
-    - `obteEstatGraella(): array` – Retorna l'estat actual de la graella.
-    - `obteTornJugador(): string` – Retorna el nom del jugador actual.
-    - `finalitzaPartida(): void` – Finalitza la partida i actualitza la puntuació dels jugadors.
-    - `reiniciaPartida(): void` – Reinicia la partida actual sense reiniciar la puntuació.
-    - `obtePuntuacio(): array` – Retorna la puntuació actual dels jugadors.
-    - `obteGuanyador(): ?string` – Retorna el nom del guanyador de la partida actual.
+- Dins de php crear les carpetes App,Views i Helpers.
+- Dins de la carpeta App crea les carpetes Models, Controllers , Services i Exceptions. 
+ - Dins de la carpeta src tindrem el index.php i el css.
 
-#### 2. Separació del Model de Negoci de la Presentació
-- **Model-Vista-Controlador (MVC)**:
-    - **Model**: La classe Joc4enRatlla representa el model, que s'encarrega de tota la lògica del joc, incloent la gestió de la graella i la determinació del guanyador.
-    - **Vista**: Les vistes presenten la graella del joc, el torn actual del jugador, i els resultats finals (guanyador o empat). Aquestes vistes han d'estar separades del model i només han de mostrar la informació proporcionada pel controlador.
-    - **Controlador**: El controlador gestiona les interaccions de l'usuari, com els moviments en la graella. Aquest component comunica el model amb les vistes, assegurant-se que els canvis en l'estat del joc es reflectisquen correctament en la presentació.
 
-#### 3. Integració de Composer i Autoloading
+
+#### 2. Integració de Composer i Autoloading
 - **Configuració de Composer**: Defineix un `composer.json` per al projecte, configurant l'autoloading PSR-4 per carregar automàticament les classes de `Joc4enRatlla`.
 - **Estructura del Projecte**:
-    - Organitza el codi en directoris com `src/Models` per a les classes del joc i `src/Controllers` per a la gestió del flux del joc.
+    - Organitza el codi en directoris com `App/Models` per a les classes del joc i `App/Controllers` per a la gestió del flux del joc.
     - Configura Composer per gestionar les dependències del projecte.
 
+
+#### 3. Refactorització amb Programació Orientada a Objectes (POO) i amb MVC 
+
+##### Models
+
+- Dins de la carpeta Models:
+ 
+  - **Classe `Board`**: Crea una classe `Board` per representar la graella del joc. Aquesta classe ha de gestionar la configuració inicial de la graella, els moviments dels jugadors, i la comprovació de si hi ha un guanyador.
+
+```php
+  
+namespace Joc4enRatlla\Models;
+ 
+class Board
+{
+    public const FILES = 6;
+    public const COLUMNS = 7;
+    public const DIRECTIONS = [
+        [0, 1],   // Horizontal derecha
+        [1, 0],   // Vertical abajo
+        [1, 1],   // Diagonal abajo-derecha
+        [1, -1]   // Diagonal abajo-izquierda
+    ];
+
+    private array $slots;
+
+    public function __construct()
+    
+    // Getters i Setters 
+    
+    private static function initializeBoard(): array //Inicialitza la graella amb valors buits
+    public function setMovementOnBoard(int $column, int $player): array //Realitza un moviment en la graella
+    public function checkWin(array $coord): bool //Comprova si hi ha un guanyador
+    public function isValidMove(int $column): bool //Comprova si el moviment és vàlid
+     
+
+
+}
+```
+
+  - **Classe  `Jugador`**: Crea una classe `Player` per representar els jugadors del joc, amb propietats com el `name`, el `color` de les fitxes, forma de jugar `isAutomatic`.
+
+```php
+namespace Joc4enRatlla\Models;
+
+ 
+class Player {
+    private $name;      // Nom del jugador
+    private $color;     // Color de les fitxes
+    private $isAutomatic; // Forma de jugar (automàtica/manual)
+ 
+    public function __construct( $name, $color, $isAutomatic = false)  
+
+    // Getters i Setters 
+ 
+}
+
+```
+ 
+  - **Classe `Game`**: Refactoritza la lògica del joc en una classe `Game` que gestione la graella, el torn del jugador, i la lògica per determinar el guanyador, la puntuació.
+   
+```php
+
+namespace Joc4enRatlla\Models;
+
+use Joc4enRatlla\Models\Board;
+use Joc4enRatlla\Models\Player;
+
+class Game
+{
+    private Board $board;
+    private int $nextPlayer;
+    private array $players;
+    private ?Player $winner;
+    private array $scores = [1 => 0, 2 => 0];
+    
+    public function __construct( Player $jugador1, Player $jugador2)
+     
+    // getters i setters
+       
+    public function reset(): void //Reinicia el joc
+    public function play($columna)  //Realitza un moviment
+    public function playAutomatic(){
+        $opponent = $this->nextPlayer === 1 ? 2 : 1;
+
+        for ($col = 1; $col <= Board::COLUMNS; $col++) {
+            if ($this->board->isValidMove($col)) {
+                $tempBoard = clone($this->board);
+                $coord = $tempBoard->setMovementOnBoard($col, $this->nextPlayer);
+
+                if ($tempBoard->checkWin($coord)) {
+                    $this->play($col);
+                    return;
+                }
+            }
+        }
+
+        for ($col = 1; $col <= Board::COLUMNS; $col++) {
+            if ($this->board->isValidMove($col)) {
+                $tempBoard = clone($this->board);
+                $coord = $tempBoard->setMovementOnBoard($col, $opponent);
+                if ($tempBoard->checkWin($coord )) {
+                    $this->play($col);
+                    return;
+                }
+            }
+        }
+
+        $possibles = array();
+        for ($col = 1; $col <= Board::COLUMNS; $col++) {
+            if ($this->board->isValidMove($col)) {
+                $possibles[] = $col;
+            }
+        }
+        if (count($possibles)>2) {
+            $random = rand(-1,1);
+        }
+        $middle = (int) (count($possibles) / 2)+$random;
+        $inthemiddle = $possibles[$middle];
+        $this->play($inthemiddle);
+    }
+    public function save()  //Guarda l'estat del joc a les sessions
+    public static function restore() //Restaura l'estat del joc de les sessions
+ 
+}
+
+```
+  - **Documentació**:
+    - Totes les classes i mètodes han d'estar documentats amb comentaris PHPDoc.
+
+##### Controladors
+
+- Dins de la carpeta Controllers:
+
+    - **Classe `JocController`**: Crea un controlador `JocController` que gestione el  joc. Aquest controlador ha de permetre als jugadors realitzar moviments, comprovar l'estat del joc, i gestionar les vistes.
+     
+ ```php
+  namespace Joc4enRatlla\Controllers;
+
+    use Joc4enRatlla\Models\Player;
+    use Joc4enRatlla\Models\Game;
+    
+    
+    class GameController
+    {
+    private Game $game;
+    
+    // Request és l'array $_POST
+    
+    public function __construct($request=null)
+    {
+        //Inicialització del joc
+        $this->play($request);
+
+    }
+ 
+    public function play(Array $request)  
+    {
+        // Gestió del joc
+        ...
+        
+        $board = $this->game->getBoard();
+        $players = $this->game->getPlayers();
+        $winner = $this->game->getWinner();
+        $scores = $this->game->getScores();
+
+        loadView('index',compact('board','players','winner','scores'));
+     }
+}
+  ```
+
+##### Serveis i funcions
+
+- Dins de la carpeta Services:
+
+    - **Funció `loadView`**: Crea una funció `loadView` que carregue les vistes del joc. Aquesta funció ha de rebre el nom de la vista i les dades a passar a la vista, i ha de mostrar la vista amb les dades proporcionades.
+
+```php
+<?php
+
+namespace Joc4enRatlla\Services;
+
+class Service
+{
+    public static function loadView($view, $data = [])
+    {
+        $viewPath = str_replace('.', '/', $view);
+        extract($data);
+
+        include  $_SERVER['DOCUMENT_ROOT'] . "/../Views/$viewPath.view.php";
+
+    }
+}
+```
+i la funció `loadView` en un fitxer de funcions
+
+```php
+  function loadView($view, $data = [])
+    {
+       Joc4enRatlla\Services\Service::loadView($view, $data);
+    }
+
+    function dd(...$data )
+    {
+        echo "<pre>";
+        foreach ($data as $d) {
+            var_dump($d);
+        }
+
+        echo "</pre>";
+        die();
+    }
+``` 
+ 
+##### Vistes
+
+- Dins de la carpeta Views:
+
+    - **Vista `index.php`**: Crea una vista `index.php` que mostre la graella del joc, el torn actual del jugador, i els resultats finals (guanyador o empat). Aquesta vista ha de permetre als jugadors realitzar moviments en la graella.
+    
+```php
+
+<html>
+<head>
+    <link rel="stylesheet" href="4ratlla.css?v=<?php echo time(); ?>">
+    <title>4 en ratlla</title>
+    <style>
+        .player1 {
+            background-color: <?= $players[1]->getColor() ?> ; /* Color vermell per un dels jugadors */
+        }
+
+        .player2 {
+            background-color:  <?= $players[2]->getColor() ?>; /* Color groc per l'altre jugador */
+        }
+
+    </style>
+</head>
+<body>
+<?php include_once $_SERVER['DOCUMENT_ROOT'].'/../Views/partials/error.view.php'  ?>
+ <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <?php include_once $_SERVER['DOCUMENT_ROOT'].'/../Views/partials/board.view.php'  ?>
+     <input type="submit" name="reset" value="Reiniciar joc">
+     <input type="submit" name="exit" value="Acabar joc">
+</form>
+ <?php include_once $_SERVER['DOCUMENT_ROOT'].'/../Views/partials/panel.view.php'  ?>
+</body>
+</html>
+
+```
+
+##### SPA
+
+Creen la pàgina index.php que carregarà el joc 4 en ratlla.
+
+```php
+<?php
+session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../Helpers/functions.php';
+use Joc4enRatlla\Controllers\GameController;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $gameController = new GameController($_POST); 
+} else {
+    loadView('jugador');
+}
+``` 
+ 
 #### 4. Proves amb PHPUnit
 - **Escriu Proves Unitàries**: Crea proves unitàries per a la classe `Joc4enRatlla` utilitzant PHPUnit. Les proves poden incloure:
     - Verificació de la configuració inicial de la graella.
@@ -2776,7 +3031,7 @@ Després de refactoritzar l'aplicació per separar la lògica del negoci de la p
     - Registra els moviments dels jugadors i els resultats del joc en un fitxer `game.log`.
     - Registra errors greus o problemes amb les sessions en un fitxer d'errors separat.
 
-### Consideracions Addicionals per al  Projecte 
+### Consideracions Addicionals pel  Projecte 
 
 #### 1. Documentació amb PHPDoc
 - **Documentació Completa**: Documenta totes les classes i mètodes amb comentaris PHPDoc. Això inclou les descripcions dels paràmetres i els valors de retorn per a cada mètode.
@@ -2788,16 +3043,23 @@ Després de refactoritzar l'aplicació per separar la lògica del negoci de la p
 #### 3. Serialització i Persistència
 - **Serialització de l'Estat del Joc**: Implementa funcionalitats per serialitzar l'estat del joc (usant JSON o `serialize()`) i deserialitzar-lo per mantenir la persistència entre sessions o guardar l'estat per a reprendre la partida posteriorment.
 
-### Rúbrica d'Avaluació per als Projectes  
+#### 4. Exempcions
+- **Gestió d'Excepcions**: Utilitza excepcions per gestionar el que un jugador jugue una columna que ja estiga plena. Afig el missatge  d'error al jocs.
+   
+#### 5. Fes que el jugador puga triar nom i color
+
+- **Triar Nom i Color**: Permet als jugadors triar el seu nom i el color de les fitxes al començar una partida. Aquesta informació ha de ser guardada en les sessions i mostrada en la vista del joc.
 
 | **Criteri**                                                 | ** Insuficient (1 punt)**                                                                                   | ** Adequat (2 punts)**                                                                                                                          | ** Bé (3 punts)**                                                                                                      | ** Excel·lent (4 punts)**                                                                                                 |
 |-------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| **Funcionalitat del programa **                             | No es funcional.                                                                                            | Es funcional però falten funcionalitats.                                                                                                        | Es funcional però falten detalls.                                                                                      | Totalment funcional.                                                                                                      | 
 | **Implementació de Programació Orientada a Objectes (POO)** | Les classes no estan ben dissenyades, falta encapsulació, ús incorrecte d'herència, o mètodes no funcional. | Les classes estan creades però poden tindre errors o una estructura confusa. S'aplica la POO de manera bàsica, però hi ha problemes de disseny. | Classes correctament estructurades i funcionalment completes. Ús adequat d'encapsulació, herència i polimorfisme.      | Disseny de classes ben organitzat, reutilitzable i amb una implementació clara dels principis de POO.                     |
-| **Separació del Model de Negoci de la Presentació (MVC)**      | No s'ha implementat la separació de model i presentació; el codi de lògica i presentació està mesclat.      | Hi ha una separació parcial, però algunes parts de la lògica del negoci es barregen amb la presentació o a l'inrevés.                           | La separació entre model, vista i controlador està ben implementada, però podria millorar en alguns aspectes.          | Excel·lent separació entre el model, vista i controlador, seguint els principis del patró MVC i mantenint un codi net.   |
+| **Separació del Model de Negoci de la Presentació (MVC)**   | No s'ha implementat la separació de model i presentació; el codi de lògica i presentació està mesclat.      | Hi ha una separació parcial, però algunes parts de la lògica del negoci es barregen amb la presentació o a l'inrevés.                           | La separació entre model, vista i controlador està ben implementada, però podria millorar en alguns aspectes.          | Excel·lent separació entre el model, vista i controlador, seguint els principis del patró MVC i mantenint un codi net.    |
 | **Integració de Composer i Autoloading**                    | No s'ha configurat Composer o l'autoloading, o està mal configurat i no funciona correctament.              | Composer s'ha utilitzat, però amb una estructura de projectes i autoloading bàsics o incorrectes.                                               | Composer i l'autoloading estan configurats correctament amb una estructura de projectes ben definida.                  | Ús excel·lent de Composer amb una configuració avançada d'autoloading i una estructura de projecte organitzada i modular. |
 | **Implementació de Proves amb PHPUnit**                     | No s'han creat proves, o les proves creades són mínimes i no adequades per a verificar la funcionalitat.    | Es presenten proves bàsiques amb PHPUnit, però cobreixen parcialment les funcionalitats requerides.                                             | Proves unitàries completes que cobreixen la majoria dels casos, incloent proves de gestió de sessions i lògica de joc. | Proves exhaustives que cobreixen totes les funcionalitats i consideren casos límit, amb ús de mocks quan necessari.       |
 | **Ús de Logger amb Monolog**                                | No s'ha implementat el logger o no s'utilitza de manera efectiva per registrar esdeveniments importants.    | Logger implementat, però amb ús limitat o incorrecte en la registració d'esdeveniments i errors.                                                | Logger ben implementat, amb esdeveniments i errors registrats adequadament en diferents fitxers o canals.              | Ús avançat de logger amb diferents handlers per registrar informació, errors, i seguiment detallat del flux del joc.      |
 | **Documentació amb PHPDoc**                                 | Falta documentació o és insuficient per comprendre les classes i mètodes del projecte.                      | Documentació bàsica amb PHPDoc, però amb omisions o descripcions poc clares.                                                                    | Documentació completa amb PHPDoc per a totes les classes i mètodes, amb descripcions clares i detallades.              | Documentació excel·lent amb PHPDoc, ben estructurada i completa, facilitant la comprensió i manteniment del projecte.     |
+| **Exempcions**                                              | No hi ha.                                                                                                   | Si hi ha però no es mostra missatge d'error.                                                                                                    | Es tracta perfectament i hi ha missatge d'error .                                                                      |                                                                                                                           |
 | **Qualitat del Codi i Bones Pràctiques**                    | Codi desorganitzat, amb molts errors de sintaxi, mala nomenclatura, o sense bones pràctiques de codi.       | Codi funcional però amb problemes d'estructura, estil inconsistent o incompliment parcial de bones pràctiques.                                  | Codi ben escrit, seguint les convencions de nomenclatura i bones pràctiques de desenvolupament.                        | Codi de qualitat professional, net, ben organitzat, i seguint rigorosament les millors pràctiques de programació.         |
 
 ### Explicació dels Criteris
