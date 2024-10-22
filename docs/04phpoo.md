@@ -1658,15 +1658,87 @@ public function proveidorDeDades() {
 
 #### Mocks
 
-Els mocks són objectes simulats que ens permeten aïllar la unitat de codi que estem provant. PHPUnit facilita la creació de mocks per a classes o interfícies.
+Un mock és un objecte simulat que imita el comportament d'un objecte real en un entorn de proves. S'utilitza per simular la funcionalitat de certs components o dependències d'una classe, sense necessitat d'executar el codi real d'aquests components. Això permet provar una classe de manera aïllada i controlar el comportament de les seves dependències.
 
-``` php
-$mock = $this->createMock(ServeiExtern::class);
-$mock->method('obtenirDades')->willReturn('Dades simulades');
+**Els mocks són útils quan:**
 
-$calculadora = new Calculadora($mock);
-$resultat = $calculadora->processaDades();
-$this->assertEquals('Resultat esperat', $resultat);
+* No volem o no podem dependre del comportament real d'un component extern, com una connexió a una base de dades o una API.
+* Necessitem verificar la interacció entre la classe sota prova i una dependència externa (per exemple, comprovar que un mètode s'ha cridat amb uns certs arguments).
+* Volem millorar la velocitat i la fiabilitat de les proves en eliminar la dependència de sistemes externs.
+
+**Com funciona un mock**
+
+Quan utilitzem un mock, en lloc de cridar el mètode real d'una dependència, definim el comportament esperat manualment. També podem verificar que certs mètodes del mock s'hagin cridat, amb certs arguments, un nombre determinat de vegades, etc.
+
+**Exemple senzill de mock amb PHPUnit**
+
+Suposem que tenim una classe UserService que depèn d'una classe EmailService per enviar correus electrònics quan es crea un nou usuari. No volem enviar correus electrònics durant les proves, però sí que volem assegurar-nos que el mètode d'enviament de correus es crida quan es crea un usuari nou.
+
+```php
+<?php
+
+class EmailService
+{
+    public function sendEmail($to, $subject, $message)
+    {
+        // Lògica per enviar un correu electrònic
+    }
+}
+
+class UserService
+{
+    private $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
+    public function createUser($user)
+    {
+        // Crear usuari...
+
+        // Enviar un correu electrònic al nou usuari
+        $this->emailService->sendEmail($user->email, 'Welcome!', 'Benvingut a la nostra plataforma!');
+    }
+}
+
+```
+
+```php
+<?php
+
+use PHPUnit\Framework\TestCase;
+
+class UserServiceTest extends TestCase
+{
+    public function testCreateUserSendsEmail()
+    {
+        // Creem un mock de la classe EmailService
+        $emailServiceMock = $this->createMock(EmailService::class);
+
+        // Definim l'expectativa: esperem que el mètode sendEmail sigui cridat una vegada
+        // amb els arguments concrets que especifiquem.
+        $emailServiceMock->expects($this->once())
+                         ->method('sendEmail')
+                         ->with(
+                             $this->equalTo('test@example.com'),
+                             $this->equalTo('Welcome!'),
+                             $this->stringContains('Benvingut a la nostra plataforma!')
+                         );
+
+        // Creem una instància de UserService passant el mock d'EmailService
+        $userService = new UserService($emailServiceMock);
+
+        // Simulem la creació d'un nou usuari
+        $user = new stdClass();
+        $user->email = 'test@example.com';
+        $userService->createUser($user);
+
+        // El mètode sendEmail del mock hauria de ser cridat una vegada amb els paràmetres especificats
+    }
+}
+
 ```
 
 
