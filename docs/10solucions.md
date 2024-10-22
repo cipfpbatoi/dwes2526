@@ -1162,11 +1162,13 @@ composer dump-autoload
 
 ```php
 <?php
+<?php
 
-namespace App;
+namespace App\Logger;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 
 class LoggerFactory
 {
@@ -1175,11 +1177,11 @@ class LoggerFactory
         $logger = new Logger('app');
 
         // Handler per a missatges d'informació
-        $infoHandler = new StreamHandler(__DIR__ . '/../logs/info.log', Logger::INFO);
+        $infoHandler = new StreamHandler($_SERVER['DOCUMENT_ROOT']. '/logs/info.log', Level::INFO);
         $logger->pushHandler($infoHandler);
 
         // Handler per a missatges d'error
-        $errorHandler = new StreamHandler(__DIR__ . '/../logs/error.log', Logger::ERROR);
+        $errorHandler = new StreamHandler($_SERVER['DOCUMENT_ROOT'] . '/logs/error.log', Level::ERROR);
         $logger->pushHandler($errorHandler);
 
         return $logger;
@@ -1190,20 +1192,22 @@ class LoggerFactory
         $logger = new Logger('console');
 
         // Handler per escriure missatges a la consola
-        $consoleHandler = new StreamHandler('php://stdout', Logger::WARNING);
+        $consoleHandler = new StreamHandler('php://stdout', Level::WARNING);
         $logger->pushHandler($consoleHandler);
 
         return $logger;
     }
 }
 ```
+
 Provar el logger
+
 ```php
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
 
-use App\LoggerFactory;
+use App\Logger\LoggerFactory;
 
 $logger = LoggerFactory::createLogger();
 $consoleLogger = LoggerFactory::createConsoleLogger();
@@ -1219,10 +1223,502 @@ $consoleLogger->error('Això és un missatge d\'error per consola.');
 ```
 
 
-* Documenta la classe `Producte` creada en exercicis anteriors utilitzant comentaris PHPDoc. Inclou la descripció de la classe, les propietats, i els mètodes. Utilitza una eina com `phpDocumentor` per generar documentació automàtica.
+* Documenta la classe `Empleado` creada en exercicis anteriors utilitzant comentaris PHPDoc. Inclou la descripció de la classe, les propietats, i els mètodes. Utilitza una eina com `phpDocumentor` per generar documentació automàtica.
+
+```php
+<?php
+namespace App\Models;
+
+class Empleado extends Persona {
+    private $sou;
+    private $telefons = [];
+
+    /**
+     * Constructor de la clase Empleado
+     * @param string $nom
+     * @param string $cognoms
+     * @param float $sou
+     * @param int $edat
+     */
+    public function __construct($nom, $cognoms, $sou, $edat = 25) {
+        parent::__construct($nom, $cognoms, $edat);
+        $this->sou = $sou;
+    }
+
+    /**
+     * Obtiene el sueldo del empleado
+     * @return float
+     */
+    public function getSou() {
+        return $this->sou;
+    }
+
+    /**
+     * Establece el sueldo del empleado
+     * @param float $sou
+     */
+    public function setSou($sou) {
+        $this->sou = $sou;
+    }
+
+    /**
+     * Obtiene los teléfonos del empleado
+     * @return array
+     */
+    public function getTelefonos() {
+        return $this->telefons;
+    }
+
+    /**
+     * Establece un teléfono al empleado
+     * @param string $telefon
+     */
+    public function setTelefono($telefon) {
+        $this->telefons[] = $telefon;
+    }
+
+    /**
+     * Devuelve los teléfonos del empleado
+     * @return string
+     */
+    public function listarTelefonos() {
+        return implode(', ', $this->telefons);
+    }
+
+    
+    /**
+     * Vacía la llista de telèfons de l'empleat.
+     *
+     * Aquest mètode elimina tots els telèfons associats a l'empleat, deixant l'array de telèfons buit.
+     *
+     * @return void
+     */
+    public function vaciarTelefonos(): void
+    {
+        $this->telefons = [];
+    }
+
+    /**
+     * Comprova si l'empleat ha de pagar impostos.
+     *
+     * Aquest mètode determina si l'empleat està obligat a pagar impostos en funció del seu salari.
+     * Si el salari de l'empleat és superior a 3333€, haurà de pagar impostos.
+     *
+     * @return bool Retorna `true` si l'empleat ha de pagar impostos, `false` en cas contrari.
+     */
+    public function debePagarImpuestos(): bool
+    {
+        return $this->sou > 3333;
+    }
+}
+```
+
+Des dewl directori php execute : 
+```bash
+docker run --rm -v $(pwd):/data phpdoc/phpdoc:latest run -d /data/src -t /data/src/docs
+```
 
 * Escriu proves unitàries per als mètodes de les classes `Persona`, `Empleado`, i `Empresa` utilitzant PHPUnit. Prova els mètodes `getNomComplet`, `estaJubilat`, `addWorker`, i `getCosteNominas`. Assegura't que les proves cobreixen diferents escenaris, incloent errors potencials.
 
+
+```php
+use PHPUnit\Framework\TestCase;
+use App\Models\Persona;
+
+class PersonaTest extends TestCase
+{
+    public function testGetNomComplet()
+    {
+        $persona = new Persona('Joan', 'Garcia');
+        $this->assertEquals('Joan Garcia', $persona->getNomComplet());
+    }
+
+    public function testEstaJubilat()
+    {
+        // Persona amb edat inferior a la de jubilació
+        $persona = new Persona('Joan', 'Garcia', 50);
+        $this->assertFalse($persona->estaJubilat());
+
+        // Persona amb edat igual o superior a la de jubilació
+        $persona = new Persona('Pere', 'Martí', 66);
+        $this->assertTrue($persona->estaJubilat());
+    }
+
+    public function testEstaJubilatEdgeCase()
+    {
+        // Prova del cas límit a l'edat exacta de jubilació
+        $persona = new Persona('Maria', 'Lopez', 66);
+        $this->assertTrue($persona->estaJubilat());
+    }
+}
+```
+
+```php
+
+use PHPUnit\Framework\TestCase;
+use App\Models\Empleado;
+
+class EmpleadoTest extends TestCase
+{
+    public function testDebePagarImpuestos()
+    {
+        // Empleado amb salari inferior al llindar d'impostos
+        $empleado = new Empleado('Joan', 'García',2500);
+        $this->assertFalse($empleado->debePagarImpuestos());
+
+        // Empleado amb salari superior al llindar d'impostos
+        $empleado = new Empleado('Maria', 'Abradelo',5000);
+        $this->assertTrue($empleado->debePagarImpuestos());
+    }
+
+    public function testVaciarTelefonos()
+    {
+        // Afegim telèfons i després els buidem
+        $empleado = new Empleado('Joan','Petit', 2500);
+        $empleado->setTelefono('123456789');
+        $empleado->setTelefono('987654321');
+
+        $empleado->vaciarTelefonos();
+
+        // Assegurar-nos que la llista de telèfons està buida
+        $this->assertCount(0, $empleado->getTelefonos());
+    }
+}
+
+```
+
+```php
+use PHPUnit\Framework\TestCase;
+use App\Models\Empresa;
+use App\Models\Empleado;
+
+class EmpresaTest extends TestCase
+{
+    public function testAddWorker()
+    {
+        $empresa = new Empresa();
+        $empleado = new Empleado('Joan','Petit', 2500);
+
+        // Afegim un treballador i comprovem que la llista de treballadors té 1 element
+        $empresa->addWorker($empleado);
+        $this->assertCount(1, $empresa->getWorkers());
+
+        // Afegim un altre treballador i comprovem que ara la llista té 2 elements
+        $empleado2 = new Empleado('Maria','Abradelo' ,3000);
+        $empresa->addWorker($empleado2);
+        $this->assertCount(2, $empresa->getWorkers());
+    }
+
+    public function testGetCosteNominas()
+    {
+        $empresa = new Empresa();
+        $empleado1 = new Empleado('Joan','García' ,2500);
+        $empleado2 = new Empleado('Maria','Serra' ,3000);
+
+        // Afegim treballadors i calculem el cost de les nòmines
+        $empresa->addWorker($empleado1);
+        $empresa->addWorker($empleado2);
+
+        // El cost hauria de ser 2500 + 3000 = 5500
+        $this->assertEquals(5500, $empresa->getCosteNominas());
+    }
+
+    public function testGetCosteNominasEmpty()
+    {
+        $empresa = new Empresa();
+
+        // Si no hi ha treballadors, el cost de les nòmines ha de ser 0
+        $this->assertEquals(0, $empresa->getCosteNominas());
+    }
+}
+```
+
 * Escriu una prova unitària que comprove que el logger està registrant correctament els missatges d'error a l'arxiu corresponent. Utilitza un mock per assegurar-te que el logger funciona sense necessitat d'escriure en un fitxer real durant la prova.
+
+```php
+<?php
+
+use PHPUnit\Framework\TestCase;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+class LoggerTest extends TestCase
+{
+    public function testLoggerErrorMessageIsHandledCorrectly()
+    {
+        // Creem un mock per al StreamHandler, simulant el comportament d'un logger d'arxius
+        $mockHandler = $this->createMock(StreamHandler::class);
+
+        // El mock s'espera que el mètode 'handle' es cridi exactament una vegada.
+        // Això s'executa quan el logger maneja un missatge d'error.
+        $mockHandler->expects($this->once())
+                    ->method('handle')
+                    ->with($this->callback(function ($record) {
+                        // Verifiquem que el missatge sigui del tipus ERROR i que continga el missatge esperat
+                        return $record['level'] === Logger::ERROR && $record['message'] === 'Això és un missatge d\'error';
+                    }));
+
+        // Creem un logger de Monolog i li afegim el nostre handler mock
+        $logger = new Logger('test');
+        $logger->pushHandler($mockHandler);
+
+        // Registrem un missatge d'error
+        $logger->error('Això és un missatge d\'error');
+    }
+}
+```
+
+#### Exercici 5. Generació de PDFs amb DomPDF
+
+* Instal·la la llibreria `dompdf/dompdf` amb Composer. Crea un script PHP que genere un PDF senzill amb un títol i un paràgraf de text.
+
+```bash
+composer require dompdf/dompdf
+```
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Dompdf\Dompdf;
+
+// Crear una instància de Dompdf
+$dompdf = new Dompdf();
+
+// Contingut HTML
+$html = '<h1>Títol del PDF</h1><p>Aquest és un paràgraf de text senzill.</p>';
+
+// Carregar el contingut HTML en Dompdf
+$dompdf->loadHtml($html);
+
+// Configurar la mida del paper i l'orientació
+$dompdf->setPaper('A4', 'portrait');
+
+// Renderitzar el PDF
+$dompdf->render();
+
+// Desar el PDF o mostrar-lo
+$dompdf->stream("document_senzill.pdf", ["Attachment" => false]);
+```
+
+* Crea un PDF utilitzant DomPDF que incloga una taula amb dades i una imatge. Assegura't que el PDF es renderitze correctament i que la imatge s'incloga en el document.
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Dompdf\Dompdf;
+
+// Crear una instància de Dompdf
+$dompdf = new Dompdf();
+
+// Contingut HTML amb una taula i una imatge
+$html = '
+<h1>Informe amb Taula i Imatge</h1>
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Cognoms</th>
+            <th>Edat</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Joan</td>
+            <td>Garcia</td>
+            <td>35</td>
+        </tr>
+        <tr>
+            <td>Maria</td>
+            <td>Perez</td>
+            <td>28</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<img src="ruta_a_la_teva_imatge/imatge.png" alt="Imatge Exemple" width="200">
+';
+
+// Carregar el contingut HTML en Dompdf
+$dompdf->loadHtml($html);
+
+// Configurar la mida del paper i l'orientació
+$dompdf->setPaper('A4', 'portrait');
+
+// Renderitzar el PDF
+$dompdf->render();
+
+// Desar el PDF o mostrar-lo
+$dompdf->stream("informe_taula_imatge.pdf", ["Attachment" => false]);
+```
+
+* Utilitzant la classe `Empresa` i `Empleado`, genera un informe en PDF amb la llista de treballadors i el seu sou. Utilitza DomPDF per generar aquest informe.
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+
+use Dompdf\Dompdf;
+use App\Empresa;
+use App\Empleado;
+
+// Crear instàncies d'Empresa i Empleado
+$empresa = new Empresa();
+$empleado1 = new Empleado("Joan", 2500);
+$empleado2 = new Empleado("Maria", 3000);
+
+$empresa->addWorker($empleado1);
+$empresa->addWorker($empleado2);
+
+// Generar contingut HTML per al PDF
+$html = '<h1>Informe de Treballadors</h1>';
+$html .= '<table border="1" cellpadding="10">';
+$html .= '<thead><tr><th>Nom</th><th>Salari</th></tr></thead>';
+$html .= '<tbody>';
+
+foreach ($empresa->getWorkers() as $empleado) {
+    $html .= '<tr>';
+    $html .= '<td>' . $empleado->getNom() . '</td>';
+    $html .= '<td>' . $empleado->getSalari() . ' €</td>';
+    $html .= '</tr>';
+}
+
+$html .= '</tbody></table>';
+$html .= '<p>Cost total de les nòmines: ' . $empresa->getCosteNominas() . ' €</p>';
+
+// Crear una instància de Dompdf
+$dompdf = new Dompdf();
+
+// Carregar el contingut HTML en Dompdf
+$dompdf->loadHtml($html);
+
+// Configurar la mida del paper i l'orientació
+$dompdf->setPaper('A4', 'portrait');
+
+// Renderitzar el PDF
+$dompdf->render();
+
+// Desar el PDF o mostrar-lo
+$dompdf->stream("informe_treballadors.pdf", ["Attachment" => false]);
+```
+
+#### Exercici 6. Serialització i JSON
+
+* Crea una interfície `JSerializable` que incloga els mètodes:
+
+    - `toJSON(): string` – Converteix l'objecte a un JSON utilitzant `json_encode()`.
+    - `toSerialize(): string` – Serialitza l'objecte utilitzant `serialize()`.
+
+* Modifica les classes `Persona`, `Empleado`, i `Empresa` per implementar aquesta interfície. Assegura't que les propietats privades es puguen serialitzar correctament.
+
+* Escriu mètodes per deserialitzar un objecte a partir d'una cadena JSON o d'una cadena serialitzada. Prova aquests mètodes amb PHPUnit per assegurar-te que la deserialització funciona correctament.
+
+
+Es mostra soles la classe Persona :
+
+```php
+namespace App\Models;
+
+interface JSerializable
+{
+    /**
+     * Converteix l'objecte a una cadena JSON.
+     * 
+     * @return string
+     */
+    public function toJSON(): string;
+
+    /**
+     * Serialitza l'objecte a una cadena.
+     * 
+     * @return string
+     */
+    public function toSerialize(): string;
+}
+```
+
+```php
+namespace App\Models;
+
+class Persona implements JSerializable{
+    
+
+    ...
+
+    public function toJSON(): string
+    {
+        return json_encode(get_object_vars($this));
+    }
+
+    public function toSerialize(): string
+    {
+        return serialize($this);
+    }
+
+    // Deserialitzar des d'un JSON
+    public static function fromJSON(string $json): self
+    {
+        $data = json_decode($json, true);
+        return new self($data['nom'], $data['cognoms'], $data['edat']);
+    }
+
+    // Deserialitzar des d'una cadena serialitzada
+    public static function fromSerialized(string $serialized): self
+    {
+        return unserialize($serialized);
+    }
+
+    
+}
+
+```
+
+```php
+
+use PHPUnit\Framework\TestCase;
+use App\Models\Persona;
+
+class PersonaTest extends TestCase
+{
+    
+    ...
+
+    public function testToJSON()
+    {
+        $persona = new Persona('Joan', 'Garcia', 30);
+        $json = $persona->toJSON();
+        $this->assertJson($json);
+        $this->assertStringContainsString('"nom":"Joan"', $json);
+    }
+
+    public function testFromJSON()
+    {
+        $json = '{"nom":"Joan","cognoms":"Garcia","edat":30}';
+        $persona = Persona::fromJSON($json);
+        $this->assertEquals('Joan Garcia', $persona->getNomComplet());
+    }
+
+    public function testToSerialize()
+    {
+        $persona = new Persona('Maria', 'Perez', 40);
+        $serialized = $persona->toSerialize();
+        $this->assertIsString($serialized);
+    }
+
+    public function testFromSerialized()
+    {
+        $persona = new Persona('Maria', 'Perez', 40);
+        $serialized = $persona->toSerialize();
+        $personaDeserialized = Persona::fromSerialized($serialized);
+        $this->assertEquals('Maria Perez', $personaDeserialized->getNomComplet());
+    }
+}
+```
+
 
 
