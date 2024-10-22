@@ -1603,16 +1603,16 @@ Amb PHPUnit, podem realitzar diversos tipus de proves, entre elles:
 
 * Proves Unitàries : Verifiquen el funcionament d'una unitat de codi individual, com una funció o mètode.
 * Proves Funcionals: Verifiquen que un conjunt de mòduls funciona correctament conjuntament. Aquestes proves poden simular interaccions de l'usuari en un sistema web, encara que això es fa millor amb frameworks especialitzats per a proves funcionals.
-* Proves d'Integració*: Comproven que diferents mòduls o serveis funcionen correctament quan es combinen.
+* Proves d'Integració: Comproven que diferents mòduls o serveis funcionen correctament quan es combinen.
 
 
 Exemple de prova unitària:
     
- ```php
+```php
 public function testResta() {
-$calculadora = new Calculadora();
-$resultat = $calculadora->resta(5, 3);
-$this->assertEquals(2, $resultat);
+    $calculadora = new Calculadora();
+    $resultat = $calculadora->resta(5, 3);
+    $this->assertEquals(2, $resultat);
 }
 ```
  
