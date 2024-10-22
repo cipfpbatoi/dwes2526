@@ -2644,71 +2644,6 @@ Fins ara, has creat diverses classes que gestionen la lògica del joc i les dade
 
 
 
-EmpleadoController
-```php
-<?php
-namespace App\Controllers;
-
-use App\Models\Empleado;
-
-class EmpleadoController {
-
-    public function listAll(){
-        $persona1 = new Empleado('Ignasi','Gomis Mullor',50);
-        $persona2 = new Empleado('Juan','Segura Vasco',50);
-        $persona1->setSou(2500);
-        $persona2->setSou(2500);
-
-        $empleados = [$persona1, $persona2];
-
-        
-        include $_SERVER['DOCUMENT_ROOT'].'/views/empleado.view.php';
-        
-
-    }
-}
-```
-
-empleado.view.php
-```html
-
-
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <title>Empleado</title>
-</head>
-<body>
-
-<table>
-    <tr>
-        <th>Nom</th><th>Telefons</th><th>Sou</th>
-    </tr>
-    <?php foreach ($empleados as $empleado): ?>
-    <tr>
-        <td><?= $empleado ?></td><td><?= $empleado->listarTelefonos() ?></td><td><?= $empleado->getSou() ?></td>
-    </tr>
-    <?php endforeach; ?>
-</table>
-</body>
-</html>
-```
-
-
-index.php
-```php
-
-<?php
-include_once __DIR__ .'/../vendor/autoload.php';
-
-use App\Controllers\EmpleadoController;
-
-$controller = new EmpleadoController();
-$controller->listAll();
-
-```
-
 #### Exercici 8. Creació de Proves Unitàries per al Patró MVC
 
 Després de refactoritzar l'aplicació per separar la lògica del negoci de la presentació seguint el patró Model-Vista-Controlador (MVC), és fonamental assegurar-se que tots els components funcionen correctament i que la interacció entre ells es realitza tal com s'espera. Per això, has de crear una sèrie de proves unitàries utilitzant PHPUnit per verificar el funcionament del model, les vistes i els controladors.
@@ -2727,6 +2662,8 @@ Després de refactoritzar l'aplicació per separar la lògica del negoci de la p
     - Implementa proves per verificar que el controlador respon correctament a diferents sol·licituds de l'usuari, per exemple:
         - Mostrar una llista d'empleats en HTML.
         - Generar un informe en PDF utilitzant DomPDF.
+
+
 
 * **Proves de les Vistes**:
     - Escriu proves unitàries per comprovar que les vistes reben i mostren correctament la informació proporcionada pel controlador.

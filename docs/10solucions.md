@@ -1720,5 +1720,270 @@ class PersonaTest extends TestCase
 }
 ```
 
+#### Exercici 7. Separació del Model de Negoci i la Presentació (MVC)
+ 
+Fins ara, has creat diverses classes que gestionen la lògica del joc i les dades (models), com `Persona`, `Empleado`, i `Empresa`, i has generat sortides HTML i PDFs amb DomPDF. Ara és el moment de refactoritzar la teua aplicació per assegurar una separació clara entre la lògica del negoci i la presentació, seguint el patró Model-Vista-Controlador (MVC).
+  
+* **Crear el Model**:
+    - Refactoritza les classes `Persona`, `Empleado`, i `Empresa` per assegurar que només gestionen la lògica de negoci (per exemple, càlcul de nòmines, gestió d'empleats, etc.).
+    - Assegura't que aquestes classes no contenen codi relacionat amb la presentació (HTML o PDF).
+
+* **Crear les Vistes**:
+    - Crea vistes separades per presentar la informació als usuaris:
+        - Una vista HTML per mostrar la informació de `Empleado` i `Empresa` com a llistats.
+        - Una vista PDF per generar informes amb DomPDF, basant-se en les dades proporcionades pel model.
+
+* **Crear el Controlador**:
+    - Implementa un controlador que reba les sol·licituds dels usuaris, interactue amb el model (`Persona`, `Empleado`, `Empresa`), i tria la vista adequada per mostrar els resultats (HTML o PDF).
+    - El controlador ha d'encapsular tota la lògica necessària per a gestionar la interacció entre la vista i el model, assegurant que el model no estiga lligat a la capa de presentació.
 
 
+
+EmpleadoController
+```php
+<?php
+
+namespace App\Controllers;
+
+use App\Models\Empleado;
+
+class EmpleadoController {
+
+    // Llista tots els empleats i els mostra en una vista HTML
+    public function listAll(){
+        // Crea alguns empleats de prova
+        $persona1 = new Empleado('Ignasi', 'Gomis Mullor', 50);
+        $persona2 = new Empleado('Juan', 'Segura Vasco', 50);
+        $persona1->setSou(2500);
+        $persona2->setSou(2500);
+
+        $empleados = [$persona1, $persona2];
+
+        // Inclou la vista HTML per llistar els empleats
+        include $_SERVER['DOCUMENT_ROOT'].'/views/empleado.view.php';
+    }
+
+    // Genera un PDF amb la llista d'empleats
+    public function generatePDF(){
+        // Crea alguns empleats de prova
+        $persona1 = new Empleado('Ignasi', 'Gomis Mullor', 50);
+        $persona2 = new Empleado('Juan', 'Segura Vasco', 50);
+        $persona1->setSou(2500);
+        $persona2->setSou(2500);
+
+        $empleados = [$persona1, $persona2];
+
+        // Inclou la vista que generarà el PDF amb DomPDF
+        include $_SERVER['DOCUMENT_ROOT'].'/views/informe_empleado_pdf.php';
+    }
+}
+
+```
+
+empleado.view.php
+```html
+
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleado</title>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>Nom</th><th>Telefons</th><th>Sou</th>
+    </tr>
+    <?php foreach ($empleados as $empleado): ?>
+    <tr>
+        <td><?= $empleado ?></td><td><?= $empleado->listarTelefonos() ?></td><td><?= $empleado->getSou() ?></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+</body>
+</html>
+```
+informe_empleado_pdf.view.php
+```php
+<?php
+
+// Aquesta vista s'utilitza per generar el PDF amb DomPDF
+
+use Dompdf\Dompdf;
+
+// Genera l'HTML per al PDF
+$html = '
+<h1>Informe de Treballadors</h1>
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Telefons</th>
+            <th>Sou</th>
+        </tr>
+    </thead>
+    <tbody>';
+
+foreach ($empleados as $empleado) {
+    $html .= '<tr>';
+    $html .= '<td>' . $empleado->getNomComplet() . '</td>';
+    $html .= '<td>' . implode(', ', $empleado->listarTelefonos()) . '</td>';
+    $html .= '<td>' . $empleado->getSou() . ' €</td>';
+    $html .= '</tr>';
+}
+
+$html .= '</tbody></table>';
+
+// Crea i renderitza el PDF amb DomPDF
+$dompdf = new Dompdf();
+$dompdf->loadHtml($html);
+$dompdf->setPaper('A4', 'portrait');
+$dompdf->render();
+$dompdf->stream("informe_empleado.pdf", ["Attachment" => false]);
+```
+
+index.php
+```php
+
+<?php
+include_once __DIR__ .'/../vendor/autoload.php';
+
+use App\Controllers\EmpleadoController;
+
+// Crea una instància del controlador
+$controller = new EmpleadoController();
+
+// Comprova si l'usuari ha demanat una llista HTML o un PDF
+if (isset($_GET['format']) && $_GET['format'] === 'pdf') {
+    // Genera el PDF
+    $controller->generatePDF();
+} else {
+    // Mostra la llista d'empleats en HTML
+    $controller->listAll();
+}
+
+
+```
+#### Exercici 8. Creació de Proves Unitàries per al Patró MVC
+
+Després de refactoritzar l'aplicació per separar la lògica del negoci de la presentació seguint el patró Model-Vista-Controlador (MVC), és fonamental assegurar-se que tots els components funcionen correctament i que la interacció entre ells es realitza tal com s'espera. Per això, has de crear una sèrie de proves unitàries utilitzant PHPUnit per verificar el funcionament del model, les vistes i els controladors.
+  
+* **Proves del Model**:
+    - Escriu proves unitàries per verificar el funcionament dels mètodes de les classes `Persona`, `Empleado`, i `Empresa`.
+    - Assegura't que els mètodes funcionen correctament, com ara:
+        - `getNomComplet()`
+        - `debePagarImpuestos()`
+        - `addWorker()` i `getCosteNominas()`
+    - Prova que els càlculs es realitzen correctament i que les dades es gestionen segons el que s'espera.
+
+* **Proves del Controlador**:
+    - Escriu proves unitàries per assegurar-te que els controladors interactuen correctament amb els models i que seleccionen la vista adequada per a cada situació.
+    - Prova que les dades es passen correctament del model a la vista a través del controlador.
+    - Implementa proves per verificar que el controlador respon correctament a diferents sol·licituds de l'usuari, per exemple:
+        - Mostrar una llista d'empleats en HTML.
+        - Generar un informe en PDF utilitzant DomPDF.
+
+* **Proves de les Vistes**:
+    - Escriu proves unitàries per comprovar que les vistes reben i mostren correctament la informació proporcionada pel controlador.
+    - Prova que la generació de contingut HTML o PDF es realitza correctament a partir de les dades proporcionades pel model.
+
+
+```php
+<?php
+
+use PHPUnit\Framework\TestCase;
+use App\Controllers\EmpleadoController;
+use App\Models\Empleado;
+
+class EmpleadoControllerTest extends TestCase
+{
+    public function testListAll()
+    {
+         
+        $controller = new EmpleadoController();
+
+        // Captura la sortida HTML del controlador
+        ob_start();
+        $controller->listAll();
+        $output = ob_get_clean();
+
+        // Comprova que la vista inclou les dades esperades
+        $this->assertStringContainsString('Ignasi', $output);
+        $this->assertStringContainsString('Segura Vasco', $output);
+    }
+
+    public function testGeneratePDF()
+    {
+         
+        $controller = new EmpleadoController();
+
+        // Captura la sortida PDF generada pel controlador
+        ob_start();
+        $controller->generatePDF();
+        $output = ob_get_clean();
+
+        // Comprova que el contingut PDF conté les dades correctes
+        $this->assertStringContainsString('Informe de Treballadors', $output);
+        $this->assertStringContainsString('Ignasi', $output);
+    }
+}
+
+```
+
+```php
+<?php
+
+use PHPUnit\Framework\TestCase;
+
+class EmpleadoViewTest extends TestCase
+{
+    public function testRenderHTML()
+    {
+        // Simulem els empleats que seran passats a la vista
+        $empleados = [
+            new App\Models\Empleado('Ignasi', 'Gomis Mullor', 50, 2500),
+            new App\Models\Empleado('Juan', 'Segura Vasco', 50, 2500)
+        ];
+
+        // Captura la sortida HTML
+        ob_start();
+        include __DIR__ . '/../views/empleado.view.php';
+        $output = ob_get_clean();
+
+        // Verifica que els noms i salaris dels empleats apareixen en l'HTML generat
+        $this->assertStringContainsString('Ignasi', $output);
+        $this->assertStringContainsString('2500', $output);
+    }
+}
+```
+
+```php
+<?php
+
+use PHPUnit\Framework\TestCase;
+use Dompdf\Dompdf;
+
+class InformeEmpleadoPDFTest extends TestCase
+{
+    public function testRenderPDF()
+    {
+        // Simulem els empleats que seran passats a la vista
+        $empleados = [
+            new App\Models\Empleado('Ignasi', 'Gomis Mullor', 50, 2500),
+            new App\Models\Empleado('Juan', 'Segura Vasco', 50, 2500)
+        ];
+
+        // Genera el PDF utilitzant la vista
+        ob_start();
+        include __DIR__ . '/../views/informe_empleado_pdf.php';
+        $output = ob_get_clean();
+
+        // Comprova que el contingut del PDF inclou les dades correctes
+        $this->assertStringContainsString('Informe de Treballadors', $output);
+        $this->assertStringContainsString('Ignasi', $output);
+        $this->assertStringContainsString('2500', $output);
+    }
+}
+```    
