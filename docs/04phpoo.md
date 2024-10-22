@@ -1663,7 +1663,7 @@ Un mock és un objecte simulat que imita el comportament d'un objecte real en un
 **Els mocks són útils quan:**
 
 * No volem o no podem dependre del comportament real d'un component extern, com una connexió a una base de dades o una API.
-* Necessitem verificar la interacció entre la classe sota prova i una dependència externa (per exemple, comprovar que un mètode s'ha cridat amb uns certs arguments).
+* Necessitem verificar la interacció entre la classe provada i una dependència externa (per exemple, comprovar que un mètode s'ha cridat amb uns certs arguments).
 * Volem millorar la velocitat i la fiabilitat de les proves en eliminar la dependència de sistemes externs.
 
 **Com funciona un mock**
