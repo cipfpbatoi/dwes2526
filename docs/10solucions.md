@@ -953,7 +953,7 @@ $_SESSION['pages'][] = $_SERVER['REQUEST_URI'];
 
 ```php
 <?php
-<?php 
+namespace App\Models;
 abstract class Persona {
     private $nom;
     private $cognoms;
@@ -1022,6 +1022,7 @@ abstract class Persona {
 * Transforma `Persona` en una classe abstracta. Redefineix el mètode estàtic `toHtml(Persona $p)` en totes les seues subclasses. 
 
 ```php
+namespace App\Models;
 class Empleado extends Persona {
     private $sou;
     private $telefons = [];
@@ -1069,6 +1070,21 @@ class Empleado extends Persona {
 }
 
 
+
+```
+
+#### Exercici 3. Integració d'Espais de Noms, Autoloading, i Composer
+
+* Crea una classe `Empresa` que incloga una propietat amb un array de `Empleados` . Implementa:
+
+    - `public function addWorker(Empleado $t)`
+    - `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
+    - `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
+
+* Configura el projecte PHP amb Composer que utilitze l'autoloading PSR-4.  
+
+```php
+
 <?php
 namespace App\Models;
 
@@ -1093,5 +1109,120 @@ class Empresa {
         }
         return $total;
     }
+
+    public function listWorkersHtml(): string
+    {
+        $html = "<ul>";
+        foreach ($this->empleados as $empleado) {
+            $html .= "<li>{$empleado->getNom()} - Salari: {$empleado->getSalari()}€</li>";
+        }
+        $html .= "</ul>";
+
+        return $html;
+    }
+
+}
+
+```
+
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App"
+        }
+    },
+    "require": {}
 }
 ```
+
+Amb esta estructura de directoris : 
+
+```bash
+/projecte
+    /src
+        /App
+            Empresa.php
+            Empleado.php
+    composer.json
+```  
+
+I executar
+
+```bash
+composer dump-autoload
+```
+
+#### Exercici 4. Logger i Documentació
+
+* Utilitza la llibreria `Monolog` per configurar un logger que escriga missatges a un fitxer `app.log`. Afig funcionalitat perquè el logger registre missatges d'informació i d'error en diferents arxius segons la gravetat.
+
+
+* Configura un logger que escriga missatges de registre tant a un fitxer com a la consola. Prova el logger registrant missatges d'error i advertència.
+
+```php
+<?php
+
+namespace App;
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+class LoggerFactory
+{
+    public static function createLogger(): Logger
+    {
+        $logger = new Logger('app');
+
+        // Handler per a missatges d'informació
+        $infoHandler = new StreamHandler(__DIR__ . '/../logs/info.log', Logger::INFO);
+        $logger->pushHandler($infoHandler);
+
+        // Handler per a missatges d'error
+        $errorHandler = new StreamHandler(__DIR__ . '/../logs/error.log', Logger::ERROR);
+        $logger->pushHandler($errorHandler);
+
+        return $logger;
+    }
+
+    public static function createConsoleLogger(): Logger
+    {
+        $logger = new Logger('console');
+
+        // Handler per escriure missatges a la consola
+        $consoleHandler = new StreamHandler('php://stdout', Logger::WARNING);
+        $logger->pushHandler($consoleHandler);
+
+        return $logger;
+    }
+}
+```
+Provar el logger
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use App\LoggerFactory;
+
+$logger = LoggerFactory::createLogger();
+$consoleLogger = LoggerFactory::createConsoleLogger();
+
+// Registra missatges d'informació i error
+$logger->info('Això és un missatge d\'informació.');
+$logger->error('Això és un missatge d\'error.');
+
+// Registra un missatge d'advertència a la consola
+$consoleLogger->warning('Això és un advertiment.');
+$consoleLogger->error('Això és un missatge d\'error per consola.');
+
+```
+
+
+* Documenta la classe `Producte` creada en exercicis anteriors utilitzant comentaris PHPDoc. Inclou la descripció de la classe, les propietats, i els mètodes. Utilitza una eina com `phpDocumentor` per generar documentació automàtica.
+
+* Escriu proves unitàries per als mètodes de les classes `Persona`, `Empleado`, i `Empresa` utilitzant PHPUnit. Prova els mètodes `getNomComplet`, `estaJubilat`, `addWorker`, i `getCosteNominas`. Assegura't que les proves cobreixen diferents escenaris, incloent errors potencials.
+
+* Escriu una prova unitària que comprove que el logger està registrant correctament els missatges d'error a l'arxiu corresponent. Utilitza un mock per assegurar-te que el logger funciona sense necessitat d'escriure en un fitxer real durant la prova.
+
+
