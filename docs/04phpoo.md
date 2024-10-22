@@ -3059,55 +3059,93 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 - **Triar Nom i Color**: Permet als jugadors triar el seu nom i el color de les fitxes al començar una partida. Aquesta informació ha de ser guardada en les sessions i mostrada en la vista del joc.
 
-| **Criteri**                                                 | ** Insuficient (1 punt)**                                                                                   | ** Adequat (2 punts)**                                                                                                                          | ** Bé (3 punts)**                                                                                                      | ** Excel·lent (4 punts)**                                                                                                 |
-|-------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| **Funcionalitat del programa **                             | No es funcional.                                                                                            | Es funcional però falten funcionalitats.                                                                                                        | Es funcional però falten detalls.                                                                                      | Totalment funcional.                                                                                                      | 
-| **Implementació de Programació Orientada a Objectes (POO)** | Les classes no estan ben dissenyades, falta encapsulació, ús incorrecte d'herència, o mètodes no funcional. | Les classes estan creades però poden tindre errors o una estructura confusa. S'aplica la POO de manera bàsica, però hi ha problemes de disseny. | Classes correctament estructurades i funcionalment completes. Ús adequat d'encapsulació, herència i polimorfisme.      | Disseny de classes ben organitzat, reutilitzable i amb una implementació clara dels principis de POO.                     |
-| **Separació del Model de Negoci de la Presentació (MVC)**   | No s'ha implementat la separació de model i presentació; el codi de lògica i presentació està mesclat.      | Hi ha una separació parcial, però algunes parts de la lògica del negoci es barregen amb la presentació o a l'inrevés.                           | La separació entre model, vista i controlador està ben implementada, però podria millorar en alguns aspectes.          | Excel·lent separació entre el model, vista i controlador, seguint els principis del patró MVC i mantenint un codi net.    |
-| **Integració de Composer i Autoloading**                    | No s'ha configurat Composer o l'autoloading, o està mal configurat i no funciona correctament.              | Composer s'ha utilitzat, però amb una estructura de projectes i autoloading bàsics o incorrectes.                                               | Composer i l'autoloading estan configurats correctament amb una estructura de projectes ben definida.                  | Ús excel·lent de Composer amb una configuració avançada d'autoloading i una estructura de projecte organitzada i modular. |
-| **Implementació de Proves amb PHPUnit**                     | No s'han creat proves, o les proves creades són mínimes i no adequades per a verificar la funcionalitat.    | Es presenten proves bàsiques amb PHPUnit, però cobreixen parcialment les funcionalitats requerides.                                             | Proves unitàries completes que cobreixen la majoria dels casos, incloent proves de gestió de sessions i lògica de joc. | Proves exhaustives que cobreixen totes les funcionalitats i consideren casos límit, amb ús de mocks quan necessari.       |
-| **Ús de Logger amb Monolog**                                | No s'ha implementat el logger o no s'utilitza de manera efectiva per registrar esdeveniments importants.    | Logger implementat, però amb ús limitat o incorrecte en la registració d'esdeveniments i errors.                                                | Logger ben implementat, amb esdeveniments i errors registrats adequadament en diferents fitxers o canals.              | Ús avançat de logger amb diferents handlers per registrar informació, errors, i seguiment detallat del flux del joc.      |
-| **Documentació amb PHPDoc**                                 | Falta documentació o és insuficient per comprendre les classes i mètodes del projecte.                      | Documentació bàsica amb PHPDoc, però amb omisions o descripcions poc clares.                                                                    | Documentació completa amb PHPDoc per a totes les classes i mètodes, amb descripcions clares i detallades.              | Documentació excel·lent amb PHPDoc, ben estructurada i completa, facilitant la comprensió i manteniment del projecte.     |
-| **Exempcions**                                              | No hi ha.                                                                                                   | Si hi ha però no es mostra missatge d'error.                                                                                                    | Es tracta perfectament i hi ha missatge d'error .                                                                      |                                                                                                                           |
-| **Qualitat del Codi i Bones Pràctiques**                    | Codi desorganitzat, amb molts errors de sintaxi, mala nomenclatura, o sense bones pràctiques de codi.       | Codi funcional però amb problemes d'estructura, estil inconsistent o incompliment parcial de bones pràctiques.                                  | Codi ben escrit, seguint les convencions de nomenclatura i bones pràctiques de desenvolupament.                        | Codi de qualitat professional, net, ben organitzat, i seguint rigorosament les millors pràctiques de programació.         |
+#### Rúbrica de l'Avaluació
 
-### Explicació dels Criteris
+##### Funcionalitat del Joc
+| Punts | Descripció |
+|-------|-------------|
+| 0     | El joc no és funcional o està incomplet. |
+| 1     | El joc és funcional, però conté errors significatius. |
+| 2     | El joc està majoritàriament funcional amb errors mínims. |
+| 3     | El joc està completament funcional i sense errors. |
 
-#### **1 punt: Insuficient**
-- **POO**: Les classes no segueixen els principis bàsics de la programació orientada a objectes. Hi ha problemes greus com la falta d'encapsulació, l'ús inadequat de l'herència o mètodes que no funcionen correctament.
-- **MVC**: No s'ha implementat la separació del model de negoci i la presentació. El codi de la lògica del negoci està mesclat amb la presentació (HTML, CSS), cosa que dificulta el manteniment i l'escalabilitat del projecte.
-- **Composer i Autoloading**: No s'ha configurat Composer o l'autoloading. Si estan configurats, no funcionen correctament.
-- **Proves amb PHPUnit**: Les proves estan absents o són mínimes, i no verifiquen adequadament la funcionalitat del projecte.
-- **Logger amb Monolog**: El logger no s'ha implementat, o si està present, no s'utilitza de manera efectiva per registrar esdeveniments importants.
-- **Documentació amb PHPDoc**: Falta documentació essencial, o la que existeix és insuficient per a entendre el codi.
-- **Qualitat del Codi**: El codi és desorganitzat, amb molts errors de sintaxi i no segueix les bones pràctiques de programació.
+##### Implementació de Programació Orientada a Objectes (POO)
+| Punts | Descripció |
+|-------|-------------|
+| 0     | No s'han utilitzat classes o s'ha fet de forma poc coherent. |
+| 1     | Tots els models tenen la seua classe i és operativa. |
+| 2     | L'aplicatiu funciona amb classes. |
 
-#### **2 punts: Adequat**
-- **POO**: Les classes estan creades, però poden contindre errors o una estructura confusa. L'aplicació de la POO és bàsica, amb alguns problemes de disseny.
-- **MVC**: Hi ha una separació parcial entre el model de negoci i la presentació. No obstant això, encara hi ha parts del codi on la lògica del negoci està barrejada amb la presentació o a l'inrevés, cosa que indica una comprensió bàsica però incompleta del patró MVC.
-- **Composer i Autoloading**: Composer s'ha utilitzat, però l'estructura de projectes o l'autoloading no són òptims, presentant configuracions bàsiques o incorrectes.
-- **Proves amb PHPUnit**: Es presenten proves bàsiques que cobreixen parcialment les funcionalitats requerides.
-- **Logger amb Monolog**: El logger està implementat, però l'ús és limitat o incorrecte en la registració d'esdeveniments i errors.
-- **Documentació amb PHPDoc**: La documentació amb PHPDoc és bàsica, amb algunes omisions o descripcions poc clares.
-- **Qualitat del Codi**: El codi és funcional però presenta problemes d'estructura, estil inconsistent o incompliment parcial de bones pràctiques.
+##### Separació del Model de Negoci de la Presentació (MVC)
+| Punts | Descripció |
+|-------|-------------|
+| 0     | No s'ha implementat la separació de model i presentació; el codi de lògica i presentació està mesclat. |
+| 1     | Hi ha una separació parcial, però algunes parts de la lògica del negoci es barregen amb la presentació o a l'inrevés. |
+| 2     | La separació entre model, vista i controlador està ben implementada, però podria millorar en alguns aspectes. |
+| 3     | Excel·lent separació entre el model, vista i controlador, seguint els principis del patró MVC i mantenint un codi net. |
 
-#### **3 punts: Bé**
-- **POO**: Les classes estan correctament estructurades i són funcionalment completes. Es fa un ús adequat de l'encapsulació, l'herència i el polimorfisme.
-- **MVC**: La separació entre el model, vista i controlador està ben implementada, seguint majoritàriament els principis del patró MVC. El codi és clar i estructurat, amb algunes àrees que podrien millorar-se per aconseguir una millor modularitat i mantenibilitat.
-- **Composer i Autoloading**: Composer i l'autoloading estan configurats correctament, amb una estructura de projectes ben definida.
-- **Proves amb PHPUnit**: Les proves unitàries estan completes i cobreixen la majoria dels casos, incloent-hi la gestió de sessions i la lògica del joc.
-- **Logger amb Monolog**: El logger està ben implementat, amb esdeveniments i errors registrats adequadament en diferents fitxers o canals.
-- **Documentació amb PHPDoc**: La documentació amb PHPDoc és completa per a totes les classes i mètodes, amb descripcions clares i detallades.
-- **Qualitat del Codi**: El codi està ben escrit, seguint les convencions de nomenclatura i les bones pràctiques de desenvolupament.
+##### Integració de Composer i Autoloading
+| Punts | Descripció |
+|-------|-------------|
+| 0     | No. |
+| 1     | Sí. |
 
-#### **4 punts: Excel·lent**
-- **POO**: El disseny de classes està ben organitzat, és reutilitzable i implementa clarament els principis de la programació orientada a objectes. El codi és elegant i eficient.
-- **MVC**: Excel·lent separació entre el model, vista i controlador, seguint rigorosament els principis del patró MVC. El codi està ben organitzat, modular i fàcil de mantenir, cosa que facilita l'escalabilitat del projecte. Hi ha una clara distinció de responsabilitats entre les diferents capes.
-- **Composer i Autoloading**: S'utilitza Composer de manera excel·lent, amb una configuració avançada de l'autoloading i una estructura de projecte organitzada i modular.
-- **Proves amb PHPUnit**: Les proves són exhaustives, cobrint totes les funcionalitats i considerant casos límit, amb ús de mocks quan necessari.
-- **Logger amb Monolog**: S'utilitza el logger de manera avançada, amb diferents handlers per registrar informació, errors, i fer un seguiment detallat del flux del joc.
-- **Documentació amb PHPDoc**: La documentació amb PHPDoc és excel·lent, ben estructurada i completa, facilitant la comprensió i el manteniment del projecte.
-- **Qualitat del Codi**: El codi és de qualitat professional, net, ben organitzat, i segueix rigorosament les millors pràctiques de programació.
+##### Implementació de Proves amb PHPUnit
+| Punts | Descripció |
+|-------|-------------|
+| 0     | No s'han creat proves, o les proves creades són mínimes i no adequades per a verificar la funcionalitat. |
+| 1     | Es presenten proves bàsiques amb PHPUnit, però cobreixen parcialment les funcionalitats requerides. |
+| 2     | Proves unitàries completes que cobreixen la majoria dels casos, incloent proves de gestió de sessions i lògica de joc. |
+| 3     | Proves exhaustives que cobreixen totes les funcionalitats i consideren casos límit, amb ús de mocks quan necessari. |
+
+##### Ús de Logger amb Monolog
+| Punts | Descripció |
+|-------|-------------|
+| 0     | No s'ha implementat el logger o no s'utilitza de manera efectiva per registrar esdeveniments importants. |
+| 1     | Logger implementat, però amb ús limitat o incorrecte en la registració d'esdeveniments i errors. |
+| 2     | Logger ben implementat, amb esdeveniments i errors registrats adequadament en diferents fitxers o canals. |
+
+##### Documentació amb PHPDoc
+| Punts | Descripció |
+|-------|-------------|
+| 0     | Falta documentació o és insuficient per comprendre les classes i mètodes del projecte. |
+| 1     | Documentació bàsica amb PHPDoc, però amb omisions o descripcions poc clares. |
+| 2     | Documentació completa amb PHPDoc per a totes les classes i mètodes, amb descripcions clares i detallades. |
+
+##### Exempcions
+| Punts | Descripció |
+|-------|-------------|
+| 0     | No hi ha. |
+| 1     | Si hi ha però no es mostra missatge d'error. |
+| 2     | Es tracta perfectament i hi ha missatge d'error. |
+
+##### Interfície
+| Punts | Descripció |
+|-------|-------------|
+| 0     | No hi ha. |
+| 1     | Implementada. |
+
+##### Elecció color Jugador i panell de resultats
+| Punts | Descripció |
+|-------|-------------|
+| 0     | No. |
+| 1     | Un dels dos. |
+| 2     | Els dos. |
+
+##### Qualitat del Codi i Bones Pràctiques
+| Punts | Descripció |
+|-------|-------------|
+| 0     | Codi desordenat i sense comentaris. |
+| 1     | Codi desorganitzat, amb molts errors de sintaxi, mala nomenclatura, o sense bones pràctiques de codi. |
+| 2     | Codi ben escrit, seguint les convencions de nomenclatura i bones pràctiques de desenvolupament. |
+
+##### Innovació i Creativitat
+| Punts | Descripció |
+|-------|-------------|
+| 0     | Cap creativitat o innovació en el projecte. |
+| 1     | Algunes idees creatives han estat implementades. |
+| 2     | El projecte mostra innovació significativa. |
+
 
 ## 15. Autoavaluació: Programació Orientada a Objectes en PHP
 
