@@ -2803,6 +2803,10 @@ class Board
     public function isValidMove(int $column): bool {
         // TODO: Comprova si el moviment és vàlid
     }
+    
+    public function isFull(): bool {
+        // TODO: El tauler està ple?
+    }
      
 
 
