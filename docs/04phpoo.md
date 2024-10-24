@@ -2783,16 +2783,30 @@ class Board
         [1, -1]   // Diagonal abajo-izquierda
     ];
 
-    private array $slots;
+    private array $slots; // graella
 
-    public function __construct()
+    public function __construct(){
+      // TODO: Ha d'inicializar $slots
+    }
     
-    // Getters i Setters 
+    // TODO: Getters i Setters 
     
-    private static function initializeBoard(): array //Inicialitza la graella amb valors buits
-    public function setMovementOnBoard(int $column, int $player): array //Realitza un moviment en la graella
-    public function checkWin(array $coord): bool //Comprova si hi ha un guanyador
-    public function isValidMove(int $column): bool //Comprova si el moviment és vàlid
+    private static function initializeBoard(): array{
+        // TODO: Inicialitza la graella amb valors buits
+    }
+    public function setMovementOnBoard(int $column, int $player): array {
+        // TODO: Realitza un moviment en la graella
+    }
+    public function checkWin(array $coord): bool {
+        // TODO: Comprova si hi ha un guanyador
+    }
+    public function isValidMove(int $column): bool {
+        // TODO: Comprova si el moviment és vàlid
+    }
+    
+    public function isFull(): bool {
+        // TODO: El tauler està ple?
+    }
      
 
 
@@ -2810,9 +2824,11 @@ class Player {
     private $color;     // Color de les fitxes
     private $isAutomatic; // Forma de jugar (automàtica/manual)
  
-    public function __construct( $name, $color, $isAutomatic = false)  
+    public function __construct( $name, $color, $isAutomatic = false) {
+        // TODO: Inicialitzar variables 
+    }
 
-    // Getters i Setters 
+    // TODO: Getters i Setters 
  
 }
 
@@ -2835,12 +2851,22 @@ class Game
     private ?Player $winner;
     private array $scores = [1 => 0, 2 => 0];
     
-    public function __construct( Player $jugador1, Player $jugador2)
+    public function __construct( Player $jugador1, Player $jugador2){
+        // TODO: S'han d'inicialitzar les variables tenint en compte que el array de jugador ha de començar amb l'index 1 
+    }
      
-    // getters i setters
+    // TODO: getters i setters
        
-    public function reset(): void //Reinicia el joc
-    public function play($columna)  //Realitza un moviment
+    public function reset(): void{
+        // TODO: Reinicia el joc
+    }
+    public function play($columna){
+        // TODO: Realitza un moviment
+    }
+    /**
+    * Realitza moviment automàtic
+    * @return void
+    */                                          
     public function playAutomatic(){
         $opponent = $this->nextPlayer === 1 ? 2 : 1;
 
@@ -2880,8 +2906,12 @@ class Game
         $inthemiddle = $possibles[$middle];
         $this->play($inthemiddle);
     }
-    public function save()  //Guarda l'estat del joc a les sessions
-    public static function restore() //Restaura l'estat del joc de les sessions
+    public function save(){
+        // TODO: Guarda l'estat del joc a les sessions
+    }
+    public static function restore(){
+        // TODO: Restaura l'estat del joc de les sessions
+    }
  
 }
 
@@ -2910,15 +2940,17 @@ class Game
     
     public function __construct($request=null)
     {
-        //Inicialització del joc
+        // TODO: Inicialització del joc.Ha d'inicializar el Game si és la primera vegada o agafar les dades de la sessió si ja ha estat inicialitzada
+         
         $this->play($request);
 
     }
  
     public function play(Array $request)  
     {
-        // Gestió del joc
-        ...
+        // TODO : Gestió del joc. Ací es on s'ha de vore si hi ha guanyador, si el que juga es automàtic  o manual, s'ha polsat reiniciar...
+        
+       
         
         $board = $this->game->getBoard();
         $players = $this->game->getPlayers();
@@ -2987,11 +3019,11 @@ i la funció `loadView` en un fitxer de funcions
     <title>4 en ratlla</title>
     <style>
         .player1 {
-            background-color: <?= $players[1]->getColor() ?> ; /* Color vermell per un dels jugadors */
+            background-color: <?= $players[1]->getColor() ?> ; /* Color   per un dels jugadors */
         }
 
         .player2 {
-            background-color:  <?= $players[2]->getColor() ?>; /* Color groc per l'altre jugador */
+            background-color:  <?= $players[2]->getColor() ?>; /* Color   per l'altre jugador */
         }
 
     </style>
