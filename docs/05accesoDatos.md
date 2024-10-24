@@ -596,29 +596,29 @@ Un Query Builder (Constructor de Consultes) és una eina o classe que facilita l
 
 A continuació, detallo algunes de les principals avantatges i característiques d'un Query Builder com el que has compartit anteriorment:
 
-    * 1. Abstracció de la Base de Dades:
-    - El Query Builder proporciona una capa d'abstracció que permet interactuar amb diferents tipus de bases de dades (MySQL, PostgreSQL, SQLite, etc.) sense canviar el codi de la teva aplicació. Això facilita la portabilitat i l'escalabilitat del codi.
+ * 1. Abstracció de la Base de Dades:
+ - El Query Builder proporciona una capa d'abstracció que permet interactuar amb diferents tipus de bases de dades (MySQL, PostgreSQL, SQLite, etc.) sense canviar el codi de la teva aplicació. Això facilita la portabilitat i l'escalabilitat del codi.
 
-    * 2. Seguretat:
-    - Prevé injeccions SQL: Gràcies a l'ús de sentències preparades i enllaçament de paràmetres, el Query Builder ajuda a prevenir atacs d'injecció SQL, una de les amenaces més comunes en desenvolupament web.
+ * 2. Seguretat:
+ - Prevé injeccions SQL: Gràcies a l'ús de sentències preparades i enllaçament de paràmetres, el Query Builder ajuda a prevenir atacs d'injecció SQL, una de les amenaces més comunes en desenvolupament web.
 
-    * 3. Sintaxi Més Neta i Més Fàcil:
-    - Els Query Builders solen proporcionar una sintaxi més neta i fàcil d'entendre que les cadenes SQL pures. Això fa que el codi sigui més llegible i fàcil de mantenir.
+ * 3. Sintaxi Més Neta i Més Fàcil:
+ - Els Query Builders solen proporcionar una sintaxi més neta i fàcil d'entendre que les cadenes SQL pures. Això fa que el codi sigui més llegible i fàcil de mantenir.
 
-    * 4. Reutilització de Codi:
-    - Les funcions del Query Builder es poden reutilitzar a tot el projecte, reduint la duplicació de codi i facilitant el manteniment.
+ * 4. Reutilització de Codi:
+ - Les funcions del Query Builder es poden reutilitzar a tot el projecte, reduint la duplicació de codi i facilitant el manteniment.
 
-    * 5. Flexibilitat:
-    - Permet realitzar consultes complexes amb una sintaxi simplificada, facilitant l'adaptació del codi a canvis en els requeriments de l'aplicació.
+ * 5. Flexibilitat:
+ - Permet realitzar consultes complexes amb una sintaxi simplificada, facilitant l'adaptació del codi a canvis en els requeriments de l'aplicació.
 
-    * 6. Desenvolupament Més Ràpid:
-    - Ajuda a accelerar el procés de desenvolupament, ja que els desenvolupadors no necessiten recordar la sintaxi SQL exacta per a cada tipus de base de dades.
+ * 6. Desenvolupament Més Ràpid:
+ - Ajuda a accelerar el procés de desenvolupament, ja que els desenvolupadors no necessiten recordar la sintaxi SQL exacta per a cada tipus de base de dades.
 
-    * 7. Fàcil de Depurar:
-    - El codi generat pel Query Builder és més fàcil de depurar en comparació amb les llargues cadenes SQL.
+ * 7. Fàcil de Depurar:
+ - El codi generat pel Query Builder és més fàcil de depurar en comparació amb les llargues cadenes SQL.
 
-    * 8. Suport per a Operacions CRUD:
-    - Els Query Builders solen incloure suport integrat per a operacions CRUD (Crear, Llegir, Actualitzar, Esborrar), fent més fàcil la manipulació de dades.
+ * 8. Suport per a Operacions CRUD:
+ - Els Query Builders solen incloure suport integrat per a operacions CRUD (Crear, Llegir, Actualitzar, Esborrar), fent més fàcil la manipulació de dades.
 
 En resum, un Query Builder serveix per simplificar la interacció amb bases de dades, proporcionant una interfície més segura, neta i fàcil d'utilitzar que les cadenes SQL pures. Ajuda a accelerar el desenvolupament, facilita el manteniment i millora la seguretat de l'aplicació.
 Ací en tenim un exemple de construcció casera:
@@ -894,9 +894,9 @@ Consisteix a navegar a una pàgina web i extraure informació automàticament, a
 Aquesta pràctica requereix l'ús d'una llibreria que facilite la descàrrega de la informació desitjada imitant la interacció d'un navegador web. Aquest "robot" pot accedir a diverses pàgines simultàniament.
 
 !!! question "¿És legal?"
-Si el lloc web indica que té el contingut protegit per drets d'autor o en les normes d'accés via usuari/contrasenya ens avisa de la seua prohibició, estaríem incorrent en un delicte.
-És recomanable estudiar l'arxiu `robots.txt` que es troba en l'arrel de cada lloc web.
-Més informació en l'article [El manual complet per al web scraping legal i ètic en 2021](https://ichi.pro/es/el-manual-completo-para-el-web-scraping-legal-y-etico-en-2021-69178542830388)
+    Si el lloc web indica que té el contingut protegit per drets d'autor o en les normes d'accés via usuari/contrasenya ens avisa de la seua prohibició, estaríem incorrent en un delicte.
+    És recomanable estudiar l'arxiu `robots.txt` que es troba en l'arrel de cada lloc web.
+    Més informació en l'article [El manual complet per al web scraping legal i ètic en 2021](https://ichi.pro/es/el-manual-completo-para-el-web-scraping-legal-y-etico-en-2021-69178542830388)
 
 ### Goutte
 
@@ -1102,29 +1102,9 @@ function eliminarUsuari($id) {
 ```
 </details>
 
-##### Exercici 6. Ús de sentències preparades
+ 
 
-1. Refactoritza els exercicis anteriors per utilitzar sentències preparades per evitar injecció SQL.
-
-<details>
-<summary>Solució</summary>
-
-``` php
-<?php
-function inserirAmbPreparada($nom, $correu) {
-    global $pdo;
-    $sql = "INSERT INTO users (nom, correu) VALUES (:nom, :correu)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':nom', $nom);
-    $stmt->bindParam(':correu', $correu);
-    $stmt->execute();
-    echo "Usuari inserit amb sentència preparada!";
-}
-```
-
-</details>
-
-##### Exercici 7. Tractament d'errors
+##### Exercici 6. Tractament d'errors
 
 1. Modifica el codi anterior per gestionar els errors amb `try-catch` i mostrar missatges d'error clars.
 
@@ -1141,7 +1121,7 @@ function inserirAmbPreparada($nom, $correu) {
 ```
 </details>
 
-##### Exercici 8. Ús de Query Builder
+##### Exercici 7. Ús de Query Builder
 
 1. Utilitza un Query Builder per fer consultes a la base de dades de manera més fàcil i segura sense escriure SQL explícitament.
 
@@ -1162,7 +1142,7 @@ function obtenirUsuaris() {
 ```
 </details>
 
-##### Exercici 9. Tractament de fitxers
+##### Exercici 8. Tractament de fitxers
 
 1. Crea un script que llegeixi un fitxer CSV i insereixi les dades en una taula de la base de dades.
 
@@ -1189,7 +1169,7 @@ function llegirCSV($fitxerCSV) {
 </details>
 
 
-##### Exercici 10. Web Scraping
+##### Exercici 9. Web Scraping
 
 1. Utilitza Goutte per a fer web scraping a la pàgina `https://books.toscrape.com/` i extreu el títol i preu de tots els llibres de la categoria `Classics`.
 2. Mostra els resultats en una taula HTML.
@@ -1295,7 +1275,15 @@ function llegirCSV($fitxerCSV) {
     - Definir la classe `Empleat` amb els seus atributs.
     - Modificar els exercicis anteriors per a utilitzar aquesta classe en lloc de variables simples.
 
-#### Exercici 7: Ús d'un Query Builder
+#### Exercici 7:Completa el Query Builder seleccionat 
+1. **Descripció:**
+   Completa el QueryBuilder seleccionat.
+
+2. **Requisits:**
+   - Implementar el Query Builder en les operacions de consulta,   i eliminació.
+
+
+#### Exercici 8: Ús d'un Query Builder
 
 1. **Descripció:**
    Modifica els exercicis anteriors per a utilitzar un Query Builder per a fer les consultes a la base de dades.
@@ -1303,7 +1291,7 @@ function llegirCSV($fitxerCSV) {
 2. **Requisits:**
     - Implementar el Query Builder en les operacions de consulta, inserció, actualització i eliminació.
 
-#### Exercici 8: Poblar la taula amb dades de webscraping
+#### Exercici 9: Poblar la taula amb dades de webscraping
 
 1. **Descripció:**
    Modifica l'exercici de webscraping per a poblar una taula de la base de dades amb els llibres de la categoria `Classics` de la pàgina `https://books.toscrape.com/`.
@@ -1343,22 +1331,12 @@ function llegirCSV($fitxerCSV) {
    - Una vegada que l'usuari ha iniciat sessió, guarda l’estat del joc a la sessió.
    - Quan l'usuari finalitza la sessió o vol guardar el seu progrés, emmagatzema l’estat actual de la partida a la base de dades.
 
-#### 2. Requisits Específics per a Cada Joc
-
-##### **Ofegat:**
-1. **Guardar i carregar partida:**
-   - Desa l'estat de la partida a la base de dades: la paraula a endevinar, les lletres encertades, els intents restants, i l’estat de la partida (en curs, guanyada o perduda).
-   - Permet que l'usuari reprenga la partida guardada quan torna a iniciar sessió.
-
-2. **Lògica de la Partida:**
-   - Gestiona el joc amb sessions mentre l'usuari juga activament. La base de dades només s’utilitza per guardar o carregar una partida guardada.
-
-##### **4 en Ratlla:**
-1. **Guardar i carregar partida:**
+ 
+6. **Guardar i carregar partida:**
    - Desa l'estat de la partida a la base de dades: l’estat de la graella, el torn del jugador actual, i l’estat de la partida (en curs, guanyada o empatada).
    - Quan l’usuari reprén la partida, carrega l'estat de la graella i continua des del torn correcte.
 
-2. **Lògica de la Partida:**
+7. **Lògica de la Partida:**
    - La graella es manté en la sessió durant el joc actiu. Només es guarda a la base de dades quan es desitja interrompre la partida i es carrega al reprendre-la.
 
 #### 3. Consideracions Addicionals
@@ -1389,9 +1367,6 @@ CREATE TABLE usuaris (
 CREATE TABLE partides (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuari_id INT NOT NULL,
-    paraula VARCHAR(100), -- Només per al joc Ofegat
-    lletres_encertades VARCHAR(100), -- Només per al joc Ofegat
-    intents_restants INT, -- Només per al joc Ofegat
     graella TEXT, -- Només per al joc 4 en Ratlla
     torn_actual INT, -- Només per al joc 4 en Ratlla
     estat_partida ENUM('en_curs', 'guanyada', 'perduda') NOT NULL,
