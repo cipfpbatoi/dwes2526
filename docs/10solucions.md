@@ -953,7 +953,7 @@ $_SESSION['pages'][] = $_SERVER['REQUEST_URI'];
 
 ```php
 <?php
-<?php 
+namespace App\Models;
 abstract class Persona {
     private $nom;
     private $cognoms;
@@ -1022,6 +1022,7 @@ abstract class Persona {
 * Transforma `Persona` en una classe abstracta. Redefineix el mètode estàtic `toHtml(Persona $p)` en totes les seues subclasses. 
 
 ```php
+namespace App\Models;
 class Empleado extends Persona {
     private $sou;
     private $telefons = [];
@@ -1069,6 +1070,21 @@ class Empleado extends Persona {
 }
 
 
+
+```
+
+#### Exercici 3. Integració d'Espais de Noms, Autoloading, i Composer
+
+* Crea una classe `Empresa` que incloga una propietat amb un array de `Empleados` . Implementa:
+
+    - `public function addWorker(Empleado $t)`
+    - `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
+    - `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
+
+* Configura el projecte PHP amb Composer que utilitze l'autoloading PSR-4.  
+
+```php
+
 <?php
 namespace App\Models;
 
@@ -1093,5 +1109,881 @@ class Empresa {
         }
         return $total;
     }
+
+    public function listWorkersHtml(): string
+    {
+        $html = "<ul>";
+        foreach ($this->empleados as $empleado) {
+            $html .= "<li>{$empleado->getNom()} - Salari: {$empleado->getSalari()}€</li>";
+        }
+        $html .= "</ul>";
+
+        return $html;
+    }
+
+}
+
+```
+
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App"
+        }
+    },
+    "require": {}
 }
 ```
+
+Amb esta estructura de directoris : 
+
+```bash
+/projecte
+    /src
+        /App
+            Empresa.php
+            Empleado.php
+    composer.json
+```  
+
+I executar
+
+```bash
+composer dump-autoload
+```
+
+#### Exercici 4. Logger i Documentació
+
+* Utilitza la llibreria `Monolog` per configurar un logger que escriga missatges a un fitxer `app.log`. Afig funcionalitat perquè el logger registre missatges d'informació i d'error en diferents arxius segons la gravetat.
+
+
+* Configura un logger que escriga missatges de registre tant a un fitxer com a la consola. Prova el logger registrant missatges d'error i advertència.
+
+```php
+<?php
+<?php
+
+namespace App\Logger;
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
+
+class LoggerFactory
+{
+    public static function createLogger(): Logger
+    {
+        $logger = new Logger('app');
+
+        // Handler per a missatges d'informació
+        $infoHandler = new StreamHandler($_SERVER['DOCUMENT_ROOT']. '/logs/info.log', Level::INFO);
+        $logger->pushHandler($infoHandler);
+
+        // Handler per a missatges d'error
+        $errorHandler = new StreamHandler($_SERVER['DOCUMENT_ROOT'] . '/logs/error.log', Level::ERROR);
+        $logger->pushHandler($errorHandler);
+
+        return $logger;
+    }
+
+    public static function createConsoleLogger(): Logger
+    {
+        $logger = new Logger('console');
+
+        // Handler per escriure missatges a la consola
+        $consoleHandler = new StreamHandler('php://stdout', Level::WARNING);
+        $logger->pushHandler($consoleHandler);
+
+        return $logger;
+    }
+}
+```
+
+Provar el logger
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use App\Logger\LoggerFactory;
+
+$logger = LoggerFactory::createLogger();
+$consoleLogger = LoggerFactory::createConsoleLogger();
+
+// Registra missatges d'informació i error
+$logger->info('Això és un missatge d\'informació.');
+$logger->error('Això és un missatge d\'error.');
+
+// Registra un missatge d'advertència a la consola
+$consoleLogger->warning('Això és un advertiment.');
+$consoleLogger->error('Això és un missatge d\'error per consola.');
+
+```
+
+
+* Documenta la classe `Empleado` creada en exercicis anteriors utilitzant comentaris PHPDoc. Inclou la descripció de la classe, les propietats, i els mètodes. Utilitza una eina com `phpDocumentor` per generar documentació automàtica.
+
+```php
+<?php
+namespace App\Models;
+
+class Empleado extends Persona {
+    private $sou;
+    private $telefons = [];
+
+    /**
+     * Constructor de la clase Empleado
+     * @param string $nom
+     * @param string $cognoms
+     * @param float $sou
+     * @param int $edat
+     */
+    public function __construct($nom, $cognoms, $sou, $edat = 25) {
+        parent::__construct($nom, $cognoms, $edat);
+        $this->sou = $sou;
+    }
+
+    /**
+     * Obtiene el sueldo del empleado
+     * @return float
+     */
+    public function getSou() {
+        return $this->sou;
+    }
+
+    /**
+     * Establece el sueldo del empleado
+     * @param float $sou
+     */
+    public function setSou($sou) {
+        $this->sou = $sou;
+    }
+
+    /**
+     * Obtiene los teléfonos del empleado
+     * @return array
+     */
+    public function getTelefonos() {
+        return $this->telefons;
+    }
+
+    /**
+     * Establece un teléfono al empleado
+     * @param string $telefon
+     */
+    public function setTelefono($telefon) {
+        $this->telefons[] = $telefon;
+    }
+
+    /**
+     * Devuelve los teléfonos del empleado
+     * @return string
+     */
+    public function listarTelefonos() {
+        return implode(', ', $this->telefons);
+    }
+
+    
+    /**
+     * Vacía la llista de telèfons de l'empleat.
+     *
+     * Aquest mètode elimina tots els telèfons associats a l'empleat, deixant l'array de telèfons buit.
+     *
+     * @return void
+     */
+    public function vaciarTelefonos(): void
+    {
+        $this->telefons = [];
+    }
+
+    /**
+     * Comprova si l'empleat ha de pagar impostos.
+     *
+     * Aquest mètode determina si l'empleat està obligat a pagar impostos en funció del seu salari.
+     * Si el salari de l'empleat és superior a 3333€, haurà de pagar impostos.
+     *
+     * @return bool Retorna `true` si l'empleat ha de pagar impostos, `false` en cas contrari.
+     */
+    public function debePagarImpuestos(): bool
+    {
+        return $this->sou > 3333;
+    }
+}
+```
+
+Des dewl directori php execute : 
+```bash
+docker run --rm -v $(pwd):/data phpdoc/phpdoc:latest run -d /data/src -t /data/src/docs
+```
+
+* Escriu proves unitàries per als mètodes de les classes `Persona`, `Empleado`, i `Empresa` utilitzant PHPUnit. Prova els mètodes `getNomComplet`, `estaJubilat`, `addWorker`, i `getCosteNominas`. Assegura't que les proves cobreixen diferents escenaris, incloent errors potencials.
+
+
+```php
+use PHPUnit\Framework\TestCase;
+use App\Models\Persona;
+
+class PersonaTest extends TestCase
+{
+    public function testGetNomComplet()
+    {
+        $persona = new Persona('Joan', 'Garcia');
+        $this->assertEquals('Joan Garcia', $persona->getNomComplet());
+    }
+
+    public function testEstaJubilat()
+    {
+        // Persona amb edat inferior a la de jubilació
+        $persona = new Persona('Joan', 'Garcia', 50);
+        $this->assertFalse($persona->estaJubilat());
+
+        // Persona amb edat igual o superior a la de jubilació
+        $persona = new Persona('Pere', 'Martí', 66);
+        $this->assertTrue($persona->estaJubilat());
+    }
+
+    public function testEstaJubilatEdgeCase()
+    {
+        // Prova del cas límit a l'edat exacta de jubilació
+        $persona = new Persona('Maria', 'Lopez', 66);
+        $this->assertTrue($persona->estaJubilat());
+    }
+}
+```
+
+```php
+
+use PHPUnit\Framework\TestCase;
+use App\Models\Empleado;
+
+class EmpleadoTest extends TestCase
+{
+    public function testDebePagarImpuestos()
+    {
+        // Empleado amb salari inferior al llindar d'impostos
+        $empleado = new Empleado('Joan', 'García',2500);
+        $this->assertFalse($empleado->debePagarImpuestos());
+
+        // Empleado amb salari superior al llindar d'impostos
+        $empleado = new Empleado('Maria', 'Abradelo',5000);
+        $this->assertTrue($empleado->debePagarImpuestos());
+    }
+
+    public function testVaciarTelefonos()
+    {
+        // Afegim telèfons i després els buidem
+        $empleado = new Empleado('Joan','Petit', 2500);
+        $empleado->setTelefono('123456789');
+        $empleado->setTelefono('987654321');
+
+        $empleado->vaciarTelefonos();
+
+        // Assegurar-nos que la llista de telèfons està buida
+        $this->assertCount(0, $empleado->getTelefonos());
+    }
+}
+
+```
+
+```php
+use PHPUnit\Framework\TestCase;
+use App\Models\Empresa;
+use App\Models\Empleado;
+
+class EmpresaTest extends TestCase
+{
+    public function testAddWorker()
+    {
+        $empresa = new Empresa();
+        $empleado = new Empleado('Joan','Petit', 2500);
+
+        // Afegim un treballador i comprovem que la llista de treballadors té 1 element
+        $empresa->addWorker($empleado);
+        $this->assertCount(1, $empresa->getWorkers());
+
+        // Afegim un altre treballador i comprovem que ara la llista té 2 elements
+        $empleado2 = new Empleado('Maria','Abradelo' ,3000);
+        $empresa->addWorker($empleado2);
+        $this->assertCount(2, $empresa->getWorkers());
+    }
+
+    public function testGetCosteNominas()
+    {
+        $empresa = new Empresa();
+        $empleado1 = new Empleado('Joan','García' ,2500);
+        $empleado2 = new Empleado('Maria','Serra' ,3000);
+
+        // Afegim treballadors i calculem el cost de les nòmines
+        $empresa->addWorker($empleado1);
+        $empresa->addWorker($empleado2);
+
+        // El cost hauria de ser 2500 + 3000 = 5500
+        $this->assertEquals(5500, $empresa->getCosteNominas());
+    }
+
+    public function testGetCosteNominasEmpty()
+    {
+        $empresa = new Empresa();
+
+        // Si no hi ha treballadors, el cost de les nòmines ha de ser 0
+        $this->assertEquals(0, $empresa->getCosteNominas());
+    }
+}
+```
+
+* Escriu una prova unitària que comprove que el logger està registrant correctament els missatges d'error a l'arxiu corresponent. Utilitza un mock per assegurar-te que el logger funciona sense necessitat d'escriure en un fitxer real durant la prova.
+
+```php
+<?php
+
+use PHPUnit\Framework\TestCase;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+class LoggerTest extends TestCase
+{
+    public function testLoggerErrorMessageIsHandledCorrectly()
+    {
+        // Creem un mock per al StreamHandler, simulant el comportament d'un logger d'arxius
+        $mockHandler = $this->createMock(StreamHandler::class);
+
+        // El mock s'espera que el mètode 'handle' es cridi exactament una vegada.
+        // Això s'executa quan el logger maneja un missatge d'error.
+        $mockHandler->expects($this->once())
+                    ->method('handle')
+                    ->with($this->callback(function ($record) {
+                        // Verifiquem que el missatge sigui del tipus ERROR i que continga el missatge esperat
+                        return $record['level'] === Logger::ERROR && $record['message'] === 'Això és un missatge d\'error';
+                    }));
+
+        // Creem un logger de Monolog i li afegim el nostre handler mock
+        $logger = new Logger('test');
+        $logger->pushHandler($mockHandler);
+
+        // Registrem un missatge d'error
+        $logger->error('Això és un missatge d\'error');
+    }
+}
+```
+
+#### Exercici 5. Generació de PDFs amb DomPDF
+
+* Instal·la la llibreria `dompdf/dompdf` amb Composer. Crea un script PHP que genere un PDF senzill amb un títol i un paràgraf de text.
+
+```bash
+composer require dompdf/dompdf
+```
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Dompdf\Dompdf;
+
+// Crear una instància de Dompdf
+$dompdf = new Dompdf();
+
+// Contingut HTML
+$html = '<h1>Títol del PDF</h1><p>Aquest és un paràgraf de text senzill.</p>';
+
+// Carregar el contingut HTML en Dompdf
+$dompdf->loadHtml($html);
+
+// Configurar la mida del paper i l'orientació
+$dompdf->setPaper('A4', 'portrait');
+
+// Renderitzar el PDF
+$dompdf->render();
+
+// Desar el PDF o mostrar-lo
+$dompdf->stream("document_senzill.pdf", ["Attachment" => false]);
+```
+
+* Crea un PDF utilitzant DomPDF que incloga una taula amb dades i una imatge. Assegura't que el PDF es renderitze correctament i que la imatge s'incloga en el document.
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Dompdf\Dompdf;
+
+// Crear una instància de Dompdf
+$dompdf = new Dompdf();
+
+// Contingut HTML amb una taula i una imatge
+$html = '
+<h1>Informe amb Taula i Imatge</h1>
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Cognoms</th>
+            <th>Edat</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Joan</td>
+            <td>Garcia</td>
+            <td>35</td>
+        </tr>
+        <tr>
+            <td>Maria</td>
+            <td>Perez</td>
+            <td>28</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<img src="ruta_a_la_teva_imatge/imatge.png" alt="Imatge Exemple" width="200">
+';
+
+// Carregar el contingut HTML en Dompdf
+$dompdf->loadHtml($html);
+
+// Configurar la mida del paper i l'orientació
+$dompdf->setPaper('A4', 'portrait');
+
+// Renderitzar el PDF
+$dompdf->render();
+
+// Desar el PDF o mostrar-lo
+$dompdf->stream("informe_taula_imatge.pdf", ["Attachment" => false]);
+```
+
+* Utilitzant la classe `Empresa` i `Empleado`, genera un informe en PDF amb la llista de treballadors i el seu sou. Utilitza DomPDF per generar aquest informe.
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+
+use Dompdf\Dompdf;
+use App\Empresa;
+use App\Empleado;
+
+// Crear instàncies d'Empresa i Empleado
+$empresa = new Empresa();
+$empleado1 = new Empleado("Joan", 2500);
+$empleado2 = new Empleado("Maria", 3000);
+
+$empresa->addWorker($empleado1);
+$empresa->addWorker($empleado2);
+
+// Generar contingut HTML per al PDF
+$html = '<h1>Informe de Treballadors</h1>';
+$html .= '<table border="1" cellpadding="10">';
+$html .= '<thead><tr><th>Nom</th><th>Salari</th></tr></thead>';
+$html .= '<tbody>';
+
+foreach ($empresa->getWorkers() as $empleado) {
+    $html .= '<tr>';
+    $html .= '<td>' . $empleado->getNom() . '</td>';
+    $html .= '<td>' . $empleado->getSalari() . ' €</td>';
+    $html .= '</tr>';
+}
+
+$html .= '</tbody></table>';
+$html .= '<p>Cost total de les nòmines: ' . $empresa->getCosteNominas() . ' €</p>';
+
+// Crear una instància de Dompdf
+$dompdf = new Dompdf();
+
+// Carregar el contingut HTML en Dompdf
+$dompdf->loadHtml($html);
+
+// Configurar la mida del paper i l'orientació
+$dompdf->setPaper('A4', 'portrait');
+
+// Renderitzar el PDF
+$dompdf->render();
+
+// Desar el PDF o mostrar-lo
+$dompdf->stream("informe_treballadors.pdf", ["Attachment" => false]);
+```
+
+#### Exercici 6. Serialització i JSON
+
+* Crea una interfície `JSerializable` que incloga els mètodes:
+
+    - `toJSON(): string` – Converteix l'objecte a un JSON utilitzant `json_encode()`.
+    - `toSerialize(): string` – Serialitza l'objecte utilitzant `serialize()`.
+
+* Modifica les classes `Persona`, `Empleado`, i `Empresa` per implementar aquesta interfície. Assegura't que les propietats privades es puguen serialitzar correctament.
+
+* Escriu mètodes per deserialitzar un objecte a partir d'una cadena JSON o d'una cadena serialitzada. Prova aquests mètodes amb PHPUnit per assegurar-te que la deserialització funciona correctament.
+
+
+Es mostra soles la classe Persona :
+
+```php
+namespace App\Models;
+
+interface JSerializable
+{
+    /**
+     * Converteix l'objecte a una cadena JSON.
+     * 
+     * @return string
+     */
+    public function toJSON(): string;
+
+    /**
+     * Serialitza l'objecte a una cadena.
+     * 
+     * @return string
+     */
+    public function toSerialize(): string;
+}
+```
+
+```php
+namespace App\Models;
+
+class Persona implements JSerializable{
+    
+
+    ...
+
+    public function toJSON(): string
+    {
+        return json_encode(get_object_vars($this));
+    }
+
+    public function toSerialize(): string
+    {
+        return serialize($this);
+    }
+
+    // Deserialitzar des d'un JSON
+    public static function fromJSON(string $json): self
+    {
+        $data = json_decode($json, true);
+        return new self($data['nom'], $data['cognoms'], $data['edat']);
+    }
+
+    // Deserialitzar des d'una cadena serialitzada
+    public static function fromSerialized(string $serialized): self
+    {
+        return unserialize($serialized);
+    }
+
+    
+}
+
+```
+
+```php
+
+use PHPUnit\Framework\TestCase;
+use App\Models\Persona;
+
+class PersonaTest extends TestCase
+{
+    
+    ...
+
+    public function testToJSON()
+    {
+        $persona = new Persona('Joan', 'Garcia', 30);
+        $json = $persona->toJSON();
+        $this->assertJson($json);
+        $this->assertStringContainsString('"nom":"Joan"', $json);
+    }
+
+    public function testFromJSON()
+    {
+        $json = '{"nom":"Joan","cognoms":"Garcia","edat":30}';
+        $persona = Persona::fromJSON($json);
+        $this->assertEquals('Joan Garcia', $persona->getNomComplet());
+    }
+
+    public function testToSerialize()
+    {
+        $persona = new Persona('Maria', 'Perez', 40);
+        $serialized = $persona->toSerialize();
+        $this->assertIsString($serialized);
+    }
+
+    public function testFromSerialized()
+    {
+        $persona = new Persona('Maria', 'Perez', 40);
+        $serialized = $persona->toSerialize();
+        $personaDeserialized = Persona::fromSerialized($serialized);
+        $this->assertEquals('Maria Perez', $personaDeserialized->getNomComplet());
+    }
+}
+```
+
+#### Exercici 7. Separació del Model de Negoci i la Presentació (MVC)
+ 
+Fins ara, has creat diverses classes que gestionen la lògica del joc i les dades (models), com `Persona`, `Empleado`, i `Empresa`, i has generat sortides HTML i PDFs amb DomPDF. Ara és el moment de refactoritzar la teua aplicació per assegurar una separació clara entre la lògica del negoci i la presentació, seguint el patró Model-Vista-Controlador (MVC).
+  
+* **Crear el Model**:
+    - Refactoritza les classes `Persona`, `Empleado`, i `Empresa` per assegurar que només gestionen la lògica de negoci (per exemple, càlcul de nòmines, gestió d'empleats, etc.).
+    - Assegura't que aquestes classes no contenen codi relacionat amb la presentació (HTML o PDF).
+
+* **Crear les Vistes**:
+    - Crea vistes separades per presentar la informació als usuaris:
+        - Una vista HTML per mostrar la informació de `Empleado` i `Empresa` com a llistats.
+        - Una vista PDF per generar informes amb DomPDF, basant-se en les dades proporcionades pel model.
+
+* **Crear el Controlador**:
+    - Implementa un controlador que reba les sol·licituds dels usuaris, interactue amb el model (`Persona`, `Empleado`, `Empresa`), i tria la vista adequada per mostrar els resultats (HTML o PDF).
+    - El controlador ha d'encapsular tota la lògica necessària per a gestionar la interacció entre la vista i el model, assegurant que el model no estiga lligat a la capa de presentació.
+
+
+
+EmpleadoController
+```php
+<?php
+
+namespace App\Controllers;
+
+use App\Models\Empleado;
+
+class EmpleadoController {
+
+    // Llista tots els empleats i els mostra en una vista HTML
+    public function listAll(){
+        // Crea alguns empleats de prova
+        $persona1 = new Empleado('Ignasi', 'Gomis Mullor', 50);
+        $persona2 = new Empleado('Juan', 'Segura Vasco', 50);
+        $persona1->setSou(2500);
+        $persona2->setSou(2500);
+
+        $empleados = [$persona1, $persona2];
+
+        // Inclou la vista HTML per llistar els empleats
+        include $_SERVER['DOCUMENT_ROOT'].'/views/empleado.view.php';
+    }
+
+    // Genera un PDF amb la llista d'empleats
+    public function generatePDF(){
+        // Crea alguns empleats de prova
+        $persona1 = new Empleado('Ignasi', 'Gomis Mullor', 50);
+        $persona2 = new Empleado('Juan', 'Segura Vasco', 50);
+        $persona1->setSou(2500);
+        $persona2->setSou(2500);
+
+        $empleados = [$persona1, $persona2];
+
+        // Inclou la vista que generarà el PDF amb DomPDF
+        include $_SERVER['DOCUMENT_ROOT'].'/views/informe_empleado_pdf.php';
+    }
+}
+
+```
+
+empleado.view.php
+```html
+
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleado</title>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>Nom</th><th>Telefons</th><th>Sou</th>
+    </tr>
+    <?php foreach ($empleados as $empleado): ?>
+    <tr>
+        <td><?= $empleado ?></td><td><?= $empleado->listarTelefonos() ?></td><td><?= $empleado->getSou() ?></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+</body>
+</html>
+```
+informe_empleado_pdf.view.php
+```php
+<?php
+
+// Aquesta vista s'utilitza per generar el PDF amb DomPDF
+
+use Dompdf\Dompdf;
+
+// Genera l'HTML per al PDF
+$html = '
+<h1>Informe de Treballadors</h1>
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Telefons</th>
+            <th>Sou</th>
+        </tr>
+    </thead>
+    <tbody>';
+
+foreach ($empleados as $empleado) {
+    $html .= '<tr>';
+    $html .= '<td>' . $empleado->getNomComplet() . '</td>';
+    $html .= '<td>' . implode(', ', $empleado->listarTelefonos()) . '</td>';
+    $html .= '<td>' . $empleado->getSou() . ' €</td>';
+    $html .= '</tr>';
+}
+
+$html .= '</tbody></table>';
+
+// Crea i renderitza el PDF amb DomPDF
+$dompdf = new Dompdf();
+$dompdf->loadHtml($html);
+$dompdf->setPaper('A4', 'portrait');
+$dompdf->render();
+$dompdf->stream("informe_empleado.pdf", ["Attachment" => false]);
+```
+
+index.php
+```php
+
+<?php
+include_once __DIR__ .'/../vendor/autoload.php';
+
+use App\Controllers\EmpleadoController;
+
+// Crea una instància del controlador
+$controller = new EmpleadoController();
+
+// Comprova si l'usuari ha demanat una llista HTML o un PDF
+if (isset($_GET['format']) && $_GET['format'] === 'pdf') {
+    // Genera el PDF
+    $controller->generatePDF();
+} else {
+    // Mostra la llista d'empleats en HTML
+    $controller->listAll();
+}
+
+
+```
+#### Exercici 8. Creació de Proves Unitàries per al Patró MVC
+
+Després de refactoritzar l'aplicació per separar la lògica del negoci de la presentació seguint el patró Model-Vista-Controlador (MVC), és fonamental assegurar-se que tots els components funcionen correctament i que la interacció entre ells es realitza tal com s'espera. Per això, has de crear una sèrie de proves unitàries utilitzant PHPUnit per verificar el funcionament del model, les vistes i els controladors.
+  
+* **Proves del Model**:
+    - Escriu proves unitàries per verificar el funcionament dels mètodes de les classes `Persona`, `Empleado`, i `Empresa`.
+    - Assegura't que els mètodes funcionen correctament, com ara:
+        - `getNomComplet()`
+        - `debePagarImpuestos()`
+        - `addWorker()` i `getCosteNominas()`
+    - Prova que els càlculs es realitzen correctament i que les dades es gestionen segons el que s'espera.
+
+* **Proves del Controlador**:
+    - Escriu proves unitàries per assegurar-te que els controladors interactuen correctament amb els models i que seleccionen la vista adequada per a cada situació.
+    - Prova que les dades es passen correctament del model a la vista a través del controlador.
+    - Implementa proves per verificar que el controlador respon correctament a diferents sol·licituds de l'usuari, per exemple:
+        - Mostrar una llista d'empleats en HTML.
+        - Generar un informe en PDF utilitzant DomPDF.
+
+* **Proves de les Vistes**:
+    - Escriu proves unitàries per comprovar que les vistes reben i mostren correctament la informació proporcionada pel controlador.
+    - Prova que la generació de contingut HTML o PDF es realitza correctament a partir de les dades proporcionades pel model.
+
+
+```php
+<?php
+
+use PHPUnit\Framework\TestCase;
+use App\Controllers\EmpleadoController;
+use App\Models\Empleado;
+
+class EmpleadoControllerTest extends TestCase
+{
+    public function testListAll()
+    {
+         
+        $controller = new EmpleadoController();
+
+        // Captura la sortida HTML del controlador
+        ob_start();
+        $controller->listAll();
+        $output = ob_get_clean();
+
+        // Comprova que la vista inclou les dades esperades
+        $this->assertStringContainsString('Ignasi', $output);
+        $this->assertStringContainsString('Segura Vasco', $output);
+    }
+
+    public function testGeneratePDF()
+    {
+         
+        $controller = new EmpleadoController();
+
+        // Captura la sortida PDF generada pel controlador
+        ob_start();
+        $controller->generatePDF();
+        $output = ob_get_clean();
+
+        // Comprova que el contingut PDF conté les dades correctes
+        $this->assertStringContainsString('Informe de Treballadors', $output);
+        $this->assertStringContainsString('Ignasi', $output);
+    }
+}
+
+```
+
+```php
+<?php
+
+use PHPUnit\Framework\TestCase;
+
+class EmpleadoViewTest extends TestCase
+{
+    public function testRenderHTML()
+    {
+        // Simulem els empleats que seran passats a la vista
+        $empleados = [
+            new App\Models\Empleado('Ignasi', 'Gomis Mullor', 50, 2500),
+            new App\Models\Empleado('Juan', 'Segura Vasco', 50, 2500)
+        ];
+
+        // Captura la sortida HTML
+        ob_start();
+        include __DIR__ . '/../views/empleado.view.php';
+        $output = ob_get_clean();
+
+        // Verifica que els noms i salaris dels empleats apareixen en l'HTML generat
+        $this->assertStringContainsString('Ignasi', $output);
+        $this->assertStringContainsString('2500', $output);
+    }
+}
+```
+
+```php
+<?php
+
+use PHPUnit\Framework\TestCase;
+use Dompdf\Dompdf;
+
+class InformeEmpleadoPDFTest extends TestCase
+{
+    public function testRenderPDF()
+    {
+        // Simulem els empleats que seran passats a la vista
+        $empleados = [
+            new App\Models\Empleado('Ignasi', 'Gomis Mullor', 50, 2500),
+            new App\Models\Empleado('Juan', 'Segura Vasco', 50, 2500)
+        ];
+
+        // Genera el PDF utilitzant la vista
+        ob_start();
+        include __DIR__ . '/../views/informe_empleado_pdf.php';
+        $output = ob_get_clean();
+
+        // Comprova que el contingut del PDF inclou les dades correctes
+        $this->assertStringContainsString('Informe de Treballadors', $output);
+        $this->assertStringContainsString('Ignasi', $output);
+        $this->assertStringContainsString('2500', $output);
+    }
+}
+```    
