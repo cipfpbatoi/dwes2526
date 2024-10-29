@@ -175,39 +175,62 @@ No aprofundirem en la resta d'opcions però, en la pestanya **Més** existeix l'
 
 ## 3. PHP Data Objects :: PDO
 
-*PHP Data Objects* (o *PDO*) és un *driver* de *PHP* que s'utilitza per a treballar sota una interfície d'objectes amb la base de dades. Hui dia és el que més s'utilitza per a manejar informació des d'una base de dades, ja siga relacional o no relacional.
+La classe PDO de PHP s'utilitza per connectar-se a una base de dades i executar consultes SQL de manera segura. Quan construeixes una instància de PDO, pots passar-li diferents atributs en el constructor i opcions per configurar el comportament de la connexió. Aquí tens els atributs principals i el seu propòsit:
 
-Per establir la connexió en la bbdd utilitzarem:
+### Constructor de la classe PDO
 
-``` php
-<?php
-    $conexion = new PDO('mysql:host=localhost; dbname=dwes', 'dwes', 'abc123');
-```
-
-A més, amb *PDO* podem usar les excepcions amb *try catch* per a gestionar els errors que es produïsquen en la nostra aplicació, per a això, com féiem abans, hem d'encapsular el codi entre blocs *try / catch*.
+El constructor de la classe PDO accepta tres paràmetres obligatoris i un opcional:
 
 ``` php
 <?php
+    $pdo = new PDO(string $dsn, string $username, string $password, array $options);
 
-    $dsn = 'mysql:dbname=prueba;host=127.0.0.1';
-    $usuario = 'usuario';
-    $contraseña = 'contraseña';
-
-    try {
-        $mbd = new PDO($dsn, $usuario, $contraseña);
-        $mbd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo 'Falló la conexión: ' . $e->getMessage();
-    }
 ```
-En primer lloc, creem la connexió amb la base de dades a través del constructor *PDO* passant-li la informació de la base de dades.
 
-En segon lloc, establim els paràmetres per a manejar les exempcions, en aquest cas hem utilitzat:
+* $dsn (Data Source Name): És una cadena que especifica el tipus de base de dades i la informació necessària per connectar-s'hi.
+  * Format per tipus de base de dades i configuració, per exemple:
+    * Mysql:host=localhost;dbname=testdb (per a MySQL).
+    * pgsql:host=localhost;port=5432;dbname=testdb (per a PostgreSQL).
+    * sqlite:/path/to/database.db (per a SQLite).
+  * $username: El nom d'usuari per a la connexió a la base de dades.
+  * $password: La contrasenya associada al nom d'usuari.
+  * $options (Opcional): Un array d'opcions per definir el comportament de la connexió. Aquests són alguns dels valors més comuns que es poden definir en aquest array:
+    * PDO::ATTR_ERRMODE: Controla com es gestionen els errors. Alguns valors comuns són:
+      * PDO::ERRMODE_SILENT: Els errors no generen cap missatge.
+      * PDO::ERRMODE_WARNING: Els errors generen un avís.
+      * PDO::ERRMODE_EXCEPTION: Els errors generen una excepció, que és el més recomanable per controlar errors.
+    * PDO::ATTR_DEFAULT_FETCH_MODE: Defineix el mode de recuperació de dades per defecte, com ara:
+      * PDO::FETCH_ASSOC: Retorna les dades com un array associatiu.
+      * PDO::FETCH_OBJ: Retorna les dades com un objecte.
+      * PDO::FETCH_BOTH: Retorna les dades com un array associatiu i numèric.
+    * PDO::ATTR_PERSISTENT: Habilita connexions persistents. Una connexió persistent pot millorar el rendiment mantenint la connexió activa per múltiples peticions en lloc de crear-ne una nova cada vegada.
+    * PDO::ATTR_TIMEOUT: Defineix un temps límit per a la connexió en segons.
 
-- `PDO::ATTR_ERRMODE` indicant-li a PHP que volem un reporte d'errors.
-- `PDO::ERRMODE_EXCEPTION` amb aquest atribut obliguem al fet que llance exempcions, a més de ser l'opció més humana i llegible que hi ha a l'hora de controlar errors.
+##### Exemple de connexió amb PDO
 
-Qualsevol error que es llance a través de **PDO**, el sistema llançarà una <span class="alert">**PDOException**</span>.
+``` php     
+$dsn = "mysql:host=localhost;dbname=testdb";
+$username = "usuari";
+$password = "contrasenya";
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_PERSISTENT => true,
+    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+];
+
+try {
+    $pdo = new PDO($dsn, $username, $password, $options);
+    echo "Connexió establerta amb èxit!";
+} catch (PDOException $e) {
+    echo "Error de connexió: " . $e->getMessage();
+}
+```
+
+Aquest codi estableix una connexió a una base de dades MySQL amb un joc de caràcters utf8, una connexió persistent, i llança excepcions en cas d'errors.
+
+ 
+Qualsevol error que es llance a través de **PDO**, el sistema llançarà una  **PDOException** .
 
 ### Fitxer de configuració de la BD
 
@@ -254,7 +277,7 @@ Una vegada tenim la plantilla de la nostra consulta, hem de seguir amb la prepar
 
 ```php
 <?php
-    //  ▒▒▒▒▒▒▒▒ Borrando con parámetros ▒▒▒▒▒▒▒▒
+     
 
     include "config/database.inc.php";
 
@@ -487,7 +510,7 @@ Així doncs, si pel que siga canviem l'estructura de la taula <span class="alert
     $sentencia = $conexion -> prepare($sql);
 
     // Aquí 'Tienda' es el nombre de nuestra clase
-    $sentencia -> setFetchMode(PDO::FETCH_CLASS, "Tienda");
+    $sentencia -> setFetchMode(PDO::FETCH_CLASS, Tienda::class);
     $sentencia -> execute();
 
     while($t = $sentencia -> fetch()) {
@@ -1302,48 +1325,26 @@ function llegirCSV($fitxerCSV) {
 
 ## 9. Enunciat dels projectes
 
-### Projecte "Ofegat" i "4 en Ratlla"
+### Projecte  "4 en Ratlla"
 
 #### 1. Autenticació d'Usuaris i Gestió de Partides Guardades
 
 1. **Registre d'Usuari:**
-   - Crea un formulari de registre perquè nous usuaris es puguen registrar.
-   - **Validació del registre**: Comprova que el nom d'usuari no estiga duplicat i que la contrasenya complisca certs requisits.
-   - Emmagatzema la contrasenya de l'usuari en forma de **hash** utilitzant `password_hash()` per garantir la seguretat.
-
-2. **Inici de Sessió (Login):**
-   - Crea un formulari d’inici de sessió (nom d’usuari i contrasenya).
-   - Autentica l’usuari comprovant el nom d’usuari i la contrasenya amb `password_verify()`.
-   - Si l'autenticació és correcta, inicialitza una sessió per a l'usuari i guarda l'**ID de l’usuari** en la sessió.
-
-3. **Gestió de Partides Guardades:**
-   - Quan l'usuari inicia sessió, comprova si té una partida guardada:
-      - Si té una partida guardada, ofereix l’opció de **reprendre** la partida.
-      - Si no té cap partida guardada, permet iniciar una **nova partida**.
-   - Si l'usuari decideix iniciar una nova partida, la partida guardada anteriorment es **sobrescriu**.
-
-4. **Opcions per als Usuaris:**
-   - **Iniciar nova partida**: L’usuari pot començar una nova partida. Aquesta acció esborrarà la partida anterior guardada.
-   - **Reprendre partida**: Si l’usuari té una partida guardada, pot continuar-la des d’on ho va deixar.
-   - **Tancar sessió**: Afig una opció perquè l’usuari puga tancar sessió i finalitzar la seua sessió activa.
-
-5. **Manteniment de la Sessió de Joc:**
-   - Una vegada que l'usuari ha iniciat sessió, guarda l’estat del joc a la sessió.
-   - Quan l'usuari finalitza la sessió o vol guardar el seu progrés, emmagatzema l’estat actual de la partida a la base de dades.
-
+   - Crea un formulari de login perquè el usuaris s'hagen de validar .
+   - Si l'usuari no està registrat es donarà d'alta automàticament i se li permetrà entrar.
+   - Després de validar-se o registrar-se es mostrarà la pantalla de triar nom i color.
  
-6. **Guardar i carregar partida:**
-   - Desa l'estat de la partida a la base de dades: l’estat de la graella, el torn del jugador actual, i l’estat de la partida (en curs, guanyada o empatada).
-   - Quan l’usuari reprén la partida, carrega l'estat de la graella i continua des del torn correcte.
+2. **Opcions noves** 
 
-7. **Lògica de la Partida:**
-   - La graella es manté en la sessió durant el joc actiu. Només es guarda a la base de dades quan es desitja interrompre la partida i es carrega al reprendre-la.
-
+   - **Guardar Partida**: Es guardarà l'estat actual de la partida en la BBDD (només una per usuari, la darrera). Si guardem un altra substituirà a l'anterior. 
+   - **Carregar Partida**: Es carregarà l'estat de la partida guardada per a l'usuari.
+   - **Tancar sessió**: Afig una opció perquè l’usuari puga tancar sessió i finalitzar la seua sessió activa.
+ 
 #### 3. Consideracions Addicionals
 
 1. **Seguretat:**
    - Utilitza **hashing** de contrasenyes amb `password_hash()` per emmagatzemar-les de forma segura.
-   - Gestiona les **sessions** i les **cookies** de manera segura per evitar robatoris de sessió.
+    
 
 2. **Millores de la Interfície d'Usuari:**
    - Proporciona missatges clars d'error en cas de contrasenyes incorrectes o usuaris inexistents.
@@ -1358,18 +1359,29 @@ function llegirCSV($fitxerCSV) {
 ### **Exemple d'Estructura de la Base de Dades:**
 
 ```sql
-CREATE TABLE usuaris (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nom_usuari VARCHAR(50) UNIQUE NOT NULL,
-    contrasenya VARCHAR(255) NOT NULL
+CREATE TABLE `partides` (
+                           `usuari_id` int NOT NULL,
+                           `game` text CHARACTER  
 );
+ 
+CREATE TABLE `usuaris` (
+                          `id` int NOT NULL,
+                          `nom_usuari` varchar(50) NOT NULL,
+                          `contrasenya` varchar(255) NOT NULL
+);
+ 
+ALTER TABLE `partides`
+   ADD PRIMARY KEY (`usuari_id`);
+ 
+ALTER TABLE `usuaris`
+   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nom_usuari` (`nom_usuari`);
+ 
+ALTER TABLE `usuaris`
+   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+ 
+ALTER TABLE `partides`
+   ADD CONSTRAINT `partides_ibfk_1` FOREIGN KEY (`usuari_id`) REFERENCES `usuaris` (`id`) ON DELETE CASCADE;
+COMMIT;
 
-CREATE TABLE partides (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuari_id INT NOT NULL,
-    graella TEXT, -- Només per al joc 4 en Ratlla
-    torn_actual INT, -- Només per al joc 4 en Ratlla
-    estat_partida ENUM('en_curs', 'guanyada', 'perduda') NOT NULL,
-    FOREIGN KEY (usuari_id) REFERENCES usuaris(id) ON DELETE CASCADE
-);
 ```
