@@ -2960,7 +2960,7 @@ class Game
         loadView('index',compact('board','players','winner','scores'));
      }
 }
-  ```
+```
 
 ##### Serveis i funcions
 
@@ -2985,6 +2985,7 @@ class Service
     }
 }
 ```
+
 i la funció `loadView` en un fitxer de funcions
 
 ```php
