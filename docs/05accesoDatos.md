@@ -1029,9 +1029,9 @@ echo $precioTotal;
 ``` php
 <?php
 try {
-    $dsn = 'mysql:host=localhost;dbname=test';
-    $usuari = 'usuari';
-    $contrasenya = 'contrasenya';
+    $dsn = 'mysql:host=db;dbname=pruebadb';
+    $usuari = 'root';
+    $contrasenya = '1234';
     $pdo = new PDO($dsn, $usuari, $contrasenya);
     echo "Connexió establerta!";
 } catch (PDOException $e) {
@@ -1050,13 +1050,13 @@ try {
 <summary>Solució</summary>
 
 ``` php
-<?php
 function inserirUsuari($nom, $correu) {
     global $pdo;
     $sql = "INSERT INTO users (nom, correu) VALUES (:nom, :correu)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':nom', $nom);
-    $stmt->bindParam(':correu', $
+    $stmt->bindParam(':correu', $correu);
+    $stmt->execute();
     echo "Usuari inserit!";
 }
 ```
