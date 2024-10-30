@@ -20,9 +20,10 @@
 ## Objectiu del Projecte
 
 Desenvolupar el backend per a l’aplicació **BatoiBooks** en PHP, proporcionant:
-- Autenticació per token JWT.
-- Gestió completa de les dades de l'aplicació (operacions CRUD).
-- Interfície d’administració amb funcionalitats avançades, com la generació de factures en PDF.
+
+    - Autenticació per token JWT.
+    - Gestió completa de les dades de l'aplicació (operacions CRUD).
+    - Interfície d’administració amb funcionalitats avançades, com la generació de factures en PDF.
 
 ---
 
@@ -48,10 +49,11 @@ Es crearà un fitxer PHP específic per a cada entitat, que atendrà les operaci
 - **Courses**
 
 Per a cada taula es permetran operacions:
-- **GET**: Per obtenir dades (llistat o element per ID).
-- **POST**: Per inserir nous elements.
-- **PUT**: Per modificar elements existents.
-- **DELETE**: Per eliminar elements.
+
+    - **GET**: Per obtenir dades (llistat o element per ID).
+    - **POST**: Per inserir nous elements.
+    - **PUT**: Per modificar elements existents.
+    - **DELETE**: Per eliminar elements.
 
 Cada operació validarà les dades abans de ser processades i respondrà amb els estats corresponents.
 
