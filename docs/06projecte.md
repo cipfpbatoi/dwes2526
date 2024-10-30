@@ -29,7 +29,11 @@ Desenvolupar el backend per a l’aplicació **BatoiBooks** en PHP, proporcionan
 
 ## Funcionalitats del Backend
 
-### 1. Autenticació
+### 1. BBDD
+
+Crear la BBDD i les taules utilitzant el següent [sql](./recursos/sql/batoi_books.sql) 
+
+### 2. Autenticació per al frontEnd
 
 1. **Registre**: Endpoint per registrar nous usuaris. Rebrà dades com `email`, `nick` i `password`, i retornarà un token JWT per a la sessió de l’usuari.
 
@@ -39,7 +43,7 @@ Desenvolupar el backend per a l’aplicació **BatoiBooks** en PHP, proporcionan
 
 ---
 
-### 2. Controladors d’Entitats (CRUD)
+### 3. Controladors d’Entitats (CRUD)
 
 Es crearà un fitxer PHP específic per a cada entitat, que atendrà les operacions CRUD bàsiques. Les taules que es gestionaran són:
 
@@ -90,10 +94,10 @@ Contingut JSON: {
 ```
 
 
-### 3. Interfície d’Administrador
+### 4. Interfície d’Administrador
 
-1. **Accés al CRUD de Mòduls i Cursos**: L’usuari administrador podrà gestionar completament les taules `modules` i `courses`.
-2. **Autenticació de l'usuari**: L'usuari s'autenticarà amb un usuari i es comprovarà que és l'administrador.  
+1. **Autenticació de l'usuari**: L'usuari s'autenticarà amb un usuari i es comprovarà que és l'administrador.
+2. **Accés al CRUD de Mòduls i Cursos**: L’usuari administrador podrà gestionar completament les taules `modules` i `courses`.
 3. **Generació de Factures en PDF**:
     - Permetre la selecció de dates i usuaris.
     - Calcular un 10% de l’import total de les vendes per generar la factura.
