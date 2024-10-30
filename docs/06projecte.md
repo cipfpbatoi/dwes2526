@@ -107,8 +107,11 @@ Contingut JSON: {
 - Estructurar el projecte amb fitxers separats per a cada entitat dins de la carpeta `api/` i `backend`
 - Utilitzar el format JSON per a la comunicació entre el client i el servidor.
 - Garantir la seguretat en les peticions autenticades mitjançant el token JWT.
-
+- Utilitzar en la mesura de lo possible el MVC en el backend i els control·ladors per a respondre a les peticions de l'API.
+- Cal fer proves a un model o control·lador de l'aplicatiu.
+- Cal guardar en un fitxer de log les peticions que es fan a l'api en forma de: Usuari, IP client i Mètode utilitzat.   
+- Utilitzar exempcions per al maneig d'errors de l'usuari.
+ 
 ---
 
-Amb aquest enunciat es podrà implementar un backend complet per a BatoiBooks, incloent seguretat amb tokens, gestió de dades i generació de documents.
-
+ 
