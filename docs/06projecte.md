@@ -118,4 +118,209 @@ Contingut JSON: {
  
 ---
 
+## Exemples de resposta
+
+Estos exemples es poden agafar com a referència per a la implementació de l'API. Però només són la base sobre la que construir una solució pròpia que puga incorporar l'harència de classes per fer 
+mes eficient i reutilitzable el codi.
+
+### API
+
+#### DBService.php
+
+```php
+namespace BatoiBook\Services;
+
+class DBService
+{
+    public static function connect(): \PDO
+    {
+        $dbConfig =  require  $_SERVER['DOCUMENT_ROOT'] . '/../config/connection.php';
+
+        try {
+            $dsn = "mysql:host=" . $dbConfig['host'] . ";dbname=" . $dbConfig['dbname'];
+            $db = new \PDO($dsn, $dbConfig['username'], $dbConfig['password']);
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        } catch (\PDOException $e) {
+            die("Error de connexió: " . $e->getMessage());
+        }
+
+        return $db;
+
+    }
+}
+```
+
+#### Model 
+
+```php
+namespace BatoiBook\Models;
+
+class Course
+{
+   public function __construct(
+   public int $id = 0,
+   public string $course = '',
+   public int $familyId = 0,
+   public string $vliteral = '',
+   public string $cliteral = '' ) 
+   {}
+}
+```
+
+#### Controlador
+
+```php
+namespace BatoiBook\Controllers\Api;
+use \PDO;
+use \PDOException;
+
+class CourseController extends ApiController
+{
+    protected PDO $db;
+    public function __construct()
+    {
+        $this->db = DBService::connect();
+    }
+
+    public function getAll(): void
+    {
+        $stmt = $this->db->prepare("SELECT * FROM courses");
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Course::class);
+
+        $this->jsonResponse($stmt->fetchAll());
+    }
+
+    public function getOne(int $id): void
+    {
+        $stmt = $this->db->prepare("SELECT * FROM courses WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,  Course::class);
+        $record = $stmt->fetch();
+
+        if ($record) {
+            $this->jsonResponse($record);
+        } else {
+            $this->errorResponse("Record not found", 404);
+        }
+    }
+
+    public function create(array $data): int
+    {
+        try {
+            $columns = implode(", ", array_keys($data));
+            $placeholders = implode(", ", array_map(fn($key) => ":$key", array_keys($data)));
+
+            $stmt = $this->db->prepare("INSERT INTO courses ($columns) VALUES ($placeholders)");
+
+            foreach ($data as $key => $value) {
+                $stmt->bindValue(":$key", $value);
+            }
+
+            $stmt->execute();
+            return $this->db->lastInsertId();
+         } catch (PDOException $e) {
+            $this->errorResponse("Failed to create record: " . $e->getMessage());
+        }
+    }
+
+    public function update(int $id, array $data): void
+    {
+        try {
+            $setClause = implode(", ", array_map(function ($key) {
+                return "$key = :$key";
+            }, array_keys($data)));
+
+
+            $stmt = $this->db->prepare("UPDATE courses SET $setClause WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+            foreach ($data as $key => $value) {
+                 $stmt->bindValue(":$key", $value);
+            }
+
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                $this->jsonResponse(["message" => "Record updated successfully"]);
+            } else {
+                $this->errorResponse("Record not found", 404);
+            }
+        } catch (PDOException $e) {
+            $this->errorResponse("Failed to update record: " . $e->getMessage());
+        }
+    }
+
+    public function delete(int $id): void
+    {
+        $stmt = $this->db->prepare("DELETE FROM courses WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $this->jsonResponse(["message" => "Record deleted successfully"]);
+        } else {
+            $this->errorResponse("Record not found", 404);
+        }
+    }
+}
+```
+
+#### courses.php
+
+```php
+  
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../Helpers/functions.php';
+
+use BatoiBook\Controllers\Api\CourseController;
  
+header("Content-Type: application/json");
+
+$controller = new CourseController();
+$method = $_SERVER['REQUEST_METHOD'];
+$id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
+switch ($method) {
+    case 'GET':
+        if (isset($id)) {
+            $record = $controller->getOne($id);
+            echo json_encode($record ?? ["error" => "Field not found"]);
+        } else {
+            $records = $controller->getAll ();
+            echo json_encode($records);
+        }
+        break;
+    case 'POST':
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if ($data) {
+            $id = $controller->create ($data);
+            echo json_encode(["message" => "Field created successfully", "id" => $id]);
+        } else {
+            echo json_encode(["error" => "Invalid data"]);
+        }
+        break;
+    case 'PUT':
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (isset($_GET['id']) && $data) {
+            $success = $controller->update ($id, $data);
+            echo json_encode(["message" => $success ? "Field updated successfully" : "Book not found"]);
+        } else {
+            echo json_encode(["error" => "Invalid data or ID"]);
+        }
+        break;
+    case 'DELETE':
+        if (isset($_GET['id'])) {
+            $success = $controller->delete ($id);
+            echo json_encode(["message" => $success ? "Field deleted successfully" : "Book not found"]);
+        } else {
+            echo json_encode(["error" => "ID not provided"]);
+        }
+        break;
+    default:
+        echo json_encode(["error" => "Invalid request method"]);
+        break;
+}
+```
+
