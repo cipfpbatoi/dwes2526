@@ -112,7 +112,7 @@ Contingut JSON: {
 - Utilitzar el format JSON per a la comunicació entre el client i el servidor.
 - Garantir la seguretat en les peticions autenticades mitjançant el token JWT.
 - Utilitzar en la mesura de lo possible el MVC en el backend i els control·ladors per a respondre a les peticions de l'API.
-- Cal fer proves a un model o control·lador de l'aplicatiu.
+- Cal fer test de la lògica de la factura.
 - Cal guardar en un fitxer de log les peticions que es fan a l'api en forma de: Usuari, IP client i Mètode utilitzat.   
 - Utilitzar exempcions per al maneig d'errors de l'usuari.
  
@@ -193,10 +193,7 @@ class CourseController extends ApiController
 
     public function getOne(int $id): void
     {
-        $stmt = $this->db->prepare("SELECT * FROM courses WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,  Course::class);
+        //TODO: Implementar consulta 
         $record = $stmt->fetch();
 
         if ($record) {
@@ -209,16 +206,7 @@ class CourseController extends ApiController
     public function create(array $data): int
     {
         try {
-            $columns = implode(", ", array_keys($data));
-            $placeholders = implode(", ", array_map(fn($key) => ":$key", array_keys($data)));
-
-            $stmt = $this->db->prepare("INSERT INTO courses ($columns) VALUES ($placeholders)");
-
-            foreach ($data as $key => $value) {
-                $stmt->bindValue(":$key", $value);
-            }
-
-            $stmt->execute();
+            //TODO: Implementar inserció
             return $this->db->lastInsertId();
          } catch (PDOException $e) {
             $this->errorResponse("Failed to create record: " . $e->getMessage());
@@ -228,17 +216,7 @@ class CourseController extends ApiController
     public function update(int $id, array $data): void
     {
         try {
-            $setClause = implode(", ", array_map(function ($key) {
-                return "$key = :$key";
-            }, array_keys($data)));
-
-
-            $stmt = $this->db->prepare("UPDATE courses SET $setClause WHERE id = :id");
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-
-            foreach ($data as $key => $value) {
-                 $stmt->bindValue(":$key", $value);
-            }
+            //TODO: Implementar actualització
 
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
@@ -253,9 +231,7 @@ class CourseController extends ApiController
 
     public function delete(int $id): void
     {
-        $stmt = $this->db->prepare("DELETE FROM courses WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+        //TODO: Implementar eliminació
         if ($stmt->rowCount() > 0) {
             $this->jsonResponse(["message" => "Record deleted successfully"]);
         } else {
@@ -324,3 +300,83 @@ switch ($method) {
 }
 ```
 
+### Autentificació
+
+#### Requeriments previs
+
+Cal instal·lar la llibreria `firebase/php-jwt` per a poder generar i validar els tokens JWT.
+
+```bash
+composer require firebase/php-jwt
+```
+
+#### login.php
+
+```php
+ 
+   require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+   
+   use Firebase\JWT\JWT;
+   use Firebase\JWT\Key;
+   use BatoiBook\Services\DBService;
+   
+   // Clau secreta per generar el token (és important mantenir-la segura)
+   $secretKey = 'clau_secreta';
+   header('Content-Type: application/json');
+   // Llegeix les dades de la petició
+   $data = json_decode(file_get_contents("php://input"));
+    
+   if (!empty($data->email) && !empty($data->password)) {
+       
+        $db = DBService::connect();  
+        //TODO: Implementar consulta per recuperar l'usuari
+        $user = $stmt->fetch();
+        if ($user) {
+            if (password_verify($data->password,$user->password)) {
+                $payload = [
+                     "iss" => "http://localhost", // Issuer
+                     "aud" => "http://localhost", // Audience
+                     "iat" => time(),             // Issued at
+                     "exp" => time() + 3600,      // Expira en una hora
+                     "userId" => $userId
+                 ];
+                $jwt = JWT::encode($payload, $secretKey, 'HS256');    
+                echo json_encode(["success" => true, "token" => $jwt]);
+            } else {
+                echo json_encode(["success" => false, "message" => "Contrasenya incorrecta"]);
+            }
+        } else {
+            echo json_encode(["success" => false, "message" => "Usuari no trobat"]);
+        }
+   
+   } else {
+       echo json_encode(["success" => false, "message" => "Falten dades"]);
+   }
+``` 
+
+#### register.php
+
+```php
+//TODO: Implementar registre d'usuari
+```
+
+#### validate.php
+
+per a validar que qualsevol petició a l'API siga autenticada.
+```php
+if (!isset($_SERVER['HTTP_AUTHORIZATION'])) {
+      throw new UnAuthoritzedException("Token no proporcionat");
+}
+$authHeader = $_SERVER['HTTP_AUTHORIZATION'];
+[$type, $token] = explode(" ", $authHeader);
+if ($type !== 'Bearer') {
+    throw new UnAuthoritzedException("Tipus de token no vàlid");
+}
+try {
+    $jwt = JWT::decode($token, new Key(SELF::SECRET_KEY, 'HS256'));
+    $userId = $jwt->userId;
+} catch (Exception $e) {
+    throw new UnAuthoritzedException("Token no vàlid o expirat");
+}
+ 
+```
