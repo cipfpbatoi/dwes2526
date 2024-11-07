@@ -114,7 +114,7 @@ Contingut JSON: {
 - Utilitzar en la mesura de lo possible el MVC en el backend i els control·ladors per a respondre a les peticions de l'API.
 - Cal fer test de la lògica de la factura.
 - Cal guardar en un fitxer de log les peticions que es fan a l'api en forma de: Usuari, IP client i Mètode utilitzat.   
-- Utilitzar exempcions per al maneig d'errors de l'usuari.
+- Utilitzar, en la mesura de lo possible, exempcions per al maneig d'errors de l'usuari.
  
 ---
 
@@ -122,6 +122,35 @@ Contingut JSON: {
 
 Estos exemples es poden agafar com a referència per a la implementació de l'API. Però només són la base sobre la que construir una solució pròpia que puga incorporar l'harència de classes per fer 
 mes eficient i reutilitzable el codi.
+
+### Estructura de directoris
+
+```
+App
+├── Controllers
+│   ├── Api
+│   │   ├── ApiController.php 
+│   │   ├── BookController.php
+│   │   ├── CourseController.php
+│   │   ├── ModuleController.php
+│   │   └── LoginController.php
+│   ├── ModuleController.php
+│   └── CourseController.php      
+├── Execptions       
+├── Models
+│   ├── Book.php
+│   ├── Course.php
+│   ├── Module.php
+│   └── User.php
+├── Services
+│   ├── DBService.php
+│   └── AuthService.php
+├── Views
+├── config
+├── src
+│   ├── api
+      
+   
 
 ### API
 
@@ -172,6 +201,8 @@ class Course
 ```
 
 #### Controlador
+
+En el ApiController.php es troben les funcions comunes a tots els controladors, com el jsonResponse i errorResponse.  
 
 ```php
 namespace BatoiBook\Controllers\Api;
@@ -263,19 +294,16 @@ $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 switch ($method) {
     case 'GET':
         if (isset($id)) {
-            $record = $controller->getOne($id);
-            echo json_encode($record ?? ["error" => "Field not found"]);
+            $controller->getOne($id);
         } else {
-            $records = $controller->getAll ();
-            echo json_encode($records);
-        }
+            $controller->getAll ();
+       }
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'), true);
 
         if ($data) {
-            $id = $controller->create ($data);
-            echo json_encode(["message" => "Field created successfully", "id" => $id]);
+            $controller->create($data);
         } else {
             echo json_encode(["error" => "Invalid data"]);
         }
@@ -292,8 +320,7 @@ switch ($method) {
         break;
     case 'DELETE':
         if (isset($_GET['id'])) {
-            $success = $controller->delete ($id);
-            echo json_encode(["message" => $success ? "Field deleted successfully" : "Book not found"]);
+            $controller->delete ($id);
         } else {
             echo json_encode(["error" => "ID not provided"]);
         }
@@ -384,3 +411,6 @@ try {
 }
  
 ```
+
+### Interfície d'Administrador
+
