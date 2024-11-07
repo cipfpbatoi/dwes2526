@@ -31,7 +31,7 @@ Desenvolupar el backend per a l’aplicació **BatoiBooks** en PHP, proporcionan
 
 ### 1. BBDD
 
-Crear la BBDD i les taules utilitzant el següent [sql](./recursos/sql/batoi_books.sql) 
+Crear la BBDD i les taules utilitzant el següent [sql](recursos/batoiBook/batoiBook.sql) 
 
 ### 2. Autenticació per al frontEnd
 
@@ -43,7 +43,7 @@ Crear la BBDD i les taules utilitzant el següent [sql](./recursos/sql/batoi_boo
 
 ---
 
-### 3. Controladors d’Entitats (CRUD)
+### 3. API REST
 
 Es crearà un fitxer PHP específic per a cada entitat, que atendrà les operacions CRUD bàsiques. Les taules que es gestionaran són:
 
@@ -68,7 +68,7 @@ Cada operació validarà les dades abans de ser processades i respondrà amb els
 * Tornar un llibre
 
 ```http     
-GET /api/books.php?userId=2
+GET /api/books.php?id=2
 ``` 
 
 * Tornar tots els llibres
@@ -124,6 +124,10 @@ Estos exemples es poden agafar com a referència per a la implementació de l'AP
 mes eficient i reutilitzable el codi.
 
 ### API
+
+#### POSTMAN
+
+Ací tens una [col.lecció del POSTMAN](./recursos/batoiBook/BatoiBooks.postman_collection.json) per realitzar les peticions i provar-les.
 
 #### DBService.php
 
