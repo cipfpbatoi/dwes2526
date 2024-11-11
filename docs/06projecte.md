@@ -22,7 +22,6 @@
 Desenvolupar el backend per a l’aplicació **BatoiBooks** en PHP, proporcionant:
 
 - Autenticació per token JWT.
-- Gestió completa de les dades de l'aplicació (operacions CRUD).
 - Interfície d’administració amb funcionalitats avançades, com la generació de factures en PDF.
 
 ---
@@ -133,10 +132,12 @@ App
 │   │   ├── BookController.php
 │   │   ├── CourseController.php
 │   │   ├── ModuleController.php
-│   │   └── LoginController.php
+│   │   └── AuthController.php
 │   ├── ModuleController.php
-│   └── CourseController.php      
-├── Execptions       
+│   ├── CourseController.php
+│   └── AuthController.php
+├── Helpers      
+├── Exceptions       
 ├── Models
 │   ├── Book.php
 │   ├── Course.php
@@ -146,9 +147,23 @@ App
 │   ├── DBService.php
 │   └── AuthService.php
 ├── Views
+├── logs 
+├── tests
 ├── config
+│   └── connection.php
 ├── src
 │   ├── api
+│   │   ├── books.php
+│   │   ├── courses.php
+│   │   ├── modules.php
+│   │   ├── register.php
+│   │   └── login.php
+│   ├── backend
+│   │   ├── login.php
+│   │   ├── generateInvoice.php
+│   │   ├── modules.php
+│   │   └── courses.php  
+└── └── index.php
       
 ```   
 
@@ -156,7 +171,7 @@ App
 
 #### POSTMAN
 
-Ací tens una [col.lecció del POSTMAN](./recursos/batoiBook/BatoiBooks.postman_collection.json) per realitzar les peticions i provar-les.
+Ací tens una [col.lecció del POSTMAN](./recursos/batoiBook/BatoiBooksApi.postman_collection.json) per realitzar les peticions i provar-les.
 
 #### DBService.php
 
@@ -412,5 +427,4 @@ try {
  
 ```
 
-### Interfície d'Administrador
-
+ 
