@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "332255a0-f327-4861-9b9c-95da3afd3456",
 		"name": "BatoiBooksApi",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "10298028"
 	},
 	"item": [
@@ -14,15 +14,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{BASE_URL}}/books",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"books"
-							]
-						}
+						"url": "{{BASE_URL}}/books.php"
 					},
 					"response": []
 				},
@@ -32,18 +24,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/books/:id",
+							"raw": "{{BASE_URL}}/books.php?id=2",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"books",
-								":id"
+								"books.php"
 							],
-							"variable": [
+							"query": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -64,16 +55,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/books/",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"books",
-								""
-							]
-						}
+						"url": "{{BASE_URL}}/books.php"
 					},
 					"response": []
 				},
@@ -144,15 +126,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{BASE_URL}}/users.php",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"users.php"
-							]
-						}
+						"url": "{{BASE_URL}}/users.php"
 					},
 					"response": []
 				},
@@ -193,15 +167,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/users.php ",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"users.php "
-							]
-						}
+						"url": "{{BASE_URL}}/users.php "
 					},
 					"response": []
 				},
@@ -272,15 +238,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{BASE_URL}}/modules.php",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"modules.php"
-							]
-						}
+						"url": "{{BASE_URL}}/modules.php"
 					},
 					"response": []
 				},
@@ -370,15 +328,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/course.php",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"course.php"
-							]
-						}
+						"url": "{{BASE_URL}}/course.php"
 					},
 					"response": []
 				},
@@ -481,15 +431,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/course.php ",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"course.php "
-							]
-						}
+						"url": "{{BASE_URL}}/course.php "
 					},
 					"response": []
 				},
@@ -541,15 +483,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/register.php",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"register.php"
-							]
-						}
+						"url": "{{BASE_URL}}/register.php"
 					},
 					"response": []
 				},
@@ -573,15 +507,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{BASE_URL}}/login.php",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"login.php"
-							]
-						}
+						"url": "{{BASE_URL}}/login.php"
 					},
 					"response": []
 				}

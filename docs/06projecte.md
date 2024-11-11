@@ -119,7 +119,7 @@ Contingut JSON: {
 
 ## Exemples de resposta
 
-Estos exemples es poden agafar com a referència per a la implementació de l'API. Però només són la base sobre la que construir una solució pròpia que puga incorporar l'harència de classes per fer 
+Estos exemples es poden agafar com a referència per a la implementació de l'API. Però només són la base sobre la que construir una solució pròpia que puga incorporar l'harència de classes per fer
 mes eficient i reutilitzable el codi.
 
 ### Estructura de directoris
