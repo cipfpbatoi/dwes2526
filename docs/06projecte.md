@@ -30,7 +30,7 @@ Desenvolupar el backend per a l’aplicació **BatoiBooks** en PHP, proporcionan
 
 ### 1. BBDD
 
-Crear la BBDD i les taules utilitzant el següent [sql](recursos/batoiBook/batoiBook.sql) 
+Crear la BBDD i les taules utilitzant el següent [sql](recursos/batoiBook/batoiBook-2.sql) 
 
 ### 2. Autenticació per al frontEnd
 
