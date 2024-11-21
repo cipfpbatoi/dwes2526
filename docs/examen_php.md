@@ -12,13 +12,20 @@
 
 ### Exercici RA2   
 
-1. Modifica el codi de la pàgina `salutacions.php` per a que mostre el nom complet de la persona que ha accedit a la pàgina (situada en `config/nom.php`) i la data.
- 
-   
+1. Modifica el codi de la pàgina `salutacions.php` per a que mostre el nom complet de la persona que ha accedit a la pàgina (situada en `config/nom.php`) i la data, amb la salutació de Bon dia o Bona nit (en compte de Hola) depenent de l'hora del dia.
+
+##### Limitacions
+
+* No es poden utilitzar funcions de php per a imprimir en pantalla com echo o print.
+
+```php
+ $today = date("H:i:s");                         // 17:16:18
+```
+
 ### Exercici RA3  
 
 * Modifica  la pàgina `matriu.php` de forma que a partir del número introduït pel usuari:
-  * Genera una matriu de números aleatoris entre 1 i 500 de 10xnumero i mostra-los en una taula, afegint una columna al final de cada fila on es mostre la suma de la fila.
+  * Genera una matriu de números aleatoris `rand(int $min, int $max): int` entre 1 i 500 de 10xnumero i mostra-los en una taula, afegint una columna al final de cada fila on es mostre la suma de la fila.
   * S'ha de comprovar que el número estiga entre 1 i 10, en cas contrari s'ha de tornar al formulari amb les dades introduïdes i amb un missatge d'error.
   * Els números par estaran en blau i els senars en vermell.
   * Calen, al meyns, les següents funcions: `generaMatriu(int $n,int $m): array` i `printCela(int $num): void`.
@@ -51,11 +58,12 @@ Crea una petita aplicació web amb les següents funcionalitats:
 Crea una aplicació web per gestionar una llista de productes. Aquesta aplicació ha de permetre les operacions bàsiques de **CRUD** (creació, lectura, actualització, eliminació) sobre una base de dades. Completa les següents funcionalitats:
 
 ### 1. Connexió amb la Base de Dades
-- Crea una classe `Database` que s'encarregui de la connexió amb la base de dades. Assegura't que la connexió es gestioni correctament amb principis d'OOP i un patró com el Singleton per evitar múltiples connexions.
+- Crea una classe `Database` que s'encarregui de la connexió amb la base de dades. Assegura't que la connexió es gestioni correctament amb principis d'OOP .
+ 
 
 ### 2. Recuperació i Visualització de Productes
 - Implementa un controlador `ProductController` i una classe `Product` en la carpeta **Models** que s’encarreguin de recuperar els productes de la base de dades i passar-los a la vista.
--Adapta la vista `products.view.php` per tal que mostre la llista de productes en una taula amb les opcions d'editar i eliminar cada producte.
+- Adapta la vista `products.view.php` per tal que mostre la llista de productes en una taula amb les opcions d'editar i eliminar cada producte.
 
 ### 3. Afegir nous Productes
 - Implementa una funcionalitat que permeta afegir nous productes a la base de dades mitjançant el formulari de la vista `create_product.view.php`.
