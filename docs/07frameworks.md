@@ -1397,6 +1397,25 @@ L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar 
    h1 {
        color: darkblue;
    }
+   
+   nav ul {
+    list-style-type: none;
+    padding: 0;
+   }
+
+   nav ul li {
+    display: inline;
+    margin-right: 15px;
+   }
+  
+   nav ul li a {
+    text-decoration: none;
+    color: darkblue;
+   }
+  
+   nav ul li a:hover {
+    text-decoration: underline;
+   }
    ```
 
 2. **Incloure el fitxer CSS amb `@vite`:**
@@ -1454,7 +1473,30 @@ L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar 
    </table>
    ```
 
-3. **Qüestió:** Com utilitzar les dades passades des del controlador per generar contingut dinàmic?
+3. **Crear una nova vista parcial per al menú de navegació:**
+  
+  * Afegeix un fitxer nou a resources/views/partials/menu.blade.php amb el contingut següent:
+
+   ```html
+    <nav>
+        <ul>
+            <li><a href="/">Inici</a></li>
+            <li><a href="/equips">Guia d'Equips</a></li>
+            <li><a href="/estadis">Llistat d'Estadis</a></li>
+        </ul>
+    </nav>
+   ```
+
+  * Modifica la vista resources/views/equips/index.blade.php per incloure el menú amb la directiva @include:
+
+  ```html
+    @include('partials.menu')
+  ```
+
+
+4. **Qüestió:** Com utilitzar les dades passades des del controlador per generar contingut dinàmic?
+
+
 
 ---
 
@@ -1483,6 +1525,7 @@ L'objectiu d'aquest exercici és crear una extensió de la guia d'equips de futb
 ### **3. Crear una vista per mostrar els estadis**
 
 1. Crea un fitxer de vista a `resources/views/estadis/index.blade.php` per mostrar els estadis en format de taula.
+2. Inclou el menu.
 
 ---
 
@@ -1495,6 +1538,16 @@ L'objectiu d'aquest exercici és crear una extensió de la guia d'equips de futb
 3. Executa Vite per aplicar els estils.
 
 ---
+
+### **5. Ampliar la guia d'estadis**
+
+1. Afegir una nova ruta /estadis/crear per mostrar un formulari que permet afegir un nou estadi.
+
+2. Crear un controlador amb un mètode crear que retorne una vista amb el formulari.
+
+3. Dissenyar un formulari Blade que contingui camps per al nom de l'estadi, ciutat i capacitat.
+
+4. Mostrar un missatge de confirmació quan l'usuari faci clic al botó d'enviar.
 
 ## Objectiu final
 
