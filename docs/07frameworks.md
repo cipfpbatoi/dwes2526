@@ -1300,7 +1300,9 @@ L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar 
 1. **Crear un projecte Laravel anomenat `futbol-femeni`:**
 
    ```bash
-   composer create-project laravel/laravel futbol-femeni
+   curl -s https://laravel.build/futbol-femeni | bash
+   cd futbol-femeni
+   ./vendor/bin/sail up 
    ```
   
 2. **Qüestió:** Per què és important tenir una estructura clara al projecte Laravel?
@@ -1493,11 +1495,55 @@ L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar 
     @include('partials.menu')
   ```
 
+4. Crear un component per als equips
 
-4. **Qüestió:** Com utilitzar les dades passades des del controlador per generar contingut dinàmic?
+  * Executa la següent comanda per crear un component Blade anomenat Equip:
 
+    ```bash
+    php artisan make:component Equip
+    ```
+    * Edita el fitxer resources/views/components/equip.blade.php i afegeix aquest contingut:
+    
+          ```html
+          <tr>
+              <td>{{ $equip['nom'] }}</td>
+              <td>{{ $equip['estadi'] }}</td>
+              <td>{{ $equip['titols'] }}</td>
+          </tr>
+          ```
+  * Afegeix els estils al fitxer CSS resources/css/equips.css:
+    
+        ```css
+        .equip {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        .equip h2 {
+        margin: 0;
+        color: darkblue;
+        }
 
+      ```
+   * Modifica la vista resources/views/equips/index.blade.php per utilitzar el component:
+  
+      ```html
+      @include('partials.menu')
 
+    <h1>Guia d'Equips</h1>
+    @foreach($equips as $equip)
+        <x-equip 
+            :nom="$equip['nom']" 
+            :estadi="$equip['estadi']" 
+            :titols="$equip['titols']" 
+        />
+    @endforeach
+        ```
+5. **Qüestió:** Què és un component Blade i quins avantatges té respecte a les vistes parcials?
+ 
 ---
 
 # Exercici: Guia d'Estadis de Futbol
@@ -1548,6 +1594,8 @@ L'objectiu d'aquest exercici és crear una extensió de la guia d'equips de futb
 3. Dissenyar un formulari Blade que contingui camps per al nom de l'estadi, ciutat i capacitat.
 
 4. Mostrar un missatge de confirmació quan l'usuari faci clic al botó d'enviar.
+
+5. Crea un component per als estadis.
 
 ## Objectiu final
 
