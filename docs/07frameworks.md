@@ -1534,6 +1534,7 @@ public function __construct(
 </body>
 </html>
 ```
+
 * Modifica la vista resources/views/equips/index.blade.php per heretar de la plantilla base:
       
 ```php
