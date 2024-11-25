@@ -1206,196 +1206,200 @@ Quan redirigeixes després de validar un formulari, pots reenviar els valors de 
 
 A la vista, pots accedir als valors antics amb la funció `old()`.
 
-# Exercici Pràctic: Guia d'Equips de Futbol Femení
+## Exercici Pràctic: Guia d'Equips de Futbol Femení
 
 L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar una guia d'equips de futbol femení. Aprendrem a configurar rutes, controladors, vistes i a passar dades utilitzant les funcionalitats de Laravel.
 
 ---
 
-## Pas 1: Configurar el projecte
+#### Pas 1: Configurar el projecte
 
 1. **Crear un projecte Laravel anomenat `futbol-femeni`:**
 
  ```bash
   curl -s "https://laravel.build/futbol-femeni?with=mysql,mailpit" | bash
-  
-  cd futbol-femeni
-  ./vendor/bin/sail up 
-  ./vendor/bin/sail artisan migrate
  ```
-Problemes:  des de dins de l'institut no funciona perquè els repositoris estan capats.
+
+ Problemes:  des de dins de l'institut no funciona perquè els repositoris estan capats.
 
 Solució: 
 
   * Quan falle . Copiar la següent [carpeta](recursos/docker.zip) a la carpeta del projecte.
   * Canviar este troç del docker-compose.yml per este:
 
+```
     laravel.test:
         build:
-            context: './vendor/laravel/sail/runtimes/8.3'
- ```
-per 
+            context: './vendor/laravel/sail/runtimes/8.3'  
+```
+per
 ```
     laravel.test:
         build:
             context: './docker'
- ```
- 
+```
+
+i despres acabem la instal·lació:
+
+```bash
+  cd futbol-femeni
+  ./vendor/bin/sail up 
+  ./vendor/bin/sail artisan migrate
+```
 
 2. **Qüestió:** Per què és important tenir una estructura clara al projecte Laravel?
 
 ---
 
-## Pas 2: Definir la ruta inicial
+#### Pas 2: Definir la ruta inicial
 
 1. **Editar `routes/web.php` per crear una ruta inicial:**
 
-   ```php
-   Route::get('/', function () {
-       return "Benvingut a la Guia d"Equips de Futbol Femení!";
-   });
-   ```
+```php
+Route::get('/', function () {
+   return "Benvingut a la Guia d"Equips de Futbol Femení!";
+});
+```
 
 2. **Qüestió:** Quina diferència hi ha entre definir una ruta directa i una que utilitza un controlador?
 
 ---
 
-## Pas 3: Crear un controlador
+#### Pas 3: Crear un controlador
 
 1. **Generar un controlador anomenat `EquipController`:**
 
- ```bash
-  ./vendor/bin/sail artisan make:controller EquipController
- ```
+```bash
+./vendor/bin/sail artisan make:controller EquipController
+```
 
 2. **Afegir un mètode `index` al controlador:**
 
-   ```php
-   public function index() {
-       return view('equips.index');
-   }
-   ```
+```php
+public function index() {
+   return view('equips.index');
+}
+```
 
 3. **Definir una ruta per al mètode `index`:**
 
-   ```php
-   Route::get('/equips', [EquipController::class, 'index']);
-   ```
+```php
+Route::get('/equips', [EquipController::class, 'index']);
+```
 
 4. **Qüestió:** Per què és recomanable separar la lògica en controladors?
 
 ---
 
-## Pas 4: Crear una vista
+#### Pas 4: Crear una vista
 
 1. **Crear una vista a `resources/views/equips/index.blade.php`:**
 
-   ```html
-   <h1>Guia d'Equips</h1>
-   ```
+```html
+<h1>Guia d'Equips</h1>
+```
 
 2. **Qüestió:** Què fa especial el motor de plantilles Blade en comparació amb HTML estàndard?
 
 ---
 
-## Pas 5: Passar dades a la vista
+#### Pas 5: Passar dades a la vista
 
 1. **Modifica el mètode `index` per passar un array d'equips:**
 
-   ```php
-   public function index() {
-       $equips = ['Barça Femení', 'Atlètic de Madrid', 'Real Madrid Femení'];
-       return view('equips.index', compact('equips'));
-   }
-   ```
+```php
+public function index() {
+   $equips = ['Barça Femení', 'Atlètic de Madrid', 'Real Madrid Femení'];
+   return view('equips.index', compact('equips'));
+}
+```
 
 2. **Afegeix un bucle `@foreach` a la vista:**
 
-   ```html
-   <h1>Guia d'Equips</h1>
-   <ul>
-       @foreach($equips as $equip)
-           <li>{{ $equip }}</li>
-       @endforeach
-   </ul>
-   ```
+```html
+<h1>Guia d'Equips</h1>
+<ul>
+   @foreach($equips as $equip)
+       <li>{{ $equip }}</li>
+   @endforeach
+</ul>
+```
 
 3. **Qüestió:** Com podem utilitzar Blade per fer el codi més segur?
 
 ---
 
-## Pas 6: Afegir estils amb Vite
+#### Pas 6: Afegir estils amb Vite
 
 1. **Crear un fitxer CSS a `resources/css/equips.css`:**
 
-   ```css
-   body {
-       font-family: Arial, sans-serif;
-   }
+```css
+body {
+   font-family: Arial, sans-serif;
+}
 
-   h1 {
-       color: darkblue;
-   }
-   
-   nav ul {
-    list-style-type: none;
-    padding: 0;
-   }
+h1 {
+   color: darkblue;
+}
 
-   nav ul li {
-    display: inline;
-    margin-right: 15px;
-   }
-  
-   nav ul li a {
-    text-decoration: none;
-    color: darkblue;
-   }
-  
-   nav ul li a:hover {
-    text-decoration: underline;
-   }
-   ```
+nav ul {
+list-style-type: none;
+padding: 0;
+}
+
+nav ul li {
+display: inline;
+margin-right: 15px;
+}
+
+nav ul li a {
+text-decoration: none;
+color: darkblue;
+}
+
+nav ul li a:hover {
+text-decoration: underline;
+}
+```
 
 2. **Incloure el fitxer CSS amb `@vite`:**
 
   Modificar el fitxer vite.config.js per a que inclogui el fitxer CSS:
 
-   ```javascript
-    import laravel from 'laravel-vite-plugin';
+``` 
+import laravel from 'laravel-vite-plugin';
 
-    export default defineConfig({
-      plugins: [
-        laravel({
-          input: [
-            'resources/css/app.css',
-            'resources/css/equips.css',
-            'resources/js/app.js'],
-          refresh: true,
-        }),
-      ],
-    });
-    ```
+export default defineConfig({
+  plugins: [
+    laravel({
+      input: [
+        'resources/css/app.css',
+        'resources/css/equips.css',
+        'resources/js/app.js'],
+      refresh: true,
+    }),
+  ],
+});
+```
     
-I incloure el fitxer CSS a la vista:
-
-
-   ```html
-   @vite('resources/css/equips.css')
-   ```
+    i incloure el fitxer CSS a la vista:
+ 
+```html
+@vite('resources/css/equips.css')
+```
 
 3. **Executar Vite:**
 
-   ```bash
-   npm install
-   npm run build
-   ```
+```bash
+npm install
+npm run build
+```
 
 4. **Qüestió:** Què és Hot Module Replacement (HMR) i com ajuda en el desenvolupament?
 
 ---
 
-## Pas 7: Ampliar funcionalitats
+#### Pas 7: Ampliar funcionalitats
 
 1. **Afegir més camps als equips:**
 
@@ -1558,15 +1562,15 @@ I incloure el fitxer CSS a la vista:
  8. **Qüestió:** Per què és important tenir una plantilla base en una aplicació web? 
 ---
 
-# Exercici: Guia d'Estadis de Futbol
+## Exercici: Guia d'Estadis de Futbol
 
 L'objectiu d'aquest exercici és crear una extensió de la guia d'equips de futbol femení per incloure una nova funcionalitat: un llistat d'estadis de futbol. Els alumnes implementaran rutes, controladors i vistes per mostrar estadis i les seves característiques.
 
 ---
 
-## Instruccions
+### Instruccions
 
-### **1. Crear un controlador d'estadis**
+#### **1. Crear un controlador d'estadis**
 
 1. Genera un nou controlador anomenat `EstadiController`.
 
@@ -1574,20 +1578,20 @@ L'objectiu d'aquest exercici és crear una extensió de la guia d'equips de futb
 
 ---
 
-### **2. Crear una ruta per als estadis**
+#### **2. Crear una ruta per als estadis**
 
 1. Defineix una nova ruta a `routes/web.php` que apunti al mètode `index` del controlador.
 
 ---
 
-### **3. Crear una vista per mostrar els estadis**
+#### **3. Crear una vista per mostrar els estadis**
 
 1. Crea un fitxer de vista a `resources/views/estadis/index.blade.php` per mostrar els estadis en format de taula.
 2. Inclou el menu.
 
 ---
 
-### **4. Afegir estils al llistat d'estadis**
+#### **4. Afegir estils al llistat d'estadis**
 
 1. Crea un fitxer CSS a `resources/css/estadis.css` per estilitzar la taula.
 
@@ -1597,7 +1601,7 @@ L'objectiu d'aquest exercici és crear una extensió de la guia d'equips de futb
 
 ---
 
-### **5. Ampliar la guia d'estadis**
+#### **5. Ampliar la guia d'estadis**
 
 1. Afegir una nova ruta /estadis/crear per mostrar un formulari que permet afegir un nou estadi.
 
@@ -1611,7 +1615,7 @@ L'objectiu d'aquest exercici és crear una extensió de la guia d'equips de futb
   
 6. Modifica la vista resources/views/estadis/index.blade.php per heretar de layouts.app.
 
-### **6. Jugadores **
+#### **6. Jugadores **
 
 Fes el mateix amb les jugadores, crea un controlador, una vista i un component.
 
@@ -1624,7 +1628,7 @@ $jugadores = [
     ['nom' => 'Misa Rodríguez', 'equip' => 'Real Madrid Femení', 'posició' => 'Portera'],
 ];
 ```
-### **7. Partits**
+#### **7. Partits**
  
 Fes el mateix amb els partits, crea un controlador, una vista i un component.
  
@@ -1639,7 +1643,7 @@ $partits = [
 
  ---
 
-## Preguntes per reflexionar
+#### Preguntes per reflexionar
 
 1. **Rutes:** Per què utilitzem un controlador per gestionar la lògica d'aquesta funcionalitat?
 2. **Blade:** Què passa si intentem accedir a una clau que no existeix en un array?
