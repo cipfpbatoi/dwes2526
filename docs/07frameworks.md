@@ -1440,7 +1440,7 @@ npm run build
 
 3. **Crear una nova vista parcial per al menú de navegació:**
   
-        * Afegeix un fitxer nou a resources/views/partials/menu.blade.php amb el contingut següent:
+* Afegeix un fitxer nou a resources/views/partials/menu.blade.php amb el contingut següent:
 
 ```html
 <nav>
@@ -1452,7 +1452,7 @@ npm run build
 </nav>
 ```
 
-    * Modifica la vista resources/views/equips/index.blade.php per incloure el menú amb la directiva @include:
+* Modifica la vista resources/views/equips/index.blade.php per incloure el menú amb la directiva @include:
 
 ```html
 @include('partials.menu')
@@ -1554,7 +1554,9 @@ public function __construct(
  @endsection
 ```
  6. **Qüestió:** Què és un component Blade i quins avantatges té respecte a les vistes parcials?
+
  7. **Qüestio:** Què permet la directiva @yield i com es relaciona amb @section?
+
  8. **Qüestió:** Per què és important tenir una plantilla base en una aplicació web? 
 ---
 
@@ -1611,7 +1613,7 @@ L'objectiu d'aquest exercici és crear una extensió de la guia d'equips de futb
   
 6. Modifica la vista resources/views/estadis/index.blade.php per heretar de layouts.app.
 
-#### **6. Jugadores **
+#### **6. Jugadores**
 
 Fes el mateix amb les jugadores, crea un controlador, una vista i un component.
 
