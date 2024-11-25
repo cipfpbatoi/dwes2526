@@ -6,20 +6,23 @@
 ### Què és un framework?
 
 Un **framework** proporciona una estructura base per al desenvolupament d'aplicacions, facilitant tasques com:
-- Connexió a bases de dades.
-- Organització del codi.
-- Gestió de rutes i validacions.
+     
+   - Connexió a bases de dades.
+   - Organització del codi.
+   - Gestió de rutes i validacions.
 
 La majoria de frameworks PHP segueixen el patró **MVC** (Model-Vista-Controlador), que permet separar clarament la lògica de negoci, la interfície d'usuari i les dades.
 
 ### Per què utilitzar un framework?
 
 Els frameworks ofereixen:
+
 - **Estandardització:** Promouen bones pràctiques de desenvolupament.
 - **Eficàcia:** Acceleració del desenvolupament amb eines preconstruïdes.
 - **Mantenibilitat:** Faciliten l'escalabilitat i el manteniment del codi.
 
 Exemples de frameworks PHP populars:
+
 - **Laravel:** Sintaxi clara, funcionalitats modernes, ideal per a projectes de qualsevol mida.
 - **Symfony:** Robust i altament modular, enfocat en aplicacions complexes.
 - **Slim:** Lleuger i ideal per APIs RESTful.
@@ -31,6 +34,7 @@ Exemples de frameworks PHP populars:
 ### Per què triar Laravel?
 
 Laravel és un dels frameworks més populars gràcies a:
+
 - **Facilitat d'ús:** Sintaxi expressiva i intuïtiva.
 - **Patró MVC:** Clarament implementat per separar lògica, vistes i dades.
 - **ORM Eloquent:** Gestió intuïtiva de bases de dades.
@@ -54,21 +58,15 @@ Laravel és un dels frameworks més populars gràcies a:
 
 Si ja esteu desenvolupant Linux i Docker Compose està instal·lat, podeu utilitzar una senzilla ordre de terminal per a crear un nou projecte Laravel. Per exemple, per a crear una nova aplicació Laravel en un directori anomenat "exemple-app", podeu executar l'ordre següent al terminal:
 
+```bash
 curl -s https://laravel.build/example-app | bash
+``` 
 
 Per descomptat, podeu canviar "exemple-app" en aquest URL a qualsevol cosa que vulgueu - només assegureu-vos que el nom de l'aplicació només conté caràcters alfanumèrics, guions i guions baixos. El directori de l'aplicació Laravel es crearà dins del directori des del qual executeu l'ordre.
 
 La instal·lació del **Sail** pot trigar diversos minuts mentre els contenidors de l'aplicació del **sail** es construeixen a la vostra màquina local.
 
-Després de crear el projecte,
-
-Seria bó comprovar que el .env inclou la següent configuració:
-
-```php
-WWWUSER = 1000
-WWWGROUP = 1000
-```
-
+ 
 Ara podeu navegar al directori de l'aplicació i iniciar Laravel Sail. Laravel Sail proporciona una interfície senzilla de línia d'ordres per a interactuar amb la configuració predeterminada de l'acoblador Laravel:
 ```php
 cd exemple-app && ./vendor/bin/sail up &
@@ -76,17 +74,12 @@ cd exemple-app && ./vendor/bin/sail up &
 
 Un cop iniciats els contenidors Docker de l'aplicació, podeu accedir a l'aplicació al vostre navegador web a: http://localhost.
 
-Per a executar una terminal en el contenidor haurem d'executar:
-
-```php
-./vendor/bin/sail bash
-```
-
 I per a inicialitzar la base de dades des de dins del contenidor:
 
 ```php
-php artisan migrate
+./vendor/bin/sail artisan migrate
 ```
+ 
 
 ##### phpmyadmin
 
@@ -98,91 +91,15 @@ myadmin:
  ports:
  - 8080:80
  environment:
- MYSQL\_ROOT\_PASSWORD: '${DB\_PASSWORD}'
+ MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
  links:
  - "mysql:db"
- depends\_on:
+ depends_on:
  - mysql
  networks:
  - sail
 ```
 
-#### Instal·lació des de repositori github
-
-Seguiu aquests passos per a un repositori de Laravel amb Sail després de clonar des de Github. Aquest és un exemple
-
-1. **Clona el repositori, exemple:**
-
-$ git clone https://github.com/example/laravel-backend-api.git
-
-2. **Canvia el directori a l'aplicació/projecte de nova creació.**
-
-$ cd laravel-backend-api
-
-3. **Copia el fitxer .env**
-
-$ cp .env.example .env
-
-4. **Obre .env per a coincidir la configuració amb les línies següents:**
-
- ```php
- DB\_CONNECTION=mysql
- DB\_HOST=mysql
- DB\_PORT=3306
- DB\_DATABASE=batoiBook
- DB\_USERNAME=root
- DB\_PASSWORD=1234
- 
-5. ** Afegix el phpmyadmin a docker-compose.yml**
- 
- ```php
- myadmin:
- image: 'phpmyadmin:latest'
- ports:
- - 8080:80
- environment:
- MYSQL\_ROOT\_PASSWORD: '${DB\_PASSWORD}'
- links:
- - "mysql:db"
- depends\_on:
- - mysql
- networks:
- - sail
- ```
-
-5. **Instal·la totes les dependències requerides**
-
-$ docker run --rm -v $(pwd):/opt -w /opt laravelsail/php83-composer:latest composer install
-
-NOTA: Això pot trigar una estona si aquesta és la primera vegada que s'instal·la com a contenidor.
-
-6. **Executa els servidors amb Sail**
-
-$ vendor/bin/sail up -d
-
-7. **Entra en el phpmyadmin (localhost:8080) i crea la base de dades batoiBook.**
-
-8. **Inicia el terminal del contenidor**
-
-$ vendor/bin/sail bash
-
-9. **Genera la clau APP.KEY.**
-
-$ php artisan key:generate
-
-10. **Construeix la llavor.**
-
-$ php artisan migrate:fresh --seed
-
-11. **Genera els node\_modules**
-
-$ npm install
-
-$ npm run build
-
-Ara podeu obrir la vostra aplicació amb el vostre navegador: http://localhost
-
-Ara que ja tenim tot el sistema preparat per a desenvolupar projectes Laravel, vegem els primers passos que hem de donar per a crear aquests projectes.
 
 ### Configuració de Laravel
 
@@ -194,18 +111,18 @@ Laravel utilitza el fitxer `.env` per gestionar configuracions específiques de 
 
 ##### Exemple de `.env`:
 ```env
-APP\_NAME="LaravelApp"
-APP\_ENV=local
-APP\_KEY=base64:...
-APP\_DEBUG=true
-APP\_URL=http://localhost
+APP_NAME="LaravelApp"
+APP_ENV=local
+APP_KEY=base64:...
+APP_DEBUG=true
+APP_URL=http://localhost
 
-DB\_CONNECTION=mysql
-DB\_HOST=127.0.0.1
-DB\_PORT=3306
-DB\_DATABASE=laravel
-DB\_USERNAME=root
-DB\_PASSWORD=
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 ### Configuració predeterminada
 
@@ -1309,8 +1226,10 @@ L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar 
 Problemes:  des de dins de l'institut no funciona perquè els repositoris estan capats.
 
 Solució: 
+
   * Quan falle . Copiar la següent [carpeta](recursos/docker.zip) a la carpeta del projecte.
   * Canviar este troç del docker-compose.yml per este:
+
  ```
     laravel.test:
         build:
@@ -1462,7 +1381,7 @@ per
 I incloure el fitxer CSS a la vista:
 
 
-    ```html
+   ```html
    @vite('resources/css/equips.css')
    ```
 
