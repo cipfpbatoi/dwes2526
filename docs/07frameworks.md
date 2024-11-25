@@ -1301,11 +1301,29 @@ L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar 
 
  ```bash
   curl -s "https://laravel.build/futbol-femeni?with=mysql,mailpit" | bash
+  
   cd futbol-femeni
   ./vendor/bin/sail up 
   ./vendor/bin/sail artisan migrate
  ```
-  
+Problemes:  des de dins de l'institut no funciona perquè els repositoris estan capats.
+
+Solució: 
+  * Quan falle . Copiar la següent [carpeta](recursos/docker.zip) a la carpeta del projecte.
+  * Canviar este troç del docker-compose.yml per este:
+ ```
+    laravel.test:
+        build:
+            context: './vendor/laravel/sail/runtimes/8.3'
+ ```
+per 
+```
+    laravel.test:
+        build:
+            context: './docker'
+ ```
+ 
+
 2. **Qüestió:** Per què és important tenir una estructura clara al projecte Laravel?
 
 ---
