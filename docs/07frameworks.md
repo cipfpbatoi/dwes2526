@@ -1440,123 +1440,119 @@ npm run build
 
 3. **Crear una nova vista parcial per al menú de navegació:**
   
-  * Afegeix un fitxer nou a resources/views/partials/menu.blade.php amb el contingut següent:
+        * Afegeix un fitxer nou a resources/views/partials/menu.blade.php amb el contingut següent:
 
-   ```html
-    <nav>
-        <ul>
-            <li><a href="/">Inici</a></li>
-            <li><a href="/equips">Guia d'Equips</a></li>
-            <li><a href="/estadis">Llistat d'Estadis</a></li>
-        </ul>
-    </nav>
-   ```
+```html
+<nav>
+    <ul>
+        <li><a href="/">Inici</a></li>
+        <li><a href="/equips">Guia d'Equips</a></li>
+        <li><a href="/estadis">Llistat d'Estadis</a></li>
+    </ul>
+</nav>
+```
 
-  * Modifica la vista resources/views/equips/index.blade.php per incloure el menú amb la directiva @include:
+    * Modifica la vista resources/views/equips/index.blade.php per incloure el menú amb la directiva @include:
 
-  ```html
-    @include('partials.menu')
-  ```
+```html
+@include('partials.menu')
+```
 
 4. Crear un component per als equips
 
-   * Executa la següent comanda per crear un component Blade anomenat Equip:
+* Executa la següent comanda per crear un component Blade anomenat Equip:
 
-     ```bash
-     ./vendor/bin/sail artisan make:component Equip
-     ```
-     * Edita el fitxer resources/views/components/equip.blade.php i afegeix aquest contingut:
-    
-           ```html
-           <tr>
-               <td>{{ $equip['nom'] }}</td>
-               <td>{{ $equip['estadi'] }}</td>
-               <td>{{ $equip['titols'] }}</td>
-           </tr>
-           ```
-       * Afegeix els estils al fitxer CSS resources/css/equips.css:
-    
-             ```css
-             .equip {
-             border: 1px solid #ddd;
-             padding: 10px;
-             margin: 10px 0;
-             border-radius: 5px;
-             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-             }
-    
-             .equip h2 {
-             margin: 0;
-             color: darkblue;
-             }
+```bash
+./vendor/bin/sail artisan make:component Equip
+```
+ 
+* Afegeix els estils al fitxer CSS resources/css/equips.css:
 
-           ```
-         * Modifica la vista resources/views/equips/index.blade.php per utilitzar el component:
+```css
+  .equip {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .equip h2 {
+  margin: 0;
+  color: darkblue;
+  }
+
+```
+
+* Modifica la vista resources/views/equips/index.blade.php per utilitzar el component:
   
-            ```html
-              ....
-              <tbody>
-              @foreach($equips as $equip)
-                  <x-equip
-                      :nom="$equip['nom']"
-                      :estadi="$equip['estadi']"
-                      :titols="$equip['titols']"
-                  />
-              @endforeach
-              </tbody>
-              ```
-           * Modifica el component (app/Views/components/Equip.php) per utilitzar les dades passades:
+```html
+....
+<tbody>
+@foreach($equips as $equip)
+<x-equip
+   :nom="$equip['nom']"
+   :estadi="$equip['estadi']"
+   :titols="$equip['titols']"
+/>
+@endforeach
+</tbody>
+```
+* Modifica el component (app/Views/components/Equip.php) per utilitzar les dades passades:
   
-              ```php
-              public function __construct(
-                    public string $nom,
-                    public string $estadi,
-                    public int $titols ) { }
-   5. Crear una plantilla base
-         * Crea el fitxer resources/views/layouts/app.blade.php:
-        
-            ```html
-                 <!DOCTYPE html>
-                 <html lang="ca">
-                 <head>
-                       <meta charset="UTF-8">
-                       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                       <title>@yield('title','Guia de futbol femení')</title>
-                       @vite(['resources/css/app.css', 'resources/css/equips.css'])
-                 </head>
-                 <body>
-                       <header>
-                         @include('partials.menu')
-                       </header>
-                       <main>
-                        @yield('content')
-                       </main>
-                       <footer>
-                           <p>&copy; 2024 Guia de Futbol Femení</p>
-                       </footer>
-                 </body>
-                 </html>
-            ```
-        * Modifica la vista resources/views/equips/index.blade.php per heretar de la plantilla base:
-                  
-             ```php
-                 @extends('layouts.app')
+```php
+public function __construct(
+     public string $nom,
+     public string $estadi,
+     public int $titols ) { }
+``` 
 
-                 @section('title', 'Guia d\'Equips')
-                 @section('content')
-                 <h1>Guia d'Equips</h1>
-                 <ul>
-                 @foreach($equips as $equip)
-                  <x-equip
-                     :nom="$equip['nom']"
-                     :estadi="$equip['estadi']"
-                     :titols="$equip['titols']"
-                 />
-                 @endforeach
-                 </ul>
-                 @endsection
-               ```
+5. Crear una plantilla base
+
+* Crea el fitxer resources/views/layouts/app.blade.php:
+
+```html
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>@yield('title','Guia de futbol femení')</title>
+      @vite(['resources/css/app.css', 'resources/css/equips.css'])
+</head>
+<body>
+      <header>
+        @include('partials.menu')
+      </header>
+      <main>
+       @yield('content')
+      </main>
+      <footer>
+          <p>&copy; 2024 Guia de Futbol Femení</p>
+      </footer>
+</body>
+</html>
+```
+* Modifica la vista resources/views/equips/index.blade.php per heretar de la plantilla base:
+      
+```php
+ @extends('layouts.app')
+
+ @section('title', 'Guia d\'Equips')
+ @section('content')
+ <h1>Guia d'Equips</h1>
+ <ul>
+ @foreach($equips as $equip)
+  <x-equip
+     :nom="$equip['nom']"
+     :estadi="$equip['estadi']"
+     :titols="$equip['titols']"
+ />
+ @endforeach
+ </ul>
+ @endsection
+```
  6. **Qüestió:** Què és un component Blade i quins avantatges té respecte a les vistes parcials?
  7. **Qüestio:** Què permet la directiva @yield i com es relaciona amb @section?
  8. **Qüestió:** Per què és important tenir una plantilla base en una aplicació web? 
