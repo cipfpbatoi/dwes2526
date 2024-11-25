@@ -1230,7 +1230,6 @@ Solució:
   * Quan falle . Copiar la següent [carpeta](recursos/docker.zip) a la carpeta del projecte.
   * Canviar este troç del docker-compose.yml per este:
 
- ```
     laravel.test:
         build:
             context: './vendor/laravel/sail/runtimes/8.3'
