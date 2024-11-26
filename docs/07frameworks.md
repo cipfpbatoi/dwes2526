@@ -182,14 +182,14 @@ Gestiona els sistemes d'arxius.
  'disks' => [
  'local' => [
  'driver' => 'local',
- 'root' => storage\_path('app'),
+ 'root' => storage_path('app'),
  ],
  's3' => [
  'driver' => 's3',
- 'key' => env('AWS\_ACCESS\_KEY\_ID'),
- 'secret' => env('AWS\_SECRET\_ACCESS\_KEY'),
- 'region' => env('AWS\_DEFAULT\_REGION'),
- 'bucket' => env('AWS\_BUCKET'),
+ 'key' => env('AWS_ACCESS_KEY_ID'),
+ 'secret' => env('AWS_SECRET_ACCESS_KEY'),
+ 'region' => env('AWS_DEFAULT_REGION'),
+ 'bucket' => env('AWS_BUCKET'),
  ],
  ],
 ```
@@ -218,7 +218,7 @@ config(['app.debug' => false]); // Desactiva el mode depuració
 Si el valor no existeix, pots establir un valor predeterminat:
 
 ```php
-$value = config('app.missing\_key', 'valor per defecte');
+$value = config('app.missing_key', 'valor per defecte');
 ```
 Aquestes funcions són útils per ajustar l'aplicació a les necessitats de l'entorn o per gestionar configuracions específiques durant l'execució.
 
@@ -227,17 +227,23 @@ Aquestes funcions són útils per ajustar l'aplicació a les necessitats de l'en
 Laravel inclou un interfície de línia de comandos (CLI, Command line interface) anomenat **Artisan**. Aquesta utilitat ens va a permetre realitzar múltiples tasques necessàries durant el procés de desenvolupament o desplegament a producció d'una aplicació, per la qual cosa ens facilitarà i accelerarà el treball.
 Per a veure una llista de totes les opcions que inclou Artisan podem executar el següent comando en un consola o terminal del sistema en la carpeta arrel del nostre projecte:
 
+```bash
 php artisan list
+``` 
 
 Si volem obtenir una ajuda més detallada sobre alguna de les opcions de Artisan simplement hem d'escriure la paraula **help** davant del comando en qüestió, per exemple:
 
+```bash
 php artisan help migrate
+``` 
 
 A poc a poc anirem veient més opcions de Artisan, de moment anem a comentar solament dues opcions importants: el llistat de rutes i la generació de codi.
 
 Per a veure un llistat amb totes les rutes que hem definit en el fitxer routes.php podem executar el comando:
 
+```bash
 php artisan route:list
+``` 
 
 Açò ens mostrarà una taula amb el mètode, l'adreça, l'acció i els filtres definits per a totes les rutes. D'aquesta forma podem comprovar totes les rutes de la nostra aplicació i assegurar-nos que estiga tot correcte.
 
@@ -251,6 +257,7 @@ Laravel segueix una estructura modular basada en el patró **MVC (Model-Vista-Co
 
 ##### **1. app/**
 Conté la lògica principal de l'aplicació.
+  
 - **Models/**: Classes que representen les taules de la base de dades. Gestionen les relacions i la lògica de negoci.
 - **Http/Controllers/**: Controladors que processen les peticions i retornen respostes.
 - **Http/Middleware/**: Classes per filtrar i processar les peticions abans d'arribar als controladors.
@@ -258,30 +265,39 @@ Conté la lògica principal de l'aplicació.
 - **Policies/**: Gestionen l'autenticació basada en permisos.
 
 ##### **2. bootstrap/**
+
 Conté el fitxer `app.php`, que inicialitza el framework i carrega configuracions bàsiques. També inclou la **caché de rutes i serveis** per millorar el rendiment.
 
 ##### **3. config/**
+
 Fitxers de configuració global de l'aplicació (base de dades, mail, cues, etc.). És recomanable revisar aquests fitxers per personalitzar-los segons les necessitats del projecte.
 
 ##### **4. database/**
+
 Gestió de bases de dades.
+ 
 - **Migrations/**: Fitxers per definir l'estructura de les taules de manera programàtica.
 - **Factories/**: Generació de dades de prova per als models.
 - **Seeders/**: Inserció de dades inicials per a la base de dades.
 
 ##### **5. public/**
+
 Punt d'entrada de l'aplicació. Conté:
+  
 - Fitxer `index.php`, que gestiona totes les peticions.
 - Recursos públics com **CSS, JavaScript, imatges**.
 
 ##### **6. resources/**
+
 Carpeta de recursos per a la interfície d'usuari.
+  
 - **views/**: Conté les vistes Blade.
 - **lang/**: Fitxers de traducció per a aplicacions multilingües.
 - **css/** i **js/**: Recursos d'estil i funcionalitat del client.
 
 ##### **7. routes/**
 Defineix totes les rutes de l'aplicació.
+
 - **web.php**: Rutes per a l'aplicació web.
 - **api.php**: Rutes per a APIs RESTful.
 - **console.php**: Comandes Artisan personalitzades.
@@ -289,12 +305,14 @@ Defineix totes les rutes de l'aplicació.
 
 ##### **8. storage/**
 Emmagatzematge d'arxius generats per l'aplicació.
+
 - **app/**: Conté arxius d'usuari o aplicació.
 - **framework/**: Caché, sessions, i altres fitxers temporals.
 - **logs/**: Registres d'errors i activitat.
 
 ##### **9. tests/**
 Inclou proves automatitzades per garantir el bon funcionament de l'aplicació.
+
 - **Feature/**: Proves completes que cobreixen múltiples components.
 - **Unit/**: Proves individuals per a components o mètodes específics.
 
@@ -425,6 +443,7 @@ Al fitxer **config/app.php** del projecte, trobaràs una secció anomenada **pro
 - **AuthServiceProvider**: Configura el sistema d'autenticació d'usuaris.
 
 Un proveïdor de serveis pot contenir dos mètodes principals:
+
 - **register**: Defineix els serveis i els vincula al contenidor de Laravel.
 - **boot**: S'executa després de carregar tots els serveis, ideal per inicialitzar funcionalitats.
 
@@ -790,8 +809,8 @@ php artisan make:component Alert
 ```php
 class Alert extends Component {
  public $type;
- public function \_\_construct($type) {
- $this->type = $type;
+ public function __construct($type) {
+    $this->type = $type;
  }
  public function render() {
  return view('components.alert');
@@ -821,6 +840,7 @@ Ara que ja coneixem com utilitzar Blade per modularitzar les nostres vistes, és
 ### Què és Vite?
 
 Vite és una eina de construcció de frontend que ofereix un entorn de desenvolupament extremadament ràpid i empaqueta el codi per a producció. Amb Laravel, Vite permet:
+  
 - Gestionar fitxers CSS i Javascript del projecte.
 - Optimitzar els recursos per a producció.
 - Carregar els canvis en temps real durant el desenvolupament.
@@ -1458,56 +1478,8 @@ npm run build
 @include('partials.menu')
 ```
 
-4. Crear un component per als equips
 
-* Executa la següent comanda per crear un component Blade anomenat Equip:
-
-```bash
-./vendor/bin/sail artisan make:component Equip
-```
- 
-* Afegeix els estils al fitxer CSS resources/css/equips.css:
-
-```css
-  .equip {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .equip h2 {
-  margin: 0;
-  color: darkblue;
-  }
-
-```
-
-* Modifica la vista resources/views/equips/index.blade.php per utilitzar el component:
-  
-```html
-....
-<tbody>
-@foreach($equips as $equip)
-<x-equip
-   :nom="$equip['nom']"
-   :estadi="$equip['estadi']"
-   :titols="$equip['titols']"
-/>
-@endforeach
-</tbody>
-```
-* Modifica el component (app/Views/components/Equip.php) per utilitzar les dades passades:
-  
-```php
-public function __construct(
-     public string $nom,
-     public string $estadi,
-     public int $titols ) { }
-``` 
-
-5. Crear una plantilla base
+4. Crear una plantilla base
 
 * Crea el fitxer resources/views/layouts/app.blade.php:
 
@@ -1539,27 +1511,156 @@ public function __construct(
       
 ```php
  @extends('layouts.app')
+@section('title', " Guia d'Equips" )
+@section('content')
+    <h1>Guia d'Equips</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Estadi</th>
+            <th>Títols</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($equips as $equip )
+            <tr>
+                <td class="equip"><h2>{{ $equip['nom']  }}</h2></td>
+                <td class="equip">{{ $equip['estadi']  }}</td>
+                <td class="equip">{{ $equip['titols']  }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+@endsection
 
- @section('title', 'Guia d\'Equips')
- @section('content')
- <h1>Guia d'Equips</h1>
- <ul>
- @foreach($equips as $equip)
-  <x-equip
-     :nom="$equip['nom']"
-     :estadi="$equip['estadi']"
-     :titols="$equip['titols']"
- />
- @endforeach
- </ul>
- @endsection
 ```
- 6. **Qüestió:** Què és un component Blade i quins avantatges té respecte a les vistes parcials?
 
- 7. **Qüestio:** Què permet la directiva @yield i com es relaciona amb @section?
+5. Crear un component per als equips
 
- 8. **Qüestió:** Per què és important tenir una plantilla base en una aplicació web? 
+* Executa la següent comanda per crear un component Blade anomenat Equip:
+
+```bash
+./vendor/bin/sail artisan make:component Equip
+```
+
+* Afegeix els estils al fitxer CSS resources/css/equips.css:
+
+```css
+  .equip {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .equip h2 {
+  margin: 0;
+  color: darkblue;
+  }
+
+```
+* Modifica la vista resources/views/components/equip.blade.php per crear el component:
+
+```html
+<div class="equip">
+    <h2>{{ $nom }}</h2>
+    <p><strong>Estadi:</strong> {{ $estadi }}</p>
+    <p><strong>Títols:</strong> {{ $titols }}</p>
+</div>
+```
+* Crea un mètode al controlador d'equips per mostrar un equip:
+
+```php
+public function show($id) {
+    $equips = [
+        ['nom' => 'Barça Femení', 'estadi' => 'Camp Nou', 'titols' => 30],
+        ['nom' => 'Atlètic de Madrid', 'estadi' => 'Cívitas Metropolitano', 'titols' => 10],
+        ['nom' => 'Real Madrid Femení', 'estadi' => 'Alfredo Di Stéfano', 'titols' => 5],
+    ];
+    $equip = $equips[$id];
+    return view('equips.show', compact('equip'));
+}
+```
+
+* Crea la vista resources/views/equips/show.blade.php per utilitzar el component:
+
+```html
+@extends('layouts.app')
+@section('title', " Guia d'Equips" )
+@section('content')
+<x-equip
+   :nom="$equip['nom']"
+   :estadi="$equip['estadi']"
+   :titols="$equip['titols']"
+/>
+@endsection 
+```
+
+* Modifica el component (app/Views/components/Equip.php) per utilitzar les dades passades:
+
+```php
+public function __construct(
+     public string $nom,
+     public string $estadi,
+     public int $titols ) { }
+``` 
+
+* Crea la ruta:
+
+```php
+Route::get('/equips/{id}', [EquipController::class, 'show']);
+```
+
+ 6. **Qüestió:** Com podem fer per no repetir l'array d'equips en el controlador ?
+
+ 7. **Qüestió:** Què és un component Blade i quins avantatges té respecte a les vistes parcials?
+
+ 8. **Qüestio:** Què permet la directiva @yield i com es relaciona amb @section?
+
+ 9. **Qüestió:** Per què és important tenir una plantilla base en una aplicació web? 
 ---
+
+#### Pas 8: Refactoritzar el codi
+
+1. **No repetir l'array d'equips en el controlador**
+
+```php
+public $equips = [
+        ['nom' => 'Barça Femení', 'estadi' => 'Camp Nou', 'titols' => 30],
+        ['nom' => 'Atlètic de Madrid', 'estadi' => 'Cívitas Metropolitano', 'titols' => 10],
+        ['nom' => 'Real Madrid Femení', 'estadi' => 'Alfredo Di Stéfano', 'titols' => 5],
+    ];
+
+    public function index() {
+        $equips = $this->equips;
+        return view('equips.index', compact('equips'));
+    }
+
+    public function show($id) {
+        $equip = $this->equips[$id];
+        return view('equips.show', compact('equip'));
+    }
+```
+
+2. **Passar les rutes a resource**
+    
+  ```php
+  Route::resource('equips', EquipController::class);
+  ```
+3. **Crear l'enllaç en el index per a vore un equip**
+
+```html
+@foreach($equips as $key => $equip)
+    <tr>
+        <td><a href="{{ route('equips.show', $key) }}">{{ $equip['nom'] }}</a></td>
+        <td>{{ $equip['estadi'] }}</td>
+        <td>{{ $equip['titols'] }}</td>
+    </tr>
+@endforeach
+```
+
 
 ## Exercici: Guia d'Estadis de Futbol
 
