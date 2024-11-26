@@ -1555,6 +1555,28 @@ L'objectiu d'aquest exercici és crear una extensió de la guia d'equips de futb
 
 2. Afegeix un mètode `index` al controlador per retornar una vista amb un llistat d'estadis.
 
+```php
+$estadiosFutbolFemeni = [
+    [
+    'nom' => 'Estadi Johan Cruyff',
+    'ciutat' => 'Sant Joan Despí',
+    'capacitat' => 6000,
+    'equip_principal' => 'FC Barcelona Femení'
+    ],
+    [
+    'nom' => 'Centro Deportivo Wanda Alcalá de Henares',
+    'ciutat' => 'Alcalá de Henares',
+    'capacitat' => 2800,
+    'equip_principal' => 'Atlètic de Madrid Femení'
+    ],
+    [
+    'nom' => 'Estadio Alfredo Di Stéfano',
+    'ciutat' => 'Madrid',
+    'capacitat' => 6000,
+    'equip_principal' => 'Real Madrid Femení'
+    ]
+];
+```  
 ---
 
 #### **2. Crear una ruta per als estadis**
