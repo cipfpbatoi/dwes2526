@@ -80,18 +80,19 @@
     - c) Emprant sessions per compartir informació entre vistes.
     - d) Copiant el codi en cada vista per assegurar que funcioni correctament.
 
-14. **Què fa el mètode `redirect()` en Laravel?**
-    - a) Redirigeix a una altra pàgina o ruta.
-    - b) Genera una resposta amb codi d'estat 404.
-    - c) Crea una nova vista en temps real.
-    - d) Converteix una resposta en un fitxer descarregable.
+14. **Què és una ruta amb nom (Named Route) a Laravel i quins avantatges ofereix?**
+    - a) Una ruta amb nom és una que utilitza la funció `name()` per assignar-li un identificador únic, facilitant-ne la reutilització i manteniment.
+    - b) És una ruta que només es pot accedir si està associada a un middleware específic.
+    - c) És una funcionalitat per generar rutes dinàmiques basades en controladors de recursos.
+    - d) Una ruta amb nom és aquella que no requereix paràmetres i retorna només text estàtic.
 
-15. **Com pots protegir un projecte Laravel contra atacs Cross-Site Request Forgery (CSRF)?**
-    - a) Utilitzant el middleware `VerifyCsrfToken` i el token `@csrf` en els formularis.
-    - b) Definint polítiques estrictes de permisos a la base de dades.
-    - c) Encriptant totes les respostes enviades al client.
-    - d) Limitant l'accés a les vistes només a usuaris autenticats.
+15. **Quan és recomanable utilitzar components Blade en comptes de vistes parcials a Laravel?**
+    - a) Quan necessitem passar dades dinàmiques i encapsular la lògica de presentació en una estructura reutilitzable i clara.
+    - b) Quan la vista parcial és molt complexa i conté múltiples dependències externes.
+    - c) Quan volem crear mètodes d’ajuda per a consultes SQL directament des de la vista.
+    - d) Quan necessitem incloure una vista dins d’una altra sense passar-hi dades addicionals.
 
+ 
 ---
 
 ## Secció 2: Preguntes obertes (Pràctica)

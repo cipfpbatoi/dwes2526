@@ -927,52 +927,7 @@ Per empaquetar i versionar els recursos per a producció, executa:
  ```
 
 ---
-
-### Integració amb Tailwind CSS
-
-**Tailwind CSS** és un framework d'utilitats que facilita la creació de dissenys personalitzats. Per instal·lar Tailwind CSS en un projecte Laravel:
-
-1. Instal·la Tailwind CSS amb npm:
-
- ```bash
- npm install -D tailwindcss postcss autoprefixer
- npx tailwindcss init
- ```
-
-2. Configura `tailwind.config.js` per especificar els fitxers Blade:
-
- ```javascript
- module.exports = {
- content: [
- './resources/**/*.blade.php',
- './resources/**/*.js',
- './resources/**/*.vue',
- ],
- theme: {
- extend: {},
- },
- plugins: [],
- };
- ```
-
-3. Afegeix Tailwind a `resources/css/app.css`:
-
- ```css
- @tailwind base;
- @tailwind components;
- @tailwind utilities;
- ```
-
-4. Executa Vite per compilar el CSS:
-
- ```bash
- npm run dev
- ```
-
-Ara pots utilitzar les classes de Tailwind CSS a les teves vistes Blade.
-
-[Instal·lacio](https://tailwindcss.com/docs/guides/laravel)
-
+ 
 
 ## Controladors
 
@@ -1073,159 +1028,8 @@ Route::get('admin', [App\Http\Controllers\Photos\AdminController::class, 'method
 Laravel afegeix automàticament l'espai de noms per als controladors a `RouteServiceProvider`. Si crees subcarpetes, assegura't d'actualitzar el fitxer de rutes amb el nom complet del controlador.
 
 ---
-
-### Altres funcionalitats útils
-
-#### Middleware
-
-Pots aplicar middleware als controladors per protegir rutes o afegir funcionalitats:
-
-```php
-class CatalogController extends Controller {
- public function \_\_construct() {
- $this->middleware('auth');
- }
-}
-```
-
-#### Controladors invocables
-
-Un controlador invocable és un controlador amb un sol mètode `\_\_invoke`. Es crea amb:
-
-```bash
-php artisan make:controller ExampleController --invokable
-```
-
-Aquest controlador es pot utilitzar directament a les rutes:
-
-```php
-Route::get('example', ExampleController::class);
-```
-
----
-
-
-## Respostes en Laravel
-
-Laravel ofereix una varietat de maneres per gestionar i retornar respostes a les peticions del client. Les respostes poden incloure contingut HTML, JSON, redireccions i capçaleres personalitzades.
-
----
-
-### Crear una resposta
-
-El mètode `response()` permet crear respostes personalitzades. Els paràmetres que accepta són:
-
-1. **Contingut**: El contingut que es retornarà al client.
-2. **Codi d'estat HTTP**: Per defecte és `200`.
-3. **Capçaleres**: Un array opcional amb les capçaleres.
-
-Exemple bàsic:
-
-```php
-return response("Missatge de resposta", 201);
-```
-
-També pots afegir capçaleres amb el mètode `header`:
-
-```php
-return response("Missatge de resposta", 201)
- ->header('X-Custom-Header', 'Valor personalitzat')
- ->header('Cache-Control', 'no-cache');
-```
-
----
-
-### Respostes JSON
-
-Per retornar respostes en format JSON, utilitza el mètode `json()`:
-
-```php
-return response()->json(['dades' => $dades], 201)
- ->header('X-Custom-Header', 'Valor');
-```
-
-Laravel s'encarrega d'afegir automàticament les capçaleres necessàries perquè el navegador reconegui el contingut com a JSON.
-
----
-
-### Redireccions
-
-Laravel proporciona el mètode `redirect()` per redirigir l'usuari:
-
-1. **Redirecció a una ruta específica:**
-
- ```php
- return redirect('/');
- ```
-
-2. **Redirecció a una ruta amb nom:**
-
- ```php
- return redirect()->route('inicio');
- ```
-
-3. **Redirecció a la ruta anterior:**
-
- ```php
- return back();
- ```
-
-4. **Redirecció amb dades temporals (sessió):**
-
- ```php
- return redirect()->route('inicio')->with('missatge', 'Acció completada correctament');
- ```
-
-A la vista, pots accedir a aquest missatge:
-
-```blade
-@if(session()->has('missatge'))
- {{ session('missatge') }}
-
-
-@endif
-```
-
----
-
-### Redirecció des d'un controlador
-
-Quan redirigeixes des d'un controlador, assegura't de retornar el resultat de la redirecció:
-
-```php
-class LlibreController extends Controller {
- public function index() {
- // Lògica del mètode
- }
-
- public function store(Request $request) {
- // Processar dades
- return redirect()->route('llibres.index')
- ->with('missatge', 'Llibre creat correctament');
- }
-}
-```
-
----
-
-### Redirecció amb valors de la petició
-
-Quan redirigeixes després de validar un formulari, pots reenviar els valors de la petició amb el mètode `withInput()`. Això és útil per omplir els camps del formulari amb les dades prèviament enviades:
-
-1. **Tornar tots els valors:**
-
- ```php
- return redirect('formulari')->withInput();
- ```
-
-2. **Tornar alguns valors exclosos:**
-
- ```php
- return redirect('formulari')->withInput($request->except('password'));
- ```
-
-A la vista, pots accedir als valors antics amb la funció `old()`.
-
+ 
+ 
 ## Exercici Pràctic: Guia d'Equips de Futbol Femení
 
 L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar una guia d'equips de futbol femení. Aprendrem a configurar rutes, controladors, vistes i a passar dades utilitzant les funcionalitats de Laravel.
@@ -1660,6 +1464,81 @@ public $equips = [
     </tr>
 @endforeach
 ```
+4. **Utilitza chatgpt per a donar estil a les vistes mitjançant tailwind**
+
+```html
+app.blade.php
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Guia de futbol femení')</title>
+    @vite(['resources/css/app.css'])
+</head>
+<body class="font-sans bg-gray-100 text-gray-900">
+<header class="bg-blue-800 text-white p-4">
+    @include('partials.menu')
+</header>
+<main class="container mx-auto p-6">
+    @yield('content')
+</main>
+<footer class="bg-blue-800 text-white text-center p-4">
+    <p>&copy; 2024 Guia de Futbol Femení</p>
+</footer>
+</body>
+</html>
+``` 
+
+```html
+index.blade.php
+@extends('layouts.app')
+
+@section('title', "Guia d'Equips")
+
+@section('content')
+<h1 class="text-3xl font-bold text-blue-800 mb-6">Guia d'Equips</h1>
+<table class="w-full border-collapse border border-gray-300">
+    <thead class="bg-gray-200">
+    <tr>
+        <th class="border border-gray-300 p-2">Nom</th>
+        <th class="border border-gray-300 p-2">Estadi</th>
+        <th class="border border-gray-300 p-2">Títols</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($equips as $key => $equip)
+    <tr class="hover:bg-gray-100">
+        <td class="border border-gray-300 p-2">
+            <a href="{{ route('equips.show', $key) }}" class="text-blue-700 hover:underline">{{ $equip['nom'] }}</a>
+        </td>
+        <td class="border border-gray-300 p-2">{{ $equip['estadi'] }}</td>
+        <td class="border border-gray-300 p-2">{{ $equip['titols'] }}</td>
+    </tr>
+    @endforeach
+    </tbody>
+</table>
+@endsection
+``` 
+```html
+equip.blade.php
+<div class="equip border rounded-lg shadow-md p-4 bg-white">
+    <h2 class="text-xl font-bold text-blue-800">{{ $nom }}</h2>
+    <p><strong>Estadi:</strong> {{ $estadi }}</p>
+    <p><strong>Títols:</strong> {{ $titols }}</p>
+</div>
+``` 
+```html
+menu.blade.php
+<nav>
+    <ul class="flex space-x-4">
+        <li><a href="/" class="text-white hover:underline">Inici</a></li>
+        <li><a href="/equips" class="text-white hover:underline">Guia d'Equips</a></li>
+        <li><a href="/estadis" class="text-white hover:underline">Llistat d'Estadis</a></li>
+    </ul>
+</nav>
+```
 
 
 ## Exercici: Guia d'Estadis de Futbol
@@ -1740,6 +1619,10 @@ $partits = [
     ['local' => 'Real Madrid Femení', 'visitant' => 'Barça Femení', 'data' => '2024-12-15', 'resultat' => '0-3'],
 ];
 ```
+
+#### **8. Modifica el menu**
+
+Per poder anar a totes les pantalles i canvia les rutes a anomenades.
 
  ---
 
