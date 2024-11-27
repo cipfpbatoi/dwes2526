@@ -409,7 +409,6 @@ Sobre el projecte blog de la sessió anterior, afegirem aquests canvis:
 * 
 #### Exercisi 712
 
-Sobre el projecte blog anterior, afegirem aquests canvis:
 
 * Fes que la funció **edit** del controlador de posts, en lloc de mostrar un missatge de text pla indicant que ací va un formulari, redirigisquen a la pàgina d'inici, usant la instrucció [**redirect**](#utilitzar-la-resposta-per-fer-redireccions) .
 * Afig un [helper](#helperserviceprovider) al projecte que definisca una funció anomenada **fechaActual** . Rebrà com a paràmetre un format de data (per defecte, "d/m/Y") i traurà la data actual en aquest format. Utilitza-ho per a mostrar la data actual en format "d/m/Y" en la plantilla base alineada a la dreta de la barra de navegació.
