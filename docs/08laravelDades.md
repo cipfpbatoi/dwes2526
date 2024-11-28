@@ -284,6 +284,7 @@ class Movie extends Model
 ```
 
 Per defecte:
+
 - El model s'associa a una taula plural (`movies` per al model `Movie`).
 - Utilitza `id` com a clau primària.
 - Assumeix l'ús de camps `created_at` i `updated_at` gestionats automàticament.
@@ -325,7 +326,57 @@ $movie->save();
 $movie = Movie::find($id);
 $movie->delete();
 ```
- 
+### Propietats comuns dels Models Eloquent
+
+Els models d'Eloquent ofereixen diverses propietats que permeten configurar el comportament de la interacció amb la base de dades. A continuació es detallen les més importants:
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Example extends Model
+{
+    // Especifica el nom de la taula si no segueix la convenció per defecte
+    protected $table = 'custom_table_name';
+
+    // Defineix la clau primària de la taula
+    protected $primaryKey = 'custom_id';
+
+    // Indica si la clau primària és autoincremental
+    public $incrementing = false;
+
+    // Especifica el tipus de la clau primària (per exemple, string si no és integer)
+    protected $keyType = 'string';
+
+    // Defineix quins camps poden ser assignats massivament
+    protected $fillable = ['name', 'email', 'password'];
+
+    // Defineix quins camps no poden ser assignats massivament
+    protected $guarded = ['is_admin'];
+
+    // Oculta camps quan es converteix a JSON o arrays
+    protected $hidden = ['password', 'remember_token'];
+
+    // Defineix quins camps són visibles quan es converteix a JSON o arrays
+    protected $visible = ['name', 'email'];
+
+    // Transformació automàtica de camps a un tipus específic
+    protected $casts = [
+        'is_admin' => 'boolean',
+        'settings' => 'array',
+    ];
+
+    // Indica si la taula té els camps `created_at` i `updated_at`
+    public $timestamps = true;
+
+    // Defineix la connexió a la base de dades
+    protected $connection = 'mysql';
+}
+```
+
 ### **Relacions en Eloquent**
 
 #### 1. **Un a un (One-to-One):**
@@ -622,4 +673,347 @@ Book::factory()->withDiscount()->create();
 - Faciliten la generació massiva de dades.
 - Simplifiquen les proves i el desenvolupament amb dades fictícies realistes.
 - Redueixen el temps d'inicialització de les aplicacions.
+
+---
+## Requests, Responses i Validació en Laravel  
+
+### **1. Requests**
+
+#### **Introducció**
+Un *Request* en Laravel és un objecte que encapsula la informació sobre la petició HTTP, incloent dades, capçaleres, paràmetres i fitxers.
  
+#### **Accés a dades del Request**
+- Accedir a tots els inputs.
+- Obtenir un input específic.
+- Especificar valors per defecte.
+- Accedir a paràmetres de ruta.
+
+ ```php
+$input = $request->all();
+$name = $request->input('name');
+$age = $request->input('age', 18);
+$id = $request->route('id');
+```
+ 
+#### **Validació de presència**
+- Comprovar si un input existeix.
+- Comprovar si inputs estan plens.
+- Filtrar inputs específics.
+- Excloure certs inputs.
+
+```php
+if ($request->has('email')) {
+    // Input 'email' present
+}
+if ($request->filled('name')) {
+    // Input 'name' no està buit
+}
+$filtered = $request->only(['name', 'email']);
+$excluded = $request->except(['password']);
+```
+
+### **Tractament de fitxers**
+- Comprovar si hi ha un fitxer.
+- Emmagatzemar un fitxer.
+
+```php
+if ($request->hasFile('photo')) {
+$file = $request->file('photo');
+}
+$path = $request->file('photo')->store('photos');
+    
+```
+ 
+## **2. Responses**
+
+### **Creació de respostes**
+- Crear una resposta bàsica.
+- Crear una resposta JSON.
+- Fer redireccions.
+- Fer redireccions amb dades de sessió.
+
+```php
+return response('Hello World', 200);
+return response()->json([
+    'name' => 'John',
+    'status' => 'success'
+]);
+return redirect('dashboard');
+return redirect('login')->with('status', 'Sessió iniciada');
+``` 
+ 
+
+### **Manipular capçaleres**
+- Afegeix una o múltiples capçaleres.
+
+---
+
+### **Respostes de fitxers**
+- Descàrrega de fitxers.
+- Mostrar fitxers.
+
+---
+
+## **3. Validació**
+
+### **Introducció**
+Laravel ofereix un sistema potent i senzill per validar dades d'inputs.
+
+---
+
+### **Validació bàsica**
+- Validar dades amb un Request.
+- Validar manualment.
+
+---
+
+### **Regles comunes**
+- `required`: Camp obligatori.
+- `email`: Validació d'un correu electrònic.
+- `min:value`: Mínim de caràcters o valor numèric.
+- `max:value`: Màxim de caràcters o valor numèric.
+- `unique:table,column`: Ha de ser únic en una taula/columna.
+
+---
+
+### **Missatges personalitzats**
+Es poden definir missatges personalitzats per a les regles de validació.
+
+---
+
+### **Validació condicional**
+Validació basada en altres camps o condicions.
+
+---
+
+### **Validació personalitzada**
+Es poden afegir regles personalitzades mitjançant extensions del Validator.
+
+---
+
+### **Errors de validació**
+- Obtenir tots els errors.
+- Mostrar errors específics.
+
+---
+
+Aquestes seccions cobreixen els punts principals de Requests, Responses, i Validació en Laravel. Si necessites aprofundir en algun apartat, no dubtis a dir-ho! 😊
+
+
+
+## Exercici Pràctic: Guia d'Equips de Futbol Femení amb Base de Dades
+
+L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení per utilitzar una base de dades relacional. Aprendràs a crear taules amb migracions, models per gestionar les dades, i a integrar-los amb controladors i vistes.
+
+---
+
+## **1. Crear la Migració per a la Taula `equips`**
+
+### **Migració**
+
+1. Genera una migració per a la taula `equips` amb la següent estructura:
+    - `id`: Clau primària, autoincremental.
+    - `nom`: Nom de l'equip (cadena, únic, obligatori).
+    - `estadi`: Nom de l'estadi de l'equip (cadena, obligatori).
+    - `titols`: Nombre de títols guanyats (entero, predeterminat 0).
+    - `created_at` i `updated_at`: Camps de timestamps generats automàticament.
+
+```bash
+php artisan make:migration create_equips_table --create=equips
+```
+   
+2. Modifica el fitxer de migració per incloure l'estructura de la taula:
+
+```php
+public function up()
+{
+    Schema::create('equips', function (Blueprint $table) {
+        $table->id();
+        $table->string('nom')->unique();
+        $table->string('estadi');
+        $table->integer('titols')->default(0);
+        $table->timestamps();
+    });
+}
+```
+
+3. Executa la migració per crear la taula:
+
+```bash 
+php artisan migrate
+```
+
+### **Models i Seeders**
+  
+1. Genera un model anomenat `Equip` per gestionar la taula:
+
+   ```bash
+   php artisan make:model Equip
+    ```
+
+2. Modifica el model Equip a app/Models/Equip.php per definir els camps que es poden emplenar mitjançant assignació massiva:
+
+    ```php
+    protected $fillable = ['nom', 'estadi', 'titols'];
+    ```
+   
+3. Crea un seeder per a la taula `equips`:
+
+    ```bash
+    php artisan make:seeder EquipsSeeder
+    ```
+   
+4. Modifica el seeder EquipsSeeder per generar dades d'exemple:
+
+    ```php
+    public function run()
+    {
+        DB::table('equips')->insert([
+                ['nom' => 'Barça Femení', 'estadi' => 'Camp Nou', 'titols' => 30],
+                ['nom' => 'Atlètic de Madrid', 'estadi' => 'Cívitas Metropolitano', 'titols' => 10],
+                ['nom' => 'Real Madrid Femení', 'estadi' => 'Alfredo Di Stéfano', 'titols' => 5],
+        ]);
+    }
+    ```
+5. Afegeix el seeder EquipsSeeder al fitxer DatabaseSeeder:
+
+    ```php
+    public function run()
+    {
+        $this->call([
+            EquipsSeeder::class,
+        ]);
+    }
+    ```
+6. Executa els seeders per omplir la taula `equips` amb dades d'exemple:
+
+    ```bash
+    php artisan db:seed
+    ```
+### ** 3.  Controladors i CRUD**
+
+ 
+1. Modifica el mètode `index` del controlador per obtenir els equips des de la base de dades:
+
+   ```php
+   public function index() {
+       $equips = Equip::all();
+       return view('equips.index', compact('equips'));
+   }   
+   ```
+2. Modifica el mètode **show** per obtenir un equip específic:
+
+   ```php
+   public function show($id) {
+       $equip = Equip::findOrFail($id);
+       return view('equips.show', compact('equip'));
+   }
+   ```    
+3. Crear un nou equip amb el mètode **create**:
+
+   ```php
+   public function create() {
+       return view('equips.create');
+   }
+   ```
+4. Emmagatzemar un nou equip amb el mètode **store**:
+
+```php
+public function store(Request $request) {
+    $validated = $request->validate([
+        'nom' => 'required|unique:equips',
+        'estadi' => 'required',
+        'titols' => 'integer|min:0',
+    ]);
+   Equip::create($validated);
+   return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
+}  
+``` 
+5. Modifica el mètode **edit** per editar un equip existent:
+
+```php
+public function edit($id) {
+    $equip = Equip::findOrFail($id);
+    return view('equips.edit', compact('equip'));
+}
+```
+
+6. Actualitza un equip existent amb el mètode **update**:
+
+```php
+public function update(Request $request, $id) {
+    $validated = $request->validate([
+        'nom' => 'required|unique:equips,nom,'.$id,
+        'estadi' => 'required',
+        'titols' => 'integer|min:0',
+    ]);
+    $equip = Equip::findOrFail($id);
+    $equip->update($validated);
+    return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament!');
+}
+```
+
+7. Esborra un equip amb el mètode **destroy**:
+
+```php
+public function destroy($id) {
+    $equip = Equip::findOrFail($id);
+    $equip->delete();
+    return redirect()->route('equips.index')->with('success', 'Equip esborrat correctament!');
+}
+```
+
+## Exercici: Guia de Futbol Femení amb Base de Dades
+
+  
+## **Passos a Seguir**
+
+### **1. Crear Migracions i Models**
+
+1. Genera una migració per a modificar la taula `equips` per tal que l'estadi siga clau aliena d'estadis.
+2. Crea una migració per a la taula `estadis`.
+3. Genera una migració per a les jugadores, associant-les amb un equip.
+4. Afegeix una migració per a la taula `partits`, incloent equips locals i visitants, data del partit i resultat.
+5. Executa totes les migracions.
+
+---
+
+### **2. Models i Relacions**
+
+1. Defineix les relacions en els models:
+    - Un equip té moltes jugadores.
+    - Un equip té un estadi.
+    - Un equip pot tenir molts partits com a local o visitant.
+    - Un partit té un equip local i un equip visitant.
+2. Defineix les relacions inverses i ajusta les configuracions segons les necessitats.
+
+---
+
+### **3. Refactoritzar el Controlador**
+
+1. Modifica els controladors per treballar amb els models en lloc d'utilitzar dades estàtiques.
+2. Recupera dades amb relacions definides per generar respostes completes.
+
+---
+
+### **4. Afegir Funcionalitat de Creació i Edició**
+
+1. Implementa formularis per crear i editar equips, jugadores, estadis i partits.
+2. Assegura’t que els camps estiguin validats correctament abans de desar les dades.
+3. Organitza el codi amb components Blade per formularis modulars.
+
+---
+
+### **5. Configuració de les Rutes**
+
+1. Defineix rutes de recursos per a `equip`, `jugadora`, `estadi` i `partit`.
+2. Assegura't que les rutes gestionen les operacions CRUD.
+
+---
+
+## **Qüestions per Reflexió**
+
+1. **Migracions:** Quins avantatges té utilitzar migracions per gestionar l'esquema de la base de dades?
+2. **Relacions:** Com gestionaries les relacions many-to-many (per exemple, entre equips i partits)?
+3. **Blade i Components:** Quins beneficis aporta l'ús de components Blade en formularis complexos?
+
