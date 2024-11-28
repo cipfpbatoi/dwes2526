@@ -1,4 +1,4 @@
-# ** Gestió de Dades amb Laravel  **
+# **Gestió de Dades amb Laravel**
 
 ## **1. Introducció**
 Laravel és un framework PHP modern que simplifica el desenvolupament d'aplicacions web, incloent-hi la gestió de bases de dades. La integració amb Eloquent, el seu ORM (Object-Relational Mapping), permet treballar amb bases de dades de forma intuïtiva i eficient.
@@ -29,7 +29,7 @@ Aquest comandament confirma si Laravel pot connectar-se a la base de dades confi
 - Comprovar que l'extensió del driver de la base de dades (com `pdo_mysql` o `pdo_pgsql`) estigui habilitada al `php.ini`.
 - Utilitzar `php artisan config:clear` per esborrar la memòria cau de configuracions si els canvis al `.env` no es reflecteixen. 
 
-## **3. Migracions en Laravel  **
+## **3. Migracions en Laravel**
 
 ### **Introducció**
 Les migracions són un sistema de control de versions per a bases de dades que permet treballar de manera col·laborativa, mantenint un històric dels canvis realitzats en l'esquema. Amb migracions, pots:
@@ -441,4 +441,185 @@ En la vista:
 ```php
 {{ $movies->links() }}
 ```
+
+
+
+## **Seeders i Factories en Laravel  **
+
+Els **seeders** i **factories** permeten generar dades de prova de manera fàcil i ràpida, útils durant el desenvolupament per simular dades inicials en una aplicació.
+
+---
+
+### **Seeders**
+Els seeders són classes especials que permeten "sembrar" dades a la base de dades.
+
+#### **Crear un Seeder**
+```bash
+php artisan make:seeder NomSeeder
+```
+Això crea un fitxer a la carpeta database/seeders. Per exemple:
+
+```php
+class BooksSeeder extends Seeder
+{
+    public function run()
+    {
+        // Exemple: Crear un llibre
+        $book = new Book();
+        $book->title = "Laravel for Beginners";
+        $book->author = "John Doe";
+        $book->save();
+    }
+}
+```
+
+#### Afegir Seeders al Seeder General
+Inclou els seeders al fitxer DatabaseSeeder:
+
+```php
+class DatabaseSeeder extends Seeder
+{
+    public function run()
+    {
+        $this->call([
+            BooksSeeder::class,
+            AuthorsSeeder::class,
+        ]);
+    }
+}
+```
+
+#### Executar Seeders
+
+Executar tots els seeders:
+Executar un seeder específic:
+Reiniciar les migracions i executar els seeders:
+
+```bash
+php artisan db:seed
+php artisan db:seed --class=BooksSeeder
+php artisan migrate:fresh --seed
+```
+
+### Factories
+
+Els factories permeten crear grans quantitats de dades de manera ràpida i dinàmica mitjançant Faker.
+
+#### Crear un Factory
+
+```bash
+php artisan make:factory NomFactory -m Model
+```
+
+Per exemple, per al model Author:
+
+```php
+namespace Database\Factories;
+
+use App\Models\Author;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class AuthorFactory extends Factory
+{
+protected $model = Author::class;
+
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->name,
+            'birth_year' => $this->faker->year,
+        ];
+    }
+}
+```
+
+#### Utilitzar un Factory
+Per generar dades amb un factory:
+
+```php
+use App\Models\Author;
+
+// Crear un únic autor
+Author::factory()->create();
+
+// Crear diversos autors
+Author::factory()->count(10)->create();
+```
+#### Integració amb Seeders
+
+Combina factories amb seeders per generar dades dinàmiques:
+
+```php
+class AuthorsSeeder extends Seeder
+{
+    public function run()
+    {
+        Author::factory()->count(10)->create();
+    }
+}
+```
+
+#### Dades Relacionades
+
+Els factories permeten generar dades relacionades. Per exemple, llibres amb els seus autors:
+
+```php
+class BooksSeeder extends Seeder
+{
+    public function run()
+    {
+        $authors = Author::factory()->count(5)->create();
+
+        $authors->each(function ($author) {
+            Book::factory()->count(2)->create(['author_id' => $author->id]);
+        });
+    }
+}
+```
+
+#### Exemples Avançats
+
+##### Utilitzar Factories per Relacions
+Definir relacions dins d’un factory:
+```php
+class BookFactory extends Factory
+{
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->sentence,
+            'author_id' => Author::factory(),
+        ];
+    }
+}
+```
+Llançar el factory:
+```php
+Book::factory()->count(10)->create();
+```
+
+##### Factories amb Estats
+Els estats permeten definir configuracions personalitzades per un model:
+
+```php
+class BookFactory extends Factory
+{
+    public function withDiscount()
+    {
+        return $this->state([
+        'price' => $this->faker->numberBetween(5, 10),
+        ]);
+    }
+}
+```
+Ús d'un estat:
+```php
+Book::factory()->withDiscount()->create();
+```
+
+### Avantatges dels Factories
+
+- Faciliten la generació massiva de dades.
+- Simplifiquen les proves i el desenvolupament amb dades fictícies realistes.
+- Redueixen el temps d'inicialització de les aplicacions.
  

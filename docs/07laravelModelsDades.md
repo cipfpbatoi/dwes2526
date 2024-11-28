@@ -1470,3 +1470,4 @@ AJUDA: si vols triar un usuari a l'atzar com a autor de cada comentari, pots fer
 
 En aquest cas, seria convenient que aqueix usuari aleatori s'afija directament en el factory del comentari, i no en el seeder, ja que en cas contrari és possible que genere el mateix usuari per a tots els comentaris d'un post.
 En la fitxa dels posts (vista posts/show.blade.php ), afig el codi necessari per a mostrar el **login** de l'usuari que ha fet el post, i el llistat de comentaris associat al post, mostrant per a cadascun el login de l'usuari que el va fer, i el text del comentari en si. Utilitza també la [llibreria)(us-de-dates) **Carbon** per a mostrar la data de creació del post (o la dels comentaris, com preferisques) en format d/m/Y .
+
