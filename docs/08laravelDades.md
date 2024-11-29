@@ -683,24 +683,16 @@ Book::factory()->withDiscount()->create();
 Un *Request* en Laravel és un objecte que encapsula la informació sobre la petició HTTP, incloent dades, capçaleres, paràmetres i fitxers.
  
 #### **Accés a dades del Request**
-- Accedir a tots els inputs.
-- Obtenir un input específic.
-- Especificar valors per defecte.
-- Accedir a paràmetres de ruta.
-
+  
  ```php
-$input = $request->all();
-$name = $request->input('name');
-$age = $request->input('age', 18);
-$id = $request->route('id');
+$input = $request->all(); //Accedir a tots els inputs.
+$name = $request->input('name'); //Obtenir un input específic.
+$age = $request->input('age', 18); //Especificar valors per defecte.
+$id = $request->route('id'); //Accedir a paràmetres de ruta.
 ```
  
 #### **Validació de presència**
-- Comprovar si un input existeix.
-- Comprovar si inputs estan plens.
-- Filtrar inputs específics.
-- Excloure certs inputs.
-
+ 
 ```php
 if ($request->has('email')) {
     // Input 'email' present
@@ -708,98 +700,143 @@ if ($request->has('email')) {
 if ($request->filled('name')) {
     // Input 'name' no està buit
 }
-$filtered = $request->only(['name', 'email']);
-$excluded = $request->except(['password']);
+$filtered = $request->only(['name', 'email']); //Filtrar inputs específics.
+$excluded = $request->except(['password']); //Excloure certs inputs.
 ```
 
 ### **Tractament de fitxers**
-- Comprovar si hi ha un fitxer.
-- Emmagatzemar un fitxer.
-
+ 
 ```php
-if ($request->hasFile('photo')) {
-$file = $request->file('photo');
+if ($request->hasFile('photo')) { //Comprovar si hi ha un fitxer.
+    $file = $request->file('photo');
 }
-$path = $request->file('photo')->store('photos');
+$path = $request->file('photo')->store('photos'); //Emmagatzemar un fitxer.
     
 ```
  
 ## **2. Responses**
 
 ### **Creació de respostes**
-- Crear una resposta bàsica.
-- Crear una resposta JSON.
-- Fer redireccions.
-- Fer redireccions amb dades de sessió.
-
+ 
 ```php
-return response('Hello World', 200);
+return response('Hello World', 200); //Crear una resposta bàsica.
 return response()->json([
     'name' => 'John',
     'status' => 'success'
-]);
-return redirect('dashboard');
-return redirect('login')->with('status', 'Sessió iniciada');
+]); //Crear una resposta JSON.
+return redirect('dashboard'); //Redirecció .
+return redirect('login')->with('status', 'Sessió iniciada'); //Redirecció amb dades de sessió.
 ``` 
  
-
 ### **Manipular capçaleres**
-- Afegeix una o múltiples capçaleres.
-
----
-
+ 
+```php
+//Afegeix una o múltiples capçaleres.
+return response('Hello')->header('Content-Type', 'text/plain');
+return response('Hello')
+->header('Content-Type', 'application/json')
+->header('Cache-Control', 'no-cache');
+```
+ 
 ### **Respostes de fitxers**
-- Descàrrega de fitxers.
-- Mostrar fitxers.
+ 
+```php
 
----
+return response()->download($pathToFile); //Descàrrega de fitxers.
+return response()->file($pathToFile); //Mostrar fitxers.
+``` 
 
 ## **3. Validació**
 
 ### **Introducció**
 Laravel ofereix un sistema potent i senzill per validar dades d'inputs.
-
----
-
+ 
+ 
 ### **Validació bàsica**
-- Validar dades amb un Request.
-- Validar manualment.
+ 
+```php
+    // Validar dades amb un Request.
+$request->validate([
+    'name' => 'required|string|max:255',
+    'email' => 'required|email',
+    'password' => 'required|min:8',
+]);
+```
+ 
+```php
+    // Validar manualment.
+$validator = Validator::make($request->all(), [
+    'title' => 'required|max:255',
+    'body' => 'required',
+]);
 
----
-
+if ($validator->fails()) {
+    return redirect('/form')->withErrors($validator);
+}
+```
+ 
 ### **Regles comunes**
 - `required`: Camp obligatori.
 - `email`: Validació d'un correu electrònic.
 - `min:value`: Mínim de caràcters o valor numèric.
 - `max:value`: Màxim de caràcters o valor numèric.
 - `unique:table,column`: Ha de ser únic en una taula/columna.
-
----
+[Llista sencera de regles](https://laravel.com/docs/11.x/validation#available-validation-rules)
+ 
 
 ### **Missatges personalitzats**
-Es poden definir missatges personalitzats per a les regles de validació.
 
----
+```php
+// Es poden definir missatges personalitzats per a les regles de validació.
 
+$request->validate([
+    'name' => 'required',
+], [
+    'name.required' => 'El nom és obligatori.',
+]);
+```
+    
+ 
 ### **Validació condicional**
-Validació basada en altres camps o condicions.
-
----
+     
+ ```php
+ // Validació basada en altres camps o condicions.
+$request->validate([
+    'password' => 'required_if:is_admin,true',
+]);
+```
 
 ### **Validació personalitzada**
-Es poden afegir regles personalitzades mitjançant extensions del Validator.
 
----
+```php
+// Es poden afegir regles personalitzades mitjançant extensions del Validator.
 
+Validator::extend('uppercase', function ($attribute, $value, $parameters, $validator) {
+    return strtoupper($value) === $value;
+});
+```
+ 
 ### **Errors de validació**
-- Obtenir tots els errors.
-- Mostrar errors específics.
+ 
 
----
-
-Aquestes seccions cobreixen els punts principals de Requests, Responses, i Validació en Laravel. Si necessites aprofundir en algun apartat, no dubtis a dir-ho! 😊
-
-
+```php
+// Obtenir tots els errors en la vista
+@if ($errors->any())
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif
+```
+ 
+```php
+    // Mostrar errors per camp específic
+@error('name')
+    <div>{{ $message }}</div>
+@enderror
+```
+ 
 
 ## Exercici Pràctic: Guia d'Equips de Futbol Femení amb Base de Dades
 
