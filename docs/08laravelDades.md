@@ -798,8 +798,8 @@ $request->validate([
     
  
 ### **Validació condicional**
-     
- ```php
+
+```php
  // Validació basada en altres camps o condicions.
 $request->validate([
     'password' => 'required_if:is_admin,true',
