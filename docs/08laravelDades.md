@@ -1000,18 +1000,248 @@ public function destroy($id) {
 }
 ```
 
+8. Anem a crear la migració, model i seeder per la taula `estadis` i vincular-la amb la taula `equips`.
+
+```bash
+php artisan make:migration create_estadis_table
+php artisan make:migration add_estadi_id_to_equips_table
+php artisan make:model Estadi
+php artisan make:seeder EstadisSeeder
+```
+
+9. Modifica la migració `create_estadis_table` per incloure l'estructura de la taula `estadis`:
+
+```php
+public function up()
+{
+    Schema::create('estadis', function (Blueprint $table) {
+        $table->id();
+        $table->string('nom')->unique();
+        $table->integer('capacitat');
+        $table->timestamps();
+    });
+}
+```
+
+10. Modifica la migració `add_estadi_id_to_equips_table` per afegir la clau forana `estadi_id` a la taula `equips`:
+
+```php
+public function up()
+{
+    Schema::table('equips', function (Blueprint $table) {
+        $table->deleteColumn('estadi'); // Esborra el camp estadi
+        $table->foreignId('estadi_id')->constrained(); // Afegir la clau forana
+    });
+ }
+
+public function down()
+{
+    Schema::table('equips', function (Blueprint $table) {
+        $table->string('estadi');
+        $table->dropForeign(['estadi_id']);
+        $table->deleteColumn('estadi_id');
+    });
+}
+```
+11. Modifica el model `Equip` per definir la relació amb l'estadi:
+
+```php
+public function estadi()
+{
+    return $this->belongsTo(Estadi::class);
+}
+```
+
+12. Modifica el model `Estadi` per definir la relació amb els equips:
+
+```php
+public function equips()
+{
+    return $this->hasMany(Equip::class);
+}
+```
+
+13. Modifica el seeder `EstadisSeeder` per generar dades d'exemple per a la taula `estadis`:
+
+```php
+public function run()
+{
+    DB::table('estadis')->insert([
+        ['nom' => 'Camp Nou', 'capacitat' => 99000],
+        ['nom' => 'Wanda Metropolitano', 'capacitat' => 68000],
+        ['nom' => 'Santiago Bernabéu', 'capacitat' => 81000],
+    ]);
+}
+```
+
+14. Afegeix el seeder `EstadisSeeder` al fitxer `DatabaseSeeder`:
+
+```php
+public function run()
+{
+    $this->call([
+        EquipsSeeder::class,
+        EstadisSeeder::class,
+    ]);
+}
+```
+
+15. Modifica el seeder `EquipsSeeder` per assignar equips a estadis existents:
+
+```php
+public function run()
+{
+    $estadi = Estadi::where('nom', 'Camp Nou')->first();
+    $estadi->equips()->create([
+        'nom' => 'Barça Femení',
+        'titols' => 30,
+    ]);
+    $estadi = Estadi::where('nom', 'Wanda Metropolitano')->first();
+    $estadi->equips()->create([
+        'nom' => 'Atlètic de Madrid',
+        'titols' => 10,
+    ]);
+    $estadi = Estadi::where('nom', 'Santiago Bernabéu')->first();
+    $estadi->equips()->create([
+        'nom' => 'Real Madrid Femení',
+        'titols' => 5,
+    ]);
+ }
+```
+
+16. Executa els seeders per omplir les taules `equips` i `estadis` amb dades d'exemple:
+
+```bash
+php artisan migrate:fresh --seed 
+```
+
+17. Modifica la vista `equips.index` per mostrar l'estadi de cada equip:
+
+```php
+@foreach ($equips as $equip)
+    <tr>
+        <td>{{ $equip->nom }}</td>
+        <td>{{ $equip->estadi->nom }}</td>
+        <td>{{ $equip->titols }}</td>
+        <td>
+            <a href="{{ route('equips.show', $equip->id) }}">Mostrar</a>
+            <a href="{{ route('equips.edit', $equip->id) }}">Editar</a>
+        </td>
+    </tr>
+@endforeach
+```
+18. Crea la vista `equips.create` per incloure un desplegable amb els estadis disponibles:
+
+```php
+<form action="{{ route('equips.store') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
+    @csrf
+    <div class="mb-4">
+        <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Nom:</label>
+        <input type="text" name="nom" id="nom" required
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    
+    <div class="mb-4">
+        <label for="titols" class="block text-sm font-medium text-gray-700 mb-1">Títols:</label>
+        <input type="number" name="titols" id="titols" required
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    
+    <div class="mb-4">
+        <label for="estadi_id" class="block text-sm font-medium text-gray-700 mb-1">Estadi:</label>
+        <select name="estadi_id" id="estadi_id" required
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            @foreach ($estadis as $estadi)
+                <option value="{{ $estadi->id }}">{{ $estadi->nom }}</option>
+            @endforeach
+        </select>
+    </div>
+    
+    <button type="submit"
+        class="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-lg shadow hover:bg-blue-600 focus:ring focus:ring-blue-300">
+        Crear Equip
+    </button>
+</form>
+
+```
+
+19. Crea el mètode store en el controlador EquipController per emmagatzemar un nou equip:
+
+```php
+public function store(Request $request) {
+    $validated = $request->validate([
+        'nom' => 'required|unique:equips',
+        'estadi_id' => 'required|exists:estadis,id',
+        'titols' => 'integer|min:0',
+    ]);
+    Equip::create($validated);
+    return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
+}
+```
+
+20. Modifica la vista `equips.edit` per incloure un desplegable amb els estadis disponibles:
+
+```php
+<form action="{{ route('equips.update', $equip->id) }}" method="POST" class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
+    @csrf
+    @method('PUT')
+
+    <div class="mb-4">
+        <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Nom:</label>
+        <input type="text" name="nom" id="nom" value="{{ old('nom', $equip->nom) }}" required
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    
+    <div class="mb-4">
+        <label for="titols" class="block text-sm font-medium text-gray-700 mb-1">Títols:</label>
+        <input type="number" name="titols" id="titols" value="{{ old('titols', $equip->titols) }}" required
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    
+    <div class="mb-4">
+        <label for="estadi_id" class="block text-sm font-medium text-gray-700 mb-1">Estadi:</label>
+        <select name="estadi_id" id="estadi_id" required
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            @foreach ($estadis as $estadi)
+                <option value="{{ $estadi->id }}" {{ $estadi->id == $equip->estadi_id ? 'selected' : '' }}>
+                    {{ $estadi->nom }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    
+    <button type="submit"
+        class="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-lg shadow hover:bg-blue-600 focus:ring focus:ring-blue-300">
+        Actualitzar Equip
+    </button>
+</form>
+```
+21. Crea el mètode update en el controlador EquipController per actualitzar un equip existent:
+
+```php
+public function update(Request $request, $id) {
+    $validated = $request->validate([
+        'nom' => 'required|unique:equips,nom,'.$id,
+        'estadi_id' => 'required|exists:estadis,id',
+        'titols' => 'integer|min:0',
+    ]);
+    $equip = Equip::findOrFail($id);
+    $equip->update($validated);
+    return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament!');
+}
+```
+
+
+
 ## Exercici: Guia de Futbol Femení amb Base de Dades
 
-  
 ## **Passos a Seguir**
 
 ### **1. Crear Migracions i Models**
 
-1. Genera una migració per a modificar la taula `equips` per tal que l'estadi siga clau aliena d'estadis.
-2. Crea una migració per a la taula `estadis`.
-3. Genera una migració per a les jugadores, associant-les amb un equip.
-4. Afegeix una migració per a la taula `partits`, incloent equips locals i visitants, data del partit i resultat.
-5. Executa totes les migracions.
+1. Genera una migració per a les jugadores, associant-les amb un equip.
+2. Afegeix una migració per a la taula `partits`, incloent equips locals i visitants, data del partit i resultat.
+3. Executa totes les migracions.
 
 ---
 
@@ -1019,9 +1249,9 @@ public function destroy($id) {
 
 1. Defineix les relacions en els models:
     - Un equip té moltes jugadores.
-    - Un equip té un estadi.
     - Un equip pot tenir molts partits com a local o visitant.
     - Un partit té un equip local i un equip visitant.
+ 
 2. Defineix les relacions inverses i ajusta les configuracions segons les necessitats.
 
 ---
