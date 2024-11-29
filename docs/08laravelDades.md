@@ -924,12 +924,12 @@ php artisan migrate
     ```
 6. Executa els seeders per omplir la taula `equips` amb dades d'exemple:
 
-    ```bash
+ ```bash
     php artisan db:seed
-    ```
-### ** 3.  Controladors i CRUD**
+ ```
 
- 
+### ** 3.  Controladors i CRUD**
+  
 1. Modifica el mètode `index` del controlador per obtenir els equips des de la base de dades:
 
    ```php
@@ -953,20 +953,8 @@ php artisan migrate
        return view('equips.create');
    }
    ```
-4. Emmagatzemar un nou equip amb el mètode **store**:
-
-```php
-public function store(Request $request) {
-    $validated = $request->validate([
-        'nom' => 'required|unique:equips',
-        'estadi' => 'required',
-        'titols' => 'integer|min:0',
-    ]);
-   Equip::create($validated);
-   return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
-}  
-``` 
-5. Modifica el mètode **edit** per editar un equip existent:
+ 
+4. Modifica el mètode **edit** per editar un equip existent:
 
 ```php
 public function edit($id) {
@@ -974,23 +962,9 @@ public function edit($id) {
     return view('equips.edit', compact('equip'));
 }
 ```
+ 
 
-6. Actualitza un equip existent amb el mètode **update**:
-
-```php
-public function update(Request $request, $id) {
-    $validated = $request->validate([
-        'nom' => 'required|unique:equips,nom,'.$id,
-        'estadi' => 'required',
-        'titols' => 'integer|min:0',
-    ]);
-    $equip = Equip::findOrFail($id);
-    $equip->update($validated);
-    return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament!');
-}
-```
-
-7. Esborra un equip amb el mètode **destroy**:
+5. Esborra un equip amb el mètode **destroy**:
 
 ```php
 public function destroy($id) {
@@ -1000,7 +974,9 @@ public function destroy($id) {
 }
 ```
 
-8. Anem a crear la migració, model i seeder per la taula `estadis` i vincular-la amb la taula `equips`.
+### **4. Relacions entre Taules**
+
+1. Anem a crear la migració, model i seeder per la taula `estadis` i vincular-la amb la taula `equips`.
 
 ```bash
 php artisan make:migration create_estadis_table
@@ -1009,7 +985,7 @@ php artisan make:model Estadi
 php artisan make:seeder EstadisSeeder
 ```
 
-9. Modifica la migració `create_estadis_table` per incloure l'estructura de la taula `estadis`:
+2. Modifica la migració `create_estadis_table` per incloure l'estructura de la taula `estadis`:
 
 ```php
 public function up()
@@ -1023,7 +999,7 @@ public function up()
 }
 ```
 
-10. Modifica la migració `add_estadi_id_to_equips_table` per afegir la clau forana `estadi_id` a la taula `equips`:
+3. Modifica la migració `add_estadi_id_to_equips_table` per afegir la clau forana `estadi_id` a la taula `equips`:
 
 ```php
 public function up()
@@ -1043,7 +1019,8 @@ public function down()
     });
 }
 ```
-11. Modifica el model `Equip` per definir la relació amb l'estadi:
+
+4. Modifica el model `Equip` per definir la relació amb l'estadi:
 
 ```php
 public function estadi()
@@ -1052,7 +1029,7 @@ public function estadi()
 }
 ```
 
-12. Modifica el model `Estadi` per definir la relació amb els equips:
+5. Modifica el model `Estadi` per definir la relació amb els equips:
 
 ```php
 public function equips()
@@ -1061,7 +1038,7 @@ public function equips()
 }
 ```
 
-13. Modifica el seeder `EstadisSeeder` per generar dades d'exemple per a la taula `estadis`:
+6. Modifica el seeder `EstadisSeeder` per generar dades d'exemple per a la taula `estadis`:
 
 ```php
 public function run()
@@ -1074,7 +1051,7 @@ public function run()
 }
 ```
 
-14. Afegeix el seeder `EstadisSeeder` al fitxer `DatabaseSeeder`:
+7. Afegeix el seeder `EstadisSeeder` al fitxer `DatabaseSeeder`:
 
 ```php
 public function run()
@@ -1086,7 +1063,7 @@ public function run()
 }
 ```
 
-15. Modifica el seeder `EquipsSeeder` per assignar equips a estadis existents:
+8. Modifica el seeder `EquipsSeeder` per assignar equips a estadis existents:
 
 ```php
 public function run()
@@ -1109,13 +1086,13 @@ public function run()
  }
 ```
 
-16. Executa els seeders per omplir les taules `equips` i `estadis` amb dades d'exemple:
+9. Executa els seeders per omplir les taules `equips` i `estadis` amb dades d'exemple:
 
 ```bash
 php artisan migrate:fresh --seed 
 ```
 
-17. Modifica la vista `equips.index` per mostrar l'estadi de cada equip:
+10. Modifica la vista `equips.index` per mostrar l'estadi de cada equip:
 
 ```php
 @foreach ($equips as $equip)
@@ -1130,7 +1107,7 @@ php artisan migrate:fresh --seed
     </tr>
 @endforeach
 ```
-18. Crea la vista `equips.create` per incloure un desplegable amb els estadis disponibles:
+11. Crea la vista `equips.create` per incloure un desplegable amb els estadis disponibles:
 
 ```php
 <form action="{{ route('equips.store') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
@@ -1165,7 +1142,7 @@ php artisan migrate:fresh --seed
 
 ```
 
-19. Crea el mètode store en el controlador EquipController per emmagatzemar un nou equip:
+12. Crea el mètode store en el controlador EquipController per emmagatzemar un nou equip:
 
 ```php
 public function store(Request $request) {
@@ -1179,7 +1156,7 @@ public function store(Request $request) {
 }
 ```
 
-20. Modifica la vista `equips.edit` per incloure un desplegable amb els estadis disponibles:
+13. Modifica la vista `equips.edit` per incloure un desplegable amb els estadis disponibles:
 
 ```php
 <form action="{{ route('equips.update', $equip->id) }}" method="POST" class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
@@ -1216,7 +1193,7 @@ public function store(Request $request) {
     </button>
 </form>
 ```
-21. Crea el mètode update en el controlador EquipController per actualitzar un equip existent:
+14. Crea el mètode update en el controlador EquipController per actualitzar un equip existent:
 
 ```php
 public function update(Request $request, $id) {
@@ -1230,9 +1207,7 @@ public function update(Request $request, $id) {
     return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament!');
 }
 ```
-
-
-
+ 
 ## Exercici: Guia de Futbol Femení amb Base de Dades
 
 ## **Passos a Seguir**
