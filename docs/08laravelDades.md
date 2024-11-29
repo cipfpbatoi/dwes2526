@@ -932,49 +932,32 @@ php artisan make:model Equip
 
 ### **Controladors i CRUD**
   
-1. Modifica el mètode `index` del controlador per obtenir els equips des de la base de dades:
+1. Modifica el mètode `index`,`show`,`create`,`edit` i `destroy` del controlador per obtenir els equips des de la base de dades:
 
    ```php
    public function index() {
-       $equips = Equip::all();
-       return view('equips.index', compact('equips'));
-   }   
-   ```
-2. Modifica el mètode **show** per obtenir un equip específic:
+        $equips = Equip::all();
+        return view('equips.index', compact('equips'));
+    }
 
-   ```php
-   public function show($id) {
-       $equip = Equip::findOrFail($id);
-       return view('equips.show', compact('equip'));
-   }
-   ```    
-3. Crear un nou equip amb el mètode **create**:
+    public function show(Equip $equip) {
+        return view('equips.show', compact('equip'));
+    }
 
-   ```php
-   public function create() {
-       return view('equips.create');
-   }
+    public function create() {
+        return view('equips.create');
+    }
+
+    public function edit(Equip $equip) {
+        return view('equips.edit', compact('equip'));
+    }
+
+    public function destroy(Equip $equip) {
+        $equip->delete();
+        return redirect()->route('equips.index')->with('success', 'Equip esborrat correctament!');
+    } 
    ```
  
-4. Modifica el mètode **edit** per editar un equip existent:
-
-```php
-public function edit($id) {
-    $equip = Equip::findOrFail($id);
-    return view('equips.edit', compact('equip'));
-}
-```
- 
-
-5. Esborra un equip amb el mètode **destroy**:
-
-```php
-public function destroy($id) {
-    $equip = Equip::findOrFail($id);
-    $equip->delete();
-    return redirect()->route('equips.index')->with('success', 'Equip esborrat correctament!');
-}
-```
 
 ### **Relacions entre Taules**
 
