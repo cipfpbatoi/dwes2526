@@ -928,7 +928,7 @@ php artisan migrate
     php artisan db:seed
  ```
 
-### ** 3.  Controladors i CRUD**
+### **Controladors i CRUD**
   
 1. Modifica el mètode `index` del controlador per obtenir els equips des de la base de dades:
 
@@ -974,7 +974,7 @@ public function destroy($id) {
 }
 ```
 
-### **4. Relacions entre Taules**
+### **Relacions entre Taules**
 
 1. Anem a crear la migració, model i seeder per la taula `estadis` i vincular-la amb la taula `equips`.
 
