@@ -884,44 +884,46 @@ php artisan migrate
   
 1. Genera un model anomenat `Equip` per gestionar la taula:
 
-   ```bash
-   php artisan make:model Equip
-    ```
+```bash
+php artisan make:model Equip
+ ```
 
 2. Modifica el model Equip a app/Models/Equip.php per definir els camps que es poden emplenar mitjançant assignació massiva:
 
-    ```php
-    protected $fillable = ['nom', 'estadi', 'titols'];
-    ```
+ ```php
+ protected $fillable = ['nom', 'estadi', 'titols'];
+ ```
    
 3. Crea un seeder per a la taula `equips`:
 
-    ```bash
-    php artisan make:seeder EquipsSeeder
-    ```
+ ```bash
+ php artisan make:seeder EquipsSeeder
+ ```
    
 4. Modifica el seeder EquipsSeeder per generar dades d'exemple:
 
-    ```php
-    public function run()
-    {
-        DB::table('equips')->insert([
-                ['nom' => 'Barça Femení', 'estadi' => 'Camp Nou', 'titols' => 30],
-                ['nom' => 'Atlètic de Madrid', 'estadi' => 'Cívitas Metropolitano', 'titols' => 10],
-                ['nom' => 'Real Madrid Femení', 'estadi' => 'Alfredo Di Stéfano', 'titols' => 5],
-        ]);
-    }
-    ```
+ ```php
+ public function run()
+ {
+     DB::table('equips')->insert([
+             ['nom' => 'Barça Femení', 'estadi' => 'Camp Nou', 'titols' => 30],
+             ['nom' => 'Atlètic de Madrid', 'estadi' => 'Cívitas Metropolitano', 'titols' => 10],
+             ['nom' => 'Real Madrid Femení', 'estadi' => 'Alfredo Di Stéfano', 'titols' => 5],
+     ]);
+ }
+ ```
+
 5. Afegeix el seeder EquipsSeeder al fitxer DatabaseSeeder:
 
-    ```php
-    public function run()
-    {
-        $this->call([
-            EquipsSeeder::class,
-        ]);
-    }
-    ```
+ ```php
+ public function run()
+ {
+     $this->call([
+         EquipsSeeder::class,
+     ]);
+ }
+ ```
+
 6. Executa els seeders per omplir la taula `equips` amb dades d'exemple:
 
  ```bash
