@@ -990,7 +990,7 @@ public function up()
 public function up()
 {
     Schema::table('equips', function (Blueprint $table) {
-        $table->deleteColumn('estadi'); // Esborra el camp estadi
+        $table->dropColumn('estadi'); // Esborra el camp estadi
         $table->foreignId('estadi_id')->constrained(); // Afegir la clau forana
     });
  }
@@ -1000,7 +1000,7 @@ public function down()
     Schema::table('equips', function (Blueprint $table) {
         $table->string('estadi');
         $table->dropForeign(['estadi_id']);
-        $table->deleteColumn('estadi_id');
+        $table->dropColumn('estadi_id');
     });
 }
 ```
@@ -1081,16 +1081,19 @@ php artisan migrate:fresh --seed
 
 ```php
 @foreach ($equips as $equip)
-    <tr>
-        <td>{{ $equip->nom }}</td>
-        <td>{{ $equip->estadi->nom }}</td>
-        <td>{{ $equip->titols }}</td>
-        <td>
-            <a href="{{ route('equips.show', $equip->id) }}">Mostrar</a>
-            <a href="{{ route('equips.edit', $equip->id) }}">Editar</a>
+    <tr class="hover:bg-gray-100">
+        <td class="border border-gray-300 p-2">
+            <a href="{{ route('equips.show', $equip->id) }}" class="text-blue-700 hover:underline">{{ $equip->nom }}</a>
+        </td>
+        <td class="border border-gray-300 p-2">{{ $equip->estadi->nom }}</td>
+        <td class="border border-gray-300 p-2">{{ $equip->titols }}</td>
+        <td class="border border-gray-300 p-2 flex space-x-2">
+            <a href="{{ route('equips.show', $equip->id) }}" class="text-green-600 hover:underline">Mostrar</a>
+            <a href="{{ route('equips.edit', $equip->id) }}" class="text-yellow-600 hover:underline">Editar</a>
         </td>
     </tr>
 @endforeach
+
 ```
 11. Crea la vista `equips.create` per incloure un desplegable amb els estadis disponibles:
 
@@ -1127,6 +1130,9 @@ php artisan migrate:fresh --seed
 
 ```
 
+**Cal modificar el controlador `EquipController` per obtenir els estadis disponibles.**
+
+ 
 12. Crea el mètode store en el controlador EquipController per emmagatzemar un nou equip:
 
 ```php
@@ -1140,6 +1146,8 @@ public function store(Request $request) {
     return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
 }
 ```
+**Cal modificat el model `Equip` per permetre l'assignació massiva de l'estadi.**
+
 
 13. Modifica la vista `equips.edit` per incloure un desplegable amb els estadis disponibles:
 
@@ -1151,33 +1159,47 @@ public function store(Request $request) {
     <div class="mb-4">
         <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Nom:</label>
         <input type="text" name="nom" id="nom" value="{{ old('nom', $equip->nom) }}" required
-            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 
+            @error('nom') border-red-500 @enderror">
+        @error('nom')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
     </div>
-    
+
     <div class="mb-4">
         <label for="titols" class="block text-sm font-medium text-gray-700 mb-1">Títols:</label>
         <input type="number" name="titols" id="titols" value="{{ old('titols', $equip->titols) }}" required
-            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 
+            @error('titols') border-red-500 @enderror">
+        @error('titols')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
     </div>
-    
+
     <div class="mb-4">
         <label for="estadi_id" class="block text-sm font-medium text-gray-700 mb-1">Estadi:</label>
         <select name="estadi_id" id="estadi_id" required
-            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 
+            @error('estadi_id') border-red-500 @enderror">
             @foreach ($estadis as $estadi)
                 <option value="{{ $estadi->id }}" {{ $estadi->id == $equip->estadi_id ? 'selected' : '' }}>
                     {{ $estadi->nom }}
                 </option>
             @endforeach
         </select>
+        @error('estadi_id')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
     </div>
-    
+
     <button type="submit"
         class="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-lg shadow hover:bg-blue-600 focus:ring focus:ring-blue-300">
         Actualitzar Equip
     </button>
 </form>
+
 ```
+
 14. Crea el mètode update en el controlador EquipController per actualitzar un equip existent:
 
 ```php
@@ -1197,6 +1219,10 @@ public function update(Request $request, $id) {
 
 ## **Passos a Seguir**
 
+### **0. Configuració Inicial**
+
+1. Falta acabar poder esborrar equips.
+ 
 ### **1. Crear Migracions i Models**
 
 1. Genera una migració per a les jugadores, associant-les amb un equip.
