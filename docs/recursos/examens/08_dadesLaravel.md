@@ -92,3 +92,11 @@
     - B) `digits`
     - C) `numeric`
     - D) `number`
+
+### Preguntes obertes
+
+- 1. **Si els formularis permeten pujar una foto de la jugadora, com gestionaries les validacions per assegurar-te que només s’accepten imatges i que tenen una mida màxima determinada?**
+- 2. **Com modularitzaries els components Blade per evitar repetir codi en els formularis de creació i edició? Posa exemples de components que podrien ser útils.**
+- 3. **Quins camps has validat en els formularis de creació o edició? Com has implementat aquestes validacions al controlador?** 
+- 4. **Com has relacionat els camps equip_local i equip_visitant a la taula partits? Per què has triat aquest disseny i com afecta les consultes?**
+- 5. **Com garantitzaries que les dades generades amb factories siguin realistes i coherents entre si, especialment per als partits? Per exemple, que el local i el visitant no siguin el mateix equip.**

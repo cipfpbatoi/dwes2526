@@ -1341,10 +1341,10 @@ public function update(Request $request, $id)
 }
 ```
 
-11. Crea el mètode destroy per esborrar l'escut de l'equip:
+11. Crea el mètode delete per esborrar l'escut de l'equip:
 
 ```php
-public function destroy(Equip $equip)
+public function delete(Equip $equip)
 {
     if ($equip->escut) {
         Storage::disk('public')->delete($equip->escut);
@@ -1402,26 +1402,54 @@ public function run()
 }
 ```
 
+4. Modifica el model `Equip` per permetre els factories:
+
+```php
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Estadi extends Model
+{
+    use HasFactory;
+ ...  
+}
+```
+
+5. Crea el factory per a la taula `estadis`:
+
+```bash
+php artisan make:factory EstadiFactory --model=Estadi
+```
+
+6. Modifica el factory `EstadiFactory` per generar dades aleatòries:
+
+```php
+public function definition()
+{
+    return [
+        'nom' => $this->faker->unique()->city.' Stadium',
+        'capacitat' => $this->faker->numberBetween(10000, 100000),
+    ];
+}
+```
+ 
 4. Executa els seeders per omplir la taula `equips` amb dades generades pel factory:
 
 ```bash
 php artisan migrate:fresh --seed
 ```   
-
-
+ 
 ## Exercici: Guia de Futbol Femení amb Base de Dades
 
 ## **Passos a Seguir**
-
-  
+   
 ### **1. Crear Migracions i Models**
 
 1. Genera una migració per a les jugadores, associant-les amb un equip i amb la possibilitat de posar una foto de la jugadora.
 2. Afegeix una migració per a la taula `partits`, incloent equips locals i visitants, data del partit i resultat.
 3. Executa totes les migracions.
 
----
-
+ 
 ### **2. Models i Relacions**
 
 1. Defineix les relacions en els models:
@@ -1431,16 +1459,24 @@ php artisan migrate:fresh --seed
  
 2. Defineix les relacions inverses i ajusta les configuracions segons les necessitats.
 
----
+ 
+### **3. Seeders i Factories**
 
-### **3. Refactoritzar el Controlador**
+1. Crea factories per a les jugadores i els partits.
+
+
+### **4. Refactoritzar el Controlador**
 
 1. Modifica els controladors per treballar amb els models en lloc d'utilitzar dades estàtiques.
 2. Recupera dades amb relacions definides per generar respostes completes.
 
----
+### **5. Configuració de les Rutes**
 
-### **4. Afegir Funcionalitat de Creació i Edició**
+1. Defineix rutes de recursos per a `equip`, `jugadora`, `estadi` i `partit`.
+2. Assegura't que les rutes gestionen les operacions CRUD.
+
+ 
+### **6. Afegir Funcionalitat de Creació i Edició**
 
 1. Implementa formularis per crear i editar equips, jugadores, estadis i partits.
 2. Assegura’t que els camps estiguin validats correctament abans de desar les dades.
@@ -1448,12 +1484,7 @@ php artisan migrate:fresh --seed
 
 ---
 
-### **5. Configuració de les Rutes**
 
-1. Defineix rutes de recursos per a `equip`, `jugadora`, `estadi` i `partit`.
-2. Assegura't que les rutes gestionen les operacions CRUD.
-
----
 
 ## **Qüestions per Reflexió**
 
