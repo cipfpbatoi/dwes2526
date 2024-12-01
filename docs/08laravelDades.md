@@ -1042,8 +1042,9 @@ public function run()
 public function run()
 {
     $this->call([
-        EquipsSeeder::class,
         EstadisSeeder::class,
+        EquipsSeeder::class,
+        
     ]);
 }
 ```
@@ -1368,6 +1369,46 @@ public function destroy(Equip $equip)
 </div>
 ```
  
+### **Utilitzar Factories per a Dades d'Exemple**
+
+1. Crea un factory per a la taula `equips`:
+
+```bash
+php artisan make:factory EquipFactory --model=Equip
+```
+
+2. Modifica el factory `EquipFactory` per generar dades aleatòries:
+
+```php
+public function definition()
+{
+       return [
+           'nom' => $this->faker->unique()->company,
+           'titols' => $this->faker->numberBetween(0, 50),
+           'estadi_id' => \App\Models\Estadi::factory(),
+           'escut' => 'escuts/dummy.png', // Imatge de prova predefinida
+        ];
+    }
+}
+``` 
+
+3. Actualitza el seeder `EquipsSeeder` per utilitzar el factory:
+
+```php
+public function run()
+{
+    ...
+    Equip::factory()->count(10)->create();
+}
+```
+
+4. Executa els seeders per omplir la taula `equips` amb dades generades pel factory:
+
+```bash
+php artisan migrate:fresh --seed
+```   
+
+
 ## Exercici: Guia de Futbol Femení amb Base de Dades
 
 ## **Passos a Seguir**
