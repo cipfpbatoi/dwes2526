@@ -1214,18 +1214,168 @@ public function update(Request $request, $id) {
     return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament!');
 }
 ```
+
+### **Afegir un escut a l'equip**
+
+1. Crea una migració per afegir un camp `escut` a la taula `equips`:
+
+```bash
+php artisan make:migration add_escut_to_equips_table
+```
+
+2. Modifica la migració `add_escut_to_equips_table` per incloure el camp `escut`:
+
+```php
+public function up()
+{
+    Schema::table('equips', function (Blueprint $table) {
+        $table->string('escut')->nullable();
+    });
+}
+public function down()
+{
+    Schema::table('equips', function (Blueprint $table) {
+        $table->dropColumn('escut');
+    });
+}
+```   
+
+3. Aplicar la migració
+
+```bash
+php artisan migrate
+```   
+
+4. Modifica el model `Equip` per incloure el camp `escut`:
+
+```php
+protected $fillable = ['nom', 'estadi_id', 'titols', 'escut'];
+```
+
+5. Modifica la vista `equips.create` per incloure un camp d'arxiu per pujar l'escut de l'equip:
+
+```php
+<div class="mb-4">
+    <label for="escut" class="block text-sm font-medium text-gray-700 mb-1">Escut:</label>
+    <input type="file" name="escut" id="escut"
+        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+</div>
+```
+
+6. Modifica la vista `equips.edit` per incloure un camp d'arxiu per actualitzar l'escut de l'equip:
+
+```php
+<div class="mb-4">
+    <label for="escut" class="block text-sm font-medium text-gray-700 mb-1">Escut:</label>
+    <input type="file" name="escut" id="escut" 
+        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    @if ($equip->escut)
+        <p class="mt-2 text-sm text-gray-500">Escut actual:</p>
+        <img src="{{ asset('storage/' . $equip->escut) }}" alt="Escut de {{ $equip->nom }}" class="h-16 mt-2">
+    @endif
+</div>
+```
+
+7. Afegeix enctype="multipart/form-data" al dos formularis:
+
+```html
+<form action="{{ route('equips.store') }}" method="POST" enctype="multipart/form-data">
+```
+
+8. Crea un enllaç simbòlic a la carpeta storage
+
+```bash
+php artisan storage:link
+```
+
+9. Actualitza el mètode store del controlador
+
+```php
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'nom' => 'required|unique:equips',
+        'titols' => 'integer|min:0',
+        'estadi_id' => 'required|exists:estadis,id',
+        'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validació del fitxer
+    ]);
+
+    if ($request->hasFile('escut')) {
+        $path = $request->file('escut')->store('escuts', 'public');
+        $validated['escut'] = $path;
+    }
+
+    Equip::create($validated);
+
+    return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
+}
+
+``` 
+
+10. Actualitza el mètode update del controlador
+
+```php
+public function update(Request $request, $id)
+{
+    $validated = $request->validate([
+        'nom' => 'required|unique:equips,nom,' . $id,
+        'titols' => 'integer|min:0',
+        'estadi_id' => 'required|exists:estadis,id',
+        'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    $equip = Equip::findOrFail($id);
+
+    if ($request->hasFile('escut')) {
+        if ($equip->escut) {
+            Storage::disk('public')->delete($equip->escut); // Esborra l'escut antic
+        }
+        $path = $request->file('escut')->store('escuts', 'public');
+        $validated['escut'] = $path;
+    }
+
+    $equip->update($validated);
+
+    return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament!');
+}
+```
+
+11. Crea el mètode destroy per esborrar l'escut de l'equip:
+
+```php
+public function destroy(Equip $equip)
+{
+    if ($equip->escut) {
+        Storage::disk('public')->delete($equip->escut);
+    }
+    $equip->delete();
+    return redirect()->route('equips.index')->with('success', 'Equip esborrat correctament!');
+}
+```
+
+12. Modificat el component de la vista `equips.show` per mostrar l'escut de l'equip:
+
+```php
+<div class="equip border rounded-lg shadow-md p-4 bg-white">
+      @if ($escut)
+          <td class="border border-gray-300 p-2">
+              <img src="{{ asset('storage/' . $escut) }}" alt="Escut de {{ $nom }}" class="h-8 w-8 object-cover rounded-full">
+          </td>
+      @endif
+    <h2 class="text-xl font-bold text-blue-800">{{ $nom }}</h2>
+    <p><strong>Estadi:</strong> {{ $estadi }}</p>
+    <p><strong>Títols:</strong> {{ $titols }}</p>
+</div>
+```
  
 ## Exercici: Guia de Futbol Femení amb Base de Dades
 
 ## **Passos a Seguir**
 
-### **0. Configuració Inicial**
-
-1. Falta acabar poder esborrar equips.
- 
+  
 ### **1. Crear Migracions i Models**
 
-1. Genera una migració per a les jugadores, associant-les amb un equip.
+1. Genera una migració per a les jugadores, associant-les amb un equip i amb la possibilitat de posar una foto de la jugadora.
 2. Afegeix una migració per a la taula `partits`, incloent equips locals i visitants, data del partit i resultat.
 3. Executa totes les migracions.
 
