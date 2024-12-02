@@ -1446,18 +1446,18 @@ php artisan migrate:fresh --seed
  
 Passos a Seguir
 
-1. Crear Migracions i Models
+1. **Crear Migracions i Models**
 
 - Genera una migració per a les jugadores, associant-les amb un equip i amb la possibilitat de posar una foto de la jugadora.
 - Afegeix una migració per a la taula partits, incloent equips locals i visitants, data del partit i resultat.
 - Executa totes les migracions.
 
-2. Seeders i Factories
+2. **Seeders i Factories**
 
 - Crea seeders per a les taules jugadores i partits.
 - Utilitza factories per generar dades d'exemple per a jugadores i partits.
 
-3. Models i Relacions
+3. **Models i Relacions**
 
 Defineix les relacions en els models:
 
@@ -1466,17 +1466,17 @@ Defineix les relacions en els models:
 - Un partit té un equip local i un equip visitant.
 - Defineix les relacions inverses i ajusta les configuracions segons les necessitats.
 
-4. Configuració de les Rutes
+4. **Configuració de les Rutes**
 
 - Defineix rutes de recursos per a equip, jugadora, estadi i partit.
 - Assegura't que les rutes gestionen les operacions CRUD.
 
-5. Refactoritzar el Controlador
+5. **Refactoritzar el Controlador**
 
 - Modifica els controladors per treballar amb els models en lloc d'utilitzar dades estàtiques.
 - Recupera dades amb relacions definides per generar respostes completes.
   
-6. Afegir Funcionalitat de Creació i Edició
+6. **Afegir Funcionalitat de Creació i Edició**
 
 - Implementa formularis per crear i editar equips, jugadores, estadis i partits.
 - Assegura’t que els camps estiguin validats correctament abans de desar les dades.
