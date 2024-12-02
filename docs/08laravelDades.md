@@ -1441,14 +1441,9 @@ public function definition()
 php artisan migrate:fresh --seed
 ```   
  
-## **Qüestions per Reflexió**
-
-1. **Migracions:** Quins avantatges té utilitzar migracions per gestionar l'esquema de la base de dades?
-2. **Relacions:** Com gestionaries les relacions many-to-many (per exemple, entre equips i partits)?
-3. **Blade i Components:** Quins beneficis aporta l'ús de components Blade en formularis complexos?
 
 ## Exercici: Guia de Futbol Femení amb Base de Dades
-
+ 
 Passos a Seguir
 
 1. Crear Migracions i Models
@@ -1456,7 +1451,12 @@ Passos a Seguir
 - Genera una migració per a les jugadores, associant-les amb un equip i amb la possibilitat de posar una foto de la jugadora.
 - Afegeix una migració per a la taula partits, incloent equips locals i visitants, data del partit i resultat.
 - Executa totes les migracions.
-  
+
+2. Seeders i Factories
+
+- Crea seeders per a les taules jugadores i partits.
+- Utilitza factories per generar dades d'exemple per a jugadores i partits.
+
 3. Models i Relacions
 
 Defineix les relacions en els models:
@@ -1466,22 +1466,25 @@ Defineix les relacions en els models:
 - Un partit té un equip local i un equip visitant.
 - Defineix les relacions inverses i ajusta les configuracions segons les necessitats.
 
-3. Seeders i Factories
+4. Configuració de les Rutes
 
-Crea factories per a les jugadores i els partits.
-  
+- Defineix rutes de recursos per a equip, jugadora, estadi i partit.
+- Assegura't que les rutes gestionen les operacions CRUD.
+
 5. Refactoritzar el Controlador
 
 - Modifica els controladors per treballar amb els models en lloc d'utilitzar dades estàtiques.
 - Recupera dades amb relacions definides per generar respostes completes.
   
-6. Configuració de les Rutes
-
-- Defineix rutes de recursos per a equip, jugadora, estadi i partit.
-- Assegura't que les rutes gestionen les operacions CRUD.
-  
-7. Afegir Funcionalitat de Creació i Edició
+6. Afegir Funcionalitat de Creació i Edició
 
 - Implementa formularis per crear i editar equips, jugadores, estadis i partits.
 - Assegura’t que els camps estiguin validats correctament abans de desar les dades.
 - Organitza el codi amb components Blade per formularis modulars.
+ 
+
+## **Qüestions per Reflexió**
+
+1. **Migracions:** Quins avantatges té utilitzar migracions per gestionar l'esquema de la base de dades?
+2. **Relacions:** Com gestionaries les relacions many-to-many (per exemple, entre equips i partits)?
+3. **Blade i Components:** Quins beneficis aporta l'ús de components Blade en formularis complexos?
