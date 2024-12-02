@@ -887,8 +887,8 @@ php artisan migrate
 1. Genera un model anomenat `Equip` per gestionar la taula:
 
 ```bash
-php artisan make:model Equip
- ```
+php artisan make:model Equip 
+```
 
 2. Modifica el model Equip a app/Models/Equip.php per definir els camps que es poden emplenar mitjançant assignació massiva:
 
