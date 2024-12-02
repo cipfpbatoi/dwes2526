@@ -1444,20 +1444,26 @@ php artisan migrate:fresh --seed
 
 ## Exercici: Guia de Futbol Femení amb Base de Dades
  
-Passos a Seguir
+Passos a Seguir:
 
-1. **Crear Migracions i Models**
+1. **Completa estadis el CRUD de l'estadi**
+
+- Afegeix els mètodes create, store, edit, update i destroy al controlador EstadiController.
+- Modifica les vistes per a la gestió de l'estadi (index, show, create, edit).
+- Modifica el component d'estadi per mostrar els equips que hi juguen.
+  
+2. **Jugadores i partides: Crear Migracions i Models**
 
 - Genera una migració per a les jugadores, associant-les amb un equip i amb la possibilitat de posar una foto de la jugadora.
 - Afegeix una migració per a la taula partits, incloent equips locals i visitants, data del partit i resultat.
 - Executa totes les migracions.
 
-2. **Seeders i Factories**
+3. **Seeders i Factories**
 
 - Crea seeders per a les taules jugadores i partits.
 - Utilitza factories per generar dades d'exemple per a jugadores i partits.
 
-3. **Models i Relacions**
+4. **Models i Relacions**
 
 Defineix les relacions en els models:
 
@@ -1466,21 +1472,16 @@ Defineix les relacions en els models:
 - Un partit té un equip local i un equip visitant.
 - Defineix les relacions inverses i ajusta les configuracions segons les necessitats.
 
-4. **Configuració de les Rutes**
+    
+5. **Desenvolupa les funcionalitats de Creació i Edició de jugadores i partits**
 
-- Defineix rutes de recursos per a equip, jugadora, estadi i partit.
-- Assegura't que les rutes gestionen les operacions CRUD.
-
-5. **Refactoritzar el Controlador**
-
-- Modifica els controladors per treballar amb els models en lloc d'utilitzar dades estàtiques.
-- Recupera dades amb relacions definides per generar respostes completes.
-  
-6. **Afegir Funcionalitat de Creació i Edició**
-
-- Implementa formularis per crear i editar equips, jugadores, estadis i partits.
+- Implementa formularis per crear i editar  jugadores  i partits.
 - Assegura’t que els camps estiguin validats correctament abans de desar les dades.
-- Organitza el codi amb components Blade per formularis modulars.
+- Cada jugador pot tindre o no una foto.
+
+6. **Vistes i Components**
+
+- Modifica el component d'equips per mostrar les jugadores. 
  
 
 ## **Qüestions per Reflexió**
