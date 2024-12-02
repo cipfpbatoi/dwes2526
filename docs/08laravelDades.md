@@ -495,7 +495,7 @@ En la vista:
 
 
 
-## **Seeders i Factories en Laravel  **
+## **6. Seeders i Factories en Laravel**
 
 Els **seeders** i **factories** permeten generar dades de prova de manera fàcil i ràpida, útils durant el desenvolupament per simular dades inicials en una aplicació.
 
@@ -627,8 +627,10 @@ class BooksSeeder extends Seeder
     }
 }
 ```
-
+ 
 #### Exemples Avançats
+
+Podem cercar com construir factories més complexes a la [documentació oficial](https://fakerphp.org).  
 
 ##### Utilitzar Factories per Relacions
 Definir relacions dins d’un factory:
@@ -675,7 +677,7 @@ Book::factory()->withDiscount()->create();
 - Redueixen el temps d'inicialització de les aplicacions.
 
 ---
-## Requests, Responses i Validació en Laravel  
+## **7.Requests, Responses i Validació en Laravel**  
 
 ### **1. Requests**
 
@@ -1439,50 +1441,6 @@ public function definition()
 php artisan migrate:fresh --seed
 ```   
  
-## Exercici: Guia de Futbol Femení amb Base de Dades
-
-## **Passos a Seguir**
-   
-### **1. Crear Migracions i Models**
-
-1. Genera una migració per a les jugadores, associant-les amb un equip i amb la possibilitat de posar una foto de la jugadora.
-2. Afegeix una migració per a la taula `partits`, incloent equips locals i visitants, data del partit i resultat.
-3. Executa totes les migracions.
-
- 
-### **2. Models i Relacions**
-
-1. Defineix les relacions en els models:
-    - Un equip té moltes jugadores.
-    - Un equip pot tenir molts partits com a local o visitant.
-    - Un partit té un equip local i un equip visitant.
- 
-2. Defineix les relacions inverses i ajusta les configuracions segons les necessitats.
-
- 
-### **3. Seeders i Factories**
-
-1. Crea factories per a les jugadores i els partits.
-
-
-### **4. Refactoritzar el Controlador**
-
-1. Modifica els controladors per treballar amb els models en lloc d'utilitzar dades estàtiques.
-2. Recupera dades amb relacions definides per generar respostes completes.
-
-### **5. Configuració de les Rutes**
-
-1. Defineix rutes de recursos per a `equip`, `jugadora`, `estadi` i `partit`.
-2. Assegura't que les rutes gestionen les operacions CRUD.
-
- 
-### **6. Afegir Funcionalitat de Creació i Edició**
-
-1. Implementa formularis per crear i editar equips, jugadores, estadis i partits.
-2. Assegura’t que els camps estiguin validats correctament abans de desar les dades.
-3. Organitza el codi amb components Blade per formularis modulars.
-
----
 
 
 
