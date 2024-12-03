@@ -626,4 +626,384 @@ Storage::disk('s3')->put('documents/file.txt', 'Contingut');
 // Obtenir una URL
 $url = Storage::disk('s3')->url('documents/file.txt');
 ```
+
+## Gestió de Sessions en Laravel
+
+Laravel ofereix una API senzilla i segura per gestionar sessions d'usuari. Les sessions permeten emmagatzemar dades temporals associades a cada usuari mentre interactua amb l'aplicació.
  
+### 1. Tipus de Controladors de Sessió
+
+Laravel suporta diversos tipus de controladors per gestionar sessions. Es defineixen al fitxer `config/session.php` amb el paràmetre `SESSION_DRIVER`.
+
+#### Tipus de Controladors
+- **file**: Emmagatzema les dades en fitxers al servidor (predeterminat).
+- **cookie**: Desa les dades en cookies xifrades al navegador.
+- **database**: Desa les dades en una taula de base de dades.
+- **redis**: Utilitza Redis per a una gestió ràpida i distribuïda.
+- **array**: Desa les dades en memòria, només per a proves.
+
+**Configuració en el fitxer `.env`:**
+```env
+SESSION_DRIVER=file
+```
+ 
+### 2. Configuració de les Sessions
+
+#### Opcions Clau al Fitxer `config/session.php`
+- **lifetime**: Temps d'expiració de la sessió en minuts:
+  ```php
+  'lifetime' => 120,
+  ```
+- **expire_on_close**: Expira quan es tanca el navegador:
+  ```php
+  'expire_on_close' => false,
+  ```
+- **encrypt**: Si es volen xifrar les dades de sessió:
+  ```php
+  'encrypt' => false,
+  ```
+
+---
+
+### 3. Ús de Sessions
+
+#### 3.1 Afegir Dades a la Sessió
+Utilitza el mètode `put` per guardar dades:
+```php
+session(['key' => 'value']);
+
+// Alternativa amb l'helper:
+Session::put('key', 'value');
+```
+
+#### 3.2 Obtenir Dades de la Sessió
+Utilitza el mètode `get` per recuperar dades:
+```php
+$value = session('key', 'valor_per_defecte'); // Helper
+$value = Session::get('key', 'valor_per_defecte'); // Façana
+```
+
+#### 3.3 Eliminar Dades de la Sessió
+Elimina una clau específica:
+```php
+Session::forget('key');
+```
+
+Elimina totes les dades de la sessió:
+```php
+Session::flush();
+```
+ 
+### 4. Sessió Flash
+
+Les dades flash només existeixen per a la següent petició HTTP. Són útils per missatges temporals com alertes d'èxit o errors.
+
+#### 4.1 Afegir Dades Flash
+```php
+Session::flash('status', 'La tasca s'ha completat!');
+```
+
+#### 4.2 Recuperar Dades Flash
+```php
+$value = Session::get('status');
+```
+ 
+### 5. Sessió Basada en Base de Dades
+
+#### 5.1 Crear la Taula de Sessió
+Per utilitzar el controlador `database`, primer cal crear una taula de base de dades amb el comandament Artisan:
+```bash
+php artisan session:table
+php artisan migrate
+```
+
+Això crea una taula anomenada `sessions` amb els camps necessaris.
+
+#### 5.2 Configurar el Driver
+Al fitxer `.env`, estableix:
+```env
+SESSION_DRIVER=database
+```
+
+## Testing en Laravel
+
+Laravel proporciona un ecosistema complet per realitzar proves en les aplicacions. Les proves són essencials per assegurar que el codi funciona correctament i evitar regressions.
+
+---
+
+### 1. Tipus de Proves en Laravel
+
+#### 1.1 Proves Unitàries
+Les proves unitàries validen la funcionalitat de components individuals del codi, com models o serveis.
+
+#### 1.2 Proves d'Integració
+Verifiquen la interacció entre múltiples components de l'aplicació.
+
+#### 1.3 Proves HTTP
+Validen rutes, controladors i respostes HTTP.
+
+#### 1.4 Proves de Base de Dades
+Asseguren que les dades es processen i emmagatzemen correctament.
+
+#### 1.5 Proves d'Interfície amb Dusk
+Simulen la interacció amb el navegador per provar la interfície d'usuari.
+
+---
+
+### 2. Configuració
+
+#### 2.1 Configurar l'Ambient de Proves
+Laravel utilitza el fitxer `.env.testing` per definir la configuració de les proves. Per exemple:
+```env
+APP_ENV=testing
+DB_CONNECTION=sqlite
+DB_DATABASE=:memory:
+```
+
+#### 2.2 Executar Proves
+Utilitza PHPUnit per executar les proves:
+```bash
+php artisan test
+```
+
+---
+
+### 3. Proves HTTP
+
+#### 3.1 Crear Proves
+Genera una prova amb Artisan:
+```bash
+php artisan make:test ExampleTest
+```
+
+#### 3.2 Exemple de Prova HTTP
+```php
+namespace Tests\Feature;
+
+use Tests\TestCase;
+
+class ExampleTest extends TestCase
+{
+    public function test_homepage_loads_correctly()
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee('Benvingut');
+    }
+}
+```
+ 
+### 4. Proves de Base de Dades
+
+#### 4.1 Migracions en Proves
+Utilitza el trait `RefreshDatabase` per executar les migracions abans de cada prova:
+```php
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class ExampleTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_database_interaction()
+    {
+        $user = User::factory()->create();
+
+        $this->assertDatabaseHas('users', [
+            'email' => $user->email,
+        ]);
+    }
+}
+```
+
+#### 4.2 Factories
+Utilitza factories per generar dades de prova:
+```php
+$user = User::factory()->create();
+```
+ 
+### 5. Proves d'Interfície amb Dusk
+
+#### 5.1 Instal·lació de Laravel Dusk
+```bash
+composer require --dev laravel/dusk
+php artisan dusk:install
+```
+
+#### 5.2 Exemple de Prova Dusk
+```php
+namespace Tests\Browser;
+
+use Laravel\Dusk\Browser;
+use Tests\DuskTestCase;
+
+class LoginTest extends DuskTestCase
+{
+    public function test_login_page()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/login')
+                    ->type('email', 'user@example.com')
+                    ->type('password', 'password')
+                    ->press('Login')
+                    ->assertPathIs('/dashboard');
+        });
+    }
+}
+```
+
+Executa les proves amb:
+```bash
+php artisan dusk
+```
+
+## Laravel Livewire: Introducció
+
+**Laravel Livewire** és un framework que permet construir components d'interfície d'usuari dinàmics sense haver d'escriure JavaScript. Amb Livewire, pots utilitzar PHP per gestionar la lògica del client, mentre que Livewire s'encarrega de la comunicació asincrònica amb el servidor.
+
+### 1. Instal·lació
+
+#### 1.1 Requisits
+Laravel Livewire funciona amb aplicacions Laravel. Assegura't de tenir Laravel instal·lat.
+
+#### 1.2 Instal·lar Livewire
+Utilitza Composer per instal·lar el paquet:
+```bash
+composer require livewire/livewire
+```
+
+Publica els actius de Livewire:
+```bash
+php artisan livewire:publish
+```
+
+Inclou els scripts de Livewire en les teues vistes Blade:
+```html
+@livewireStyles
+@livewireScripts
+```
+ 
+### 2. Crear Components Livewire
+
+#### 2.1 Generar un Component
+Utilitza Artisan per crear un component:
+```bash
+php artisan make:livewire HelloWorld
+```
+
+Això genera:
+- Un fitxer de classe PHP: `app/Http/Livewire/HelloWorld.php`
+- Una plantilla Blade: `resources/views/livewire/hello-world.blade.php`
+
+#### 2.2 Exemple de Component
+**Classe del Component:**
+```php
+namespace App\Http\Livewire;
+
+use Livewire\Component;
+
+class HelloWorld extends Component
+{
+    public $message = "Hola, món!";
+
+    public function render()
+    {
+        return view('livewire.hello-world');
+    }
+}
+```
+
+**Plantilla Blade:**
+```html
+<div>
+    <h1>{{ $message }}</h1>
+</div>
+```
+
+Inclou el component en una vista:
+```html
+<livewire:hello-world />
+```
+ 
+### 3. Interactivitat amb Livewire
+
+#### 3.1 Propietats Dinàmiques
+Les propietats de la classe PHP es poden vincular directament als camps d'un formulari HTML:
+```php
+class Counter extends Component
+{
+    public $count = 0;
+
+    public function increment()
+    {
+        $this->count++;
+    }
+
+    public function render()
+    {
+        return view('livewire.counter');
+    }
+}
+```
+
+**Plantilla Blade:**
+```html
+<div>
+    <button wire:click="increment">Incrementar</button>
+    <h1>{{ $count }}</h1>
+</div>
+```
+
+#### 3.2 Validació en Temps Real
+Livewire permet validar dades a mesura que l'usuari interactua amb el formulari:
+```php
+class Form extends Component
+{
+    public $name;
+    public $email;
+
+    protected $rules = [
+        'name' => 'required|min:3',
+        'email' => 'required|email',
+    ];
+
+    public function submit()
+    {
+        $this->validate();
+
+        // Processar les dades
+    }
+
+    public function render()
+    {
+        return view('livewire.form');
+    }
+}
+```
+
+**Plantilla Blade:**
+```html
+<div>
+    <form wire:submit.prevent="submit">
+        <input type="text" wire:model="name">
+        @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+
+        <input type="email" wire:model="email">
+        @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+```
+ 
+### 4. Avantatges de Livewire
+- **Simplicitat**: Evita la necessitat de gestionar JavaScript per funcionalitats comunes.
+- **Reactivitat**: Actualitza la interfície automàticament en resposta a canvis de dades.
+- **Integració**: Es combina perfectament amb Blade i Laravel.
+
+
+## Exercici Pràctic: Guia d'Equips de Futbol Femení amb Base de Dades
+
+L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb les funcionalitats tractades en este tema. 
+ 
+
