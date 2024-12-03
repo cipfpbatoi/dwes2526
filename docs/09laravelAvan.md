@@ -504,4 +504,126 @@ Assegura't que el sistema de cues estiga configurat al fitxer `.env`:
 QUEUE_CONNECTION=database
 ```
 
-  
+## Sistema de Fitxers en Laravel
+
+Laravel proporciona una API unificada per treballar amb diferents sistemes de fitxers com el sistema local, Amazon S3, FTP, i altres. Aquesta funcionalitat permet gestionar l'emmagatzematge de fitxers d'una manera senzilla i flexible.
+ 
+### 1. Configuració Inicial
+
+#### 1.1 Configurar els Discs d'Emmagatzematge
+Els discos d'emmagatzematge es defineixen al fitxer `config/filesystems.php`. Per defecte, Laravel inclou els següents discos:
+- **local**: Emmagatzematge en el sistema local.
+- **public**: Per fitxers públics accessibles des d'un navegador.
+- **s3**: Per emmagatzematge a Amazon S3.
+
+#### 1.2 Configuració del `.env`
+Exemple de configuració:
+```env
+FILESYSTEM_DISK=local
+AWS_ACCESS_KEY_ID=el_teu_access_key
+AWS_SECRET_ACCESS_KEY=el_teu_secret_key
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=el_teu_bucket
+```
+ 
+### 2. Treballar amb el Sistema de Fitxers
+
+#### 2.1 Accedir a un Disc
+Utilitza la façana `Storage` per accedir al sistema de fitxers:
+```php
+use Illuminate\Support\Facades\Storage;
+
+$disk = Storage::disk('local'); // Accedir al disc local
+```
+
+Si no especifiques cap disc, Laravel utilitza el disc predeterminat (`FILESYSTEM_DISK` al `.env`).
+
+ 
+### 3. Operacions Bàsiques amb Fitxers
+
+#### 3.1 Guardar Fitxers
+```php
+use Illuminate\Support\Facades\Storage;
+
+// Guardar un fitxer amb contingut
+Storage::put('documents/file.txt', 'Contingut del fitxer');
+
+// Guardar un fitxer pujat
+$file = $request->file('document');
+Storage::putFile('uploads', $file);
+
+// Guardar amb un nom personalitzat
+Storage::putFileAs('uploads', $file, 'custom_name.txt');
+```
+
+#### 3.2 Obtenir Fitxers
+```php
+// Obtenir el contingut d'un fitxer
+$content = Storage::get('documents/file.txt');
+
+// Verificar si un fitxer existeix
+if (Storage::exists('documents/file.txt')) {
+    // Fitxer existeix
+}
+```
+
+#### 3.3 Eliminar Fitxers
+```php
+// Eliminar un fitxer
+Storage::delete('documents/file.txt');
+
+// Eliminar múltiples fitxers
+Storage::delete(['file1.txt', 'file2.txt']);
+```
+
+#### 3.4 Llistar Fitxers
+```php
+// Llistar tots els fitxers d'un directori
+$files = Storage::files('documents');
+
+// Llistar fitxers recursivament
+$allFiles = Storage::allFiles('documents');
+
+// Llistar carpetes
+$directories = Storage::directories('documents');
+
+// Llistar carpetes recursivament
+$allDirectories = Storage::allDirectories('documents');
+```
+ 
+### 4. Fitxers Públics
+
+#### 4.1 Publicar Fitxers
+Per fer fitxers accessibles públicament, utilitza el disc `public`. Assegura't de crear un enllaç simbòlic per al directori `storage/app/public` al directori `public/storage`:
+```bash
+php artisan storage:link
+```
+
+#### 4.2 Obtenir una URL Pública
+```php
+$url = Storage::url('documents/file.txt'); // Genera una URL pública
+```
+ 
+
+### 5. Treballar amb Amazon S3
+
+#### 5.1 Configuració
+Inclou les credencials d'Amazon S3 al fitxer `.env`:
+```env
+AWS_ACCESS_KEY_ID=el_teu_access_key
+AWS_SECRET_ACCESS_KEY=el_teu_secret_key
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=el_teu_bucket
+```
+
+#### 5.2 Exemple
+```php
+use Illuminate\Support\Facades\Storage;
+
+// Guardar un fitxer a S3
+Storage::disk('s3')->put('documents/file.txt', 'Contingut');
+
+// Obtenir una URL
+$url = Storage::disk('s3')->url('documents/file.txt');
+```
+ 
