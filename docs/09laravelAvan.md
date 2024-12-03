@@ -150,11 +150,15 @@ public function handle($request, Closure $next)
 Els middleware es registren al fitxer `Kernel.php`, i poden aplicar-se a rutes específiques o a tot l'aplicatiu.
 
 #### 2.2 Policies per a accés granular
+
 **Creació d'una Policy**  
+
 Les policies permeten definir regles d'autorització específiques:
+
 ```bash
 php artisan make:policy PostPolicy --model=Post
 ```
+
 Exemple per permetre que un usuari només puga editar els seus posts:
 ```php
 public function update(User $user, Post $post)
@@ -168,6 +172,7 @@ protected $policies = [
     Post::class => PostPolicy::class,
 ];
 ```
+
 Ús de la política en un controlador:
 ```php
 public function edit(Post $post)
@@ -176,4 +181,94 @@ public function edit(Post $post)
     return view('posts.edit', compact('post'));
 }
 ```
- 
+
+### 3.Utilitzar Form Requests per a Validacions més Complexes
+
+Els **Form Requests** són classes dedicades que encapsulen la lògica de validació d'una sol·licitud HTTP. Aquestes classes permeten organitzar millor el codi, especialment en formularis amb moltes regles de validació.
+
+#### 1. Crear un Form Request
+Per crear un **Form Request**, utilitzem l'eina Artisan:
+```bash
+php artisan make:request MoviePost
+```
+Això genera una nova classe a la carpeta `app/Http/Requests`. Aquesta classe conté dos mètodes principals:
+
+1. **authorize()**  
+   Retorna `true` o `false` segons si l'usuari està autoritzat a fer la sol·licitud. Per defecte, podem retornar `true` per permetre totes les sol·licituds:
+    ```php
+    public function authorize()
+    {
+        return true;
+    }
+    ```
+
+2. **rules()**  
+   Retorna un array amb les regles de validació:
+    ```php
+    public function rules()
+    {
+        return [
+            'title' => 'required|min:3',
+            'director' => 'required',
+            'year' => 'required|numeric|min:1900',
+        ];
+    }
+    ```
+
+#### 2. Utilitzar el Form Request en un Controlador
+En lloc d'especificar les regles de validació directament al controlador, podem injectar el **Form Request** al mètode del controlador:
+```php
+public function store(MoviePost $request)
+{
+    // Si arribem aquí, les dades són vàlides.
+    // Accedim a les dades validades:
+    $validated = $request->validated();
+
+    // Crear una nova pel·lícula
+    $movie = new Movie($validated);
+    $movie->save();
+
+    return redirect()->route('movies.index');
+}
+```
+El mètode `validated()` retorna només les dades que han passat les regles de validació.
+
+#### 3. Personalitzar Missatges d'Error
+Podem personalitzar els missatges d'error sobreescrivint el mètode **messages()** dins del Form Request:
+```php
+public function messages()
+{
+    return [
+        'title.required' => 'El camp títol és obligatori.',
+        'title.min' => 'El camp títol ha de tindre almenys 3 caràcters.',
+        'year.required' => 'El camp any és obligatori.',
+    ];
+}
+```
+
+#### 4. Mostrar Errors de Validació a la Vista
+Quan es produeixen errors de validació, Laravel redirigeix automàticament a la vista anterior amb la variable global `$errors`, que conté els errors de validació.
+
+Exemple de com mostrar un llistat d'errors al començament del formulari:
+```php
+@if ($errors->any())
+    <ul>
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif
+```
+
+Per mostrar errors específics sota un camp:
+```php
+<div class="form-group">
+    <label for="title">Títol:</label>
+    <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}">
+    @if ($errors->has('title'))
+        <div class="text-danger">{{ $errors->first('title') }}</div>
+    @endif
+</div>
+```
+
+
