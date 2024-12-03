@@ -6,6 +6,7 @@
 
 #### 1.1 Configuració inicial
 Laravel ofereix dos paquets principals per implementar l’autenticació:
+  
 1. **Laravel Breeze**: Simple i lleuger, ideal per a projectes educatius i senzills.
 2. **Laravel Jetstream**: Robust i complet, inclou funcionalitats avançades com equips, autenticació de dos factors i gestió d'API.
 
@@ -18,6 +19,7 @@ php artisan migrate
 ```
 
 Aquestes ordres configuren:
+
 - Rutes per login, registre, restabliment de contrasenya, etc.
 - Plantilles Blade predefinides amb Tailwind CSS.
 
@@ -1005,5 +1007,155 @@ class Form extends Component
 ## Exercici Pràctic: Guia d'Equips de Futbol Femení amb Base de Dades
 
 L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb les funcionalitats tractades en este tema. 
+
+### Pas 1: Configurar l'autenticació amb Laravel Breeze
+1. Instal·la Laravel Breeze:
+   ```bash
+   composer require laravel/breeze --dev
+   php artisan breeze:install
+   npm install && npm run dev
+   php artisan migrate
+   ```
+2. Inicia sessió com a usuari per defecte.
+
+---
+
+### Pas 2: Afegir els rols al sistema
+#### Migració per al camp `role` als usuaris
  
+1. Crea una nova migració per afegir el camp `role` a usuaris:
+   ```bash
+   php artisan make:migration add_role_to_users_table --table=users
+   ```
+   Afegeix el camp:
+   ```php
+   Schema::table('users', function (Blueprint $table) {
+       $table->string('role')->default('arbitre');
+   });
+   ```
+   Aplica la migració:
+   ```bash
+   php artisan migrate
+   ```
+
+#### En el seeder d'usuaris crea un usuari administrador
+ 
+  ```php
+  User::create([
+      'name' => 'Admin',
+      'email' => 'admin@example.com',
+      'password' => Hash::make('password'),
+      'role' => 'administrador',
+  ]);
+  ```
+ 
+### Pas 3: Middleware per a permisos de rol
+#### Crear Middleware per a gestionar els rols
+1. Genera el middleware:
+   ```bash
+   php artisan make:middleware RoleMiddleware
+   ```
+2. Defineix el control dels rols:
+   ```php
+   public function handle($request, Closure $next, $role)
+   {
+       if (auth()->user()->role !== $role) {
+           return redirect('/')->with('error', 'No tens permís per accedir a aquesta pàgina.');
+       }
+       return $next($request);
+   }
+   ```
+
+#### Registrar el Middleware
+- Afegeix-lo a `app/Http/Kernel.php`:
+  ```php
+  protected $routeMiddleware = [
+      'role' => \App\Http\Middleware\RoleMiddleware::class,
+  ];
+  ```
+
+#### Aplicar Middleware a rutes
+- Protegeix les rutes segons els rols:
+  ```php
+  Route::middleware(['auth', 'role:administrador'])->group(function () {
+      Route::get('/admin', [AdminController::class, 'index']);
+  });
+
+  Route::middleware(['auth', 'role:manager'])->group(function () {
+      Route::get('/manager', [ManagerController::class, 'index']);
+  });
+  ```
+
+---
+
+### Pas 4: Associar managers a equips
+#### Migració per a l’associació entre usuaris i equips
+1. Crea una migració nova:
+   ```bash
+   php artisan make:migration add_team_id_to_users_table --table=users
+   ```
+2. Afegeix el camp `team_id`:
+   ```php
+   Schema::table('users', function (Blueprint $table) {
+       $table->unsignedBigInteger('team_id')->nullable();
+       $table->foreign('team_id')->references('id')->on('equips')->onDelete('set null');
+   });
+   ```
+3. Aplica la migració:
+   ```bash
+   php artisan migrate
+   ```
+
+#### Assignar equips als managers
+- Crea un manager per equip i assigna-li  :
+  ```php
+  User::create([
+      'name' => 'Manager1',
+      'email' => 'manager1@example.com',
+      'password' => Hash::make('password'),
+      'role' => 'manager',
+      'team_id' => $equipId,
+  ]);
+  ```
+
+### Relació entre models
+- Defineix la relació al model `User`:
+  ```php
+  public function equip()
+  {
+      return $this->belongsTo(Equip::class, 'team_id');
+  }
+  ```
+- Defineix la relació inversa al model `Equip`:
+  ```php
+  public function manager()
+  {
+      return $this->hasOne(User::class, 'team_id');
+  }
+  ```
+
+### Mostrar dades del manager i del seu equip
+- Carrega el manager amb el seu equip:
+  ```php
+  $manager = User::with('equip')->where('role', 'manager')->get();
+  ```
+
+---
+
+## Pas 5: Vista per gestionar usuaris i rols
+### Llistat d'usuaris amb el rol
+1. Crea un controlador i una vista per gestionar els usuaris:
+   ```php
+   Route::get('/admin/users', [AdminController::class, 'index'])->middleware('role:administrador');
+   ```
+   ```php
+   public function index()
+   {
+       $usuaris = User::with('equip')->get();
+       return view('admin.users.index', compact('usuaris'));
+   }
+   ```
+
+### Formulari per assignar rols o equips
+1. Crea un formulari on l’administrador puga modificar el rol o l’equip dels usuaris.
 
