@@ -272,3 +272,113 @@ Per mostrar errors específics sota un camp:
 ```
 
 
+## Ús d'idiomes en Laravel
+
+Laravel proporciona eines senzilles i potents per a la **localització d'aplicacions**, permetent suportar múltiples idiomes. Aquesta funcionalitat és ideal per a desenvolupar aplicacions accessibles a usuaris de diferents regions i llengües.
+ 
+### 1. Configuració Inicial
+
+#### 1.1 Idioma Predeterminat
+L'idioma predeterminat s'estableix al fitxer `config/app.php` mitjançant el paràmetre `locale`:
+```php
+'locale' => 'en', // Idioma predeterminat
+```
+
+#### 1.2 Idioma Alternatiu
+Es pot definir un idioma "alternatiu" que s'utilitzarà quan no es troben traduccions en l'idioma actiu:
+```php
+'fallback_locale' => 'en', // Idioma alternatiu
+```
+ 
+### 2. Treballant amb Fitxers de Traducció
+
+#### 2.1 Organització dels Fitxers
+Els fitxers de traducció es guarden al directori `lang`. Cada idioma té la seua pròpia carpeta, amb fitxers `.php` que contenen arrays clau-valor per a les traduccions:
+
+**Exemple d'estructura:**
+```
+/lang
+    /en
+        messages.php
+    /es
+        messages.php
+```
+
+#### 2.2 Crear un Fitxer de Traducció
+Un fitxer de traducció típic conté un array de cadenes:
+```php
+// lang/en/messages.php
+return [
+    'welcome' => 'Welcome to our application!',
+];
+```
+
+Per a altres idiomes:
+```php
+// lang/es/messages.php
+return [
+    'welcome' => '¡Bienvenido a nuestra aplicación!',
+];
+```
+
+---
+
+### 3. Ús de Traduccions en el Codi
+
+#### 3.1 Recuperar Traduccions
+Utilitza la funció auxiliar `__()` per obtenir les traduccions:
+```php
+echo __('messages.welcome'); // Welcome to our application!
+```
+
+Si la traducció no existeix, es retorna la clau proporcionada:
+```php
+echo __('messages.unknown'); // messages.unknown
+```
+
+#### 3.2 Traduccions amb Paràmetres
+És possible definir paràmetres dins de les traduccions utilitzant el símbol `:`, que es substitueix quan es crida a la funció:
+```php
+// lang/en/messages.php
+return [
+    'greeting' => 'Hello, :name!',
+];
+```
+```php
+echo __('messages.greeting', ['name' => 'John']); // Hello, John!
+```
+
+---
+
+### 4. Localització en Temps d'Execució
+
+#### 4.1 Canviar l'Idioma Actiu
+Per canviar l'idioma de l'aplicació en temps d'execució, utilitza el mètode `App::setLocale()`:
+```php
+use Illuminate\Support\Facades\App;
+
+App::setLocale('es'); // Canvia a espanyol
+```
+
+Aquesta configuració només afecta la petició actual.
+ 
+
+### 5. Traduccions amb Fitxers JSON
+
+Laravel permet utilitzar fitxers JSON per a traduccions simples. Aquest enfocament és útil per a aplicacions amb cadenes de traducció úniques i desordenades.
+
+**Exemple de Fitxer JSON:**
+```json
+// lang/es.json
+{
+    "I love programming.": "Me encanta programar."
+}
+```
+
+Per accedir a aquestes cadenes:
+```php
+echo __('I love programming.');
+```
+ 
+
+
