@@ -60,17 +60,8 @@ Laravel Breeze inclou logout preconfigurat:
 
 #### 1.5 Restabliment de contrasenya
 Per habilitar el restabliment de contrasenya:
-1. Configura el correu SMTP al fitxer `.env`:
-   ```env
-   MAIL_MAILER=smtp
-   MAIL_HOST=smtp.gmail.com
-   MAIL_PORT=587
-   MAIL_USERNAME=el_teu_email@gmail.com
-   MAIL_PASSWORD=la_teua_contrasenya
-   MAIL_ENCRYPTION=tls
-   MAIL_FROM_ADDRESS=el_teu_email@gmail.com
-   MAIL_FROM_NAME="Nom del projecte"
-   ```
+
+1. Configura el correu SMTP al fitxer `.env`.
 2. Laravel Breeze genera automàticament els formularis i la lògica necessària.
 
  
@@ -379,6 +370,138 @@ Per accedir a aquestes cadenes:
 ```php
 echo __('I love programming.');
 ```
+
+## Enviament de Correus en Laravel
+
+Laravel ofereix una API senzilla i flexible per gestionar l'enviament de correus electrònics. Aquesta funcionalitat és útil per a notificacions, restabliment de contrasenyes i altres comunicacions amb els usuaris.
+
+---
+
+### 1. Configuració Inicial
+
+#### 1.1 Configurar el Servei de Correu
+Laravel suporta múltiples serveis d'enviament de correu com SMTP, Mailgun, Postmark, Amazon SES, entre altres. La configuració es defineix al fitxer `.env`:
+
+**Exemple de configuració SMTP per Gmail:**
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=el_teu_email@gmail.com
+MAIL_PASSWORD=la_teua_contrasenya
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=el_teu_email@gmail.com
+MAIL_FROM_NAME="Nom del Projecte"
+```
+
+#### 1.2 Configurar el Fitxer `config/mail.php`
+Aquest fitxer conté la configuració global per al sistema de correu. Normalment, no és necessari modificar-lo si es configura correctament el `.env`.
+
+---
+
+### 2. Crear Correus
  
+#### 2.1 Crear una Classe de Correu
+Les classes de correu es generen amb Artisan:
+```bash
+php artisan make:mail WelcomeMail
+```
 
+Aquest comandament crea una classe al directori `App\Mail`. Aquesta classe és on es defineix el contingut i el disseny del correu.
 
+#### 2.2 Exemple d'una Classe de Correu
+```php
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class WelcomeMail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $user;
+
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
+
+    public function build()
+    {
+        return $this->view('emails.welcome')
+                    ->subject('Benvingut a la nostra aplicació');
+    }
+}
+```
+ 
+### 3. Enviar Correus
+
+#### 3.1 Enviar un Correu des d'un Controlador
+Utilitza la façana `Mail` per enviar correus:
+```php
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
+Mail::to('usuari@example.com')->send(new WelcomeMail($user));
+```
+
+#### 3.2 Enviar a Múltiples Receptors
+Laravel permet enviar correus a múltiples destinataris:
+```php
+Mail::to(['user1@example.com', 'user2@example.com'])->send(new WelcomeMail($user));
+```
+ 
+### 4. Plantilles de Correus
+
+#### 4.1 Crear una Vista per al Correu
+Les vistes per a correus es guarden al directori `resources/views/emails`. Exemple de plantilla Blade:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Benvingut</title>
+</head>
+<body>
+    <h1>Hola, {{ $user->name }}</h1>
+    <p>Gràcies per registrar-te a la nostra aplicació!</p>
+</body>
+</html>
+```
+
+#### 4.2 Utilitzar Components i Markdown
+Laravel permet crear correus amb components de Markdown. Generem un correu amb components:
+```bash
+php artisan make:mail WelcomeMail --markdown=emails.welcome
+```
+
+Aquest comandament crea una plantilla Markdown a `resources/views/emails`.
+
+Exemple de plantilla Markdown:
+```markdown
+# Benvingut, {{ $user->name }}
+
+Gràcies per unir-te a la nostra aplicació.
+
+@component('mail::button', ['url' => 'https://example.com'])
+Visita el nostre lloc web
+@endcomponent
+
+Gràcies,<br>
+{{ config('app.name') }}
+```
+ 
+### 5. Correu en Cua
+
+Per enviar correus de manera asíncrona i millorar el rendiment de l'aplicació, podem utilitzar cues:
+```php
+Mail::to('usuari@example.com')->queue(new WelcomeMail($user));
+```
+
+Assegura't que el sistema de cues estiga configurat al fitxer `.env`:
+```env
+QUEUE_CONNECTION=database
+```
+
+  
