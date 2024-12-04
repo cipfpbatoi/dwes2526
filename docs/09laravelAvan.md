@@ -1065,20 +1065,12 @@ L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb
        return $next($request);
    }
    ```
-
-#### Registrar el Middleware
-- Afegeix-lo a `app/Http/Kernel.php`:
-  ```php
-  protected $routeMiddleware = [
-      'role' => \App\Http\Middleware\RoleMiddleware::class,
-  ];
-  ```
-
+ 
 #### Aplicar Middleware a rutes
-- Protegeix les rutes segons els rols:
+- Protegeix les rutes per tal que els equips soles puguen modificar-los els administradors:
   ```php
   Route::middleware(['auth', 'role:administrador'])->group(function () {
-      Route::get('/admin', [AdminController::class, 'index']);
+      Route::resource('/admin', [AdminController::class, 'index']);
   });
 
   Route::middleware(['auth', 'role:manager'])->group(function () {
