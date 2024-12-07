@@ -1009,18 +1009,19 @@ class Form extends Component
 L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb les funcionalitats tractades en este tema. 
 
 ### Pas 1: Configurar l'autenticació amb Laravel Breeze
-1. Instal·la Laravel Breeze:
+1. Copia el fitxer app.blade.php de la carpeta resources/views/layouts a equips.blade.php.
+2. Guarda les rutes de la Guia d'Equips de Futbol Femení en algun fitxer per utilitzar despres.  
+3. Instal·la Laravel Breeze:
    ```bash
    composer require laravel/breeze --dev
    php artisan breeze:install
    npm install && npm run dev
    php artisan migrate
    ```
-2. Inicia sessió com a usuari per defecte.
-
----
-
+ 
+ 
 ### Pas 2: Afegir els rols al sistema
+
 #### Migració per al camp `role` als usuaris
  
 1. Crea una nova migració per afegir el camp `role` a usuaris:
@@ -1038,7 +1039,7 @@ L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb
    php artisan migrate
    ```
 
-#### En el seeder d'usuaris crea un usuari administrador
+#### Crea el seeders d'usuaris i crea un usuari administrador
  
   ```php
   User::create([
@@ -1049,7 +1050,8 @@ L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb
   ]);
   ```
  
-### Pas 3: Middleware per a permisos de rol
+### Pas 3: Middleware per a permisos de rol i manager
+
 #### Crear Middleware per a gestionar els rols
 1. Genera el middleware:
    ```bash
@@ -1067,20 +1069,20 @@ L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb
    ```
  
 #### Aplicar Middleware a rutes
-- Protegeix les rutes per tal que els equips soles puguen modificar-los els administradors:
+- Protegeix les rutes per tal que els equips,estadis soles puguen modificar-los els administradors:
   ```php
-  Route::middleware(['auth', 'role:administrador'])->group(function () {
-      Route::resource('/admin', [AdminController::class, 'index']);
-  });
+    Route::middleware(['auth', RoleMiddleware::class.':administrador' ])->group(function (){
+        Route::resource('/equips', EquipController::class)->except(['index', 'show']);
+        Route::resource('/estadis', EstadisController::class)->except(['index', 'show']);
+    });
+    Route::resource('/equips', EquipController::class)->only(['index', 'show']);
+    Route::resource('/estadis', EstadisController::class)->only(['index', 'show']);
 
-  Route::middleware(['auth', 'role:manager'])->group(function () {
-      Route::get('/manager', [ManagerController::class, 'index']);
-  });
   ```
-
----
+ 
 
 ### Pas 4: Associar managers a equips
+
 #### Migració per a l’associació entre usuaris i equips
 1. Crea una migració nova:
    ```bash
@@ -1089,8 +1091,8 @@ L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb
 2. Afegeix el camp `team_id`:
    ```php
    Schema::table('users', function (Blueprint $table) {
-       $table->unsignedBigInteger('team_id')->nullable();
-       $table->foreign('team_id')->references('id')->on('equips')->onDelete('set null');
+       $table->unsignedBigInteger('equip_id')->nullable();
+       $table->foreign('equip_id')->references('id')->on('equips')->onDelete('set null');
    });
    ```
 3. Aplica la migració:
@@ -1101,13 +1103,15 @@ L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb
 #### Assignar equips als managers
 - Crea un manager per equip i assigna-li  :
   ```php
-  User::create([
-      'name' => 'Manager1',
-      'email' => 'manager1@example.com',
-      'password' => Hash::make('password'),
-      'role' => 'manager',
-      'team_id' => $equipId,
-  ]);
+  foreach (Equip::all() as $equip){
+            User::create([
+                'name' => 'Manager  '.$equip->nom,
+                'email' => $equip->nom.'@manager.com',
+                'password' => Hash::make('1234'),
+                'role' => 'manager',
+                'equip_id' => $equip->id,
+            ]);
+        }
   ```
 
 ### Relació entre models
@@ -1115,39 +1119,236 @@ L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb
   ```php
   public function equip()
   {
-      return $this->belongsTo(Equip::class, 'team_id');
+      return $this->belongsTo(Equip::class );
   }
   ```
 - Defineix la relació inversa al model `Equip`:
   ```php
   public function manager()
   {
-      return $this->hasOne(User::class, 'team_id');
+      return $this->hasOne(User::class );
   }
   ```
+  
+ 
+### Pas 5: Adaptar les vistes al component layout de Breeze
 
-### Mostrar dades del manager i del seu equip
-- Carrega el manager amb el seu equip:
-  ```php
-  $manager = User::with('equip')->where('role', 'manager')->get();
-  ```
+1. Modificar equips.blade.php per a utilitzar el layout de Breeze.
 
----
+```php
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            @yield('title','Guia de futbol femení')
+        </h2>
+    </x-slot>
 
-## Pas 5: Vista per gestionar usuaris i rols
-### Llistat d'usuaris amb el rol
-1. Crea un controlador i una vista per gestionar els usuaris:
-   ```php
-   Route::get('/admin/users', [AdminController::class, 'index'])->middleware('role:administrador');
-   ```
-   ```php
-   public function index()
-   {
-       $usuaris = User::with('equip')->get();
-       return view('admin.users.index', compact('usuaris'));
-   }
-   ```
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Guia de Futbol Femení</p>
+    </footer>
+</x-app-layout>
+```
 
-### Formulari per assignar rols o equips
-1. Crea un formulari on l’administrador puga modificar el rol o l’equip dels usuaris.
+2. Modificar la vista de l'equip per a utilitzar el layout de Breeze.
+
+```php
+@extends('layouts.equips')
+```
+
+3. Modificar el layout de Breeze per a incloure el menú de navegació .
+
+En navigation.blade.php:
+```php
+    ...
+    <!-- Navigation Links -->
+    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            {{ __('Dashboard') }}
+        </x-nav-link>
+    </div>
+    @include('partials.menu')
+    ...
+```
+
+4. En partials/menu.blade.php:
+```php
+    ...
+    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+        <x-nav-link :href="route('equips.index')" :active="request()->routeIs('dashboard')">
+            {{ __('Guia Equips') }}
+        </x-nav-link>
+    </div>
+    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+        <x-nav-link :href="route('estadis.index')" :active="request()->routeIs('dashboard')">
+            {{ __('Estadis') }}
+        </x-nav-link>
+    </div>
+    ...
+```
+
+### Pas 6: El manager soles puga editar el seu equip
+
+#### 1. Crear la Política
+Executa el següent comandament per generar la política associada al model `Equip`:
+```bash
+php artisan make:policy EquipPolicy --model=Equip
+```
+ 
+#### 2. Definir la Lògica a la Política
+Edita el fitxer generat `app/Policies/EquipPolicy.php` i afegeix les regles de permisos.
+
+### Exemple:
+```php
+namespace App\Policies;
+
+use App\Models\User;
+use App\Models\Equip;
+
+class EquipPolicy
+{
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        // Només els administradors poden crear equips
+        return $user->role === 'administrador';
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Equip $equip)
+    {
+        // Permetre si l'usuari és un administrador o un manager i està assignat a aquest equip
+        return $user->role === 'administrador' || ($user->role === 'manager' && $user->equip_id === $equip->id);
+    }
+
+    /**
+     * Determina si l'usuari pot eliminar l'equip.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Equip $equip
+     * @return bool
+     */
+    public function delete(User $user, Equip $equip)
+    {
+        // Només els administradors poden eliminar equips
+        return $user->role === 'administrador';
+    }
+}
+```
+
+ 
+#### 3. Utilitzar la Política al Controlador
+Al controlador `EquipController`, utilitza el mètode `authorize` per aplicar la política abans de permetre accions.
+
+### Exemple:
+```php
+class EquipController extends Controller
+{
+
+    use AuthorizesRequests;
+
+    public function index() {
+        $equips = Equip::all();
+        return view('equips.index', compact('equips'));
+    }
+
+    public function show(Equip $equip) {
+        return view('equips.show', compact('equip'));
+    }
+
+    public function create() {
+        $this->authorize('create');
+        $estadis = Estadi::all();
+        return view('equips.create',compact('estadis'));
+    }
+
+    public function edit(Equip $equip) {
+        $this->authorize('update', $equip);
+        $estadis = Estadi::all();
+        return view('equips.edit', compact('equip','estadis'));
+    }
+
+
+    public function store(Request $request)
+    {
+        $this->authorize('create');
+        $validated = $request->validate([
+            'nom' => 'required|unique:equips',
+            'titols' => 'integer|min:0',
+            'estadi_id' => 'required|exists:estadis,id',
+            'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validació del fitxer
+        ]);
+
+        if ($request->hasFile('escut')) {
+            $path = $request->file('escut')->store('escuts', 'public');
+            $validated['escut'] = $path;
+        }
+
+        Equip::create($validated);
+
+        return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
+    }
+
+
+    public function update(Request $request, Equip $equip)
+    {
+        $this->authorize('update', $equip);
+        $validated = $request->validate([
+            'nom' => 'required|unique:equips,nom,' . $equip->id,
+            'titols' => 'integer|min:0',
+            'estadi_id' => 'required|exists:estadis,id',
+            'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+
+        if ($request->hasFile('escut')) {
+            if ($equip->escut) {
+                Storage::disk('public')->delete($equip->escut); // Esborra l'escut antic
+            }
+            $path = $request->file('escut')->store('escuts', 'public');
+            $validated['escut'] = $path;
+        }
+
+        $equip->update($validated);
+
+        return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament!');
+    }
+
+    public function destroy(Equip $equip)
+    {
+        $this->authorize('delete', $equip);
+        if ($equip->escut) {
+            Storage::disk('public')->delete($equip->escut);
+        }
+        $equip->delete();
+        return redirect()->route('equips.index')->with('success', 'Equip esborrat correctament!');
+    }
+
+
+}
+```
+  
+
+#### 4. Utilitzar la Política a les Vistes
+A les vistes Blade, pots utilitzar les directives `@can` per verificar els permisos.
+
+### Exemple:
+```blade
+@can('update', $equip)
+    <a href="{{ route('equips.edit', $equip->id) }}" class="text-yellow-600 hover:underline">Editar</a>
+@endcan
+```
+
 
