@@ -1206,7 +1206,7 @@ php artisan make:policy EquipPolicy --model=Equip
 #### 2. Definir la Lògica a la Política
 Edita el fitxer generat `app/Policies/EquipPolicy.php` i afegeix les regles de permisos.
 
-### Exemple:
+ 
 ```php
 namespace App\Policies;
 
@@ -1251,8 +1251,7 @@ class EquipPolicy
  
 #### 3. Utilitzar la Política al Controlador
 Al controlador `EquipController`, utilitza el mètode `authorize` per aplicar la política abans de permetre accions.
-
-### Exemple:
+ 
 ```php
 class EquipController extends Controller
 {
@@ -1344,7 +1343,7 @@ class EquipController extends Controller
 #### 4. Utilitzar la Política a les Vistes
 A les vistes Blade, pots utilitzar les directives `@can` per verificar els permisos.
 
-### Exemple:
+ 
 ```blade
 @can('update', $equip)
     <a href="{{ route('equips.edit', $equip->id) }}" class="text-yellow-600 hover:underline">Editar</a>
@@ -1353,7 +1352,7 @@ A les vistes Blade, pots utilitzar les directives `@can` per verificar els permi
 
 ### Pas 7. Afegir FormRequest per a la validació
 
-#### Pas 1: Generar el Form Request
+####  1. Generar el Form Request
 
 Executa el següent comandament per crear un Form Request:
 
@@ -1366,7 +1365,7 @@ Aquest comandament crearà una classe `StoreEquipRequest` i altra `UpdateEquipRe
 
 ---
 
-#### Pas 2: Definir les regles de validació
+####  2. Definir les regles de validació
 
 Obre el fitxer `StoreEquipRequest.php` i defineix les regles de validació al mètode `rules`.
 
@@ -1420,7 +1419,7 @@ class StoreEquipRequest extends FormRequest
 }
 ```
  
-#### Pas 3: Modificar el Controlador per Utilitzar el Form Request
+#### 3. Modificar el Controlador per Utilitzar el Form Request
 
 Substitueix la injecció de `Request` pel nou `StoreEquipRequest` al mètode `store` del controlador `EquipController`.
 
@@ -1444,13 +1443,12 @@ public function store(StoreEquipRequest $request)
 }
 ```
  
-#### Pas 4: Fes el mateix per al Mètode `update`
+#### 4. Fes el mateix per al Mètode `update`
 
  
 Defineix les regles al mètode `rules`, incloent l'excepció per al camp únic (en aquest cas, el `nom`):
 
-##### Exemple:
- 
+  
 ```php
 use App\Http\Requests\StoreEquipRequest;
 
@@ -1472,168 +1470,121 @@ public function rules()
     ];
 } 
 ```
-## Idiomes al projecte 
+## Pas 8. Idiomes al projecte 
 
-####  Pas 1:  Configura  
+#### 1. Publicar els Fitxers de Llenguatge
 
-Laravel té suport integrat per al multiidioma. Els fitxers de traducció es troben al directori `resources/lang`.
+Per defecte, Laravel no inclou el directori `lang`. Per personalitzar els fitxers de llenguatge o crear-ne de nous, executa:
 
-##### Crea els directoris dels idiomes
-Afegeix els següents directoris a `resources/lang`:
-
-- `resources/lang/ca` (per al valencià)
-- `resources/lang/es` (per al castellà)
-- `resources/lang/en` (ja existeix per defecte)
-
-##### Crea els fitxers de traducció per errors
-A cada directori, crea un fitxer `validation.php` per personalitzar els missatges d'error.
-
-##### Exemple: `resources/lang/ca/validation.php`
-```php
-return [
-    'required' => 'El camp :attribute és obligatori.',
-    'unique' => 'El valor del camp :attribute ja està en ús.',
-    'integer' => 'El camp :attribute ha de ser un número enter.',
-    'min' => [
-        'numeric' => 'El valor del camp :attribute ha de ser almenys :min.',
-    ],
-    'image' => 'El camp :attribute ha de ser una imatge.',
-    'mimes' => 'El camp :attribute ha de tenir un format: :values.',
-    'max' => [
-        'file' => 'El fitxer :attribute no pot ser més gran de :max kilobytes.',
-    ],
-    'exists' => 'El valor seleccionat per :attribute no és vàlid.',
-];
+```bash
+php artisan lang:publish
 ```
 
-##### Exemple: `resources/lang/es/validation.php`
-```php
-return [
-    'required' => 'El campo :attribute es obligatorio.',
-    'unique' => 'El valor del campo :attribute ya está en uso.',
-    'integer' => 'El campo :attribute debe ser un número entero.',
-    'min' => [
-        'numeric' => 'El valor del campo :attribute debe ser al menos :min.',
-    ],
-    'image' => 'El campo :attribute debe ser una imagen.',
-    'mimes' => 'El campo :attribute debe tener un formato: :values.',
-    'max' => [
-        'file' => 'El archivo :attribute no puede ser mayor a :max kilobytes.',
-    ],
-    'exists' => 'El valor seleccionado para :attribute no es válido.',
-];
-```
+Aquesta comanda crearà el directori `lang` i publicarà els fitxers de llenguatge predeterminats de Laravel.
 
-##### Exemple: `resources/lang/en/validation.php`
-```php
-return [
-    'required' => 'The :attribute field is required.',
-    'unique' => 'The :attribute has already been taken.',
-    'integer' => 'The :attribute must be an integer.',
-    'min' => [
-        'numeric' => 'The :attribute must be at least :min.',
-    ],
-    'image' => 'The :attribute must be an image.',
-    'mimes' => 'The :attribute must be a file of type: :values.',
-    'max' => [
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
-    ],
-    'exists' => 'The selected :attribute is invalid.',
-];
-```
  
-#### 2. Configura l'idioma predeterminat
 
-Al fitxer `config/app.php`, modifica el valor de `locale` per establir l'idioma predeterminat:
+#### 2. Configurar l'Idioma Predeterminat
+
+Al fitxer `config/app.php`, ajusta l'opció `locale` per establir l'idioma predeterminat:
 
 ```php
 'locale' => 'ca',
 ```
 
+També pots configurar un idioma de reserva amb l'opció `fallback_locale`:
+
+```php
+'fallback_locale' => 'en',
+```
  
-#### 3. Canvi d'idioma dinàmic
+#### 3. Definir les Traduccions
 
-##### Crea un middleware per gestionar l'idioma
-Executa el comandament següent:
-```bash
-php artisan make:middleware SetLocale
+Les cadenes de traducció es poden emmagatzemar en fitxers PHP o JSON dins del directori `lang`.
+
+##### Utilitzant Fitxers PHP
+
+Crea subdirectoris per a cada idioma dins de `lang` i afegeix els fitxers de traducció corresponents. Per exemple:
+
+```
+/lang
+    /ca
+        messages.php
+    /es
+        messages.php
+    /en
+        messages.php
 ```
 
-Edita el fitxer `SetLocale.php`:
+Cada fitxer ha de retornar un array de cadenes traduïdes:
 
 ```php
-namespace App\Http\Middleware;
-
-use Closure;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
-
-class SetLocale
-{
-    public function handle($request, Closure $next)
-    {
-        $locale = $request->get('lang', Session::get('locale', config('app.locale')));
-        App::setLocale($locale);
-        Session::put('locale', $locale);
-
-        return $next($request);
-    }
-}
-```
-
-### Registra el middleware
-Al fitxer `app/Http/Kernel.php`, registra el middleware:
-
-```php
-protected $middlewareGroups = [
-    'web' => [
-        // Altres middleware
-        \App\Http\Middleware\SetLocale::class,
-    ],
+return [
+    'welcome' => 'Benvingut!',
+    // Altres cadenes...
 ];
 ```
 
-##### Afegir enllaços per canviar l'idioma
-Afegeix botons o enllaços a les vistes per permetre als usuaris canviar l'idioma.
+##### Utilitzant Fitxers JSON
 
-##### Exemple a Blade:
-```blade
-<a href="{{ url()->current() }}?lang=ca">Valencià</a>
-<a href="{{ url()->current() }}?lang=es">Castellano</a>
-<a href="{{ url()->current() }}?lang=en">English</a>
+Per a aplicacions amb moltes cadenes traduïbles, és recomanable utilitzar fitxers JSON:
+
 ```
+/lang
+    ca.json
+    es.json
+    en.json
+```
+
+Cada fitxer JSON ha de contenir un objecte amb parelles clau-valor per a les traduccions:
+
+```json
+{
+    "welcome": "Benvingut!",
+    // Altres cadenes...
+}
+```
+ 
+## 4. Recuperar Cadenes de Traducció
+
+Utilitza la funció `__` per obtenir les cadenes traduïdes:
+
+```php
+echo __('messages.welcome');
+```
+
+Si utilitzes fitxers JSON, pots recuperar les cadenes directament amb la clau:
+
+```php
+echo __('welcome');
+```
+
+ 
+#### 6. Canviar l'Idioma Dinàmicament
+
+Per canviar l'idioma durant l'execució, utilitza el mètode `setLocale`:
+
+```php
+App::setLocale('es');
+```
+
+Per facilitar als usuaris la selecció de l'idioma, pots crear rutes o enllaços que estableixin l'idioma desitjat.
 
 ---
 
-#### 4. Prova els idiomes
+#### 7. Traduir Missatges de Validació
 
-1. Accedeix a la teva aplicació amb diferents valors del paràmetre `lang` a l'URL, com ara:
-   ```
-   /equips?lang=ca
-   /equips?lang=es
-   /equips?lang=en
-   ```
+Els missatges de validació es poden personalitzar als fitxers de llenguatge corresponents. Per exemple, al fitxer `resources/lang/ca/validation.php`:
 
-2. Verifica que els missatges d'errors es mostrin a l'idioma corresponent.
+```php
+return [
+    'required' => 'El camp :attribute és obligatori.',
+    // Altres missatges de validació...
+];
+```
+
+Això assegura que els missatges de validació es mostren en l'idioma seleccionat.
+
+
  
-#### 5. Tradueix altres textos
-
-Utilitza `__('key')` o la directiva `@lang` per accedir a altres traduccions.
-
-##### Exemple:
-- Fitxer `resources/lang/ca/messages.php`:
-  ```php
-  return [
-      'welcome' => 'Benvingut!',
-      'edit_team' => 'Editar Equip',
-  ];
-  ```
-
-- Al fitxer Blade:
-  ```blade
-  <h1>{{ __('messages.welcome') }}</h1>
-  <a href="{{ route('equips.edit', $equip->id) }}">{{ __('messages.edit_team') }}</a>
-  ```
- 
-
  
