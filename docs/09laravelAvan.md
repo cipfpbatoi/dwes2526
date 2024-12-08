@@ -1486,17 +1486,14 @@ Aquesta comanda crearà el directori `lang` i publicarà els fitxers de llenguat
 
 #### 2. Configurar l'Idioma Predeterminat
 
-Al fitxer `config/app.php`, ajusta l'opció `locale` per establir l'idioma predeterminat:
+Al fitxer `.env`, ajusta l'opcions `locale` per establir l'idioma predeterminat:
 
 ```php
-'locale' => 'ca',
+APP_LOCALE=ca
+APP_FALLBACK_LOCALE=en
 ```
 
-També pots configurar un idioma de reserva amb l'opció `fallback_locale`:
-
-```php
-'fallback_locale' => 'en',
-```
+ 
  
 #### 3. Definir les Traduccions
 
@@ -1509,21 +1506,62 @@ Crea subdirectoris per a cada idioma dins de `lang` i afegeix els fitxers de tra
 ```
 /lang
     /ca
-        messages.php
+        ca.json
     /es
-        messages.php
+        es.json 
     /en
-        messages.php
+        en.json
 ```
 
 Cada fitxer ha de retornar un array de cadenes traduïdes:
 
-```php
-return [
-    'welcome' => 'Benvingut!',
-    // Altres cadenes...
-];
+```json
+ {
+  "Creació d'Equip": "Creació d'Equip",
+  "Guia d'Equips": "Guia d'Equips",
+  "Modificació d'Equip": "Modificació d'Equip",
+  "Escut actual": "Escut actual",
+  "Escut": "Escut",
+  "Estadi": "Estadi",
+  "Nom": "Nom",
+  "Títols": "Títols",
+  "Guardar": "Guardar",
+  "Actualitzar": "Actualitzar",
+  "Esborrar": "Esborrar"
+}
 ```
+```json
+{
+  "Creació d'Equip": "Creación de Equipo",
+  "Guia d'Equips": "Guía de Equipos",
+  "Modificació d'Equip": "Modificación de Equipo",
+  "Escut actual": "Escudo actual",
+  "Escut": "Escudo",
+  "Estadi": "Estadio",
+  "Nom": "Nombre",
+  "Títols": "Títulos",
+  "Guardar": "Guardar",
+  "Actualitzar": "Actualizar",
+  "Esborrar": "Borrar"
+} 
+```
+```json
+{
+  "Creació d'Equip": "Team Creation",
+  "Guia d'Equips": "Team Guide",
+  "Modificació d'Equip": "Team Modification",
+  "Escut actual": "Current Shield",
+  "Escut": "Shield",
+  "Estadi": "Stadium",
+  "Nom": "Name",
+  "Títols": "Titles",
+  "Guardar": "Save",
+  "Actualitzar": "Update",
+  "Esborrar": "Delete"
+}
+```
+
+
 
 ##### Utilitzant Fitxers JSON
 
