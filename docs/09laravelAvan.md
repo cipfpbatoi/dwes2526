@@ -1351,4 +1351,289 @@ A les vistes Blade, pots utilitzar les directives `@can` per verificar els permi
 @endcan
 ```
 
+### Pas 7. Afegir FormRequest per a la validació
 
+#### Pas 1: Generar el Form Request
+
+Executa el següent comandament per crear un Form Request:
+
+```bash
+php artisan make:request StoreEquipRequest
+php artisan make:request UpdateEquipRequest
+```
+
+Aquest comandament crearà una classe `StoreEquipRequest` i altra `UpdateEquipRequest  al directori `app/Http/Requests`.
+
+---
+
+#### Pas 2: Definir les regles de validació
+
+Obre el fitxer `StoreEquipRequest.php` i defineix les regles de validació al mètode `rules`.
+
+##### Exemple de validació:
+```php
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreEquipRequest extends FormRequest
+{
+    /**
+     * Determina si l'usuari està autoritzat a fer aquesta petició.
+     *
+     * @return bool
+     */
+    public function authorize(): bool
+    {
+         return $this->user()->can('create', Equip::class);
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'nom' => 'required|unique:equips',
+            'titols' => 'integer|min:0',
+            'estadi_id' => 'required|exists:estadis,id',
+            'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validació del fitxer
+        ];
+    }
+    
+    public function messages()
+    {
+        return [
+            'nom.required' => 'El camp "Nom" és obligatori.',
+            'nom.unique' => 'Aquest nom ja està en ús. Si us plau, tria un altre.',
+            'titols.integer' => 'El camp "Títols" ha de ser un número enter.',
+            'titols.min' => 'El nombre de títols no pot ser inferior a zero.',
+            'estadi_id.required' => 'El camp "Estadi" és obligatori.',
+            'estadi_id.exists' => 'L\'estadi seleccionat no és vàlid.',
+            'escut.image' => 'El camp "Escut" ha de ser una imatge.',
+            'escut.mimes' => 'El camp "Escut" només accepta formats: jpeg, png, jpg.',
+            'escut.max' => 'La mida de l\'escut no pot superar els 2 MB.',
+        ];
+    }
+}
+```
+ 
+#### Pas 3: Modificar el Controlador per Utilitzar el Form Request
+
+Substitueix la injecció de `Request` pel nou `StoreEquipRequest` al mètode `store` del controlador `EquipController`.
+
+##### Exemple:
+```php
+use App\Http\Requests\StoreEquipRequest;
+
+public function store(StoreEquipRequest $request)
+{
+     
+    $validated = $request->validated(); // Obté les dades validades
+
+    if ($request->hasFile('escut')) {
+        $path = $request->file('escut')->store('escuts', 'public');
+        $validated['escut'] = $path;
+    }
+
+    Equip::create($validated);
+
+    return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
+}
+```
+ 
+#### Pas 4: Fes el mateix per al Mètode `update`
+
+ 
+Defineix les regles al mètode `rules`, incloent l'excepció per al camp únic (en aquest cas, el `nom`):
+
+##### Exemple:
+ 
+```php
+use App\Http\Requests\StoreEquipRequest;
+
+public function authorize()
+{
+    $equip = $this->route('equip'); // Obté l'equip de la ruta
+    return $this->user()->can('update', $equip);
+}
+
+public function rules()
+{
+    $equipId = $this->route('equip')->id; // Obté l'ID de l'equip actual
+
+    return [
+        'nom' => 'required|unique:equips,nom,' . $equipId,
+        'titols' => 'integer|min:0',
+        'estadi_id' => 'required|exists:estadis,id',
+        'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ];
+} 
+```
+## Idiomes al projecte 
+
+####  Pas 1:  Configura  
+
+Laravel té suport integrat per al multiidioma. Els fitxers de traducció es troben al directori `resources/lang`.
+
+##### Crea els directoris dels idiomes
+Afegeix els següents directoris a `resources/lang`:
+
+- `resources/lang/ca` (per al valencià)
+- `resources/lang/es` (per al castellà)
+- `resources/lang/en` (ja existeix per defecte)
+
+##### Crea els fitxers de traducció per errors
+A cada directori, crea un fitxer `validation.php` per personalitzar els missatges d'error.
+
+##### Exemple: `resources/lang/ca/validation.php`
+```php
+return [
+    'required' => 'El camp :attribute és obligatori.',
+    'unique' => 'El valor del camp :attribute ja està en ús.',
+    'integer' => 'El camp :attribute ha de ser un número enter.',
+    'min' => [
+        'numeric' => 'El valor del camp :attribute ha de ser almenys :min.',
+    ],
+    'image' => 'El camp :attribute ha de ser una imatge.',
+    'mimes' => 'El camp :attribute ha de tenir un format: :values.',
+    'max' => [
+        'file' => 'El fitxer :attribute no pot ser més gran de :max kilobytes.',
+    ],
+    'exists' => 'El valor seleccionat per :attribute no és vàlid.',
+];
+```
+
+##### Exemple: `resources/lang/es/validation.php`
+```php
+return [
+    'required' => 'El campo :attribute es obligatorio.',
+    'unique' => 'El valor del campo :attribute ya está en uso.',
+    'integer' => 'El campo :attribute debe ser un número entero.',
+    'min' => [
+        'numeric' => 'El valor del campo :attribute debe ser al menos :min.',
+    ],
+    'image' => 'El campo :attribute debe ser una imagen.',
+    'mimes' => 'El campo :attribute debe tener un formato: :values.',
+    'max' => [
+        'file' => 'El archivo :attribute no puede ser mayor a :max kilobytes.',
+    ],
+    'exists' => 'El valor seleccionado para :attribute no es válido.',
+];
+```
+
+##### Exemple: `resources/lang/en/validation.php`
+```php
+return [
+    'required' => 'The :attribute field is required.',
+    'unique' => 'The :attribute has already been taken.',
+    'integer' => 'The :attribute must be an integer.',
+    'min' => [
+        'numeric' => 'The :attribute must be at least :min.',
+    ],
+    'image' => 'The :attribute must be an image.',
+    'mimes' => 'The :attribute must be a file of type: :values.',
+    'max' => [
+        'file' => 'The :attribute may not be greater than :max kilobytes.',
+    ],
+    'exists' => 'The selected :attribute is invalid.',
+];
+```
+ 
+#### 2. Configura l'idioma predeterminat
+
+Al fitxer `config/app.php`, modifica el valor de `locale` per establir l'idioma predeterminat:
+
+```php
+'locale' => 'ca',
+```
+
+ 
+#### 3. Canvi d'idioma dinàmic
+
+##### Crea un middleware per gestionar l'idioma
+Executa el comandament següent:
+```bash
+php artisan make:middleware SetLocale
+```
+
+Edita el fitxer `SetLocale.php`:
+
+```php
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+
+class SetLocale
+{
+    public function handle($request, Closure $next)
+    {
+        $locale = $request->get('lang', Session::get('locale', config('app.locale')));
+        App::setLocale($locale);
+        Session::put('locale', $locale);
+
+        return $next($request);
+    }
+}
+```
+
+### Registra el middleware
+Al fitxer `app/Http/Kernel.php`, registra el middleware:
+
+```php
+protected $middlewareGroups = [
+    'web' => [
+        // Altres middleware
+        \App\Http\Middleware\SetLocale::class,
+    ],
+];
+```
+
+##### Afegir enllaços per canviar l'idioma
+Afegeix botons o enllaços a les vistes per permetre als usuaris canviar l'idioma.
+
+##### Exemple a Blade:
+```blade
+<a href="{{ url()->current() }}?lang=ca">Valencià</a>
+<a href="{{ url()->current() }}?lang=es">Castellano</a>
+<a href="{{ url()->current() }}?lang=en">English</a>
+```
+
+---
+
+#### 4. Prova els idiomes
+
+1. Accedeix a la teva aplicació amb diferents valors del paràmetre `lang` a l'URL, com ara:
+   ```
+   /equips?lang=ca
+   /equips?lang=es
+   /equips?lang=en
+   ```
+
+2. Verifica que els missatges d'errors es mostrin a l'idioma corresponent.
+ 
+#### 5. Tradueix altres textos
+
+Utilitza `__('key')` o la directiva `@lang` per accedir a altres traduccions.
+
+##### Exemple:
+- Fitxer `resources/lang/ca/messages.php`:
+  ```php
+  return [
+      'welcome' => 'Benvingut!',
+      'edit_team' => 'Editar Equip',
+  ];
+  ```
+
+- Al fitxer Blade:
+  ```blade
+  <h1>{{ __('messages.welcome') }}</h1>
+  <a href="{{ route('equips.edit', $equip->id) }}">{{ __('messages.edit_team') }}</a>
+  ```
+ 
+
+ 
