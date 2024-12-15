@@ -1010,14 +1010,15 @@ L'objectiu d'aquest exercici és estendre la Guia d'Equips de Futbol Femení amb
 
 ### Pas 1: Configurar l'autenticació amb Laravel Breeze
 1. Copia el fitxer app.blade.php de la carpeta resources/views/layouts a equips.blade.php.
-2. Guarda les rutes de la Guia d'Equips de Futbol Femení en algun fitxer per utilitzar despres.  
+2. Guarda les rutes de la Guia d'Equips de Futbol Femení en algun fitxer per utilitzar després.  
 3. Instal·la Laravel Breeze:
-   ```bash
-   composer require laravel/breeze --dev
-   php artisan breeze:install
-   npm install && npm run dev
-   php artisan migrate
-   ```
+
+```bash
+composer require laravel/breeze --dev
+php artisan breeze:install
+npm install && npm run dev
+php artisan migrate
+```
  
  
 ### Pas 2: Afegir els rols al sistema
@@ -1761,6 +1762,165 @@ return [
 
 Això assegura que els missatges de validació es mostren en l'idioma seleccionat.
 
+## Exercicis 
 
+### 1. Ordenació de la BBDD, seeders i factories
+
+- Anem a afegir els següents camps a la BBDD
+  - Afegir el camp `data_naixement` a la taula `jugadores` de tipus `date`.
+  - Afegir el camp `estadi_id` a la taula `partits` clau forània
+  - Afegir el camp `arbitre_id` a la taula `partits` clau forània.
+  - Afegir el camp `data` a la taula partits de tipus date.
+  - Afegir el camp `dorsal` a la taula jugadores de tipus integer.
+  - Afegir el camp `jornada` a la taula partits de tipus integer.
+- Fes que el seeder de usuaris cree 30 amb el rol `arbitre`.
+- Fes que el seeder de equips només en cree 18.
+- Anem a crear el calendari utilitzant el chatgpt.  
+
+```php
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\Equip;
+use App\Models\Partit;
+use App\Models\User;
+use Carbon\Carbon;
+use Exception;
+
+class PartitsSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $arbitres = User::where('role', 'arbitre')->get();
+
+        if ($arbitres->isEmpty()) {
+            throw new Exception('No hi ha cap àrbitre disponible.');
+        }
+
+        $equips = Equip::all();
+        $numEquips = $equips->count();
+
+        if ($numEquips < 2) {
+            throw new Exception('Es necessiten almenys 2 equips per generar una lliga.');
+        }
+
+        // Afegim un equip fictici si el nombre d'equips és imparell
+        $equipFictici = null;
+        if ($numEquips % 2 !== 0) {
+            $equipFictici = (object)[
+                'id' => null,
+                'estadi_id' => null
+            ];
+            $equips->push($equipFictici);
+        }
+
+        $numJornades = $equips->count() - 1; // Nombre de jornades per anada
+        $partitsPerJornada = $equips->count() / 2;
+        $dataInicial = Carbon::now();
+        $arbitres = $arbitres->shuffle();
+
+        // Generem el calendari d'anada
+        $jornades = [];
+        for ($jornada = 1; $jornada <= $numJornades; $jornada++) {
+            $dataJornada = $dataInicial->copy()->addWeeks($jornada - 1); // Una jornada per setmana
+            $jornades[$jornada] = []; // Guardem els partits d'aquesta jornada
+
+            // Distribuïm els equips
+            $equipsActuals = $equips->toArray();
+            $localEquips = array_slice($equipsActuals, 0, $partitsPerJornada);
+            $visitantEquips = array_reverse(array_slice($equipsActuals, $partitsPerJornada));
+
+            for ($i = 0; $i < $partitsPerJornada; $i++) {
+                $local = $localEquips[$i];
+                $visitant = $visitantEquips[$i];
+
+                // Evitem partits amb l'equip fictici
+                if ($local['id'] !== null && $visitant['id'] !== null) {
+                    $dataAleatoria = $dataJornada->copy()->addDays(rand(-2, 2)); // Data aleatòria dins del rang [-2, 2]
+                    $jornades[$jornada][] = Partit::create([
+                        'local_id' => $local['id'],
+                        'visitant_id' => $visitant['id'],
+                        'estadi_id' => $local['estadi_id'],
+                        'arbitre_id' => $arbitres->random()->id,
+                        'jornada' => $jornada,
+                        'data' => $dataAleatoria
+                    ]);
+                }
+            }
+
+            // Rotació dels equips (round-robin)
+            $equips->push($equips->splice(1, 1)[0]);
+        }
+
+        // Generem el calendari de tornada
+        foreach ($jornades as $jornada => $partits) {
+            $dataJornadaTornada = $dataInicial->copy()->addWeeks($numJornades + $jornada - 1); // Jornades de tornada després de les d'anada
+
+            foreach ($partits as $partit) {
+                $dataAleatoria = $dataJornadaTornada->copy()->addDays(rand(-2, 2)); // Data aleatòria dins del rang [-2, 2]
+                Partit::create([
+                    'local_id' => $partit->visitant_id, // Invertim local i visitant
+                    'visitant_id' => $partit->local_id,
+                    'estadi_id' => $partit->visitant_id ? Equip::find($partit->visitant_id)->estadi_id : null,
+                    'arbitre_id' => $arbitres->random()->id,
+                    'jornada' => $jornada + $numJornades, // Jornada de tornada
+                    'data' => $dataAleatoria
+                ]);
+            }
+        }
+    }
+}
+```
+
+### 2. Creació dels Form Requests
  
+- Genera els Form Requests per als models `Estadi`, `Jugadora` i `Partit` utilitzant Artisan.
+- Implementa les regles de validació següents:
+    - **Estadis**:
+        - `nom`: Obligatori, text amb un màxim de 255 caràcters.
+        - `capacitat`: Obligatori, número enter positiu.
+        - `ciutat`: Obligatori, text amb un màxim de 255 caràcters.
+    - **Jugadores**:
+        - `nom`: Obligatori, text amb un màxim de 255 caràcters.
+        - `posició`: Obligatori, una de les opcions `defensa`, `migcampista`, `davantera` o `porter`.
+        - `equip_id`: Obligatori, identificador existent a la taula `equips`.
+        - `data_naixement`: Obligatori, data vàlida anterior a la data actual.
+        - `foto`: Opcional, pero si està ha de ser una foto .png i amb un tamany màxim.
+    - **Partits**:
+        - `equip_local_id`: Obligatori, identificador existent a la taula `equips` i diferent de `equip_visitant_id`.
+        - `equip_visitant_id`: Obligatori, identificador existent a la taula `equips`.
+        - `data`: Obligatori, data igual o futura.
+        - `goles_local`: Obligatori, igual o major que 0.
+        - `goles_visitant`: Obligatori, igual o major que 0.
+        - `estadi_id`: Obligatori, identificador existent a la taula `estadis`.
+
+- Substitueix la validació manual al controlador pels Form Requests creats.
+- Personalitza els missatges d'error perquè siguen més clars per als usuaris.
+- Si algun camp no està dona'l d'alta a les migracions, seeders i factories.
+ 
+## 3. Restricció de les operaciones per als usuaris no autenticants
+
+- Sabent que @auth @endauth son les directives per a autenticació i @guest @endguest per a no autenticació, modifica les vistes per a que els usuaris no autenticats no puguen accedir a les operacions.
+
+## 4. Restricció de permisos per als partits
+
+Assegurar que només els usuaris amb rol d'`àrbitre` puguin modificar partits. Ningú pot crear-ne.
+ 
+- Modifica el Form Request de `Partit` per incloure una validació que només permeti accedir als usuaris amb rol d'`àrbitre`.
+- Utilitza el mètode `authorize()` del Form Request per implementar aquesta restricció.
+- Verifica que el middleware de rol ja implementat també assegure que només els àrbitres poden accedir a les rutes de **creació** i **modificació** de partits.
+
+## 5. Jugadores
+
+- Assegurat que soles els manager puguen modificar o esborrar a les seues jugadores.
+- Així mateix quan un manager crea una jugadora aquesta ha de ser assignada al seu equip.
+ 
+## 6. Calendari
+
+- Crea una vista per a vore les jornades i el resultats dels partits. 
  
