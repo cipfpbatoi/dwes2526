@@ -1762,6 +1762,171 @@ return [
 
 Això assegura que els missatges de validació es mostren en l'idioma seleccionat.
 
+
+### Pas 9. Crear un component livewire per a mostrar un històric de partits
+
+1. Instal·la Livewire:
+```bash
+composer require livewire/livewire
+php artisan livewire:publish
+```
+
+2. Afegeix els scripts de Livewire a la plantilla Blade:
+
+```html
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+</head>
+<body class="font-sans antialiased">
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    @include('layouts.navigation')
+
+    <!-- Page Heading -->
+    @isset($header)
+    <header class="bg-white dark:bg-gray-800 shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {{ $header }}
+        </div>
+    </header>
+    @endisset
+
+    <!-- Page Content -->
+    <main>
+        {{ $slot }}
+    </main>
+</div>
+@livewireScripts
+</body>
+</html>
+```
+3. Genera el component Livewire:
+```bash
+ php artisan make:livewire HistorialPartits
+```
+
+4. Modifica el component Livewire `app/Livewire/HistorialPartits.php`:
+```php
+namespace App\Livewire;
+
+use App\Models\Partit;
+use Livewire\Component;
+
+class HistorialPartits extends Component
+{
+    public $partits;
+    public $equip = '';
+    public $data = '';
+
+    public function mount()
+    {
+        $this->partits = Partit::with(['equipLocal', 'equipVisitant', 'estadi', 'arbitre'])->get();
+    }
+
+
+    public function filtrar()
+    {
+        $this->partits = Partit::with(['equipLocal', 'equipVisitant', 'estadi', 'arbitre'])
+            ->when($this->equip, function ($query) {
+                $query->whereHas('equipLocal', fn($q) => $q->where('nom', 'like', "%{$this->equip}%"))
+                    ->orWhereHas('equipVisitant', fn($q) => $q->where('nom', 'like', "%{$this->equip}%"));
+            })
+            ->when($this->data, function ($query) {
+                $query->whereDate('data', $this->data);
+            })
+            ->get();
+    }
+
+    public function render()
+    {
+        return view('livewire.historial-partits', ['partits' => $this->partits]);
+    }
+}
+```
+5. Modifica la vista del component Livewire `resources/views/livewire/historial-partits.blade.php`:
+```php
+<div>
+    <div class="flex space-x-4">
+        <input wire:model="equip" type="text" placeholder="Cerca equip" class="border px-4 py-2">
+        <input wire:model="data" type="date" class="border px-4 py-2">
+        <button wire:click="filtrar" class="bg-blue-500 text-white px-4 py-2">Filtrar</button>
+    </div>
+
+    <table class="table-auto w-full mt-4">
+        <thead>
+        <tr>
+            <th>Data</th>
+            <th>Equip Local</th>
+            <th>Equip Visitant</th>
+            <th>Resultat</th>
+            <th>Estadi</th>
+            <th>Àrbitre</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($partits as $partit)
+            <tr>
+                <td>{{ $partit->data }}</td>
+                <td>{{ $partit->equipLocal->nom }}</td>
+                <td>{{ $partit->equipVisitant->nom }}</td>
+                <td>{{ $partit->resultat }}</td>
+                <td>{{ $partit->estadi->nom }}</td>
+                <td>{{ $partit->arbitre->name }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
+```
+6. Crea la vista `resources/views/partits/historic.blade.php`:
+```php
+@extends('layouts.futbolFemeni')
+
+@section('title', __('Històric de partits' ))
+
+@section('content')
+
+    <!-- Afegim el component Livewire aquí -->
+    <div class="mt-8">
+        @livewire('historial-partits')
+    </div>
+@endsection
+```
+7. Modifica la ruta `routes/web.php`:
+```php
+Route::get('/historic', [PartitController::class, 'historic'])->name('partits.historic');
+
+```
+8. Modifica el controlador `app/Http/Controllers/PartitController.php`:
+```php
+public function historic()
+{
+    return view('partits.historic');
+}
+```
+9. Afegix entrada en el menú `resources/views/layouts/navigation.blade.php`:
+```php
+<div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+    <x-nav-link :href="route('partits.historic')" :active="request()->routeIs('partits.historic')">
+        {{ __('Històric Partits') }}
+    </x-nav-link>
+</div>
+```
+
+
 ## Exercicis 
 
 ### 1. Ordenació de la BBDD, seeders i factories
@@ -1942,6 +2107,27 @@ Assegurar que només els usuaris amb rol d'`àrbitre` puguin modificar partits. 
 - Crea un camp calculat per a vore l'edat mitjana de les jugadores de l'equip. 
 - Fes que baix de les jugadores isquen els ultims 5 resultats jugats per l'equip.
 
-### 7. Classificació
+### 8. Classificació
 
-- Crea una vista per a vore la classificació dels equips.
+#### **Plantejament del Problema**
+ 
+- Crea un component livewire per mostrar la classificació en temps real.
+
+- Genera una taula que mostre, per a cada equip:
+   - Nom de l’equip.
+   - Total de punts.
+   - Partits jugats.
+   - Partits guanyats, empatats i perduts.
+   - Gols a favor i en contra.
+   - Diferència de gols.
+   
+- Ordena automàticament els equips per punts (i per diferència de gols en cas d’empat).
+- Cada vegada que s’actualitzi un resultat, la classificació ha de canviar automàticament.
+
+Condicionants 
+
+1. Implementar la funcionalitat com a **component Livewire**.
+2. Fer servir una combinació de **Eloquent** i càlculs personalitzats per generar la classificació.
+3. Presentar el resultat en temps real.
+4. Sense filtres ni opcions addicionals, simplement la taula de classificació actualitzada.
+
