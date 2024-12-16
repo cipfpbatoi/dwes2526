@@ -1919,15 +1919,24 @@ Assegurar que només els usuaris amb rol d'`àrbitre` puguin modificar partits. 
 - Assegurat que soles els manager puguen crear, modificar o esborrar a les seues jugadores.
 - Així mateix quan un manager crea una jugadora aquesta ha de ser assignada al seu equip.
 - Modifica el component de jugadora per poder vore-la en els equips de forma semblant. 
+
+
+<figure style="align: center;">
+    <img src="imagenes/09/equips.png" width="700">
+    <figcaption>Exemple d'equip</figcaption>
+</figure>
  
-[imatge](./imagenes/09/equips.png)
 
 ### 6. Calendari
 
 - Crea una vista per a vore les jornades i el resultats dels partits.  
 - Si l'usuari és un arbitre aleshores soles vora els seus partits i podrà modificar-los.
-  
- [imatge](./imagenes/09/jornada.png)
+
+<figure style="align: center;">
+    <img src="imagenes/09/jornada.png" width="700">
+    <figcaption>Exemple de jornada</figcaption>
+</figure>
+ 
 
 ### 7. Classificació
 
