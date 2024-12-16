@@ -1937,6 +1937,10 @@ Assegurar que només els usuaris amb rol d'`àrbitre` puguin modificar partits. 
     <figcaption>Exemple de jornada</figcaption>
 </figure>
  
+### 7. Equips
+
+- Crea un camp calculat per a vore l'edat mitjana de les jugadores de l'equip. 
+- Fes que baix de les jugadores isquen els ultims 5 resultats jugats per l'equip.
 
 ### 7. Classificació
 
