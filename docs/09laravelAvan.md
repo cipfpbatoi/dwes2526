@@ -824,40 +824,7 @@ Utilitza factories per generar dades de prova:
 $user = User::factory()->create();
 ```
  
-### 5. Proves d'Interfície amb Dusk
-
-#### 5.1 Instal·lació de Laravel Dusk
-```bash
-composer require --dev laravel/dusk
-php artisan dusk:install
-```
-
-#### 5.2 Exemple de Prova Dusk
-```php
-namespace Tests\Browser;
-
-use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
-
-class LoginTest extends DuskTestCase
-{
-    public function test_login_page()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/login')
-                    ->type('email', 'user@example.com')
-                    ->type('password', 'password')
-                    ->press('Login')
-                    ->assertPathIs('/dashboard');
-        });
-    }
-}
-```
-
-Executa les proves amb:
-```bash
-php artisan dusk
-```
+ 
 
 ## Laravel Livewire: Introducció
 
@@ -1762,8 +1729,253 @@ return [
 
 Això assegura que els missatges de validació es mostren en l'idioma seleccionat.
 
+### Pas 9. Crear proves
 
-### Pas 9. Crear un component livewire per a mostrar un històric de partits
+1. Crea un fitxer de proves per al CRUD d'equips:
+```bash
+php artisan make:test EquipCRUDTest
+```
+
+2. Modifica el fitxer de proves `tests/Feature/EquipCRUDTest.php`:
+```php
+namespace Tests\Feature;
+
+use App\Models\Estadi;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use App\Models\Equip;
+
+class EquipCrudTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /** @test */
+    public function es_pot_crear_un_equip_correctament()
+    {
+        // Actuar: Crear un equip
+        $estadi = Estadi::create([
+            'nom' => 'Camp Nou',
+            'ciutat' => 'Barcelona',
+            'capacitat' => 99354,
+        ]);
+        $equip = Equip::create([
+            'nom' => 'FC Barcelona',
+             'titols' =>30,
+             'estadi_id' => 1,
+        ]);
+
+        // Comprovar que l’equip es guarda a la base de dades
+        $this->assertDatabaseHas('equips', [
+            'nom' => 'FC Barcelona',
+            'titols' => 30,
+            'estadi_id' => 1,
+        ]);
+    }
+
+    public function es_poden_llistar_els_equips()
+    {
+        // Arrange: Crear equips
+        Equip::factory()->create(['nom' => 'FC Barcelona']);
+        Equip::factory()->create(['nom' => 'Real Madrid']);
+
+        // Actuar: Obtenir la llista d’equips
+        $equips = Equip::all();
+
+        // Comprovar que la llista conté els equips creats
+        $this->assertCount(2, $equips);
+        $this->assertEquals('FC Barcelona', $equips[0]->nom);
+        $this->assertEquals('Real Madrid', $equips[1]->nom);
+    }
+
+    public function es_pot_actualitzar_un_equip()
+    {
+        // Arrange: Crear un equip
+        $equip = Equip::create([
+            'nom' => 'FC Barcelona',
+            'ciutat' => 'Barcelona',
+        ]);
+
+        // Actuar: Actualitzar l’equip
+        $equip->update([
+            'nom' => 'Barça',
+            'ciutat' => 'Catalunya',
+        ]);
+
+        // Comprovar que els canvis es reflecteixen a la base de dades
+        $this->assertDatabaseHas('equips', [
+            'nom' => 'Barça',
+            'ciutat' => 'Catalunya',
+        ]);
+    }
+
+    public function es_pot_esborrar_un_equip()
+    {
+        // Arrange: Crear un equip
+        $equip = Equip::create([
+            'nom' => 'FC Barcelona',
+            'ciutat' => 'Barcelona',
+        ]);
+
+        // Actuar: Esborrar l’equip
+        $equip->delete();
+
+        // Comprovar que l’equip ja no existeix a la base de dades
+        $this->assertDatabaseMissing('equips', [
+            'nom' => 'FC Barcelona',
+            'ciutat' => 'Barcelona',
+        ]);
+    }
+
+    public function no_es_pot_crear_un_equip_sense_nom()
+    {
+        $this->expectException(\Illuminate\Database\QueryException::class);
+
+        // Intentar crear un equip sense nom
+        Equip::create([
+            'ciutat' => 'Barcelona',
+        ]);
+    }
+}
+```
+3. Copia el .env en .env.testing i modifica'l per a executar les proves en una BBDD de testing
+
+```bash
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=testing
+DB_USERNAME=sail
+DB_PASSWORD=password
+```
+
+4. Executa les proves:
+```bash
+php artisan test
+```
+
+### Pas 10. Generar un correu electrònic amb la jornada actual (partits programats) i enviar-lo als managers dels equips.
+
+#### **1. Crear una Comanda Artisan**
+```bash
+php artisan make:command EnviarJornadaManagers
+```
+
+Al fitxer `app/Console/Commands/EnviarJornadaManagers.php`:
+
+```php
+namespace App\Console\Commands;
+
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Partit;
+use App\Mail\JornadaMail;
+
+class EnviarJornadaManagers extends Command
+{
+    protected $signature = 'jornada:enviar';
+    protected $description = 'Envia la jornada actual als managers';
+
+    public function handle()
+    {
+        $partit = Partit::whereDate('data', '>', Carbon::now()) // Filtra partits posteriors a avui
+            ->orderBy('data', 'asc') // Ordena per la data més propera
+            ->first();
+        $partits = Partit::with(['equipLocal', 'equipVisitant'])->where('jornada',$partit->jornada)->get();
+
+        // Lògica per obtenir els correus dels managers
+        $managers = User::where('role','manager')->get();
+
+
+        foreach ($managers as $manager) {
+            Mail::to($manager->email)->send(new JornadaMail($partits));
+            $this->info($manager->name . ' ha rebut la jornada.');
+
+        }
+
+        $this->info('La jornada s\'ha enviat correctament als managers.');
+    }
+}
+ 
+#### **2. Crear el Mail**
+```bash
+php artisan make:mail JornadaMail --markdown=emails.jornada
+```
+
+Al fitxer `app/Mail/JornadaMail.php`:
+
+```php
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Queue\SerializesModels;
+
+class JornadaMail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $partits;
+
+    public function __construct($partits)
+    {
+        $this->partits = $partits;
+    }
+
+
+
+    public function content(): Content
+    {
+        return new Content(
+            markdown: 'emails.jornada',
+            with: [
+                'partits' => $this->partits,
+            ],
+        );
+    }
+}
+
+```
+
+ 
+#### **3. Crear la Vista del Correu**
+Al fitxer `resources/views/emails/jornada.blade.php`:
+
+```markdown
+<x-mail::message>
+    # Jornada {{ $partits->first()->jornada }}
+
+    ## Partits Programats:
+    @foreach($partits as $partit)
+        - **{{ $partit->equipLocal->nom }}** vs **{{ $partit->equipVisitant->nom }}** ({{ $partit->data }})
+    @endforeach
+
+    Gràcies,
+    **{{ config('app.name') }}**
+</x-mail::message>
+```
+ 
+#### **4. Efectuar l'Enviament**
+Pots enviar els correus manualment executant la comanda:
+
+```bash
+php artisan jornada:enviar
+``` 
+
+Pots programar la comanda al `Kernel.php`:
+
+```php
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('jornada:enviar')->weeklyOn(1, '8:00');
+}
+```
+
+
+### Pas 11. Crear un component livewire per a mostrar un històric de partits
 
 1. Instal·la Livewire:
 ```bash
@@ -2109,8 +2321,7 @@ Assegurar que només els usuaris amb rol d'`àrbitre` puguin modificar partits. 
 
 ### 8. Classificació
 
-#### **Plantejament del Problema**
- 
+  
 - Crea un component livewire per mostrar la classificació en temps real.
 
 - Genera una taula que mostre, per a cada equip:
@@ -2124,10 +2335,14 @@ Assegurar que només els usuaris amb rol d'`àrbitre` puguin modificar partits. 
 - Ordena automàticament els equips per punts (i per diferència de gols en cas d’empat).
 - Cada vegada que s’actualitzi un resultat, la classificació ha de canviar automàticament.
 
-Condicionants 
+#### Condicionants 
 
 1. Implementar la funcionalitat com a **component Livewire**.
 2. Fer servir una combinació de **Eloquent** i càlculs personalitzats per generar la classificació.
 3. Presentar el resultat en temps real.
 4. Sense filtres ni opcions addicionals, simplement la taula de classificació actualitzada.
+
+### 9. Proves
+
+1. Crea proves per jugadoresController, EstadiController i PartitController.
 
