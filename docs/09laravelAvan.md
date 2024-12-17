@@ -2346,3 +2346,6 @@ Assegurar que només els usuaris amb rol d'`àrbitre` puguin modificar partits. 
 
 1. Crea proves per jugadoresController, EstadiController i PartitController.
 
+### 10. Correu
+
+1. Crea un correu per a enviar a tots els arbitres el seu calendari anual de partits.
