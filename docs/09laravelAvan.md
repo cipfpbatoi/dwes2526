@@ -2333,8 +2333,7 @@ Assegurar que només els usuaris amb rol d'`àrbitre` puguin modificar partits. 
    - Diferència de gols.
    
 - Ordena automàticament els equips per punts (i per diferència de gols en cas d’empat).
-- Cada vegada que s’actualitzi un resultat, la classificació ha de canviar automàticament.
-
+ 
 #### Condicionants 
 
 1. Implementar la funcionalitat com a **component Livewire**.

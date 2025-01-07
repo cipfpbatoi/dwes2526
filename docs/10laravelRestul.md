@@ -20,7 +20,7 @@
 
 # Servicios REST
 
-> Duración estimada: 32 sesiones
+> Duración estimada: 16 sesiones
 
 
 ## Introducció als serveis REST
@@ -31,7 +31,12 @@ Una **API** (Application Programming Interface) és un conjunt de funcions i pro
 
 Una de les característiques fonamentals de les API és que són **Sateless**, la qual cosa vol dir que les peticions es fan i desapareixen, no hi ha usuaris loguejats ni dades que es queden emmagatzemats.
 
-Exemples de **APIs** gratuïtes:
+### Característiques fonamentals de REST:
+- **Stateless**: Cada petició HTTP conté tota la informació necessària per processar-la.
+- **Mètodes HTTP**: Utilitza mètodes com GET, POST, PUT i DELETE.
+- **Formats d'intercanvi de dades**: Habitualment JSON o XML.
+
+### Exemples d'APIs públiques:
 
 - [ChuckNorris IO](https://api.chucknorris.io/#!)
 - [OMDB](https://www.omdbapi.com/)
@@ -72,9 +77,7 @@ $response = Http::get('https://swapi.dev/api/people/');
 ```
 
 En aquest exemple, la petició GET a https://swapi.dev/api/people/ retorna informació sobre personatges de "Star Wars". La resposta es verifica per a comprovar si ha estat exitosa, i després es processen les dades JSON. Pots adaptar aquest codi per a fer altres tipus de consultes a l'API, depenent de la informació que necessites.
-
-
-
+ 
 ### REST
 
 Amb aquesta metodologia anomenada **REST** podrem construir *APIs* perquè des d'un client extern es puguen consumir.
@@ -82,7 +85,7 @@ Amb aquesta metodologia anomenada **REST** podrem construir *APIs* perquè des d
 Gràcies a aquest **standard** de l'arquitectura del programari podrem muntar una API que utilitze els mètodes standard GET, POST, PUT i DELETE.
 
 
-### Construïnt una API/REST bàsica
+### Construïnt una API/REST bàsica amb Laravel
 
 [![](imagenes/ull.png)Video](https://youtu.be/1O8cvJKNhm8)
 
@@ -1219,38 +1222,226 @@ Us encomane a que vejau el video on està tot explicat perquè amb els apunt sol
 [Documentació de swagger-php](http://zircote.github.io/swagger-php/Getting-started.html)
 
 
-## Exercicis
+## Exercici Pràctic: API per a la Guia d'Equips de Futbol Femení.
 
-801. **Inicialització de Dades amb usersSeeder**
+L'objectiu de l'exercici consisteix a implementar una API REST completa per gestionar la lliga femenina, incloent-hi les operacions CRUD, autenticació, autorització, i documentació amb Swagger.
 
-    **Objectiu:** Utilitza el usersSeeder per a afegir personatges de Star Wars com a usuaris del nostre sistema.
-    
-    **Tasca:** Modifica usersSeeder perquè carregue personatges de Star Wars en la base de dades, assignant-los com a usuaris del sistema.
+### Pas 1: Configuració inicial de l’API (instal·lació Sanctum)
 
-802. **Desenvolupament d'una API per a batoiBook**
-   
-    **Objectiu:** Crea una API per al projecte batoiBook amb les següents especificacions:
+- Instal·la Laravel Sanctum al projecte:
+  
+  ```bash
+  composer require laravel/sanctum
+  php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+  php artisan migrate
+  ```
+  
+- Configura el fitxer bootstrap/app.php per tal que els missatges d'errada vinguen en format json:
 
-    **Endpoints per Consultar Taules:**
+  ```php
+  return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
 
-    * **Taules courses, families, i modules**: Crea endpoints per aquestes taules. Les respostes hauran de retornar-se sense utilitzar Resources, però incloent el codi de resposta HTTP.
-    * **Taula users**: Similar als anteriors, però en aquest cas, retorna només id, name, email, i administrador en les respostes.
-    * **Taula books**:
-        * Utilitza un apiResource per a incloure el nom del propietari i el nom del mòdul en les respostes. Adapta els noms dels camps a un idioma oficial d'Espanya.
-        * Per mostrar tots els llibres de manera paginada, crea una Collection Resource que afiga detalls com el número de pàgina actual, el nombre total de pàgines, el nombre de registres per pàgina, i el total de registres disponibles. Inclou també l'estat de la resposta i enllaços a les pàgines anterior i posterior.
-    * **Taula sales**: Segueix un procés similar al de la taula books per a mostrar les vendes paginades.
-    * Endpoints per a Creació, Modificació, i Esborrat:
-        * Crea endpoints específics per a crear, modificar, i esborrar elements en les taules books i sales.
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
+            return $request->is('api/*') || $request->expectsJson();
+        });
+        $exceptions->render(function (Throwable $e, Request $request) {
+            if ($e instanceof \Illuminate\Validation\ValidationException) {
+                return response()->json([
+                    'message' => 'Dades no vàlides.',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
 
-804. **Gestió d'Errors**
+            if ($e instanceof \Illuminate\Auth\AuthenticationException) {
+                return response()->json([
+                    'message' => 'No autenticat.',
+                ], 401);
+            }
+        });
+    })->create();
+  ```
 
-    **Objectiu**: Assegura que els missatges d'error es retornen en format JSON.
+### Pas 2: Controladors i Rutes 
+ 
+- Genera controladors per als models utilitzant Artisan:
+  
+  ```bash
+   php artisan make:controller Api/JugadoraController --api --model=Jugadora
+  ```
+-   Crea les rutes CRUD per als models:
 
-804. **Endpoint per a Iniciar Sessió i Protecció de Rutes**
+```php
+Route::apiResource('jugadores', Api\JugadoraController::class)->middleware('api');
+ ```
+ 
+- Completa els mètodes CRUD en el controlador utilitzant els models i Form Requests per validar les dades:
 
-    **Objectiu**: Implementa un sistema d'autenticació i seguretat per a l'API.
+```php
+/**
+* Display a listing of the resource.
+*/
+public function index()
+{
+return Jugadora::paginate(10);
+}
 
-    **Tasca**: Crea un endpoint per a iniciar sessió en l'aplicació. A més, protegeix les rutes POST, PUT, i DELETE en les taules que ho requereixen, assegurant que només usuaris autenticats puguen realitzar aquestes accions.
+public function store(JugadoraRequest $request)
+{
+    $jugadora = Jugadora::create($request->validated());
+    return response()->json($jugadora, 201);
+}
+
+public function show(Jugadora $jugadora)
+{
+    return $jugadora;
+}
+
+public function update(JugadoraRequest $request, Jugadora $jugadora)
+{
+    $jugadora->update($request->validated());
+    return response()->json($jugadora);
+}
+
+public function destroy(Jugadora $jugadora)
+{
+    $jugadora->delete();
+    return response()->json(null, 204);
+}
+``` 
+
+### Pas 3: Autenticació i autorització
+
+- Afegir al model User el trait HasApiTokens:
+
+```php
+use Laravel\Sanctum\HasApiTokens;
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable;
+}
+``` 
+
+- Afegir les rutes d'autenticació a **routes/api.php**:
+
+```php
+
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+
+Route::middleware('auth:sanctum')->group( function () {
+    Route::apiResource('jugadores',  JugadoraController::class);
+    Route::post('logout', [AuthController::class, 'logout']);
+
+});
+```
+
+- Implementar el controlador BaseController i AuthController amb els mètodes login, register i logout:
+
+```php
+namespace App\Http\Controllers\Api;
+ use App\Http\Controllers\Controller as Controller;
+class BaseController extends Controller
+{
+    /**
+     * success response method.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendResponse($result, $message, $code = 200)
+    {
+        $response = [
+            'success' => true,
+            'data'    => $result,
+            'message' => $message,
+        ];
+        return response()->json($response, $code);
+    }
+    /**
+     * return error response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendError($error, $errorMessages = [], $code = 200)
+    {
+        $response = [
+            'success' => false,
+            'message' => $error,
+        ];
+        if(!empty($errorMessages)){
+            $response['info'] = $errorMessages;
+        }
+        return response()->json($response, $code);
+    }
+}
+```
+
+```php
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BaseController as BaseController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+
+class AuthController extends BaseController
+{
+    public function login(Request $request)
+    {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $authUser = Auth::user();
+            $result['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
+            $result['name'] =  $authUser->name;
+
+            return $this->sendResponse($result, 'User signed in');
+        }
+        return $this->sendError('Unauthorised.', ['error'=>'incorrect Email/Password']);
+    }
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required|same:password',
+        ]);
+
+        if ($validator->fails()){
+            return $this->sendError('Error validation', $validator->errors());
+        }
+
+        try {
+            $input = $request->all();
+            $input['password'] = bcrypt($input['password']);
+            $user = User::create($input);
+            $result['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
+            $result['name'] =  $user->name;
+
+            return $this->sendResponse($result, 'User created successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError('Registration Error' , $e->getMessage());
+        }
+    }
+    public function logout(Request $request)
+    {
+ 
+        $user = request()->user(); //or Auth::user()
+        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+        $success['name'] =  $user->name;
+         return $this->sendResponse($success, 'User successfully signed out.');
+    }
+
+}
+
+```
 
 
-    *        
