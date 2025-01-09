@@ -1519,4 +1519,17 @@ class AuthController extends BaseController
 
 ```
 
+### Pas 4: Documentació amb Swagger
+
+- Instal·la el paquet l5-swagger:
+
+```bash
+composer require "darkaonline/l5-swagger"
+php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+```
+ 
+- Afegeix les anotacions OpenAPI als controladors, models i requests:
+
+```php
+ 
 

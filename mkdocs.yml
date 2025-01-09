@@ -13,7 +13,7 @@ nav:
   - "7.- Introducció a Laravel i el MVC": "07frameworks.md"
   - "8- Laravel i la gestió de Dades": "08laravelDades.md"
   - "9- Funcionalitats avançades de Laravel": "09laravelAvan.md"
-  - "10.- Desenvolupament d'Apis amb Laravel": "08rest.md"
+  - "10.- Desenvolupament d'Apis amb Laravel": "10laravelRestul.md"
   - "11.- Webs Hibrides": "09mashup.md"
   - "12.- Solucions Exercicis propossats": "10solucions.md"
 
