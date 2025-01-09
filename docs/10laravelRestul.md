@@ -553,68 +553,66 @@ A l'hora de rebre dades en format JSON per a serveis REST, també podem establir
 
 
 D'altra banda, hem d'assegurar-nos que qualsevol error que es produïsca en la part del API retorne un contingut en format JSON, i no una pàgina web. Per exemple, si sol·licitem veure la fitxa d'un llibre que el seu id no existeix, no hauria de retornar-nos una pàgina d'error 404, sinó un codi d'estat 404 amb un missatge d'error en format JSON.
-Això no es compleix per defecte, ja que Laravel està configurat per a renderitzar una vista amb l'error produït. En el cas de Laravel 8 hem de modificar el mètode **register** dins de la classe **App\Exceptions\Handler.php**. Ho podem deixar de la següent forma:
+Això no es compleix per defecte, ja que Laravel està configurat per a renderitzar una vista amb l'error produït.  Ho podem fer modificant el fitxer bootstrap/app.php.
 
 ```php
-<?php
-
-namespace App\Exceptions;
-
-use Illuminate\Database\QueryException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-
-class Handler extends ExceptionHandler
-{
-    /**
-     * A list of the exception types that are not reported.
-     *
-     * @var array
-     */
-    protected $dontReport = [
-        //
-    ];
-
-    /**
-     * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var array
-     */
-    protected $dontFlash = [
-        'password',
-        'password_confirmation',
-    ];
-
-    /**
-     * Register the exception handling callbacks for the application.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->renderable(function (Throwable $exception) {
-
-            if (request()->is('api*'))
-            {
-                if ($exception instanceof ModelNotFoundException)
-                    return response()->json(['error' => 'Elemento no encontrado'], 404);
-                else if ($exception instanceof AuthenticationException)
-                    return response()->json(['error' => 'Usuario no autenticado'], 401);
-                else if ($exception instanceof ValidationException)
-                    return response()->json(['error' => 'Datos no válidos'], 400);
-                else if ($exception instanceof QueryException)
-                    return response()->json(['error' => 'Datos no válidos'], 400);
-                else if (isset($exception))
-                    return response()->json(['error' => 'Error en la aplicación (' .get_class($exception) . '):' .$exception->getMessage()], 500);
-            }
+->withExceptions(function (Exceptions $exceptions) {
+        // Gestionar excepcions en format JSON només per a rutes API
+        $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
+            // Només retornar JSON si la ruta comença amb "api/*"
+            return $request->is('api/*');
         });
-    }
-}
+
+        // Renderitzar excepcions personalitzades
+        $exceptions->render(function (Throwable $e, Request $request) {
+            // Excepcions de validació
+            if ($e instanceof \Illuminate\Validation\ValidationException) {
+                return response()->json([
+                    'message' => 'Dades no vàlides.',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
+
+            // Excepcions d'autenticació
+            if ($e instanceof \Illuminate\Auth\AuthenticationException) {
+                return response()->json([
+                    'message' => 'No autenticat.',
+                ], 401);
+            }
+
+            // Ruta no trobada
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+                if ($request->is('api/*')) {
+                    return response()->json([
+                        'message' => 'Ruta no trobada.',
+                    ], 404);
+                }
+                // Comportament per defecte per a rutes no API (HTML)
+                return parent::render($request, $e);
+            }
+
+            // Recurs no trobat
+            if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+                if ($request->is('api/*')) {
+                    return response()->json([
+                        'message' => 'Recurs no trobat.',
+                    ], 404);
+                }
+                return parent::render($request, $e);
+            }
+
+            // Resposta genèrica per a errors del servidor
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Error del servidor.',
+                ], 500);
+            }
+
+            // Comportament per defecte per a rutes no API
+            return parent::render($request, $e);
+        });
 ```
-### Provant els serveis amb POSTMAN
+#### Provant els serveis amb POSTMAN
 
 Ja hem vist que provar uns serveis de llistat (GET) és senzill a través d'un navegador. Però els serveis d'inserció (POST), modificació (PUT) o esborrat (DELETE) exigeixen d'altres eines per a poder ser provats. Podríem definir formularis amb aquests mètodes encapsulats, però l'esforç de definir
 aqueixos formularis per a després no utilitzar-los més no mereix molt la pena. Veurem a continuació una eina molt útil per a provar tot tipus de serveis sense necessitat d'implementar gens addicional.
@@ -629,7 +627,7 @@ botó **New** a la cantonada superior esquerra. Per exemple, podem crear una col
 Des del mateix botó*New a la cantonada superior esquerra podem crear noves peticions i associar-les a una col·lecció. Existeix una forma alternativa (potser més còmoda) de crear aqueixes peticions, a través del panell
 de pestanyes, afegint noves:
 
-#### Afegir peticions GET
+##### Afegir peticions GET
 
 
 Per a afegir una petició, habitualment triarem el tipus de comando sota les pestanyes (GET, POST, PUT, DELETE) i la URL associada a aquest comando. Per exemple:
@@ -653,7 +651,7 @@ Bastaria amb reemplaçar l'id de la URL pel qual vulguem consultar realment. Si 
 
 ![](imagenes/08/postman_5.png)
 
-#### Afegir altres tipus de peticions
+##### Afegir altres tipus de peticions
 
 Les peticions POST difereixen de les peticions GET en què s'envia certa informació en el cos de la petició. Aquesta informació normalment són les dades que es volen afegir en el servidor. Com podem fer això amb Postman?
 En primer lloc, creem una nova petició, triem el comando POST i definim la URL (en el nostre cas, videoclub.my/api/movies o una cosa similar, depenent de com tinguem en marxa el servidor).
@@ -672,11 +670,9 @@ Per a peticions DELETE, la mecànica és similar a la fitxa de l'element (operac
 
 ![](imagenes/08/postman_8.png)
 
-## Autenticació en serveis REST
+### Autenticació en serveis REST
 
-![Video](https://youtu.be/DyTbHfQHp0I)
-
-
+ 
 En una API REST també pot ser necessari protegir certs serveis, de manera que només puguen accedir a ells els usuaris autenticats. No obstant això, en aquest cas no tenim disponible el mecanisme d'autenticació basat en sessions que vam veure en temes anteriors, ja que la parteix client que consula la API
 REST no té per què estar basada en un navegador. Podríem accedir des d'una aplicació d'escriptori feta a Java, per exemple, o des d'una aplicació mòbil, i en aquests casos no podríem disposar de les sessions, pròpies de clients web o navegadors. En el seu lloc, emprarem un mecanisme d'autenticació basat en tokens.
 
@@ -688,49 +684,8 @@ L'autenticació basada en tokens és un mecanisme de validació d'usuaris en apl
 * El servidor valida aqueixes credencials i, si són correctes, genera una cadena de text anomenada **token**, d'una certa longitud, i que servirà per a identificar unívocament a l'usuari a partir d'aqueix moment. Dit token ha de ser enviat de tornada (també en format JSON) al client que es va validar.
 * A partir d'aquest punt, el client ha d'adjuntar el token com a part de la informació en cada petició que realitza a una zona d'accés restringit, de manera que el servidor puga consultar el token i comprovar si correspon amb el d'algun usuari autoritzat. Aquest token normalment s'envia en una capçalera de la petició anomenada **Authorization**, com veurem després, i el servidor pot consultar el valor d'aquesta capçalera per a verificar l'accés del client.
 
-#### Alternatives per a la implementació de l'autenticació basada en tokens
-
-Podem emprar diferents alternatives per a l'autenticació basada en tokens baix Laravel. Comentarem dues d'elles.
-
-
-* D'altra banda podem valdre'ns de la llibreria **Laravel Sanctum**, que proporciona mecanismes d'autenticació per a APIs i per a SPAs (Single Page Applications, aplicacions de pàgina única). Entre els seus avantatges podem destacar que és senzilla d'integrar en l'aplicació i automatitza alguns aspectes
-de la gestió de tokens, a més de comptar amb el suport oficial de Laravel. Com a inconvenients, és una llibreria més intrusiva que l'anterior, ja que requereix crear una taula addicional on emmagatzemar els tokens.
-
-
-
-
-#### Sanctum or Passport
-
-A l'hora de instal·lar una llibreria per a l'autenticació podem triar per Passport que utilitza **OATH2** per autenticació o una versió més simple que no l'utilitza com és Sanctum. Esta senzilla gràfica us pot orientar per saber quin dels dos instal·le. 
-
-![](imagenes/08/api10.png)
-
-## Autenticació basada en tokens emprant Laravel Sanctum
-
-Laravel Sanctum proporciona un sistema d'autenticació lleuger per a SPA (aplicacions de pàgina única), aplicacions mòbils i APIs simples basades en tokens. Sanctum permet a cada usuari de la vostra aplicació generar múltiples tokens API per al seu compte. A aquests tokens se'ls poden concedir habilitats  que especifiquin quines accions es permeten als tokens.
-
-### Com funciona
-Laravel Sanctum existeix per resoldre dos problemes separats. Parlem de cadascun abans d'aprofundir més a la biblioteca.
-
-#### Tokens de l'API
-En primer lloc, Sanctum és un paquet senzill que podeu utilitzar per emetre tokens API als vostres usuaris sense la complicació d'OAuth. Aquesta característica s'inspira en GitHub i altres aplicacions que emeten "tokens d'accés personal". Per exemple, imagineu que la "configuració del compte" de la vostra aplicació té una pantalla on un usuari pot generar un token API per al seu compte. Podeu utilitzar Sanctum per generar i gestionar aquests tokens. Aquests tokens solen tenir un temps de venciment molt llarg (anys), però poden ser revocats manualment per l'usuari en qualsevol moment.
-Laravel Sanctum ofereix aquesta funció mitjançant l'emmagatzematge de tokens API d'usuari en una única taula de base de dades i l'autenticació de les peticions HTTP entrants a través de la capçalera Authorization que hauria de contenir un token API vàlid.
-
-#### Autenticació de SPA
-En segon lloc, Sanctum existeix per oferir una manera senzilla d'autenticar aplicacions de pàgina única (SPAs) que necessiten comunicar-se amb una API alimentada per Laravel. Aquests SPA poden existir al mateix repositori que la vostra aplicació Laravel o poden ser un repositori completament separat, com un SPA creat amb Vue CLI o una aplicació Next.js.
-Per a aquesta funció, Sanctum no utilitza tokens de cap tipus. En canvi, Sanctum utilitza els serveis d'autenticació de sessió basats en galetes de Laravel. Normalment, Sanctum utilitza el guard d'autenticació web de Laravel per aconseguir-ho. Això proporciona els beneficis de la protecció CSRF, l'autenticació de sessió, així com protegeix contra fuites de les credencials d'autenticació a través de XSS.
-El Sanctum només intentarà autenticar-se usant galetes quan la petició entrant s'origini des del vostre propi frontal de SPA. Quan Sanctum examina una sol·licitud HTTP entrant, primer comprovarà si hi ha una galeta d'autenticació i, si no n'hi ha cap, Sanctum examinarà la capçalera d'autorització per a un testimoni API vàlid.
-
-
-!!! note "Una autenticació"
-    Està molt bé utilitzar Sanctum només per a l'autenticació de tokens API o només per a l'autenticació de SPA. Només perquè utilitzeu Sanctum no vol dir que heu d'utilitzar les dues característiques que ofereix.
-
-
-## Instal·lació
-
-Les versions més modernes de laravel ja la tenen instal·lada, en cas contrari podeu trobar la informació en la [documentació oficial](https://laravel.com/docs/9.x/sanctum#configuration)
-
-### Generant tokens
+  
+#### Generant tokens
 
 Sanctum us permet emetre tokens API / tokens d'accés personal que es poden utilitzar per autenticar les peticions API a la vostra aplicació. Quan es fan sol·licituds utilitzant tokens API, el token s'ha d'incloure a la capçalera d'autorització com a token Bearer.
 
@@ -751,46 +706,121 @@ format text pla, com un objecte JSON. En cas que hi haja un error en l'autentica
 
 
 ```console
-php artisan make:controller Api/LoginController
+php artisan make:controller Api/AuthController
 ```
 
 
 ```php
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-
-class LoginController extends Controller
+namespace App\Http\Controllers\Api;
+ use App\Http\Controllers\Controller as Controller;
+class BaseController extends Controller
 {
-	public function login(Request $request)
-    { 
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+    /**
+     * success response method.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendResponse($result, $message, $code = 200)
+    {
+        $response = [
+            'success' => true,
+            'data'    => $result,
+            'message' => $message,
+        ];
+        return response()->json($response, $code);
+    }
+    /**
+     * return error response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendError($error, $errorMessages = [], $code = 200)
+    {
+        $response = [
+            'success' => false,
+            'message' => $error,
+        ];
+        if(!empty($errorMessages)){
+            $response['info'] = $errorMessages;
         }
-
-        $user = User::where('email', $request->email)->firstOrFail();
-
-        // Crear un token de Sanctum
-        $token = $user->createToken('api-token')->plainTextToken;
-
-        return response()->json(['token' => $token], 200);
+        return response()->json($response, $code);
     }
 }
+```
+
+```php
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BaseController as BaseController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+
+class AuthController extends BaseController
+{
+    public function login(Request $request)
+    {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $authUser = Auth::user();
+            $result['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
+            $result['name'] =  $authUser->name;
+
+            return $this->sendResponse($result, 'User signed in');
+        }
+        return $this->sendError('Unauthorised.', ['error'=>'incorrect Email/Password']);
+    }
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required|same:password',
+        ]);
+
+        if ($validator->fails()){
+            return $this->sendError('Error validation', $validator->errors());
+        }
+
+        try {
+            $input = $request->all();
+            $input['password'] = bcrypt($input['password']);
+            $user = User::create($input);
+            $result['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
+            $result['name'] =  $user->name;
+
+            return $this->sendResponse($result, 'User created successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError('Registration Error' , $e->getMessage());
+        }
+    }
+    public function logout(Request $request)
+    {
+ 
+        $user = request()->user(); //or Auth::user()
+        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+        $success['name'] =  $user->name;
+         return $this->sendResponse($success, 'User successfully signed out.');
+    }
+
+}
+
 ```
 
 Definim en l'arxiu **routes/api.php** una ruta que redirigisca a aquest mètode, per a quan l'usuari vulga autenticar-se (recorda afegir amb use la corresponent classe):
 
 ```php
-Route::post('login', [\App\Http\Controllers\Api\LoginController::class,'login']);
-```
+Route::post('login', [AuthController::class, 'login'])->middleware('api');
+Route::post('register', [AuthController::class, 'register'])->middleware('api');
+
+
+Route::middleware(['auth:sanctum','api'])->group( function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+
+});
+
+ ```
 
 ##### Protecció de rutes
 
@@ -798,15 +828,12 @@ Route::post('login', [\App\Http\Controllers\Api\LoginController::class,'login'])
 Per protegir rutes de manera que totes les sol·licituds entrants s'hagin d'autenticar, hauríeu d'adjuntar el guard d'autenticació sanctum a les rutes protegides dins dels vostres fitxers de rutes/api.php. Aquest guard assegurarà que les peticions entrants s'autentiquen com a peticions d'estat, galetes autenticades o continguin una capçalera vàlida de testimoni API si la petició és d'un tercer.
 
 
-Per a protegir les rutes que necessitem en els controladors API, les especifiquem en el constructor del controlador. Per exemple, així protegiríem totes les rutes del nostre controlador MovieController , excepte index i show :
-
-```php
-use Illuminate\Http\Request;
- 
+ ```php
+  
 Route::get('/user',[userController::class,'show'])->middleware('auth:sanctum');
 ```
 
-#### Revocant tokens
+##### Revocant tokens
 
 Podeu "revocar" tokens suprimint-los de la base de dades utilitzant la relació tokens que proporciona el tret Laravel\Sanctum\HasApiTokens:
 
@@ -821,7 +848,7 @@ $request->user()->currentAccessToken()->delete();
 $user->tokens()->where('id', $tokenId)->delete();
 ```
 
-#### Caducitat del tokens
+##### Caducitat del tokens
 Per defecte, els tokens de Sanctum no caduquen i només poden ser invalidats revocant el token. No obstant això, si voleu configurar un temps de venciment per als toekns API de la vostra aplicació, podeu fer-ho mitjançant l'opció de configuració de venciment definida al fitxer de configuració de sanctum de la vostra aplicació. Aquesta opció de configuració defineix el nombre de minuts fins que un token emès es consideri expirat:
 
 ```
@@ -834,7 +861,7 @@ Si heu configurat un temps de venciment del token per a la vostra aplicació, ta
 $schedule->command('sanctum:prune-expired --hours=24')->daily();
 ```
 
-### Prova d'autenticació amb POSTMAN
+##### Prova d'autenticació amb POSTMAN
 
 Vegem com provar l'autenticació per token en el projecte de videoclub, per qualsevol dels mètodes vistos abans.
 En primer lloc, i després de posar en marxa el projecte, ens assegurarem que podem accedir sense restriccions als dos serveis que no requereixen autorització ( index o show ), igual que abans.
