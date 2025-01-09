@@ -1356,72 +1356,10 @@ L'objectiu de l'exercici consisteix a implementar una API REST completa per gest
 ```php
 Route::apiResource('jugadores', Api\JugadoraController::class)->middleware('api');
  ```
- 
-- Completa els mètodes CRUD en el controlador utilitzant els models i Form Requests per validar les dades:
-
-```php
-/**
-* Display a listing of the resource.
-*/
-public function index()
-{
-return Jugadora::paginate(10);
-}
-
-public function store(JugadoraRequest $request)
-{
-    $jugadora = Jugadora::create($request->validated());
-    return response()->json($jugadora, 201);
-}
-
-public function show(Jugadora $jugadora)
-{
-    return $jugadora;
-}
-
-public function update(JugadoraRequest $request, Jugadora $jugadora)
-{
-    $jugadora->update($request->validated());
-    return response()->json($jugadora);
-}
-
-public function destroy(Jugadora $jugadora)
-{
-    $jugadora->delete();
-    return response()->json(null, 204);
-}
-``` 
-
-### Pas 3: Autenticació i autorització
-
-- Afegir al model User el trait HasApiTokens:
-
-```php
-use Laravel\Sanctum\HasApiTokens;
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
-}
-``` 
-
-- Afegir les rutes d'autenticació a **routes/api.php**:
+- Crea un controller BaseController per a gestionar les respostes de l'API:
 
 ```php
 
-Route::post('login', [AuthController::class, 'login'])->middleware('api');
-Route::post('register', [AuthController::class, 'register'])->middleware('api');
- 
-
-Route::middleware(['auth:sanctum','api'])->group( function () {
-    Route::apiResource('jugadores',  JugadoraController::class);
-    Route::post('logout', [AuthController::class, 'logout']);
-
-});
-```
-
-- Implementar el controlador BaseController i AuthController amb els mètodes login, register i logout:
-
-```php
 namespace App\Http\Controllers\Api;
  use App\Http\Controllers\Controller as Controller;
 class BaseController extends Controller
@@ -1459,6 +1397,82 @@ class BaseController extends Controller
 }
 ```
 
+
+- Completa els mètodes CRUD en el controlador utilitzant els models i Form Requests per validar les dades:
+
+```php
+namespace App\Http\Controllers\Api;
+
+ 
+use App\Http\Requests\JugadoraRequest;
+use App\Models\Jugadora;
+ 
+
+class JugadoraController extends BaseController
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return Jugadora::paginate(10);
+    }
+
+    public function store(JugadoraRequest $request)
+    {
+        $jugadora = Jugadora::create($request->validated());
+        return $this->sendResponse($jugadora, 'Jugadora Creada amb exit',201);
+    }
+
+    public function show(Jugadora $jugadora)
+    {
+        return $this->sendResponse($jugadora, 'Jugadora Recuperada amb exit', 201);
+    }
+
+    public function update(JugadoraRequest $request, Jugadora $jugadora)
+    {
+        $jugadora->update($request->validated());
+        return $this->sendResponse($jugadora, 'Jugadora Actualitzada amb exit', 201);
+    }
+
+    public function destroy(Jugadora $jugadora)
+    {
+        $jugadora->delete();
+        return $this->sendResponse(null, 'Jugadora Eliminada amb exit', 201);
+    }
+}
+
+``` 
+
+### Pas 3: Autenticació i autorització
+
+- Afegir al model User el trait HasApiTokens:
+
+```php
+use Laravel\Sanctum\HasApiTokens;
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable;
+}
+``` 
+
+- Afegir les rutes d'autenticació a **routes/api.php**:
+
+```php
+
+Route::post('login', [AuthController::class, 'login'])->middleware('api');
+Route::post('register', [AuthController::class, 'register'])->middleware('api');
+ 
+
+Route::middleware(['auth:sanctum','api'])->group( function () {
+    Route::apiResource('jugadores',  JugadoraController::class);
+    Route::post('logout', [AuthController::class, 'logout']);
+
+});
+```
+
+- Implementar el controlador   AuthController amb els mètodes login, register i logout:
+ 
 ```php
 namespace App\Http\Controllers\Api;
 
@@ -1530,6 +1544,67 @@ php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
  
 - Afegeix les anotacions OpenAPI als controladors, models i requests:
 
+app/Http/Controllers/Controller.php
 ```php
+ /**
+ * @OA\Info(
+ *    title="Futbol Femeni API Documentation",
+ *    version="1.0.0",
+ * )
+ */
+
  
+```
+
+- Genera les annotacions per al login:    
+
+```php
+/**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Autenticació de l'usuari",
+     *     tags={"Autenticació"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email", "password"},
+     *             @OA\Property(property="email", type="string", format="email", example="1@manager.com"),
+     *             @OA\Property(property="password", type="string", example="1234"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login correcte",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="token", type="string", example="jwt-token"),
+     *                 @OA\Property(property="name", type="string", example="John Doe")
+     *             ),
+     *             @OA\Property(property="message", type="string", example="User signed in")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="No autoritzat",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Unauthorised."),
+     *             @OA\Property(property="info", type="object",
+     *                 @OA\Property(property="error", type="string", example="incorrect Email/Password")
+     *             )
+     *         )
+     *     )
+     * )
+     */
+```
+- Executa la comanda per generar la documentació:
+
+```bash
+php artisan l5-swagger:generate
+```
+
+- Accedeix a la documentació a través de la URL configurada en **config/l5-swagger.php** (per defecte /api/documentation).
+- Genera  les
+      
 
