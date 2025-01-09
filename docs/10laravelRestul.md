@@ -1334,10 +1334,11 @@ class User extends Authenticatable
 
 ```php
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login'])->middleware('api');
+Route::post('register', [AuthController::class, 'register'])->middleware('api');
+ 
 
-Route::middleware('auth:sanctum')->group( function () {
+Route::middleware(['auth:sanctum','api'])->group( function () {
     Route::apiResource('jugadores',  JugadoraController::class);
     Route::post('logout', [AuthController::class, 'logout']);
 
