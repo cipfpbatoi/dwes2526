@@ -1605,6 +1605,215 @@ php artisan l5-swagger:generate
 ```
 
 - Accedeix a la documentació a través de la URL configurada en **config/l5-swagger.php** (per defecte /api/documentation).
-- Genera  les
-      
+- Genera les annotacions per al model de Jugadora.
+ ```php
+  /**
+* @OA\Schema(
+*     schema="Jugadora",
+*     description="Esquema del model Jugadora",
+*     @OA\Property(property="id", type="integer", description="ID de la jugadora"),
+*     @OA\Property(property="posicio", type="string", description="Posició de la jugadora"),
+*     @OA\Property(property="dorsal", type="integer", description="Dorsal de la jugadora"),
+*     @OA\Property(property="equip_id", type="integer", description="ID de l'equip de la jugadora"),
+*     @OA\Property(property="nom", type="string", description="Nom de la jugadora"),
+*     @OA\Property(property="foto", type="string", description="URL de la foto de la jugadora"),
+*     @OA\Property(property="data_naixement", type="string", format="date", description="Data de naixement de la jugadora"),
+*     @OA\Property(property="created_at", type="string", format="date-time", description="Data de creació del registre"),
+*     @OA\Property(property="updated_at", type="string", format="date-time", description="Data d'actualització del registre")
+* )
+  */
+```
+- Genera les annotacions per al request
 
+```php
+
+/**
+ * @OA\Schema(
+ *     schema="JugadoraRequest",
+ *     description="Validació per a la creació i actualització de jugadores",
+ *     required={"nom", "posicio", "equip_id", "data_naixement"},
+ *     @OA\Property(property="nom", type="string", maxLength=255, description="Nom de la jugadora", example="Maria López"),
+ *     @OA\Property(
+ *         property="posicio",
+ *         type="string",
+ *         enum={"defensa", "migcampista", "davantera", "porter"},
+ *         description="Posició de la jugadora",
+ *         example="davantera"
+ *     ),
+ *     @OA\Property(property="equip_id", type="integer", description="ID de l'equip de la jugadora", example=1),
+ *     @OA\Property(
+ *         property="data_naixement",
+ *         type="string",
+ *         format="date",
+ *         description="Data de naixement de la jugadora (ha de tenir entre 16 i 100 anys)",
+ *         example="2002-05-15"
+ *     ),
+ *     @OA\Property(
+ *         property="foto",
+ *         type="string",
+ *         format="binary",
+ *         description="Foto de la jugadora en format PNG (opcional, màxim 2MB)"
+ *     )
+ * )
+ */
+```
+ 
+- Genera les annotacions per a la resta de mètodes de l'API.
+
+```php
+namespace App\Http\Controllers\Api;
+
+use App\Http\Requests\JugadoraRequest;
+use App\Models\Jugadora;
+
+class JugadoraController extends BaseController
+{
+/**
+* @OA\Get(
+*     path="/api/jugadores",
+*     summary="Llista totes les jugadores",
+*     tags={"Jugadores"},
+*     @OA\Response(
+*         response=200,
+*         description="Llista de jugadores",
+*         @OA\JsonContent(
+*             @OA\Property(property="data", type="array",
+*                 @OA\Items(ref="#/components/schemas/Jugadora")
+*             ),
+*             @OA\Property(property="links", type="object"),
+*             @OA\Property(property="meta", type="object")
+*         )
+*     )
+* )
+*/
+public function index()
+{
+return Jugadora::paginate(10);
+}
+
+    /**
+     * @OA\Post(
+     *     path="/api/jugadores",
+     *     summary="Crea una nova jugadora",
+     *     tags={"Jugadores"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/JugadoraRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Jugadora creada amb èxit",
+     *         @OA\JsonContent(ref="#/components/schemas/Jugadora")
+     *     )
+     * )
+     */
+    public function store(JugadoraRequest $request)
+    {
+        $jugadora = Jugadora::create($request->validated());
+        return $this->sendResponse($jugadora, 'Jugadora Creada amb èxit', 201);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/jugadores/{id}",
+     *     summary="Mostra una jugadora",
+     *     tags={"Jugadores"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la jugadora",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Jugadora recuperada amb èxit",
+     *         @OA\JsonContent(ref="#/components/schemas/Jugadora")
+     *     )
+     * )
+     */
+    public function show(Jugadora $jugadora)
+    {
+        return $this->sendResponse($jugadora, 'Jugadora Recuperada amb èxit', 201);
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/jugadores/{id}",
+     *     summary="Actualitza una jugadora",
+     *     tags={"Jugadores"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la jugadora",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/JugadoraRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Jugadora actualitzada amb èxit",
+     *         @OA\JsonContent(ref="#/components/schemas/Jugadora")
+     *     )
+     * )
+     */
+    public function update(JugadoraRequest $request, Jugadora $jugadora)
+    {
+        $jugadora->update($request->validated());
+        return $this->sendResponse($jugadora, 'Jugadora Actualitzada amb èxit', 201);
+    }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/jugadores/{id}",
+     *     summary="Elimina una jugadora",
+     *     tags={"Jugadores"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la jugadora",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Jugadora eliminada amb èxit"
+     *     )
+     * )
+     */
+    public function destroy(Jugadora $jugadora)
+    {
+        $jugadora->delete();
+        return $this->sendResponse(null, 'Jugadora Eliminada amb èxit', 201);
+    }
+}
+```
+## Exercici     
+
+# Enunciat: Creació d'una API i la seva documentació
+
+Aquest exercici consisteix a crear una API per gestionar les taules que no són `jugadores` i documentar-la correctament utilitzant Swagger (`l5-swagger`). Segueix els passos indicats per implementar i documentar les operacions CRUD i altres funcionalitats específiques.
+
+  
+### 1. **Entitats a gestionar**
+- **Estadis**
+- **Equips**
+- **Partits**
+
+### 2. **Endpoints**
+Implementa els següents endpoints per a cada entitat, seguint els estàndards REST:
+
+- `GET /api/{resource}`: Retorna una llista paginada de recursos.
+- `POST /api/{resource}`: Crea un nou recurs.
+- `GET /api/{resource}/{id}`: Retorna un recurs específic.
+- `PUT /api/{resource}/{id}`: Actualitza un recurs específic.
+- `DELETE /api/{resource}/{id}`: Elimina un recurs específic.
+
+ 
+### 3. **Documentació amb Swagger (`l5-swagger`)**
+- Defineix els esquemes per a cada entitat a la documentació Swagger.
+- Afegeix anotacions als controladors per documentar els endpoints creats.
+ 
