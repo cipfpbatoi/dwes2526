@@ -35,14 +35,7 @@ Una de les característiques fonamentals de les API és que són **Sateless**, l
 - **Stateless**: Cada petició HTTP conté tota la informació necessària per processar-la.
 - **Mètodes HTTP**: Utilitza mètodes com GET, POST, PUT i DELETE.
 - **Formats d'intercanvi de dades**: Habitualment JSON o XML.
-
-### Exemples d'APIs públiques:
-
-- [ChuckNorris IO](https://api.chucknorris.io/#!)
-- [OMDB](https://www.omdbapi.com/)
-- [PokeAPI - Pokemon](https://pokeapi.co/)
-- [The Star Wars API](https://swapi.dev/)
-
+ 
 
 ## Els serveis REST
 
@@ -78,32 +71,57 @@ $response = Http::get('https://swapi.dev/api/people/');
 
 En aquest exemple, la petició GET a https://swapi.dev/api/people/ retorna informació sobre personatges de "Star Wars". La resposta es verifica per a comprovar si ha estat exitosa, i després es processen les dades JSON. Pots adaptar aquest codi per a fer altres tipus de consultes a l'API, depenent de la informació que necessites.
  
-### REST
+
+### Construïnt una API/REST bàsica amb Laravel
 
 Amb aquesta metodologia anomenada **REST** podrem construir *APIs* perquè des d'un client extern es puguen consumir.
 
 Gràcies a aquest **standard** de l'arquitectura del programari podrem muntar una API que utilitze els mètodes standard GET, POST, PUT i DELETE.
 
 
-### Construïnt una API/REST bàsica amb Laravel
+#### Instal·lació Laravel Sanctum
 
-[![](imagenes/ull.png)Video](https://youtu.be/1O8cvJKNhm8)
+Laravel Sanctum proporciona un sistema lleuger d'autenticació dissenyat per a SPAs (Single Page Applications), aplicacions mòbils i APIs senzilles basades en tokens. Amb Sanctum, cada usuari de la teua aplicació pot generar diversos tokens d'API, cadascun amb habilitats o permisos específics que defineixen quines accions poden realitzar amb aquests tokens.
 
+Sanctum resol dues necessitats d'autenticació diferents. Vegem cadascuna abans d'entrar en detall.
+
+##### **1. Tokens d'API**
+
+Sanctum és un paquet senzill que et permet emetre tokens d'API als teus usuaris sense la complexitat d'OAuth. Aquesta funcionalitat està inspirada en plataformes com GitHub, que proporcionen "tokens d'accés personal". Per exemple, la pàgina de configuració del compte de la teua aplicació podria incloure una secció on els usuaris generen tokens d'API per als seus comptes. Aquests tokens solen tindre un temps d'expiració molt llarg (per exemple, anys), però poden ser revocats manualment pels usuaris en qualsevol moment.
+
+Sanctum implementa aquesta funcionalitat mitjançant:
+- L'emmagatzematge dels tokens d'API en una taula específica de la base de dades.
+- L'autenticació de les peticions HTTP entrants mitjançant l'encapçalament `Authorization`, que ha d'incloure un token d'API vàlid.
+
+
+##### **2. Autenticació per a SPAs**
+
+Sanctum també ofereix una forma senzilla d'autenticar aplicacions de pàgina única (SPAs) que necessiten comunicar-se amb una API desenvolupada amb Laravel. Aquestes SPAs poden formar part del mateix repositori que la teua aplicació Laravel o ser un repositori totalment separat, com una SPA desenvolupada amb Next.js o Nuxt.
+
+Per a aquesta funcionalitat:
+- Sanctum **no utilitza tokens**, sinó que empra els serveis d'autenticació de sessió basats en galetes (cookies) ja integrats en Laravel.
+- Normalment, utilitza el sistema d'autenticació web de Laravel per aconseguir-ho, oferint protecció contra CSRF, autenticació de sessió i prevenció de filtracions de credencials mitjançant XSS.
+
+Sanctum només intentarà autenticar-se amb galetes si la petició prové del frontend de la SPA de la teua pròpia aplicació. Quan Sanctum examina una petició HTTP, comprova primer si existeix una galeta d'autenticació. Si no n'hi ha cap, llavors examina l'encapçalament `Authorization` per a un token d'API vàlid.
+
+##### Instal·lació
+
+Es pot instal·lar amb el comanament d'artisan
+
+```bash
+php artisan install:api
+```
 
 Vegem ara quins passos donar per a construir una API REST en Laravel que done suport a les operacions
 bàsiques sobre una o diverses entitats: consultes (GET), insercions (POST), modificacions (PUT) i esborrats (DELETE). Emprarem per a això els denominats controladors de API
 i que proporcionen un conjunt de funcions ja definides per a donar suport a cadascun d'aquests
 comandos.
 
-##### Definint els controlador de la API
 
-Per a proporcionar una API REST als clients que ho requerisquen, necessitem definir un controlador (o
-controladors) orientats a oferir aquests serveis REST. Aquests controladors en Laravel es denominen de tipus
-**api**, com vam veure en sessions prèvies. Normalment es definirà un controlador API per cadascun dels
-models als quals necessitem accedir. Crearem un de prova per a oferir una API REST sobre els
-llibres de la nostra aplicació de videoclub.
-Existeixen diferents maneres d'executar el comando de creació del controlador de API. Ací mostrarem
-potser un dels més útils:
+
+#### Definint els controlador de la API
+
+Per a proporcionar una API REST als clients que ho requerisquen, necessitem definir un controlador (ocontroladors) orientats a oferir aquests serveis REST. Aquests controladors en Laravel es denominen de tipus **api**, com vam veure en sessions prèvies. Normalment es definirà un controlador API per cadascun dels models als quals necessitem accedir. 
 
 ```php
 php artisan make:controller Api/MovieController --api --model=Movie
@@ -179,24 +197,19 @@ class MovieController extends Controller
 }
 ```
 
-Observem que s'incorpora automàticament la clàusula use per a carregar el model associat, que
-hem indicat en el paràmetre **--model** . A més, els mètodes show , update i destroy ja vénen amb un paràmetre de tipus Llibre que facilitarà molt algunes tasques.
+Observem que s'incorpora automàticament la clàusula use per a carregar el model associat, que hem indicat en el paràmetre **--model** . A més, els mètodes show , update i destroy ja vénen amb un paràmetre de tipus Llibre que facilitarà molt algunes tasques.
 
 ##### Establint les rutes (endPoints)
 
 
-Una vegada tenim el controlador API creat, definirem les rutes associades a cada mètode del controlador. Si recordem de sessions anteriors, podíem emprar el mètode **Route::resource** en l'arxiu **routes/web.php** per a establir de colp totes les rutes associades a un controlador de recursos.
-
-De manera anàloga, podem emprar el mètode **Route::apiResource** en l'arxiu
-**routes/api.php** per a establir automàticament totes les rutes d'un controlador de API. Afegim
-aquesta línia en aquest arxiu **routes/api.php** :
+Una vegada tenim el controlador API creat, definirem les rutes associades a cada mètode del controlador. Podem emprar el mètode **Route::apiResource** en l'arxiu
+**routes/api.php** per a establir automàticament totes les rutes d'un controlador de API. Afegim aquesta línia en aquest arxiu **routes/api.php** :
 
 ```
 Route::apiResource('movies',Api\MovieController::class);
 ```
 
-Les rutes de API (aquelles definides en l'arxiu **routes/api.php** ) per defecte tenen un prefix
-api , tal com s'estableix en el provider **RouteServiceProvider** . Per tant, hem definit una
+Les rutes de API (aquelles definides en l'arxiu **routes/api.php** ) per defecte tenen un prefix api , tal com s'estableix en el provider **RouteServiceProvider** . Per tant, hem definit una
 ruta general **api/movies** , de manera que totes les subrutes que es deriven d'ella portaran a l'un o l'altre mètode del controlador de API de video.
 Podem comprovar quines rutes hi ha actives amb aquest comando:
 
@@ -265,187 +278,221 @@ public function show(Movie $movie)
 }
 ```
 
-En aquest cas, si accedim a la URI **api/movies/1** , obtindrem la informació del video amb id = 1. Notar que Laravel s'encarrega automàticament de buscar el llibre per nosaltres (fer la corresponent operació **find** per a l'id proporcionat). És el que es coneix com a enllaç implícit, i és alguna cosa que
-també està disponible en els controladors web normals, sempre que els associem correctament amb el model vinculat. Això es fa automàticament si creem el controlador juntament amb el model o si usem el paràmetre --model per a associar-ho, com hem fet ací.
+En aquest cas, si accedim a la URI **api/movies/1** , obtindrem la informació del video amb id = 1. Notar que Laravel s'encarrega automàticament de buscar el llibre per nosaltres (fer la corresponent operació **find** per a l'id proporcionat). És el que es coneix com a enllaç implícit, i és alguna cosa que també està disponible en els controladors web normals, sempre que els associem correctament amb el model vinculat. Això es fa automàticament si creem el controlador juntament amb el model o si usem el paràmetre --model per a associar-ho, com hem fet ací.
 
-#### Mes coses sobre el format JSON i la resposta
+#### Maneig de Respostes JSON en Laravel
 
-Després de provar els dos serveis anteriors, hauràs observat que Laravel s'encarrega de transformar directament els registres obtinguts a format JSON quan els enviem mitjançant return , per la qual cosa, en principi, no tenim per què preocupar-nos d'aquest procés. No obstant això, d'aquesta manera s'escapen
-algunes coses al nostre control. Per exemple, i sobretot, no podem especificar el codi d'estat de la resposta, que per defecte és 200 si tot ha anat correctament. A més, tampoc podem controlar quina informació enviar de l'objecte en qüestió.
+Laravel ofereix diverses eines per gestionar respostes JSON, ja siga directament o utilitzant API Resources. Aquesta guia mostra com personalitzar les respostes, controlar els camps visibles i gestionar la paginació.
 
-Si volem limitar o formatar la informació a enviar dels objectes que estem tractant, i que no s'envien tots els seus camps sense més, tenim diverses opcions:
+##### 1. Ús de `response()->json()`
 
-* Si volem afegir o modificar més informació en la resposta, com el codi d'estat, l'estructura anterior no ens serveix, ja que sempre s'enviarà un codi 200. Per a això, és convenient emprar el mètode **response()->json(...)** , que permet especificar com a primer paràmetre les dades a enviar, i com segon paràmetre el codi d'estat. Els mètode anterior quedaria així,
-  enviant un codi 200 com a resposta (encara que si s'omet el segon paràmetre, s'assumeix que és 200):
+Aquest mètode et permet retornar respostes JSON personalitzades amb un codi d'estat específic.
 
 ```php
 public function show(Movie $movie)
 {
-	return response()->json($movie, 200);
+    return response()->json($movie, 200); // JSON amb codi 200 (èxit)
 }
+
 ```
 
-!!! note "Codis de resposta"
-Quant als codis d'estat de la resposta, depén del resultat de l'operació que s'haja realitzat, aquests es cataloguen en cinc grups:
 
-         * Codis 1xx: representen informació sobre una petició normalment incompleta. No són molt habituals, però es poden emprar quan la petició és molt llarga, i s'envia abans una capçalera per a comprovar si es pot processar aquesta petició.
-         * Codis 2xx: representen peticions que s'han pogut atendre satisfactòriament. El codi més habitual és el 200, resposta estàndard per a les peticions que són correctes. Existeixen altres variants, com el codi 201, que s'envia quan s'ha inserit o creat un nou recurs en el servidor (una inserció en una base de dades, per exemple), o el codi 204, que indica que la petició s'ha atés bé, però no s'ha retornat res com a resposta.
-         * Codis 3xx: són codis de redirecció, que indiquen que d'alguna manera la petició original s'ha redirigit a un altre recurs del servidor. Per exemple, el codi 301 indica que el recurs sol·licitat s'ha mogut permanentment a una altra URL. El codi 304 indica que el recurs sol·licitat no ha canviat des de l'última vegada que es va sol·licitar, per si es vol recuperar de la caixet local en aqueix cas.
-         * Codis 4xx: indiquen un error per part del client. El més típic és l'error 404, que indica que estem sol·licitant una URL o recurs que no existeix. Però també hi ha altres habituals, com el 401 (client no autoritzat), o 400 (les dades de la petició no són correctes, per exemple, perquè els camps del formulari no són vàlids).
-         * Codis 5xx: indiquen un error per part del servidor. Per exemple, l'error 500 indica un error intern del servidor, o el 504, que és un error de timeout per temps excessiu a emetre la resposta.
+| Codi | Significat                   |
+|------|-------------------------------|
+| 200  | Operació correcta.            |
+| 201  | Recurs creat (ex. POST).      |
+| 204  | Sense contingut (ex. DELETE). |
+| 400  | Petició incorrecta.           |
+| 404  | No trobat.                    |
+| 500  | Error del servidor.           |
 
+##### 2. Camps Ocults o Visibles en Models
 
-* Afegir clàusules **hidden** en els models corresponents, per a indicar que aqueixa informació no ha de ser enviada en cap cas enlloc de l'aplicació. És el que ocorre, per exemple, amb el camp password del model d'Usuari :
+Laravel permet configurar directament al model quins camps es mostraran o s'ocultaran a les respostes JSON.
+
+- **Ocultar camps:** Utilitza la propietat `hidden` en el model.
 
 ```php
 protected $hidden = ['password'];
+``` 
+
+- **Mostrar només camps seleccionats:** Utilitza la propietat `visible` en el model.
+
+```php
+protected $visible = ['id', 'name', 'email'];
 ```
 
-* Definir a mà un array amb els camps a enviar en el mètode del controlador. En el cas de la fitxa del video anterior, si només volem enviar el títol i el director, podríem fer una cosa així:
+##### 3. Personalització Directa a Controladors
+
+Si necessites un control més gran sobre els camps retornats, pots definir manualment un array al controlador.
 
 ```php
 public function show(Movie $movie)
 {
-	return [
-		'titulo' => $movie->title,
-		'director' => $movie->director
-	];
+    return [
+        'title' => $movie->title,
+        'director' => $movie->director,
+    ];
 }
+
 ```
 
-* En el cas que el pas anterior siga molt costós (perquè el model té molts camps, o perquè hem de fer el mateix en diverses parts del codi), també podem definir recursos (resources), que permeten separar el codi de la informació a mostrar del propi controlador. 
+##### 4. Ús de Recursos (API Resources)
 
+Els **API Resources** permeten controlar millor el format de les respostes JSON, separant la lògica de transformació del model.
 
-### [Eloquent: API Resources](https://laravel.com/docs/9.x/eloquent-resources)
-
-Quan creeu una API, és possible que necessiteu una capa de transformació que es trobe entre els vostres models Eloqüents i les respostes JSON que es retornen realment als usuaris de la vostra aplicació. Per exemple, podeu voler mostrar certs atributs per a un subconjunt d'usuaris i no d'altres, o podeu incloure sempre certes relacions en la representació JSON dels vostres models. Les classes de recursos d'Eloquent permeten transformar expressivament i fàcilment els vostres models i col·leccions de models en JSON.
-
-Per descomptat, sempre podreu convertir models o col·leccions eloqüents a JSON utilitzant els seus mètodes toJson; no obstant això, els recursos eloqüents proporcionen un control més granular i robust sobre la serialització JSON dels vostres models i les seves relacions.
-
-
-#### Generació de recursos
-Per a generar una classe de recursos, podeu utilitzar l'ordre make:resource Artisan. Per defecte, els recursos es col·locaran al directori app/Http/Resources de la vostra aplicació. Els recursos amplien la classe Illuminate\Http\Resources\Json\JsonResource:
-
-```console
-php artisan make:resource UserResource
-```
-
-##### Col·leccions de recursos
-A més de generar recursos que transformen models individuals, podeu generar recursos que són responsables de transformar col·leccions de models. Permet que les respostes JSON incloguin enllaços i altres metainformació que són rellevants per a tota una col·lecció d'un recurs donat.
-
-Per a crear una col·lecció de recursos, haureu d'utilitzar l'indicador --collection en crear el recurs. O, incloent la paraula Col·lecció en el nom del recurs indicarà a Laravel que hauria de crear un recurs de col·lecció. Els recursos de la col·lecció estenen la classe Illuminate\Http\Resources\Json\ResourceCollection:
-
-```console
-php artisan make:resource User --collection
-
-php artisan make:resource UserCollection
-```
-
-#### Conceptes bàsics
-
-Una classe de recursos representa un únic model que s'ha de transformar en una estructura JSON. Per exemple, aquí hi ha una classe senzilla de recursos UserResource:
+**Generar un recurs:**
+Es pot generar un recurs amb Artisan, i aquest recurs s'utilitza per personalitzar les dades que es retornen.
 
 ```php
-<?php
- 
+php artisan make:resource MovieResource
+```
+
+**Definir el format al reecurs**
+
+```php
 namespace App\Http\Resources;
- 
+
 use Illuminate\Http\Resources\Json\JsonResource;
- 
-class UserResource extends JsonResource
+
+class MovieResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
     public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'title' => $this->title,
+            'director' => $this->director,
+            'release_year' => $this->year,
         ];
     }
 }
 ```
 
-Cada classe de recurs defineix un mètode toArray que retorna la matriu d'atributs que s'han de convertir en JSON quan es retorna el recurs com a resposta des d'una ruta o mètode de controlador.
-
-Tingueu en compte que podem accedir a les propietats del model directament des de la variable $this. Això és degut al fet que una classe de recurs farà un servidor intermediari automàtic de la propietat i l'accés als mètodes fins al model subjacent per a un accés convenient. Un cop definit el recurs, es pot retornar des d'una ruta o controlador. El recurs accepta la instància del model subjacent a través del seu constructor:
+**Ús al controlador:**
 
 ```php
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Http\Resources\MovieResource;
 
-Route::get('/user/{id}', function ($id) {
-return new UserResource(User::findOrFail($id));
-});
-```
-Cada classe de recurs defineix un mètode toArray Si esteu retornant una col·lecció de recursos o una resposta paginada, hauríeu d'utilitzar el mètode de col·lecció proporcionat per la classe de recurs quan creeu la instància de recurs en la vostra ruta o controlador:
-
-```php
-use App\Http\Resources\UserResource;
-use App\Models\User;
-
-Route::get('/users', function () {
-return UserResource::collection(User::all());
-});
-```
-
-Tingueu en compte que això no permet afegir metadades personalitzades que puguin necessitar ser retornades amb la vostra col·lecció. Si voleu personalitzar la resposta de la col·lecció de recursos, podeu crear un recurs dedicat per a representar la col·lecció:
-
-```console
-php artisan make:resource UserCollection
-```
-
-Un cop generada la classe de col·lecció de recursos, podeu definir fàcilment qualsevol metadada que s'ha d'incloure amb la resposta:
-
-```php
-<?php
- 
-namespace App\Http\Resources;
- 
-use Illuminate\Http\Resources\Json\ResourceCollection;
- 
-class UserCollection extends ResourceCollection
+public function show(Movie $movie)
 {
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
+    return new MovieResource($movie);
+}
+```
+
+##### 5. Col·leccions i Paginació
+
+**Generar un recurs per col·leccions:**
+També es poden crear recursos per transformar col·leccions de dades, incloent-hi metadades i enllaços addicionals.
+
+```bash
+php artisan make:resource MovieCollection
+```
+
+**Personalitzar les col·leccions:**
+
+```php
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+class MovieCollection extends ResourceCollection
+{
     public function toArray($request)
     {
         return [
             'data' => $this->collection,
+            'meta' => [
+                'total_movies' => $this->collection->total(),
+                'per_page' => $this->collection->perPage(),
+                'current_page' => $this->collection->currentPage(),
+                'last_page' => $this->collection->lastPage(),
+            ],
             'links' => [
-                'self' => 'link-value',
+                'self' => url('/api/movies'),
             ],
         ];
     }
 }
 ```
 
-Després de definir la col·lecció de recursos, es pot retornar des d'una ruta o controlador:
+
+### **Paginar resultats:**
+Utilitza el mètode `paginate()` per retornar resultats paginats. Les respostes amb `paginate()` inclouen metadades com el nombre total de registres, la pàgina actual i els enllaços de navegació.
 
 ```php
-use App\Http\Resources\UserCollection;
-use App\Models\User;
+use App\Http\Resources\MovieCollection;
 
-Route::get('/users', function () {
-return new UserCollection(User::all());
-});
+public function index()
+{
+    return new MovieCollection(Movie::paginate(10));
+}
 ```
 
 
-### Resta dels serveis
+### **Respostes JSON amb paginació:**
+Quan utilitzes `paginate()`, Laravel afegeix metadades útils a la resposta JSON, com ara el total de registres, el nombre per pàgina, la pàgina actual, etc.
 
-[![](imagenes/ull.png)Video](https://youtu.be/pieNTwMManY)
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "title": "The Godfather",
+            "director": "Francis Ford Coppola",
+            "release_year": 1972
+        },
+        {
+            "id": 2,
+            "title": "The Godfather: Part II",
+            "director": "Francis Ford Coppola",
+            "release_year": 1974
+        }
+    ],
+    "meta": {
+        "total_movies": 50,
+        "per_page": 10,
+        "current_page": 1,
+        "last_page": 5
+    },
+    "links": {
+        "self": "http://example.com/api/movies"
+    }
+}
+```
+
+## 6. Personalització dels Recursos
+
+Els recursos també poden incloure dades de relacions o camps calculats, com ara informació agregada o camps derivats.
+
+```php
+class MovieResource extends JsonResource
+{
+    public function toArray($request)
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'director' => $this->director,
+            'release_year' => $this->year,
+            'genre' => $this->genre->name ?? 'Unknown', // Relació amb gènere
+            'rating' => $this->reviews->avg('rating'), // Mitjana de valoracions
+        ];
+    }
+}
+```
+
+
+##### Resum
+
+1. **`response()->json()`**: Útil per a respostes senzilles.
+2. **Camps ocults o visibles**: Control directe al model.
+3. **API Resources**: Separen la lògica de transformació i ofereixen flexibilitat.
+4. **Paginació**: Facilita la navegació de dades grans amb `paginate()`.
+
+Laravel 11 fa que el maneig de respostes JSON siga flexible, escalable i fàcil d'implementar.
+
+### Resta dels serveis
 
 
 Vegem ara com implementar la resta de serveis (POST, PUT i DELETE). En el cas de la inserció (POST), haurem de rebre en la petició les dades de l'objecte a inserir (un llibre, en el nostre exemple). Igual que les dades del servidor al client s'envien en format JSON, és d'esperar en aplicacions que segueixen l'arquitectura REST que les dades del client al servidor també s'envien en format JSON.
