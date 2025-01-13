@@ -1443,8 +1443,44 @@ class JugadoraController extends BaseController
 }
 
 ``` 
+### Pas 3: Resources
 
-### Pas 3: Autenticació i autorització
+- Genera un Recurso per a la Jugadora:
+
+```bash
+php artisan make:resource JugadoraResource
+```
+
+- Implementa el Recurs JugadoraResource:
+
+```php
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class JugadoraResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'nom' => $this->nom,
+            'equip' => $this->Equip->nom,
+            'posicio' => $this->posicio,
+            'dorsal' => $this->dorsal,
+            'edat' => $this->edat
+        ];
+    }
+}
+```
+ 
+### Pas 4: Autenticació i autorització
 
 - Afegir al model User el trait HasApiTokens:
 
@@ -1533,7 +1569,7 @@ class AuthController extends BaseController
 
 ```
 
-### Pas 4: Documentació amb Swagger
+### Pas 5: Documentació amb Swagger
 
 - Instal·la el paquet l5-swagger:
 
