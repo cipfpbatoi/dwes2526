@@ -1679,7 +1679,8 @@ php artisan l5-swagger:generate
 
 - Accedeix a la documentació a través de la URL configurada en **config/l5-swagger.php** (per defecte /api/documentation).
 - Genera les annotacions per al model de Jugadora.
- ```php
+
+```php
   /**
 * @OA\Schema(
 *     schema="Jugadora",
@@ -1758,7 +1759,8 @@ use App\Models\Jugadora;
 
 class JugadoraController extends BaseController
 {
-/**
+
+    /**
      * @OA\Get(
      *     path="/api/jugadores",
      *     summary="Llista totes les jugadores amb paginació",
@@ -1789,10 +1791,11 @@ class JugadoraController extends BaseController
      *     )
      * )
      */
-public function index()
-{
-return Jugadora::paginate(10);
-}
+     
+    public function index()
+    {
+        return Jugadora::paginate(10);
+    }
 
     /**
      * @OA\Post(
@@ -1835,6 +1838,7 @@ return Jugadora::paginate(10);
      *     )
      * )
      */
+     
     public function show(Jugadora $jugadora)
     {
         return $this->sendResponse($jugadora, 'Jugadora Recuperada amb èxit', 201);
@@ -1863,6 +1867,7 @@ return Jugadora::paginate(10);
      *     )
      * )
      */
+     
     public function update(JugadoraRequest $request, Jugadora $jugadora)
     {
         $jugadora->update($request->validated());
@@ -1887,6 +1892,7 @@ return Jugadora::paginate(10);
      *     )
      * )
      */
+     
     public function destroy(Jugadora $jugadora)
     {
         $jugadora->delete();
