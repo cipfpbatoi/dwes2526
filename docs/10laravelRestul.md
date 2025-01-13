@@ -1312,37 +1312,38 @@ L'objectiu de l'exercici consisteix a implementar una API REST completa per gest
   
 - Configura el fitxer bootstrap/app.php per tal que els missatges d'errada vinguen en format json:
 
-  ```php
-  return Application::configure(basePath: dirname(__DIR__))
-    ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        api: __DIR__.'/../routes/api.php',
-        commands: __DIR__.'/../routes/console.php',
-        health: '/up',
-    )
-    ->withMiddleware(function (Middleware $middleware) {
+```php
+return Application::configure(basePath: dirname(__DIR__))
+->withRouting(
+    web: __DIR__.'/../routes/web.php',
+    api: __DIR__.'/../routes/api.php',
+    commands: __DIR__.'/../routes/console.php',
+    health: '/up',
+)
+->withMiddleware(function (Middleware $middleware) {
 
-    })
-    ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
-            return $request->is('api/*') || $request->expectsJson();
-        });
-        $exceptions->render(function (Throwable $e, Request $request) {
-            if ($e instanceof \Illuminate\Validation\ValidationException) {
-                return response()->json([
-                    'message' => 'Dades no vàlides.',
-                    'errors' => $e->errors(),
-                ], 422);
-            }
+})
+->withExceptions(function (Exceptions $exceptions) {
+    $exceptions->render(function (Exception $e, Request $request) {
+        if ($request->is('api/*')) {
+            $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], $statusCode);
+        }
+    });
 
-            if ($e instanceof \Illuminate\Auth\AuthenticationException) {
-                return response()->json([
-                    'message' => 'No autenticat.',
-                ], 401);
-            }
-        });
-    })->create();
-  ```
+    $exceptions->render(function (Throwable $e, Request $request) {
+        if ($request->is('api/*')) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    });
+})->create();
+```
 
 ### Pas 2: Controladors i Rutes 
  
@@ -1429,15 +1430,15 @@ class JugadoraController extends BaseController
         return $this->sendResponse($jugadora, 'Jugadora Recuperada amb exit', 201);
     }
 
-    public function update(JugadoraRequest $request, Jugadora $jugadora)
+    public function update(JugadoraRequest $request, Jugadora $jugadore)
     {
-        $jugadora->update($request->validated());
-        return $this->sendResponse($jugadora, 'Jugadora Actualitzada amb exit', 201);
+        $jugadore->update($request->validated());
+        return $this->sendResponse($jugadore, 'Jugadora Actualitzada amb èxit', 201);
     }
 
-    public function destroy(Jugadora $jugadora)
+    public function destroy(Jugadora $jugadore)
     {
-        $jugadora->delete();
+        $jugadore->delete();
         return $this->sendResponse(null, 'Jugadora Eliminada amb exit', 201);
     }
 }
@@ -1479,7 +1480,43 @@ class JugadoraResource extends JsonResource
     }
 }
 ```
- 
+
+- Modifica el controlador JugadoraController per a utilitzar el Recurs JugadoraResource:
+
+```php
+
+    public function index()
+    {
+        return  JugadoraResource::collection(Jugadora::paginate());
+    }
+    
+    public function show(Jugadora $jugadore)
+    {
+        return $this->sendResponse(new JugadoraResource($jugadore), 'Jugadora Recuperada amb èxit', 201);
+    }
+    
+    public function update(JugadoraRequest $request, Jugadora $jugadore)
+    {
+        $jugadore->update($request->validated());
+        return $this->sendResponse($jugadore, 'Jugadora Actualitzada amb èxit', 201);
+    }
+    
+    public function store(JugadoraRequest $request)
+    {
+        $jugadora = Jugadora::create($request->validated());
+        return $this->sendResponse(new JugadoraResource($jugadora), 'Jugadora Creada amb èxit', 201);
+    }
+    
+    public function destroy(Jugadora $jugadore)
+    {
+        $jugadore->delete();
+        return $this->sendResponse(null, 'Jugadora Eliminada amb èxit', 201);
+    }
+```
+    
+
+
+
 ### Pas 4: Autenticació i autorització
 
 - Afegir al model User el trait HasApiTokens:
@@ -1507,7 +1544,7 @@ Route::middleware(['auth:sanctum','api'])->group( function () {
 });
 ```
 
-- Implementar el controlador   AuthController amb els mètodes login, register i logout:
+- Implementar el controlador AuthController amb els mètodes login, register i logout:
  
 ```php
 namespace App\Http\Controllers\Api;
@@ -1693,7 +1730,24 @@ php artisan l5-swagger:generate
  * )
  */
 ```
- 
+
+- Genera les annotacions per al json resource
+    
+```php
+  /**
+* @OA\Schema(
+*     schema="JugadoraResource",
+*     description="Esquema del recurs Jugadora",
+*     @OA\Property(property="id", type="integer", description="Identificador de la jugadora"),
+*     @OA\Property(property="nom", type="string", description="Nom de la jugadora"),
+*     @OA\Property(property="equip", type="string", description="Nom de l'equip de la jugadora"),
+*     @OA\Property(property="posicio", type="string", enum={"defensa", "migcampista", "davantera", "porter"}, description="Posició de la jugadora"),
+*     @OA\Property(property="dorsal", type="integer", description="Dorsal de la jugadora"),
+*     @OA\Property(property="edat", type="integer", description="Edat de la jugadora"),
+* )
+  */
+```
+
 - Genera les annotacions per a la resta de mètodes de l'API.
 
 ```php
@@ -1705,23 +1759,36 @@ use App\Models\Jugadora;
 class JugadoraController extends BaseController
 {
 /**
-* @OA\Get(
-*     path="/api/jugadores",
-*     summary="Llista totes les jugadores",
-*     tags={"Jugadores"},
-*     @OA\Response(
-*         response=200,
-*         description="Llista de jugadores",
-*         @OA\JsonContent(
-*             @OA\Property(property="data", type="array",
-*                 @OA\Items(ref="#/components/schemas/Jugadora")
-*             ),
-*             @OA\Property(property="links", type="object"),
-*             @OA\Property(property="meta", type="object")
-*         )
-*     )
-* )
-*/
+     * @OA\Get(
+     *     path="/api/jugadores",
+     *     summary="Llista totes les jugadores amb paginació",
+     *     tags={"Jugadores"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Llista de jugadores",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(ref="#/components/schemas/JugadoraResource")
+     *             ),
+     *             @OA\Property(property="links", type="object",
+     *                 @OA\Property(property="first", type="string", example="http://localhost/api/jugadores?page=1"),
+     *                 @OA\Property(property="last", type="string", example="http://localhost/api/jugadores?page=3"),
+     *                 @OA\Property(property="prev", type="string", example="null"),
+     *                 @OA\Property(property="next", type="string", example="http://localhost/api/jugadores?page=2")
+     *             ),
+     *             @OA\Property(property="meta", type="object",
+     *                 @OA\Property(property="current_page", type="integer", example=1),
+     *                 @OA\Property(property="from", type="integer", example=1),
+     *                 @OA\Property(property="last_page", type="integer", example=3),
+     *                 @OA\Property(property="path", type="string", example="http://localhost/api/jugadores"),
+     *                 @OA\Property(property="per_page", type="integer", example=15),
+     *                 @OA\Property(property="to", type="integer", example=15),
+     *                 @OA\Property(property="total", type="integer", example=45)
+     *             )
+     *         )
+     *     )
+     * )
+     */
 public function index()
 {
 return Jugadora::paginate(10);
@@ -1739,7 +1806,7 @@ return Jugadora::paginate(10);
      *     @OA\Response(
      *         response=201,
      *         description="Jugadora creada amb èxit",
-     *         @OA\JsonContent(ref="#/components/schemas/Jugadora")
+     *         @OA\JsonContent(ref="#/components/schemas/JugadoraResource")
      *     )
      * )
      */
@@ -1764,7 +1831,7 @@ return Jugadora::paginate(10);
      *     @OA\Response(
      *         response=200,
      *         description="Jugadora recuperada amb èxit",
-     *         @OA\JsonContent(ref="#/components/schemas/Jugadora")
+     *         @OA\JsonContent(ref="#/components/schemas/JugadoraResource")
      *     )
      * )
      */
@@ -1792,7 +1859,7 @@ return Jugadora::paginate(10);
      *     @OA\Response(
      *         response=200,
      *         description="Jugadora actualitzada amb èxit",
-     *         @OA\JsonContent(ref="#/components/schemas/Jugadora")
+     *         @OA\JsonContent(ref="#/components/schemas/JugadoraResource")
      *     )
      * )
      */
