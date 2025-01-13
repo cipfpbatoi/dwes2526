@@ -926,13 +926,15 @@ Required @OA\Info() not found
 Això vol dir que primer heu de crear aquesta notació.  Així que afegim-ho.  Prefereixo crear un controlador abstracte per a una API, però podeu afegir això a **app/Http/Controllers/Controller.php**
 
 
-```
+```php
 /**
  * @OA\Info(
- *    title="Your super  ApplicationAPI",
+ *    title="Futbol Femeni API Documentation",
  *    version="1.0.0",
  * )
- */
+ * @OA\PathItem(path="/api")
+*/  
+ 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -941,7 +943,7 @@ class Controller extends BaseController
 
 A continuació, hem d'afegir documents per a almenys una ruta, per exemple per per app/Http/Controllers/Api/LoginController.php:
 
-```
+```php
 /**
  * @OA\Post(
  * path="/login",
@@ -987,7 +989,7 @@ Ara mirarem les anotacions.  Intentaré explicar com utilitzar-les:
 
 Anem a afegir un codi de resposta 200:
 
-```
+```php
 * 	@OA\Response(
 *     response=200,
 *     description="Success",
@@ -1000,7 +1002,7 @@ Anem a afegir un codi de resposta 200:
 L'anotació **@OA\Property** té una clau de propietat(nom de camp) i un tipus.  El tipus pot tenir valors diferents: string, object, integer, array, boolean, etc.
 En aquesta resposta, vaig utilitzar el tipus objecte.  Podeu passar una referència a aquest objecte.  Crearem un objecte **user**.  Prefereixo afegir això a la classe Model.
 
-```
+```php
 /**
  *
  * @OA\Schema(
@@ -1035,23 +1037,18 @@ El gran problema d'este component és que no està ben documentat. Partint del s
 Primer cal possar l'inici del swagger en el **Controller.php** de la següent manera:
 
 
-```
+```php
 /**
  * @OA\Info(
- *    title="VideoClub ApplicationAPI",
- *    version="1.0.0",
+ *     title="API de Jugadores",
+ *     version="1.0.0",
+ *     description="Documentació de l'API per a gestionar jugadores"
  * )
- */
-
-/**
  * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
  *     type="http",
- *     description="Login with email and password to get the authentication token",
- *     name="Token based Based",
- *     in="header",
  *     scheme="bearer",
- *     bearerFormat="JWT",
- *     securityScheme="apiAuth",
+ *     bearerFormat="JWT"
  * )
  */
 ```
@@ -1059,7 +1056,7 @@ La primera part serveix per a identificar el projecte i la segon per a l'autenti
 
 Ara omplirem el **model Movie.php** per a generar el schema Movie.
 
-```
+```php
 /**
  *
  * @OA\Schema(
@@ -1077,7 +1074,7 @@ Observeu que en el genre retorne un string perquè serà el que voldrè retornar
 
 Ara generarè el schema de la petició request del post de movie. No és exactament igual que esta perquè ací voldré el genre amb ID i restriccions en alguns camps. Ho puc fer en el **MoviePost.php** dins de request.
 
-```
+```php
 /**
  * @OA\Schema(
  *      title="Store Movie Request",
@@ -1210,6 +1207,7 @@ Per últim el controlador de movies queda de la següent manera.
      *      tags={"Movies"},
      *      summary="Get list of movies",
      *      description="Returns list of movies",
+     *      security={{"bearerAuth":{}}},
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -1244,7 +1242,7 @@ Per últim el controlador de movies queda de la següent manera.
      *      tags={"Movies"},
      *      summary="Store new movie",
      *      description="Returns movie data",
-     *      security={ {"apiAuth": {} }},
+     *      security={{"bearerAuth":{}}},
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/MoviePost")
@@ -1619,10 +1617,18 @@ php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
 
 app/Http/Controllers/Controller.php
 ```php
- /**
+/**
  * @OA\Info(
  *    title="Futbol Femeni API Documentation",
  *    version="1.0.0",
+ * )
+ * @OA\PathItem(path="/api")
+**  
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
  * )
  */
 
@@ -1767,6 +1773,7 @@ class JugadoraController extends BaseController
      *     path="/api/jugadores",
      *     summary="Llista totes les jugadores amb paginació",
      *     tags={"Jugadores"},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="Llista de jugadores",
@@ -1804,6 +1811,7 @@ class JugadoraController extends BaseController
      *     path="/api/jugadores",
      *     summary="Crea una nova jugadora",
      *     tags={"Jugadores"},
+     *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/JugadoraRequest")
@@ -1826,6 +1834,7 @@ class JugadoraController extends BaseController
      *     path="/api/jugadores/{id}",
      *     summary="Mostra una jugadora",
      *     tags={"Jugadores"},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -1851,6 +1860,7 @@ class JugadoraController extends BaseController
      *     path="/api/jugadores/{id}",
      *     summary="Actualitza una jugadora",
      *     tags={"Jugadores"},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -1881,6 +1891,7 @@ class JugadoraController extends BaseController
      *     path="/api/jugadores/{id}",
      *     summary="Elimina una jugadora",
      *     tags={"Jugadores"},
+     *     security={{"bearerAuth":{}}}, 
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
