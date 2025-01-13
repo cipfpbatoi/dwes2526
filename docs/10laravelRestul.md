@@ -1671,6 +1671,7 @@ app/Http/Controllers/Controller.php
      * )
      */
 ```
+
 - Executa la comanda per generar la documentació:
 
 ```bash
@@ -1697,6 +1698,7 @@ php artisan l5-swagger:generate
 * )
   */
 ```
+
 - Genera les annotacions per al request
 
 ```php
