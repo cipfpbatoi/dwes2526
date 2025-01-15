@@ -61,35 +61,13 @@ Per exemple podriem desenvolupar:
 
 #### Pas 1 - Instal·lació
 
-Se suposa que ja tenim instal·lat el paquet sanctum. En cas contrari caldria instal·lar-lo:
-
-```console
-composer require laravel/sanctum
-```
-
 Instal·lem el paquet de Google:
 
 ```console
 composer require laravel/socialite
 ```
-#### Pas 2 - Configuració
 
-Publica la Configuració de Sanctum:
-
-```console
-php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-```
-
-Afegeix el middleware de Sanctum a la teva API en app/Http/Kernel.php.
-    
-```php
-'api' => [
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
-```
-#### Pas 3 - Crear credencials a Google cloud
+#### Pas 2 - Crear credencials a Google cloud
 
 * Obre la Consola de Google Cloud: Visita [Google Cloud Console](https://goo.gle/3oFLcJ5).
 
@@ -113,7 +91,7 @@ Afegeix el middleware de Sanctum a la teva API en app/Http/Kernel.php.
 * Afegeix les URL de redirecció autoritzades des de Laravel (p. ex., http://localhost/auth/google/callback per a l'entorn de desenvolupament).
 * Obté l'ID de Client i el Secret de Client: Després de crear les credencials, anota l'ID de client i el secret que Google proporciona. ![Fig.4](imagenes/09/credencials2.png).
 
-#### Pas 4 - Configuració de Socialite per a Google
+#### Pas 3 - Configuració de Socialite per a Google
 
 ```php
 GOOGLE_CLIENT_ID=your-google-client-id
@@ -129,13 +107,13 @@ Afegeix la Configuració de Google a config/services.php:
     'redirect' => env('GOOGLE_REDIRECT'),
 ],
 ```
-#### Pas 5 - Creació de Rutes i Controladors
+#### Pas 4 - Creació de Rutes i Controladors
 
 Defineix rutes en routes/web.php per a redirigir cap a Google i per al callback.
 
 ```php  
-Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
-Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
+Route::get('auth/google', [LoginController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 ```
 
 En LoginController, afegeix la lògica per a redirigir a l'usuari cap a Google i manejar el callback.
@@ -156,23 +134,24 @@ public function redirectToGoogle()
 public function handleGoogleCallback()
 {
     try {
-        $user = Socialite::driver('google')->user();
+        $googleUser = Socialite::driver('google')->stateless()->user();
 
-        // Trobar o crear l'usuari basat en la informació de Google
-        $localUser = User::updateOrCreate(
-            ['email' => $user->email],
-            [
-                'name' => $user->name,
-                'google_id' => $user->id,
-                // Altres camps que vulguis guardar
-            ]
-        );
+            // Cerca o crea l'usuari a la base de dades
+            $user = User::updateOrCreate(
+                ['email' => $googleUser->email],
+                [
+                    'name' => $googleUser->name,
+                    'google_id' => $googleUser->id,
+                    'avatar' => $googleUser->avatar,
+                ]
+            );
 
-        // Iniciar sessió de l'usuari
-        Auth::login($localUser);
+            // Autentica l'usuari
+            Auth::login($user);
 
         // Generar token Sanctum
-        $token = $localUser->createToken('Personal Access Token')->plainTextToken;
+        // Si volem autenticar en l'API podriem generar un token
+        $token = $userr->createToken('Personal Access Token')->plainTextToken;
 
         // Redirigir l'usuari amb el token
         return view('auth.success', ['token' => $token]); // Asumint que tens una vista 'auth.success'
@@ -186,20 +165,20 @@ public function handleGoogleCallback()
 Caldrà fer unes modificacions en el model User.php
 
 ```php
-<?php
-protected $fillable = [
+ 
+    protected $fillable = [
         'name',
         'email',
         'password',
         'google_id',
-        'administrador',
+        'avatar',
     ];
-?>
+ 
 ```
 
-I afegir el camp google_id a la migració de la base de dades
+I afegir el camp google_id i avatar a la migració de la base de dades
 
-#### Pas 6 - Creació de les vistes de comprovació
+#### Pas 5 - Creació de les vistes de comprovació
 
 Crea dues vistes en resources/views/auth: success.blade.php i error.blade.php.
 
@@ -235,6 +214,13 @@ Crea dues vistes en resources/views/auth: success.blade.php i error.blade.php.
 </body>
 </html>
 ```
+
+#### Pas 6. Inclou l'enllaç en el login per redirigir a google
+
+```html
+<a href="{{ route('auth.google') }}">Inicia sessió amb Google</a>
+```
+
 ## WebSockets
 
 Els WebSockets permeten comunicacions bidireccionals en temps real entre el servidor i els clients. Laravel facilita treballar amb WebSockets a través de Laravel Echo i canals de difusió.
@@ -655,9 +641,9 @@ Aquest exemple és molt bàsic i només per a fins educatius. En un entorn de pr
 Assegura't de provar aquest codi en l'entorn de Sandbox de PayPal abans de considerar la seva implementació en producció.
 Personalitza els imports del pagament (import, moneda, descripció) segons les necessitats del teu projecte.
 
-## Activitats
+### Activitats
 
-901. Crea l'autenticació mitjançant google per a l'aplicació de BatoiBook
+1. Crea l'autenticació mitjançant google per a l'aplicació de Futbol-femeni fent un nou tipus d'usuari que serà [convidat], que no té permisos per a fer res en la base dades i no te passwords i soles es pot autenticar mitjançant google. Els altre usuaris no poden autenticar-se mitjançant google.
 
 Tria un: 
 
