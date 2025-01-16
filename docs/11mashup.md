@@ -221,21 +221,121 @@ Crea dues vistes en resources/views/auth: success.blade.php i error.blade.php.
 <a href="{{ route('auth.google') }}">Inicia sessió amb Google</a>
 ```
 
-## WebSockets
+##  Difusió d'Esdeveniments en Temps Real amb WebSockets
+ 
+Els **WebSockets** permeten implementar interfícies d'usuari que s'actualitzen en temps real de manera eficient. A diferència del *polling* constant, els WebSockets envien dades del servidor al client només quan hi ha canvis, millorant el rendiment i l'experiència d'usuari.
+ 
+### Funcionament
+- **Canals**: Els clients es connecten a canals amb noms específics al frontend.
+- **Esdeveniments**: L'aplicació Laravel envia esdeveniments a aquests canals des del backend. Els esdeveniments poden incloure dades que el frontend utilitza per actualitzar la interfície.
 
-Els WebSockets permeten comunicacions bidireccionals en temps real entre el servidor i els clients. Laravel facilita treballar amb WebSockets a través de Laravel Echo i canals de difusió.
+### Drivers de Difusió Suportats
+Laravel proporciona tres opcions per gestionar WebSockets:
 
-### Configuració Bàsica
+1. **Laravel Reverb**: Solució autogestionada i integrada amb Laravel.
+2. **Pusher Channels**: Servei gestionat per a WebSockets.
+3. **Ably**: Plataforma avançada per a comunicacions en temps real.
 
-**Instal·lar Laravel Echo**: Utilitza npm per a instal·lar les dependències necessàries.
+### Beneficis
+
+- Actualitzacions en temps real sense recàrrega.
+- Compartició eficient de dades entre el servidor i el client.
+- Millora de l'experiència d'usuari en aplicacions interactives.
+
+### Implementació Bàsica en el servidor
+
+Laravel facilita la difusió d'esdeveniments (*event broadcasting*) gràcies a un driver de difusió que envia els esdeveniments al client mitjançant Laravel Echo (una biblioteca JavaScript).
+
+#### Configuració
+
+- Tota la configuració de la difusió es troba en el fitxer `config/broadcasting.php`.
+- Si aquest fitxer no existeix, es crearà automàticament en executar l'ordre Artisan següent:
+ 
+```bash
+  php artisan install:broadcasting
+```
+      
+Aquesta ordre:
+
+- Crearà el fitxer `config/broadcasting.php`.
+- Crearà el fitxer `routes/channels.php`, on pots registrar rutes d'autorització i callbacks per als canals de difusió.
+
+#### Configuració de la Cua
+
+- Tots els esdeveniments de difusió s'envien a través de treballs en cua (queued jobs).
+- És necessari configurar i executar un treballador de cua per evitar que la resposta de l'aplicació es veja afectada durant la difusió dels esdeveniments:
+
+```bash
+  php artisan queue:work
+```
+
+#### Configuració Bàsica de pusher
+
+Si vols utilitzar **Pusher Channels** per a la difusió d'esdeveniments, segueix aquests passos:
+
+##### Instal·lació del SDK de Pusher Channels
+ 
+1. Instal·la el paquet de PHP de Pusher Channels amb Composer:
+   
+```bash
+   composer require pusher/pusher-php-server
+```
+
+2. Defineix les credencials de Pusher Channels al fitxer .env:
+
+```env
+PUSHER_APP_ID=19143960
+PUSHER_APP_KEY=070b902204f2ac2a3b220
+PUSHER_APP_SECRET=6687bd960e437d3c2a550
+PUSHER_APP_CLUSTER=eu
+
+VITE_PUSHER_APP_KEY=070b902204f2ac2a3b220
+VITE_PUSHER_APP_CLUSTER=eu
+```
+
+3. Configura el driver de difusió a Pusher en el fitxer `config/broadcasting.php`:
+
+```php
+'pusher' => [
+    'driver' => 'pusher',
+    'key' => env('PUSHER_APP_KEY'),
+    'secret' => env('PUSHER_APP_SECRET'),
+    'app_id' => env('PUSHER_APP_ID'),
+    'options' => [
+        'cluster' => env('PUSHER_APP_CLUSTER'),
+        'useTLS' => true,
+    ],
+],
+```
+4. Defineix el driver de difusió al fitxer .env:
+
+```env
+BROADCAST_DRIVER=pusher
+``` 
+
+5. Configuració del Client Laravel Echo
 
 ```bash
 npm install --save laravel-echo pusher-js
+ ```
+
+6. Configuració de Laravel Echo
+
+```js
+import Echo from 'laravel-echo';
+
+import Pusher from 'pusher-js';
+window.Pusher = Pusher;
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});
 ```
-
-**Configuració del Fitxer .env**: Defineix les claus i secrets de Pusher (o la teua solució WebSocket).
-
-### Creació de Canals
+  
+##### Creació de Canals
 
 Defineix canals en routes/channels.php. Per exemple, un canal privat:
 
@@ -245,7 +345,7 @@ Broadcast::channel('channel-name', function ($user) {
 });
 ```
 
-### Escoltar Esdeveniments amb Echo
+#### Escoltar Esdeveniments amb Echo
 
 A l'frontend, utilitza Laravel Echo per a escoltar esdeveniments en un canal:
 
@@ -253,6 +353,7 @@ A l'frontend, utilitza Laravel Echo per a escoltar esdeveniments en un canal:
 Echo.channel('channel-name')
 .listen('EventName', (e) => {
 console.log(e);
+
 });
 ```
 
@@ -270,112 +371,86 @@ class EventName implements ShouldBroadcast
 }
 ```
 
-### Exemple Complet
+### Exemple d'Implementació
 
-#### Pas 1: Configuració dels WebSockets
-Primer, has de configurar el teu sistema per a utilitzar WebSockets. Laravel Echo i Laravel WebSockets (un paquet que permet crear un servidor de WebSockets directament en Laravel) són opcions populars.
+Després de configurar el pusher i el Laravel Echo, podem implementar que la classificació s'actualitze de forma automàtica quan es canvie un resultat.
+ 
+1. Afegir el codi per a gestionar l'escolta en el frontend:
 
-1. Instal·la Laravel WebSockets:
-
-```bash
-composer require beyondcode/laravel-websockets
+```bootstrap.js
+window.Echo.channel('futbol-femeni')
+    .listen('.PartitActualitzat', (data) => {
+        console.log('Esdeveniment rebut:', data);
+        Livewire.dispatch('PartitActualitzat',data);
+    });
 ```
 
-2. Publica les Configuracions i Migracions:
+2. Modificar el routes/channel.php per a autoritzar l'accés al canal:
 
-```bash
-php artisan vendor:publish --provider="BeyondCode\LaravelWebSockets\WebSocketsServiceProvider" --tag="migrations"
-php artisan vendor:publish --provider="BeyondCode\LaravelWebSockets\WebSocketsServiceProvider" --tag="config"
+```php
+
+use Illuminate\Support\Facades\Broadcast;
+
+Broadcast::channel('futbol-femeni', function () {
+    return true;
+});
 ```
 
-3. Executa les Migracions:
+3. Modificar el component livewire per a gestionar l'esdeveniment rebut:
 
-```bash
-php artisan migrate
+```php
+    #[On('PartitActualitzat')] 
+    public function actualitzarClassificacio()
+    {
+        $this->calcularClassificacio();
+        $this->dispatch('$refresh');
+    }
 ```
 
-4. Configura .env per a usar el driver pusher:
-
-```bash
-BROADCAST_DRIVER=pusher
-
-PUSHER_APP_ID=local
-PUSHER_APP_KEY=local
-PUSHER_APP_SECRET=local
-PUSHER_APP_CLUSTER=mt1
-```
-
-5. Inicia el servidor de WebSockets:
-
-```bash
-php artisan websockets:serve
-```
-
-#### Pas 2: Crear Event Que Utilitza WebSockets
-
-Ara, crearem un esdeveniment Laravel que utilitza WebSockets per a enviar notificacions.
-
-1. Crea un esdeveniment que implemente ShouldBroadcast:
-
-```bash
-php artisan make:event BookSold
-```
-
-2. Edita l'esdeveniment BookSold:
+4. Crear el esdeveniment que s'enviarà al canal:
 
 ```php
 namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 
-class BookSold implements ShouldBroadcast
+class PartitActualitzat implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $book;
-    public $user;
+    public $partit;
 
-    public function __construct($book, $user)
+    public function __construct($partit)
     {
-        $this->book = $book;
-        $this->user = $user;
+         $this->partit = $partit;
     }
 
     public function broadcastOn()
     {
-        return new PrivateChannel('user.'.$this->user->id);
+        return new Channel('futbol-femeni');
+    }
+
+    public function broadcastAs()
+    {
+         return 'PartitActualitzat';
     }
 }
 ```
 
-#### Pas 3: Disparar l'Esdeveniment
-
-Quan es realitze una venda, dispara l'esdeveniment:
+5. Disparar l'esdeveniment des del model:
 
 ```php
-event(new BookSold($book, $user));
+protected static function booted()
+    {
+        static::updated(function ($partit) {
+            event(new PartitActualitzat($partit));
+        });
+    }
 ```
-
-#### Pas 4: Escoltar l'Esdeveniment al Frontend
-
-Amb Laravel Echo, pots escoltar l'esdeveniment al frontend. Primer, assegura't de tindre Laravel Echo instal·lat i configurat al teu projecte frontend.
-
-```js
-Echo.private('user.' + userId)
-    .listen('BookSold', (e) => {
-        alert("El teu llibre s'ha venut!");
-        // Actualitza la UI segons corresponga
-    });
-```
-
-Aquest codi JavaScript escoltarà l'esdeveniment BookSold en un canal privat associat amb l'usuari. Quan es dispara l'esdeveniment, es mostrarà una alerta (o qualsevol altra acció que vulgues realitzar).
-
 
 ##  Integració amb ChatGPT API
 
