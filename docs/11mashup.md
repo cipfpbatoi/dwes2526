@@ -94,9 +94,9 @@ composer require laravel/socialite
 #### Pas 3 - Configuració de Socialite per a Google
 
 ```php
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-GOOGLE_REDIRECT=http://your-callback-url
+GOOGLE_CLIENT_ID=3792956990940-bat7pikhu9a8piq93jncgcursmf7isg3.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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0
+GOOGLE_REDIRECT=http://localhost/auth/google/callback
 ```
 Afegeix la Configuració de Google a config/services.php:
 
