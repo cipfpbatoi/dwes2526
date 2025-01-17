@@ -54,51 +54,44 @@ Per exemple podriem desenvolupar:
 * **Serveis Meteorològics Integrats**: Per a una aplicació d'activitats a l'aire lliure, com una app de senderisme, integrar dades meteorològiques en temps real mitjançant APIs com OpenWeatherMap pot ser molt útil. Els usuaris podrien planificar les seves activitats basant-se en les condicions meteorològiques actuals i les previsions.
 * **Recollida d'Opinions amb APIs de Ressenyes**: En una aplicació per a hotels o restaurants, integrar un sistema de recollida d'opinions com Yelp o TripAdvisor pot ajudar a obtenir feedback valuós dels clients i millorar la qualitat del servei.
 
-## Exemple de reutilització de codi
+## Autenticació amb Google
 
-### Autenticació amb Google
+### Configuració de l'Autenticació amb Google en Laravel
 
+#### **1. Instal·lar Laravel Socialite**
 
-#### Pas 1 - Instal·lació
+Laravel **Socialite** és la biblioteca oficial per gestionar l'autenticació amb proveïdors socials.
 
-Instal·lem el paquet de Google:
+#### **1. Instal·la Socialite** 
+   ```bash
+   composer require laravel/socialite
+   php artisan vendor:publish --provider="Laravel\Socialite\SocialiteServiceProvider"
+   ```
+ 
+#### **2. Configura Google API**
+1. Accedeix a la [Consola de Desenvolupadors de Google](https://console.developers.google.com/).
+2. Crea un nou projecte o selecciona un projecte existent.
+3. Activa l'API "Google+ API" o "Google Identity Services".
+4. Crea una credencial d'OAuth 2.0 i configura:
+    - **Tipus d'aplicació**: Aplicació web.
+    - **URI de redirecció autoritzat**:
+      ```
+      http://localhost/auth/google/callback
+      ```
 
-```console
-composer require laravel/socialite
-```
+5. Copia el **Client ID** i el **Client Secret**.
 
-#### Pas 2 - Crear credencials a Google cloud
+ 
+#### **3. Configura les Variables d'Entorn**
+Afegeix les credencials al fitxer `.env`:
 
-* Obre la Consola de Google Cloud: Visita [Google Cloud Console](https://goo.gle/3oFLcJ5).
-
-**Crear un Projecte a Google Cloud**
-
-* Crea un Nou Projecte: En la consola, crea un nou projecte si encara no en tens cap.
-* Navega al Projecte: Un cop creat, selecciona el projecte per a configurar les credencials.
-
-**Configurar OAuth Consent Screen**
-  
-* Vés a "APIs & Services > OAuth consent screen".
-* Selecciona l'usuari extern i omple els detalls necessaris. ![Fig.1](imagenes/09/consentiment1.png).
-* Afegeix la informació del teu domini i els detalls de l'aplicació. ![Fig.2](imagenes/09/consentiment2.png).
-
-
-**Crear Credencials**
-
-* Vés a "APIs & Services > Credentials". 
-* Clica a "Create Credentials" i selecciona "OAuth client ID".
-* Selecciona l'aplicació web com a tipus d'aplicació. ![Fig.3](imagenes/09/credencials1.png).
-* Afegeix les URL de redirecció autoritzades des de Laravel (p. ex., http://localhost/auth/google/callback per a l'entorn de desenvolupament).
-* Obté l'ID de Client i el Secret de Client: Després de crear les credencials, anota l'ID de client i el secret que Google proporciona. ![Fig.4](imagenes/09/credencials2.png).
-
-#### Pas 3 - Configuració de Socialite per a Google
-
-```php
-GOOGLE_CLIENT_ID=3792956990940-bat7pikhu9a8piq93jncgcursmf7isg3.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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0
+```dotenv
+GOOGLE_CLIENT_ID=your-client-id
+GOOGLE_CLIENT_SECRET=your-client-secret
 GOOGLE_REDIRECT=http://localhost/auth/google/callback
 ```
-Afegeix la Configuració de Google a config/services.php:
+  
+Afegeix la configuració de Google al fitxer `config/services.php`:
 
 ```php
 'google' => [
@@ -107,119 +100,64 @@ Afegeix la Configuració de Google a config/services.php:
     'redirect' => env('GOOGLE_REDIRECT'),
 ],
 ```
-#### Pas 4 - Creació de Rutes i Controladors
+ 
+#### **4. Configura les Rutes**
+Defineix les rutes necessàries al fitxer `routes/web.php`:
 
-Defineix rutes en routes/web.php per a redirigir cap a Google i per al callback.
+```php
+use App\Http\Controllers\AuthController;
 
-```php  
-Route::get('auth/google', [LoginController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
 ```
+ 
+#### **5. Crea el Controlador**
+Crea un controlador per gestionar l'autenticació amb Google amb els seguents mètodes:
 
-En LoginController, afegeix la lògica per a redirigir a l'usuari cap a Google i manejar el callback.
+```php
+namespace App\Http\Controllers;
 
-redirectToGoogle: Redirigeix l'usuari a la pàgina d'autenticació de Google.
-handleGoogleCallback: Processa la resposta de Google, crea o troba un usuari, i genera un token de Sanctum.
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
-```php  
-<?php
-// En LoginController 
-
-public function redirectToGoogle()
+class AuthController extends Controller
 {
-    return Socialite::driver('google')->redirect();
-}
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
 
-
-public function handleGoogleCallback()
-{
-    try {
+    public function handleGoogleCallback()
+    {
         $googleUser = Socialite::driver('google')->stateless()->user();
 
-            // Cerca o crea l'usuari a la base de dades
-            $user = User::updateOrCreate(
-                ['email' => $googleUser->email],
-                [
-                    'name' => $googleUser->name,
-                    'google_id' => $googleUser->id,
-                    'avatar' => $googleUser->avatar,
-                ]
-            );
+        // Cerca l'usuari o crea'l si no existeix
+        $user = User::firstOrCreate(
+            ['email' => $googleUser->getEmail()],
+            [
+                'name' => $googleUser->getName(),
+                'google_id' => $googleUser->getId(),
+                'avatar' => $googleUser->getAvatar(),
+                'password' => bcrypt(str()->random(24)), // Contrassenya aleatòria
+            ]
+        );
 
-            // Autentica l'usuari
-            Auth::login($user);
+        // Inicia sessió amb l'usuari
+        Auth::login($user);
 
-        // Generar token Sanctum
-        // Si volem autenticar en l'API podriem generar un token
-        $token = $userr->createToken('Personal Access Token')->plainTextToken;
-
-        // Redirigir l'usuari amb el token
-        return view('auth.success', ['token' => $token]); // Asumint que tens una vista 'auth.success'
-
-    } catch (\Exception $e) {
-        // Maneig d'errors
-        return view('auth.error', ['error' => $e->getMessage()]); // Asumint que tens una vista 'auth.error'
+        return redirect('/home'); // Redirigeix a la pàgina principal
     }
 }
 ```
-Caldrà fer unes modificacions en el model User.php
-
-```php
  
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'google_id',
-        'avatar',
-    ];
+#### **6. Modifica el Model `User` per afegir els camps nou i modifica la migració**
  
-```
+#### **7. Prova l'Autenticació**
+- Accedeix a l'URL: `http://localhost/auth/google/redirect`
+- Segueix el procés d'autenticació amb Google.
 
-I afegir el camp google_id i avatar a la migració de la base de dades
-
-#### Pas 5 - Creació de les vistes de comprovació
-
-Crea dues vistes en resources/views/auth: success.blade.php i error.blade.php.
-
-```php
-{{-- resources/views/auth/success.blade.php --}}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Autenticació Exitosa</title>
-</head>
-<body>
-    <h1>Benvingut/da!</h1>
-    <p>La teua autenticació ha sigut exitosa.</p>
-    <p>El teu token d'accés és: {{ $token }}</p>
-</body>
-</html>
-```
-
-```php
-{{-- resources/views/auth/error.blade.php --}}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Error d'Autenticació</title>
-</head>
-<body>
-    <h1>Error d'Autenticació</h1>
-    <p>Ha ocorregut un error durant el procés d'autenticació: {{ $error }}</p>
-</body>
-</html>
-```
-
-#### Pas 6. Inclou l'enllaç en el login per redirigir a google
-
-```html
-<a href="{{ route('auth.google') }}">Inicia sessió amb Google</a>
-```
+  
 
 ##  Difusió d'Esdeveniments en Temps Real amb WebSockets
  
@@ -236,44 +174,29 @@ Laravel proporciona tres opcions per gestionar WebSockets:
 2. **Pusher Channels**: Servei gestionat per a WebSockets.
 3. **Ably**: Plataforma avançada per a comunicacions en temps real.
 
-### Beneficis
-
-- Actualitzacions en temps real sense recàrrega.
-- Compartició eficient de dades entre el servidor i el client.
-- Millora de l'experiència d'usuari en aplicacions interactives.
-
+ 
 ### Implementació Bàsica en el servidor
 
 Laravel facilita la difusió d'esdeveniments (*event broadcasting*) gràcies a un driver de difusió que envia els esdeveniments al client mitjançant Laravel Echo (una biblioteca JavaScript).
 
 #### Configuració
-
-- Tota la configuració de la difusió es troba en el fitxer `config/broadcasting.php`.
-- Si aquest fitxer no existeix, es crearà automàticament en executar l'ordre Artisan següent:
  
 ```bash
   php artisan install:broadcasting
 ```
-      
+Em preguntarà si vull instal·lar reverb(no) i la part de client (si).         
+
 Aquesta ordre:
 
 - Crearà el fitxer `config/broadcasting.php`.
 - Crearà el fitxer `routes/channels.php`, on pots registrar rutes d'autorització i callbacks per als canals de difusió.
 
-#### Configuració de la Cua
-
-- Tots els esdeveniments de difusió s'envien a través de treballs en cua (queued jobs).
-- És necessari configurar i executar un treballador de cua per evitar que la resposta de l'aplicació es veja afectada durant la difusió dels esdeveniments:
-
-```bash
-  php artisan queue:work
-```
-
+ 
 #### Configuració Bàsica de pusher
 
 Si vols utilitzar **Pusher Channels** per a la difusió d'esdeveniments, segueix aquests passos:
 
-##### Instal·lació del SDK de Pusher Channels
+ 
  
 1. Instal·la el paquet de PHP de Pusher Channels amb Composer:
    
@@ -284,6 +207,8 @@ Si vols utilitzar **Pusher Channels** per a la difusió d'esdeveniments, segueix
 2. Defineix les credencials de Pusher Channels al fitxer .env:
 
 ```env
+BROADCAST_DRIVER=pusher
+
 PUSHER_APP_ID=19143960
 PUSHER_APP_KEY=070b902204f2ac2a3b220
 PUSHER_APP_SECRET=6687bd960e437d3c2a550
@@ -293,7 +218,7 @@ VITE_PUSHER_APP_KEY=070b902204f2ac2a3b220
 VITE_PUSHER_APP_CLUSTER=eu
 ```
 
-3. Configura el driver de difusió a Pusher en el fitxer `config/broadcasting.php`:
+i configura el driver de difusió a Pusher en el fitxer `config/broadcasting.php`:
 
 ```php
 'pusher' => [
@@ -307,20 +232,16 @@ VITE_PUSHER_APP_CLUSTER=eu
     ],
 ],
 ```
-4. Defineix el driver de difusió al fitxer .env:
+  
+3. Configuració de Laravel Echo
 
-```env
-BROADCAST_DRIVER=pusher
-``` 
-
-5. Configuració del Client Laravel Echo
+Si no està instal·lat, instal·la Laravel Echo:
 
 ```bash
-npm install --save laravel-echo pusher-js
- ```
-
-6. Configuració de Laravel Echo
-
+npm install --save-dev laravel-echo pusher-js
+npm run build
+```
+ 
 ```js
 import Echo from 'laravel-echo';
 
@@ -335,7 +256,17 @@ window.Echo = new Echo({
 });
 ```
   
-##### Creació de Canals
+al front-end, afegeix el següent codi per connectar amb el servidor de WebSockets:
+
+ 
+```js
+Echo.channel('channel-name')
+.listen('EventName', (e) => {
+    console.log(e);
+
+});
+```
+4. **Creació de Canals**
 
 Defineix canals en routes/channels.php. Per exemple, un canal privat:
 
@@ -344,20 +275,8 @@ Broadcast::channel('channel-name', function ($user) {
     return true; // Autorització
 });
 ```
-
-#### Escoltar Esdeveniments amb Echo
-
-A l'frontend, utilitza Laravel Echo per a escoltar esdeveniments en un canal:
-
-```js
-Echo.channel('channel-name')
-.listen('EventName', (e) => {
-console.log(e);
-
-});
-```
-
-### Disparar Esdeveniments en Temps Real
+ 
+5. **Disparar Esdeveniments en Temps Real**
 
 Crea esdeveniments que implementen ShouldBroadcast i defineix en quin canal s'han d'emetre.
 
@@ -370,91 +289,17 @@ class EventName implements ShouldBroadcast
     }
 }
 ```
+6. **Configuració de la Cua**
 
-### Exemple d'Implementació
+- Tots els esdeveniments de difusió s'envien a través de treballs en cua (queued jobs).
+- És necessari configurar i executar un treballador de cua per evitar que la resposta de l'aplicació es veja afectada durant la difusió dels esdeveniments:
 
-Després de configurar el pusher i el Laravel Echo, podem implementar que la classificació s'actualitze de forma automàtica quan es canvie un resultat.
+```bash
+  php artisan queue:work
+```
  
-1. Afegir el codi per a gestionar l'escolta en el frontend:
-
-```bootstrap.js
-window.Echo.channel('futbol-femeni')
-    .listen('.PartitActualitzat', (data) => {
-        console.log('Esdeveniment rebut:', data);
-        Livewire.dispatch('PartitActualitzat',data);
-    });
-```
-
-2. Modificar el routes/channel.php per a autoritzar l'accés al canal:
-
-```php
-
-use Illuminate\Support\Facades\Broadcast;
-
-Broadcast::channel('futbol-femeni', function () {
-    return true;
-});
-```
-
-3. Modificar el component livewire per a gestionar l'esdeveniment rebut:
-
-```php
-    #[On('PartitActualitzat')] 
-    public function actualitzarClassificacio()
-    {
-        $this->calcularClassificacio();
-        $this->dispatch('$refresh');
-    }
-```
-
-4. Crear el esdeveniment que s'enviarà al canal:
-
-```php
-namespace App\Events;
-
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
-
-class PartitActualitzat implements ShouldBroadcast
-{
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $partit;
-
-    public function __construct($partit)
-    {
-         $this->partit = $partit;
-    }
-
-    public function broadcastOn()
-    {
-        return new Channel('futbol-femeni');
-    }
-
-    public function broadcastAs()
-    {
-         return 'PartitActualitzat';
-    }
-}
-```
-
-5. Disparar l'esdeveniment des del model:
-
-```php
-protected static function booted()
-    {
-        static::updated(function ($partit) {
-            event(new PartitActualitzat($partit));
-        });
-    }
-```
-
 ##  Integració amb ChatGPT API
-
-
+ 
 #### Registra't i Obté les Credencials de l'API
 
   * Registra't a OpenAI: Visita el lloc web d'OpenAI i crea un compte si encara no en tens un.
@@ -716,13 +561,263 @@ Aquest exemple és molt bàsic i només per a fins educatius. En un entorn de pr
 Assegura't de provar aquest codi en l'entorn de Sandbox de PayPal abans de considerar la seva implementació en producció.
 Personalitza els imports del pagament (import, moneda, descripció) segons les necessitats del teu projecte.
 
+## Exemple de reutilització de codi
+
+### Autenticació amb Google
+
+
+#### Pas 1 - Instal·lació
+
+Instal·lem el paquet de Google:
+
+```console
+composer require laravel/socialite
+```
+
+#### Pas 2 - Crear credencials a Google cloud
+
+* Obre la Consola de Google Cloud: Visita [Google Cloud Console](https://goo.gle/3oFLcJ5).
+
+**Crear un Projecte a Google Cloud**
+
+* Crea un Nou Projecte: En la consola, crea un nou projecte si encara no en tens cap.
+* Navega al Projecte: Un cop creat, selecciona el projecte per a configurar les credencials.
+
+**Configurar OAuth Consent Screen**
+
+* Vés a "APIs & Services > OAuth consent screen".
+* Selecciona l'usuari extern i omple els detalls necessaris. ![Fig.1](imagenes/09/consentiment1.png).
+* Afegeix la informació del teu domini i els detalls de l'aplicació. ![Fig.2](imagenes/09/consentiment2.png).
+
+
+**Crear Credencials**
+
+* Vés a "APIs & Services > Credentials".
+* Clica a "Create Credentials" i selecciona "OAuth client ID".
+* Selecciona l'aplicació web com a tipus d'aplicació. ![Fig.3](imagenes/09/credencials1.png).
+* Afegeix les URL de redirecció autoritzades des de Laravel (p. ex., http://localhost/auth/google/callback per a l'entorn de desenvolupament).
+* Obté l'ID de Client i el Secret de Client: Després de crear les credencials, anota l'ID de client i el secret que Google proporciona. ![Fig.4](imagenes/09/credencials2.png).
+
+#### Pas 3 - Configuració de Socialite per a Google
+
+```php
+GOOGLE_CLIENT_ID=3792956990940-bat7pikhu9a8piq93jncgcursmf7isg3.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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0
+GOOGLE_REDIRECT=http://localhost/auth/google/callback
+```
+Afegeix la Configuració de Google a config/services.php:
+
+```php
+'google' => [
+    'client_id' => env('GOOGLE_CLIENT_ID'),
+    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    'redirect' => env('GOOGLE_REDIRECT'),
+],
+```
+#### Pas 4 - Creació de Rutes i Controladors
+
+Defineix rutes en routes/web.php per a redirigir cap a Google i per al callback.
+
+```php  
+Route::get('auth/google', [LoginController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+```
+
+En LoginController, afegeix la lògica per a redirigir a l'usuari cap a Google i manejar el callback.
+
+redirectToGoogle: Redirigeix l'usuari a la pàgina d'autenticació de Google.
+handleGoogleCallback: Processa la resposta de Google, crea o troba un usuari, i genera un token de Sanctum.
+
+```php  
+<?php
+// En LoginController 
+
+public function redirectToGoogle()
+{
+    return Socialite::driver('google')->redirect();
+}
+
+
+public function handleGoogleCallback()
+{
+    try {
+        $googleUser = Socialite::driver('google')->stateless()->user();
+
+            // Cerca o crea l'usuari a la base de dades
+            $user = User::updateOrCreate(
+                ['email' => $googleUser->email],
+                [
+                    'name' => $googleUser->name,
+                    'google_id' => $googleUser->id,
+                    'avatar' => $googleUser->avatar,
+                ]
+            );
+
+            // Autentica l'usuari
+            Auth::login($user);
+
+        // Generar token Sanctum
+        // Si volem autenticar en l'API podriem generar un token
+        $token = $userr->createToken('Personal Access Token')->plainTextToken;
+
+        // Redirigir l'usuari amb el token
+        return view('auth.success', ['token' => $token]); // Asumint que tens una vista 'auth.success'
+
+    } catch (\Exception $e) {
+        // Maneig d'errors
+        return view('auth.error', ['error' => $e->getMessage()]); // Asumint que tens una vista 'auth.error'
+    }
+}
+```
+Caldrà fer unes modificacions en el model User.php
+
+```php
+ 
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'google_id',
+        'avatar',
+    ];
+ 
+```
+
+I afegir el camp google_id i avatar a la migració de la base de dades
+
+#### Pas 5 - Creació de les vistes de comprovació
+
+Crea dues vistes en resources/views/auth: success.blade.php i error.blade.php.
+
+```php
+{{-- resources/views/auth/success.blade.php --}}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autenticació Exitosa</title>
+</head>
+<body>
+    <h1>Benvingut/da!</h1>
+    <p>La teua autenticació ha sigut exitosa.</p>
+    <p>El teu token d'accés és: {{ $token }}</p>
+</body>
+</html>
+```
+
+```php
+{{-- resources/views/auth/error.blade.php --}}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error d'Autenticació</title>
+</head>
+<body>
+    <h1>Error d'Autenticació</h1>
+    <p>Ha ocorregut un error durant el procés d'autenticació: {{ $error }}</p>
+</body>
+</html>
+```
+
+#### Pas 6. Inclou l'enllaç en el login per redirigir a google
+
+```html
+<a href="{{ route('auth.google') }}">Inicia sessió amb Google</a>
+```
+
+### Actualització de la classificació en temps real.
+
+Després de configurar el pusher i el Laravel Echo, podem implementar que la classificació s'actualitze de forma automàtica quan es canvie un resultat.
+
+1. Afegir el codi per a gestionar l'escolta en el frontend:
+
+```bootstrap.js
+window.Echo.channel('futbol-femeni')
+    .listen('.PartitActualitzat', (data) => {
+        console.log('Esdeveniment rebut:', data);
+        Livewire.dispatch('PartitActualitzat',data);
+    });
+```
+
+2. Modificar el routes/channel.php per a autoritzar l'accés al canal:
+
+```php
+
+use Illuminate\Support\Facades\Broadcast;
+
+Broadcast::channel('futbol-femeni', function () {
+    return true;
+});
+```
+
+3. Modificar el component livewire per a gestionar l'esdeveniment rebut:
+
+```php
+    #[On('PartitActualitzat')] 
+    public function actualitzarClassificacio()
+    {
+        $this->calcularClassificacio();
+        $this->dispatch('$refresh');
+    }
+```
+
+4. Crear el esdeveniment que s'enviarà al canal:
+
+```php
+namespace App\Events;
+
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class PartitActualitzat implements ShouldBroadcast
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $partit;
+
+    public function __construct($partit)
+    {
+         $this->partit = $partit;
+    }
+
+    public function broadcastOn()
+    {
+        return new Channel('futbol-femeni');
+    }
+
+    public function broadcastAs()
+    {
+         return 'PartitActualitzat';
+    }
+}
+```
+
+5. Disparar l'esdeveniment des del model:
+
+```php
+protected static function booted()
+    {
+        static::updated(function ($partit) {
+            event(new PartitActualitzat($partit));
+        });
+    }
+```
+
+
 ### Activitats
 
 1. Crea l'autenticació mitjançant google per a l'aplicació de Futbol-femeni fent un nou tipus d'usuari que serà [convidat], que no té permisos per a fer res en la base dades i no te passwords i soles es pot autenticar mitjançant google. Els altre usuaris no poden autenticar-se mitjançant google.
-
+2. Fes que, a banda de modificar la classificació, ixca una alerta en la pantalla i es canvie el color de l'equip a roig si baixa o a verd si puja.
+  
 Tria un: 
 
-902. Crea un canal de difusió per a l'aplicació de BatoiBook. Crea un esdeveniment que s'envie per aquest canal de difusió quan es realitze una venda
+ 
 903. Crea un chat per a l'API de ChatGPT en l'aplicació de BatoiBook. Fes que al mostrar el llibre (soles en show) ixca un index del llibre generat per chatgtp.
 904. Crea una pasarela de pagament per a l'aplicació de BatoiBook.
 
