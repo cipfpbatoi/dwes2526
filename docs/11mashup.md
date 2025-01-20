@@ -197,7 +197,6 @@ Aquesta ordre:
 Si vols utilitzar **Pusher Channels** per a la difusió d'esdeveniments, segueix aquests passos:
 
  
- 
 1. Instal·la el paquet de PHP de Pusher Channels amb Composer:
    
 ```bash
@@ -329,66 +328,59 @@ En el teu fitxer de configuració (per exemple, config/services.php), afegeix un
 Per a això creem un directori Services i un fixer ChatGPTService.php
 
 ```php
-<?php
-
-namespace App\Http\Services;
-
+namespace App\Services;
+ 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
-
-class ChatGTPService
+class ChatGPTService
 {
-    /**
-     * Register services.
-     */
 
-    protected $client;
-
-    public function __construct()
+    public static function getChatResponse($question)
     {
-        $this->client = new Client([
-            'base_uri' => 'https://api.openai.com/v1/',
-            'headers' => [
-                'Authorization' => 'Bearer ' . config('services.openai.api_key'),
-            ],
-        ]);
-    }
 
-    public function response($question){
         try {
-            $response = $this->client->post('chat/completions', [
+            $client = new Client([
+                'base_uri' => 'https://api.openai.com/v1/',
+                'headers' => [
+                    'Authorization' => 'Bearer ' . config('services.openai.api_key'),
+                    'Content-Type' => 'application/json',
+                ],
+            ]);
+            $response = $client->post('chat/completions', [
                 'json' => [
                     'model' => 'gpt-3.5-turbo',
                     'messages' => [
                         ['role' => 'system', 'content' => 'Ets un fan del Barça.'],
                         ['role' => 'user', 'content' => $question],
-                   ],
+                    ],
                     'max_tokens' => 250,
                 ],
             ]);
 
-            $body = $response->getBody();
-            $content = json_decode($body->getContents(), true);
-            return $content['choices'];
+            $body = json_decode($response->getBody()->getContents(), true);
+            $message = '';
+            foreach ($body['choices'] as $r){
+                if ($r['message']['role'] == 'assistant') {
+                    $message .= $r['message']['content'];
+                }
+            }
+            return $message;
         } catch (\Exception $e) {
-            // Gestiona l'error
-            echo "Error: " . $e->getMessage();
+            Log::error('Error en la resposta de ChatGPT: ' . $e->getMessage());
+            return ['error' => 'No s\'ha pogut obtenir una resposta.'];
         }
     }
 }
+
+
 ```
 
 Ara la forma de utilitzar-lo de forma bàsica és la següent:
 
 ```php
-    $chatService = new ChatGTPService();
-    $reply = $chatService->response($question);
-    $message = '';
-    foreach ($reply as $r){
-        if ($r['message']['role'] == 'assistant') {
-                $message .= $r['message']['content'];
-        }
-    }
+$descripcio = ChatGPTService::getChatResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
+        
 ```        
 
 
