@@ -801,26 +801,112 @@ protected static function booted()
     }
 ```
 
+### Exemple Integració amb ChatGPT API
+
+#### Pas 1 - Configuració de l'API
+
+1. Obtenir les credencials de l'API de ChatGPT: Registra't a OpenAI i obtingues les credencials de l'API de ChatGPT.
+2. Configura les credencials en el fitxer .env: Afegeix la clau de l'API a les variables d'entorn del teu projecte Laravel.
+
+```php
+OPENAI_API_KEY=tua_clau_api
+```
+
+3. Afegeix la configuració de l'API a config/services.php:
+
+```php
+'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+    ],
+```
+
+#### Pas 2 - Creació del Servei
+
+Crea un servei per a gestionar les crides a l'API de ChatGPT:
+
+```php
+namespace App\Services;
+
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
+
+class ChatGPTService
+{
+
+    public static function getChatResponse($question)
+    {
+
+        try {
+            $client = new Client([
+                'base_uri' => 'https://api.openai.com/v1/',
+                'headers' => [
+                    'Authorization' => 'Bearer ' . config('services.openai.api_key'),
+                    'Content-Type' => 'application/json',
+                ],
+            ]);
+            $response = $client->post('chat/completions', [
+                'json' => [
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => [
+                        ['role' => 'system', 'content' => 'Ets un fan del Barça.'],
+                        ['role' => 'user', 'content' => $question],
+                    ],
+                    'max_tokens' => 250,
+                ],
+            ]);
+
+            $body = json_decode($response->getBody()->getContents(), true);
+            $message = '';
+            foreach ($body['choices'] as $r){
+                if ($r['message']['role'] == 'assistant') {
+                    $message .= $r['message']['content'];
+                }
+            }
+            return $message;
+        } catch (\Exception $e) {
+            Log::error('Error en la resposta de ChatGPT: ' . $e->getMessage());
+            return ['error' => 'No s\'ha pogut obtenir una resposta.'];
+        }
+    }
+}
+``` 
+
+#### Pas 3 - Utilització del Servei
+
+Utilitza el servei en el teu controlador per obtenir respostes de ChatGPT:
+
+```php
+public function show(Equip $equip) {
+        $descripcio = ChatGPTService::getChatResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
+        return view('equips.show', compact('equip','descripcio'));
+    }
+```
+
+Modifica la vista per a mostrar la descripció:
+
+```php
+@extends('layouts.futbolFemeni')
+@section('title', "Pàgina equip Femení" )
+@section('content')
+<x-equip
+   :nom="$equip->nom"
+   :estadi="$equip->estadi->nom"
+   :titols="$equip->titols"
+   :escut="$equip->escut"
+   :jugadores="$equip->jugadores"
+   :descripcio="$descripcio"
+/>
+@endsection
+```
+
+Modifica el component de la vista ...
 
 ### Activitats
 
 1. Crea l'autenticació mitjançant google per a l'aplicació de Futbol-femeni fent un nou tipus d'usuari que serà [convidat], que no té permisos per a fer res en la base dades i no te passwords i soles es pot autenticar mitjançant google. Els altre usuaris no poden autenticar-se mitjançant google.
 2. Fes que, a banda de modificar la classificació, ixca una alerta en la pantalla i es canvie el color de l'equip a roig si baixa o a verd si puja.
-  
-Tria un: 
+3. Fes que, al mostrar l'estadi isca una descripció de l'estadi feta per chatgpt.
+4. Crea una pasarela de pagament per a l'ús de l'aplicació de Futbol-femeni.
 
  
-903. Crea un chat per a l'API de ChatGPT en l'aplicació de BatoiBook. Fes que al mostrar el llibre (soles en show) ixca un index del llibre generat per chatgtp.
-904. Crea una pasarela de pagament per a l'aplicació de BatoiBook.
-
-Investiga:
-
-905. Tria un e intenta intregrar en batoibooks:
-
-        * Integració de Google Maps API.
-        * Gestió d'Enviaments amb APIs de Logística.
-        * Integració de Passarel·les de Pagament.
-        * Ús de APIs de Xarxes Socials.
-        * Serveis Meteorològics Integrats.
-        * Recollida d'Opinions amb APIs de Ressenyes.
 
