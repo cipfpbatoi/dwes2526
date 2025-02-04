@@ -16,6 +16,7 @@ nav:
   - "10.- Desenvolupament d'Apis amb Laravel": "10laravelRestul.md"
   - "11.- Webs Hibrides": "11mashup.md"
   - "12.- Solucions Exercicis propossats": "10solucions.md"
+  - "13.- Exercicis recuperació": "12exercicis_addicionals.md"
 
 theme:
   language: ca

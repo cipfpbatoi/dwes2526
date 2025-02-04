@@ -467,7 +467,6 @@ class PaymentController extends Controller
                 env('PAYPAL_SANDBOX_SECRET')         // ClientSecret
             )
         );
-        $this->apiContext->setConfig(['mode' => 'sandbox']);
     }
 
     public function createPayment()
