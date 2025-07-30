@@ -827,7 +827,7 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 
 ### Entorn de desenvolupament integrat (IDE)
 
-En este curso utilitzarem [**Visual Studio Code**](<https://code.visualstudio.com>) com a editor  de codi. Existixen altres alternatives, com  [**PHP Storm**](<https://www.jetbrains.com/phpstorm/>).
+En este curs utilitzarem [**Visual Studio Code**](<https://code.visualstudio.com>) com a editor  de codi. Existixen altres alternatives, com  [**PHP Storm**](<https://www.jetbrains.com/phpstorm/>).
 
 ### GitHub Classroom
 
@@ -835,7 +835,7 @@ Us haureu de [registrar](https://classroom.github.com/) ja que l'utilitzarem dur
 
 **Metodologia de treball amb el github classroom**
 
-* Se proporcionarà a l'alumnat un enllaç amb la invitació.
+* Se li proporcionarà a l'alumnat un enllaç amb la invitació.
 * Accedint a l'enllaç a cada alumne se li crearà un repositori individual en l'organització.
 * L'alumnat treballa en el seu repositori assignat. Se'l pot baixar per treballar en local.
 * Inicialment, l'alumne crea una branca nova sobre la que va a treballar.
@@ -878,23 +878,8 @@ La tercera opció té les següents característiques:
 * Els contenidors ocupen pocs recursos.
 * Els projectes es poden possar en producció utilitzan una solució docker de manera inmediata.
 
-### XAMPP
-
-XAMPP (https://www.apachefriends.org/es/index.html) és una distribució composta amb el programari necessari per a desenvolupar en entorn servidor. Es compon de les següents eines sobre la base de les seues sigles:
-Des de la pròpia pàgina es pot descarregar l'arxiu executable per al sistema operatiu del nostre ordinador. Es recomana llegir la FAQ de cada sistema operatiu amb instruccions per a la seua posada en marxa.
-
-!!! note "Acrònim"  
-    * X per al sistema operatiu (d'aquí ve que es conega altrament com LAMP o WAMP).
-    * A per a Apatxe.
-    * M per a MySQL / MariaDB. També inclou phpMyAdmin per a l'administració de la base de dades des d'una interfície web.
-    * P per a PHP.
-    * P per a Perl.
-
-
-!!! note "XAMPP en Windows"
-    Si treballes amb el teu propi ordinador, XAMPP és una solució més senzilla que Docker, sobretot si treballes amb Windows com a sistema operatiu.
-
-### Docker
+ 
+#### Docker
 
 Docker (<https://www.docker.com>) és un gestor de contenidors, considerant un contenidor com un mètode de virtualització del sistema operatiu.
 L'ús de contenidors requereix menys recursos que una màquina virtual, per tant, el seu llançament i detenció són més ràpids que les màquines virtuals.
@@ -909,7 +894,7 @@ Al llarg del curs anirem creant diferents contenidors amb els serveis necessaris
     Per a instal·lar-ho en Windows, és necessari instal·lar prèviament **WSL 2**, el qual és un subsistema de *Linux* dins de *Windows*.
 
 
-#### Plantilla Inicial : Servidor Web nginx + PHP + MySQL + phpMyAdmin
+##### Plantilla Inicial : Servidor Web nginx + PHP + MySQL + phpMyAdmin
 
 **Docker** es basa en l'ús d'imatges per a crear contenidors. *Docker Compose* simplifica el treball amb múltiples contenidors, i per això, per a facilitar l'arranc, ens centrarem en *Docker Compose* utilitzant una plantilla que únicament contindrà com a serveis Nginx i PHP.
 Per a facilitar la posada en marxa, us facilite un repositori, disponible per a la seua descarrega mitjançant el **git clone**.
@@ -1047,7 +1032,7 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 2. **[GitHub Microservices Examples](https://github.com/search?q=microservices)**
 
 - Repositoris de codi font en GitHub que il·lustren com implementar microserveis i altres arquitectures web modernes.
-
+ 
 ## 9.AutoAvaluació
 
 #### Exercici 1: Models d'execució de codi
