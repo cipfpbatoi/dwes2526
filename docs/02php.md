@@ -1,4 +1,4 @@
-# El llenguatge PHP
+# Programació web amb PHP
 
 ??? abstract "Duració i criteris d'avaluació"
 
@@ -10,20 +10,16 @@
     | -------                 | -------             |
     | 2. Escriu sentències executables per un servidor Web reconeixent i aplicant procediments d'integració del codi en llenguatges de marques. | a) S'han reconegut els mecanismes de generació de pàgines Web a partir de llenguatges de marques amb codi embegut. <br/> b) S'han identificat les principals tecnologies associades.  <br/> c) S'han utilitzat etiquetes per a la inclusió de codi en el llenguatge de marques.  <br/> d) S'ha reconegut la sintaxi del llenguatge de programació que s'ha d'utilitzar.  <br/> e) S'han escrit sentències simples i s'ha comprovat els seus efectes en el document resultant.  <br/> f) S'han utilitzat directives per a modificar el comportament predeterminat.  <br/> g) S'han utilitzat els diferents tipus de variables i operadors disponibles en el llenguatge.  <br/> h) S'han identificat els àmbits d'utilització de les variables.  <br/> |
     | 3. Genera pàgines web de forma dinàmica seguint especificacions rebudes. | a) S'han identificat els mecanismes de separació de la lògica de negoci.<br/>b) S'han utilitzat tecnologies adequades per a la generació dinàmica de pàgines web.<br/>c) S'han utilitzat tècniques d'accés a dades.<br/>d) S'han generat pàgines web dinàmiques que compleixen amb les especificacions rebudes.<br/>e) S'ha comprovat el funcionament de les pàgines web generades.<br/>f) S'han seguit les convencions de format i codificació establertes. |
+    | 4. Desenvolupa aplicacions Web embegudes en llenguatges de marques analitzant i incorporant funcionalitats segons especificacions | a) S'han identificat els mecanismes disponibles per al manteniment de la informació que concerneix un client web concret i s'han assenyalat els seus avantatges.<br /> b) S'han utilitzat mecanismes per a mantindre l'estat de les aplicacions web.<br /> c) S'han utilitzat mecanismes per a emmagatzemar informació en el client web i per a recuperar el seu contingut.<br /> d) S'han identificat i caracteritzat els mecanismes disponibles per a l'autenticació d'usuaris.<br /> e) S'han escrit aplicacions que integren mecanismes d'autenticació d'usuaris.<br /> f) S'han utilitzat eines i entorns per a facilitar la programació, prova i depuració del codi. |
 
 
 
-## 1. Introducció a PHP
+## SA2.1.Introducció a PHP
 
 #### Què és PHP?
 **PHP** (Hypertext Preprocessor) és un llenguatge de programació de codi obert, especialment dissenyat per al desenvolupament web del costat del servidor. Es pot incrustar fàcilment en codi HTML, cosa que el fa una opció popular per crear aplicacions web dinàmiques i interactives. PHP s'utilitza per gestionar el contingut dinàmic, les bases de dades, el seguiment de sessions i fins i tot per crear aplicacions completes.
 
-#### Història de PHP
-
-PHP (Hypertext Preprocessor) és un llenguatge de programació de codi obert creat l'any 1994 per Rasmus Lerdorf. La primera versió pública va ser PHP/FI (Personal Home Page/Forms Interpreter), que va evolucionar fins a convertir-se en PHP 3 el 1998, el qual va ser completament reescrit per Zeev Suraski i Andi Gutmans.
-
-Actualment, PHP és mantingut per The PHP Group i la versió estable més recent (a partir de juliol de 2024) és PHP 8.3. Aquesta versió inclou millores en el rendiment, noves funcions com les propietats llegibles i escriptibles per tipus, expressió `match`, i molt més.
-
+ 
 #### Importància en el desenvolupament web
 PHP és un dels llenguatges més utilitzats en el desenvolupament web per diverses raons:
 
@@ -33,31 +29,8 @@ PHP és un dels llenguatges més utilitzats en el desenvolupament web per divers
 * **Flexibilitat i escalabilitat:** PHP és altament flexible i es pot utilitzar per desenvolupar tant aplicacions petites com projectes grans i complexos. També és escalable, cosa que permet gestionar un gran volum de trànsit.
 * **Cost efectiu:** Com que és de codi obert, PHP és gratuït per utilitzar i distribuir. Això redueix els costos de desenvolupament per a les empreses i els desenvolupadors.
 
-#### Exemple de codi PHP simple
-Aquí tens un exemple senzill de com funciona PHP:
-
-=== "PHP" 
-
-```php
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1>El meu primer script PHP</h1>
-
-<?php
-echo "Hola, món!";
-?>
-
-</body>
-</html>
-```
-
-En aquest exemple, el codi PHP s'incrusta dins del codi HTML i es delimina amb <?php i ?>. Quan el servidor processa aquest fitxer, executa el codi PHP i envia el resultat al navegador, generant el contingut dinàmic "Hola, món!".
-Aquest és un altre exemple de com PHP pot generar HTML dinàmicament:
-
-
-## 2. Llenguatges imbricats en HTML
+ 
+### 1. Llenguatges imbricats en HTML
 PHP permet incrustar codi dins de documents HTML, permetent la generació de contingut dinàmic. El codi PHP es delimita amb `<?php ... ?>`.
 És comú utilitzar codi PHP dins de HTML per generar contingut dinàmic. També es pot incloure HTML dins de fitxers PHP.
 ```php
@@ -82,7 +55,7 @@ echo "</body></html>";
 !!! tip "Només etiquetes d'obertura"
     Si el nostre codi només contindrà codi PHP i res d'html, com per exemple, quan codifiquem classes o interfícies, només posarem l'etiqueta d'obertura, per a així indicar que és una arxiu de php pur.
 
-## 3. Etiquetes per a inserció de codi
+### 2. Etiquetes per a inserció de codi
 Per inserir codi PHP dins de HTML, utilitzem les etiquetes:
 ```php
 <?php
@@ -104,7 +77,7 @@ Exemple:
 </html>
 ```
 
-## 4. Tipus de dades. Conversions entre tipus de dades
+### 3. Tipus de dades. Conversions entre tipus de dades
 PHP té diversos tipus de dades: enter, flotant, cadena, booleà, matriu, objecte, nul.
 ```php
 $enter = 10; // Enter
@@ -126,7 +99,7 @@ Exemple:
 $cadena = "123";
 $enter = (int)$cadena; // Converteix la cadena "123" a l'enter 123
 ```
-## 5. Constants
+### 4. Constants
 Són variables el valor dels quals no varien. Existeixen dues possibilitats:
 
 * `define(NOMBRE, valor);`
@@ -143,7 +116,7 @@ echo PI, " ", IVA; // No se pone el símbolo dolar
 * Es declaren sempre en MAJÚSCULES
 * Hi ha un conjunt de constants ja predefinides, també conegudes com *magic constants*: <https://www.php.net/manual/es/language.constants.predefined.php>
 
-## 6. Variables. Operadors.  Àmbits de les variables
+### 5. Variables. Operadors.  Àmbits de les variables
 
 * No és necessari declarar-les prèviament.
 * Comencen per `$`, per exemple `$nom`. Després del `$`, el següent caràcter ha de ser una lletra en minúscula (recomanació) o guió baix `_`. Després ja es poden posar números.
@@ -168,22 +141,7 @@ Estàtic: persisteixen el seu valor entre crides a la funció.
 
  
 Exemple:
-```php
-$global = 10; // Variable global    
-function contar() {
-    static $vegades = 0;
-    $local = 0; // Variable local
-    $local++;
-    $vegades++;
-    $global++;
-    echo $local,$vegades,$global;
-}
-contar(); // Mostra 1,1,11
-contar(); // Mostra 1,2,12
-```
-
-## 7. Sentències simples en PHP i els seus efectes
-
+   
 Assignacions
 ```php
 $x = 5;
@@ -204,30 +162,9 @@ Operacions amb cadenes:
 $nom = "Joan";
 $salutacio = $y . ", " . $nom;  // Resulta en "Hola món, Joan"
 ```
-Exemple complet:
-```php
-<?php
-// Assignació de valors
-$x = 5;
-$y = "Hola món";
-
-// Operacions aritmètiques
-$suma = $x + 10;
-$producte = $x * 2;
-
-// Concatenació de cadenes
-$nom = "Joan";
-$salutacio = $y . ", " . $nom;
-
-// Impressió de resultats
-echo $y;  // Hola món
-echo $suma;  // 15
-echo $producte;  // 10
-echo $salutacio;  // Hola món, Joan
  
-```
 
-## 8. Funcions 
+### 6. Funcions 
 
 1. **Sintaxi bàsica**:
     - La paraula clau `function` es fa servir per a definir la funció.
@@ -288,7 +225,8 @@ $resultat = sumar(5, 3);  // $resultat conté 8
 ```
 
 
-## 9. Directives per a modificar el comportament predeterminat del codi
+### 7. Directives per a modificar el comportament predeterminat del codi
+
 Include i require:
 ```php
 include 'fitxer.php';
@@ -315,7 +253,7 @@ saludar(); // Mostra "Hola!"
 ?>
 ```
  
-## 10. Mecanismes de decisió (if, switch)
+### 8. Mecanismes de decisió (if, switch)
 If, else, elseif:
 ```php
 if ($condicio) {
@@ -409,7 +347,7 @@ $tipusDia = match ($dia) {
 echo $tipusDia;  // Sortida: Dia laborable
 ```
 
-## 11. Bucles (for, while, foreach)
+### 9. Bucles (for, while, foreach)
 For:
 ```php
 for ($i = 0; $i < 10; $i++) {
@@ -439,7 +377,7 @@ foreach ($fruites as $fruita) {
 }
 ```
 
-## 12. Arrays
+### 10. Arrays
 
 Per a emmagatzemar dades compostes, podem utilitzar tant arrays senzills com arrays associatius (similars a un mapa). En realitat tots els arrays són mapes ordenats compostos de parells clau-valor.
 
@@ -481,7 +419,7 @@ foreach ($frutas as $fruta) {
 }
 ```
 
-## 13. Arrays associatius
+### 11. Arrays associatius
 
 Cada element és un parell clau-valor. En comptes d'accedir per la posició, el fem mitjançant una clau. Així doncs, per a cada clau s'emmagatzema un valor.
 
@@ -510,7 +448,7 @@ foreach ($capitales as $pais => $ciudad) { // separamos cada elemento en clave =
 }
 ```
 
-## 14. Com utilitzar les cometes en PHP
+### 12. Com utilitzar les cometes en PHP
 
 En PHP, les cometes dobles (`"`) i les cometes simples (`'`) s'utilitzen per definir cadenes de caràcters, però tenen comportaments diferents a l'hora de processar variables:
 
@@ -536,7 +474,7 @@ $frase = "El meu color preferit és $color.";
 echo $frase;  // Sortida: El meu color preferit és blau.
   ```
 
-## 15. Comentaris en el codi
+### 13. Comentaris en el codi
 Comentaris d'una línia:
 ```php
 // Això és un comentari d'una línia
@@ -546,7 +484,7 @@ Comentaris de diverses línies:
 /* Això és un comentari
    de diverses línies */
 ```
-## 16. Variables de servidor
+### 14. Variables de servidor
 
 PHP emmagatzema la informació del servidor i de les peticions HTTP en sis arrays globals:
 
@@ -598,7 +536,7 @@ Apatxe crea una clau per a cada capçalera HTTP, en majúscules i substituint el
 echo $_SERVER["HTTP_USER_AGENT"]."<br>"; // Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36
 ```
 
-## 17. Formularis
+### 15. Formularis
 
 A l'hora d'enviar un formulari, hem de tindre clar quan usar GET o POST
 
@@ -753,92 +691,1097 @@ Cada arxiu carregat en `$_FILES` té:
 * `type`: tipus ACARONE
 * `error`: si hi ha error, conté un missatge. Si ok → 0.
 
-## Capçaleres de resposta
+## SA2.2 Mecanismes per al Manteniment de la Informació en Aplicacions Web
+ 
+### 1. Fonaments 
 
-Ha de ser el primer a retornar. Es retornen mitjançant la funció `header(cadena)`. Mitjançant les capçaleres podem configurar el tipus de contingut, temps d'expiració, redirigir el navegador, especificar errors HTTP, etc.
+HTTP és un protocol **stateless**, sense estat. En les aplicacions web modernes, és essencial gestionar l'estat del client per proporcionar una experiència d'usuari fluida i personalitzada.
+Per això, se simula l'estat mitjançant l'ús de cookies, tokens o la sessió. L'estat és necessari per a processos com ara el carret de la compra, operacions associades a un usuari, etc...
+A continuació es detallen diversos mecanismes per mantenir aquesta informació, així com els seus avantatges i desavantatges.
 
-``` php
-<?php header("Content-Type: text/plain"); ?>
-<?php header("Location: http://www.ejemplo.com/inicio.html");
-exit(); 
-```
+#### Cookies
 
-Es pot comprovar en les eines del desenvolupador dels navegadors web mitjançant *Developer Tools --> Network --> Headers*.
+Les **cookies** són petits fitxers de text emmagatzemats al navegador de l'usuari. Són àmpliament utilitzades per mantenir l'estat del client entre sol·licituds HTTP, ja que HTTP és un protocol sense estat.
 
-És molt comú configurar les capçaleres per a evitar consultes a la cache o provocar la seua renovació:
+##### Avantatges de les Cookies
+
+- **Persistència**: Les cookies poden mantenir-se durant períodes llargs definits per l'atribut `expires` o `max-age`.
+- **Accessibilitat**: Es poden accedir des de qualsevol pàgina del mateix domini.
+- **Simplicitat**: Fàcils d'implementar i gestionar.
+
+##### Desavantatges de les Cookies
+
+- **Seguretat**: Poden ser objectiu d'atacs com **XSS (Cross-Site Scripting)** si no es gestionen correctament.
+- **Limitacions de mida**: Les cookies estan limitades a 4KB de dades.
+- **Privadesa**: Les dades de l'usuari poden ser vulnerables si no es protegeixen adequadament.
+
+ 
+#### Sessions
+
+Les **sessions** són un mecanisme que permet associar dades a un usuari durant una sessió específica. Aquestes dades s'emmagatzemen al servidor, mentre que el client només guarda un identificador de sessió.
+
+##### Avantatges de les Sessions
+
+- **Seguretat**: Les dades sensibles es mantenen al servidor.
+- **Capacitat d'emmagatzematge**: No limitades per la mida de les cookies.
+- **Compartició de dades**: Facilita la compartició d'estat entre diferents components d'una aplicació web.
+
+##### Desavantatges de les Sessions
+
+- **Escalabilitat**: Requereix memòria addicional al servidor, la qual cosa pot ser problemàtica amb molts usuaris.
+- **Persistència limitada**: Normalment només duren mentre el navegador està obert, tret que es configuri d'una altra manera.
+
+ 
+#### Web Storage
+
+El **Web Storage** és una API del navegador que permet emmagatzemar dades al client de manera més senzilla i amb més capacitat que les cookies tradicionals. Inclou dos mecanismes principals: `localStorage` i `sessionStorage`.
+
+##### Característiques del Web Storage
+
+- **`localStorage`**: Permet emmagatzemar dades que persisteixen fins que s'elimina explícitament, fins i tot després de tancar el navegador.
+- **`sessionStorage`**: Les dades es mantenen només durant la sessió del navegador i s'esborren quan es tanca la pestanya o finestra.
+
+##### Avantatges
+
+- **Capacitat d'Emmagatzematge**: Ofereix més espai (fins a 5-10MB) que les cookies.
+- **API Simple**: Proporciona una interfície senzilla per emmagatzemar i recuperar dades.
+
+##### Usos Comuns
+
+- **Manteniment de l'Estat del Client**: Pot guardar dades de sessió i preferències de l'usuari que no cal enviar al servidor.
+- **Sincronització amb l'Entorn Servidor**: Es pot utilitzar per emmagatzemar dades que després es sincronitzen amb el servidor, millorant el rendiment i l'experiència d'usuari.
+
+##### Consideracions de Seguretat
+
+- **Accessibilitat**: Les dades són accessibles per JavaScript, per la qual cosa s'ha de tenir cura amb les vulnerabilitats XSS.
+- **Dades Sensibles**: Evita emmagatzemar dades sensibles o confidencials.
+
+Tot i que **Web Storage** s'executa al costat del client, entendre les seves funcionalitats pot ajudar els desenvolupadors del servidor a dissenyar sistemes més robustos i eficaços, on la cooperació entre client i servidor maximitza l'eficiència de l'aplicació web.
+
+#### Tokens d'Autenticació
+
+Els **JSON Web Tokens (JWT)** són un estàndard obert que defineix una manera compacta i autònoma d'enviar informació entre dues parts de manera segura com a objecte JSON. S'utilitzen habitualment per a l'autenticació en aplicacions web.
+
+##### Avantatges dels JWT
+
+- **Estatut autònom**: Porten tota la informació necessària, eliminant la necessitat de mantenir sessions al servidor.
+- **Escalabilitat**: Milloren l'escalabilitat en aplicacions distribuïdes.
+- **Seguretat**: Es poden signar digitalment per assegurar la seva autenticitat.
+
+##### Desavantatges dels JWT
+
+- **Revocació complexa**: Una vegada emesos, és difícil revocar-los sense mantenir una llista negra.
+- **Sobrecarrega de dades**: Si els tokens són grans, poden afectar el rendiment, especialment en xarxes de baixa latència.
+
+ 
+#### Cache del Navegador
+
+El **cache del navegador** s'utilitza per emmagatzemar còpies temporals de recursos web per millorar el rendiment i reduir la càrrega del servidor.
+
+##### Avantatges del Cache
+
+- **Rendiment**: Redueix el temps de càrrega dels recursos.
+- **Optimització**: Disminueix l'ample de banda requerit.
+
+##### Desavantatges del Cache
+
+- **Consistència**: Pot servir dades obsoletes si no es gestiona correctament.
+- **Control**: Requereix configuració per evitar el caching indesitjat de dades dinàmiques.
+
+ 
+### 2. Cookies i Sessions en PHP
+
+#### Cookies
+
+Les cookies s'emmagatzemen en el array global `$_COOKIE`. El que col·loquem dins del array, es guardarà en el client. Cal tindre present que el client pot no voler emmagatzemar-les.
+
+Existeix una limitació de 20 cookies per domini i 300 en total en el navegador.
+
+En PHP, per a crear una cookie s'utilitza la funció `setcookie`:
 
 ``` php
 <?php
-header("Expires: Sun, 31 Jan 2021 23:59:59 GMT");
-// tres horas
-$now = time();
-$horas3 = gmstrftime("%a, %d %b %Y %H:%M:%S GMT", $now + 60 * 60 * 3);
-header("Expires: {$horas3}");
-// un año
-$now = time();
-$anyo1 = gmstrftime("%a, %d %b %Y %H:%M:%S GMT", $now + 365 * 86440);
-header("Expires: {$anyo1}");
-// se marca como expirado (fecha en el pasado)
-$pasado = gmstrftime("%a, %d %b %Y %H:%M:%S GMT");
-header("Expires: {$pasado}");
-// evitamos cache de navegador y/o proxy
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-header("Cache-Control: no-store, no-cache, must-revalidate");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-// redirigimos a otra página
-header("Location: http://www.ejemplo.com/inicio.html");
-exit();
-// devolvemos un error 404
-header("HTTP/1.0 404 Not Found");
-// enviamos un archivo para descargar
-header("Content-Type: application/force-download");
-// enviamos un archivo json
-header("Content-Type: application/json");
+setcookie(
+    'nom_cookie',
+    'valor_cookie',
+    [
+        'expires' => time() + 3600, // 1 hora
+        'path' => '/',
+        'domain' => '', // Domini actual
+        'secure' => true, // Només HTTPS
+        'httponly' => true, // Només accessible via HTTP
+        'samesite' => 'Lax' // o 'Strict' o 'None'
+    ]
+);
+?>
+```
+Destacar que el nom no pot contindre espais ni el caràcter `;`. Respecte al contingut de la cookie, no pot superar els 4 KB.
+
+##### Consideracions de seguretat per a cookies:
+
+**HTTPOnly**: Assegura't que les cookies que contenen informació sensible no siguin accessibles per JavaScript utilitzant l'atribut HttpOnly.
+
+**Secure**: Utilitza l'atribut Secure per assegurar que les cookies només es transmeten en connexions HTTPS.
+
+**SameSite**: Defineix correctament l'atribut SameSite per a prevenir atacs CSRF (Cross-Site Request Forgery).
+
+
+Per exemple, mitjançant *cookies* podem comprovar la quantitat de visites diferents que realitza un usuari:
+
+``` php
+<?php
+$accesosPagina = 0;
+if (isset($_COOKIE['accesos'])) { 
+    $accesosPagina = $_COOKIE['accesos']; // recuperamos una cookie
+    setcookie('accesos', ++$accesosPagina); // le asignamos un valor
+}
+?>
 ```
 
-## 18. Referències
+!!! tip "Inspeccionant les cookies"
+Si volem veure que contenen les cookies que tenim emmagatzemades en el navegador, es pot comprovar el seu valor en Dev Tools --> Application --> Storage
 
-### Llibres Recomanats
-1. **[PHP and MySQL Web Development](https://www.pearson.com/us/higher-education/program/Welling-PHP-and-My-SQL-Web-Development-5th-Edition/PGM335533.html)** de Luke Welling i Laura Thomson
-    - Aquest llibre proporciona una visió completa sobre el desenvolupament web amb PHP i MySQL, des de conceptes bàsics fins a tècniques avançades.
+El temps de vida de les cookies pot ser tan llarg com el lloc web en el qual resideixen. Elles seguiran ací, fins i tot si el navegador està tancat o obert.
 
-2. **[Learning PHP, MySQL & JavaScript: With jQuery, CSS & HTML5](https://www.oreilly.com/library/view/learning-php-mysql/9781491918661/)** de Robin Nixon
-    - Ideal per a aquells que busquen una introducció pràctica al desenvolupament web modern utilitzant PHP juntament amb altres tecnologies web.
+Per a esborrar una cookie es pot posar que expiren en el passat:
 
-3. **[Modern PHP: New Features and Good Practices](https://www.oreilly.com/library/view/modern-php/9781491905180/)** de Josh Lockhart
-    - Aquest llibre explora les novetats i bones pràctiques en les versions modernes de PHP, incloent-hi temes com la programació orientada a objectes i l'ús de frameworks.
+``` php
+<?php
+setcookie(nombre, "", 1) // pasado
+```
 
-### Documentació Oficial
-- **[Documentació Oficial de PHP](https://www.php.net/manual/es/index.php)**
-    - La documentació oficial de PHP és una referència essencial per a qualsevol desenvolupador que utilitzi PHP. Inclou guies de llenguatge, referències de funcions i exemples de codi.
+O que caduquen dins d'un període de temps deteminado:
 
-### Cursos en Línia
-- **[Curso de PHP en W3Schools](https://www.w3schools.com/php/)**
-    - Un recurs en línia gratuït amb tutorials i exercicis interactius que cobreixen els conceptes bàsics i avançats de PHP.
+``` php
+<?php
+setcookie(nombre, valor, time() + 3600) // Caducan dentro de una hora
+```
 
-- **[PHP for Beginners - Become a PHP Master - CMS Project](https://www.udemy.com/course/php-for-complete-beginners-includes-msql-object-oriented/)** a Udemy
-    - Un curs complet de PHP en Udemy que inclou la creació d'un sistema de gestió de continguts (CMS) com a projecte final.
+<figure style="align: center;">
+    <img src="imagenes/04/04cookies.png" width="700">
+    <figcaption>Comunicació amb cookies</figcaption>
+</figure>
 
-### Recursos Addicionals
-- **[PHP: The Right Way](https://phptherightway.com/)**
-    - Un recurs comunitari que ofereix bones pràctiques, consells i pautes per al desenvolupament amb PHP.
+S'utilitzen per a:
 
-- **[Laravel Documentation](https://laravel.com/docs)**
-    - Documentació oficial de Laravel, un dels frameworks de PHP més populars per al desenvolupament web.
+* Recordar els inicis de sessió
+* Emmagatzemar valors temporals d'usuari
+* Si un usuari està navegant per una llista paginada d'articles, ordenats d'una certa manera, podem emmagatzemar l'ajust de la classificació.
 
-### Exemples i Tutorials
-- **[TutorialsPoint PHP Tutorial](https://www.tutorialspoint.com/php/index.htm)**
-    - Proporciona una introducció detallada a PHP amb exemples de codi i explicacions pas a pas.
+L'alternativa en el client per a emmagatzemar informació en el navegador és l'objecte [LocalStorage](https://developer.mozilla.org/es/docs/web/api/window/localstorage).
 
-- **[GeeksforGeeks PHP Tutorials](https://www.geeksforgeeks.org/php/)**
-    - Una col·lecció d'articles i tutorials sobre diversos temes relacionats amb PHP, des de conceptes bàsics fins a avançats.
+#### Sessió
 
-### Repositoris de Codi
-- **[GitHub PHP](https://github.com/search?q=PHP)**
-    - Una col·lecció de repositoris de codi font en PHP, on pots trobar projectes de codi obert i exemples pràctics.
+La sessió afig la gestió de l'estat a HTTP, emmagatzemant en aquest cas la informació en el servidor.
+Cada visitant té un ID de sessió únic, el qual per defecte s'emmagatzema en una cookie denominada `PHPSESSID`.
+Si el client no té les cookies actives, l'ID es propaga en cada URL dins del mateix domini.
+Cada sessió té associat un magatzem de dades mitjançant el array global `$_SESSION`, en el qual podem emmagatzemar i recuperar informació.
 
+La sessió comença en executar un script PHP. Es genera un nou ID i es carreguen les dades del magatzem:
+
+<figure style="align: center;">
+    <img src="imagenes/04/04sesion.png" width="700">
+    <figcaption>Comunicació amb sessions</figcaption>
+</figure>
+
+Les operacions que podem realitzar amb la sessió són:
+
+``` php
+<?php
+session_start(); // carga la sesión
+session_regenerate_id(true); // regenera el id
+session_id() // devuelve el id
+$_SESSION[clave] = valor; // inserción
+session_destroy(); // destruye la sesión
+unset($_SESSION[clave]; // borrado
+```
+
+Veurem mitjançant un exemple com podem inserir en un pàgina dades en la sessió per a posteriorment en una altra pàgina accedir a aqueixes dades. Per exemple, en `sesion.php` tindríem
+
+``` php
+<?php
+// Iniciar sessió
+session_start();
+session_regenerate_id(true);
+
+// Establir valors de sessió
+$_SESSION['usuari'] = 'JohnDoe';
+$_SESSION['rol'] = 'admin';
+
+?>
+
+```
+
+I posteriorment podem accedir a la sessió en `sesion1.php`:
+
+``` php
+<?php
+session_start();
+// Recuperar valors de sessió
+echo 'Usuari: ' . $_SESSION['usuari'] . '<br>';
+echo 'Rol: ' . $_SESSION['rol'] . '<br>';
+
+// Tancar sessió de forma segura
+session_unset();  // Eliminar totes les variables de sessió
+session_destroy();  // Destruir la sessió
+?>
+```
+
+!!! note "Configurant la sessió en `php.ini`"
+Les següent propietats de `php.ini` permeten configurar alguns aspectes de la sessió:
+
+      * `session.save_handler`: controlador que gestiona com s'emmagatzema (`files`)
+      * `session.save_path`: ruta on s'emmagatzemen els arxius amb les dades (si tenim un clúster, podríem usar `/mnt/sessions` en tots els servidor de manera que apunten a una carpeta compartida)
+      * `session.name`: nom de la sessió (`PHSESSID`)
+      * `session.acte_start`: Es pot fer que s'autocarregue amb cada script. Per defecte està deshabilitat
+      * `session.cookie_lifetime`: temps de vida per defecte
+
+Més informació en la [documentació oficial](https://www.php.net/manual/es/session.configuration.php).
+
+##### Serialització en PHP
+
+La serialització és el procés de convertir una estructura de dades o un objecte en una seqüència de caràcters que pot ser fàcilment emmagatzemada o transmesa i després reconstruïda. PHP proporciona dos funcions principals per a això: serialize() i unserialize().
+
+1. serialize()
+   La funció serialize() en PHP s'utilitza per a convertir una estructura de dades o un objecte en una representació de cadena.
+
+``` php
+$data = array("a", "b", "c");
+$serialized_data = serialize($data);
+echo $serialized_data;
+```
+Eixida
+
+``` php
+a:3:{i:0;s:1:"a";i:1;s:1:"b";i:2;s:1:"c";}
+```
+
+2. unserialize()
+   La funció unserialize() en PHP s'utilitza per a convertir la representació de cadena serialitzada de nou en una estructura de dades o un objecte.
+
+``` php
+$original_data = unserialize($serialized_data);
+print_r($original_data);
+```
+
+Eixida
+
+``` php
+Array
+(
+    [0] => a
+    [1] => b
+    [2] => c
+)
+```
+
+##### Utilitzant serialització amb Sessions
+Les sessions en PHP permeten emmagatzemar informació d'usuari per ser utilitzada en diverses pàgines. Pot ser útil serialitzar dades per a emmagatzemar-les en una sessió:
+
+Iniciant una sessió i emmagatzemant dades serialitzades:
+
+``` php
+session_start();
+session_regenerate_id(true);
+
+$data = array("a", "b", "c");
+$_SESSION['data_serialitzada'] = serialize($data);
+``` 
+
+``` php
+session_start();
+
+if (isset($_SESSION['data_serialitzada'])) {
+$data = unserialize($_SESSION['data_serialitzada']);
+print_r($data);
+}
+```
+
+Consideracions de Seguretat:
+És crucial entendre que la funció unserialize() pot ser perillosa si s'usa amb dades que no són de confiança, ja que podria portar a l'execució de codi arbitrari. Per això, mai has de deserialitzar dades que vinguen d'una font desconeguda o no fiable sense validar-les prèviament.
+
+### 3. Autenticació d'usuaris
+
+#### Mecanismes d'Autenticació d'Usuaris
+
+| Mecanisme d'Autenticació | Característiques | Avantatges |
+| ------------------------- | ---------------- | ---------- |
+| **Bàsica (usuari/contrasenya)** | Es requereix un nom d'usuari i una contrasenya per accedir. | Fàcil d'implementar, àmpliament utilitzada. |
+| **Cookies** | Emmagatzema informació d'autenticació en el navegador de l'usuari. | Persistència d'inici de sessió, personalització d'experiència. |
+| **Sessions** | Manté l'estat d'autenticació en el servidor amb una identificació de sessió única. | Major seguretat, evita la necessitat d'emmagatzemar informació sensible al client. |
+| **OAuth** | Permet als usuaris accedir a recursos sense compartir les seves credencials. | Seguretat millorada, experiència d'usuari simplificada. |
+| **JWT (JSON Web Token)** | Utilitza tokens basats en JSON per a l'autenticació. | Lliure d'estat, fàcil de compartir entre diferents serveis. |
+| **SAML (Security Assertion Markup Language)** | Utilitza XML per a intercanviar dades d'autenticació entre l'usuari i el servei. | Integració amb sistemes d'autenticació empresarial, alt nivell de seguretat. |
+| **Autenticació multifactor (MFA)** | Requereix múltiples formes de verificació (per exemple, contrasenya + codi SMS). | Seguretat augmentada, redueix el risc de compromís de comptes. |
+
+#### Exemple amb sessions
+
+Una sessió estableix una relació anònima amb un usuari particular, de manera que podem saber si és el mateix usuari entre dues peticions diferents. Si preparem un sistema de login, podrem saber qui utilitza la nostra aplicació.
+
+``` php
+<?php
+// Llista d'usuaris predefinits amb contrasenyes en text pla
+$users = [
+    'user1@example.com' => 'password1',
+    'user2@example.com' => 'password2',
+];
+
+// Convertir les contrasenyes a un format encriptat
+foreach ($users as $email => $password) {
+    $users[$email] = password_hash($password, PASSWORD_BCRYPT);
+}
+
+// Formulari d'autenticació
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    if (isset($users[$email]) && password_verify($password, $users[$email])) {
+        // L'usuari està autenticat
+        session_start();
+        $_SESSION['user'] = $email;
+        echo "Login successful. Welcome, " . $email;
+    } else {
+        // Credencials incorrectes
+        echo "Invalid email or password.";
+    }
+}
+?>
+<form method="post">
+    Email: <input type="email" name="email" required>
+    Password: <input type="password" name="password" required>
+    <button type="submit" name="login">Login</button>
+</form>
+```
+Aquest exemple mostra com mantenir l'estat de la sessió d'un usuari una vegada autenticat.
+
+``` php
+<?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Mostra la pàgina només si l'usuari està autenticat
+echo "Welcome, " . $_SESSION['user'];
+?>
+```
+
+Finalment, necessitem l'opció de tancar la sessió que col·loquem en `logout.php`:
+
+``` php
+<?php
+// Recuperamos la información de la sesión
+session_start();
+
+// Y la destruimos
+session_destroy();
+header("Location: index.php");
+?>
+```
+
+!!! warning "Autenticació en producció"
+En l'actualitat l'autenticació d'usuari no es realitza gestionant la sessió direcamente, sinó que es realitza mitjançant algun framekwork que abstrau tot el procés o la integració de mecanismes d'autenticació tipus *OAuth*, com estudiarem en l'última unitat mitjançant *Laravel*.
+ `
+## SA2.3 POO
+
+#### 1. Introducció de la POO en php
+
+PHP segueix un paradigma de programació orientada a objectes (POO) basada en classes.
+
+Un classe és un plantilla que defineix les propietats i mètodes per a poder crear objectes. D'aquest manera, un objecte és una instància d'una classe.
+
+Tant les propietats com els mètodes es defineixen amb una visibilitat (qui pot accedir)
+
+* Privat - `private`: Només pot accedir la pròpia classe.
+* Protegit - `protected`: Només pot accedir la pròpia classe o els seus descendents.
+* Público - `public`: Pot accedir qualsevol altra classe.
+
+Per a declarar una classe, s'utilitza la paraula clau `class` seguit del nom de la classe. Per a instanciar un objecte a partir de la classe, s'utilitza `new`:
+
+``` php
+<?php
+class NomClase {
+// propiedades
+// y métodos
+}
+
+$ob = new NomClase();
+```
+
+!!! important "Classes amb majúscula"
+Totes les classes comencen per lletra majúscula.
+
+Quan un projecte creix, és normal modelar les classes mitjançant UML (recordeu Entorns de Desenvolupament?). La classes es representen mitjançant un quadrat, separant el nom, de les propietats i els mètodes:
+
+![UML](imagenes/03/uml.png){ width=500 }
+
+Una vegada que hem creat un objecte, s'utilitza l'operador `->` per a accedir a una propietat o un mètode:
+
+``` php
+$objeto->propiedad;
+$objeto->método(parámetros);
+```
+
+Si des de dins de la classe, volem accedir a una propietat o mètode de la mateixa classe, utilitzarem la referència `$this`;
+
+``` php
+$this->propiedad;
+$this->método(parámetros);  
+```
+
+Així doncs, com a exemple, codificaríem una persona en el fitxer `Persona.php` com:
+
+``` php
+<?php
+class Persona {
+    private string $nombre;
+
+    public function setNombre(string $nom) {
+        $this->nombre=$nom;
+    }
+
+    public function imprimir(){
+        echo $this->nombre;
+        echo '<br>';
+    }
+}
+
+$bruno = new Persona(); // creamos un objeto
+$bruno->setNombre("Bruno Díaz");
+$bruno->imprimir();
+```
+
+Encara que es poden declarar diverses classes en el mateix arxiu, és una mala pràctica. Així doncs, cada fitxer contedrá una sola classe, i es nomenarà amb el nom de la classe.
+
+### 2. Principis de la POO
+
+### Encapsulació
+
+Les propietats es defineixen privades o protegides (si volem que les classes heretades puguen accedir).
+
+Per a cada propietat, s'afigen mètodes públics (*getter/setter*):
+
+``` php
+public setPropiedad(tipo $param)
+public getPropiedad() : tipo
+```
+
+Les constants es defineixen públiques perquè siguen accessibles per tots els recursos.
+
+``` php
+<?php
+class MayorMenor {
+    private int $mayor;
+    private int $menor;
+
+    public function setMayor(int $may) {
+        $this->mayor = $may;
+    }
+
+    public function setMenor(int $men) {
+        $this->menor = $men;
+    }
+
+    public function getMayor() : int {
+        return $this->mayor;
+    }
+
+    public function getMenor() : int {
+        return $this->menor;
+    }
+}
+```
+
+#### Rebent i enviant objectes
+
+És recomanable indicar-ho en la mena de paràmetres. Si l'objecte pot retornar nuls es posa `?` davant del nom de la classe.
+
+!!! important "Objectes per referència"
+Els objectes que s'envien i reben com a paràmetres sempre es passen per referència.
+
+``` php hl_lines="2"
+<?php
+function maymen(array $numeros) : ?MayorMenor {
+    $a = max($numeros);
+    $b = min($numeros);
+
+    $result = new MayorMenor();
+    $result->setMayor($a);
+    $result->setMenor($b);
+
+    return $result;
+}
+
+$resultado =  maymen([1,76,9,388,41,39,25,97,22]);
+echo "<br>Mayor: ".$resultado->getMayor();
+echo "<br>Menor: ".$resultado->getMenor();
+```
+
+#### Constructor
+
+El constructor dels objectes es defineix mitjançant el mètode màgic `__construct`.
+Pot o no tindre paràmetres, però només pot haver-hi un únic constructor.
+ 
+Una de les grans novetats que ofereix PHP 8 és la simplificació dels constructors amb paràmetres, la qual cosa es coneix com a promoció de les propietats del constructor*.
+
+Per a això, en comptes d'haver de declarar les propietats com a privades o protegides, i després dins del constructor haver d'assignar els paràmetres a estàs propietats, el propi constructor promociona les propietats.
+
+Vegem-ho millor amb un exemple. Imaginem una classe `Punt` on vulguem emmagatzemar les seues coordenades:
+
+``` php
+<?php
+class Punto {
+    protected float $x;
+    protected float $y;
+    protected float $z;
+
+    public function __construct(
+        float $x = 0.0,
+        float $y = 0.0,
+        float $z = 0.0
+    ) {
+        $this->x = $x;
+        $this->y = $y;
+        $this->z = $z;
+    }
+}
+```
+
+En PHP 8, quedaria de la següent manera (molt més curt, la qual cosa facilita la seua llegibilitat):
+
+``` php
+<?php
+class Punto {
+    public function __construct(
+        protected float $x = 0.0,
+        protected float $y = 0.0,
+        protected float $z = 0.0,
+    ) {}
+}
+```
+
+!!! info "L'ordre importa"
+A l'hora de codificar l'ordre dels elements ha de ser:
+
+    ``` php
+    <?php
+    declare(strict_types=1);
+
+    class NombreClase {
+        // propiedades
+
+        // constructor
+
+        // getters - setters
+
+        // resto de métodos
+    }
+    ?>
+    ```
+
+#### Classes estàtiques
+
+Són aquelles que tenen propietats i/o mètodes estàtics (també es coneixen com *de classe*, perquè el seu valor es comparteix entre totes les instàncies de la mateixa classe).
+
+Es declaren amb `static` i es referencien amb `::`.
+
+* Si volem accedir a un mètode estàtic, s'anteposa el nom de la classe: `Producte::nuevoProducto()`.
+* Si des d'un mètode volem accedir a una propietat estàtica de la mateixa classe, s'utilitza la referència `self`: `self::$numProductos`
+
+``` php
+<?php
+class Producto {
+    const IVA = 0.23;
+    private static $numProductos = 0; 
+
+    public static function nuevoProducto() {
+        self::$numProductos++;
+    }
+}
+
+Producto::nuevoProducto();
+$impuesto = Producto::IVA;
+```
+
+També podem tindre classes normals que tinguen alguna propietat estàtica:
+
+``` php
+<?php
+class Producto {
+    const IVA = 0.23;
+    private static $numProductos = 0; 
+    private $codigo;
+
+    public function __construct(string $cod) {
+        self::$numProductos++;
+        $this->codigo = $cod;
+    }
+
+    public function mostrarResumen() : string {
+        return "El producto ".$this->codigo." es el número ".self::$numProductos;
+    }
+}
+
+$prod1 = new Producto("PS5");
+$prod2 = new Producto("XBOX Series X");
+$prod3 = new Producto("Nintendo Switch");
+echo $prod3->mostrarResumen();
+```
+
+  
+#### Mètodes encadenats
+
+Segueix el plantejament de la programació funcional, i també es coneix com *method chaining*. Planteja que sobre un objecte es realitzen diverses crides.
+
+``` php
+<?php
+$p1 = new Libro();
+$p1->setNombre("Harry Potter");
+$p1->setAutor("JK Rowling");
+echo $p1;
+
+// Method chaining
+$p2 = new Libro();
+$p2->setNombre("Patria")->setAutor("Aramburu");
+echo $p2;
+```
+
+Per a facilitar-ho, modificarem tots els seus mètodes mutants (que modifiquen dades, setters*, ...) perquè retornen una referència a `$this`:
+
+``` php
+<?php
+class Libro {
+    private string $nombre;
+    private string $autor;
+
+    public function getNombre() : string {
+        return $this->nombre;
+    }
+    public function setNombre(string $nombre) : Libro { 
+        $this->nombre = $nombre;
+        return $this;
+    }
+
+    public function getAutor() : string {
+        return $this->autor;
+    }
+    public function setAutor(string $autor) : Libro {
+        $this->autor = $autor;
+        return $this;
+    }
+
+    public function __toString() : string {
+        return $this->nombre." de ".$this->autor;
+    }
+}
+```
+
+#### Mètodes màgics
+
+Totes les classes PHP ofereixen un conjunt de mètodes, també coneguts com *magic methods* que es poden sobreescriure per a substituir el seu comportament. Alguns d'ells ja els hem utilitzats.
+
+Davant qualsevol dubte, és convenient consultar la [documentació oficial](https://www.php.net/manual/es/language.oop5.magic.php).
+
+Els més destacables són:
+
+* `__construct()`
+* `__destruct()` → s'invoca en perdre la referència. S'utilitza per a tancar una connexió a la BD, tancar un fitxer, ...
+* `__toString()` → representació de l'objecte com a cadena. És a dir, quan fem `echo $objecte` s'executa automàticament aquest mètode.
+* `__get(propietat)`, `__set(propietat, valor)` → Permetria accedir a les propietat privades, encara que sempre és més llegible/mantenible codificar els *getter/setter*.
+* `__isset(propietat)`, `__unset(propietat)` → Permet esbrinar o llevar el valor a una propietat.
+* `__sleep()`, `__wakeup()` → S'executen en recuperar (*unserialize^) o emmagatzemar un objecte que se serialitza (*serialize), i s'utilitzen per a permet definir quines propietats se serialitzen.
+* `__call()`, `__callStatic()` → S'executen en cridar a un mètode que no és públic. Permeten sobrecarreguen mètodes.
+
+ 
+## 3. Espai de noms
+
+Des de PHP 5.3 i també coneguts com *Namespaces*, permeten organitzar les classes/interfícies, funcions i/o constants de manera similar als paquets a *Java*.
+
+!!! tip "Recomanació"
+Un només namespace per arxiu i crear una estructura de carpetes respectant els nivells/subnivells (igual que es fa a Java)
+
+Es declaren en la primera línia mitjançant la paraula clau `namespace` seguida del nom de l'espai de noms assignat (cada subnivell se separa amb la barra invertida `\`):
+
+Per exemple, per a col·locar la classe `Producte` dins del *namespace* `Dwes\Exemples` ho faríem així:
+
+``` php
+<?php
+namespace Dwes\Exemples;
+
+const IVA = 0.21;
+
+class Producte {
+    public $nombre;
+      
+    public function muestra() : void {
+        echo"<p>Prod:" . $this->nombre . "</p>";
+    }
+}
+```
+
+#### Accés
+
+Per a referenciar a un recurs que conté un namespace, primer hem de tindre'l disponible fent ús de `include` o `require`. Si el recurs està en el mateix *namespace*, es realitza un accés directe (es coneix com a accés sense qualificar).
+
+Realment hi ha tres tipus d'accés:
+
+* sense qualificar: `recurs`
+* qualificat: `rutaRelativa\recurs` → no fa falta posar el *namespace* complet
+* totalment qualificat: `\rutaAbsoluta\recurs`
+
+``` php
+<?php
+namespace Dwes\Ejemplos;
+
+include_once("Producto.php");
+
+echo IVA; // sin cualificar
+echo Utilidades\IVA; // acceso cualificado. Daría error, no existe \Dwes\Ejemplos\Utilidades\IVA
+echo \Dwes\Ejemplos\IVA; // totalmente cualificado
+
+$p1 = new Producto(); // lo busca en el mismo namespace y encuentra \Dwes\Ejemplos\Producto
+$p2 = new Model\Producto(); // daría error, no existe el namespace Model. Está buscando \Dwes\Ejemplos\Model\Producto
+$p3 = new \Dwes\Ejemplos\Producto(); // \Dwes\Ejemplos\Producto
+```
+ 
+Per a evitar la referència qualificada podem declarar l'ús mitjançant `use` (similar a fer `import` a Java). Es fa en la capçalera, després del `namespace`:
+
+Els tipus Posibles són:
+
+* `use const nombreCualificadoConstante`
+* `use function nombreCualificadoFuncion`
+* `use nombreCualificadoClase`
+* `use nombreCualificadoClase as NuevoNombre` // per a canviar de nom elements
+
+Per exemple, si volem utilitzar la classe `\Dwes\Exemples\Producte` des d'un recurs que es troba en l'arrel, per exemple en `inici.php`, faríem:
+
+``` php
+<?php
+include_once("Dwes\Exemples\Producte.php");
+
+use const Dwes\Exemples\IVA;
+use \Dwes\Exemples\Producte;
+
+echo IVA;
+$p1 = new Producte();
+```
+
+!!! tip "To `use` or not to `use`"
+En resum, `use` permet accedir sense qualificar a recursos que estan en un altre *namespace*. Si estem en el mateix espai de nom, no necessitem `use`.
+
+#### Organització
+
+Tot projecte, conforme creix, necessita organitzar el seu codi font. Es planteja una organització en la qual els arxius que interactuan amb el navegador es col·loquen en l'arrel, i les classes que definim van dins d'un namespace (i dins de la seua pròpia carpeta `src` o `app`).
+
+<figure>
+<img src="imagenes/03/03organizacion.png">
+<figcaption>Organització del codi font</figcaption>
+</figure>
+
+!!! tip "Organització, includes i usos"
+* Col·locarem cada recurs en un fitxer a part.
+* En la primera línia indicarem la seua *namespace* (si no està en l'arrel).
+* Si utilitzem altres recursos, farem un `include_once` d'aqueixos recursos (classes, interfícies, etc...).
+* Cada recurs ha d'incloure tots els altres recursos que referencie: la classe de la qual hereta, interfícies que implementa, classes utilitzades/rebudes com a paràmetres, etc...
+* Si els recursos estan en un espai de noms diferent al que estem, emprarem `use` amb la ruta completa per a després utilitzar referències sense qualificar.
+
+#### Autoload
+
+No és tediós haver de fer el `include` de les classes? El autoload ve al rescat.
+
+Així doncs, permet carregar les classes (no les constants ni les funcions) que s'utilitzaran i evitar haver de fer el `include_once` de cadascuna d'elles. Per a això, es pot utilitzar el composer.
+
+### 4. Composer
+
+<figure style="float: right;">
+    <img src="imagenes/05/logo-composer.png" width="200">
+    <figcaption>Logo Composer</figcaption>
+</figure>
+
+Eina per excel·lència en PHP per a la gestió de llibreries i dependències, de manera que instal·la i les actualitza assegurant que tot l'equip de desenvolupament té el mateix entorn i versions. A més, ofereix *autoloading* del nostre codi, de manera que no hàgem de fer-lo nosaltres "a mà".
+
+Està escrit en PHP, i podeu consultar tota la seua documentació en [https://getcomposer.org/](https://getcomposer.org/).
+
+Utilitza [*Packagist*]( https://packagist.org/) com a repositori de llibreries.
+
+Funcionalment, és similar a Maven (Java) / npm (JS).
+
+#### Instal·lació
+
+Si estem usant XAMPP, hem d'instal·lar *Composer* en el propi sistema operatiu. Es recomana seguir les [instruccions oficials](https://getcomposer.org/doc/00-intro.md) segons el sistema operatiu a emprar.
+
+En canvi, si usem *Docker*, necessitem modificar la configuració del nostre contenidor. En el nostre cas, hem decidit modificar l'arxiu `Dockerfile` i afegir el següent comando:
+
+``` docker
+COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
+```
+
+És important que dins del contenidor comprovem que tenim la v2:
+
+``` bash
+composer -V
+```
+
+#### Primers passos
+
+Quan creem un projecte per primera vegada, hem d'inicialitzar el repositori. Per a això, executarem el comando `composer init` on:
+
+* Configurem el nom del paquet, descripció, autor (nom <email>), tipus de paquet (project), etc...
+* Definim les dependències del projecte (`require`) i les de desenvolupament (`require-dev`) de manera interactiva.
+* En les de desenvolupament s'indica aquelles que no s'instal·laran a l'entorn de producció, per exemple, les llibreries de proves.
+
+Després de la seua configuració, es crearà automàticament l'arxiu `composer.json` amb les dades introduïdes i descàrrega les llibreries en la carpeta `vendor`. La instal·lació de les llibreries sempre es realitza de manera local per a cada projecte.
+
+``` json
+{
+    "name": "dwes/log",
+    "description": "Pruebas con Monolog",
+    "type": "project",
+    "require": {
+        "monolog/monolog": "^2.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aitor Medrano",
+            "email": "a.medrano@edu.gva.es"
+        }
+    ]
+}
+```
+
+A l'hora d'indicar cada llibreria introduirem:
+
+* el nom de la llibreria, composta tant pel creador o "vendor", com pel nom del projecte. Exemples: `monolog/monolog` o `laravel/installer`.
+* la versió de cada llibreria. Tenim diverses opcions per a indicar-la:
+
+    * Directament: 1.4.2
+    * Amb comodins: 1.
+    * A partir de: >= 2.0.3
+    * Sense trencament de canvis: ^1.3.2 // >=1.3.2 <2.0.0
+
+#### Actualitzar llibreries
+
+Podem definir les dependències via l'arxiu `composer.json` o mitjançant comandos amb el format `composer require vendor/package:version`. Per exemple, si volem afegir phpUnit com a llibreria de desenvolupament, farem:
+
+``` bash
+composer require phpunit/phpunit –dev
+```
+
+Després d'afegir noves llibreries, hem d'actualitzar el nostre projecte:
+
+``` bash
+composer update
+```
+
+Si creem l'arxiu `composer.json` nosaltres directament sense inicialitzar el repositori, hem d'instal·lar les dependències:
+
+``` bash
+composer install
+```
+
+En fer aquest pas (tant instal·lar com actualitzar), com ja hem comentat, es descarreguen les llibreries en dins de la carpeta `vendor`. És molt important afegir aquesta carpeta a l'arxiu `.gitignore` per a no pujar-les a GitHub.
+
+A més es crea l'arxiu `composer.lock`, que emmagatzema la versió exacta que s'ha instal·lat de cada llibreria (aquest arxiu no es toca).
+
+#### `autoload.php`
+
+*Composer* crea de manera automàtica en `vendor/autoload.php` el codi per a incloure de manera automàtica totes les llibreries que tinguem configurades en `composer.json`.
+
+Per a utilitzar-ho, en la capçalera del nostre arxius posarem:
+
+``` php
+<?php
+require 'vendor/autoload.php';
+```
+
+En el nostre cas, de moment només el podrem en els arxius on provem les classes
+
+Si volem que Composer també s'encarregue de carregar de manera automàtica les nostres classes de domini, dins de l'arxiu `composer.json`, definirem la propietat `autoload`:
+
+``` json
+"autoload": {
+    "psr-4": {"Dwes\\": "app/Dwes"}
+},
+```
+
+Posteriorment, hem de tornar a generar el *autoload* de *Composer* mitjançant l'opció `dump-autoload` (o `du`):
+
+``` bash
+composer dump-autoload
+```
+
+
+### 5. Logger amb Monolog
+
+Provarem *Composer* afegint la llibreria de [*Monolog*](https://github.com/seldaek/monolog) al nostre projecte. Es tracta d'un llibreria per a la gestió de logs de les nostres aplicacions, suportant diferents nivells (info, warning, etc...), eixides (fitxers, sockets, BBDD, Web Services, email, etc) i formats (text pla, HTML, JSON, etc...).
+
+Per a això, inclourem la llibreria en el nostre projecte amb:
+
+``` bash
+composer require monolog/monolog
+```
+
+Monolog 2 requereix almenys PHP 7.2, compleix amb el estandar de logging PSR-3, i és la llibreria emprada per *Laravel* i *Symfony* per a la gestió de logs.
+
+!!! info "Quan utilitzar un log"
+* Seguir les acciones/moviments dels usuaris
+* Registrar les transaccions
+* Rastrejar els errors d'usuari
+* Fallades/avisos a nivell de sistema
+* Interpretar i col·leccionar dades per a posterior investigació de patrons
+
+#### Nivells
+
+A continuació vam mostrar els diferents nivells de menys a més restrictiu:
+
+    * debug -100: Informació detallada amb propòsits de debug. No usar en entorns de producció.
+    * info - 200: Esdeveniments interessants com l'inici de sessió d'usuaris.
+    * notice - 250: Esdeveniments normals però significatius.
+    * warning - 300: Ocurrències excepcionals que no arriben a ser error.
+    * error - 400: Errors d'execució que permeten continuar amb l'execució de l'aplicació però que han de ser monitorats.
+    * critical - 500: Situacions importants on es generen excepcions no esperades o no hi ha disponible un component.
+    * alert - 550: S'han de prendre mesures immediatament.
+      Caiguda completa de la web, base de dades no disponible, etc... A més, se solen enviar missatges per email.
+    * emergency - 600: És l'error més greu i indica que tot el sistema està inutilitzable.
+
+
+#### Hola Monolog
+
+Per exemple, en l'arxiu `pruebaLog.php` que col·locaríem en l'arrel, primer incloem el **autoload**, importem els classes a utilitzar per a finalment usar els mètodes de **Monolog**:
+
+``` php
+<?php
+include __DIR__ ."/vendor/autoload.php";
+
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger("MiLogger");
+$log->pushHandler(new StreamHandler("logs/milog.log", Level::Debug));
+
+$log->debug("Esto es un mensaje de DEBUG");
+$log->info("Esto es un mensaje de INFO");
+$log->warning("Esto es un mensaje de WARNING");
+$log->error("Esto es un mensaje de ERROR");
+$log->critical("Esto es un mensaje de CRITICAL");
+$log->alert("Esto es un mensaje de ALERT");
+```
+
+En tots els mètodes de registre de missatges (`debug`, `info`, ...), a més del propi missatge, li podem passar informació com el contingut d'alguna variable, usuari de l'aplicació, etc.. com a segon paràmetre dins d'un array, el qual es coneix com **array de contexte**.
+És convenient fer-ho mitjançant un array associatiu per a facilitar la lectura del log.
+
+``` php
+<?php
+$log->warning("Producto no encontrado", [$producto]);
+$log->warning("Producto no encontrado", ["datos" => $producto]);
+```
+
+#### Funcionament
+
+Cada instància `Logger` té un nom de canal i una pila de manejadores (**handler**).
+Cada missatge que manem al log travessa la pila de manejadores, i cadascun decideix si ha de registrar la informació, i si es dona el cas, finalitzar la propagació.
+Per exemple, un `StreamHandler` en el fons de la pila que ho escriga tot en disc, i en el topall afig un `MailHandler` que envie un mail només quan hi haja un error.
+
+
+Els manejadores més utilitzats són:
+
+* `StreamHandler(ruta, nivel)`
+* `RotatingFileHandler(ruta, maxFiles, nivel)`
+* `NativeMailerHandler(para, asunto, desde, nivel)`
+* `FirePHPHandler(nivel)`
+
+Per exemple: Si volem que els missatges de l'aplicació isquen pel log del servidor,
+en el nostre cas l'arxiu `error.log` de **Apatxe** utilitzarem com a ruta l'eixida d'error:
+
+``` php
+<?php
+// error.log
+$log->pushHandler(new StreamHandler("php://stderr", Level::Debug));
+```
+
+!!! tip "FirePHP"
+Per exemple, mitjançant `FirePHPHandler`, podem utilitzar `FirePHP`, la qual és una eina per a fer debug en la consola de Firefox*.
+Després d'instal·lar l'extensió en Firefox, habilitar les opcions i configurar el **Handler**, podem veure els missatges acolorits amb les seues dades:
+
+    ``` php
+    <?php
+    $log = new Logger("MiFirePHPLogger");
+    $log->pushHandler(new FirePHPHandler(Level::INFO));
+
+    $datos = ["real" => "Bruce Wayne", "personaje" => "Batman"];
+    $log->debug("Esto es un mensaje de DEBUG", $datos);
+    $log->info("Esto es un mensaje de INFO", $datos);
+    $log->warning("Esto es un mensaje de WARNING", $datos);
+    // ...
+    ```
+
+    <figure style="align: center;">
+        <img src="imagenes/05/firePhp.png">
+        <figcaption>Ejemplo de uso de FirePHP</figcaption>
+    </figure>
+
+
+#### Manejadors
+
+Si no s'indica cap, se li assigna un per defecte. L'últim manejador inserit serà el primer a executar-se.
+Després es van executant conforme a la pila.
+
+
+#### Processadors
+
+Els processadors permeten afegir informació als missatges.
+Per a això, s'apilen després de cada manejador mitjançant el mètode `pushProcessor($processador)`.
+
+Alguns processadors coneguts són `IntrospectionProcessor` (mostren la línia, fitxer, classe i metodo des del qual s'invoca el log), `WebProcessor` (afig la URI, mètode i IP) o `GitProcessor` (afig la branca i el commit).
+
+=== "PHP"
+
+    ``` php
+    <?php
+    $log = new Logger("MiLogger");
+    $log->pushHandler(new RotatingFileHandler("logs/milog.log", 0, Level::DEBUG));
+    $log->pushProcessor(new IntrospectionProcessor());
+    $log->pushHandler(new StreamHandler("php://stderr", Level::WARNING));
+    // no usa Introspection pq lo hemos apilado después, le asigno otro
+    $log->pushProcessor(new WebProcessor());
+    ```
+
+=== "Consola en format text"
+
+    ``` log
+    [2020-11-26T13:35:31.076138+01:00] MiLogger.DEBUG: Esto es un mensaje de DEBUG [] {"file":"C:\\xampp\\htdocs\\log\\procesador.php","line":12,"class":null,"function":null}
+    [2020-11-26T13:35:31.078344+01:00] MiLogger.INFO: Esto es un mensaje de INFO [] {"file":"C:\\xampp\\htdocs\\log\\procesador.php","line":13,"class":null,"function":null}
+    ```
+
+#### Formatadors
+
+S'associen als manejadores amb `setFormatter`. Els formateadores més utilitzats són `LineFormatter`, `HtmlFormatter` o `JsonFormatter`.
+
+=== "PHP"
+
+    ``` php
+    <?php
+    $log = new Logger("MiLogger");
+    $rfh = new RotatingFileHandler("logs/milog.log", Level::Debug);
+    $rfh->setFormatter(new JsonFormatter());
+    $log->pushHandler($rfh);
+    ```
+
+=== "Consola en JSON"
+
+    ``` json
+    {"message":"Esto es un mensaje de DEBUG","context":{},"level":100,"level_name":"DEBUG","channel":"MiLogger","datetime":"2020-11-27T15:36:52.747211+01:00","extra":{}}
+    {"message":"Esto es un mensaje de INFO","context":{},"level":200,"level_name":"INFO","channel":"MiLogger","datetime":"2020-11-27T15:36:52.747538+01:00","extra":{}}
+    ```
+
+!!! tip "Més informació"
+Més informació sobre manejadores, formateadores i processadors en <https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md>
+ 
 
 ## 19. Exercicis 
 
