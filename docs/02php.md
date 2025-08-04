@@ -1398,117 +1398,57 @@ Els més destacables són:
  
 ## 3. Espai de noms
 
-Des de PHP 5.3 i també coneguts com *Namespaces*, permeten organitzar les classes/interfícies, funcions i/o constants de manera similar als paquets a *Java*.
+## 🧩 1. Espais de noms (Namespaces)
 
-!!! tip "Recomanació"
-Un només namespace per arxiu i crear una estructura de carpetes respectant els nivells/subnivells (igual que es fa a Java)
+Els **espais de noms** serveixen per **organitzar les classes** i evitar conflictes. Funcionen com els paquets a Java.
 
-Es declaren en la primera línia mitjançant la paraula clau `namespace` seguida del nom de l'espai de noms assignat (cada subnivell se separa amb la barra invertida `\`):
+### Com es declaren
 
-Per exemple, per a col·locar la classe `Producte` dins del *namespace* `Dwes\Exemples` ho faríem així:
+S’escriuen al principi del fitxer:
 
-``` php
+```php
 <?php
-namespace Dwes\Exemples;
+namespace Dwes\Exemples;
 
-const IVA = 0.21;
+class Producte {
+  public $nom;
 
-class Producte {
-    public $nombre;
-      
-    public function muestra() : void {
-        echo"<p>Prod:" . $this->nombre . "</p>";
-    }
+  public function mostra() {
+    echo "Producte: " . $this->nom;
+  }
 }
 ```
 
-#### Accés
+#### Com s'utilitzen
 
-Per a referenciar a un recurs que conté un namespace, primer hem de tindre'l disponible fent ús de `include` o `require`. Si el recurs està en el mateix *namespace*, es realitza un accés directe (es coneix com a accés sense qualificar).
-
-Realment hi ha tres tipus d'accés:
-
-* sense qualificar: `recurs`
-* qualificat: `rutaRelativa\recurs` → no fa falta posar el *namespace* complet
-* totalment qualificat: `\rutaAbsoluta\recurs`
-
+Per a usar una classe d’un altre namespace:
+ 
 ``` php
-<?php
-namespace Dwes\Ejemplos;
+require 'Dwes/Exemples/Producte.php';
+use Dwes\Exemples\Producte;
 
-include_once("Producto.php");
+$p = new Producte();
 
-echo IVA; // sin cualificar
-echo Utilidades\IVA; // acceso cualificado. Daría error, no existe \Dwes\Ejemplos\Utilidades\IVA
-echo \Dwes\Ejemplos\IVA; // totalmente cualificado
-
-$p1 = new Producto(); // lo busca en el mismo namespace y encuentra \Dwes\Ejemplos\Producto
-$p2 = new Model\Producto(); // daría error, no existe el namespace Model. Está buscando \Dwes\Ejemplos\Model\Producto
-$p3 = new \Dwes\Ejemplos\Producto(); // \Dwes\Ejemplos\Producto
 ```
  
-Per a evitar la referència qualificada podem declarar l'ús mitjançant `use` (similar a fer `import` a Java). Es fa en la capçalera, després del `namespace`:
-
-Els tipus Posibles són:
-
-* `use const nombreCualificadoConstante`
-* `use function nombreCualificadoFuncion`
-* `use nombreCualificadoClase`
-* `use nombreCualificadoClase as NuevoNombre` // per a canviar de nom elements
-
-Per exemple, si volem utilitzar la classe `\Dwes\Exemples\Producte` des d'un recurs que es troba en l'arrel, per exemple en `inici.php`, faríem:
-
-``` php
-<?php
-include_once("Dwes\Exemples\Producte.php");
-
-use const Dwes\Exemples\IVA;
-use \Dwes\Exemples\Producte;
-
-echo IVA;
-$p1 = new Producte();
-```
-
 !!! tip "To `use` or not to `use`"
 En resum, `use` permet accedir sense qualificar a recursos que estan en un altre *namespace*. Si estem en el mateix espai de nom, no necessitem `use`.
 
-#### Organització
-
-Tot projecte, conforme creix, necessita organitzar el seu codi font. Es planteja una organització en la qual els arxius que interactuan amb el navegador es col·loquen en l'arrel, i les classes que definim van dins d'un namespace (i dins de la seua pròpia carpeta `src` o `app`).
-
-<figure>
-<img src="imagenes/03/03organizacion.png">
-<figcaption>Organització del codi font</figcaption>
-</figure>
-
-!!! tip "Organització, includes i usos"
-* Col·locarem cada recurs en un fitxer a part.
-* En la primera línia indicarem la seua *namespace* (si no està en l'arrel).
-* Si utilitzem altres recursos, farem un `include_once` d'aqueixos recursos (classes, interfícies, etc...).
-* Cada recurs ha d'incloure tots els altres recursos que referencie: la classe de la qual hereta, interfícies que implementa, classes utilitzades/rebudes com a paràmetres, etc...
-* Si els recursos estan en un espai de noms diferent al que estem, emprarem `use` amb la ruta completa per a després utilitzar referències sense qualificar.
-
-#### Autoload
-
-No és tediós haver de fer el `include` de les classes? El autoload ve al rescat.
-
-Així doncs, permet carregar les classes (no les constants ni les funcions) que s'utilitzaran i evitar haver de fer el `include_once` de cadascuna d'elles. Per a això, es pot utilitzar el composer.
-
-### 4. Composer
+ 
+#### 📦 2. Composer i autoload
 
 <figure style="float: right;">
     <img src="imagenes/05/logo-composer.png" width="200">
     <figcaption>Logo Composer</figcaption>
 </figure>
 
-Eina per excel·lència en PHP per a la gestió de llibreries i dependències, de manera que instal·la i les actualitza assegurant que tot l'equip de desenvolupament té el mateix entorn i versions. A més, ofereix *autoloading* del nostre codi, de manera que no hàgem de fer-lo nosaltres "a mà".
 
-Està escrit en PHP, i podeu consultar tota la seua documentació en [https://getcomposer.org/](https://getcomposer.org/).
+Composer és una eina que:
 
-Utilitza [*Packagist*]( https://packagist.org/) com a repositori de llibreries.
+* Instala paquets PHP (llibreries externes).
+* Crea un fitxer autoload.php per carregar les classes automàticament.
 
-Funcionalment, és similar a Maven (Java) / npm (JS).
-
+ 
 #### Instal·lació
 
 Si estem usant XAMPP, hem d'instal·lar *Composer* en el propi sistema operatiu. Es recomana seguir les [instruccions oficials](https://getcomposer.org/doc/00-intro.md) segons el sistema operatiu a emprar.
@@ -1587,7 +1527,7 @@ En fer aquest pas (tant instal·lar com actualitzar), com ja hem comentat, es de
 
 A més es crea l'arxiu `composer.lock`, que emmagatzema la versió exacta que s'ha instal·lat de cada llibreria (aquest arxiu no es toca).
 
-#### `autoload.php`
+##### `autoload.php`
 
 *Composer* crea de manera automàtica en `vendor/autoload.php` el codi per a incloure de manera automàtica totes les llibreries que tinguem configurades en `composer.json`.
 
@@ -1615,7 +1555,7 @@ composer dump-autoload
 ```
 
 
-### 5. Logger amb Monolog
+### 3. Logger amb Monolog
 
 Provarem *Composer* afegint la llibreria de [*Monolog*](https://github.com/seldaek/monolog) al nostre projecte. Es tracta d'un llibreria per a la gestió de logs de les nostres aplicacions, suportant diferents nivells (info, warning, etc...), eixides (fitxers, sockets, BBDD, Web Services, email, etc) i formats (text pla, HTML, JSON, etc...).
 
@@ -1681,577 +1621,272 @@ $log->warning("Producto no encontrado", [$producto]);
 $log->warning("Producto no encontrado", ["datos" => $producto]);
 ```
 
-#### Funcionament
-
-Cada instància `Logger` té un nom de canal i una pila de manejadores (**handler**).
-Cada missatge que manem al log travessa la pila de manejadores, i cadascun decideix si ha de registrar la informació, i si es dona el cas, finalitzar la propagació.
-Per exemple, un `StreamHandler` en el fons de la pila que ho escriga tot en disc, i en el topall afig un `MailHandler` que envie un mail només quan hi haja un error.
-
-
-Els manejadores més utilitzats són:
-
-* `StreamHandler(ruta, nivel)`
-* `RotatingFileHandler(ruta, maxFiles, nivel)`
-* `NativeMailerHandler(para, asunto, desde, nivel)`
-* `FirePHPHandler(nivel)`
-
-Per exemple: Si volem que els missatges de l'aplicació isquen pel log del servidor,
-en el nostre cas l'arxiu `error.log` de **Apatxe** utilitzarem com a ruta l'eixida d'error:
-
-``` php
-<?php
-// error.log
-$log->pushHandler(new StreamHandler("php://stderr", Level::Debug));
-```
-
-!!! tip "FirePHP"
-Per exemple, mitjançant `FirePHPHandler`, podem utilitzar `FirePHP`, la qual és una eina per a fer debug en la consola de Firefox*.
-Després d'instal·lar l'extensió en Firefox, habilitar les opcions i configurar el **Handler**, podem veure els missatges acolorits amb les seues dades:
-
-    ``` php
-    <?php
-    $log = new Logger("MiFirePHPLogger");
-    $log->pushHandler(new FirePHPHandler(Level::INFO));
-
-    $datos = ["real" => "Bruce Wayne", "personaje" => "Batman"];
-    $log->debug("Esto es un mensaje de DEBUG", $datos);
-    $log->info("Esto es un mensaje de INFO", $datos);
-    $log->warning("Esto es un mensaje de WARNING", $datos);
-    // ...
-    ```
-
-    <figure style="align: center;">
-        <img src="imagenes/05/firePhp.png">
-        <figcaption>Ejemplo de uso de FirePHP</figcaption>
-    </figure>
-
-
-#### Manejadors
-
-Si no s'indica cap, se li assigna un per defecte. L'últim manejador inserit serà el primer a executar-se.
-Després es van executant conforme a la pila.
-
-
-#### Processadors
-
-Els processadors permeten afegir informació als missatges.
-Per a això, s'apilen després de cada manejador mitjançant el mètode `pushProcessor($processador)`.
-
-Alguns processadors coneguts són `IntrospectionProcessor` (mostren la línia, fitxer, classe i metodo des del qual s'invoca el log), `WebProcessor` (afig la URI, mètode i IP) o `GitProcessor` (afig la branca i el commit).
-
-=== "PHP"
-
-    ``` php
-    <?php
-    $log = new Logger("MiLogger");
-    $log->pushHandler(new RotatingFileHandler("logs/milog.log", 0, Level::DEBUG));
-    $log->pushProcessor(new IntrospectionProcessor());
-    $log->pushHandler(new StreamHandler("php://stderr", Level::WARNING));
-    // no usa Introspection pq lo hemos apilado después, le asigno otro
-    $log->pushProcessor(new WebProcessor());
-    ```
-
-=== "Consola en format text"
-
-    ``` log
-    [2020-11-26T13:35:31.076138+01:00] MiLogger.DEBUG: Esto es un mensaje de DEBUG [] {"file":"C:\\xampp\\htdocs\\log\\procesador.php","line":12,"class":null,"function":null}
-    [2020-11-26T13:35:31.078344+01:00] MiLogger.INFO: Esto es un mensaje de INFO [] {"file":"C:\\xampp\\htdocs\\log\\procesador.php","line":13,"class":null,"function":null}
-    ```
-
-#### Formatadors
-
-S'associen als manejadores amb `setFormatter`. Els formateadores més utilitzats són `LineFormatter`, `HtmlFormatter` o `JsonFormatter`.
-
-=== "PHP"
-
-    ``` php
-    <?php
-    $log = new Logger("MiLogger");
-    $rfh = new RotatingFileHandler("logs/milog.log", Level::Debug);
-    $rfh->setFormatter(new JsonFormatter());
-    $log->pushHandler($rfh);
-    ```
-
-=== "Consola en JSON"
-
-    ``` json
-    {"message":"Esto es un mensaje de DEBUG","context":{},"level":100,"level_name":"DEBUG","channel":"MiLogger","datetime":"2020-11-27T15:36:52.747211+01:00","extra":{}}
-    {"message":"Esto es un mensaje de INFO","context":{},"level":200,"level_name":"INFO","channel":"MiLogger","datetime":"2020-11-27T15:36:52.747538+01:00","extra":{}}
-    ```
-
+ 
 !!! tip "Més informació"
 Més informació sobre manejadores, formateadores i processadors en <https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md>
  
 
-## 19. Exercicis 
+##  Exercicis 
 
 ### Bateria d'Exercicis Solucionats per a la Unitat de PHP
 
-#### Exercici 1: Introducció a PHP
-1. Crea un fitxer  que imprimeixi "Hola, món!" a la pantalla.
-2. Modifica el fitxer per tal que imprimeixi el teu nom utilitzant una variable.
+Hi ha un repositori preparat amb les solucions : https://github.com/Curs-2025-26/SA2.Exemples del que pots fer un fork.
+ 
+#### Enunciat dels exercicis
+ 
+Escriu els següent programes: 
 
-<details>
-<summary>Solució</summary>
+##### 1. 'Hola món' 
+     
+* Declare una variable amb el teu nom.
+* Mostre en pantalla un missatge com ara:  “Hola, món! , Ignasi” dins d’una etiqueta HTML <h1> utilitzant echo.
+   
+  Pots combinar text i variables utilitzant el signe de concatenació (.).
+
+##### 2. 'Variables' 
+
+* Declare una variable $a amb el valor numèric 5.
+* Declare una altra variable $b amb el valor "10" (cadena).
+* Mostre per pantalla el resultat de sumar $a + $b dins d’una frase com: “Suma: 15”, utilitzant echo.
+
+  Observa com PHP converteix automàticament el valor de la cadena "10" a nombre.
+
+##### 3. 'Cometes simples vs dobles'
+
+* Declare una variable $name amb el teu nom.
+* Mostre dues frases amb echo:
+    * Una utilitzant cometes dobles, on s’imprimisca el contingut de la variable.
+    * Una altra utilitzant cometes simples, on s’imprimisca literalment $name.
+
+    Ex.:
+    Hola, Ignasi!
+    Hola, $name!
+
+##### 4. 'Condicional bàsic'
+
+* Crea una variable `$edat` amb un valor numèric.
+* Utilitza una estructura condicional `if` per:
+    * Mostrar un missatge si l’edat és negativa: `"Edat invàlida"`.
+    * Si és igual o major de 18, mostrar `"Ets major d'edat"`.
+    * Si no, mostrar `"Ets menor d'edat"`.
+
+
+##### 5. 'Arrays i bucles'
+
+* Crea un array anomenat `$fruites` amb tres valors inicials: `"poma"`, `"plàtan"` i `"maduixa"`.
+* Mostra per pantalla el primer element de l’array.
+* Afegeix un nou element `"taronja"` a l’array.
+* Recorre l’array complet amb un bucle `foreach` i mostra cada fruita en una línia separada.
+
+
+##### 6. 'Estructures `match`'
+
+* Declara una variable `$nota` amb un valor entre 0 i 10.
+* Utilitza l’estructura `match (true)` per assignar un resultat segons el valor:
+    * `10` → `"Excel·lent"`
+    * Entre `8` i `9` → `"Molt bé"`
+    * Entre `5` i `7` → `"Bé"`
+    * Per defecte → `"Insuficient"`
+* Mostra el resultat per pantalla.
+
+* Declara una variable `$producte` amb algun dels següents valors: `"pa"`, `"llet"`, `"formatge"`.
+* Usa un altre `match` per assignar un preu a cada producte.
+* Mostra per pantalla el missatge: `"El preu de formatge és 2.5 euros."`
+
+##### 7. 'Informació del servidor amb `$_SERVER`'
+
+* Crea una pàgina HTML amb títol "Informació del Servidor".
+* Mostra diferents dades utilitzant l’array especial `$_SERVER`:
+    * Nom del servidor (`SERVER_NAME`)
+    * Adreça IP del servidor (`SERVER_ADDR`)
+    * Software del servidor (`SERVER_SOFTWARE`)
+    * Agent d'usuari del client (`HTTP_USER_AGENT`)
+    * Mètode de la sol·licitud (`REQUEST_METHOD`)
+    * URL de la sol·licitud (`REQUEST_URI`)
+    * Referent de la pàgina (`HTTP_REFERER`)
+    * Protocol utilitzat (`SERVER_PROTOCOL`)
+    * Port utilitzat (`SERVER_PORT`)
+* Assegura't de controlar si alguna clau no està disponible, com per exemple el `HTTP_REFERER`.
+
+
+##### 8. 'Formulari de contacte amb validació'
+
+* Crea una pàgina HTML amb un formulari que demane:
+    * Una adreça de correu electrònic (`email`)
+    * Un missatge (`textarea`)
+* El formulari s’ha d’enviar mitjançant el mètode POST i validar:
+    * Que el camp `email` conté una adreça vàlida (`FILTER_VALIDATE_EMAIL`)
+    * Que els camps no estiguen buits (usa `required` en HTML i valida amb PHP)
+* Mostra un missatge de confirmació si tot és correcte, o d’error si el correu no és vàlid.
+* Assegura’t de protegir el contingut rebut amb `htmlspecialchars()` per evitar problemes de seguretat.
+
+##### 9. 'Formulari amb validació i missatges d’error'
+
+* Crea un formulari que demane:
+    * El nom de l’usuari (`input text`)
+    * El correu electrònic (`input text`)
+* Afegeix validació en PHP perquè:
+    * Cap dels camps estiga buit
+    * El correu siga vàlid (`FILTER_VALIDATE_EMAIL`)
+* Mostra missatges d’error en cas de validació incorrecta (en color roig).
+* Si les dades són correctes, mostra-les en pantalla.
+* Assegura’t de:
+    * Utilitzar `htmlspecialchars()` i `trim()` per netejar les entrades
+    * Mantenir les dades escrites en el formulari si hi ha errors (**sticky form**)
+##### 10. 'Pujar fitxer i seleccionar opció'
+
+* Crea un formulari que permeta:
+    * Pujar un fitxer (input `file`)
+    * Seleccionar una opció d’entre diverses (checkbox)
+* El formulari ha de validar:
+    * Que el fitxer ha estat pujat correctament
+    * Que almenys una opció ha estat seleccionada
+* Mostra per pantalla:
+    * Nom, tipus, mida i ubicació del fitxer
+    * L’opció seleccionada pel usuari
+* El fitxer pujat s’ha de moure a una carpeta anomenada `uploads/` dins del projecte.
+* Utilitza `move_uploaded_file()` per traslladar-lo de la ubicació temporal a la definitiva.
+
+##### 11. 'Comptador de visites amb sessió'
+
+* Crea un script que utilitze sessions per comptar quantes vegades un usuari ha visitat la pàgina.
+    * Si és la primera vegada, mostra `"Has visitat esta pàgina 1 vegada."`
+    * Si ja ha visitat abans, incrementa el comptador i mostra el nombre de visites.
+* Afegeix un botó que permeta **reiniciar** el comptador. En fer clic:
+    * S’ha de destruir la sessió
+    * Redirigir a la mateixa pàgina per tornar a començar
+
+##### 12. 'Cistella de la compra (I): Afegir productes'
+
+* Crea una pàgina amb un formulari on es puga introduir el nom d’un producte.
+* Quan s’envia el formulari:
+    * Guarda el producte dins d’una variable de sessió anomenada `$_SESSION["cistella"]`
+    * Redirigeix l’usuari a una pàgina anomenada `02_cistella_veure.php`
+* Inclou un enllaç que permeta accedir a la pàgina de visualització de la cistella.
+
+##### 13. 'Cistella de la compra (II): Veure i buidar'
+
+* Crea una pàgina que mostre els productes emmagatzemats en la variable de sessió `$_SESSION["cistella"]`.
+    * Si no hi ha cap producte, mostra un missatge indicant-ho.
+    * Si n’hi ha, mostra’ls en una llista.
+* Inclou un botó per buidar la cistella:
+    * Si es prem, elimina `$_SESSION["cistella"]`
+    * Redirigeix a la mateixa pàgina per actualitzar el contingut
+
+##### 14. 'Sistema bàsic d’autenticació amb sessió'
+
+* Crea un formulari de login amb els camps:
+    * Usuari (`usuari`)
+    * Contrasenya (`clau`)
+* Valida els camps amb valors fixos, per exemple:
+    * Usuari: `admin`
+    * Clau: `1234`
+* Si les dades són correctes:
+    * Guarda l’estat de login a la sessió (`$_SESSION["login"]`)
+    * Guarda també el nom de l’usuari
+    * Redirigeix a la mateixa pàgina
+* Si són incorrectes, mostra un missatge d’error.
+* Si l’usuari està identificat:
+    * Mostra un missatge de benvinguda amb el nom d’usuari
+    * Mostra un enllaç per a tancar sessió, que destruïsca la sessió i redirigisca
+
+##### 15. 'Recordar nom amb cookies'
+
+* Crea una pàgina amb un formulari que demane el nom de l’usuari.
+* Quan s’envie el formulari:
+    * Guarda el nom en una cookie amb duració d’1 hora.
+    * Redirigeix a la mateixa pàgina.
+* Quan es carregue la pàgina:
+    * Si existeix la cookie, mostra un missatge de benvinguda amb el nom.
+    * Mostra el valor de la cookie com a valor per defecte en l’input (`sticky form`).
+
+##### 16. 'Preferència de tema amb cookies'
+
+* Crea una pàgina que permeta a l’usuari seleccionar entre dos temes: `"clar"` i `"fosc"`.
+* Quan l’usuari selecciona un tema, guarda la selecció en una cookie amb duració d’1 dia.
+* Aplica l’estil CSS corresponent segons el valor de la cookie:
+    * Tema `"clar"`: fons blanc, text negre.
+    * Tema `"fosc"`: fons fosc, text clar.
+* Redirigeix automàticament després de canviar el tema per aplicar-lo.
+
+##### 17. 'Gestió de productes amb fitxer CSV'
+
+* Crea un formulari que permeta afegir productes amb:
+    * Nom del producte (`text`)
+    * Preu (`number`)
+* Quan s’envie el formulari:
+    * Guarda les dades en un fitxer `productes.csv` en format CSV.
+    * Mostra un missatge si s’ha afegit correctament o si falta algun camp.
+* Mostra una taula amb tots els productes emmagatzemats al fitxer:
+    * Llig el fitxer `productes.csv`
+    * Mostra una taula amb les columnes: `Nom` i `Preu (€)`
+
+##### 18. 'Classe `Usuari` i mètodes'
+
+* Crea una classe anomenada `Usuari` amb atributs privats:
+    * `$nom`, `$email`  
+* Afegeix un constructor que inicialitze `$nom`, `$email` .
+* Afegeix els mètodes públics següents:
+    * `saluda()`: retorna un missatge com: `"Hola, sóc Ignasi i el meu email és ignasi@example.com"`
     
-    ```php
-    <?php
-    // Exercici 1
-    $name = 'Ignasi':
-    echo "Hola, món!" . "Hola, " .$name;
-    ?>
-    ```
-</details>
+* Prova la classe creant una instància i cridant als mètodes `saluda()` i `validar()`.
+
+##### 19. 'Instanciació i ús d’una classe'
+
+* Inclou el fitxer `Usuari.php` on es defineix la classe `Usuari`.
+* Crea una instància de la classe amb nom `"Pau"` i email `"pau@example.com"`.
+* Mostra el resultat del mètode `saluda()` per pantalla.
+* Assegura’t que has utilitzat `require_once` per incloure la definició de la classe.
+
+##### 20. 'Classe `Producte` amb constructor i mètode'
+
+* Crea una classe anomenada `Producte` amb dos atributs públics:
+    * `$nom` i `$preu`
+* Afegeix un constructor per inicialitzar els atributs.
+* Afegeix un mètode públic `mostrar()` que retorne una cadena amb el format:
+    * `"Nom - Preu€"` (per exemple: `"Formatge - 2.5€"`)
+* Crea una instància de `Producte` i mostra el resultat del mètode `mostrar()`.
+
+##### 21. 'Ús d’una classe amb `try-catch`'
+
+* Inclou el fitxer `Producte.php` on es defineix la classe `Producte`.
+* Crea una instància amb els valors `"Portàtil"` i `799.99`.
+* Mostra el resultat del mètode `mostrar()` per pantalla.
+* Encapsula la creació i ús de l’objecte dins d’un bloc `try-catch`.
+    * En cas d’error, mostra el missatge capturat amb `getMessage()`.
+
+##### 22. 'Login amb sessió i classe `Usuari`'
+
+* Afegeix a la classe `Usuari` la propietat $clau (modifica el constructor) i els mètodes:
+    * `validar($usuari, $clau)`
+    * `getNom()`
+* Crea un script de login que:
+    * Cree un objecte `Usuari` amb valors fixos (p. ex. `"admin"`, `"1234"`)
+    * Valide les dades del formulari POST utilitzant el mètode `validar()`
+    * Si les dades són correctes, guarde l’estat en `$_SESSION` i redirigisca
+    * Si no, mostre un error
+* Mostra un formulari si l’usuari no està loguejat i un missatge de benvinguda si ho està.
+* Afig un enllaç per tancar sessió que:
+    * Elimine la sessió
+    * Redirigisca a la mateixa pàgina
+
+##### 23. 'Classe amb namespace personalitzat'
+
+* Crea una classe anomenada `Salutador` dins del namespace `App`.
+* Afegeix un mètode públic `diu($nom)` que retorne `"Hola, $nom!"`
+* Desa la classe dins d’un fitxer adequat, seguint l’estructura de carpetes segons PSR-4.
+* Prova la classe des d’un fitxer a part utilitzant:
+    * `require 'vendor/autoload.php';`
+    * `use App\Salutador;`
+
+##### 24. 'Ús de classe amb autoload i `use`'
+
+* Crea un fitxer `index.php` dins d’una carpeta `public/`.
+* Assegura’t que utilitza l’autoload generat per Composer:
+    * `require __DIR__ . '/../vendor/autoload.php';`
+* Importa la classe `Salutador` mitjançant `use App\Salutador`.
+* Crea una instància i crida al mètode `diu("Anna")` per mostrar el missatge.
 
-#### Exercici 2: Ús de cometes
-1. Crea un fitxer que definisca una variable `$name` amb el teu nom i imprimeixi la frase "Hola, [nom]!" utilitzant cometes dobles.
-2. Fes-ho amb cometes simples i compara els resultats.
-
-<details>
-<summary>Solució</summary>
-
-    ```php
-    <?php
-    // Exercici 2
-    $name = 'Ignasi':
-    echo "Hola, $name!";
-    echo 'Hola, $name!';
-    ?>
-    ```
-</details>
-
-#### Exercici 3: Funcions bàsiques
-1. Crea una funció `suma` que sume dos números i retorni el resultat. Invoca la funció amb els números 5 i 3 i imprimeix el resultat.
-2. Crea una funció `multiplicacio` que multipliqui dos números i retorni el resultat. Invoca la funció amb els números 4 i 7 i imprimeix el resultat.
-
-<details>
-<summary>Solució</summary>
-
-    ```php
-    <?php
-    // Exercici 2
-    function suma($a, $b) {
-        return $a + $b;
-    }
-    function multiplicacio($a, $b) {
-        return $a * $b;
-    }
-    echo suma(5, 3);  // Sortida: 8
-    echo multiplicacio(4, 7);  // Sortida: 28
-    ?>
-    ```
-
-</details>
-
-#### Exercici 4: Control de flux - Condicionals
-1. Crea un fitxer que definisca una variable `$edat`. Si `$edat` és major o igual a 18, imprimeix "Ets major d'edat"; en cas contrari, imprimeix "Ets menor d'edat".
-2. Modifica el fitxer `edat.php` per tal que imprimeixi "Edat invàlida" si `$edat` és un número negatiu.
-
-<details>
-    <summary>Solució</summary>
-
-    ```php
-    <?php
-    // Exercici 4
-    $edat = 20;
-    if ($edat < 0) {
-        echo "Edat invàlida";
-    } else{
-        if ($edat >= 18) {
-            echo "Ets major d'edat";
-        } else {
-            echo "Ets menor d'edat";
-        }
-    }
-    ?>
-    ```    
-</details>
-
-#### Exercici 5: Control de flux - Bucles
-1. Crea un fitxer que utilitzi un bucle `for` per imprimir els números del 0 al 9.
-2. Fes-ho també amb un bucle `while` que faci el mateix.
-
-<details>
-    <summary>Solució</summary>
-    
-        ```php
-            <?php
-            // Exercici 5
-            // Bucle for
-            for ($i = 0; $i < 10; $i++) {
-                echo $i . "<br>";
-            }
-            // Bucle while
-            $i = 0;
-            while ($i < 10) {
-                echo $i . "<br>";
-                $i++;
-            }
-            ?>
-        ```
-</details>
-
-#### Exercici 6: Treballar amb arrays
-1. Crea un fitxer que definisca un array `$fruites` amb tres elements: "poma", "plàtan" i "maduixa". Imprimeix el primer element de l'array.
-2. Afegeix un quart element "taronja" a l'array i imprimeix tots els elements utilitzant un bucle `foreach`.
-
-<details>
-    <summary>Solució</summary>
-        
-        ```php
-        <?php
-        // Exercici 6
-        // Punt 1
-        $fruites = array("poma", "plàtan", "maduixa");
-        echo $fruites[0] . "<br>";
-        // Punt 2
-        $fruites[] = "taronja";
-        foreach ($fruites as $fruita) {
-            echo $fruita . "<br>";
-        }
-        ?>
-        ```
-</details>
-
-#### Exercici 7: Cometes dobles i variables
-1. Crea un fitxer que definisca una variable `$color` amb el valor "blau". Utilitza cometes dobles per imprimir "El meu color preferit és [color]."
-2. Ara,  utilitza cometes simples i concatenació.
-
-<details>
-<summary>Solució</summary>
-
-    ```php
-    <?php
-    // Exercici 7
-    $color = "blau";
-    echo "El meu color preferit és $color.";
-    echo 'El meu color preferit és ' . $color . '.';
-    ?>
-    ```
-</details>
-
-#### Exercici 8: Combinació de funcions i arrays
-1. Crea una funció `afegir_element` que prenga un array i un element com a arguments, afegeisca l'element a l'array i retorne l'array modificat.
-2. Crea un fitxer on defnisques un array `$animals` amb els elements "gat" i "gos". Utilitza la funció `afegir_element` per afegir "conill" a l'array i imprimeix tots els elements.
-
-<details>
-<summary>Solució</summary>
-    
-    ```php
-    <?php
-    // Exercici 8
-    function afegir_element($array, $element) {
-        $array[] = $element;
-        return $array;
-    }
-    $animals = array("gat", "gos");
-    $animals = afegir_element($animals, "conill");
-    foreach ($animals as $animal) {
-        echo $animal . "<br>";
-    }
-    ?>
-    ```
-</details>
-
-#### Exercici 9: Utilitzant `match` per a categoritzar
-
-Crea un fitxer  que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
-     - Si la nota és 10, imprimir "Excel·lent".
-     - Si la nota és 8 o 9, imprimir "Molt bé".
-     - Si la nota és 5, 6 o 7, imprimir "Bé".
-     - Per qualsevol altra nota, imprimir "Insuficient".
-
-<details>
-<summary>Solució</summary>
-
-```php
-$nota = 8;
-
-$resultat = match (true) {
-    $nota === 10 => 'Excel·lent',
-    $nota >= 8 && $nota <= 9 => 'Molt bé',
-    $nota >= 5 && $nota <= 7 => 'Bé',
-    default => 'Insuficient',
-};
-
-echo $resultat;  // Sortida: Molt bé
-```
-</details>
-
-#### Exercici 10: Llista de preus amb `match`
-
-Crea un fitxer que utilitze la instrucció `match` per assignar un preu a una variable `$producte`. Els productes i preus són:
-     - "pa" => 1.00
-     - "llet" => 0.80
-     - "formatge" => 2.50
-     - Qualsevol altre producte => 0.00
-
-<details>
-<summary>Solució</summary>
-
-```php
-$producte = 'formatge';
-
-$preu = match ($producte) {
-    'pa' => 1.00,
-    'llet' => 0.80,
-    'formatge' => 2.50,
-    default => 0.00,
-};
-
-echo "El preu de $producte és $preu euros.";  // Sortida: El preu de formatge és 2.5 euros.
-```
-</details>
-
-#### Exercici 11: Calculadora simple amb `match`
-
-Crea un fitxer que utilitze la instrucció `match` per fer operacions matemàtiques bàsiques (`+`, `-`, `*`, `/`). La variable `$operacio` ha de determinar l'operació a realitzar i les variables `$a` i `$b` seran els operands.
-
-<details>
-<summary>Solució</summary>
-
-```php
-$a = 10;
-$b = 5;
-$operacio = '+';
-
-$resultat = match ($operacio) {
-    '+' => $a + $b,
-    '-' => $a - $b,
-    '*' => $a * $b,
-    '/' => $a / $b,
-    default => 'Operació desconeguda',
-};
-
-echo "El resultat de $a $operacio $b és $resultat.";  // Sortida: El resultat de 10 + 5 és 15.
-```
-</details>
-
-#### Exercici 12: Tractament de formulari
-
-1. Crea un formulari en HTML que permeti als usuaris introduir el seu nom i edat. Després de l'enviament del formulari, mostra una pàgina PHP que processi les dades introduïdes i mostri un missatge de benvinguda personalitzat.
-
-<details>
-<summary>Solució</summary>
-
-```php
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <title>Formulari de Benvinguda</title>
-</head>
-<body>
-    <h2>Formulari de Benvinguda</h2>
-    <form action="benvinguda.php" method="post">
-        <label for="nom">Nom:</label>
-        <input type="text" id="nom" name="nom" required><br><br>
-        <label for="edat">Edat:</label>
-        <input type="number" id="edat" name="edat" required><br><br>
-        <input type="submit" value="Enviar">
-    </form>
-</body>
-</html>
-```
-
-```php
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <title>Benvinguda</title>
-</head>
-<body>
-    <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $nom = htmlspecialchars($_POST['nom']);
-            $edat = htmlspecialchars($_POST['edat']);
-            echo "<h2>Benvingut/da, $nom!</h2>";
-            echo "<p>Tens $edat anys.</p>";
-        } else {
-            echo "<p>Si us plau, completa el formulari.</p>";
-        }
-    ?>
-</body>
-</html>
-```
-</details>
-
-#### Exercici 13: Formulari en la mateixa pàgina
-
-1.  Crea un formulari en HTML que permeta als usuaris introduir la seva adreça de correu electrònic i un missatge. Després de l'enviament del formulari, crea una pàgina PHP que processe les dades introduïdes, comprove que l'adreça de correu electrònic és vàlida i mostre el missatge introduït per l'usuari.
-
-<details>
-<summary>Solució</summary>
-    
-```php
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <title>Formulari de Contacte</title>
-</head>
-<body>
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = htmlspecialchars($_POST['email']);
-        $missatge = htmlspecialchars($_POST['missatge']);
-
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo "<h2>Gràcies per contactar-nos!</h2>";
-            echo "<p>El teu correu electrònic: $email</p>";
-            echo "<p>El teu missatge: $missatge</p>";
-        } else {
-            echo "<p>Adreça de correu electrònic no vàlida. Si us plau, torna-ho a intentar.</p>";
-        }
-    } else {
-        ?>
-        <h2>Formulari de Contacte</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <label for="email">Correu electrònic:</label>
-            <input type="email" id="email" name="email" required><br><br>
-            <label for="missatge">Missatge:</label><br>
-            <textarea id="missatge" name="missatge" rows="4" cols="50" required></textarea><br><br>
-            <input type="submit" value="Enviar">
-        </form>
-        <?php
-    }
-    ?>
-</body>
-</html>
-```
-</details>
-
-#### Exercici 14: Validació de formulari amb `match`
-
-1. Crea un fitxer que utilitze la instrucció `match` per validar un formulari amb camps per a nom, correu electrònic i edat. Si algun camp està buit, ha de retornar un missatge d'error corresponent.
-
-<details>
-<summary>Solució</summary>
-
-```php
-$nom = 'Joan';
-$correu = 'joan@example.com';
-$edat = '';
-
-$validacio = match (true) {
-empty($nom) => 'El camp nom és obligatori.',
-!filter_var($correu, FILTER_VALIDATE_EMAIL) => 'El correu electrònic no és vàlid.',
-empty($edat) => 'El camp edat és obligatori.',
-default => 'Formulari vàlid.',
-};
-
-echo $validacio;  // Sortida: El camp edat és obligatori.
-```
-
-</details>
-
-#### Exercici 15: Variables de servidor
-
-1. Mostra en un fitxer les variables de servidor que conegues
-
-<details>
-<summary>Solució</summary>
-    
-```php
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <title>Informació del Servidor</title>
-</head>
-<body>
-    <h2>Informació del Servidor</h2>
-    <?php
-        echo "<p><strong>Nom del servidor:</strong> " . $_SERVER['SERVER_NAME'] . "</p>";
-        echo "<p><strong>Adreça IP del servidor:</strong> " . $_SERVER['SERVER_ADDR'] . "</p>";
-        echo "<p><strong>Software del servidor:</strong> " . $_SERVER['SERVER_SOFTWARE'] . "</p>";
-        echo "<p><strong>Agent d'usuari del client:</strong> " . $_SERVER['HTTP_USER_AGENT'] . "</p>";
-        echo "<p><strong>Mètode de la sol·licitud:</strong> " . $_SERVER['REQUEST_METHOD'] . "</p>";
-        echo "<p><strong>URL de la sol·licitud:</strong> " . $_SERVER['REQUEST_URI'] . "</p>";
-        echo "<p><strong>Referent:</strong> " . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'No disponible') . "</p>";
-        echo "<p><strong>Protocol utilitzat:</strong> " . $_SERVER['SERVER_PROTOCOL'] . "</p>";
-        echo "<p><strong>Port utilitzat:</strong> " . $_SERVER['SERVER_PORT'] . "</p>";
-    ?>
-</body>
-</html>
-```
-</details>
-
-#### Exercici 16: Pujar fitxers al servidor
-
-1. Crea un formulari en HTML que permeti als usuaris pujar un fitxer i seleccionar una opció d'un checkbox. Les opcions del checkbox han de ser carregades des d'un array predefinit en PHP. Després de l'enviament del formulari, el fitxer pujat ha de ser processat i mogut a una ubicació específica del servidor, i s'ha de mostrar la informació del fitxer i l'opció seleccionada.
-
-<details>
-<summary>Solució</summary>
-
-```php
-
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <title>Pujar Fitxer i Selecció Opció</title>
-</head>
-<body>
-    <?php
-    // Definim les opcions per al checkbox
-    $opcions = ["Opció 1", "Opció 2", "Opció 3"];
-
-    // Comprovem si el formulari ha estat enviat
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Comprovem si el fitxer ha estat pujat sense errors
-        if (isset($_FILES["fitxer"]) && $_FILES["fitxer"]["error"] == 0) {
-            $nom_fitxer = $_FILES["fitxer"]["name"];
-            $tipus_fitxer = $_FILES["fitxer"]["type"];
-            $mida_fitxer = $_FILES["fitxer"]["size"];
-            $ubicacio_temporal = $_FILES["fitxer"]["tmp_name"];
-
-            // Movem el fitxer a una ubicació permanent
-            $ubicacio_destinacio = "uploads/" . basename($nom_fitxer);
-            if (move_uploaded_file($ubicacio_temporal, $ubicacio_destinacio)) {
-                echo "<p>El fitxer <strong>$nom_fitxer</strong> ha estat pujat correctament.</p>";
-                echo "<p>Tipus de fitxer: $tipus_fitxer</p>";
-                echo "<p>Mida del fitxer: " . ($mida_fitxer / 1024) . " KB</p>";
-                echo "<p>Ubicació del fitxer: $ubicacio_destinacio</p>";
-            } else {
-                echo "<p>Error al moure el fitxer a la ubicació final.</p>";
-            }
-        } else {
-            echo "<p>Error al pujar el fitxer.</p>";
-        }
-
-        // Comprovem si una opció del checkbox ha estat seleccionada
-        if (isset($_POST['opcio'])) {
-            $opcio_seleccionada = $_POST['opcio'];
-            echo "<p>Has seleccionat: $opcio_seleccionada</p>";
-        } else {
-            echo "<p>No has seleccionat cap opció.</p>";
-        }
-    } else {
-        ?>
-        <h2>Formulari per Pujar Fitxer i Selecció d'Opció</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-            <label for="fitxer">Selecciona un fitxer:</label>
-            <input type="file" id="fitxer" name="fitxer" required><br><br>
-
-            <label for="opcio">Selecciona una opció:</label><br>
-            <?php
-            foreach ($opcions as $opcio) {
-                echo '<input type="checkbox" id="' . $opcio . '" name="opcio" value="' . $opcio . '">';
-                echo '<label for="' . $opcio . '"> ' . $opcio . '</label><br>';
-            }
-            ?><br>
-
-            <input type="submit" value="Enviar">
-        </form>
-        <?php
-    }
-    ?>
-</body>
-</html>
-```
-</details>
 
 ### Exercicis proposats 
 
@@ -2298,11 +1933,12 @@ A partir del formulari anterior fes que es puga pujar una imatge. Mostra la imat
 
 ### [Solucions](10solucions.html#Tema 2: Introducció a PHP)
 
-## 20. Enunciats dels Projectes
+##  Projecte
 
-### Projecte "L'Ofegat"
+### Projecte "El penjat"
 
-**Enunciat:**
+**Entrega 1:**
+
 Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El joc ha de permetre als jugadors endevinar les lletres d'una paraula predefinida i mostrar l'estat actual de les lletres endevinades. No és necessari mantenir l'estat del joc entre sol·licituds ni comprovar si s'han esgotat els intents en aquesta fase inicial.
 
 **Requisits:**
@@ -2333,69 +1969,121 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 .incorrect { color: red; }
 ```
 
-### Projecte "4 en Ratlla"
 
-**Enunciat:**
-Implementa una versió simplificada del joc "4 en Ratlla" utilitzant HTML i PHP. El joc ha de permetre als jugadors introduir els seus moviments i mostrar l'estat actual de la graella. No és necessari mantenir l'estat del joc entre sol·licituds ni comprovar si hi ha un guanyador en aquesta fase inicial.
-
-**Requisits:**
-
-1. **Inicialització de la Graella**:
-    - Crea una funció `inicialitzarGraella()` que inicialitze una graella buida de 6 files i 7 columnes.
-2. **Pintar la Graella**:
-    - Crea una funció `pintarGraella($graella)` que pinte la graella en HTML. Utilitza diferents colors per a les fitxes dels jugadors, aplicant el CSS adjunt.
-3. **Realitzar Moviments**:
-    - Crea una funció `ferMoviment(&$graella, $columna, $jugadorActual)` que realitze un moviment en la columna especificada pel jugador actual.
-4. **Interfície d'Usuari**:
-    - Crea un formulari HTML que permeta als jugadors introduir la columna on volen posar la seua fitxa. Aquest formulari ha de mantenir el jugador actual entre sol·licituds.
-
-**Codi CSS Proporcionat**:
-
-```css
-table { border-collapse: collapse; }
-td {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 10px dotted #fff; /* Cercle amb punts blancs */
-    background-color: #000; /* Fons negre o pot ser un altre color */
-    display: inline-block;
-    margin: 10px;
-    color: white;
-    font-size: 2rem;
-    text-align: center ;
-    vertical-align: middle;
-}
-.player1 {
-    background-color: red; /* Color vermell per un dels jugadors */
-}
-.player2 {
-    background-color: yellow; /* Color groc per l'altre jugador */
-}
-.buid {
-    background-color: white; /* Color blanc per cercles buits */
-    border-color: #000; /* Puntes negres per millor visibilitat */
-}
-
-```
-
-### Rúbrica
-
-| Criteri                            | Puntuació Total | Complet(2)                          | A mitjes(1)                       | No(0)                              |
-|------------------------------------|-----------------|-------------------------------------|-----------------------------------|------------------------------------|
-| **Paraula a Endevinar**            | 1               | Paraula definida correctament       | Paraula definida però amb errors  | No s'ha definit la paraula         |
-| **Inicialització de les Lletres**  | 3               | Array creat correctament            | Array creat però amb errors       | No s'ha creat l'array              |
-| **Funció per a Comprovar Intents** | 5               | Funció creada i funcional           | Funció creada però amb errors     | No s'ha creat la funció            |
-| **Comprovació d'Intents**          | 3               | Comprovació realitzada correctament | Comprovació amb errors            | No s'ha realitzat la comprovació   |
-| **Inicialització de la Graella**   | 4               | Funció creada correctament          | Funció creada però amb errors     | No s'ha creat la funció            |
-| **Pintar la Graella**              | 4               | Funció creada i funcional           | Funció creada però amb errors     | No s'ha creat la funció            |
-| **Realitzar Moviments**            | 5               | Funció creada i funcional           | Funció creada però amb errors     | No s'ha creat la funció            |
-| **Interfícies d'Usuari**           | 6               | Interfície correcta i funcional     | Interfície creada però amb errors | No s'ha creat la interfície        |
-| **Estil CSS**                      | 2               | CSS aplicat correctament            | CSS aplicat però amb errors       | No s'ha aplicat el CSS             |
-| **Comentaris i Claredat del Codi** | 1               | Codi ben comentat i clar            | Codi amb alguns comentaris        | Codi sense comentaris o desordenat |
+| Criteri                            | Puntuació Total | Complet(2)                          | Incomplet(1)                     | Insuficient(0)                     |
+|------------------------------------|-----------------|-------------------------------------|----------------------------------|------------------------------------|
+| **Paraula a Endevinar**            | 1               | Paraula definida correctament       | Paraula definida però amb errors | No s'ha definit la paraula         |
+| **Inicialització de les Lletres**  | 2               | Array creat correctament            | Array creat però amb errors      | No s'ha creat l'array              |
+| **Funció per a Comprovar Intents** | 3               | Funció creada i funcional           | Funció creada però amb errors    | No s'ha creat la funció            |
+| **Comprovació d'Intents**          | 2               | Comprovació realitzada correctament | Comprovació amb errors           | No s'ha realitzat la comprovació   |
+| **Estil CSS**                      | 1               | CSS aplicat correctament            | CSS aplicat però amb errors      | No s'ha aplicat el CSS             |
+| **Comentaris i Claredat del Codi** | 1               | Codi ben comentat i clar            | Codi amb alguns comentaris       | Codi sense comentaris o desordenat |
 
 
-## 21. Autoavaluació: Conceptes Bàsics de PHP
+**Entrega 2:** 
+
+1. **Manteniment de l'Estat del Joc amb Sessions:**
+    - Utilitza sessions per a emmagatzemar l'estat actual del joc, incloent la paraula a endevinar, lletres endevinades, i el nombre d'intents restants.
+
+2. **Gestió de la Sessió del Joc:**
+    - Afegeix funcionalitats per a reiniciar el joc en qualsevol moment, reinicialitzant les variables de sessió per a començar una nova partida.
+    - Afegeix una opció per a tancar sessió i finalitzar la partida actual.
+    - Afegeix un funció per a saver si el joc ha acabat, ja siga perquè s'han endevinat totes les lletres o s'haguen arribat al màxim número d'intents permesos.
+    - Controla el final del joc
+
+3. **Cookies per a Recordar Jugadors:**
+    - Implementa cookies per a recordar els jugadors entre visites, permetent que l'usuari siga recordat si selecciona una opció de "Recordar-me" durant l'inici de sessió.
+
+4. **Seguretat i Autenticació:**
+    - Implementa un sistema d'autenticació bàsic per a garantir que només els jugadors autenticats puguen accedir al joc.
+    - Utilitza sessions per a mantenir l'estat d'autenticació i controlar l'accés a les funcionalitats del joc.
+
+
+#### Consideracions Addicionals
+
+- **Resiliència del Joc:** Implementa la lògica necessària per a manejar intents invàlids i mostrar missatges d'error adequats.
+- **Millores d'Interfície:** Afegix un enllaç o botó per a tancar sessió i una opció per a reiniciar el joc.
+
+
+    | Criteri                    | Puntuació Total  |Complet (2)                                                | Incomplet (1)                                           | Insuficient (0)                                   |
+    |----------------------------|------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------|
+    | **Funcionalitat del Joc**  | 2                |El joc està completament funcional i sense errors.         | El joc és funcional, però conté errors significatius.   | El joc no és funcional o està incomplet.          |
+    | **Ús de Sessions**         | 1                |Sessions ben implementades per a mantenir l'estat del joc. | Sessions utilitzades, però amb deficiències importants. | No s'han utilitzat sessions o són incorrectes.    |
+    | **Ús de Cookies**          | 1                |Cookies ben utilitzades per a recordar els jugadors.       | Cookies utilitzades amb limitacions evidents.           | No s'han utilitzat cookies o són incorrectes.     |
+    | **Autenticació d'Usuaris** | 3                |Autenticació segura i efectiva implementada.               | Autenticació present però amb deficiències notables.    | No s'ha implementat autenticació o és incorrecta. |
+    | **Interfície d'Usuari**    | 1                |Interfície atractiva i fàcil d'utilitzar.                  | Interfície funcional però poc intuïtiva.                | Interfície confusa i difícil d'utilitzar.         |
+    | **Punts addicionals**      | 2                | 1 punt per cadascúna aconseguida.                         | 
+
+**Entrega 3**
+
+1. **Desenvolupar una versió modular i escalable del joc "L'Ofegat" emprant programació orientada a objectes (POO) i gestió de dependències amb Composer**
+    -Organitza el projecte de manera clara utilitzant namespaces i Composer (autoload PSR-4):
+
+ofegat-poo/
+├── composer.json
+├── vendor/
+├── app/
+│ ├── Joc.php
+│ ├── Jugador.php
+│ └── GestorPartida.php
+├── public/
+│ ├── index.php
+│ ├── login.php
+│ ├── logout.php
+│ └── reiniciar.php
+├── config/
+│ └── paraules.php
+├── templates/
+│ ├── capçalera.php
+│ ├── peu.php
+│ └── joc.php
+├── style.css
+
+2. **Classes**
+
+- **Joc**
+    - Emmagatzema la paraula a endevinar, intents restants i lletres encertades/error.
+    - Mètodes per comprovar lletres, mostrar estat del joc i saber si ha acabat.
+
+- **Jugador**
+    - Gestió del nom d’usuari (amb cookie si s'ha marcat "recordar").
+    - Control de sessió.
+
+- **GestorPartida**
+    - Inicia, reinicia i manté l'estat del joc en sessió.
+    - Crida els mètodes corresponents de `Joc` i `Jugador`.
+
+3. **Altres** 
+  
+- Ús de Composer per a autoload.
+- `index.php` mostrarà el joc actual.
+- `login.php` per accedir amb nom d’usuari.
+- `reiniciar.php` per reiniciar la partida.
+- `logout.php` per tancar sessió i esborrar cookies.
+
+4. **Extres**
+
+- Afegir dibuix d'ofegat (ASCII o imatge) segons el nombre d'errades.
+- Multijugador amb base de dades.
+- Guardar puntuacions.
+
+ 
+| **Criteri**                          | **Punts** | **Complet (2)**                                                  | **Incomplet (1)**                                            | **Insuficient (0)**                                   |
+|-------------------------------------|-----------|------------------------------------------------------------------|--------------------------------------------------------------|--------------------------------------------------------|
+| **Funcionament correcte del joc**   | 3         | El joc és completament funcional i sense errors.                | El joc és funcional però amb errors o limitacions notables.  | El joc no funciona o està incomplet.                  |
+| **Ús correcte de POO**              | 2         | Classes ben estructurades, encapsulament correcte, ús de mètodes i atributs clars. | S’usen classes però amb estructura poc clara o pràctiques deficients. | No s’aplica orientació a objectes o de manera incorrecta. |
+| **Autoload amb Composer**           | 1         | Composer ben configurat i autoload funcional amb PSR-4.         | Composer usat però amb problemes o mala configuració.        | No s’ha utilitzat Composer o l’autoload no funciona.   |
+| **Gestió d’usuari amb sessió/cookie** | 2       | Sessions i cookies ben implementades per a gestionar usuaris.   | Sessions/cookies funcionals però amb limitacions importants. | No s’han implementat o no funcionen correctament.     |
+| **Interfície clara i funcional**    | 1         | Interfície intuïtiva i clara per a jugar.                        | Interfície funcional però poc intuïtiva o desorganitzada.     | Interfície confusa o inexistent.                      |
+| **Bon ús del codi i organització**  | 1         | Codi ben estructurat, clar i fàcil de seguir.                   | Codi funcional però desorganitzat o poc llegible.            | Codi desordenat i difícil de mantenir.                |
+
+**Puntuació màxima total: 10 punts**
+
+
+
+ 
+
+##  Autoavaluació: Conceptes Bàsics de PHP
 
 #### Exercici 1: Sintaxi Bàsica de PHP
 
@@ -2654,3 +2342,478 @@ function checkAnswer7() {
     document.getElementById('result7').innerText = resultText;
 }
 </script>
+
+#### Exercici 8: Funcions de les Cookies
+
+##### Pregunta:
+Quina és la funció principal de les cookies en el context del desenvolupament web?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q1a" name="question1" value="a">
+  <label for="q1a">a) Guardar els fitxers de l'usuari al servidor.</label><br>
+  <input type="radio" id="q1b" name="question1" value="b">
+  <label for="q1b">b) Emmagatzemar informació del client per personalitzar l'experiència d'usuari.</label><br>
+  <input type="radio" id="q1c" name="question1" value="c">
+  <label for="q1c">c) Executar codi al servidor.</label><br>
+  <input type="radio" id="q1d" name="question1" value="d">
+  <label for="q1d">d) Controlar la velocitat de la connexió a Internet.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer1()">
+</form>
+
+<p id="result1"></p>
+
+<script>
+function checkAnswer1() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question1');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) Emmagatzemar informació del client per personalitzar l'experiència d'usuari.";
+    document.getElementById('result1').innerText = resultText;
+}
+</script>
+
+#### Exercici 9: Seguretat de les Cookies
+
+##### Pregunta:
+Quins atributs de seguretat haurien de tindre les cookies per protegir-les contra atacs?
+
+##### Opcions:
+<form>
+  <input type="checkbox" id="q2a" name="question2" value="a">
+  <label for="q2a">a) Secure</label><br>
+  <input type="checkbox" id="q2b" name="question2" value="b">
+  <label for="q2b">b) HttpOnly</label><br>
+  <input type="checkbox" id="q2c" name="question2" value="c">
+  <label for="q2c">c) SameSite</label><br>
+  <input type="checkbox" id="q2d" name="question2" value="d">
+  <label for="q2d">d) CrossSite</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer2()">
+</form>
+
+<p id="result2"></p>
+
+<script>
+function checkAnswer2() {
+    var correctAnswers = ["a", "b", "c"];
+    var checkboxes = document.getElementsByName('question2');
+    var userAnswers = [];
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            userAnswers.push(checkboxes[i].value);
+        }
+    }
+    userAnswers.sort();
+    var resultText = (JSON.stringify(userAnswers) === JSON.stringify(correctAnswers))
+        ? "Correcte!"
+        : "Incorrecte. Les respostes correctes són a) Secure, b) HttpOnly, c) SameSite.";
+    document.getElementById('result2').innerText = resultText;
+}
+</script>
+
+#### Exercici 10: Creació de Sessions en PHP
+
+##### Pregunta:
+Quin dels següents passos és necessari per iniciar una sessió en PHP?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q3a" name="question3" value="a">
+  <label for="q3a">a) Cridar a la funció session_start().</label><br>
+  <input type="radio" id="q3b" name="question3" value="b">
+  <label for="q3b">b) Utilitzar la funció session_open().</label><br>
+  <input type="radio" id="q3c" name="question3" value="c">
+  <label for="q3c">c) Assignar un valor a la variable $_SESSION.</label><br>
+  <input type="radio" id="q3d" name="question3" value="d">
+  <label for="q3d">d) No es necessita cap funció especial.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer3()">
+</form>
+
+<p id="result3"></p>
+
+<script>
+function checkAnswer3() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question3');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) Cridar a la funció session_start().";
+    document.getElementById('result3').innerText = resultText;
+}
+</script>
+
+#### Exercici 11: Manteniment d'Informació en Sessions
+
+##### Pregunta:
+Com es pot mantindre la informació d'un usuari durant la sessió d'una aplicació web?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q4a" name="question4" value="a">
+  <label for="q4a">a) Utilitzant la variable global $GLOBALS.</label><br>
+  <input type="radio" id="q4b" name="question4" value="b">
+  <label for="q4b">b) Utilitzant la variable $_SESSION.</label><br>
+  <input type="radio" id="q4c" name="question4" value="c">
+  <label for="q4c">c) Utilitzant la variable $_COOKIE.</label><br>
+  <input type="radio" id="q4d" name="question4" value="d">
+  <label for="q4d">d) Utilitzant arxius temporals al servidor.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer4()">
+</form>
+
+<p id="result4"></p>
+
+<script>
+function checkAnswer4() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question4');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) Utilitzant la variable $_SESSION.";
+    document.getElementById('result4').innerText = resultText;
+}
+</script>
+
+#### Exercici 12: Funcions de PHP per a Sessions
+
+##### Pregunta:
+Quina funció de PHP es fa servir per destruir una sessió?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q5a" name="question5" value="a">
+  <label for="q5a">a) session_destroy()</label><br>
+  <input type="radio" id="q5b" name="question5" value="b">
+  <label for="q5b">b) session_unset()</label><br>
+  <input type="radio" id="q5c" name="question5" value="c">
+  <label for="q5c">c) session_delete()</label><br>
+  <input type="radio" id="q5d" name="question5" value="d">
+  <label for="q5d">d) session_end()</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer5()">
+</form>
+
+<p id="result5"></p>
+
+<script>
+function checkAnswer5() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question5');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) session_destroy().";
+    document.getElementById('result5').innerText = resultText;
+}
+</script>
+
+#### Exercici 13: Avantatges de les Sessions
+
+##### Pregunta:
+Quins són els avantatges d'utilitzar sessions en lloc de cookies per a mantenir l'estat de l'usuari?
+
+##### Opcions:
+<form>
+  <input type="checkbox" id="q6a" name="question6" value="a">
+  <label for="q6a">a) Les sessions poden emmagatzemar més informació perquè es guarden al servidor.</label><br>
+  <input type="checkbox" id="q6b" name="question6" value="b">
+  <label for="q6b">b) Les sessions són més segures perquè no s'envien al client.</label><br>
+  <input type="checkbox" id="q6c" name="question6" value="c">
+  <label for="q6c">c) Les sessions redueixen la càrrega del servidor.</label><br>
+  <input type="checkbox" id="q6d" name="question6" value="d">
+  <label for="q6d">d) Les sessions no necessiten ser configurades amb atributs de seguretat.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer6()">
+</form>
+
+<p id="result6"></p>
+
+<script>
+function checkAnswer6() {
+    var correctAnswers = ["a", "b"];
+    var checkboxes = document.getElementsByName('question6');
+    var userAnswers = [];
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            userAnswers.push(checkboxes[i].value);
+        }
+    }
+    userAnswers.sort();
+    var resultText = (JSON.stringify(userAnswers) === JSON.stringify(correctAnswers))
+        ? "Correcte!"
+        : "Incorrecte. Les respostes correctes són a) Les sessions poden emmagatzemar més informació perquè es guarden al servidor, b) Les sessions són més segures perquè no s'envien al client.";
+    document.getElementById('result6').innerText = resultText;
+}
+</script>
+
+#### Exercici 14: Autenticació d'Usuaris
+
+##### Pregunta:
+Quina és la pràctica recomanada per assegurar la identitat d'un usuari en una aplicació web?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q7a" name="question7" value="a">
+  <label for="q7a">a) Utilitzar noms d'usuari i contrasenyes emmagatzemades com a cookies.</label><br>
+  <input type="radio" id="q7b" name="question7" value="b">
+  <label for="q7b">b) Utilitzar sessions per mantenir l'estat d'autenticació després d'iniciar sessió.</label><br>
+  <input type="radio" id="q7c" name="question7" value="c">
+  <label for="q7c">c) Emmagatzemar la contrasenya de l'usuari a la URL.</label><br>
+  <input type="radio" id="q7d" name="question7" value="d">
+  <label for="q7d">d) No utilitzar cap forma d'autenticació.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer7()">
+</form>
+
+<p id="result7"></p>
+
+<script>
+function checkAnswer7() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question7');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) Utilitzar sessions per mantenir l'estat d'autenticació després d'iniciar sessió.";
+    document.getElementById('result7').innerText = resultText;
+}
+</script>
+
+#### Exercici 15: Constructors en PHP
+
+##### Pregunta:
+Quina és la funció principal d'un constructor en una classe PHP?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q1a" name="question1" value="a">
+  <label for="q1a">a) Destruir els objectes de la classe quan ja no són necessaris.</label><br>
+  <input type="radio" id="q1b" name="question1" value="b">
+  <label for="q1b">b) Inicialitzar les propietats de l'objecte quan es crea.</label><br>
+  <input type="radio" id="q1c" name="question1" value="c">
+  <label for="q1c">c) Executar una funció arbitrària abans de cada mètode.</label><br>
+  <input type="radio" id="q1d" name="question1" value="d">
+  <label for="q1d">d) Crear mètodes màgics automàticament.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer1()">
+</form>
+
+<p id="result1"></p>
+
+<script>
+function checkAnswer1() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question1');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) Inicialitzar les propietats de l'objecte quan es crea.";
+    document.getElementById('result1').innerText = resultText;
+}
+</script>
+
+#### Exercici 16: Herència en PHP
+
+##### Pregunta:
+Quina és l'avantatge principal de l'herència en la programació orientada a objectes?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q2a" name="question2" value="a">
+  <label for="q2a">a) Permet reutilitzar codi definint classes noves basades en classes existents.</label><br>
+  <input type="radio" id="q2b" name="question2" value="b">
+  <label for="q2b">b) Permet ocultar totes les propietats i mètodes de la classe.</label><br>
+  <input type="radio" id="q2c" name="question2" value="c">
+  <label for="q2c">c) Permet definir funcions globals sense necessitat de classes.</label><br>
+  <input type="radio" id="q2d" name="question2" value="d">
+  <label for="q2d">d) Permet cridar a funcions de JavaScript des de PHP.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer2()">
+</form>
+
+<p id="result2"></p>
+
+<script>
+function checkAnswer2() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question2');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) Permet reutilitzar codi definint classes noves basades en classes existents.";
+    document.getElementById('result2').innerText = resultText;
+}
+</script>
+
+#### Exercici 17: Polimorfisme
+
+##### Pregunta:
+Què permet el polimorfisme en el context de la POO?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q3a" name="question3" value="a">
+  <label for="q3a">a) Permet que una funció tinga múltiples implementacions depenent de l'objecte que la cride.</label><br>
+  <input type="radio" id="q3b" name="question3" value="b">
+  <label for="q3b">b) Permet la creació d'objectes a partir de funcions anònimes.</label><br>
+  <input type="radio" id="q3c" name="question3" value="c">
+  <label for="q3c">c) Permet la connexió entre PHP i bases de dades relacionals.</label><br>
+  <input type="radio" id="q3d" name="question3" value="d">
+  <label for="q3d">d) Permet executar múltiples scripts PHP alhora.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer3()">
+</form>
+
+<p id="result3"></p>
+
+<script>
+function checkAnswer3() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question3');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) Permet que una funció tinga múltiples implementacions depenent de l'objecte que la cride.";
+    document.getElementById('result3').innerText = resultText;
+}
+</script>
+
+#### Exercici 18: Espais de Noms
+
+##### Pregunta:
+Per a què s'utilitzen els espais de noms (namespaces) en PHP?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q4a" name="question4" value="a">
+  <label for="q4a">a) Per executar codi PHP de forma asincrònica.</label><br>
+  <input type="radio" id="q4b" name="question4" value="b">
+  <label for="q4b">b) Per evitar conflictes entre noms de classes, funcions o constants en diferents parts del codi.</label><br>
+  <input type="radio" id="q4c" name="question4" value="c">
+  <label for="q4c">c) Per definir variables globals accessibles des de qualsevol punt del codi.</label><br>
+  <input type="radio" id="q4d" name="question4" value="d">
+  <label for="q4d">d) Per importar codi d'altres llenguatges de programació com JavaScript.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer4()">
+</form>
+
+<p id="result4"></p>
+
+<script>
+function checkAnswer4() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question4');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) Per evitar conflictes entre noms de classes, funcions o constants en diferents parts del codi.";
+    document.getElementById('result4').innerText = resultText;
+}
+</script>
+
+ 
+
+#### Exercici 19: Excepcions en PHP
+
+##### Pregunta:
+Quina és la finalitat d'utilitzar excepcions en PHP?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q6a" name="question6" value="a">
+  <label for="q6a">a) Evitar l'execució de codi mal format.</label><br>
+  <input type="radio" id="q6b" name="question6" value="b">
+  <label for="q6b">b) Gestionar errors i condicions excepcionals de manera controlada dins d'una aplicació.</label><br>
+  <input type="radio" id="q6c" name="question6" value="c">
+  <label for="q6c">c) Declarar funcions dins d'una classe.</label><br>
+  <input type="radio" id="q6d" name="question6" value="d">
+  <label for="q6d">d) Garantir que totes les variables estiguen inicialitzades abans del seu ús.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer6()">
+</form>
+
+<p id="result6"></p>
+
+<script>
+function checkAnswer6() {
+    var correctAnswer = "b";
+    var radios = document.getElementsByName('question6');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és b) Gestionar errors i condicions excepcionals de manera controlada dins d'una aplicació.";
+    document.getElementById('result6').innerText = resultText;
+}
+</script>
+
+#### Exercici 20: Autoloading en PHP
+
+##### Pregunta:
+Quin avantatge ofereix l'autoloading en PHP?
+
+##### Opcions:
+<form>
+  <input type="radio" id="q7a" name="question7" value="a">
+  <label for="q7a">a) Permet que les classes es carreguen automàticament quan s'utilitzen, sense necessitat de fer incloure manualment cada fitxer.</label><br>
+  <input type="radio" id="q7b" name="question7" value="b">
+  <label for="q7b">b) Permet l'execució de múltiples scripts alhora.</label><br>
+  <input type="radio" id="q7c" name="question7" value="c">
+  <label for="q7c">c) Permet la manipulació de fitxers en el servidor.</label><br>
+  <input type="radio" id="q7d" name="question7" value="d">
+  <label for="q7d">d) Permet la connexió amb bases de dades.</label><br><br>
+  <input type="button" value="Comprovar" onclick="checkAnswer7()">
+</form>
+
+<p id="result7"></p>
+
+<script>
+function checkAnswer7() {
+    var correctAnswer = "a";
+    var radios = document.getElementsByName('question7');
+    var userAnswer;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            userAnswer = radios[i].value;
+            break;
+        }
+    }
+    var resultText = userAnswer === correctAnswer ? "Correcte!" : "Incorrecte. La resposta correcta és a) Permet que les classes es carreguen automàticament quan s'utilitzen, sense necessitat de fer incloure manualment cada fitxer.";
+    document.getElementById('result7').innerText = resultText;
+}
+</script>
+
