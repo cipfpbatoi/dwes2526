@@ -1593,7 +1593,215 @@ $log->warning("Producto no encontrado", ["datos" => $producto]);
  
 !!! tip "Més informació"
 Més informació sobre manejadores, formateadores i processadors en <https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md>
+
+
+### 9. Gestió d'Exempcions
+
+
+La gestió d'excepcions forma part des de PHP 5. El seu funcionament és similar a Java*, fent ús d'un bloc `try / catch / finally`.
+Si detectem una situació anòmala i volem llançar una excepció, haurem de realitzar `throw new Exception` (adjuntant el missatge que l'ha provocat).
+
+``` php
+<?php
+try {
+    if ($divisor == 0) {
+        throw new Exception("División por cero.");
+    }
+    $resultado = $dividendo / $divisor;
+} catch (Exception $e) {
+    echo "Se ha producido el siguiente error: ".$e->getMessage();
+}
+```
+
+La classe `Exception` és la classe pare de totes les excepcions. El seu constructor rep `missatge[,codigoError][,excepcionPrevia]`.
+
+A partir d'un objecte `Exception`, podem accedir als mètodes `getMessage()`i `getCode()` per a obtindre el missatge i el codi d'error de l'excepció capturada.
+
+El propi llenguatge ofereix un conjunt d'excepcions ja definides, les quals podem capturar (i llançar des de PHP 7). Es recomana la seua consulta en la [documentació oficial](https://www.php.net/manual/es/class.exception.php).
+
+#### Creant exempcions
+
+Per a crear una excepció, la forma més curta és crear una classe que únicament herete de `Exception`.
+
+``` php
+<?php
+class HolaExcepcion extends Exception {}
+```
+
+Si volem, i és recomanable depenent dels requisits, podem sobrecarregar els mètodes màgics, per exemple, sobrecarregant el constructor i cridant al constructor del pare, o reescriure el mètode `__toString` per a canviar el seu missatge:
+
+``` php
+<?php
+class MiExcepcion extends Exception {
+    public function __construct($msj, $codigo = 0, Exception $previa = null) {
+        // código propio
+        parent::__construct($msj, $codigo, $previa);
+    }
+    public function __toString() {
+        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+    }
+    public function miFuncion() {
+        echo "Una función personalizada para este tipo de excepción\n";
+    }
+}
+```
+
+Si definim una excepció d'aplicació dins d'un *namespace*, quan referenciem a `Exception`, haurem de referenciar-la mitjançant el seu nom totalment qualificat (`\Exception`), o utilitzant `use`:
+
+=== "Mitjançant nom totalment qualificat"
+``` php
+<?php
+namespace \Dwes\Ejemplos;
+
+    class AppExcepcion extends \Exception {}
+ ```
+=== "Mitjançant `use`"
+``` php
+<?php
+namespace \Dwes\Ejemplos;
+
+    use Exception;
+
+    class AppExcepcion extends Exception {}
+ ```
+
+#### Rellançar exempcions
+
+En les aplicacions reals, és molt comuna capturar una excepció de sistema i llançar una d'aplicació que hem definit nostros.
+També podem llançar les excepcions sense necessitat d'estar dins d'un `try/catch`.
+
+``` php
+<?php
+class AppException extends Exception {}
+
+try {
+    // Código de negocio que falla
+} catch (Exception $e) {
+    throw new AppException("AppException: ".$e->getMessage(), $e->getCode(), $e);
+}
+```
+
+## SA 2.4 Accés a fitxers
+
+### 1. Funcions bàsiques de PHP per a fitxers
+
+| Funció     | Descripció                                       |
+|------------|--------------------------------------------------|
+| `fopen()`  | Obri un fitxer.                                 |
+| `fread()`  | Llig el contingut d’un fitxer.                  |
+| `fwrite()` | Escriu dades en un fitxer.                      |
+| `fclose()` | Tanca un fitxer obert.                          |
+| `file_exists()` | Comprova si un fitxer existix.            |
+| `unlink()` | Elimina un fitxer.                              |
+
+### 2. Modes d'obertura de fitxers
+
+| Mode | Descripció                                                  |
+|------|-------------------------------------------------------------|
+| `r`  | Llig només. El punter es col·loca al principi del fitxer.   |
+| `w`  | Escriure només. Es crea o truncat si ja existix.            |
+| `a`  | Afegeix al final del fitxer. El crea si no existix.         |
+| `r+` | Llig i escriu. No crea el fitxer si no existix.             |
+| `w+` | Llig i escriu. Trunca el fitxer o el crea de nou.           |
+| `a+` | Llig i escriu. Afegeix al final si el fitxer existix.       |
+
+#### Exemple bàsic
+
+```php
+<?php
+$fitxer = fopen("dades.txt", "w");
+fwrite($fitxer, "Hola món!");
+fclose($fitxer);
+?>
+```
+
+Aquest codi crea (o substitueix) un fitxer anomenat dades.txt i escriu el text "Hola món!" dins d'ell.
+
+#### Consideracions de seguretat
+
+- Comprova sempre si el fitxer existix abans de llegir o escriure.
+- Utilitza rutes relatives i evita permetre a l’usuari introduir noms de fitxer directament.
+- Gestiona correctament els errors amb file_exists(), is_readable(), is_writable().
+
+### 3.Llegir fitxer línia a línia
+
+```php
+<?php
+$fitxer = fopen("dades.txt", "r");
+
+while (!feof($fitxer)) {
+    $linia = fgets($fitxer);
+    echo $linia . "<br>";
+}
+
+fclose($fitxer);
  
+```
+
+
+La funció fgets() llig una línia de text. La funció feof() comprova si s’ha arribat al final del fitxer.
+
+### 4. Escriure múltiples línies
+
+```php
+<?php
+$fitxer = fopen("registre.log", "a");
+$linies = ["Primera línia", "Segona línia", "Tercera línia"];
+
+foreach ($linies as $linia) {
+    fwrite($fitxer, $linia . PHP_EOL);
+}
+
+fclose($fitxer);
+?>
+``` 
+PHP_EOL assegura que el salt de línia siga compatible amb el sistema operatiu.
+
+### 5. Gestió de directoris
+
+#### Crear un directori
+
+```php
+<?php
+if (!is_dir("documents")) {
+    mkdir("documents", 0755);
+}
+?>
+``` 
+
+mkdir() crea un directori amb els permisos indicats. is_dir() comprova si ja existix.
+
+#### Llistar el contingut d’un directori
+
+```php
+<?php
+$directori = opendir("documents");
+
+while (($fitxer = readdir($directori)) !== false) {
+    if ($fitxer != "." && $fitxer != "..") {
+        echo $fitxer . "<br>";
+    }
+}
+
+closedir($directori);
+ 
+``` 
+
+#### Eliminar fitxers i directoris
+
+```php
+<?php
+if (file_exists("documents/antiga.txt")) {
+    unlink("documents/antiga.txt");
+}
+
+if (is_dir("documents/buid")) {
+    rmdir("documents/buid");
+}
+?>
+``` 
+
+
 
 ##  Exercicis 
 
