@@ -135,9 +135,9 @@ Operadors:
 
 Els àmbits d'utilització d'una variable són:
 
-Local: dins d'una funció.
-Global: fora de qualsevol funció.
-Estàtic: persisteixen el seu valor entre crides a la funció.
+- Local: dins d'una funció.
+- Global: fora de qualsevol funció.
+- Estàtic: persisteixen el seu valor entre crides a la funció.
 
  
 Exemple:
@@ -253,7 +253,7 @@ saludar(); // Mostra "Hola!"
 ?>
 ```
  
-### 8. Mecanismes de decisió (if, switch)
+### 8. Mecanismes de decisió (if, match)
 If, else, elseif:
 ```php
 if ($condicio) {
@@ -264,33 +264,7 @@ if ($condicio) {
     // Codi si cap de les condicions anteriors és certa
 }
 ```
-Switch:
-```php
-switch ($variable) {
-    case 1:
-        // Codi per al cas 1
-        break;
-    case 2:
-        // Codi per al cas 2
-        break;
-    default:
-        // Codi per al cas per defecte
-}
-```
-Exemple:
-```php
-$dia = "dilluns";
-switch ($dia) {
-    case "dilluns":
-        echo "Avui és dilluns";
-        break;
-    case "dimarts":
-        echo "Avui és dimarts";
-        break;
-    default:
-        echo "Avui no és dilluns ni dimarts";
-}
-```
+ 
 Match: 
 ```php
 $result = match ($variable) {
@@ -301,13 +275,7 @@ $result = match ($variable) {
     default => valorPerDefecte,
 };
 ```
-**Diferències amb switch**
-
-    1. **Comparació estricta**: `match` utilitza comparació estricta (===) per comparar els valors.
-    2. **Retorna un valor**: `match` és una expressió, la qual cosa significa que retorna un valor.
-    3. **No necessita break**: A diferència de `switch`, no es necessita l'ús de `break` per evitar la caiguda (fall-through).
-    4. **Més concís**: Permet una sintaxi més neta i concisa.
-
+ 
 Exemple simple:
 ```php
 $color = 'roig';
@@ -348,6 +316,7 @@ echo $tipusDia;  // Sortida: Dia laborable
 ```
 
 ### 9. Bucles (for, while, foreach)
+
 For:
 ```php
 for ($i = 0; $i < 10; $i++) {
@@ -472,9 +441,10 @@ En PHP, les cometes dobles (`"`) i les cometes simples (`'`) s'utilitzen per def
 $color = "blau";
 $frase = "El meu color preferit és $color.";
 echo $frase;  // Sortida: El meu color preferit és blau.
-  ```
+```
 
 ### 13. Comentaris en el codi
+
 Comentaris d'una línia:
 ```php
 // Això és un comentari d'una línia
@@ -484,6 +454,7 @@ Comentaris de diverses línies:
 /* Això és un comentari
    de diverses línies */
 ```
+
 ### 14. Variables de servidor
 
 PHP emmagatzema la informació del servidor i de les peticions HTTP en sis arrays globals:
@@ -562,7 +533,7 @@ $par = $_POST["parametro"]
 A l'hora d'enviar un formulari, hem de tindre clar quan usar GET o POST. Per als següents apartats ens basarem en el següent exemple:
 
 
-### Validació
+#### Validació
 
 Respecte a la validació, és convenient sempre fer *validació doble*:
 
@@ -578,10 +549,10 @@ if (isset($_GET["parametro"])) {
 ```
 
 !!! info "Llibreries de validació"
-Existeixen diverses llibreries que faciliten la validació dels formularis, com són [respect/validation](https://respect-validation.readthedocs.io/en/latest/) o [particle/validator](http://validator.particle-php.com/en/latest/).
-Quan estudiem Laravel aprofundirem en la validació de manera declarativa.
+    Existeixen diverses llibreries que faciliten la validació dels formularis, com són [respect/validation](https://respect-validation.readthedocs.io/en/latest/) o [particle/validator](http://validator.particle-php.com/en/latest/).
+    Quan estudiem Laravel aprofundirem en la validació de manera declarativa.
 
-### Parámetre multivalor
+#### Parámetre multivalor
 
 Existeixen elements HTML que envien diversos valors:
 
@@ -615,7 +586,7 @@ foreach ($lenguajes as $lenguaje) {
 }
 ```
 
-### Tornant a emplenar un formulari
+#### Tornant a emplenar un formulari
 
 Un *sticky form* és un formulari que recorda els seus valors. Per a això, hem d'emplenar els atributs `value` dels elements HTML amb la informació que contenien:
 
@@ -645,7 +616,7 @@ if (!empty($_POST['modulos']) && !empty($_POST['nombre'])) {
 <?php } ?>
 ```
 
-### Pujant arxius
+#### Pujant arxius
 
 S'emmagatzemen en el servidor en el array `$_FILES` amb el nom del camp del tipus `file` del formulari.
 
@@ -789,9 +760,7 @@ El **cache del navegador** s'utilitza per emmagatzemar còpies temporals de recu
 - **Control**: Requereix configuració per evitar el caching indesitjat de dades dinàmiques.
 
  
-### 2. Cookies i Sessions en PHP
-
-#### Cookies
+### 2. Cookies  
 
 Les cookies s'emmagatzemen en el array global `$_COOKIE`. El que col·loquem dins del array, es guardarà en el client. Cal tindre present que el client pot no voler emmagatzemar-les.
 
@@ -870,7 +839,7 @@ S'utilitzen per a:
 
 L'alternativa en el client per a emmagatzemar informació en el navegador és l'objecte [LocalStorage](https://developer.mozilla.org/es/docs/web/api/window/localstorage).
 
-#### Sessió
+### 3.Sessions
 
 La sessió afig la gestió de l'estat a HTTP, emmagatzemant en aquest cas la informació en el servidor.
 Cada visitant té un ID de sessió únic, el qual per defecte s'emmagatzema en una cookie denominada `PHPSESSID`.
@@ -938,7 +907,7 @@ Les següent propietats de `php.ini` permeten configurar alguns aspectes de la s
 
 Més informació en la [documentació oficial](https://www.php.net/manual/es/session.configuration.php).
 
-##### Serialització en PHP
+### 4.Serialització en PHP
 
 La serialització és el procés de convertir una estructura de dades o un objecte en una seqüència de caràcters que pot ser fàcilment emmagatzemada o transmesa i després reconstruïda. PHP proporciona dos funcions principals per a això: serialize() i unserialize().
 
@@ -1000,7 +969,7 @@ print_r($data);
 Consideracions de Seguretat:
 És crucial entendre que la funció unserialize() pot ser perillosa si s'usa amb dades que no són de confiança, ja que podria portar a l'execució de codi arbitrari. Per això, mai has de deserialitzar dades que vinguen d'una font desconeguda o no fiable sense validar-les prèviament.
 
-### 3. Autenticació d'usuaris
+### 5. Autenticació d'usuaris
 
 #### Mecanismes d'Autenticació d'Usuaris
 
@@ -1087,7 +1056,7 @@ En l'actualitat l'autenticació d'usuari no es realitza gestionant la sessió di
  `
 ## SA2.3 POO
 
-#### 1. Introducció de la POO en php
+###  1. Introducció de la POO en php
 
 PHP segueix un paradigma de programació orientada a objectes (POO) basada en classes.
 
@@ -1158,7 +1127,7 @@ Encara que es poden declarar diverses classes en el mateix arxiu, és una mala p
 
 ### 2. Principis de la POO
 
-### Encapsulació
+#### Encapsulació
 
 Les propietats es defineixen privades o protegides (si volem que les classes heretades puguen accedir).
 
@@ -1396,13 +1365,13 @@ Els més destacables són:
 * `__call()`, `__callStatic()` → S'executen en cridar a un mètode que no és públic. Permeten sobrecarreguen mètodes.
 
  
-## 3. Espai de noms
+### 3. Espai de noms
 
-## 🧩 1. Espais de noms (Namespaces)
+#### 🧩 1. Espais de noms (Namespaces)
 
 Els **espais de noms** serveixen per **organitzar les classes** i evitar conflictes. Funcionen com els paquets a Java.
 
-### Com es declaren
+##### Com es declaren
 
 S’escriuen al principi del fitxer:
 
@@ -1419,7 +1388,7 @@ class Producte {
 }
 ```
 
-#### Com s'utilitzen
+##### Com s'utilitzen
 
 Per a usar una classe d’un altre namespace:
  
@@ -1449,7 +1418,7 @@ Composer és una eina que:
 * Crea un fitxer autoload.php per carregar les classes automàticament.
 
  
-#### Instal·lació
+##### Instal·lació
 
 Si estem usant XAMPP, hem d'instal·lar *Composer* en el propi sistema operatiu. Es recomana seguir les [instruccions oficials](https://getcomposer.org/doc/00-intro.md) segons el sistema operatiu a emprar.
 
@@ -1503,7 +1472,7 @@ A l'hora d'indicar cada llibreria introduirem:
     * A partir de: >= 2.0.3
     * Sense trencament de canvis: ^1.3.2 // >=1.3.2 <2.0.0
 
-#### Actualitzar llibreries
+##### Actualitzar llibreries
 
 Podem definir les dependències via l'arxiu `composer.json` o mitjançant comandos amb el format `composer require vendor/package:version`. Per exemple, si volem afegir phpUnit com a llibreria de desenvolupament, farem:
 
