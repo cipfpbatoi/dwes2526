@@ -1522,7 +1522,7 @@ Posteriorment, hem de tornar a generar el *autoload* de *Composer* mitjançant l
 ``` bash
 composer dump-autoload
 ```
-### 3. Gestió de dates i hores amb Carbon
+### 4. Gestió de dates i hores amb Carbon
 
 #### Què és Carbon?
 
@@ -1571,7 +1571,7 @@ echo "$data1 és anterior a $data2";
 ```
 
 
-### 4. Gestió d'Exempcions
+### 5. Gestió d'Exempcions
 
 
 La gestió d'excepcions forma part des de PHP 5. El seu funcionament és similar a Java*, fent ús d'un bloc `try / catch / finally`.
@@ -1657,7 +1657,7 @@ try {
 }
 ```
 
-### 5. Logger amb Monolog
+### 6. Logger amb Monolog
 
 Provarem *Composer* afegint la llibreria de [*Monolog*](https://github.com/seldaek/monolog) al nostre projecte. Es tracta d'un llibreria per a la gestió de logs de les nostres aplicacions, suportant diferents nivells (info, warning, etc...), eixides (fitxers, sockets, BBDD, Web Services, email, etc) i formats (text pla, HTML, JSON, etc...).
 
@@ -1730,7 +1730,7 @@ Més informació sobre manejadores, formateadores i processadors en <https://git
 
 
 
-## SA 2.4 Accés a fitxers
+## Annex:  Accés a fitxers
 
 ### 1. Funcions bàsiques de PHP per a fitxers
 
@@ -2114,11 +2114,9 @@ Escriu els següent programes:
 
 
 
-##  Projecte
-
-### Projecte "El penjat"
-
-**Entrega 1:**
+###  Projecte "El penjat"
+ 
+#### Entrega 1 
 
 Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El joc ha de permetre als jugadors endevinar les lletres d'una paraula predefinida i mostrar l'estat actual de les lletres endevinades. No és necessari mantenir l'estat del joc entre sol·licituds ni comprovar si s'han esgotat els intents en aquesta fase inicial.
 
@@ -2161,7 +2159,7 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 | **Comentaris i Claredat del Codi** | 1               | Codi ben comentat i clar            | Codi amb alguns comentaris       | Codi sense comentaris o desordenat |
 
 
-**Entrega 2:** 
+#### Entrega 2  
 
 1. **Manteniment de l'Estat del Joc amb Sessions:**
     - Utilitza sessions per a emmagatzemar l'estat actual del joc, incloent la paraula a endevinar, lletres endevinades, i el nombre d'intents restants.
@@ -2195,7 +2193,7 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
     | **Interfície d'Usuari**    | 1                |Interfície atractiva i fàcil d'utilitzar.                  | Interfície funcional però poc intuïtiva.                | Interfície confusa i difícil d'utilitzar.         |
     | **Punts addicionals**      | 2                | 1 punt per cadascúna aconseguida.                         | 
 
-**Entrega 3**
+#### Entrega 3 
 
 1. **Desenvolupar una versió modular i escalable del joc "L'Ofegat" emprant programació orientada a objectes (POO) i gestió de dependències amb Composer**
     -Organitza el projecte de manera clara utilitzant namespaces i Composer (autoload PSR-4):
@@ -2442,7 +2440,7 @@ A partir del formulari anterior fes que es puga pujar una imatge. Mostra la imat
 
 #### [Solucions](10solucions.html )
 
-##  Autoavaluació: Conceptes Bàsics de PHP
+### Autoavaluació: Conceptes Bàsics de PHP
 
 #### Exercici 1: Sintaxi Bàsica de PHP
 
