@@ -2184,39 +2184,40 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 - **Millores d'Interfície:** Afegix un enllaç o botó per a tancar sessió i una opció per a reiniciar el joc.
 
 
-    | Criteri                    | Puntuació Total  |Complet (2)                                                | Incomplet (1)                                           | Insuficient (0)                                   |
-    |----------------------------|------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------|
-    | **Funcionalitat del Joc**  | 2                |El joc està completament funcional i sense errors.         | El joc és funcional, però conté errors significatius.   | El joc no és funcional o està incomplet.          |
-    | **Ús de Sessions**         | 1                |Sessions ben implementades per a mantenir l'estat del joc. | Sessions utilitzades, però amb deficiències importants. | No s'han utilitzat sessions o són incorrectes.    |
-    | **Ús de Cookies**          | 1                |Cookies ben utilitzades per a recordar els jugadors.       | Cookies utilitzades amb limitacions evidents.           | No s'han utilitzat cookies o són incorrectes.     |
-    | **Autenticació d'Usuaris** | 3                |Autenticació segura i efectiva implementada.               | Autenticació present però amb deficiències notables.    | No s'ha implementat autenticació o és incorrecta. |
-    | **Interfície d'Usuari**    | 1                |Interfície atractiva i fàcil d'utilitzar.                  | Interfície funcional però poc intuïtiva.                | Interfície confusa i difícil d'utilitzar.         |
-    | **Punts addicionals**      | 2                | 1 punt per cadascúna aconseguida.                         | 
+| Criteri                    | Puntuació Total  | Complet (2)                                                | Incomplet (1)                                           | Insuficient (0)                                   |
+|----------------------------|------------------|------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------|
+| **Funcionalitat del Joc**  | 2                | El joc està completament funcional i sense errors.         | El joc és funcional, però conté errors significatius.   | El joc no és funcional o està incomplet.          |
+| **Ús de Sessions**         | 1                | Sessions ben implementades per a mantenir l'estat del joc. | Sessions utilitzades, però amb deficiències importants. | No s'han utilitzat sessions o són incorrectes.    |
+| **Ús de Cookies**          | 1                | Cookies ben utilitzades per a recordar els jugadors.       | Cookies utilitzades amb limitacions evidents.           | No s'han utilitzat cookies o són incorrectes.     |
+| **Autenticació d'Usuaris** | 3                | Autenticació segura i efectiva implementada.               | Autenticació present però amb deficiències notables.    | No s'ha implementat autenticació o és incorrecta. |
+| **Interfície d'Usuari**    | 1                | Interfície atractiva i fàcil d'utilitzar.                  | Interfície funcional però poc intuïtiva.                | Interfície confusa i difícil d'utilitzar.         |
+| **Punts addicionals**      | 2                | 1 punt per cadascúna aconseguida.                          | 
 
 #### Entrega 3 
 
 1. **Desenvolupar una versió modular i escalable del joc "L'Ofegat" emprant programació orientada a objectes (POO) i gestió de dependències amb Composer**
     -Organitza el projecte de manera clara utilitzant namespaces i Composer (autoload PSR-4):
 
-ofegat-poo/
-├── composer.json
-├── vendor/
-├── app/
-│ ├── Joc.php
-│ ├── Jugador.php
-│ └── GestorPartida.php
-├── public/
-│ ├── index.php
-│ ├── login.php
-│ ├── logout.php
-│ └── reiniciar.php
-├── config/
-│ └── paraules.php
-├── templates/
-│ ├── capçalera.php
-│ ├── peu.php
-│ └── joc.php
-├── style.css
+    
+    ofegat-poo/
+    ├── composer.json
+    ├── vendor/
+    ├── app/
+    │ ├── Joc.php
+    │ ├── Jugador.php
+    │ └── GestorPartida.php
+    ├── public/
+    │ ├── index.php
+    │ ├── login.php
+    │ ├── logout.php
+    │ └── reiniciar.php
+    ├── config/
+    │ └── paraules.php
+    ├── templates/
+    │ ├── capçalera.php
+    │ ├── peu.php
+    │ └── joc.php
+    ├── style.css
 
 2. **Classes**
 
@@ -2235,10 +2236,12 @@ ofegat-poo/
 3. **Altres** 
   
 - Ús de Composer per a autoload.
-- `index.php` mostrarà el joc actual.
-- `login.php` per accedir amb nom d’usuari.
-- `reiniciar.php` per reiniciar la partida.
-- `logout.php` per tancar sessió i esborrar cookies.
+  - `index.php` mostrarà el joc actual.
+  - `login.php` per accedir amb nom d’usuari.
+  - `reiniciar.php` per reiniciar la partida.
+  - `logout.php` per tancar sessió i esborrar cookies.
+
+- Crea un fitxer de paraules i utilitza'l per fer que cada vegada s'haja d'endivinar una
 
 4. **Extres**
 
@@ -2247,14 +2250,14 @@ ofegat-poo/
 - Guardar puntuacions.
 
  
-| **Criteri**                          | **Punts** | **Complet (2)**                                                  | **Incomplet (1)**                                            | **Insuficient (0)**                                   |
-|-------------------------------------|-----------|------------------------------------------------------------------|--------------------------------------------------------------|--------------------------------------------------------|
-| **Funcionament correcte del joc**   | 3         | El joc és completament funcional i sense errors.                | El joc és funcional però amb errors o limitacions notables.  | El joc no funciona o està incomplet.                  |
-| **Ús correcte de POO**              | 2         | Classes ben estructurades, encapsulament correcte, ús de mètodes i atributs clars. | S’usen classes però amb estructura poc clara o pràctiques deficients. | No s’aplica orientació a objectes o de manera incorrecta. |
-| **Autoload amb Composer**           | 1         | Composer ben configurat i autoload funcional amb PSR-4.         | Composer usat però amb problemes o mala configuració.        | No s’ha utilitzat Composer o l’autoload no funciona.   |
-| **Gestió d’usuari amb sessió/cookie** | 2       | Sessions i cookies ben implementades per a gestionar usuaris.   | Sessions/cookies funcionals però amb limitacions importants. | No s’han implementat o no funcionen correctament.     |
-| **Interfície clara i funcional**    | 1         | Interfície intuïtiva i clara per a jugar.                        | Interfície funcional però poc intuïtiva o desorganitzada.     | Interfície confusa o inexistent.                      |
-| **Bon ús del codi i organització**  | 1         | Codi ben estructurat, clar i fàcil de seguir.                   | Codi funcional però desorganitzat o poc llegible.            | Codi desordenat i difícil de mantenir.                |
+| **Criteri**                        | **Punts** | **Complet (2)**                                                                    | **Incomplet (1)**                                                     | **Insuficient (0)**                                       |
+|------------------------------------|-----------|------------------------------------------------------------------------------------|-----------------------------------------------------------------------|-----------------------------------------------------------|
+| **Funcionament correcte del joc**  | 2         | El joc és completament funcional i sense errors.                                   | El joc és funcional però amb errors o limitacions notables.           | El joc no funciona o està incomplet.                      |
+| **Ús correcte de POO**             | 2         | Classes ben estructurades, encapsulament correcte, ús de mètodes i atributs clars. | S’usen classes però amb estructura poc clara o pràctiques deficients. | No s’aplica orientació a objectes o de manera incorrecta. |
+| **Autoload amb Composer**          | 1         | Composer ben configurat i autoload funcional amb PSR-4.                            | Composer usat però amb problemes o mala configuració.                 | No s’ha utilitzat Composer o l’autoload no funciona.      |
+| **Utilització del fitxer**         | 2         | Lectura del fitxer i random de paraules amb funcions o poo                         | Lectura del fitxer poc funcional o escalable                          | No s’han implementat o no funciona correctament.          |
+| **Extres**                         | 2         | Tots els extres implementats                                                       | Algun extra implementat                                               | No s'han implementat                                      |
+| **Bon ús del codi i organització** | 1         | Codi ben estructurat, clar i fàcil de seguir.                                      | Codi funcional però desorganitzat o poc llegible.                     | Codi desordenat i difícil de mantenir.                    |
 
 **Puntuació màxima total: 10 punts**
  
