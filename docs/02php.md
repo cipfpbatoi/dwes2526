@@ -1522,80 +1522,56 @@ Posteriorment, hem de tornar a generar el *autoload* de *Composer* mitjançant l
 ``` bash
 composer dump-autoload
 ```
+### 3. Gestió de dates i hores amb Carbon
 
+#### Què és Carbon?
 
-### 3. Logger amb Monolog
+**Carbon** és una llibreria PHP que facilita el treball amb dates i hores. Està basada en l’extensió `DateTime` de PHP, però amb una sintaxi molt més senzilla i potent.
 
-Provarem *Composer* afegint la llibreria de [*Monolog*](https://github.com/seldaek/monolog) al nostre projecte. Es tracta d'un llibreria per a la gestió de logs de les nostres aplicacions, suportant diferents nivells (info, warning, etc...), eixides (fitxers, sockets, BBDD, Web Services, email, etc) i formats (text pla, HTML, JSON, etc...).
+Es tracta d’una llibreria molt utilitzada en aplicacions modernes per formatar, manipular i calcular temps.
 
-Per a això, inclourem la llibreria en el nostre projecte amb:
+#### Instal·lació amb Composer
 
-``` bash
-composer require monolog/monolog
+Per a utilitzar Carbon en el nostre projecte, cal primer instal·lar-lo mitjançant Composer:
+
+```bash
+composer require nesbot/carbon
+```
+Una vegada instal·lat, ja la podem carregar automàticament amb l’autoloader de Composer.
+
+#### Exemple bàsic
+
+```php
+$data = Carbon::now();
+
+echo $data->format('d/m/Y H:i'); // 05/08/2025 11:45
+echo $data->locale('ca')->isoFormat('dddd, D [de] MMMM [de] YYYY'); // dilluns, 5 de agost de 2025
 ```
 
-Monolog 2 requereix almenys PHP 7.2, compleix amb el estandar de logging PSR-3, i és la llibreria emprada per *Laravel* i *Symfony* per a la gestió de logs.
+#### Operaciò amb dates
 
-!!! info "Quan utilitzar un log"
-* Seguir les acciones/moviments dels usuaris
-* Registrar les transaccions
-* Rastrejar els errors d'usuari
-* Fallades/avisos a nivell de sistema
-* Interpretar i col·leccionar dades per a posterior investigació de patrons
+```php
+$ahir = Carbon::yesterday();
+$demà = Carbon::tomorrow();
+$unaSetmanaDesprés = Carbon::now()->addWeek();
+$fa3Dies = Carbon::now()->subDays(3);
 
-#### Nivells
+echo "Ahir era: " . $ahir;
+echo "Demà serà: " . $demà;
+```
+#### Comparaciò de dates
 
-A continuació vam mostrar els diferents nivells de menys a més restrictiu:
+```php
+$data1 = Carbon::parse('2025-08-05');
+$data2 = Carbon::parse('2025-09-01');
 
-    * debug -100: Informació detallada amb propòsits de debug. No usar en entorns de producció.
-    * info - 200: Esdeveniments interessants com l'inici de sessió d'usuaris.
-    * notice - 250: Esdeveniments normals però significatius.
-    * warning - 300: Ocurrències excepcionals que no arriben a ser error.
-    * error - 400: Errors d'execució que permeten continuar amb l'execució de l'aplicació però que han de ser monitorats.
-    * critical - 500: Situacions importants on es generen excepcions no esperades o no hi ha disponible un component.
-    * alert - 550: S'han de prendre mesures immediatament.
-      Caiguda completa de la web, base de dades no disponible, etc... A més, se solen enviar missatges per email.
-    * emergency - 600: És l'error més greu i indica que tot el sistema està inutilitzable.
-
-
-#### Hola Monolog
-
-Per exemple, en l'arxiu `pruebaLog.php` que col·locaríem en l'arrel, primer incloem el **autoload**, importem els classes a utilitzar per a finalment usar els mètodes de **Monolog**:
-
-``` php
-<?php
-include __DIR__ ."/vendor/autoload.php";
-
-use Monolog\Level;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
-$log = new Logger("MiLogger");
-$log->pushHandler(new StreamHandler("logs/milog.log", Level::Debug));
-
-$log->debug("Esto es un mensaje de DEBUG");
-$log->info("Esto es un mensaje de INFO");
-$log->warning("Esto es un mensaje de WARNING");
-$log->error("Esto es un mensaje de ERROR");
-$log->critical("Esto es un mensaje de CRITICAL");
-$log->alert("Esto es un mensaje de ALERT");
+if ($data1->lt($data2)) {
+echo "$data1 és anterior a $data2";
+}
 ```
 
-En tots els mètodes de registre de missatges (`debug`, `info`, ...), a més del propi missatge, li podem passar informació com el contingut d'alguna variable, usuari de l'aplicació, etc.. com a segon paràmetre dins d'un array, el qual es coneix com **array de contexte**.
-És convenient fer-ho mitjançant un array associatiu per a facilitar la lectura del log.
 
-``` php
-<?php
-$log->warning("Producto no encontrado", [$producto]);
-$log->warning("Producto no encontrado", ["datos" => $producto]);
-```
-
- 
-!!! tip "Més informació"
-Més informació sobre manejadores, formateadores i processadors en <https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md>
-
-
-### 9. Gestió d'Exempcions
+### 4. Gestió d'Exempcions
 
 
 La gestió d'excepcions forma part des de PHP 5. El seu funcionament és similar a Java*, fent ús d'un bloc `try / catch / finally`.
@@ -1680,6 +1656,79 @@ try {
     throw new AppException("AppException: ".$e->getMessage(), $e->getCode(), $e);
 }
 ```
+
+### 5. Logger amb Monolog
+
+Provarem *Composer* afegint la llibreria de [*Monolog*](https://github.com/seldaek/monolog) al nostre projecte. Es tracta d'un llibreria per a la gestió de logs de les nostres aplicacions, suportant diferents nivells (info, warning, etc...), eixides (fitxers, sockets, BBDD, Web Services, email, etc) i formats (text pla, HTML, JSON, etc...).
+
+Per a això, inclourem la llibreria en el nostre projecte amb:
+
+``` bash
+composer require monolog/monolog
+```
+
+Monolog 2 requereix almenys PHP 7.2, compleix amb el estandar de logging PSR-3, i és la llibreria emprada per *Laravel* i *Symfony* per a la gestió de logs.
+
+!!! info "Quan utilitzar un log"
+* Seguir les acciones/moviments dels usuaris
+* Registrar les transaccions
+* Rastrejar els errors d'usuari
+* Fallades/avisos a nivell de sistema
+* Interpretar i col·leccionar dades per a posterior investigació de patrons
+
+#### Nivells
+
+A continuació vam mostrar els diferents nivells de menys a més restrictiu:
+
+    * debug -100: Informació detallada amb propòsits de debug. No usar en entorns de producció.
+    * info - 200: Esdeveniments interessants com l'inici de sessió d'usuaris.
+    * notice - 250: Esdeveniments normals però significatius.
+    * warning - 300: Ocurrències excepcionals que no arriben a ser error.
+    * error - 400: Errors d'execució que permeten continuar amb l'execució de l'aplicació però que han de ser monitorats.
+    * critical - 500: Situacions importants on es generen excepcions no esperades o no hi ha disponible un component.
+    * alert - 550: S'han de prendre mesures immediatament.
+      Caiguda completa de la web, base de dades no disponible, etc... A més, se solen enviar missatges per email.
+    * emergency - 600: És l'error més greu i indica que tot el sistema està inutilitzable.
+
+
+#### Hola Monolog
+
+Per exemple, en l'arxiu `pruebaLog.php` que col·locaríem en l'arrel, primer incloem el **autoload**, importem els classes a utilitzar per a finalment usar els mètodes de **Monolog**:
+
+``` php
+<?php
+include __DIR__ ."/vendor/autoload.php";
+
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger("MiLogger");
+$log->pushHandler(new StreamHandler("logs/milog.log", Level::Debug));
+
+$log->debug("Esto es un mensaje de DEBUG");
+$log->info("Esto es un mensaje de INFO");
+$log->warning("Esto es un mensaje de WARNING");
+$log->error("Esto es un mensaje de ERROR");
+$log->critical("Esto es un mensaje de CRITICAL");
+$log->alert("Esto es un mensaje de ALERT");
+```
+
+En tots els mètodes de registre de missatges (`debug`, `info`, ...), a més del propi missatge, li podem passar informació com el contingut d'alguna variable, usuari de l'aplicació, etc.. com a segon paràmetre dins d'un array, el qual es coneix com **array de contexte**.
+És convenient fer-ho mitjançant un array associatiu per a facilitar la lectura del log.
+
+``` php
+<?php
+$log->warning("Producto no encontrado", [$producto]);
+$log->warning("Producto no encontrado", ["datos" => $producto]);
+```
+
+ 
+!!! tip "Més informació"
+Més informació sobre manejadores, formateadores i processadors en <https://github.com/Seldaek/monolog/blob/master/doc/02-handlers-formatters-processors.md>
+
+
+
 
 ## SA 2.4 Accés a fitxers
 
@@ -1800,9 +1849,7 @@ if (is_dir("documents/buid")) {
 }
 ?>
 ``` 
-
-
-
+ 
 ##  Exercicis 
 
 ### Bateria d'Exercicis Solucionats per a la Unitat de PHP
@@ -2065,50 +2112,7 @@ Escriu els següent programes:
 * Crea una instància i crida al mètode `diu("Anna")` per mostrar el missatge.
 
 
-### Exercicis proposats 
 
-#### Exercici 1: Manipulació de Variables i Operadors
-
-Assigna múltiples variables i utilitza operadors aritmètics i lògics. Mostra el resultat de cada operació.
-
-#### Exercici 2: Control de Flux amb Bucles
-
-Utilitza un bucle `for` per imprimir els números parells del 0 al 20.
-Fes-ho també amb un bucle `while`.
-
-#### Exercici 3: Treballar amb Arrays i Funcions
-
-Escriu una funció que prenga un array de números, calculi la mitjana i retorni el resultat. Utilitza aquesta funció per imprimir la mitjana d'un array de cinc números.
-
-#### Exercici 4: Manipulació de Strings
-
-Escriu un script que prenga una cadena de text i compti el nombre de vocals. Imprimeix el resultat.
-
-#### Exercici 5: Arrays Multidimensionals
-
-Crea un array multidimensional que represente una taula de multiplicar del 1 al 5 i imprimeix els resultats en forma de taula.
-
-#### Exercici 6: Utilitzant `match` per a categoritzar
-
-Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
-- Si la nota és 10, imprimir "Excel·lent".
-- Si la nota és 8 o 9, imprimir "Molt bé".
-- Si la nota és 5, 6 o 7, imprimir "Bé".
-- Per qualsevol altra nota, imprimir "Insuficient".
-
-#### Exercici 7: Validació de Formularis
-
-Crea un formulari en HTML que permetis als usuaris introduir el seu nom, el correu electrònic i un password (dues vegades). Després de l'enviament del formulari, valida que tots els camps han estat completats i que el correu electrònic és vàlid, que el password tinga complexitat i que coincidixen. Mostra un missatge d'error si alguna validació falla, i si tot és correcte, mostra un missatge confirmant que l'usuari s'ha registrat correctament.
-
-#### Exercici 8: Processament de Formularis amb Select i Radio Buttons
-
-A partir del formulari [newBook.php](recursos/newBook.php), fes que el mòdul i el estat els agafe de valors introduïts en arrays. Mostra el resultat en una taula.  
- 
-#### Exercici 9: Pujar imatges des de formulari
-
-A partir del formulari anterior fes que es puga pujar una imatge. Mostra la imatge en la taula.
-
-### [Solucions](10solucions.html#Tema 2: Introducció a PHP)
 
 ##  Projecte
 
@@ -2255,10 +2259,188 @@ ofegat-poo/
 | **Bon ús del codi i organització**  | 1         | Codi ben estructurat, clar i fàcil de seguir.                   | Codi funcional però desorganitzat o poc llegible.            | Codi desordenat i difícil de mantenir.                |
 
 **Puntuació màxima total: 10 punts**
+ 
+### Exercicis proposats
+
+#### Exercici 1: Manipulació de Variables i Operadors
+
+Assigna múltiples variables i utilitza operadors aritmètics i lògics. Mostra el resultat de cada operació.
+
+#### Exercici 2: Control de Flux amb Bucles
+
+Utilitza un bucle `for` per imprimir els números parells del 0 al 20.
+Fes-ho també amb un bucle `while`.
+
+#### Exercici 3: Treballar amb Arrays i Funcions
+
+Escriu una funció que prenga un array de números, calculi la mitjana i retorni el resultat. Utilitza aquesta funció per imprimir la mitjana d'un array de cinc números.
+
+#### Exercici 4: Manipulació de Strings
+
+Escriu un script que prenga una cadena de text i compti el nombre de vocals. Imprimeix el resultat.
+
+#### Exercici 5: Arrays Multidimensionals
+
+Crea un array multidimensional que represente una taula de multiplicar del 1 al 5 i imprimeix els resultats en forma de taula.
+
+#### Exercici 6: Utilitzant `match` per a categoritzar
+
+Crea un fitxer que utilitze la instrucció `match` per categoritzar una variable `$nota` segons el següent criteri:
+- Si la nota és 10, imprimir "Excel·lent".
+- Si la nota és 8 o 9, imprimir "Molt bé".
+- Si la nota és 5, 6 o 7, imprimir "Bé".
+- Per qualsevol altra nota, imprimir "Insuficient".
+
+#### Exercici 7: Validació de Formularis
+
+Crea un formulari en HTML que permetis als usuaris introduir el seu nom, el correu electrònic i un password (dues vegades). Després de l'enviament del formulari, valida que tots els camps han estat completats i que el correu electrònic és vàlid, que el password tinga complexitat i que coincidixen. Mostra un missatge d'error si alguna validació falla, i si tot és correcte, mostra un missatge confirmant que l'usuari s'ha registrat correctament.
+
+#### Exercici 8: Processament de Formularis amb Select i Radio Buttons
+
+A partir del formulari [newBook.php](recursos/newBook.php), fes que el mòdul i el estat els agafe de valors introduïts en arrays. Mostra el resultat en una taula.
+
+#### Exercici 9: Pujar imatges des de formulari
+
+A partir del formulari anterior fes que es puga pujar una imatge. Mostra la imatge en la taula.
+
+#### Exercici 10: Sistema de Carret de Compres sense Base de Dades
+
+1. **Descripció:**
+
+   Desenvolupa una aplicació PHP que permeta als usuaris afegir productes a un carret de compres i mostrar el contingut del carret. Utilitza sessions per a mantindre l'estat del carret entre pàgines.
+
+2. **Requisits:**
+    - Crear una pàgina on l'usuari puga seleccionar productes.
+    - Afegir els productes seleccionats a un carret emmagatzemat en una sessió.
+    - Mostrar un resum del carret amb els productes afegits i les seues quantitats.
+    - Permetre que l'usuari elimine productes del carret.
 
 
+```html
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Selecció de productes</title>
+</head>
+<body>
+    <h1>Afegir productes al carret</h1>
+    <form action="carret.php" method="POST">
+        <label for="producte">Tria un producte:</label>
+        <select name="producte" id="producte">
+            <option value="Poma">Poma</option>
+            <option value="Plàtan">Plàtan</option>
+            <option value="Taronja">Taronja</option>
+        </select>
+        <input type="submit" value="Afegir al carret">
+    </form>
+    <a href="carret.php">Veure carret</a>
+</body>
+</html>
+```
+
+
+#### Exercici 11: Autenticació Bàsica d'Usuaris amb Sessions
+
+1. **Descripció:**
+
+   Crea una aplicació PHP que permeta als usuaris iniciar sessió mitjançant un formulari. Utilitza sessions per a mantindre l'estat d'autenticació de l'usuari i mostrar missatges personalitzats basats en aquest estat.
+
+2. **Requisits:**
+    - Crear un formulari d'inici de sessió que sol·licite el nom d'usuari i la contrasenya.
+    - Emmagatzemar l'estat d'autenticació en una sessió després de verificar les credencials.
+    - Mostrar una pàgina de benvinguda personalitzada per a l'usuari autenticat.
+    - Proporcionar un enllaç per a tancar sessió i destruir la sessió.
+
+#### Exercici 12: Recordatori d'Usuari amb Cookies
+
+1. **Descripció:**
+
+   Afig una funcionalitat de "recordar-me" a l'exercici anterior que emmagatzeme el nom d'usuari en una cookie i permeta a l'usuari ser recordat en futures visites al lloc web.
+
+2. **Requisits:**
+    - Afig una opció de "recordar-me" al formulari d'inici de sessió.
+    - Emmagatzemar el nom d'usuari en una cookie quan l'opció és seleccionada.
+    - Comprovar la cookie en futures visites i iniciar sessió automàticament si la cookie existeix.
+    - Assegurar que les cookies es configuren amb atributs de seguretat adequats (`HttpOnly`, `Secure`, `SameSite`).
+
+#### Exercici 13: Formulari de Contacte amb Protecció CSRF
+
+1. **Descripció:**
+
+   Desenvolupa un formulari de contacte que permeta als usuaris enviar missatges i implementa protecció CSRF per a assegurar que les sol·licituds siguen legítimes.
+
+2. **Requisits:**
+    - Crear un formulari de contacte amb camps per al nom, correu electrònic i missatge.
+    - Generar i emmagatzemar un token CSRF en una sessió quan es carrega el formulari.
+    - Incloure el token CSRF com a camp ocult en el formulari.
+    - Verificar el token CSRF quan s'envia el formulari i mostrar un missatge de confirmació si és vàlid.
+    - Mostrar un missatge d'error si el token CSRF no és vàlid o no existeix.
+
+#### Exercici 14: Seguiment d'Activitat de l'Usuari amb Sessions
+
+1. **Descripció:**
+
+   Crea un sistema que registre les pàgines visitades per l'usuari durant una sessió i mostre aquesta informació quan l'usuari visita una pàgina d'activitat.
+
+2. **Requisits:**
+    - Emmagatzemar una llista de pàgines visitades per l'usuari en una sessió.
+    - Actualitzar la llista de pàgines cada vegada que l'usuari visite una nova pàgina.
+    - Crear una pàgina que mostre l'historial de pàgines visitades durant la sessió actual.
+    - Assegurar que l'historial es restableix quan l'usuari tanca la sessió.
+
+#### Exercici 15. Creació de la Classe Bàsica i Gestió de Propietats
+
+* Crea una classe `Persona` amb les propietats privades `nom`, `cognoms`, i `edat`. Encapsula aquestes propietats mitjançant getters i setters. Afig els següents mètodes:
+
+      - `getNomComplet(): string` – Retorna el nom complet de la persona.
+      - `estaJubilat(): bool` – Retorna `true` si l'edat és major o igual a 65, `false` en cas contrari.
+
+* Modifica la classe `Persona` afegint un constructor que assigna nom i cognoms. Si es proporciona un tercer paràmetre, assigna l'edat; en cas contrari, assigna una edat per defecte de 25 anys.
+
+* Modifica la classe `Persona` per utilitzar una constant `LIMITE_EDAT` amb el valor de 66 anys i utilitza-la en el mètode `estaJubilat`.
+
+#### Exercici 16. Herència i Polimorfisme
+
+* Crea una classe `Empleado` que herete de `Persona`. Afig les següents propietats i mètodes:
+
+    - `private float $sou`
+    - `private array $telefons`
+    - `anyadirTelefono(int $telefon): void` – Afig un número de telèfon a l'array.
+    - `listarTelefonos(): string` – Retorna els números de telèfon separats per comes.
+    - `vaciarTelefonos(): void` – Buida l'array de telèfons.
+    - `debePagarImpuestos(): bool` – Retorna `true` si el sou és superior a 3333€, `false` en cas contrari.
+
+* Afig un mètode estàtic `toHtml(Empleado $emp): string` que genere un codi HTML que mostre el nom complet de l'empleat dins d'un paràgraf i els seus telèfons dins d'una llista ordenada.
+* Afig un mètode estàtic `toHtml(Persona $p)` a la classe Persona que mostre el nom complet de la persona dins d'un paràgraf. Modifica el mètode `toHtml` de `Empleado` per rebre una `Persona` com a paràmetre i comprovar si es tracta d'un `Empleado` amb `instanceof`.
+* Transforma `Persona` en una classe abstracta. Redefineix el mètode estàtic `toHtml(Persona $p)` en totes les seues subclasses.
+
+#### Exercici 17. Integració d'Espais de Noms, Autoloading, i Composer
+
+* Crea una classe `Empresa` que incloga una propietat amb un array de `Empleados` . Implementa:
+
+    - `public function addWorker(Empleado $t)`
+    - `public function listWorkersHtml(): string` – Genera la llista de treballadors en format HTML.
+    - `public function getCosteNominas(): float` – Calcula el cost total de les nòmines.
+
+* Configura el projecte PHP amb Composer que utilitze l'autoloading PSR-4.
+
+#### Exercici 18. Logger  
+
+* Utilitza la llibreria `Monolog` per configurar un logger que escriga missatges a un fitxer `app.log`. Afig funcionalitat perquè el logger registre missatges d'informació i d'error en diferents arxius segons la gravetat.
+
+* Configura un logger que escriga missatges de registre tant a un fitxer com a la consola. Prova el logger registrant missatges d'error i advertència.
 
  
+#### Exercici 19. Generació de PDFs amb DomPDF
+
+* Instal·la la llibreria `dompdf/dompdf` amb Composer. Crea un script PHP que genere un PDF senzill amb un títol i un paràgraf de text.
+
+* Crea un PDF utilitzant DomPDF que incloga una taula amb dades i una imatge. Assegura't que el PDF es renderitze correctament i que la imatge s'incloga en el document.
+
+* Utilitzant la classe `Empresa` i `Empleado`, genera un informe en PDF amb la llista de treballadors i el seu sou. Utilitza DomPDF per generar aquest informe.
+
+#### [Solucions](10solucions.html )
 
 ##  Autoavaluació: Conceptes Bàsics de PHP
 
