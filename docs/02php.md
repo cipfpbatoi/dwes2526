@@ -2149,14 +2149,13 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 ```
 
 
-| Criteri                            | Puntuació Total | Complet(2)                          | Incomplet(1)                     | Insuficient(0)                     |
-|------------------------------------|-----------------|-------------------------------------|----------------------------------|------------------------------------|
-| **Paraula a Endevinar**            | 1               | Paraula definida correctament       | Paraula definida però amb errors | No s'ha definit la paraula         |
-| **Inicialització de les Lletres**  | 2               | Array creat correctament            | Array creat però amb errors      | No s'ha creat l'array              |
-| **Funció per a Comprovar Intents** | 3               | Funció creada i funcional           | Funció creada però amb errors    | No s'ha creat la funció            |
-| **Comprovació d'Intents**          | 2               | Comprovació realitzada correctament | Comprovació amb errors           | No s'ha realitzat la comprovació   |
-| **Estil CSS**                      | 1               | CSS aplicat correctament            | CSS aplicat però amb errors      | No s'ha aplicat el CSS             |
-| **Comentaris i Claredat del Codi** | 1               | Codi ben comentat i clar            | Codi amb alguns comentaris       | Codi sense comentaris o desordenat |
+| Criteri                                    | Puntuació Total | Complet(2)                          | Incomplet(1)                  | Insuficient(0)                     |
+|--------------------------------------------|-----------------|-------------------------------------|-------------------------------|------------------------------------|
+| **Inicialització de les variables** (2.dg) | 2               | Paraula i Array creat correctament  | Creats però amb errors        | No s'ha creat l'array              |
+| **Funció per a Comprovar Intents** (2.fe)  | 3               | Funció creada i funcional           | Funció creada però amb errors | No s'ha creat la funció            |
+| **Comprovació d'Intents**   (2.eh)         | 3               | Comprovació realitzada correctament | Comprovació amb errors        | No s'ha realitzat la comprovació   |
+| **Estil CSS**               (2c)           | 1               | CSS aplicat correctament            | CSS aplicat però amb errors   | No s'ha aplicat el CSS             |
+| **Comentaris i Claredat del Codi**  (2ah)  | 1               | Codi ben comentat i clar            | Codi amb alguns comentaris    | Codi sense comentaris o desordenat |
 
 
 #### Entrega 2  
@@ -2184,14 +2183,14 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 - **Millores d'Interfície:** Afegix un enllaç o botó per a tancar sessió i una opció per a reiniciar el joc.
 
 
-| Criteri                    | Puntuació Total  | Complet (2)                                                | Incomplet (1)                                           | Insuficient (0)                                   |
-|----------------------------|------------------|------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------|
-| **Funcionalitat del Joc**  | 2                | El joc està completament funcional i sense errors.         | El joc és funcional, però conté errors significatius.   | El joc no és funcional o està incomplet.          |
-| **Ús de Sessions**         | 1                | Sessions ben implementades per a mantenir l'estat del joc. | Sessions utilitzades, però amb deficiències importants. | No s'han utilitzat sessions o són incorrectes.    |
-| **Ús de Cookies**          | 1                | Cookies ben utilitzades per a recordar els jugadors.       | Cookies utilitzades amb limitacions evidents.           | No s'han utilitzat cookies o són incorrectes.     |
-| **Autenticació d'Usuaris** | 3                | Autenticació segura i efectiva implementada.               | Autenticació present però amb deficiències notables.    | No s'ha implementat autenticació o és incorrecta. |
-| **Interfície d'Usuari**    | 1                | Interfície atractiva i fàcil d'utilitzar.                  | Interfície funcional però poc intuïtiva.                | Interfície confusa i difícil d'utilitzar.         |
-| **Punts addicionals**      | 2                | 1 punt per cadascúna aconseguida.                          | 
+| Criteri                            | Puntuació Total | Complet (2)                                                | Incomplet (1)                                           | Insuficient (0)                                   |
+|------------------------------------|-----------------|------------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------|
+| **Funcionalitat del Joc** (4f)     | 2               | El joc està completament funcional i sense errors.         | El joc és funcional, però conté errors significatius.   | El joc no és funcional o està incomplet.          |
+| **Ús de Sessions**         (4b)    | 1               | Sessions ben implementades per a mantenir l'estat del joc. | Sessions utilitzades, però amb deficiències importants. | No s'han utilitzat sessions o són incorrectes.    |
+| **Ús de Cookies**       (4c)       | 1               | Cookies ben utilitzades per a recordar els jugadors.       | Cookies utilitzades amb limitacions evidents.           | No s'han utilitzat cookies o són incorrectes.     |
+| **Autenticació d'Usuaris**   (4de) | 3               | Autenticació segura i efectiva implementada.               | Autenticació present però amb deficiències notables.    | No s'ha implementat autenticació o és incorrecta. |
+| **Interfície d'Usuari** (3f)       | 1               | Interfície atractiva i fàcil d'utilitzar.                  | Interfície funcional però poc intuïtiva.                | Interfície confusa i difícil d'utilitzar.         |
+| **Punts addicionals**    (4ef)     | 2               | 1 punt per cadascúna aconseguida.                          | 
 
 #### Entrega 3 
 
@@ -2250,14 +2249,14 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 - Guardar puntuacions.
 
  
-| **Criteri**                        | **Punts** | **Complet (2)**                                                                    | **Incomplet (1)**                                                     | **Insuficient (0)**                                       |
-|------------------------------------|-----------|------------------------------------------------------------------------------------|-----------------------------------------------------------------------|-----------------------------------------------------------|
-| **Funcionament correcte del joc**  | 2         | El joc és completament funcional i sense errors.                                   | El joc és funcional però amb errors o limitacions notables.           | El joc no funciona o està incomplet.                      |
-| **Ús correcte de POO**             | 2         | Classes ben estructurades, encapsulament correcte, ús de mètodes i atributs clars. | S’usen classes però amb estructura poc clara o pràctiques deficients. | No s’aplica orientació a objectes o de manera incorrecta. |
-| **Autoload amb Composer**          | 1         | Composer ben configurat i autoload funcional amb PSR-4.                            | Composer usat però amb problemes o mala configuració.                 | No s’ha utilitzat Composer o l’autoload no funciona.      |
-| **Utilització del fitxer**         | 2         | Lectura del fitxer i random de paraules amb funcions o poo                         | Lectura del fitxer poc funcional o escalable                          | No s’han implementat o no funciona correctament.          |
-| **Extres**                         | 2         | Tots els extres implementats                                                       | Algun extra implementat                                               | No s'han implementat                                      |
-| **Bon ús del codi i organització** | 1         | Codi ben estructurat, clar i fàcil de seguir.                                      | Codi funcional però desorganitzat o poc llegible.                     | Codi desordenat i difícil de mantenir.                    |
+| **Criteri**                             | **Punts** | **Complet (2)**                                                                    | **Incomplet (1)**                                                     | **Insuficient (0)**                                       |
+|-----------------------------------------|-----------|------------------------------------------------------------------------------------|-----------------------------------------------------------------------|-----------------------------------------------------------|
+| **Funcionament correcte del joc** (3de) | 2         | El joc és completament funcional i sense errors.                                   | El joc és funcional però amb errors o limitacions notables.           | El joc no funciona o està incomplet.                      |
+| **Ús correcte de POO**    (3af)         | 2         | Classes ben estructurades, encapsulament correcte, ús de mètodes i atributs clars. | S’usen classes però amb estructura poc clara o pràctiques deficients. | No s’aplica orientació a objectes o de manera incorrecta. |
+| **Autoload amb Composer**      (3b)     | 1         | Composer ben configurat i autoload funcional amb PSR-4.                            | Composer usat però amb problemes o mala configuració.                 | No s’ha utilitzat Composer o l’autoload no funciona.      |
+| **Utilització del fitxer**      (4f)    | 2         | Lectura del fitxer i random de paraules amb funcions o poo                         | Lectura del fitxer poc funcional o escalable                          | No s’han implementat o no funciona correctament.          |
+| **Extres**                      (4f)    | 2         | Tots els extres implementats                                                       | Algun extra implementat                                               | No s'han implementat                                      |
+| **Bon ús del codi i organització** (3f) | 1         | Codi ben estructurat, clar i fàcil de seguir.                                      | Codi funcional però desorganitzat o poc llegible.                     | Codi desordenat i difícil de mantenir.                    |
 
 **Puntuació màxima total: 10 punts**
  
