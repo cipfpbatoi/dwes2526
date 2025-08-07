@@ -1,4 +1,4 @@
-
+# SA.1.Arquitectures Web
 
 ??? abstract "Duració i criteris d'avaluació"
 
@@ -10,7 +10,7 @@
     | -------                 | -------             |
     | 1. Selecciona les arquitectures i tecnologies de programació web en entorn servidor, analitzant les seves capacitats i característiques pròpies.| a) S'han caracteritzat i diferenciat els models d'execució de codi en el servidor i en el client Web. <br/> b) S'han reconegut els avantatges que proporciona la generació dinàmica de pàgines Web i les seues diferències amb la inclusió de sentències de guions a l'interior de les pàgines Web. <br/> c) S'han identificat els mecanismes d'execució de codi en els servidors Web. <br/> d) S'han reconegut les funcionalitats que aporten els servidors d'aplicacions i la seua integració amb els servidors Web. <br/> e) S'han identificat i caracteritzat els principals llenguatges i tecnologies relacionats amb la programació Web en entorn servidor. <br/> f) S'han verificat els mecanismes d'integració dels llenguatges de marques amb els llenguatges de programació en entorn servidor. <br/> g) S'han reconegut i avaluat les eines i frameworks de programació en entorn servidor. <br/> |
 
-# Arquitectures Web
+## 1. Introducció
 
 Una arquitectura web defineix l'estructura i el comportament dels components d'una aplicació web, incloent com es comuniquen entre ells i amb els usuaris finals. Aquesta arquitectura pot abastar des de la interfície d'usuari en el client fins als serveis de backend i bases de dades en el servidor.
 
@@ -23,7 +23,7 @@ Les arquitectures web són fonamentals en el desenvolupament d'aplicacions web m
 - **Flexibilitat i Adaptabilitat**: Les arquitectures modernes permeten l'ús de diverses tecnologies i eines per a diferents parts del sistema, proporcionant flexibilitat i permetent una adaptació ràpida als canvis tecnològics. Això és especialment rellevant amb l'adopció de pràctiques DevOps i l'ús de contenidors i orquestradors com Docker i Kubernetes.
 - **Col·laboració i Desplegament**: Un bon disseny arquitectònic facilita la col·laboració entre equips de desenvolupament, ja que clarifica les responsabilitats i els punts d'integració. També permet un desplegament més eficient i automatitzat, reduint els riscos d'errors i millorant el temps de lliurament.
 
-## 1.Tipus d'Arquitectures Web
+## 2.Tipus d'Arquitectures Web
 
 A continuació, es descriuen alguns dels principals tipus d'arquitectures web, cadascun amb les seves pròpies característiques, avantatges i desavantatges:
 
@@ -116,7 +116,7 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 
 Les arquitectures web són fonamentals per al desenvolupament d'aplicacions eficients i escalables. La selecció de l'arquitectura adequada depèn de les necessitats específiques del projecte, incloent-hi consideracions de rendiment, escalabilitat, seguretat i mantenibilitat.
 
-## 2. Pàgines Web Estàtiques vs. Dinàmiques
+## 3. Pàgines Web Estàtiques vs. Dinàmiques
 
 ### Pàgines estàtiques
 
@@ -260,7 +260,7 @@ Les pàgines web dinàmiques són aquelles en què el contingut pot canviar en f
 
 Les pàgines web estàtiques són adequades per a llocs web senzills amb contingut fix, mentre que les pàgines web dinàmiques són necessàries per a aplicacions més complexes que requereixen interactivitat i contingut variable. La decisió entre utilitzar una pàgina estàtica o dinàmica dependrà de les necessitats específiques del projecte i dels recursos disponibles. Les SPA ofereixen una experiència d'usuari molt rica però poden tenir desavantatges en termes de SEO i temps de càrrega inicial.
 
-## 3. Models d'Execució
+## 4. Models d'Execució
 
 Els models d'execució de codi en el desenvolupament web es poden dividir principalment en dos tipus: execució al client i execució al servidor. Cada model té les seves pròpies característiques, avantatges i desavantatges que cal considerar a l'hora de dissenyar una aplicació web.
 
@@ -444,7 +444,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 La decisió sobre si utilitzar l'execució de codi al client, al servidor o una SPA depèn de les necessitats específiques de l'aplicació i els recursos disponibles. Comprendre les diferències clau i els avantatges de cada model ajudarà a prendre decisions informades i a desenvolupar aplicacions web eficients i segures.
 
 
-## 4. Servidors Web
+## 5. Servidors Web
 
 Un servidor web és un programa que serveix contingut web estàtic com HTML, CSS, JavaScript, imatges i altres fitxers als clients a través del protocol HTTP o HTTPS. El servidor web gestiona les sol·licituds entrants dels clients (navegadors web) i retorna les respostes adequades.
 
@@ -643,7 +643,7 @@ http.ListenAndServe(":8080", nil)
 
 Un servidor web serveix contingut estàtic com HTML, CSS, JavaScript i imatges als clients a través de HTTP o HTTPS. Gestiona sol·licituds entrants i retorna respostes adequades. Exemples de servidors web inclouen Apache, Nginx i Microsoft IIS, cadascun amb funcionalitats úniques com la redirecció d'URLs, suport per a HTTPS i gestió de peticions HTTP. A més, utilitzen llenguatges interpretats (PHP, Python), compilats (Java) i intermediaris (Node.js) per executar codi.
 
-## 5. Servidors d'Aplicacions
+## 6. Servidors d'Aplicacions
 
 Un servidor d'aplicacions és un tipus de servidor dissenyat per executar aplicacions web dinàmiques i gestionar la lògica de negoci d'una aplicació. Aquest servidor actua com una capa intermèdia entre el client (navegador web) i les bases de dades o altres serveis de backend, proporcionant un entorn d'execució per a aplicacions web.
 
@@ -747,7 +747,7 @@ Aquesta col·laboració permet una gestió eficient de les sol·licituds i una m
 
 Els servidors d'aplicacions executen aplicacions dinàmiques i proporcionen serveis empresarials. Es diferencien dels servidors web en què no només serveixen contingut estàtic, sinó que també processen lògica d'aplicació i interaccions de base de dades. Exemples inclouen Apache Tomcat, JBoss i GlassFish, utilitzats per a aplicacions Java. També donen suport a tecnologies com servlets, JSP, EJB i frameworks com Spring, facilitant la construcció d'aplicacions robustes i escalables.
 
-## 6.Frameworks de Programació en Entorn Servidor
+## 7.Frameworks de Programació en Entorn Servidor
 
 Un framework és una plataforma de desenvolupament que proporciona una estructura estandarditzada per a la creació d'aplicacions web. Facilita i accelera el procés de desenvolupament oferint biblioteques de codi preescrit, components reutilitzables i un conjunt de bones pràctiques. Els frameworks ajuden els desenvolupadors a centrar-se en la funcionalitat de l'aplicació en lloc de preocupar-se pels aspectes bàsics i repetitius de la programació.
 
@@ -823,7 +823,7 @@ La selecció del framework adequat per a un projecte depèn de diversos factors:
 - **Django Official Documentation:** [Django](https://docs.djangoproject.com/en/stable/)
 - **Laravel Documentation:** [Laravel](https://laravel.com/docs)
 
-## 7. Entorn de treball
+## 8. Entorn de treball
 
 ### Entorn de desenvolupament integrat (IDE)
 
@@ -973,7 +973,67 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 !!! important "Directoris de php"
     Si us fixeu en les carpetes que us ha creat el repositori veureu que les pàgines que pot executar (directori arrel de la nostra web) es troba a php/src. Les pàgines que anem a crear , de moment, les haureu de ficar ahí.
 
-## 8. Referències
+## 9. Exercici 
+
+### SA1 – Comparativa d’Arquitectures Web en Entorn Servidor (Grups de 3 persones)
+
+#### 🎯 Objectiu (RA1)
+Reconéixer les arquitectures web més habituals en entorn servidor, identificant els seus components, característiques i escenaris d’ús.
+
++---------------------+   +----------------------+   +---------------------------+
+|    Monolítica       |   |        MVC           |   |       Microserveis        |
++---------------------+   +----------------------+   +---------------------------+
+| [ Client ]          |   | [ Client ]           |   | [ Client ]                |
+|        |            |   |      |               |   |       |                  |
+|     [Servidor]      |   |   [Servidor]         |   |   [API Gateway]           |
+|  (Tot en un fitxer) |   | ┌──Controller──┐     |   |   ┌────┬────┐             |
+|                     |   | │  Model        │     |   |   │User│Product│          |
+|                     |   | │  View         │     |   |   │Srv │Srv    │          |
++---------------------+   +----------------------+   +---------------------------+
+
+
+##### 1. Explora el següents repositoris
+
+* [Arquitectura monolítica](https://github.com/Curs-2025-26/SA1.Arquitectura_monolitica)
+* [Arquitectura MCV](https://github.com/Curs-2025-26/SA1.Arquitectura_MVC)
+* [Arquitectura microserveis](https://github.com/Curs-2025-26/SA1.Arquitectura_microserveis)
+
+##### 2. Fes un fork de cadascú d'ells
+
+##### 3. Utilitza codespaces per generar un entorn de prova
+
+##### 4. Envia peticions i prova l'arquitectura
+
+##### 5. Completa la següent taula
+
+🧾 Fitxa comparativa d'arquitectures web
+
+| Arquitectura      | Components visibles | Separació de responsabilitats | Avantatges | Inconvenients | Casos d’ús recomanats |
+|------------------|---------------------|-------------------------------|------------|---------------|-----------------------|
+| **Monolítica**    |                     |                               |            |               |                       |
+| **MVC**           | `                   |                               |            |               |                       |
+| **Microserveis**  |                     |                               |            |               |                       |
+
+
+##### 6. Reflexió final
+
+Tria un escenari (ex. botiga online, sistema de reserves...) i explica:
+
+* Quina arquitectura faries servir?
+* Per què és la més adequada en aquest cas?
+
+#### ✅ Rúbrica d’avaluació – SA1: Arquitectures web
+
+| Criteri                                                        | Puntuació màxima |
+|----------------------------------------------------------------|------------------|
+| Obri correctament el repositori a GitHub Codespaces            | 2 punts          |
+| Identifica i descriu components bàsics de l'arquitectura       | 3 punts          |
+| Relaciona cada projecte amb els conceptes teòrics corresponents| 3 punts          |
+| Reflexiona i compara arquitectures segons escenari proposat    | 2 punts          |
+| **Puntuació total**                                            | **10 punts**     |
+
+  
+## 10. Referències
 
 ### Llibres Recomanats
 1. **[Web Architecture: Core Concepts](https://www.amazon.com/Web-Architecture-Concepts-Richard-N-Taylor/dp/0134765048)** de Richard N. Taylor, Nenad Medvidovic i Eric Dashofy
@@ -1033,7 +1093,7 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 
 - Repositoris de codi font en GitHub que il·lustren com implementar microserveis i altres arquitectures web modernes.
  
-## 9.AutoAvaluació
+## 11.AutoAvaluació
 
 #### Exercici 1: Models d'execució de codi
 
