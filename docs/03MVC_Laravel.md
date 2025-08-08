@@ -12,7 +12,7 @@
 
 ## SA3.1  Introducció al patró MVC i la separació de capes. Instal·lació de Laravel.   
 
-###  Avantatges de separar la lògica de negoci dels aspectes de presentació
+###  🧩 Avantatges de separar la lògica de negoci dels aspectes de presentació
  
 #### 🔍 Què és la separació de capes?
 
