@@ -156,9 +156,9 @@ Vista (Blade):
 
 En resum, els frameworks com Laravel implementen el patró MVC, afavorint la separació de la lògica de negoci i la capa de presentació. Aquesta divisió millora la claredat del projecte, la col·laboració en equip i la mantenibilitat del codi a llarg termini.
 
-###  Instal·lació de Laravel
+###  📦 Instal·lació de Laravel
 
-#### I🔧 Crear una aplicació Laravel amb Docker (Sail)
+#### 🔧 Crear una aplicació Laravel amb Docker (Sail)
 
 Si estàs desenvolupant en Linux i ja tens Docker Compose instal·lat, pots crear una aplicació Laravel nova amb una simple comanda de term
 
@@ -223,5 +223,14 @@ myadmin:
  networks:
  - sail
 ```
+
+### Estructura d’un projecte Laravel
+
+Laravel utilitza una estructura modular basada en el patró **MVC**.  
+Aquesta organització facilita la separació de responsabilitats i el manteniment.
+
+** 📂 Carpetes principals:**
+
+![Estructura directoris](./imagenes/03/carpetes_laravel.png) 
 
 
