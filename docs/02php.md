@@ -30,7 +30,7 @@ PHP és un dels llenguatges més utilitzats en el desenvolupament web per divers
 * **Cost efectiu:** Com que és de codi obert, PHP és gratuït per utilitzar i distribuir. Això redueix els costos de desenvolupament per a les empreses i els desenvolupadors.
 
  
-### 1. Llenguatges imbricats en HTML
+### 🌐 1. Llenguatges imbricats en HTML
 PHP permet incrustar codi dins de documents HTML, permetent la generació de contingut dinàmic. El codi PHP es delimita amb `<?php ... ?>`.
 És comú utilitzar codi PHP dins de HTML per generar contingut dinàmic. També es pot incloure HTML dins de fitxers PHP.
 ```php
@@ -55,7 +55,7 @@ echo "</body></html>";
 !!! tip "Només etiquetes d'obertura"
     Si el nostre codi només contindrà codi PHP i res d'html, com per exemple, quan codifiquem classes o interfícies, només posarem l'etiqueta d'obertura, per a així indicar que és una arxiu de php pur.
 
-### 2. Etiquetes per a inserció de codi
+### 🏷️ 2. Etiquetes per a inserció de codi
 Per inserir codi PHP dins de HTML, utilitzem les etiquetes:
 ```php
 <?php
@@ -77,7 +77,7 @@ Exemple:
 </html>
 ```
 
-### 3. Tipus de dades. Conversions entre tipus de dades
+### 🔢 3. Tipus de dades. Conversions entre tipus de dades
 PHP té diversos tipus de dades: enter, flotant, cadena, booleà, matriu, objecte, nul.
 ```php
 $enter = 10; // Enter
@@ -99,7 +99,7 @@ Exemple:
 $cadena = "123";
 $enter = (int)$cadena; // Converteix la cadena "123" a l'enter 123
 ```
-### 4. Constants
+### 🛑 4. Constants
 Són variables el valor dels quals no varien. Existeixen dues possibilitats:
 
 * `define(NOMBRE, valor);`
@@ -116,7 +116,7 @@ echo PI, " ", IVA; // No se pone el símbolo dolar
 * Es declaren sempre en MAJÚSCULES
 * Hi ha un conjunt de constants ja predefinides, també conegudes com *magic constants*: <https://www.php.net/manual/es/language.constants.predefined.php>
 
-### 5. Variables. Operadors.  Àmbits de les variables
+### 📦 5. Variables. Operadors.  Àmbits de les variables
 
 * No és necessari declarar-les prèviament.
 * Comencen per `$`, per exemple `$nom`. Després del `$`, el següent caràcter ha de ser una lletra en minúscula (recomanació) o guió baix `_`. Després ja es poden posar números.
@@ -164,7 +164,7 @@ $salutacio = $y . ", " . $nom;  // Resulta en "Hola món, Joan"
 ```
  
 
-### 6. Funcions 
+### 🛠️ 6. Funcions 
 
 1. **Sintaxi bàsica**:
     - La paraula clau `function` es fa servir per a definir la funció.
@@ -225,7 +225,7 @@ $resultat = sumar(5, 3);  // $resultat conté 8
 ```
 
 
-### 7. Directives per a modificar el comportament predeterminat del codi
+### ⚙️ 7. Directives per a modificar el comportament predeterminat del codi
 
 Include i require:
 ```php
@@ -253,7 +253,7 @@ saludar(); // Mostra "Hola!"
 ?>
 ```
  
-### 8. Mecanismes de decisió (if, match)
+### 🔀 8. Mecanismes de decisió (if, match)
 If, else, elseif:
 ```php
 if ($condicio) {
@@ -315,7 +315,7 @@ $tipusDia = match ($dia) {
 echo $tipusDia;  // Sortida: Dia laborable
 ```
 
-### 9. Bucles (for, while, foreach)
+### 🔄 9. Bucles (for, while, foreach)
 
 For:
 ```php
@@ -346,7 +346,7 @@ foreach ($fruites as $fruita) {
 }
 ```
 
-### 10. Arrays
+### 📚 10. Arrays
 
 Per a emmagatzemar dades compostes, podem utilitzar tant arrays senzills com arrays associatius (similars a un mapa). En realitat tots els arrays són mapes ordenats compostos de parells clau-valor.
 
@@ -388,7 +388,7 @@ foreach ($frutas as $fruta) {
 }
 ```
 
-### 11. Arrays associatius
+### 🗂️ 11. Arrays associatius
 
 Cada element és un parell clau-valor. En comptes d'accedir per la posició, el fem mitjançant una clau. Així doncs, per a cada clau s'emmagatzema un valor.
 
@@ -417,7 +417,7 @@ foreach ($capitales as $pais => $ciudad) { // separamos cada elemento en clave =
 }
 ```
 
-### 12. Com utilitzar les cometes en PHP
+### 📝 12. Com utilitzar les cometes en PHP
 
 En PHP, les cometes dobles (`"`) i les cometes simples (`'`) s'utilitzen per definir cadenes de caràcters, però tenen comportaments diferents a l'hora de processar variables:
 
@@ -443,7 +443,7 @@ $frase = "El meu color preferit és $color.";
 echo $frase;  // Sortida: El meu color preferit és blau.
 ```
 
-### 13. Comentaris en el codi
+### 💬 13. Comentaris en el codi
 
 Comentaris d'una línia:
 ```php
@@ -455,7 +455,7 @@ Comentaris de diverses línies:
    de diverses línies */
 ```
 
-### 14. Variables de servidor
+### 🖥️ 14. Variables de servidor
 
 PHP emmagatzema la informació del servidor i de les peticions HTTP en sis arrays globals:
 
@@ -507,7 +507,7 @@ Apatxe crea una clau per a cada capçalera HTTP, en majúscules i substituint el
 echo $_SERVER["HTTP_USER_AGENT"]."<br>"; // Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36
 ```
 
-### 15. Formularis
+### 📋 15. Formularis
 
 A l'hora d'enviar un formulari, hem de tindre clar quan usar GET o POST
 
@@ -664,7 +664,7 @@ Cada arxiu carregat en `$_FILES` té:
 
 ## SA2.2 Mecanismes per al Manteniment de la Informació en Aplicacions Web
  
-### 1. Fonaments 
+### 📖 1. Fonaments 
 
 HTTP és un protocol **stateless**, sense estat. En les aplicacions web modernes, és essencial gestionar l'estat del client per proporcionar una experiència d'usuari fluida i personalitzada.
 Per això, se simula l'estat mitjançant l'ús de cookies, tokens o la sessió. L'estat és necessari per a processos com ara el carret de la compra, operacions associades a un usuari, etc...
@@ -760,7 +760,7 @@ El **cache del navegador** s'utilitza per emmagatzemar còpies temporals de recu
 - **Control**: Requereix configuració per evitar el caching indesitjat de dades dinàmiques.
 
  
-### 2. Cookies  
+### 🍪 2. Cookies  
 
 Les cookies s'emmagatzemen en el array global `$_COOKIE`. El que col·loquem dins del array, es guardarà en el client. Cal tindre present que el client pot no voler emmagatzemar-les.
 
@@ -839,7 +839,7 @@ S'utilitzen per a:
 
 L'alternativa en el client per a emmagatzemar informació en el navegador és l'objecte [LocalStorage](https://developer.mozilla.org/es/docs/web/api/window/localstorage).
 
-### 3.Sessions
+### 🔑 3.Sessions
 
 La sessió afig la gestió de l'estat a HTTP, emmagatzemant en aquest cas la informació en el servidor.
 Cada visitant té un ID de sessió únic, el qual per defecte s'emmagatzema en una cookie denominada `PHPSESSID`.
@@ -907,7 +907,7 @@ Les següent propietats de `php.ini` permeten configurar alguns aspectes de la s
 
 Més informació en la [documentació oficial](https://www.php.net/manual/es/session.configuration.php).
 
-### 4.Serialització en PHP
+### 📦➡️📄 4.Serialització en PHP
 
 La serialització és el procés de convertir una estructura de dades o un objecte en una seqüència de caràcters que pot ser fàcilment emmagatzemada o transmesa i després reconstruïda. PHP proporciona dos funcions principals per a això: serialize() i unserialize().
 
@@ -969,7 +969,7 @@ print_r($data);
 Consideracions de Seguretat:
 És crucial entendre que la funció unserialize() pot ser perillosa si s'usa amb dades que no són de confiança, ja que podria portar a l'execució de codi arbitrari. Per això, mai has de deserialitzar dades que vinguen d'una font desconeguda o no fiable sense validar-les prèviament.
 
-### 5. Autenticació d'usuaris
+### 👤✔️ 5. Autenticació d'usuaris
 
 #### Mecanismes d'Autenticació d'Usuaris
 
@@ -1056,7 +1056,7 @@ En l'actualitat l'autenticació d'usuari no es realitza gestionant la sessió di
  `
 ## SA2.3 POO
 
-###  1. Introducció de la POO en php
+### 🐘 1. Introducció de la POO en php
 
 PHP segueix un paradigma de programació orientada a objectes (POO) basada en classes.
 
@@ -1125,7 +1125,7 @@ $bruno->imprimir();
 
 Encara que es poden declarar diverses classes en el mateix arxiu, és una mala pràctica. Així doncs, cada fitxer contedrá una sola classe, i es nomenarà amb el nom de la classe.
 
-### 2. Principis de la POO
+### 📐 2. Principis de la POO
 
 #### Encapsulació
 
@@ -1365,7 +1365,7 @@ Els més destacables són:
 * `__call()`, `__callStatic()` → S'executen en cridar a un mètode que no és públic. Permeten sobrecarreguen mètodes.
 
  
-### 3. Espai de noms
+### 🗺️ 3. Espai de noms
 
 #### 🧩 1. Espais de noms (Namespaces)
 
@@ -1522,7 +1522,7 @@ Posteriorment, hem de tornar a generar el *autoload* de *Composer* mitjançant l
 ``` bash
 composer dump-autoload
 ```
-### 4. Gestió de dates i hores amb Carbon
+### ⏰ 4. Gestió de dates i hores amb Carbon
 
 #### Què és Carbon?
 
@@ -1571,7 +1571,7 @@ echo "$data1 és anterior a $data2";
 ```
 
 
-### 5. Gestió d'Exempcions
+### 🚫 5. Gestió d'Exempcions
 
 
 La gestió d'excepcions forma part des de PHP 5. El seu funcionament és similar a Java*, fent ús d'un bloc `try / catch / finally`.
@@ -1657,7 +1657,7 @@ try {
 }
 ```
 
-### 6. Logger amb Monolog
+### 📜 6. Logger amb Monolog
 
 Provarem *Composer* afegint la llibreria de [*Monolog*](https://github.com/seldaek/monolog) al nostre projecte. Es tracta d'un llibreria per a la gestió de logs de les nostres aplicacions, suportant diferents nivells (info, warning, etc...), eixides (fitxers, sockets, BBDD, Web Services, email, etc) i formats (text pla, HTML, JSON, etc...).
 
@@ -1732,7 +1732,7 @@ Més informació sobre manejadores, formateadores i processadors en <https://git
 
 ## Annex:  Accés a fitxers
 
-### 1. Funcions bàsiques de PHP per a fitxers
+### 📄 1. Funcions bàsiques de PHP per a fitxers
 
 | Funció     | Descripció                                       |
 |------------|--------------------------------------------------|
@@ -1743,7 +1743,7 @@ Més informació sobre manejadores, formateadores i processadors en <https://git
 | `file_exists()` | Comprova si un fitxer existix.            |
 | `unlink()` | Elimina un fitxer.                              |
 
-### 2. Modes d'obertura de fitxers
+### 🔓 2. Modes d'obertura de fitxers
 
 | Mode | Descripció                                                  |
 |------|-------------------------------------------------------------|
@@ -1772,7 +1772,7 @@ Aquest codi crea (o substitueix) un fitxer anomenat dades.txt i escriu el text "
 - Utilitza rutes relatives i evita permetre a l’usuari introduir noms de fitxer directament.
 - Gestiona correctament els errors amb file_exists(), is_readable(), is_writable().
 
-### 3.Llegir fitxer línia a línia
+### 📖📄 3.Llegir fitxer línia a línia
 
 ```php
 <?php
@@ -1790,7 +1790,7 @@ fclose($fitxer);
 
 La funció fgets() llig una línia de text. La funció feof() comprova si s’ha arribat al final del fitxer.
 
-### 4. Escriure múltiples línies
+### ✍️📄 4. Escriure múltiples línies
 
 ```php
 <?php
@@ -1806,7 +1806,7 @@ fclose($fitxer);
 ``` 
 PHP_EOL assegura que el salt de línia siga compatible amb el sistema operatiu.
 
-### 5. Gestió de directoris
+### 📁 5. Gestió de directoris
 
 #### Crear un directori
 
@@ -1852,7 +1852,7 @@ if (is_dir("documents/buid")) {
  
 ##  Exercicis 
 
-### Bateria d'Exercicis Solucionats per a la Unitat de PHP
+### 🧩 Bateria d'Exercicis Solucionats per a la Unitat de PHP
 
 Hi ha un repositori preparat amb les solucions : https://github.com/Curs-2025-26/SA2.Exemples del que pots fer un fork.
  
@@ -2114,7 +2114,7 @@ Escriu els següent programes:
 
 
 
-###  Projecte "El penjat"
+### 🎯 Projecte "El penjat"
  
 #### Entrega 1 
 
@@ -2260,7 +2260,7 @@ Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El
 
 **Puntuació màxima total: 10 punts**
  
-### Exercicis proposats
+### 📝 Exercicis proposats
 
 #### Exercici 1: Manipulació de Variables i Operadors
 
@@ -2442,7 +2442,7 @@ A partir del formulari anterior fes que es puga pujar una imatge. Mostra la imat
 
 #### [Solucions](10solucions.html )
 
-### Autoavaluació: Conceptes Bàsics de PHP
+### ✅ Autoavaluació: Conceptes Bàsics de PHP
 
 #### Exercici 1: Sintaxi Bàsica de PHP
 
