@@ -1,4 +1,25 @@
-# Arquitectura MVC amb Laravel
+º<html>
+<head>
+  <title>@yield('title', config('app.name'))</title>
+  @vite(['resources/css/app.css','resources/js/app.js'])
+</head>
+<body>
+  @include('partials.nav')
+  <main>@yield('content')</main>
+</body>
+</html>
+Vista que hereta:
+@extends('layouts.app')
+@section('title','Inici')
+@section('content')
+  <h1>Benvingut/da!</h1>
+@endsection
+5.5 Components Blade
+php artisan make:component Alert
+Ús:
+<x-alert type="success">Missatge enviat!</x-alert>
+6) Controladors (organitzar la lògica)
+6.1 Crea# Arquitectura MVC amb Laravel
 
 ??? abstract "Duració i criteris d'evaluació"
 
@@ -9,11 +30,11 @@
     | Resultat d'aprenentatge  | Criteris d'avaluació  |
     | ------                    | -----                |
     | 5. Desenvolupa aplicacions Web identificant i aplicant mecanismes per a separar el codi de presentació de la lògica de negoci. | a) S'han identificat els avantatges de separar la lògica de negoci dels aspectes de presentació de l'aplicació. b) S'han analitzat i utilitzat mecanismes i frameworks que permeten realitzar aquesta separació i les seues característiques principals. c) S'han utilitzat objectes i controls en el servidor per a generar l'aspecte visual de l'aplicació web en el client. d) S'han utilitzat formularis generats de manera dinàmica per a respondre als esdeveniments de l'aplicació web. e) S'han identificat i aplicat els paràmetres relatius a la configuració de l'aplicació web. f) S'han escrit aplicacions web amb manteniment d'estat i separació de la lògica de negoci. g) S'han aplicat els principis i patrons de disseny de la programació orientada a objectes. h) S'ha provat i documentat el codi. |
- 
+
 ## SA 3.1 MVC i instal·lació de Laravel
 
 ###  🧩 Avantatges de la separació de capes
- 
+
 #### 🔍 Què és la separació de responsabilitats?
 En el desenvolupament d’aplicacions web, separar la **lògica de negoci** (com es processen les dades) de la **presentació** (com es mostren) és essencial per crear projectes escalables i fàcils de mantindre.
 
@@ -80,8 +101,8 @@ $usuaris = Usuari::tots();
 
 
 En resum, separar la lògica de negoci dels aspectes de presentació és una bona pràctica fonamental per desenvolupar aplicacions web robustes, escalables i fàcils de mantindre. Aquesta separació s’aplica de forma natural amb frameworks com **Laravel**, que segueixen el patró **MVC (Model-Vista-Controlador)**.
-  
- 
+
+
 ### 🔧 Frameworks i mecanismes de separació
 
 Un **framework** és un conjunt d'eines i biblioteques que facilita el desenvolupament d'aplicacions seguint una estructura predefinida i bones pràctiques.
@@ -91,7 +112,7 @@ Un **framework** és un conjunt d'eines i biblioteques que facilita el desenvolu
 - Redueix el temps de desenvolupament.
 - Estableix un patró coherent i mantenible.
 - Incorpora sistemes de seguretat, validació, rutes i molt més.
-  
+
 
 ### 🧱 Patró MVC (Model – Vista – Controlador)
 
@@ -109,7 +130,7 @@ El patró MVC és un **patró de disseny** que separa clarament tres responsabil
 
 Laravel és un framework PHP modern que aplica de manera nativa el patró MVC.
 
- 
+
 
     app/
     ├── Http/
@@ -129,7 +150,7 @@ Ruta:
 Route::get('/usuaris', [UsuariController::class, 'index']);
 ``` 
 
-Controlador: 
+Controlador:
 ```php
 class UsuariController extends Controller {
     public function index() {
@@ -139,7 +160,7 @@ class UsuariController extends Controller {
 }
 
 ``` 
-Models: 
+Models:
 
 ```php
 class Usuari extends Model {
@@ -147,7 +168,7 @@ class Usuari extends Model {
 }
 
 ``` 
-Vista (Blade): 
+Vista (Blade):
 ```php
 <ul>
 @foreach($usuaris as $usuari)
@@ -156,7 +177,7 @@ Vista (Blade):
 </ul>
 
 ``` 
- 
+
 ###  📦 Instal·lació de Laravel
 
 #### 🔧 Crear una aplicació Laravel amb Docker (Sail)
@@ -185,7 +206,7 @@ Per descomptat, podeu canviar "exemple-app" en aquest URL a qualsevol cosa que v
 
 
 3️⃣ Iniciar Laravel Sail
-  
+
 Ara podeu navegar al directori de l'aplicació i iniciar Laravel Sail. Laravel Sail proporciona una interfície senzilla de línia d'ordres per a interactuar amb la configuració predeterminada de l'acoblador Laravel:
 
 ```bash
@@ -193,7 +214,7 @@ cd exemple-app && ./vendor/bin/sail up &
 ```
 La instal·lació del **Sail** pot trigar diversos minuts mentre els contenidors de l'aplicació del **sail** es construeixen a la vostra màquina local.
 
- 
+
 4️⃣ Executar les migracions
 
 Una vegada arrancats els contenidors, pots aplicar les migracions:
@@ -260,10 +281,10 @@ php artisan route:list  # Llista totes les rutes de l’aplicació
 
 ![Funcionament Bàsic Laravel](imagenes/07/l101.png)
 
-### 🛣️ Rutes  
-   Les rutes web viuen a routes/web.php. Importa les classes amb use.
-   
-**Simple**  
+### 🛣️ Rutes
+Les rutes web viuen a routes/web.php. Importa les classes amb use.
+
+**Simple**
 
 ```php
     use Illuminate\Support\Facades\Route;
@@ -318,21 +339,29 @@ Route::resource('articles', ArticleController::class);
 // variants:
 Route::resource('articles', ArticleController::class)->only(['index','show']);
 ``` 
- 
-5) Vistes i Blade (essencial)
-   Vistes en resources/views. No hi posem lògica de negoci.
-   5.1 Mostrar vista i passar dades
-   Route::get('/', fn() => view('welcome'));
 
+### 🪟 Vistes i Blade (essencial)
+
+Vistes en resources/views. No hi posem lògica de negoci.
+
+**Mostrar vista i passar dades**
+
+```php
+Route::get('/', fn() => view('welcome'));
 Route::get('/inici', function () {
-$nom = 'Nacho';
-return view('inici', compact('nom')); // o ['nom'=>$nom] o ->with('nom',$nom)
+    $nom = 'Nacho';
+    return view('inici', compact('nom')); // o ['nom'=>$nom] o ->with('nom',$nom)
 });
+``` 
+
 resources/views/inici.blade.php
+```bladehtml
 Benvingut/da, {{ $nom }}
-5.2 Route::view curt
-Route::view('/', 'inici', ['nom' => 'Nacho']);
-5.3 Sintaxi Blade bàsica
+``` 
+
+#### 🗡️ Sintaxi Blade bàsica
+
+```bladehtml
 {{-- Comentari Blade --}}
 
 Hola, {{ $nom }}     {{-- escapada (segura) --}}
@@ -343,8 +372,13 @@ Hola, {{ $nom }}     {{-- escapada (segura) --}}
 @foreach($items as $it) {{ $it }} @endforeach
 
 @forelse($items as $it) {{ $it }} @empty Sense items @endforelse
-5.4 Layouts (herència)
+
+``` 
+####  📰 Layouts (herència)
+
 resources/views/layouts/app.blade.php
+
+```bladehtml 
 <!doctype html>
 <html>
 <head>
@@ -356,170 +390,18 @@ resources/views/layouts/app.blade.php
   <main>@yield('content')</main>
 </body>
 </html>
+``` 
 Vista que hereta:
+
+```bladehtml 
 @extends('layouts.app')
 @section('title','Inici')
 @section('content')
   <h1>Benvingut/da!</h1>
 @endsection
+``` 
+
 5.5 Components Blade
 php artisan make:component Alert
 Ús:
 <x-alert type="success">Missatge enviat!</x-alert>
-6) Controladors (organitzar la lògica)
-6.1 Crear controlador
-php artisan make:controller PruebaController
-6.2 Controlador de recursos (CRUD)
-php artisan make:controller ProducteController --resource
-Rutes:
-use App\Http\Controllers\ProducteController;
-Route::resource('productes', ProducteController::class);
-6.3 Esquelet típic (amb validació i binding)
-use App\Models\Producte;
-use Illuminate\Http\Request;
-
-class ProducteController extends Controller
-{
-public function index() {
-$productes = Producte::latest()->get();
-return view('productes.index', compact('productes'));
-}
-
-    public function create() {
-        return view('productes.create');
-    }
-
-    public function store(Request $request) {
-        $validated = $request->validate([
-            'nom'  => 'required|string|max:255',
-            'preu' => 'required|numeric|min:0',
-        ]);
-
-        Producte::create($validated);
-        return redirect()->route('productes.index')->with('ok','Creat!');
-    }
-
-    public function edit(Producte $producte) {
-        return view('productes.edit', compact('producte'));
-    }
-
-    public function update(Request $request, Producte $producte) {
-        $validated = $request->validate([
-            'nom'  => 'required|string|max:255',
-            'preu' => 'required|numeric|min:0',
-        ]);
-
-        $producte->update($validated);
-        return redirect()->route('productes.index')->with('ok','Actualitzat!');
-    }
-
-    public function destroy(Producte $producte) {
-        $producte->delete();
-        return redirect()->route('productes.index')->with('ok','Esborrat!');
-    }
-}
-7) Formularis dinàmics, POST i validació (criteri d)
-   7.1 Vistes per al CRUD
-   resources/views/productes/index.blade.php
-<h1>Productes</h1>
-
-@if(session('ok'))
-  <div class="alert alert-success">{{ session('ok') }}</div>
-@endif
-
-<a href="{{ route('productes.create') }}">Nou producte</a>
-
-<ul>
-@forelse($productes as $p)
-  <li>
-    {{ $p->nom }} — {{ $p->preu }} €
-    <a href="{{ route('productes.edit', $p) }}">Editar</a>
-    <form action="{{ route('productes.destroy', $p) }}" method="POST" style="display:inline">
-      @csrf @method('DELETE')
-      <button type="submit">Esborrar</button>
-    </form>
-  </li>
-@empty
-  <li>No hi ha productes</li>
-@endforelse
-</ul>
-resources/views/productes/create.blade.php
-<h1>Nou producte</h1>
-
-<form method="POST" action="{{ route('productes.store') }}">
-  @csrf
-  <label>Nom</label>
-  <input name="nom" value="{{ old('nom') }}">
-  @error('nom') <small>{{ $message }}</small> @enderror
-
-<label>Preu</label>
-<input name="preu" value="{{ old('preu') }}">
-@error('preu') <small>{{ $message }}</small> @enderror
-
-<button type="submit">Guardar</button>
-</form>
-resources/views/productes/edit.blade.php
-<h1>Editar producte</h1>
-
-<form method="POST" action="{{ route('productes.update', $producte) }}">
-  @csrf @method('PUT')
-
-<label>Nom</label>
-<input name="nom" value="{{ old('nom', $producte->nom) }}">
-@error('nom') <small>{{ $message }}</small> @enderror
-
-<label>Preu</label>
-<input name="preu" value="{{ old('preu', $producte->preu) }}">
-@error('preu') <small>{{ $message }}</small> @enderror
-
-<button type="submit">Actualitzar</button>
-</form>
-7.2 Model Eloquent
-app/Models/Producte.php
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Producte extends Model
-{
-protected $fillable = ['nom','preu'];
-}
-7.3 Migració
-Schema::create('productes', function (Blueprint $table) {
-$table->id();
-$table->string('nom');
-$table->decimal('preu', 8, 2);
-$table->timestamps();
-});
-7.4 Activitat
-Crea l’entitat Clients amb camps nom, email (únic), telefon (nullable) + CRUD complet amb validació.
-8) Configuració bàsica (criteri e)
-   .env i config/
-   .env → variables per entorn (no comites).
-   config/ → fitxers PHP de configuració (app.php, database.php, mail.php, filesystems.php…).
-   Exemple d’accés a config:
-   config('app.name');                 // llegir
-   config(['app.debug' => false]);     // canviar al vol (temporal)
-   $value = config('foo.bar', 'def');  // valor per defecte
-   Artisan útil
-   php artisan list        # totes les comandes
-   php artisan route:list  # rutes registrades
-   php artisan make:model Nom -m    # model + migració
-   php artisan migrate             # aplicar migracions
-   Bones pràctiques: mai posar secrets al codi; usa .env i variables d’entorn. Revisa APP_ENV, APP_DEBUG, APP_URL, timezone, locale.
-9) Recursos del client amb Vite
-   9.1 Instal·lar dependències frontend
-   npm install
-   9.2 Config per defecte (resum)
-   vite.config.js
-   import { defineConfig } from 'vite';
-   import laravel from 'laravel-vite-plugin';
-
-export default defineConfig({
-plugins: [laravel(['resources/css/app.css','resources/js/app.js'])],
-});
-9.3 Carregar a layout Blade
-@vite(['resources/css/app.css','resources/js/app.js'])
-9.4 Executar
-npm run dev   # HMR
-npm run build # producció
