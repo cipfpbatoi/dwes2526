@@ -6,7 +6,7 @@ nav:
   - "Inicio": "index.md"
   - "1.- Arquitectures Web": "01arquitecturas.md"
   - "2.- El llenguatge PHP": "02php.md"
-  - "3.- Programació Web": "03web.md"
+  - "3.- Arquitectura MVC amb Laravel": "03MVC_Laravel.md"
   - "4.- PHP Orientat a Objectes": "04phpoo.md"
   - "5.- Accès a Dades": "05accesoDatos.md"
   - "6.- Projecte Integrador Bloc 1": "06projecte.md"
