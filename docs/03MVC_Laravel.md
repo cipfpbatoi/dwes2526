@@ -9,19 +9,34 @@
     | Resultat d'aprenentatge  | Criteris d'avaluació  |
     | ------                    | -----                |
     | 5. Desenvolupa aplicacions Web identificant i aplicant mecanismes per a separar el codi de presentació de la lògica de negoci. | a) S'han identificat els avantatges de separar la lògica de negoci dels aspectes de presentació de l'aplicació. b) S'han analitzat i utilitzat mecanismes i frameworks que permeten realitzar aquesta separació i les seues característiques principals. c) S'han utilitzat objectes i controls en el servidor per a generar l'aspecte visual de l'aplicació web en el client. d) S'han utilitzat formularis generats de manera dinàmica per a respondre als esdeveniments de l'aplicació web. e) S'han identificat i aplicat els paràmetres relatius a la configuració de l'aplicació web. f) S'han escrit aplicacions web amb manteniment d'estat i separació de la lògica de negoci. g) S'han aplicat els principis i patrons de disseny de la programació orientada a objectes. h) S'ha provat i documentat el codi. |
-
-## SA3.1  Introducció al patró MVC i la separació de capes. Instal·lació de Laravel.   
-
-###  🧩 Avantatges de separar la lògica de negoci dels aspectes de presentació
  
-#### 🔍 Què és la separació de capes?
+## SA 3.1 MVC i instal·lació de Laravel
 
-La **separació de capes** consisteix a dividir una aplicació en mòduls independents segons la seua responsabilitat. En aplicacions web, les dues capes principals són:
+###  🧩 Avantatges de la separació de capes
+ 
+#### 🔍 Què és la separació de responsabilitats?
+En el desenvolupament d’aplicacions web, separar la **lògica de negoci** (com es processen les dades) de la **presentació** (com es mostren) és essencial per crear projectes escalables i fàcils de mantindre.
 
-- **Capa de presentació:** S’encarrega de mostrar la informació a l’usuari (interfície web).
-- **Capa de lògica de negoci:** Processa la informació, aplica regles, realitza càlculs i gestiona dades.
+#### Problemes quan no hi ha separació
+- Codi desordenat i difícil de llegir.
+- Modificar la interfície pot trencar la lògica i viceversa.
+- Dificultat per treballar en equip.
 
----
+#### Beneficis
+
+| Avantatge        | Descripció                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| Mantenibilitat   | És més fàcil modificar el codi, ja que cada part està separada.             |
+| Reutilització    | El codi es pot reutilitzar en diferents parts del projecte.                 |
+| Escalabilitat    | És més senzill afegir noves funcionalitats sense trencar les existents.     |
+| Treball en equip | Permet dividir tasques entre programadors backend i frontend.              |
+| Testabilitat     | Podem fer proves unitàries de la lògica sense necessitat de la interfície.  |
+| Seguretat        | Mantindre la lògica separada ajuda a controlar millor les entrades i sortides. |
+
+
+#### Comparació
+- **Aplicació monolítica**: tot el codi barrejat (HTML, SQL, lògica PHP).
+- **MVC**: cada capa té la seua responsabilitat i només interactua amb les necessàries.
 
 #### 💡 Exemple senzill
 
@@ -65,8 +80,9 @@ $usuaris = Usuari::tots();
 
 
 En resum, separar la lògica de negoci dels aspectes de presentació és una bona pràctica fonamental per desenvolupar aplicacions web robustes, escalables i fàcils de mantindre. Aquesta separació s’aplica de forma natural amb frameworks com **Laravel**, que segueixen el patró **MVC (Model-Vista-Controlador)**.
-
-### 🔧 Què és un Framework?
+  
+ 
+### 🔧 Frameworks i mecanismes de separació
 
 Un **framework** és un conjunt d'eines i biblioteques que facilita el desenvolupament d'aplicacions seguint una estructura predefinida i bones pràctiques.
 
@@ -75,8 +91,7 @@ Un **framework** és un conjunt d'eines i biblioteques que facilita el desenvolu
 - Redueix el temps de desenvolupament.
 - Estableix un patró coherent i mantenible.
 - Incorpora sistemes de seguretat, validació, rutes i molt més.
-
----
+  
 
 ### 🧱 Patró MVC (Model – Vista – Controlador)
 
@@ -88,13 +103,13 @@ El patró MVC és un **patró de disseny** que separa clarament tres responsabil
 | **Vista**  | Mostra la informació a l’usuari. |
 | **Controlador** | Gestiona les peticions i coordina el Model i la Vista. |
 
----
+![Modelo Vista Controlador](imagenes/07/mvc.png)
 
 ### 🚀 Laravel com a framework MVC
 
 Laravel és un framework PHP modern que aplica de manera nativa el patró MVC.
 
-#### 📂 Estructura bàsica d’una aplicació Laravel
+ 
 
     app/
     ├── Http/
@@ -102,21 +117,9 @@ Laravel és un framework PHP modern que aplica de manera nativa el patró MVC.
     ├── Models/ → Models (M)
     resources/
     └── views/ → Vistes Blade (V)
+    └── routes/ → Rutes (R)
 
 
----
-
-### ⚙️ Mecanismes de separació en Laravel
-
-| Mecanisme                     | Descripció |
-|------------------------------|------------|
-| **Controladors**             | Gestionen la lògica d’interacció amb l’usuari. |
-| **Models Eloquent**          | Accés a dades mitjançant ORM (Object-Relational Mapping). |
-| **Blade Templates**          | Sistema de plantilles per a la presentació de dades. |
-| **Rutes (`routes/web.php`)** | Enllacen URLs amb controladors. |
-| **Request/Response Cycle**   | Permet captar i retornar dades estructurades. |
-
----
 
 #### 🧪 Exemple bàsic
 
@@ -153,9 +156,7 @@ Vista (Blade):
 </ul>
 
 ``` 
-
-En resum, els frameworks com Laravel implementen el patró MVC, afavorint la separació de la lògica de negoci i la capa de presentació. Aquesta divisió millora la claredat del projecte, la col·laboració en equip i la mantenibilitat del codi a llarg termini.
-
+ 
 ###  📦 Instal·lació de Laravel
 
 #### 🔧 Crear una aplicació Laravel amb Docker (Sail)
@@ -224,13 +225,39 @@ myadmin:
  - sail
 ```
 
-### 📁 Estructura d’un projecte Laravel
+#### Estructura de carpetes simplificada
 
-Laravel utilitza una estructura modular basada en el patró **MVC**.  
-Aquesta organització facilita la separació de responsabilitats i el manteniment.
+![Estructura directoris](./imagenes/03/carpetes_laravel.png){ width=400 }
 
-**Carpetes principals:**
 
-![Estructura directoris](./imagenes/03/carpetes_laravel.png){ width=400 } 
+### ⚙️ Configuració bàsica en Laravel
+
+Laravel gestiona la configuració en el fitxer `.env` i en fitxers del directori `config/`.
+
+**.env** → Conté les variables de configuració de l’entorn (nom de l’app, base de dades, correu…).  
+**config/** → Conté fitxers PHP amb configuracions globals (`app.php`, `database.php`, etc.).
+
+📌 Exemple `.env` mínim:
+
+```env
+APP_NAME="LaravelApp"
+APP_ENV=local
+APP_DEBUG=true
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+Per comprovar configuracions o generar codi, utilitza Artisan:
+
+```bash
+php artisan list        # Llista de comandes disponibles
+php artisan route:list  # Llista totes les rutes de l’aplicació
+``` 
+
+## SA 3.2 CRUD bàsic en Laravel
+
+![Funcionament Bàsic Laravel](imagenes/07/l101.png)
 
 

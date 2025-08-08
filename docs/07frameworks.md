@@ -501,8 +501,8 @@ El funcionament bàsic que segueix Laravel després d'una petició web a una URL
   A continuació s'inclou un xicotet esquema d'aquest funcionament:
 
 
-![](imagenes/07/l101.png)
-Funcionament Bàsic Laravel
+![Funcionament Bàsic Laravel](imagenes/07/l101.png)
+
 
 
 
