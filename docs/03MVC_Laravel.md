@@ -224,13 +224,13 @@ myadmin:
  - sail
 ```
 
-### Estructura d’un projecte Laravel
+### 📁 Estructura d’un projecte Laravel
 
 Laravel utilitza una estructura modular basada en el patró **MVC**.  
 Aquesta organització facilita la separació de responsabilitats i el manteniment.
 
-** 📂 Carpetes principals:**
+**Carpetes principals:**
 
-![Estructura directoris](./imagenes/03/carpetes_laravel.png) 
+![Estructura directoris](./imagenes/03/carpetes_laravel.png){ width=400 } 
 
 
