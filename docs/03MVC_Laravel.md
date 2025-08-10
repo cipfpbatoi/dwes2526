@@ -204,24 +204,6 @@ Una vegada arrancats els contenidors, pots aplicar les migracions:
 Ara pots obrir l’aplicació en el navegador en http://localhost.
 
 
-📎 Annex: Instal·lació de phpMyAdmin amb Docker (opcional)
-
-Si volem que funcione el phpmyadmin haurien d'afegir un altre contenidor docker, o farem incluint el següent codi en el docker-compose.yml
-
-```php
-myadmin:
- image: 'phpmyadmin:latest'
- ports:
- - 8080:80
- environment:
- MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
- links:
- - "mysql:db"
- depends_on:
- - mysql
- networks:
- - sail
-```
 
 #### Estructura de carpetes simplificada
 
@@ -618,5 +600,253 @@ npm run dev   # HMR
 npm run build # producció
 ```
 
+## SA3.3 Formularis dinàmics i manteniment d’estat
+
+  
+En Laravel, els formularis es creen amb Blade i s’envien als controladors. La **validació** i el **manteniment d’estat** (sessions, `old()`) són clau per a una bona UX (User Experience).
+
+### 📋  Formularis amb Blade
+
+- Sempre inclou `@csrf` per protegir contra CSRF.
+- Per a PUT/PATCH/DELETE, usa `@method('PUT')`, etc.
+
+```blade
+{{-- resources/views/productes/create.blade.php --}}
+<h1>Nou producte</h1>
+
+<form method="POST" action="{{ route('productes.store') }}">
+  @csrf
+  <label>Nom</label>
+  <input name="nom" value="{{ old('nom') }}">
+  @error('nom') <small class="error">{{ $message }}</small> @enderror
+
+  <label>Preu</label>
+  <input name="preu" value="{{ old('preu') }}">
+  @error('preu') <small class="error">{{ $message }}</small> @enderror
+
+  <label>Categoria</label>
+  <select name="categoria">
+    <option value="">-- Selecciona --</option>
+    <option value="hardware" @selected(old('categoria')==='hardware')>Hardware</option>
+    <option value="software" @selected(old('categoria')==='software')>Software</option>
+  </select>
+
+  <label>
+    <input type="checkbox" name="actiu" value="1" @checked(old('actiu'))>
+    Actiu
+  </label>
+
+  <button type="submit">Guardar</button>
+</form>
+```
+!!! info "Mantenir valors" 
+    old('camp') manté el valor introduït si la validació falla.
+
+#### Validació al controlador (ràpida)
+
+```php
+public function store(\Illuminate\Http\Request $request)
+{
+    $validated = $request->validate([
+    'nom'       => ['required','string','max:255'],
+    'preu'      => ['required','numeric','min:0'],
+    'categoria' => ['nullable','in:hardware,software'],
+    'actiu'     => ['nullable','boolean'],
+    ]);
+
+    $validated['actiu'] = (bool)($validated['actiu'] ?? false);
+
+    \App\Models\Producte::create($validated);
+
+    return redirect()
+        ->route('productes.index')
+        ->with('ok','Producte creat correctament'); // flash message (sessió)
+}
+```
+
+Missatges d’error a la vista: @error('camp') ... @enderror i {{ $message }}.
+
+#### Validació amb Form Request (recomanat)
+
+```bash
+php artisan make:request StoreProducteRequest
+```
 
 
+// app/Http/Requests/StoreProducteRequest.php
+```php
+class StoreProducteRequest extends FormRequest {
+    
+    public function authorize(): bool
+    {
+      return true;
+    }
+    
+    public function rules(): array {
+        return [
+        'nom'       => ['required','string','max:255'],
+        'preu'      => ['required','numeric','min:0'],
+        'categoria' => ['nullable','in:hardware,software'],
+        'actiu'     => ['nullable','boolean'],
+        ];
+    }
+}
+```
+// controller
+
+```php
+public function store(\App\Http\Requests\StoreProducteRequest $request)
+{
+    \App\Models\Producte::create($request->validated());
+    return redirect()->route('productes.index')->with('ok','Creat!');
+}
+```
+
+#### Manteniment de l'estat amb sessions
+
+```php
+// Escriure en sessió
+session(['tema' => 'fosc']);
+
+// Llegir amb valor per defecte
+$tema = session('tema', 'clar');
+
+// Flash (1 petició)
+return back()->with('ok', 'Acció completada');
+``` 
+
+blade
+```bladehtml 
+@if(session('ok'))
+  <div class="alert alert-success">{{ session('ok') }}</div>
+@endif
+``` 
+
+#### Formularis que responen a l'estat 
+
+```bladehtml
+{{-- canvia el text del botó segons si l’usuari està logat --}}
+<button>
+{{ auth()->check() ? 'Comprar ara' : 'Inicia sessió per comprar' }}
+</button>
+``` 
+
+
+
+#### 📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
+
+Si volem que funcione el phpmyadmin haurien d'afegir un altre contenidor docker, o farem incluint el següent codi en el docker-compose.yml
+
+```php
+myadmin:
+ image: 'phpmyadmin:latest'
+ ports:
+ - 8080:80
+ environment:
+ MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+ links:
+ - "mysql:db"
+ depends_on:
+ - mysql
+ networks:
+ - sail
+```
+ I ara, ja podem accedir a http://localhost:8080 amb les credencials del .env.
+
+#### 📎 Annex II: Configuració predeterminada
+
+Els fitxers de configuració es troben al directori `config/`. A continuació es descriuen alguns dels més importants:
+
+##### **1. config/app.php**
+Conté configuracions globals de l'aplicació.
+
+- **`name`**: Nom de l'aplicació.
+- **`env`**: Entorn d'execució (`local`, `production`, `testing`).
+- **`debug`**: Habilita o deshabilita el mode depuració (`true` o `false`).
+- **`timezone`**: Zona horària de l'aplicació (per defecte `UTC`).
+- **`locale`**: Idioma predeterminat.
+ 
+
+##### **2. config/database.php**
+Configura les bases de dades de l'aplicació.
+
+- **`default`**: Connexió predeterminada (`mysql`, `sqlite`, `pgsql`, etc.).
+- **Configuracions per a cada connexió**:
+- **`mysql`**: Exemple:
+ ```php
+'mysql' => [
+  'driver' => 'mysql',
+  'host' => env('DB_HOST', '127.0.0.1'),
+  'port' => env('DB_PORT', '3306'),
+  'database' => env('DB_DATABASE', 'laravel'),
+  'username' => env('DB_USERNAME', 'root'),
+  'password' => env('DB_PASSWORD', ''),
+],
+
+ ```
+
+##### **3. config/mail.php**
+Configura el sistema d'enviament de correus electrònics.
+
+- **`default`**: Transport predeterminat (`smtp`, `mailgun`, `sendmail`, `resend` etc.).
+- **Configuracions SMTP**:
+ ```php
+ 'mailers' => [
+     'smtp' => [
+     'transport' => 'smtp',
+     'host' => env('MAIL\_HOST', 'smtp.mailtrap.io'),
+     'port' => env('MAIL\_PORT', 2525),
+     'username' => env('MAIL\_USERNAME'),
+     'password' => env('MAIL\_PASSWORD'),
+     'encryption' => env('MAIL\_ENCRYPTION', 'tls'),
+     ],
+ ],
+ ```
+##### **4. config/filesystems.php**
+Gestiona els sistemes d'arxius.
+
+- **`default`**: Sistema predeterminat (local, s3, etc.).
+- **Configuració de discos**:
+```php
+ 'disks' => [
+     'local' => [
+     'driver' => 'local',
+     'root' => storage_path('app'),
+     ],
+     's3' => [
+     'driver' => 's3',
+     'key' => env('AWS_ACCESS_KEY_ID'),
+     'secret' => env('AWS_SECRET_ACCESS_KEY'),
+     'region' => env('AWS_DEFAULT_REGION'),
+     'bucket' => env('AWS_BUCKET'),
+     ],
+ ],
+```
+
+##### Funcions d'ajuda
+
+Laravel proporciona **helpers** per treballar amb configuracions de manera senzilla i dinàmica.
+
+ **Accedir a configuracions**
+
+Utilitza la funció `config()` per obtenir valors de configuració des de qualsevol lloc de l'aplicació:
+
+```php
+config('app.name'); // Retorna el nom de l'aplicació
+```
+**Canviar configuracions en temps d'execució**
+
+Pots modificar configuracions de forma temporal durant l'execució de l'aplicació:
+
+```php
+config(['app.debug' => false]); // Desactiva el mode depuració
+``` 
+
+**Establir valors predeterminats**
+
+Si el valor no existeix, pots establir un valor predeterminat:
+
+```php
+$value = config('app.missing_key', 'valor per defecte');
+```
+Aquestes funcions són útils per ajustar l'aplicació a les necessitats de l'entorn o per gestionar configuracions específiques durant l'execució.
