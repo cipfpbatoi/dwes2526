@@ -1,26 +1,3 @@
-º<html>
-<head>
-  <title>@yield('title', config('app.name'))</title>
-  @vite(['resources/css/app.css','resources/js/app.js'])
-</head>
-<body>
-  @include('partials.nav')
-  <main>@yield('content')</main>
-</body>
-</html>
-Vista que hereta:
-@extends('layouts.app')
-@section('title','Inici')
-@section('content')
-  <h1>Benvingut/da!</h1>
-@endsection
-5.5 Components Blade
-php artisan make:component Alert
-Ús:
-<x-alert type="success">Missatge enviat!</x-alert>
-6) Controladors (organitzar la lògica)
-6.1 Crea# Arquitectura MVC amb Laravel
-
 ??? abstract "Duració i criteris d'evaluació"
 
     Duració estimada: 16 hores
@@ -65,15 +42,15 @@ Sense separació:
 
 ```php
 <?php
-// Exemple dolent: lògica i presentació mesclades
-$conn = new PDO('mysql:host=localhost;dbname=test', 'root', '');
-$sql = "SELECT * FROM usuaris";
-$result = $conn->query($sql);
-echo "<ul>";
-foreach ($result as $usuari) {
-    echo "<li>" . $usuari['nom'] . "</li>";
-}
-echo "</ul>";
+    // Exemple dolent: lògica i presentació mesclades
+    $conn = new PDO('mysql:host=localhost;dbname=test', 'root', '');
+    $sql = "SELECT * FROM usuaris";
+    $result = $conn->query($sql);
+    echo "<ul>";
+    foreach ($result as $usuari) {
+        echo "<li>" . $usuari['nom'] . "</li>";
+    }
+    echo "</ul>";
  ```
 Amb separació:
 
@@ -273,9 +250,15 @@ DB_PASSWORD=
 Per comprovar configuracions o generar codi, utilitza Artisan:
 
 ```bash
-php artisan list        # Llista de comandes disponibles
-php artisan route:list  # Llista totes les rutes de l’aplicació
+php artisan list                  # totes les comandes
+php artisan route:list            # rutes registrades
+php artisan make:model Nom -m     # model + migració
+php artisan migrate               # aplicar migracions
 ``` 
+
+!!! info "Bones pràctiques"
+    Mai posar secrets al codi; usa .env i variables d’entorn. Revisa APP_ENV, APP_DEBUG, APP_URL, timezone, locale.
+ 
 
 ## SA 3.2 CRUD bàsic en Laravel
 
@@ -400,8 +383,240 @@ Vista que hereta:
   <h1>Benvingut/da!</h1>
 @endsection
 ``` 
+    
+#### 🧩 Components Blade
 
-5.5 Components Blade
+Els **Components Blade** permeten definir elements reutilitzables:
+
+1️⃣ Crear component:
+
+```bash
 php artisan make:component Alert
-Ús:
-<x-alert type="success">Missatge enviat!</x-alert>
+```
+
+2️⃣ Definir la lògica:
+
+```php
+class Alert extends Component {
+ public $type;
+ public function __construct($type) {
+    $this->type = $type;
+ }
+ public function render() {
+    return view('components.alert');
+ }
+}
+```
+
+3️⃣  Vista del component:
+
+```bladehtml
+
+ {{ $slot }}
+
+```
+
+4️⃣ Utilitzar-lo en una vista:
+
+```bladehtml
+<x-alert >Missatge Enviat!</x-alert>
+```
+
+### ⚙️ Controladors (organitzar la lògica)
+   
+**Crear controlador**
+```bash
+   php artisan make:controller PruebaController
+```
+
+**Controlador de recursos (CRUD)**
+
+ ```bash
+php artisan make:controller ProducteController --resource
+```
+   Rutes:
+```php
+   use App\Http\Controllers\ProducteController;
+   Route::resource('productes', ProducteController::class);
+```
+   
+#### 🦴🏗️Esquelet típic (amb validació i binding)
+
+```php
+   use App\Models\Producte;
+   use Illuminate\Http\Request;
+
+class ProducteController extends Controller
+{
+public function index() {
+$productes = Producte::latest()->get();
+return view('productes.index', compact('productes'));
+}
+
+    public function create() {
+        return view('productes.create');
+    }
+
+    public function store(Request $request) {
+        $validated = $request->validate([
+            'nom'  => 'required|string|max:255',
+            'preu' => 'required|numeric|min:0',
+        ]);
+
+        Producte::create($validated);
+        return redirect()->route('productes.index')->with('ok','Creat!');
+    }
+
+    public function edit(Producte $producte) {
+        return view('productes.edit', compact('producte'));
+    }
+
+    public function update(Request $request, Producte $producte) {
+        $validated = $request->validate([
+            'nom'  => 'required|string|max:255',
+            'preu' => 'required|numeric|min:0',
+        ]);
+
+        $producte->update($validated);
+        return redirect()->route('productes.index')->with('ok','Actualitzat!');
+    }
+
+    public function destroy(Producte $producte) {
+        $producte->delete();
+        return redirect()->route('productes.index')->with('ok','Esborrat!');
+    }
+}
+
+``` 
+
+###  📋 Formularis dinàmics, POST i validació  
+    
+**Vistes per al CRUD**
+   resources/views/productes/index.blade.php
+
+```bladehtml
+<h1>Productes</h1>
+
+@if(session('ok'))
+  <div class="alert alert-success">{{ session('ok') }}</div>
+@endif
+
+<a href="{{ route('productes.create') }}">Nou producte</a>
+
+<ul>
+@forelse($productes as $p)
+  <li>
+    {{ $p->nom }} — {{ $p->preu }} €
+    <a href="{{ route('productes.edit', $p) }}">Editar</a>
+    <form action="{{ route('productes.destroy', $p) }}" method="POST" style="display:inline">
+      @csrf @method('DELETE')
+      <button type="submit">Esborrar</button>
+    </form>
+  </li>
+@empty
+  <li>No hi ha productes</li>
+@endforelse
+</ul>
+```
+resources/views/productes/create.blade.php
+
+```bladehtml
+<h1>Nou producte</h1>
+
+<form method="POST" action="{{ route('productes.store') }}">
+  @csrf
+  <label>Nom</label>
+  <input name="nom" value="{{ old('nom') }}">
+  @error('nom') <small>{{ $message }}</small> @enderror
+
+<label>Preu</label>
+<input name="preu" value="{{ old('preu') }}">
+@error('preu') <small>{{ $message }}</small> @enderror
+
+<button type="submit">Guardar</button>
+</form>
+```
+
+resources/views/productes/edit.blade.php
+
+```bladehtml
+<h1>Editar producte</h1>
+
+<form method="POST" action="{{ route('productes.update', $producte) }}">
+  @csrf @method('PUT')
+
+<label>Nom</label>
+<input name="nom" value="{{ old('nom', $producte->nom) }}">
+@error('nom') <small>{{ $message }}</small> @enderror
+
+<label>Preu</label>
+<input name="preu" value="{{ old('preu', $producte->preu) }}">
+@error('preu') <small>{{ $message }}</small> @enderror
+
+<button type="submit">Actualitzar</button>
+</form>
+```
+
+### 🗄️ Model Eloquent
+
+app/Models/Producte.php
+
+```php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Producte extends Model
+{
+protected $fillable = ['nom','preu'];
+}
+```
+
+
+### 🏗️  Migració
+
+```php
+Schema::create('productes', function (Blueprint $table) {
+$table->id();
+$table->string('nom');
+$table->decimal('preu', 8, 2);
+$table->timestamps();
+});
+```
+
+### ⚡ Recursos del client amb Vite
+
+**Instal·lar dependències frontend**
+
+```bash
+   npm install
+```
+
+**Config per defecte (resum)**
+   vite.config.js
+```js
+   import { defineConfig } from 'vite';
+   import laravel from 'laravel-vite-plugin';
+
+
+export default defineConfig({
+plugins: [laravel(['resources/css/app.css','resources/js/app.js'])],
+});
+```
+
+**Carregar a layout Blade**
+
+```bladehtml
+@vite(['resources/css/app.css','resources/js/app.js'])
+```
+
+**Executar**
+
+```bash
+npm run dev   # HMR
+npm run build # producció
+```
+
+
+

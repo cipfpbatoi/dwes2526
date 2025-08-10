@@ -813,14 +813,14 @@ class Alert extends Component {
     $this->type = $type;
  }
  public function render() {
- return view('components.alert');
+    return view('components.alert');
  }
 }
 ```
 
 3. Vista del component:
 
-```blade
+```bladehtml
 
  {{ $slot }}
 
@@ -828,8 +828,8 @@ class Alert extends Component {
 
 4. Utilitzar-lo en una vista:
 
-```blade
-Missatge enviat!
+```bladehtml
+<x-alert >Missatge Enviat</x-alert>
 ```
 
 
