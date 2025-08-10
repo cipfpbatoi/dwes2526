@@ -6,7 +6,7 @@
 
     | Resultat d'aprenentatge  | Criteris d'avaluació  |
     | ------                    | -----                |
-    | 5. Desenvolupa aplicacions Web identificant i aplicant mecanismes per a separar el codi de presentació de la lògica de negoci. | a) S'han identificat els avantatges de separar la lògica de negoci dels aspectes de presentació de l'aplicació. b) S'han analitzat i utilitzat mecanismes i frameworks que permeten realitzar aquesta separació i les seues característiques principals. c) S'han utilitzat objectes i controls en el servidor per a generar l'aspecte visual de l'aplicació web en el client. d) S'han utilitzat formularis generats de manera dinàmica per a respondre als esdeveniments de l'aplicació web. e) S'han identificat i aplicat els paràmetres relatius a la configuració de l'aplicació web. f) S'han escrit aplicacions web amb manteniment d'estat i separació de la lògica de negoci. g) S'han aplicat els principis i patrons de disseny de la programació orientada a objectes. h) S'ha provat i documentat el codi. |
+    | 5. Desenvolupa aplicacions Web identificant i aplicant mecanismes per a separar el codi de presentació de la lògica de negoci. | a) S'han identificat els avantatges de separar la lògica de negoci dels aspectes de presentació de l'aplicació. <br/> b) S'han analitzat i utilitzat mecanismes i frameworks que permeten realitzar aquesta separació i les seues característiques principals.  <br/>c) S'han utilitzat objectes i controls en el servidor per a generar l'aspecte visual de l'aplicació web en el client. <br/> d) S'han utilitzat formularis generats de manera dinàmica per a respondre als esdeveniments de l'aplicació web. <br/> e) S'han identificat i aplicat els paràmetres relatius a la configuració de l'aplicació web. <br/> f) S'han escrit aplicacions web amb manteniment d'estat i separació de la lògica de negoci. <br/> g) S'han aplicat els principis i patrons de disseny de la programació orientada a objectes. <br/> h) S'ha provat i documentat el codi. |
 
 ## SA 3.1 MVC i instal·lació de Laravel
 
@@ -731,7 +731,219 @@ blade
 </button>
 ``` 
 
+## SA3.5  Introducció a PHPDoc en Laravel
 
+PHPDoc és un estàndard de documentació per a codi PHP que utilitza comentaris especials per descriure mètodes, classes, propietats i constants.
+
+En Laravel, ajuda a:
+- Entendre més ràpid el codi.
+- Millorar l’autocompletat a l’IDE (VS Code, PhpStorm…).
+- Generar documentació automàtica.
+- Evitar errors per mal ús de mètodes i dades.
+
+### 📝 Sintaxi bàsica
+
+Un comentari PHPDoc comença amb /** i acaba amb */.
+Dins, utilitzem etiquetes per descriure elements.
+
+```php
+/**
+* Descripció breu del que fa el mètode.
+*
+* Descripció més detallada (opcional).
+*
+* @param  Tipus  $nomParam  Descripció del paràmetre
+* @return TipusRetorn  Descripció del retorn
+  */
+  📌 Exemple en un controlador de Laravel
+  /**
+* Mostra el llistat de productes.
+*
+* @return \Illuminate\View\View
+  */
+  public function index()
+  {
+  $productes = Producte::all();
+  return view('productes.index', compact('productes'));
+  }
+
+/**
+* Guarda un nou producte a la base de dades.
+*
+* @param  \Illuminate\Http\Request  $request
+* @return \Illuminate\Http\RedirectResponse
+  */
+  public function store(Request $request)
+  {
+  $validated = $request->validate([
+  'nom' => 'required|string|max:255',
+  'preu' => 'required|numeric|min:0',
+  ]);
+
+  Producte::create($validated);
+
+  return redirect()->route('productes.index')->with('success', 'Producte creat correctament.');
+  }
+```
+
+###  🔖 Etiquetes més habituals
+
+```php
+  Etiqueta	Significat
+  @param	Tipus i nom de cada paràmetre que rep el mètode.
+  @return	Tipus del valor retornat.
+  @var	Tipus d’una variable o propietat.
+  @throws	Tipus d’excepció que pot llençar-se.
+  @property	Propietats “màgiques” d’una classe (per Eloquent).
+  @method	Mètodes “màgics” que no estan explícits al codi.
+```
+
+###  📚 PHPDoc en models Eloquent
+  Quan Laravel crea models, moltes propietats i mètodes no apareixen al codi, però hi són gràcies a Eloquent. Podem documentar-los així:
+```php
+  /**
+* App\Models\Producte
+*
+* @property int $id
+* @property string $nom
+* @property float $preu
+* @method static \Illuminate\Database\Eloquent\Builder|Producte whereNom($value)
+  */
+  class Producte extends Model
+  {
+  protected $fillable = ['nom', 'preu'];
+  }
+```
+
+
+###  💡 Bones pràctiques
+
+-  Documenta tots els mètodes públics.
+-  Usa tipus complets (no array, sinó string[] o int[] quan siga possible).
+-  Actualitza PHPDoc quan canvies la signatura d’un mètode.
+-  No sobrecarregues amb informació obvia; sigues clar i útil.
+
+
+## SA3.5  Patrons de disseny orientats a objectes (a pasar al tema posterior)
+ 
+### Principis SOLID (microresum)
+   Single Responsibility: cada classe, una responsabilitat.
+   Open/Closed: oberta a extensió, tancada a modificació.
+   Liskov: substitució segura de tipus base per derivats.
+   Interface Segregation: interfícies xicotetes i específiques.
+   Dependency Inversion: dependències d’abstraccions, no implementacions.
+
+### Patrons útils en Laravel
+   DAO / Repository: aïlla l’accés a dades.
+   Service (Domini / Aplicació): conté la lògica de negoci (regles).
+   Factory: creació d’objectes (ja l’uses amb Models Factory).
+
+**Arquitectura recomanada**
+
+Controller  ->  Service  ->  Repository  ->  Eloquent Model
+(presentació)   (negoci)      (accés dades)    (ORM)
+
+### Exemple: Repository + Service
+
+**Interfície del Repositori**
+// app/Repositories/ProducteRepository.php
+```php 
+namespace App\Repositories;
+
+use App\Models\Producte;
+use Illuminate\Support\Collection;
+
+interface ProducteRepository {
+    public function tots(): Collection;
+    public function crear(array $dades): Producte;
+    public function actualitzar(Producte $p, array $dades): Producte;
+    public function esborrar(Producte $p): void;
+}
+``` 
+
+**Implementació Eloquent**
+// app/Repositories/EloquentProducteRepository.php
+
+```php 
+namespace App\Repositories;
+
+use App\Models\Producte;
+use Illuminate\Support\Collection;
+
+class EloquentProducteRepository implements ProducteRepository
+{
+    public function tots(): Collection   { return Producte::latest()->get(); }
+    public function crear(array $d): Producte { return Producte::create($d); }
+    public function actualitzar(Producte $p, array $d): Producte { $p->update($d); return $p; }
+    public function esborrar(Producte $p): void { $p->delete(); }
+}
+``` 
+
+**Servei de negoci**
+// app/Services/ProducteService.php
+``` 
+namespace App\Services;
+
+use App\Models\Producte;
+use App\Repositories\ProducteRepository;
+
+class ProducteService
+{
+public function __construct(private ProducteRepository $repo) {}
+
+    public function llistar() { return $this->repo->tots(); }
+
+    public function crear(array $dades): Producte
+    {
+        // Ex. lògica: descompte, normalització...
+        if (isset($dades['preu'])) {
+            $dades['preu'] = max(0, (float)$dades['preu']);
+        }
+        return $this->repo->crear($dades);
+    }
+
+    public function actualitzar(Producte $p, array $dades): Producte
+    {
+        return $this->repo->actualitzar($p, $dades);
+    }
+
+    public function esborrar(Producte $p): void
+    {
+        $this->repo->esborrar($p);
+    }
+}
+``` 
+
+**Binding al contenidor (Service Provider)**
+
+// app/Providers/AppServiceProvider.php
+``` 
+use App\Repositories\ProducteRepository;
+use App\Repositories\EloquentProducteRepository;
+
+public function register(): void
+{
+$this->app->bind(ProducteRepository::class, EloquentProducteRepository::class);
+}
+``` 
+
+**Controlador depenent del Servei**
+// app/Http/Controllers/ProducteController.php
+``` 
+use App\Models\Producte;
+use App\Services\ProducteService;
+use Illuminate\Http\Request;
+
+class ProducteController extends Controller
+{
+public function __construct(private ProducteService $svc) {}
+
+    public function index()  { return view('productes.index', ['productes'=>$this->svc->llistar()]); }
+    public function store(Request $r)   { $this->svc->crear($r->validate(['nom'=>'required','preu'=>'required|numeric|min:0'])); return back()->with('ok','Creat'); }
+    public function update(Request $r, Producte $producte) { $this->svc->actualitzar($producte, $r->validate(['nom'=>'required','preu'=>'required|numeric|min:0'])); return back()->with('ok','Actualitzat'); }
+    public function destroy(Producte $producte) { $this->svc->esborrar($producte); return back()->with('ok','Esborrat'); }
+}
+``` 
 
 #### 📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
 
