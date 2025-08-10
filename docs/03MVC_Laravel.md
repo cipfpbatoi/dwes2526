@@ -945,7 +945,9 @@ public function __construct(private ProducteService $svc) {}
 }
 ``` 
 
-## Exercici Pràctic: Guia d'Equips de Futbol Femení
+## Exercicis  
+
+###   🧩 Bateria d'Exercicis Solucionats per al CRUD de Laravel : Guia d'Equips de Futbol Femení
 
 L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar una guia d'equips de futbol femení. Aprendrem a configurar rutes, controladors, vistes i a passar dades utilitzant les funcionalitats de Laravel.
 
