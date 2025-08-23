@@ -642,7 +642,7 @@ En Laravel, els formularis es creen amb Blade i s’envien als controladors. La 
 !!! info "Mantenir valors" 
     old('camp') manté el valor introduït si la validació falla.
 
-### Validació al controlador (ràpida)
+### ⏱️ Validació al controlador (ràpida)
 
 ```php
 public function store(\Illuminate\Http\Request $request)
@@ -666,7 +666,7 @@ public function store(\Illuminate\Http\Request $request)
 
 Missatges d’error a la vista: @error('camp') ... @enderror i {{ $message }}.
 
-###  Validació amb Form Request (recomanat)
+###  ✅📄 Validació amb Form Request (recomanat)
 
 ```bash
 php artisan make:request StoreProducteRequest
@@ -702,7 +702,7 @@ public function store(\App\Http\Requests\StoreProducteRequest $request)
 }
 ```
 
-###  Manteniment de l'estat amb sessions
+###  🔑 Manteniment de l'estat amb sessions
 
 ```php
 // Escriure en sessió
@@ -722,7 +722,7 @@ blade
 @endif
 ``` 
 
-###  Formularis que responen a l'estat 
+### 🔄📋 Formularis que responen a l'estat 
 
 ```bladehtml
 {{-- canvia el text del botó segons si l’usuari està logat --}}
@@ -953,12 +953,44 @@ L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar 
 
 ---
 
+#### Arbre del repositori
+
+FutbolFemeni/
+├─ README.md
+├─ routes/
+│  └─ web.php
+├─ app/
+│  └─ Http/
+│     └─ Controllers/
+│        └─ EquipController.php
+├─ resources/
+│  ├─ views/
+│  │  ├─ layouts/
+│  │  │  └─ app.blade.php
+│  │  ├─ partials/
+│  │  │  └─ menu.blade.php
+│  │  ├─ equips/
+│  │  │  ├─ index.blade.php
+│  │  │  ├─ show.blade.php
+│  │  │  └─ create.blade.php
+│  │  └─ components/
+│  │     └─ equip.blade.php
+│  └─ css/
+│     └─ equips.css
+├─ vite.config.js            # afegim equips.css a l’input de Vite
+└─ .env.example              # opcional
+
+
+
 #### Pas 1: Configurar el projecte
 
 1. **Crear un projecte Laravel anomenat `futbol-femeni`:**
 
  ```bash
   curl -s "https://laravel.build/futbol-femeni?with=mysql,mailpit" | bash
+  cd futbol-femeni
+  ./vendor/bin/sail up -d
+  ./vendor/bin/sail artisan migrate
  ```
 
 Problemes:  des de dins de l'institut no funciona perquè els repositoris estan capats.
@@ -987,660 +1019,43 @@ i despres acabem la instal·lació:
   ./vendor/bin/sail up 
   ./vendor/bin/sail artisan migrate
 ```
-
-2. **Qüestió:** Per què és important tenir una estructura clara al projecte Laravel?
-
----
-
-#### Pas 2: Definir la ruta inicial
-
-1. **Editar `routes/web.php` per crear una ruta inicial:**
-
-```php
-Route::get('/', function () {
-   return "Benvingut a la Guia d"Equips de Futbol Femení!";
-});
-```
-
-2. **Qüestió:** Quina diferència hi ha entre definir una ruta directa i una que utilitza un controlador?
-
----
-
-#### Pas 3: Crear un controlador
-
-1. **Generar un controlador anomenat `EquipController`:**
-
-```bash
-./vendor/bin/sail artisan make:controller EquipController
-```
-
-2. **Afegir un mètode `index` al controlador:**
-
-```php
-public function index() {
-   return view('equips.index');
-}
-```
-
-3. **Definir una ruta per al mètode `index`:**
-
-```php
-Route::get('/equips', [EquipController::class, 'index']);
-```
-
-4. **Qüestió:** Per què és recomanable separar la lògica en controladors?
-
----
-
-#### Pas 4: Crear una vista
-
-1. **Crear una vista a `resources/views/equips/index.blade.php`:**
-
-```html
-<h1>Guia d'Equips</h1>
-```
-
-2. **Qüestió:** Què fa especial el motor de plantilles Blade en comparació amb HTML estàndard?
-
----
-
-#### Pas 5: Passar dades a la vista
-
-1. **Modifica el mètode `index` per passar un array d'equips:**
-
-```php
-public function index() {
-   $equips = ['Barça Femení', 'Atlètic de Madrid', 'Real Madrid Femení'];
-   return view('equips.index', compact('equips'));
-}
-```
-
-2. **Afegeix un bucle `@foreach` a la vista:**
-
-```html
-<h1>Guia d'Equips</h1>
-<ul>
-   @foreach($equips as $equip)
-       <li>{{ $equip }}</li>
-   @endforeach
-</ul>
-```
-
-3. **Qüestió:** Com podem utilitzar Blade per fer el codi més segur?
-
----
-
-#### Pas 6: Afegir estils amb Vite
-
-1. **Crear un fitxer CSS a `resources/css/equips.css`:**
-
-```css
-body {
-   font-family: Arial, sans-serif;
-}
-
-h1 {
-   color: darkblue;
-}
-
-nav ul {
-list-style-type: none;
-padding: 0;
-}
-
-nav ul li {
-display: inline;
-margin-right: 15px;
-}
-
-nav ul li a {
-text-decoration: none;
-color: darkblue;
-}
-
-nav ul li a:hover {
-text-decoration: underline;
-}
-```
-
-2. **Incloure el fitxer CSS amb `@vite`:**
-
-Modificar el fitxer vite.config.js per a que inclogui el fitxer CSS:
-
-``` 
-import laravel from 'laravel-vite-plugin';
-
-export default defineConfig({
-  plugins: [
-    laravel({
-      input: [
-        'resources/css/app.css',
-        'resources/css/equips.css',
-        'resources/js/app.js'],
-      refresh: true,
-    }),
-  ],
-});
-```
-
-    i incloure el fitxer CSS a la vista:
-
-```html
-@vite('resources/css/equips.css')
-```
-
-3. **Executar Vite:**
-
-```bash
-npm install
-npm run build
-```
-
-4. **Qüestió:** Què és Hot Module Replacement (HMR) i com ajuda en el desenvolupament?
-
----
-
-#### Pas 7: Ampliar funcionalitats
-
-1. **Afegir més camps als equips:**
-
-   ```php
-   public function index() {
-       $equips = [
-           ['nom' => 'Barça Femení', 'estadi' => 'Camp Nou', 'titols' => 30],
-           ['nom' => 'Atlètic de Madrid', 'estadi' => 'Cívitas Metropolitano', 'titols' => 10],
-           ['nom' => 'Real Madrid Femení', 'estadi' => 'Alfredo Di Stéfano', 'titols' => 5],
-       ];
-       return view('equips.index', compact('equips'));
-   }
-   ```
-
-2. **Actualitzar la vista per mostrar una taula:**
-
-   ```html
-   <h1>Guia d'Equips</h1>
-   <table>
-       <thead>
-           <tr>
-               <th>Nom</th>
-               <th>Estadi</th>
-               <th>Títols</th>
-           </tr>
-       </thead>
-       <tbody>
-           @foreach($equips as $equip)
-               <tr>
-                   <td>{{ $equip['nom'] }}</td>
-                   <td>{{ $equip['estadi'] }}</td>
-                   <td>{{ $equip['titols'] }}</td>
-               </tr>
-           @endforeach
-       </tbody>
-   </table>
-   ```
-
-3. **Crear una nova vista parcial per al menú de navegació:**
-
-* Afegeix un fitxer nou a resources/views/partials/menu.blade.php amb el contingut següent:
-
-```html
-<nav>
-    <ul>
-        <li><a href="/">Inici</a></li>
-        <li><a href="/equips">Guia d'Equips</a></li>
-        <li><a href="/estadis">Llistat d'Estadis</a></li>
-    </ul>
-</nav>
-```
-
-* Modifica la vista resources/views/equips/index.blade.php per incloure el menú amb la directiva @include:
-
-```html
-@include('partials.menu')
-```
-
-
-4. Crear una plantilla base
-
-* Crea el fitxer resources/views/layouts/app.blade.php:
-
-```html
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>@yield('title','Guia de futbol femení')</title>
-      @vite(['resources/css/app.css', 'resources/css/equips.css'])
-</head>
-<body>
-      <header>
-        @include('partials.menu')
-      </header>
-      <main>
-       @yield('content')
-      </main>
-      <footer>
-          <p>&copy; 2024 Guia de Futbol Femení</p>
-      </footer>
-</body>
-</html>
-```
-
-* Modifica la vista resources/views/equips/index.blade.php per heretar de la plantilla base:
-
-```php
- @extends('layouts.app')
-@section('title', " Guia d'Equips" )
-@section('content')
-    <h1>Guia d'Equips</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Estadi</th>
-            <th>Títols</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($equips as $equip )
-            <tr>
-                <td class="equip"><h2>{{ $equip['nom']  }}</h2></td>
-                <td class="equip">{{ $equip['estadi']  }}</td>
-                <td class="equip">{{ $equip['titols']  }}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-@endsection
-
-```
-
-5. Crear un component per als equips
-
-* Executa la següent comanda per crear un component Blade anomenat Equip:
-
-```bash
-./vendor/bin/sail artisan make:component Equip
-```
-
-* Afegeix els estils al fitxer CSS resources/css/equips.css:
-
-```css
-  .equip {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .equip h2 {
-  margin: 0;
-  color: darkblue;
-  }
-
-```
-* Modifica la vista resources/views/components/equip.blade.php per crear el component:
-
-```html
-<div class="equip">
-    <h2>{{ $nom }}</h2>
-    <p><strong>Estadi:</strong> {{ $estadi }}</p>
-    <p><strong>Títols:</strong> {{ $titols }}</p>
-</div>
-```
-* Crea un mètode al controlador d'equips per mostrar un equip:
-
-```php
-public function show($id) {
-    $equips = [
-        ['nom' => 'Barça Femení', 'estadi' => 'Camp Nou', 'titols' => 30],
-        ['nom' => 'Atlètic de Madrid', 'estadi' => 'Cívitas Metropolitano', 'titols' => 10],
-        ['nom' => 'Real Madrid Femení', 'estadi' => 'Alfredo Di Stéfano', 'titols' => 5],
-    ];
-    $equip = $equips[$id];
-    return view('equips.show', compact('equip'));
-}
-```
-
-* Crea la vista resources/views/equips/show.blade.php per utilitzar el component:
-
-```html
-@extends('layouts.app')
-@section('title', " Guia d'Equips" )
-@section('content')
-<x-equip
-   :nom="$equip['nom']"
-   :estadi="$equip['estadi']"
-   :titols="$equip['titols']"
-/>
-@endsection 
-```
-
-* Modifica el component (app/Views/components/Equip.php) per utilitzar les dades passades:
-
-```php
-public function __construct(
-     public string $nom,
-     public string $estadi,
-     public int $titols ) { }
-``` 
-
-* Crea la ruta:
-
-```php
-Route::get('/equips/{id}', [EquipController::class, 'show']);
-```
-
-6. **Qüestió:** Com podem fer per no repetir l'array d'equips en el controlador ?
-
-7. **Qüestió:** Què és un component Blade i quins avantatges té respecte a les vistes parcials?
-
-8. **Qüestio:** Què permet la directiva @yield i com es relaciona amb @section?
-
-9. **Qüestió:** Per què és important tenir una plantilla base en una aplicació web?
----
-
-#### Pas 8: Refactoritzar el codi
-
-1. **No repetir l'array d'equips en el controlador**
-
-```php
-public $equips = [
-        ['nom' => 'Barça Femení', 'estadi' => 'Camp Nou', 'titols' => 30],
-        ['nom' => 'Atlètic de Madrid', 'estadi' => 'Cívitas Metropolitano', 'titols' => 10],
-        ['nom' => 'Real Madrid Femení', 'estadi' => 'Alfredo Di Stéfano', 'titols' => 5],
-    ];
-
-    public function index() {
-        $equips = $this->equips;
-        return view('equips.index', compact('equips'));
-    }
-
-    public function show($id) {
-        $equip = $this->equips[$id];
-        return view('equips.show', compact('equip'));
-    }
-```
-
-2. **Passar les rutes a resource**
-
-  ```php
-  Route::resource('equips', EquipController::class);
-  ```
-3. **Crear l'enllaç en el index per a vore un equip**
-
-```html
-@foreach($equips as $key => $equip)
-    <tr>
-        <td><a href="{{ route('equips.show', $key) }}">{{ $equip['nom'] }}</a></td>
-        <td>{{ $equip['estadi'] }}</td>
-        <td>{{ $equip['titols'] }}</td>
-    </tr>
-@endforeach
-```
-4. **Utilitza chatgpt per a donar estil a les vistes mitjançant tailwind**
-
-```html
-app.blade.php
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Guia de futbol femení')</title>
-    @vite(['resources/css/app.css'])
-</head>
-<body class="font-sans bg-gray-100 text-gray-900">
-<header class="bg-blue-800 text-white p-4">
-    @include('partials.menu')
-</header>
-<main class="container mx-auto p-6">
-    @yield('content')
-</main>
-<footer class="bg-blue-800 text-white text-center p-4">
-    <p>&copy; 2024 Guia de Futbol Femení</p>
-</footer>
-</body>
-</html>
-``` 
-
-```html
-index.blade.php
-@extends('layouts.app')
-
-@section('title', "Guia d'Equips")
-
-@section('content')
-<h1 class="text-3xl font-bold text-blue-800 mb-6">Guia d'Equips</h1>
-<table class="w-full border-collapse border border-gray-300">
-    <thead class="bg-gray-200">
-    <tr>
-        <th class="border border-gray-300 p-2">Nom</th>
-        <th class="border border-gray-300 p-2">Estadi</th>
-        <th class="border border-gray-300 p-2">Títols</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($equips as $key => $equip)
-    <tr class="hover:bg-gray-100">
-        <td class="border border-gray-300 p-2">
-            <a href="{{ route('equips.show', $key) }}" class="text-blue-700 hover:underline">{{ $equip['nom'] }}</a>
-        </td>
-        <td class="border border-gray-300 p-2">{{ $equip['estadi'] }}</td>
-        <td class="border border-gray-300 p-2">{{ $equip['titols'] }}</td>
-    </tr>
-    @endforeach
-    </tbody>
-</table>
-@endsection
-``` 
-```html
-equip.blade.php
-<div class="equip border rounded-lg shadow-md p-4 bg-white">
-    <h2 class="text-xl font-bold text-blue-800">{{ $nom }}</h2>
-    <p><strong>Estadi:</strong> {{ $estadi }}</p>
-    <p><strong>Títols:</strong> {{ $titols }}</p>
-</div>
-``` 
-```html
-menu.blade.php
-<nav>
-    <ul class="flex space-x-4">
-        <li><a href="/" class="text-white hover:underline">Inici</a></li>
-        <li><a href="/equips" class="text-white hover:underline">Guia d'Equips</a></li>
-        <li><a href="/estadis" class="text-white hover:underline">Llistat d'Estadis</a></li>
-    </ul>
-</nav>
-```
-#### Pas 9.Afegir un formulari per crear equips i guardar-los en sessió
-
  
-1. Afegir mètodes al controlador
+---
 
-```php
-// app/Http/Controllers/EquipController.php
-public function create() {
-return view('equips.create');
-}
+#### En marxa
+ 
+      - php artisan serve o ./vendor/bin/sail artisan serve
+      - npm install && npm run dev (o build)
+      - Navega a http://localhost i a /equips
 
-public function store(Request $request) {
-// Validació de dades
-$validated = $request->validate([
-'nom' => 'required|min:3',
-'estadi' => 'required',
-'titols' => 'required|integer|min:0',
-]);
+#### Teoria ràpida
+Laravel seguix MVC i separa Model (dades), Vista (presentació) i Controlador (flux). Açò millora mantenibilitat, testabilitat i escalabilitat.
 
-    // Recuperar equips de la sessió o array buit
-    $equips = Session::get('equips', $this->equips);
+##### Tasques que faràs
 
-    // Afegir el nou equip
-    $equips[] = [
-        'nom' => $validated['nom'],
-        'estadi' => $validated['estadi'],
-        'titols' => $validated['titols'],
-    ];
+      - Llistar equips a /equips.
+      - Veure el detall a /equips/{id}.
+      - Crear equips amb formulari (validació) i guardar-los en sessió.
+      - Estilar amb Blade + Vite (vegeu resources/css/equips.css i @vite).
+ 
+#### Solució
 
-    // Guardar a la sessió
-    Session::put('equips', $equips);
+En el repositori [seguent](https://github.com/Curs-2025-26/futbol-femeni)
 
-    // Redirigir amb missatge d'èxit
-    return redirect()->route('equips.index')->with('success', 'Equip afegit correctament!');
-}
-```
-2. Crear la vista del formulari
+Comencem pas  per pas:
 
-```bladehtml
-<!-- resources/views/equips/create.blade.php -->
-@extends('layouts.app')
-
-@section('title', 'Afegir nou equip')
-
-@section('content')
-<h1 class="text-2xl font-bold mb-4">Afegir nou equip</h1>
-
-@if ($errors->any())
-<div class="bg-red-100 text-red-700 p-2 mb-4">
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-
-<form action="{{ route('equips.store') }}" method="POST" class="space-y-4">
-    @csrf
-    <div>
-        <label for="nom" class="block font-bold">Nom:</label>
-        <input type="text" name="nom" id="nom" value="{{ old('nom') }}" class="border p-2 w-full">
-    </div>
-    <div>
-        <label for="estadi" class="block font-bold">Estadi:</label>
-        <input type="text" name="estadi" id="estadi" value="{{ old('estadi') }}" class="border p-2 w-full">
-    </div>
-    <div>
-        <label for="titols" class="block font-bold">Títols:</label>
-        <input type="number" name="titols" id="titols" value="{{ old('titols') }}" class="border p-2 w-full">
-    </div>
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Afegir</button>
-</form>
-@endsection
-```
-
-3. Mostrar missatge d’èxit al llistat
-
-```bladehtml
-<!-- resources/views/equips/index.blade.php -->
-@if (session('success'))
-    <div class="bg-green-100 text-green-700 p-2 mb-4">
-        {{ session('success') }}
-    </div>
-@endif
-```
-
-10. Documentar amb PHPDoc el controlador
-
-```php
-<?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-
-/**
- * Controlador per a gestionar la guia d'equips de futbol femení.
- *
- * Aquesta classe inclou mètodes per llistar equips, mostrar un equip,
- * crear-ne de nous i guardar-los en sessió.
- *
- * @package App\Http\Controllers
- */
-class EquipController extends Controller
-{
-    /**
-     * Array inicial d'equips.
-     *
-     * @var array<int, array<string, mixed>>
-     */
-    public $equips = [
-        ['nom' => 'Barça Femení', 'estadi' => 'Camp Nou', 'titols' => 30],
-        ['nom' => 'Atlètic de Madrid', 'estadi' => 'Cívitas Metropolitano', 'titols' => 10],
-        ['nom' => 'Real Madrid Femení', 'estadi' => 'Alfredo Di Stéfano', 'titols' => 5],
-    ];
-
-    /**
-     * Mostra el llistat d'equips.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
-    {
-        $equips = Session::get('equips', $this->equips);
-        return view('equips.index', compact('equips'));
-    }
-
-    /**
-     * Mostra la informació d'un equip concret.
-     *
-     * @param int $id Identificador de l'equip (índex de l'array).
-     * @return \Illuminate\View\View
-     */
-    public function show($id)
-    {
-        $equips = Session::get('equips', $this->equips);
-        $equip = $equips[$id];
-        return view('equips.show', compact('equip'));
-    }
-
-    /**
-     * Mostra el formulari per crear un nou equip.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
-        return view('equips.create');
-    }
-
-    /**
-     * Guarda un nou equip en la sessió després de validar les dades.
-     *
-     * @param \Illuminate\Http\Request $request Petició HTTP amb les dades del formulari.
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
-    {
-        // Validació de dades
-        $validated = $request->validate([
-            'nom' => 'required|min:3',
-            'estadi' => 'required',
-            'titols' => 'required|integer|min:0',
-        ]);
-
-        // Recuperar equips de la sessió o array inicial
-        $equips = Session::get('equips', $this->equips);
-
-        // Afegir el nou equip
-        $equips[] = [
-            'nom' => $validated['nom'],
-            'estadi' => $validated['estadi'],
-            'titols' => $validated['titols'],
-        ];
-
-        // Guardar en la sessió
-        Session::put('equips', $equips);
-
-        // Redirigir amb missatge d’èxit
-        return redirect()->route('equips.index')->with('success', 'Equip afegit correctament!');
-    }
-}
-```
+      - Definir les rutes a  `routes/web.php`  
+      - Crear el controlador
+      - Crear els layout  app.blade
+      - Crear les vistes:
+         - partials/meu.blade
+         - equips/index.blade
+         - equips/show.blade
+         - equips/create.blade
+         - component de la vista: equip
+         - equips.css
+      - configurar vite
+ 
 
 
 #### 📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
@@ -1733,7 +1148,7 @@ Gestiona els sistemes d'arxius.
  ],
 ```
 
-##### Funcions d'ajuda
+####  📎  Annex III:  Funcions d'ajuda
 
 Laravel proporciona **helpers** per treballar amb configuracions de manera senzilla i dinàmica.
 
