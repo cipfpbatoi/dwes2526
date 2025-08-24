@@ -1080,16 +1080,19 @@ Estendre la mini-app de la **Guia d’equips de futbol femení** per afegir:
 
 #### Dades mínimes (per iniciar)
 - **Estadis** (mínim):
-   - Estadi Johan Cruyff · Sant Joan Despí · 6000 · FC Barcelona Femení
-   - Centro Deportivo Wanda Alcalá de Henares · Alcalá de Henares · 2800 · Atlètic de Madrid Femení
-   - Estadio Alfredo Di Stéfano · Madrid · 6000 · Real Madrid Femení
+
+        - Estadi Johan Cruyff · Sant Joan Despí · 6000 · FC Barcelona Femení
+        - Centro Deportivo Wanda Alcalá de Henares · Alcalá de Henares · 2800 · Atlètic de Madrid Femení
+        - Estadio Alfredo Di Stéfano · Madrid · 6000 · Real Madrid Femení
 - **Jugadores** (mínim):
-   - Alexia Putellas · Barça Femení · Migcampista
-   - Esther González · Atlètic de Madrid · Davantera
-   - Misa Rodríguez · Real Madrid Femení · Portera
+ 
+        - Alexia Putellas · Barça Femení · Migcampista
+        - Esther González · Atlètic de Madrid · Davantera
+        - Misa Rodríguez · Real Madrid Femení · Portera
 - **Partits** (mínim):
-   - Local: Barça Femení · Visitant: Atlètic de Madrid · Data: 2024-11-30 · Resultat: (buit)
-   - Local: Real Madrid Femení · Visitant: Barça Femení · Data: 2024-12-15 · Resultat: 0-3
+ 
+        - Local: Barça Femení · Visitant: Atlètic de Madrid · Data: 2024-11-30 · Resultat: (buit)
+        - Local: Real Madrid Femení · Visitant: Barça Femení · Data: 2024-12-15 · Resultat: 0-3
 
 > Pots ampliar els arrays, però **no** uses Eloquent ni migracions.
 
@@ -1171,7 +1174,7 @@ Estendre la mini-app de la **Guia d’equips de futbol femení** per afegir:
 
 ---
 
-## Criteris d’acceptació (checklist)
+##### Criteris d’acceptació (checklist)
 - [ ] Rutes definides i **anomenades** (no *hardcodejar* URLs a les vistes).
 - [ ] Dades en **sessió** (no BBDD); persistixen mentre el servidor està actiu.
 - [ ] Formularis amb **validació** i **missatges d’error** visibles.
@@ -1181,7 +1184,7 @@ Estendre la mini-app de la **Guia d’equips de futbol femení** per afegir:
 - [ ] Estils via **Vite** (un sol `@vite` al layout; CSS importat des d’`app.css`).
 
 
-## Entregables
+##### Entregables
 - Enllaç del **repositori GitHub** amb un `README` curt per arrancar el projecte.
 - **Captures** o GIF breu mostrant: crear estadi, crear jugadora i crear partit.
 - (Opcional) Breu text amb decisions de validació i possibles millores.
@@ -1206,7 +1209,7 @@ Estendre la mini-app de la **Guia d’equips de futbol femení** per afegir:
 
 ---
 
-## Preguntes de reflexió (a respondre al lliurament)
+##### Preguntes de reflexió (a respondre al lliurament)
 1. **Rutes i controladors:** quins avantatges té centralitzar validació i gestió de sessió al controlador?
 2. **Blade:** com evites errors quan una clau pot no existir en un array? Dona exemples.
 3. **Vite:** per què és més robust tenir un sol `@vite` al layout i importar la resta de CSS amb `@import`?
@@ -1217,7 +1220,7 @@ Estendre la mini-app de la **Guia d’equips de futbol femení** per afegir:
 
 
 
-#### 📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
+###  📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
 
 Si volem que funcione el phpmyadmin haurien d'afegir un altre contenidor docker, o farem incluint el següent codi en el docker-compose.yml
 
@@ -1237,7 +1240,7 @@ myadmin:
 ```
  I ara, ja podem accedir a http://localhost:8080 amb les credencials del .env.
 
-#### 📎 Annex II: Configuració predeterminada
+###  📎 Annex II: Configuració predeterminada
 
 Els fitxers de configuració es troben al directori `config/`. A continuació es descriuen alguns dels més importants:
 
@@ -1307,7 +1310,7 @@ Gestiona els sistemes d'arxius.
  ],
 ```
 
-####  📎  Annex III:  Funcions d'ajuda
+### 📎  Annex III:  Funcions d'ajuda
 
 Laravel proporciona **helpers** per treballar amb configuracions de manera senzilla i dinàmica.
 
