@@ -955,6 +955,7 @@ L'objectiu d'aquest exercici és construir una aplicació Laravel per gestionar 
 
 #### Arbre del repositori
 
+```pgsql 
 FutbolFemeni/
 ├─ README.md
 ├─ routes/
@@ -979,7 +980,7 @@ FutbolFemeni/
 │     └─ equips.css
 ├─ vite.config.js            # afegim equips.css a l’input de Vite
 └─ .env.example              # opcional
-
+``` 
 
 
 #### Pas 1: Configurar el projecte
@@ -1055,7 +1056,165 @@ Comencem pas  per pas:
          - component de la vista: equip
          - equips.css
       - configurar vite
- 
+
+### 🎯 Projecte "Futbol Femení I" 
+
+##### Objectiu
+Estendre la mini-app de la **Guia d’equips de futbol femení** per afegir:
+1) **Estadis** (llistat + alta),
+2) **Jugadores** (llistat + alta) i
+3) **Partits** (llistat + alta),  
+   aplicant **MVC en Laravel**, **Blade**, **components**, **Vite** i **validació**.
+> **Sense base de dades**: emmagatzema les dades en **sessió**.
+
+---
+
+#### Requisits previs
+- Projecte Laravel funcionant.
+- `.env` amb `SESSION_DRIVER=file`.
+- `resources/views/layouts/app.blade.php` com a **layout comú** amb `@include('partials.menu')`.
+- **Vite**: un *únic* `@vite(['resources/css/app.css','resources/js/app.js'])` al layout.  
+  Importa els estils propis dins `resources/css/app.css` (p. ex. `@import './guias.css';`).
+
+---
+
+#### Dades mínimes (per iniciar)
+- **Estadis** (mínim):
+   - Estadi Johan Cruyff · Sant Joan Despí · 6000 · FC Barcelona Femení
+   - Centro Deportivo Wanda Alcalá de Henares · Alcalá de Henares · 2800 · Atlètic de Madrid Femení
+   - Estadio Alfredo Di Stéfano · Madrid · 6000 · Real Madrid Femení
+- **Jugadores** (mínim):
+   - Alexia Putellas · Barça Femení · Migcampista
+   - Esther González · Atlètic de Madrid · Davantera
+   - Misa Rodríguez · Real Madrid Femení · Portera
+- **Partits** (mínim):
+   - Local: Barça Femení · Visitant: Atlètic de Madrid · Data: 2024-11-30 · Resultat: (buit)
+   - Local: Real Madrid Femení · Visitant: Barça Femení · Data: 2024-12-15 · Resultat: 0-3
+
+> Pots ampliar els arrays, però **no** uses Eloquent ni migracions.
+
+---
+
+#### Fases i tasques
+
+##### Fase 1 — Estadis
+1. **Controlador `EstadiController`**
+   - Mètodes: `index`, `create`, `store`.
+   - Dades inicials: array intern (seed).
+   - Llegir/guardar en **sessió** a la clau `estadis`.
+2. **Rutes anomenades**
+   - `GET /estadis` → `estadis.index`
+   - `GET /estadis/crear` → `estadis.create`
+   - `POST /estadis` → `estadis.store`
+3. **Vistes Blade**
+   - `estadis/index.blade.php`: taula **Nom**, **Ciutat**, **Capacitat**, **Equip principal** + enllaç “+ Nou estadi”.
+   - `estadis/create.blade.php`: formulari **nom**, **ciutat**, **capacitat**, **equip_principal** + botó “Guardar”.
+   - Totes hereten de `layouts/app` i mostren missatges d’èxit/errades.
+4. **Validació obligatòria**
+   - `nom`: *required*, mín. 3
+   - `ciutat`: *required*, mín. 2
+   - `capacitat`: *required*, *integer*, mín. 0
+   - `equip_principal`: *required*, mín. 3
+5. **Component Blade**
+   - Crea un component (ex. `<x-estadi :nom="…"/>`) i utilitza’l a la taula.
+
+---
+
+##### Fase 2 — Jugadores
+1. **Controlador `JugadoraController`** (`index`, `create`, `store`; sessió clau `jugadores`).
+2. **Rutes**
+   - `GET /jugadores` → `jugadores.index`
+   - `GET /jugadores/crear` → `jugadores.create`
+   - `POST /jugadores` → `jugadores.store`
+3. **Vistes**
+   - `jugadores/index.blade.php`: taula **Nom**, **Equip**, **Posició** + “+ Nova jugadora”.
+   - `jugadores/create.blade.php`: formulari **nom**, **equip**, **posicio** (select amb: Portera, Defensa, Migcampista, Davantera).
+4. **Validació**
+   - `nom`: *required*, mín. 3
+   - `equip`: *required*, mín. 2
+   - `posicio`: *required*, *in*(Portera, Defensa, Migcampista, Davantera)
+5. **Component**
+   - Component (ex. `<x-jugadora :nom="…"/>`) i ús a la taula.
+
+---
+
+##### Fase 3 — Partits
+1. **Controlador `PartitController`** (`index`, `create`, `store`; sessió clau `partits`).
+2. **Rutes**
+   - `GET /partits` → `partits.index`
+   - `GET /partits/crear` → `partits.create`
+   - `POST /partits` → `partits.store`
+3. **Vistes**
+   - `partits/index.blade.php`: taula **Local**, **Visitant**, **Data**, **Resultat** + “+ Nou partit”.
+   - `partits/create.blade.php`: formulari **local**, **visitant**, **data** (input *date*), **resultat** (opcional).
+4. **Validació**
+   - `local`: *required*, mín. 2
+   - `visitant`: *required*, mín. 2, **different:local**
+   - `data`: *required*, format `Y-m-d`
+   - `resultat`: *nullable*, **regex** `^\d+-\d+$` (ex. `2-1`) amb missatge personalitzat.
+5. **Component**
+   - Component curt (ex. `<x-equip-mini :nom="…"/>`) per al nom d’equip.
+
+---
+
+##### Fase 4 — Menú i navegació
+- Actualitza `resources/views/partials/menu.blade.php` per enllaçar amb **rutes anomenades**:  
+  `equips.index`, `estadis.index`, `jugadores.index`, `partits.index`.
+- Verifica que totes les pàgines **hereten** del layout i mostren el menú.
+
+---
+
+##### Fase 5 — Estils i Vite
+- Crea/actualitza `resources/css/guias.css` amb estils bàsics de **taules**, **formularis** i **alertes**.
+- Importa’l dins `resources/css/app.css` amb `@import`.
+- Executa **Vite** (`npm run dev` o `npm run build`) i comprova càrrega d’estils sense errors de manifest.
+
+---
+
+## Criteris d’acceptació (checklist)
+- [ ] Rutes definides i **anomenades** (no *hardcodejar* URLs a les vistes).
+- [ ] Dades en **sessió** (no BBDD); persistixen mentre el servidor està actiu.
+- [ ] Formularis amb **validació** i **missatges d’error** visibles.
+- [ ] **Missatge d’èxit** (flash) després de guardar.
+- [ ] Vistes que **hereten** del layout i inclouen el **menú**.
+- [ ] **Components Blade** usats en cada apartat (min. 1 per secció).
+- [ ] Estils via **Vite** (un sol `@vite` al layout; CSS importat des d’`app.css`).
+
+
+## Entregables
+- Enllaç del **repositori GitHub** amb un `README` curt per arrancar el projecte.
+- **Captures** o GIF breu mostrant: crear estadi, crear jugadora i crear partit.
+- (Opcional) Breu text amb decisions de validació i possibles millores.
+
+---
+
+| Criteri                                                | Puntuació Total | Complet(2)                                                                                       | Incomplet(1)                                                                    | Insuficient(0)                                               |
+|--------------------------------------------------------|-----------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|--------------------------------------------------------------|
+| **Inicialització de dades (seed i sessió)**            | 1               | Arrays inicials creats i carregats en sessió; persistència mentre dura l’execució               | Arrays creats però sense càrrega en sessió o amb claus inconsistents            | No hi ha dades inicials ni ús de sessió                      |
+| **Rutes anomenades i navegació (menú)**                | 3               | Totes les rutes definides amb `name()` i enllaçades des del menú; no hi ha URLs hardcodejades   | Algunes rutes sense nom o enllaços directes en vistes                           | Rutes desordenades o sense nom; menú inoperatiu              |
+| **Controladors i lògica de sessió (MVC)**              | 3               | Lògica en controladors (seed, lectura/escriptura sessió); vistes netes sense lògica             | Part de la lògica en vistes o manca de consistència en l’ús de sessió           | Lògica principal en vistes o sense ús de controladors        |
+| **Validació — Estadis (store)**                        | 2               | Regles completes (`nom`, `ciutat`, `capacitat`, `equip_principal`) i missatges visibles         | Regles incompletes o errors mostrats parcialment                                | Sense validació o sense mostrar errors                       |
+| **Validació — Jugadores (store)**                      | 2               | Regles completes (`nom`, `equip`, `posicio in[...]`) i feedback d’errors clar                   | Regles incompletes o select sense control de valors                             | Sense validació o feedback                                  |
+| **Validació — Partits (store)**                        | 2               | Regles completes (`local`, `visitant different:local`, `data`, `resultat regex^\d+-\d+$`)       | Falta alguna regla clau (p. ex. `different` o `regex`)                          | Sense validació o no funcional                               |
+| **Vistes Blade i herència de layout + menú**            | 2               | Totes les vistes hereten de `layouts/app` i inclouen el menú; estructura clara                   | Algunes vistes no hereten o no mostren el menú                                   | Sense layout comú o vistes disperses                         |
+| **Components Blade**                                   | 1               | Component creat i utilitzat a cada secció (p. ex. estadi, jugadora, equip-mini)                 | Component creat però ús limitat o inconsistent                                  | Sense components o no s’usen                                 |
+| **Estils CSS i Vite**                                  | 1               | Estils aplicats via Vite (un únic `@vite` al layout i CSS importat amb `@import`); sense errors | Estils aplicats però amb advertiments/manifest puntuals                          | Sense estils o errors de manifest recurrents                 |
+| **Missatges d’èxit i errors (flash/validació)**        | 1               | Missatge de confirmació en guarda i llistat d’errors en formularis                              | Només algun missatge (èxit o errors)                                            | Sense missatges                                              |
+| **Comentaris i claredat del codi**                     | 1               | Codi net i comentat on cal; noms de rutes/variables coherents                                   | Alguns comentaris o noms poc descriptius                                         | Codi desordenat o sense comentaris                           |
+| **Documentació amb PHPDoc (controladors/mètodes)**     | 1               | PHPDoc en mètodes clau (`@param`, `@return`, descripció clara de propòsit i flux)               | PHPDoc present però incomplet o inconsistent                                     | Sense PHPDoc                                                 |
+
+
+---
+
+## Preguntes de reflexió (a respondre al lliurament)
+1. **Rutes i controladors:** quins avantatges té centralitzar validació i gestió de sessió al controlador?
+2. **Blade:** com evites errors quan una clau pot no existir en un array? Dona exemples.
+3. **Vite:** per què és més robust tenir un sol `@vite` al layout i importar la resta de CSS amb `@import`?
+4. **Sessió vs BBDD:** quins límits té la sessió per a persistir dades? Quan migraries a models i migracions?
+
+---
+
+
 
 
 #### 📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
