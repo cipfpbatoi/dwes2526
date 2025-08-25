@@ -1,3 +1,5 @@
+# SA3. Arquitectura MVC amb Laravel
+
 ??? abstract "Duració i criteris d'evaluació"
 
     Duració estimada: 16 hores
@@ -1057,9 +1059,9 @@ Comencem pas  per pas:
          - equips.css
       - configurar vite
 
-### 🎯 Projecte "Futbol Femení I" 
+##  🎯 Projecte "Futbol Femení I" 
 
-##### Objectiu
+#### Objectiu
 Estendre la mini-app de la **Guia d’equips de futbol femení** per afegir:
 1) **Estadis** (llistat + alta),
 2) **Jugadores** (llistat + alta) i
