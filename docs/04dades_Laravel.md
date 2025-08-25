@@ -10,19 +10,15 @@
     | ------                    | -----                |
     | RA6.-Desenvolupa aplicacions web d'accés a magatzems de dades, aplicant mesures per a mantindre la seguretat i la integritat de la informació. | a) S'han analitzat les tecnologies que permeten l'accés mitjançant programació a la informació disponible en magatzems de dades.<br/> b) S'han creat aplicacions que establisquen connexions amb bases de dades.<br/> c) S'ha recuperat informació emmagatzemada en bases de dades.<br/> d) S'ha publicat en aplicacions web la informació recuperada.<br/> e) S'han utilitzat conjunts de dades per a emmagatzemar la informació.<br/> f) S'han creat aplicacions web que permeten l'actualització i l'eliminació d'informació disponible en una base de dades.<br/> g) S'han provat i documentat les aplicacions web.
  
-
 ##  SA 4.1  Connexió a la base de dades
- 
- 
+  
 ### 🔧 Configuració de la base de dades en Laravel
 
 Per a poder treballar amb bases de dades en Laravel, el primer pas és configurar l’accés al sistema gestor de base de dades (SGBD) que vulguem utilitzar. En aquest cas, farem servir MySQL.
-
  
 #### 📁 1. Fitxer `.env` i separació de configuracions
 
 Laravel utilitza un sistema de variables d'entorn, que permet separar la configuració segons la màquina, l'entorn (desenvolupament, producció...), o l’usuari.
-
 Aquesta configuració s’indica al fitxer `.env` que està a l’arrel del projecte. Allí definirem el tipus de connexió, el servidor, el nom de la base de dades, l’usuari i la contrasenya.
 
 ```env
@@ -143,22 +139,18 @@ També es pot controlar l’ordre dels camps nous utilitzant modificadors com `a
 
 #### 🚀 5.Executar migracions
 
-Per aplicar les migracions:
 
-    php artisan migrate
-
-Si es vol revertir l’última migració:
-
-    php artisan migrate:rollback
-
-Si volem desfer totes les migracions
-
-	php artisan migrate:reset
-
-Un comanament interessant quan estem desenvolupant un nou lloc web és **migrate:refresh**, el qual desfarà tots els canvis i tornar a aplicar les migracions:
-
-	php artisan migrate:fresh
-
+```php
+// Per aplicar les migracions 
+php artisan migrate
+// Si es vol revertir l’última migració
+php artisan migrate:rollback
+// Si volem desfer totes les migracions
+php artisan migrate:reset
+// Un comanament interessant quan estem desenvolupant un nou lloc web és **migrate:refresh**, el qual desfarà tots els canvis i tornar a aplicar les migracions:
+php artisan migrate:fresh
+``` 
+ 
 
 #### 📐 6.Schema Builder
 
@@ -171,9 +163,11 @@ Per a especificar la taula a crear o modificar, així com les columnes i tipus d
 ##### Crear i esborrar una taula
 Per a afegir una nova taula a la base de dades s'utilitza el següent constructor:
 
+```php
 	Schema::create('users', function (Blueprint $table) 	{ 
 		$table->increments('id');
 	});
+``` 
 
 On el primer argument és el nom de la taula i el segon és una funció que rep com a paràmetre un objecte
 del tipus Blueprint que utilitzarem per a configurar les columnes de la taula.
@@ -181,9 +175,10 @@ del tipus Blueprint que utilitzarem per a configurar les columnes de la taula.
 En la secció down de la migració haurem d'eliminar la taula que hem creat, per a açò usarem algun dels
 següents mètodes:
 
+```php
 	Schema::drop('users');
 	Schema::dropIfExists('users');
-
+``` 
 En crear una migració amb el comando de Artisan make:migration ja ens ve aquest codi afegit per defecte, la creació i eliminació de la taula que s'ha indicat i a més s'afigen un parell de columnes per defecte (id i timestamps).
 
 ##### Afegir columnes
@@ -242,14 +237,17 @@ Schema suporta els següents tipus d'índexs:
 
 En la taula s'especifica com afegir aquests índexs després de crear el camp, però també permet indicar aquests índexs alhora que es crea el camp:
 
+```php
 	$table->string('email')->unique();
+```
 
 ##### Claus alienes
 Amb Schema també podem definir claus alienes entre taules:
 
+```php
 	$table->foreignId('module_id')->constrained('modules');
-
-	$table->foreign('module_id')->references('code')->on('modules');
+ 	$table->foreign('module_id')->references('code')->on('modules');
+```
 
 En el primer exemple, a més de crear el camp crea la rel·lacio, i serveix si la clau a la que faig referència s'ha creat utilitzant $table->id();
 
@@ -259,7 +257,9 @@ La columna amb la clau aliena ha de ser del **mateix tipus** que la columna a la
 
 També podem especificar les accions que s'han de realitzar per a "**on delete**" i "**on update**":
 
+```php
 	$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+```
 
 ###  🧩 Models de dades amb Eloquent ORM (Laravel 12)
 
@@ -273,29 +273,16 @@ Amb Eloquent, cada **model** representa una **taula** de la base de dades, i cad
 
 Els models es creen dins la carpeta `app/Models`. Per generar-ne un:
 
-        php artisan make:model Movie
- 
-Això crearà una classe `Movie` associada, per defecte, a la taula `movies`. Si la taula té un nom diferent, podem indicar-ho al model amb la propietat `$table`.
-
----
-
-#### ⚙️ Opcions avançades en la creació
-
-També es poden generar altres components relacionats:
-
-- Model + migració:
-
-        php artisan make:model Movie -m
- 
-- Model + migració + controlador buit:
-    
-        php artisan make:model Movie -mc
- 
-- Model + migració + controlador de recursos:
-
-        php artisan make:model Movie -mcr
-
-
+```php
+ //  crearà una classe `Movie` associada, per defecte, a la taula `movies`. Si la taula té un nom diferent, podem indicar-ho al model amb la propietat `$table`.
+php artisan make:model Movie
+ // Model + migració 
+php artisan make:model Movie -m
+ // Model + migració + controlador buit 
+php artisan make:model Movie -mc
+ // Model + migració + controlador de recursos 
+php artisan make:model Movie -mcr
+```
 ---
 
 ### 📐 Bones pràctiques de nomenclatura
@@ -329,37 +316,24 @@ class User extends Model
 
 Una vegada creat el model, es pot utilitzar en els controladors per consultar la base de dades i passar la informació a les vistes.
 
-###### Consultes bàsiques
+#####  Consultes bàsiques
 
-- Tots els registres: 
-
+ 
 ```php
+
+// Tots els registres 
 $movies = Movie::all();
-
-```
-
-- Condicionals
-
-```php
+// Condicionals 
 $movies = Movie::where('precio', '<', 10)->get();
-
-```
-
-- Ordre
-
-```php
+ // Ordre
 $movies = Movie::orderBy('titulo', 'desc')->get();
- ```
-
-- Funcions agregades
-
-```php
+// Funcions agregades 
 $total = Movie::count();
 $max = Movie::max('preu');
 $min = Movie::min('preu');
 $avg = Movie::avg('preu');
 $sum = Movie::sum('preu');
- ```
+```
 
 ### 🌱 Seeders i 🏭 Factories en Laravel 12
 
