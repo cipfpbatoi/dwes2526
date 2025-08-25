@@ -192,6 +192,7 @@ A més si volem comprovar l'estat de les migracions, per a veure les que ja esta
 	php artisan migrate:status
 
 
+
 ### Schema Builder
 
 Una vegada creada una migració hem de completar els seus mètodes up i down per a indicar la taula que volem crear o el camp que volem modificar. En el mètode down sempre haurem d'afegir l'operació inversa, eliminar la taula que s'ha creat en el mètode up o eliminar la columna que s'ha afegit. 
@@ -1087,6 +1088,9 @@ class LibrosSeeder extends Seeder
 	}
 }
 ```
+
+
+
 ## Query Builder
 
 Laravel inclou una sèrie de classes que ens facilita la construcció de consultes i un altre tipus d'operacions amb la base de dades. A més, en utilitzar aquestes classes, vam crear una notació molt més llegible, compatible amb tots els tipus de bases de dades suportats per Laravel i que ens prevé de cometre errors o d'atacs per injecció de codi SQL.
