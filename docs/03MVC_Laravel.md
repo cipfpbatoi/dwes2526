@@ -1220,29 +1220,7 @@ Estendre la mini-app de la **Guia d’equips de futbol femení** per afegir:
 ---
 
 
-
-
-###  📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
-
-Si volem que funcione el phpmyadmin haurien d'afegir un altre contenidor docker, o farem incluint el següent codi en el docker-compose.yml
-
-```php
-myadmin:
- image: 'phpmyadmin:latest'
- ports:
- - 8080:80
- environment:
- MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
- links:
- - "mysql:db"
- depends_on:
- - mysql
- networks:
- - sail
-```
- I ara, ja podem accedir a http://localhost:8080 amb les credencials del .env.
-
-###  📎 Annex II: Configuració predeterminada
+###  📎 Annex I : Configuració predeterminada
 
 Els fitxers de configuració es troben al directori `config/`. A continuació es descriuen alguns dels més importants:
 
@@ -1312,7 +1290,7 @@ Gestiona els sistemes d'arxius.
  ],
 ```
 
-### 📎  Annex III:  Funcions d'ajuda
+### 📎  Annex II :  Funcions d'ajuda
 
 Laravel proporciona **helpers** per treballar amb configuracions de manera senzilla i dinàmica.
 

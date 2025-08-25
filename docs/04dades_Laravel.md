@@ -90,3 +90,26 @@ Pots fer-ho mitjançant una eina gràfica com phpMyAdmin o bé per línia de com
 - Creació de component CRUD
 - Connexió amb Service i Repository
 - Millora UX sense JS explícit
+
+
+
+
+###  📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
+
+Si volem que funcione el phpmyadmin haurien d'afegir un altre contenidor docker, o farem incluint el següent codi en el docker-compose.yml
+
+```php
+myadmin:
+ image: 'phpmyadmin:latest'
+ ports:
+ - 8080:80
+ environment:
+ MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+ links:
+ - "mysql:db"
+ depends_on:
+ - mysql
+ networks:
+ - sail
+```
+I ara, ja podem accedir a http://localhost:8080 amb les credencials del .env.
