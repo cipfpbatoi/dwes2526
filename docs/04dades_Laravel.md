@@ -419,13 +419,13 @@ Post::factory()->count(2)->create([
 - [Laravel Docs – Model Factories](https://laravel.com/docs/12.x/database-testing#defining-model-factories)
 
 
-### 4.2 Primeres operacions amb Eloquent (Laravel 12)
+## SA 4.2 Primeres operacions amb Eloquent (Laravel 12)
 
 Aquesta secció introdueix les operacions bàsiques que podem realitzar amb models Eloquent: crear, llegir, actualitzar i esborrar registres, així com treballar amb relacions entre models, càrrega eficient de dades i paginació.
 
 ---
 
-#### Inserir dades
+### ➕🗄️ Inserir dades
 
 Per a inserir dades en una taula associada a un model, podem crear una instància del model, assignar els valors i guardar-los. També es pot utilitzar el mètode `create`, però en aquest cas cal definir prèviament la propietat `$fillable` al model per evitar insercions no autoritzades de topa.
  
@@ -446,6 +446,12 @@ Movie::create([
 'director' => $request->director,
 'precio'   => $request->precio,
 ]);
+//Cada camp de la petició ha de tindre associat un camp del mateix nom en el model.
+
+// Hem de definir en el model una propietat anomenada **\$fillable** amb els noms dels camps
+// de la petició que ens interessa processar (la resta es descarten). Això és obligatori especificar-ho,
+// encara que ens interessen tots els camps, per a evitar insercions massives malintencionades (per exemple
+//, editant el codi font per a afegir altres camps i modificar dades inesperades).
 ```
 
 ```php
@@ -458,7 +464,7 @@ protected $fillable = ['titulo', 'director', 'precio'];
 
 ---
 
-#### Modificar dades
+###  ✏️🗄️ Modificar dades
 
 Per actualitzar un registre, primer el localitzem (per exemple amb `findOrFail`), modifiquem les propietats necessàries i cridem a `save`. També existeix el mètode `update`, que permet fer-ho més ràpidament si la propietat `$fillable` està definida correctament.
 
@@ -475,7 +481,7 @@ Movie::findOrFail($id)->update($request->only(['titulo', 'director', 'precio']))
 ```
 ---
 
-#### Esborrar dades
+###  🗑️ Esborrar dades
 
 Per eliminar un registre, es pot utilitzar el mètode `delete` aplicat sobre una instància del model. Cal considerar que aquesta operació s’ha de fer des de formularis o accions protegides, no mitjançant enllaços directes, per evitar vulnerabilitats (com les peticions GET per esborrar). En Laravel això es resol amb formularis que especifiquen el mètode HTTP `DELETE` i el token `@csrf`.
 
@@ -494,10 +500,16 @@ public function destroy($id)
 
 !!! Important: Fer servir formularis amb @method('DELETE') i @csrf per garantir seguretat i evitar peticions GET.
 
-
+```bladehtml
+<form action="{{ "{{  route('movies.destroy', $movie) " }}}}" method="POST">
+	@method('DELETE')
+	@csrf
+	<button>Borrar</button>
+</form>
+```
 ---
 
-#### Relacions bàsiques entre models
+###  🔗 Relacions bàsiques entre models
 
 Eloquent facilita la definició de relacions entre models com a mètodes dins de les classes:
 
@@ -509,7 +521,7 @@ Eloquent facilita la definició de relacions entre models com a mètodes dins de
 
 Eloquent també permet enllaçar fàcilment les consultes a aquestes relacions i recuperar els models relacionats com si fossin propietats d’un objecte.
 
-##### UN A U (1:1)
+####  UN A U (1:1)
 
 ```php
 // en Usuari
@@ -529,18 +541,78 @@ $telefono = Usuario::findOrFail($id)->telefon;
 
 ```
 
+#### Un a Molts (1:M)
+
+```php
+// en Autor
+public function libros()
+{
+return $this->hasMany(Libro::class);
+}
+// En Libro 
+public function autor()
+{
+return $this->belongsTo(Autor::class);
+}
+
+// Accedir a la relació
+$libros = Autor::findOrFail($id)->libros;
+```
 ---
 
-#### Accés eficient: Eager Loading
+#### Molts a molts
+
+```php
+// en User
+public function roles()
+{
+    return $this->belongsToMany(Role::class)->withTimestamps();
+}
+// en  Role:
+public function users()
+{
+    return $this->belongsToMany(User::class);
+}
+// per accedir-hi 
+$roles = User::findOrFail($id)->roles;
+foreach ($roles as $rol) {
+    echo $rol->pivot->created_at;
+}
+```
+
+
+#### ⚡🔗 Accés eficient: Eager Loading
 
 Quan obtenim registres amb relacions, Eloquent pot fer consultes addicionals per cada relació accedida de manera diferida. Amb **Eager loading** (`with`) podem indicar les relacions que volem carregar de manera anticipada, reduint considerablement el nombre de consultes i millorant el rendiment.
 
+```php
+//Evita el problema N+1 amb with():
+$posts = Post::with('comments')->get();
+//Aquest exemple carrega tots els posts i els seus comments associats amb només dues consultes a la base de dades.
+```
 ---
 
-#### Paginació
+#### 📑◀️▶️ Paginació
 
 Per gestionar resultats de manera coŀlapsible, Laravel ofereix mètodes de paginació integrats (com `paginate()` i `simplePaginate()`), que faciliten la navegació entre grans llistats.
+ 
+```php
+public function index()
+	{
+		$movies = Movie::paginate(5);
+		return view('movies.index', compact('moviemovies'));
+	}
+```
 
+Després, en la vista associada ( **movies.index** en l'exemple anterior), podem emprar el mètode
+links perquè mostre els botons de paginació en el lloc desitjat:
+
+```bladehtml
+	@forelse($movies as $movie)
+		{{  $movie->titulo " }}
+	@endforelse
+	{{   $movies->links() }}
+```
 ---
 
  ---
@@ -575,6 +647,60 @@ Per gestionar resultats de manera coŀlapsible, Laravel ofereix mètodes de pagi
 | Paginació        | `Model::paginate(10)`       | Llista paginada amb 10 resultats per pàgina      |
 | Taula pivot extra| `->withPivot('camp')`       | Accedir a camps extra en relació N:N             |
 | Timestamp pivot  | `->withTimestamps()`        | Afegix `created_at` i `updated_at` a pivot       |
+
+### 🔍 Introducció al Query Builder
+
+Laravel proporciona una altra manera d’interactuar amb la base de dades a través del **Query Builder**, una eina que permet construir consultes SQL de forma més directa i eficient, però encara dins del marc de Laravel.
+
+#### 📌 Quan usar-lo?
+- Quan necessites **consultes més complexes** (joins, agregacions, subconsultes).
+- Quan no calen **models Eloquent complets**.
+- Per a consultes amb **millor rendiment** o més específiques.
+
+---
+
+#### 🧱 Exemple bàsic
+
+```php
+$movies = DB::table('movies')->get();
+//Açò retorna totes les files de la taula movies com a objectes estàndard (no instàncies d’Eloquent).
+
+```
+#### 🔍 Amb condicions
+```php
+$cheapMovies = DB::table('movies')
+                ->where('precio', '<', 5)
+                ->orderBy('precio')
+                ->get();
+```php
+#### 📊 Agregats
+
+```php
+$total = DB::table('movies')->count();
+$max = DB::table('movies')->max('precio');
+``` 
+
+#### 🧩 Joins
+
+```php
+$peliculas = DB::table('movies')
+    ->join('directores', 'movies.director_id', '=', 'directores.id')
+    ->select('movies.*', 'directores.nom as director')
+    ->get();
+``` 
+
+#### ⚠️ Diferències amb Eloquent
+
+| **Eloquent**                        | **Query Builder**                   |
+|------------------------------------|-------------------------------------|
+| Retorna models Eloquent complets   | Retorna objectes estàndard (stdClass) |
+| Suporta relacions automàtiques     | Cal fer joins manualment           |
+| Permet guardar, modificar i esborrar registres | Només per a consultes (lectura) |
+| Sintaxi més expressiva i OO        | Sintaxi més propera a SQL          |
+| Ideal per a CRUD bàsics i mitjans  | Ideal per a consultes complexes    |
+| Pot ser més lent en consultes grans| Més eficient per a grans volums    |
+
+
 
 
 ###  Referència
