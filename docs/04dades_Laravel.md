@@ -141,14 +141,14 @@ També es pot controlar l’ordre dels camps nous utilitzant modificadors com `a
 
 
 ```php
-// Per aplicar les migracions 
-php artisan migrate
-// Si es vol revertir l’última migració
-php artisan migrate:rollback
-// Si volem desfer totes les migracions
-php artisan migrate:reset
-// Un comanament interessant quan estem desenvolupant un nou lloc web és **migrate:refresh**, el qual desfarà tots els canvis i tornar a aplicar les migracions:
-php artisan migrate:fresh
+    // Per aplicar les migracions 
+    php artisan migrate
+    // Si es vol revertir l’última migració
+    php artisan migrate:rollback
+    // Si volem desfer totes les migracions
+    php artisan migrate:reset
+    // Un comanament interessant quan estem desenvolupant un nou lloc web és **migrate:refresh**, el qual desfarà tots els canvis i tornar a aplicar les migracions:
+    php artisan migrate:fresh
 ``` 
  
 
@@ -274,14 +274,14 @@ Amb Eloquent, cada **model** representa una **taula** de la base de dades, i cad
 Els models es creen dins la carpeta `app/Models`. Per generar-ne un:
 
 ```php
- //  crearà una classe `Movie` associada, per defecte, a la taula `movies`. Si la taula té un nom diferent, podem indicar-ho al model amb la propietat `$table`.
-php artisan make:model Movie
- // Model + migració 
-php artisan make:model Movie -m
- // Model + migració + controlador buit 
-php artisan make:model Movie -mc
- // Model + migració + controlador de recursos 
-php artisan make:model Movie -mcr
+     //  crearà una classe `Movie` associada, per defecte, a la taula `movies`. Si la taula té un nom diferent, podem indicar-ho al model amb la propietat `$table`.
+    php artisan make:model Movie
+     // Model + migració 
+    php artisan make:model Movie -m
+     // Model + migració + controlador buit 
+    php artisan make:model Movie -mc
+     // Model + migració + controlador de recursos 
+    php artisan make:model Movie -mcr
 ```
 ---
 

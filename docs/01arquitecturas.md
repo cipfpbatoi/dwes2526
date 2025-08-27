@@ -1,4 +1,4 @@
-# SA.1.Arquitectures Web
+# SA1. Arquitectures Web
 
 ??? abstract "Duració i criteris d'avaluació"
 

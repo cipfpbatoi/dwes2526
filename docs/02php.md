@@ -1522,7 +1522,7 @@ Posteriorment, hem de tornar a generar el *autoload* de *Composer* mitjançant l
 ``` bash
 composer dump-autoload
 ```
-### Gestió de dates i hores amb Carbon
+### 📅 Gestió de dates i hores amb Carbon
 
 #### Què és Carbon?
 
@@ -1730,7 +1730,7 @@ Més informació sobre manejadores, formateadores i processadors en <https://git
 
 
 
-## Annex:  Accés a fitxers
+## 📎 Annex:  Accés a fitxers
 
 ### 📄 Funcions bàsiques de PHP per a fitxers
 

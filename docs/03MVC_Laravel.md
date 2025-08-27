@@ -1220,11 +1220,11 @@ Estendre la mini-app de la **Guia d’equips de futbol femení** per afegir:
 ---
 
 
-###  📎 Annex I : Configuració predeterminada
+##   📎 Annex I : Configuració predeterminada
 
 Els fitxers de configuració es troben al directori `config/`. A continuació es descriuen alguns dels més importants:
 
-##### **1. config/app.php**
+####  **1. config/app.php**
 Conté configuracions globals de l'aplicació.
 
 - **`name`**: Nom de l'aplicació.
@@ -1234,7 +1234,7 @@ Conté configuracions globals de l'aplicació.
 - **`locale`**: Idioma predeterminat.
  
 
-##### **2. config/database.php**
+####  **2. config/database.php**
 Configura les bases de dades de l'aplicació.
 
 - **`default`**: Connexió predeterminada (`mysql`, `sqlite`, `pgsql`, etc.).
@@ -1252,7 +1252,7 @@ Configura les bases de dades de l'aplicació.
 
  ```
 
-##### **3. config/mail.php**
+#### **3. config/mail.php**
 Configura el sistema d'enviament de correus electrònics.
 
 - **`default`**: Transport predeterminat (`smtp`, `mailgun`, `sendmail`, `resend` etc.).
@@ -1269,7 +1269,7 @@ Configura el sistema d'enviament de correus electrònics.
      ],
  ],
  ```
-##### **4. config/filesystems.php**
+####  **4. config/filesystems.php**
 Gestiona els sistemes d'arxius.
 
 - **`default`**: Sistema predeterminat (local, s3, etc.).
@@ -1290,7 +1290,7 @@ Gestiona els sistemes d'arxius.
  ],
 ```
 
-### 📎  Annex II :  Funcions d'ajuda
+##  📎  Annex II :  Funcions d'ajuda
 
 Laravel proporciona **helpers** per treballar amb configuracions de manera senzilla i dinàmica.
 
