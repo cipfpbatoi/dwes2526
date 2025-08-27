@@ -700,20 +700,151 @@ $peliculas = DB::table('movies')
 | Ideal per a CRUD bàsics i mitjans  | Ideal per a consultes complexes    |
 | Pot ser més lent en consultes grans| Més eficient per a grans volums    |
 
-
-
-
 ###  Referència
 
 - Documentació oficial: [Eloquent ORM – Laravel 12](https://laravel.com/docs/12.x/eloquent)
 - Vídeo d’introducció a les operacions amb Eloquent
 
+## SA4.3  Patrons de disseny orientats a objectes 
 
-### 4.3 Arquitectura escalable per a CRUDs (patrons OOP)
-- Introducció als principis SOLID
-- Patrons Laravel recomanats: Repository, Service, Factory
-- Estructura recomanada: `Controller → Service → Repository → Model`
-- Exemple complet amb `Producte`
+### Principis SOLID (microresum)
+
+- Single Responsibility: cada classe, una responsabilitat.
+- Open/Closed: oberta a extensió, tancada a modificació.
+- Liskov: substitució segura de tipus base per derivats.
+- Interface Segregation: interfícies xicotetes i específiques.
+- Dependency Inversion: dependències d’abstraccions, no implementacions.
+
+### Patrons útils en Laravel
+
+- DAO / Repository: aïlla l’accés a dades.
+- Service (Domini / Aplicació): conté la lògica de negoci (regles).
+- Factory: creació d’objectes (ja l’uses amb Models Factory).
+
+**Arquitectura recomanada**
+
+Controller  ->  Service  ->  Repository  ->  Eloquent Model
+(presentació)   (negoci)      (accés dades)    (ORM)
+
+### Exemple: Repository + Service
+
+**Interfície del Repositori**
+// app/Repositories/ProducteRepository.php
+```php 
+namespace App\Repositories;
+
+use App\Models\Producte;
+use Illuminate\Support\Collection;
+
+interface ProducteRepository {
+    public function tots(): Collection;
+    public function crear(array $dades): Producte;
+    public function actualitzar(Producte $p, array $dades): Producte;
+    public function esborrar(Producte $p): void;
+}
+``` 
+
+**Implementació Eloquent**
+// app/Repositories/EloquentProducteRepository.php
+
+```php 
+namespace App\Repositories;
+
+use App\Models\Producte;
+use Illuminate\Support\Collection;
+
+class EloquentProducteRepository implements ProducteRepository
+{
+    public function tots(): Collection   { return Producte::latest()->get(); }
+    public function crear(array $d): Producte { return Producte::create($d); }
+    public function actualitzar(Producte $p, array $d): Producte { $p->update($d); return $p; }
+    public function esborrar(Producte $p): void { $p->delete(); }
+}
+``` 
+
+**Servei de negoci**
+// app/Services/ProducteService.php
+``` 
+namespace App\Services;
+
+use App\Models\Producte;
+use App\Repositories\ProducteRepository;
+
+class ProducteService
+{
+public function __construct(private ProducteRepository $repo) {}
+
+    public function llistar() { return $this->repo->tots(); }
+
+    public function crear(array $dades): Producte
+    {
+        // Ex. lògica: descompte, normalització...
+        if (isset($dades['preu'])) {
+            $dades['preu'] = max(0, (float)$dades['preu']);
+        }
+        return $this->repo->crear($dades);
+    }
+
+    public function actualitzar(Producte $p, array $dades): Producte
+    {
+        return $this->repo->actualitzar($p, $dades);
+    }
+
+    public function esborrar(Producte $p): void
+    {
+        $this->repo->esborrar($p);
+    }
+}
+``` 
+
+**Binding al contenidor (Service Provider)**
+
+// app/Providers/AppServiceProvider.php
+``` 
+use App\Repositories\ProducteRepository;
+use App\Repositories\EloquentProducteRepository;
+
+public function register(): void
+{
+$this->app->bind(ProducteRepository::class, EloquentProducteRepository::class);
+}
+``` 
+
+**Controlador depenent del Servei**
+// app/Http/Controllers/ProducteController.php
+``` 
+use App\Models\Producte;
+use App\Services\ProducteService;
+use Illuminate\Http\Request;
+
+class ProducteController extends Controller
+{
+public function __construct(private ProducteService $svc) {}
+
+    public function index()  { return view('productes.index', ['productes'=>$this->svc->llistar()]); }
+    public function store(Request $r)   { $this->svc->crear($r->validate(['nom'=>'required','preu'=>'required|numeric|min:0'])); return back()->with('ok','Creat'); }
+    public function update(Request $r, Producte $producte) { $this->svc->actualitzar($producte, $r->validate(['nom'=>'required','preu'=>'required|numeric|min:0'])); return back()->with('ok','Actualitzat'); }
+    public function destroy(Producte $producte) { $this->svc->esborrar($producte); return back()->with('ok','Esborrat'); }
+}
+``` 
+
+
+| Cas | Repository | Service | Explicació |
+|-----|------------|---------|------------|
+| CRUD simple (index, show, store, update, delete) | ❌ | ❌ | Eloquent cobreix tot |
+| Consultes reutilitzables i complexes | ✅ | ❌ | Repository encapsula consultes |
+| Vols canviar el backend (API, MongoDB, etc.) | ✅ | ❌ | Separació de dependències amb interface |
+| Lògica de negoci específica (ex: descomptes, validacions especials) | ❌ | ✅ | La lògica no ha d'anar al controlador |
+| Validacions de negocis en diverses rutes | ✅ | ✅ | Reutilització i separació de responsabilitats |
+| Necessites *mockejar* dades en tests | ✅ | ✅ | Dependency Injection facilita proves |
+| Controlador massa llarg o amb massa responsabilitats | ✅ | ✅ | Desacobles i neteges el codi |
+| Backend ja madur, busques escalabilitat | ✅ | ✅ | Segueixes arquitectura neta i escalable |
+
+
+
+
+
+ 
 
 ### 4.4 Autenticació, hashing i autorització
 - Laravel Breeze: registre, login, logout
