@@ -419,11 +419,169 @@ Post::factory()->count(2)->create([
 - [Laravel Docs – Model Factories](https://laravel.com/docs/12.x/database-testing#defining-model-factories)
 
 
-### 4.2 Primeres operacions amb Eloquent
-- `create`, `update`, `delete`, `all()`, `find()`
-- Relacions bàsiques (1:1, 1:N, N:N)
-- Eager loading (`with()`)
-- Paginació
+### 4.2 Primeres operacions amb Eloquent (Laravel 12)
+
+Aquesta secció introdueix les operacions bàsiques que podem realitzar amb models Eloquent: crear, llegir, actualitzar i esborrar registres, així com treballar amb relacions entre models, càrrega eficient de dades i paginació.
+
+---
+
+#### Inserir dades
+
+Per a inserir dades en una taula associada a un model, podem crear una instància del model, assignar els valors i guardar-los. També es pot utilitzar el mètode `create`, però en aquest cas cal definir prèviament la propietat `$fillable` al model per evitar insercions no autoritzades de topa.
+ 
+```php
+//  Crear i desar una nova instància 
+$movie = new Movie();
+$movie->titulo = "La guerra de las galaxias";
+$movie->director = "George Lucas";
+$movie->precio = 3.95;
+$movie->save();
+
+// Obtenir l'ID assignat
+$insertedId = $movie->id;
+ 
+// Ús del mètode create
+Movie::create([
+'titulo'   => $request->titulo,
+'director' => $request->director,
+'precio'   => $request->precio,
+]);
+```
+
+```php
+// requereix $fillable al model
+class Movie extends Model
+{
+protected $fillable = ['titulo', 'director', 'precio'];
+}
+```
+
+---
+
+#### Modificar dades
+
+Per actualitzar un registre, primer el localitzem (per exemple amb `findOrFail`), modifiquem les propietats necessàries i cridem a `save`. També existeix el mètode `update`, que permet fer-ho més ràpidament si la propietat `$fillable` està definida correctament.
+
+```php
+// Localitzar i modificar un registre 
+$movie = Movie::findOrFail($id);
+$movie->titulo = "Nou títol";
+$movie->save();
+
+// O bé, de forma concisa
+
+Movie::findOrFail($id)->update($request->only(['titulo', 'director', 'precio']));
+
+```
+---
+
+#### Esborrar dades
+
+Per eliminar un registre, es pot utilitzar el mètode `delete` aplicat sobre una instància del model. Cal considerar que aquesta operació s’ha de fer des de formularis o accions protegides, no mitjançant enllaços directes, per evitar vulnerabilitats (com les peticions GET per esborrar). En Laravel això es resol amb formularis que especifiquen el mètode HTTP `DELETE` i el token `@csrf`.
+
+```php
+// Eliminar un registre
+Movie::findOrFail($id)->delete();
+
+// En un controlador, simplemente en el mètode destroy
+
+public function destroy($id)
+{
+    Movie::findOrFail($id)->delete();
+    return redirect()->route('movies.index')->with('success', 'Eliminat correctament');
+}
+```
+
+!!! Important: Fer servir formularis amb @method('DELETE') i @csrf per garantir seguretat i evitar peticions GET.
+
+
+---
+
+#### Relacions bàsiques entre models
+
+Eloquent facilita la definició de relacions entre models com a mètodes dins de les classes:
+
+| Tipus de relació | Descripció breu |
+|------------------|------------------|
+| Un a u | Relacions 1:1, com `hasOne` i `belongsTo` |
+| Un a molts | Relacions 1:N, com `hasMany` i `belongsTo` |
+| Molts a molts | Relacions N:N amb `belongsToMany`, utilitzant taules pivot |
+
+Eloquent també permet enllaçar fàcilment les consultes a aquestes relacions i recuperar els models relacionats com si fossin propietats d’un objecte.
+
+##### UN A U (1:1)
+
+```php
+// en Usuari
+public function telefon()
+{
+return $this->hasOne(Telefon::class);
+}
+// en Telefon:
+public function usuari()
+{
+return $this->belongsTo(Usuari::class);
+}
+
+// Accedir a la relació
+
+$telefono = Usuario::findOrFail($id)->telefon;
+
+```
+
+---
+
+#### Accés eficient: Eager Loading
+
+Quan obtenim registres amb relacions, Eloquent pot fer consultes addicionals per cada relació accedida de manera diferida. Amb **Eager loading** (`with`) podem indicar les relacions que volem carregar de manera anticipada, reduint considerablement el nombre de consultes i millorant el rendiment.
+
+---
+
+#### Paginació
+
+Per gestionar resultats de manera coŀlapsible, Laravel ofereix mètodes de paginació integrats (com `paginate()` i `simplePaginate()`), que faciliten la navegació entre grans llistats.
+
+---
+
+ ---
+
+### 🧰 Resum visual de 4.2 – Primeres operacions amb Eloquent
+
+| Acció             | Mètode                       | Notes                                              |
+|------------------|------------------------------|----------------------------------------------------|
+| 🔄 Llegir tot     | `Model::all()`               | Recupera tots els registres                       |
+| 🔍 Buscar per ID  | `Model::find($id)`           | Retorna o `null` si no troba                      |
+| ✅ Crear          | `Model::create([...])`       | Cal definir `$fillable`                           |
+| ✏️ Actualitzar    | `Model::find($id)->update([...])` | També necessita `$fillable`                  |
+| 🗑️ Esborrar       | `Model::find($id)->delete()` | Recomanat usar `findOrFail()`                     |
+
+---
+
+### 🔗 Tipus de relacions
+
+| Relació       | Definició Model A         | Inversa Model B           |
+|---------------|---------------------------|----------------------------|
+| Un a u (1:1)  | `hasOne(ModelB::class)`   | `belongsTo(ModelA::class)` |
+| Un a molts    | `hasMany(ModelB::class)`  | `belongsTo(ModelA::class)` |
+| Molts a molts | `belongsToMany(ModelB::class)` | `belongsToMany(ModelA::class)` |
+
+---
+
+### ⚡️ Altres utilitats
+
+| Funcionalitat     | Mètode                      | Finalitat                                         |
+|------------------|-----------------------------|--------------------------------------------------|
+| Eager loading    | `Model::with('relacio')->get()` | Evita consultes N+1                            |
+| Paginació        | `Model::paginate(10)`       | Llista paginada amb 10 resultats per pàgina      |
+| Taula pivot extra| `->withPivot('camp')`       | Accedir a camps extra en relació N:N             |
+| Timestamp pivot  | `->withTimestamps()`        | Afegix `created_at` i `updated_at` a pivot       |
+
+
+###  Referència
+
+- Documentació oficial: [Eloquent ORM – Laravel 12](https://laravel.com/docs/12.x/eloquent)
+- Vídeo d’introducció a les operacions amb Eloquent
+
 
 ### 4.3 Arquitectura escalable per a CRUDs (patrons OOP)
 - Introducció als principis SOLID
