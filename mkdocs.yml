@@ -7,8 +7,7 @@ nav:
   - "1.- Arquitectures Web": "01arquitecturas.md"
   - "2.- Programació web amb PHP": "02php.md"
   - "3.- Arquitectura MVC amb Laravel": "03MVC_Laravel.md"
-  - "4.- Accés segur i estructurat a bases de dades amb Laravel": "04dades_Laravel"
-
+  - "4.- Acces segur i estructurat a bases de dades amb Laravel": "04dades_Laravel"
 
 theme:
   language: ca
