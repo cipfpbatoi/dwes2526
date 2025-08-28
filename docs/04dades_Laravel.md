@@ -903,20 +903,45 @@ Reestructurar l’aplicació de futbol femení (feta sense persistència) cap a 
 
 ##### 1.1 Crear migració
 ```bash
-php artisan make:migration create_equips_table
-php artisan make:migration create_estadis_table
+./vendor/bin/sail artisan make:migration create_equips_table
+./vendor/bin/sail artisan make:migration create_estadis_table
 ```
 Afegir els camps necessaris:
 
-- (Equips)[https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_27_171209_create_equips_table.php]
-- (Estadis)[https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_28_102228_create_estadis_table.php]
+- [Equips](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_27_171209_create_equips_table.php) 
+- [Estadis](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_28_102228_create_estadis_table.php) 
 
 ##### 1.2 Crear els models
 ```bash
-php artisan make:model Equip
-php artisan make:model Estadi
+./vendor/bin/sail artisan make:model Equip
+./vendor/bin/sail artisan make:model Estadi
 ```
 Definir els camps i les rel·lacions:
+
+- [Equip](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Models/Equip.php) 
+- [Estadi](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Models/Estadi.php) 
+
+##### 1.3 Executar migració
+
+```bash
+./vendor/bin/sail artisan migrate
+
+``` 
+
+#### 🌱🏭 2. Seeders i Factories
+
+##### 2.1 Crear Seeders i Factories
+
+
+```bash
+./vendor/bin/sail artisan make:Seeder EquipsSeeder
+./vendor/bin/sail artisan make:Seeder EstadisSeeder
+./vendor/bin/sail artisan make:Factory EquipFactory
+./vendor/bin/sail artisan make:Factory EstadiFactory
+``` 
+
+##### 2.2 Completar Seeders i Factories
+
 
 
 
