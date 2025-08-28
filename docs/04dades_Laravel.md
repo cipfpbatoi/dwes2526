@@ -828,7 +828,23 @@ public function __construct(private ProducteService $svc) {}
 }
 ``` 
 
+### ✅ Beneficis d'utilitzar Repository + Service en Laravel
 
+
+| Benefici                            | Descripció                                                                 |
+|-------------------------------------|----------------------------------------------------------------------------|
+| 🔁 Reutilització de codi            | El codi de consultes i lògica de negoci es pot reutilitzar en diferents llocs. |
+| 🧼 Separació de responsabilitats    | Cada capa fa una sola cosa: controlador presenta, servei decideix, repositori consulta. |
+| 🧪 Facilita els tests               | Es poden substituir fàcilment per mocks en proves unitàries.               |
+| 🔄 Facilita el manteniment         | Si canvies la BBDD o la lògica, no cal tocar controlador ni vistes.        |
+| 🧱 Escalabilitat                    | Permet créixer el projecte sense que el codi es torne incontrolable.       |
+| 👥 Col·laboració més clara          | Equips poden treballar en capes diferents sense solapar-se.                |
+| 🧩 Canvi de backend o font de dades| Pots canviar MySQL per API externa o Mongo sense canviar la lògica.        |
+| 📁 Organització clara del projecte  | Estructura neta i coherent per a projectes grans.                          |
+
+### 🧩 Decisió d'ús de Repository i Service en Laravel
+
+ 
 | Cas | Repository | Service | Explicació |
 |-----|------------|---------|------------|
 | CRUD simple (index, show, store, update, delete) | ❌ | ❌ | Eloquent cobreix tot |
@@ -841,7 +857,7 @@ public function __construct(private ProducteService $svc) {}
 | Backend ja madur, busques escalabilitat | ✅ | ✅ | Segueixes arquitectura neta i escalable |
 
 
-
+ 
 
 
  
@@ -869,6 +885,38 @@ public function __construct(private ProducteService $svc) {}
 - Creació de component CRUD
 - Connexió amb Service i Repository
 - Millora UX sense JS explícit
+
+##  Exercicis
+
+###  🏟️ Exercici guiat: Reestructurar projecte Futbol Femení amb BD + Repository + Service
+
+#### 🎯 Objectiu
+Reestructurar l’aplicació de futbol femení (feta sense persistència) cap a una arquitectura escalable amb:
+- Model Eloquent
+- Migració i base de dades
+- Repository + Service
+- Validació amb FormRequest
+
+---
+
+#### 1. 🧱 Migració i model
+
+##### 1.1 Crear migració
+```bash
+php artisan make:migration create_equips_table
+php artisan make:migration create_estadis_table
+```
+Afegir els camps necessaris:
+
+- (Equips)[https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_27_171209_create_equips_table.php]
+- (Estadis)[https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_28_102228_create_estadis_table.php]
+
+##### 1.2 Crear els models
+```bash
+php artisan make:model Equip
+php artisan make:model Estadi
+```
+Definir els camps i les rel·lacions:
 
 
 
