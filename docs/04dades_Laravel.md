@@ -901,27 +901,29 @@ Reestructurar l’aplicació de futbol femení (feta sense persistència) cap a 
 
 #### 1. 🧱 Migració i model
 
-##### 1.1 Crear migració
+**Crear migració**
+
 ```bash
 ./vendor/bin/sail artisan make:migration create_equips_table
 ./vendor/bin/sail artisan make:migration create_estadis_table
 ```
-Afegir els camps necessaris:
+**Afegir els camps necessaris**
 
 - [Equips](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_27_171209_create_equips_table.php) 
 - [Estadis](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_28_102228_create_estadis_table.php) 
 
-##### 1.2 Crear els models
+**Crear els models**
+
 ```bash
 ./vendor/bin/sail artisan make:model Equip
 ./vendor/bin/sail artisan make:model Estadi
 ```
-Definir els camps i les rel·lacions:
+**Definir els camps i les rel·lacions**
 
 - [Equip](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Models/Equip.php) 
 - [Estadi](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Models/Estadi.php) 
 
-##### 1.3 Executar migració
+**Executar migració**
 
 ```bash
 ./vendor/bin/sail artisan migrate
@@ -930,7 +932,7 @@ Definir els camps i les rel·lacions:
 
 #### 🌱🏭 2. Seeders i Factories
 
-##### 2.1 Crear Seeders i Factories
+**Crear Seeders i Factories**
  
 ```bash
 ./vendor/bin/sail artisan make:Seeder EquipsSeeder
@@ -939,21 +941,81 @@ Definir els camps i les rel·lacions:
 ./vendor/bin/sail artisan make:Factory EstadiFactory
 ``` 
 
-##### 2.2 Completar Seeders i Factories
-
-
+**Completar Seeders i Factories**
+ 
 - [EquipsSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/seeders/EquipsSeeder.php)
 - [EstadisSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/seeders/EstadisSeeder.php)
 - [EquipFactory](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/factories/EquipFactory.php)
 - [EstadiFactory](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/factories/EestadiFactory.php)
-- [DatabaseSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/seeders/DatabaseSeeder.
+- [DatabaseSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/seeders/DatabaseSeeder)
 
-##### 2.3 Executar els seeder i els factories
+**Executar els seeder i els factories**
 
 ```bash
 ./vendor/bin/sail artisan db:seed
 ./vendor/bin/sail artisan migrate:fresh --seed // Ho fa tot migracions des de 0 i seeders
 ```
+#### 3.  ⚙️ CRUD amb Eloquent  
+
+**Crear el estadi controller**
+
+```bash
+./vendor/bin/sail artisan make:controller EstadiController --resource
+```
+
+**Afegir les rutes**
+
+```php
+Route::resource('/estadis', EstadisController::class)
+```
+
+**Modificar el controlador**
+
+[EstadiController](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Controllers/EstadiController.php)
+
+**Crear les vistes**
+
+[Vistes estadi](https://github.com/Curs-2025-26/futbol-femeni/tree/bdd/resources/views/estadis)
+
+#### 4. 📦  Repository i controlador per a equips
+
+**Crear Interface**
+
+[BaseRepository](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Repositories/BaseRepository.php)
+
+**Crear Repository**
+
+[EquipRepository](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Repositories/EquipRepository.php)
+
+**Registrar repository**
+
+[ServiceProvider](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Providers/AppServiceProvider.php)
+
+#### 5. 🧠 Crear Service
+
+[EquipService](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Services/EquipService.php)
+
+#### 6. 🧪 Validació amb FormRequest
+
+**Crear Validació**
+
+```bash
+./vendor/bin/sail artisan make:request StoreEquipRequest
+./vendor/bin/sail artisan make:request UpdateEquipRequest
+``` 
+
+**Modificar els fitxers** 
+
+[StoreEquipRequest](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Requests/StoreEquipRequest.php)
+[UpdateEquipRequest](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Requests/UpdateEquipRequest.php)
+
+#### 7. 💡 Controlador final
+
+[EquipController](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Controllers/EquipController.php)
+
+**Adaptar les vistes**
+
+
 
 ###  📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
 
