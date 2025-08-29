@@ -856,30 +856,169 @@ public function __construct(private ProducteService $svc) {}
 | Controlador massa llarg o amb massa responsabilitats | ✅ | ✅ | Desacobles i neteges el codi |
 | Backend ja madur, busques escalabilitat | ✅ | ✅ | Segueixes arquitectura neta i escalable |
 
+## SA 4.4 Autenticació, hashing i autorització
 
+### 🌬️🍃 Laravel Breeze: registre, login, logout
+
+Laravel Breeze és el starter kit oficial més simple per implementar autenticació en Laravel. Inclou rutes, controladors i vistes per a registre, login i logout.
+
+Per instal·lar-lo, cal usar els comandos corresponents per a afegir el paquet, generar el frontend i aplicar les migracions.
+
+```bash
+./vendor/bin/sail shell
+composer require laravel/breeze --dev
+php artisan breeze:install blade
+npm install && npm run dev
+php artisan migrate
+``` 
+
+### 🛣️🔒 Protecció de rutes amb `auth`
+
+Per a protegir rutes perquè només siguen accessibles per usuaris autenticats, es fa ús del middleware `auth`. Aquest es pot aplicar tant a grups de rutes com a rutes individuals.
+
+```php
+Route::middleware(['auth'])->group(function () {
+    Route::resource('equips', EquipController::class);
+});
+```
+
+També pots protegir rutes individuals:
+
+```php
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth');
+``` 
+
+### 🔑⚙️ Hashing automàtic de contrasenyes
+
+Laravel utilitza el sistema `Hash` per a encriptar contrasenyes abans de guardar-les a la base de dades. Breeze ja ho implementa automàticament en el registre.
+
+```php
+use Illuminate\Support\Facades\Hash;
+
+$user = User::create([
+    'name' => $request->name,
+    'email' => $request->email,
+    'password' => Hash::make($request->password),
+]);
+```
+
+### 🚦🛡️ Middleware i polítiques (`Policy`) per a autorització
+
+Els middleware controlen qui pot accedir a determinades rutes. El middleware auth és un exemple.
+Les polítiques (Policies) permeten definir què pot fer cada usuari amb un model concret (per exemple, si pot editar o esborrar un equip).
+
+Per a crear una política:
+
+```bash
+php artisan make:policy EquipPolicy --model=Equip
+```
+Això crea una classe amb mètodes com view, update, delete, etc., que pots personalitzar. S’apliquen mitjançant la funció authorize() en el controlador:
+
+```php
+public function edit(Equip $equip)
+{
+    $this->authorize('update', $equip);
+    return view('equips.edit', compact('equip'));
+}
+```
  
 
+## SA 4.5 Formularis amb seguretat i feedback
+
+### 📋✅ Validació amb `FormRequest`
+
+La validació de dades pot separar-se del controlador utilitzant classes de tipus `FormRequest`. Aquestes classes permeten definir regles de validació clares i reutilitzables, millorant la neteja del codi.
+
+```bash
+php artisan make:request StoreEquipRequest
+``` 
+
+A la classe generada, defines:
+
+```php
+public function rules()
+{
+    return [
+    'nom' => 'required|string|max:255',
+    'categoria' => 'required|string|max:100',
+    ];
+}
+```
+
+I en el controlador:
+
+```php
+public function store(StoreEquipRequest $request)
+{
+Equip::create($request->validated());
+return redirect()->route('equips.index');
+}
+``` 
+### 🛡️ Autorització dins de FormRequest amb Policies
+
+Laravel permet que cada FormRequest tinga un mètode authorize() on podem controlar si l’usuari té permís per a executar l’acció abans fins i tot de validar les dades.
+Aquest mètode és el lloc ideal per a invocar una policy associada al model.
+
+#### 🧪 Exemple: UpdateEquipRequest
+
+Suposem que tenim una política EquipPolicy amb un mètode update(User $user, Equip $equip). Per a utilitzar-la dins del FormRequest:
+
+```php
+public function authorize(): bool
+{
+    $equip = $this->route('equip'); // Obtenim el model Equip des de la ruta
+    return $this->user()->can('update', $equip); // Crida a la policy
+}
+``` 
+
+- Si l’usuari no pot fer update sobre aquest Equip, Laravel llançarà automàticament un error 403 Forbidden.
+- Si pot, passarà al mètode rules() per fer la validació.
+
+#### 🧑‍🏫 Alternativa amb Gate::allows()
+
+També podries fer-ho així:
+
+```php
+use Illuminate\Support\Facades\Gate;
+
+public function authorize(): bool
+{
+    return Gate::allows('update', $this->route('equip'));
+}
+``` 
+
+### 🛡️🔄⏮️⚠️ Ús de `@csrf`, `@method`, `old()`, `@error`
+
+- `@csrf`: Protecció contra atacs de tipus cross-site request forgery
+- `@method`: Permet enviar formularis amb verbs PUT o DELETE
+- `old()`: Manté les dades introduïdes en cas d’error de validació
+- `@error`: Mostra els errors de validació associats a cada camp
+
+### Missatges flash amb `session()->flash()`
+
+Permeten mostrar missatges temporals (èxit, error, etc.) després d’una acció, com una redirecció després de crear o modificar un recurs.
+
+```php
+return redirect()->route('equips.index')->with('ok', 'Equip creat correctament!');
+```
+
+A la vista Blade:
+
+```bladehtml
+@if (session('ok'))
+    <div class="alert alert-success">
+        {{ session('ok') }}
+    </div>
+@endif
+```
+
+### UX i manteniment d'estat
+
+L'ús combinat de `old()`, `@error`, missatges flash i bones pràctiques de disseny millora significativament l’experiència d’usuari (UX) en formularis.
 
  
-
-### 4.4 Autenticació, hashing i autorització
-- Laravel Breeze: registre, login, logout
-- Protecció de rutes amb `auth`
-- Hashing automàtic de contrasenyes
-- Middleware i polítiques (`Policy`) per a autorització
-
-### 4.5 Formularis amb seguretat i feedback
-- Validació amb `FormRequest`
-- Ús de `@csrf`, `@method`, `old()`, `@error`
-- Missatges flash amb `session()->flash()`
-- UX i manteniment d'estat
-
-### 4.6 Exercici integrador: Futbol Femení CRUD
-- Migració i model `EquipFutbol`
-- Arquitectura amb Service i Repository
-- Formularis validats i control d’accés amb auth
-- Feedback i proves bàsiques
-
 ### 4.7 Extensió opcional: CRUD dinàmic amb Livewire
 - Introducció a Livewire
 - Creació de component CRUD
