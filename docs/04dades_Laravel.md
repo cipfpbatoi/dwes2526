@@ -931,8 +931,7 @@ Definir els camps i les rel·lacions:
 #### 🌱🏭 2. Seeders i Factories
 
 ##### 2.1 Crear Seeders i Factories
-
-
+ 
 ```bash
 ./vendor/bin/sail artisan make:Seeder EquipsSeeder
 ./vendor/bin/sail artisan make:Seeder EstadisSeeder
@@ -943,8 +942,18 @@ Definir els camps i les rel·lacions:
 ##### 2.2 Completar Seeders i Factories
 
 
+- [EquipsSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/seeders/EquipsSeeder.php)
+- [EstadisSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/seeders/EstadisSeeder.php)
+- [EquipFactory](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/factories/EquipFactory.php)
+- [EstadiFactory](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/factories/EestadiFactory.php)
+- [DatabaseSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/seeders/DatabaseSeeder.
 
+##### 2.3 Executar els seeder i els factories
 
+```bash
+./vendor/bin/sail artisan db:seed
+./vendor/bin/sail artisan migrate:fresh --seed // Ho fa tot migracions des de 0 i seeders
+```
 
 ###  📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
 
