@@ -1035,10 +1035,11 @@ Reestructurar l’aplicació de futbol femení (feta sense persistència) cap a 
 - Migració i base de dades
 - Repository + Service
 - Validació amb FormRequest
+- Autenticació
 
 ---
 
-#### 1. 🧱 Migració i model
+#### 1. 🧱 Migració i model (branca bdd)
 
 **Crear migració**
 
@@ -1152,8 +1153,155 @@ Route::resource('/estadis', EstadisController::class)
 
 [EquipController](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Controllers/EquipController.php)
 
-**Adaptar les vistes**
+**Adaptar les [vistes](https://github.com/Curs-2025-26/futbol-femeni/bdd/escut/resources/views/equips)**
 
+#### 8.  🛡️ Afegir un escut a l'equip  (Branca escut)
+
+**Crear una migració per afegir un camp `escut` a la taula `equips`**
+
+```bash
+./vendor/bin/sail artisan make:migration add_escut_to_equips_table
+```
+ 
+Modificar la migració [`add_escut_to_equips_table`](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_31_044414_add_escut_to_equips_table.php)  
+
+**Aplicar la migració**
+
+```bash
+./vendor/bin/sail artisan migrate
+```   
+
+**Modificar el model `Equip` per incloure el camp `escut`**
+
+```php 
+protected $fillable = ['nom', 'estadi_id', 'titols', 'escut'];
+``` 
+
+**Modificar la vista `equips.create` per incloure un camp d'arxiu per pujar l'escut de l'equip i incloure enctype="multipart/form-data" al  formulari**
+
+```bladehtml
+<form action="{{ route('equips.store') }}" method="POST" enctype="multipart/form-data">
+
+<div class="mb-4">
+    <label for="escut" class="block text-sm font-medium text-gray-700 mb-1">Escut:</label>
+    <input type="file" name="escut" id="escut"
+        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+</div>
+```
+ 
+
+**Crear la  vista [`equips.edit`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/edit.blade.php) **
+ 
+**Crear un enllaç simbòlic a la carpeta storage**
+
+```bash
+./vendor/bin/sail artisan storage:link
+```
+**Modificar el [controlador](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Controllers/EquipController.php) per passar el fitxer al servei**
+
+**Actualitzar les [validacions](https://github.com/Curs-2025-26/futbol-femeni/tree/escut/app/Http/Requests) per incorporar el camp escut**
+**Actualitzar el mètode store,update i destroy del [servei](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Services/EquipService.php)**
+  
+**Modificat el [component](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/components/equip.blade.php) de la vista [`equips.show`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/show.blade.php) per mostrar l'escut de l'equip**
+
+ 
+
+###  🏁 Exercici Final: Guia de Futbol Femení II
+
+#### 🎯 Objectiu
+Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
+- Persistència en base de dades amb Laravel Eloquent
+- Arquitectura escalable: `Controller → Service → Repository → Model`
+- Validació robusta amb FormRequest
+- Autenticació i autorització amb Laravel Breeze i Policies
+- Components visuals, relacions entre models i funcionalitats avançades
+
+---
+
+
+#### 2. Crear migracions i models relacionats
+- **Jugadores** amb: `equip_id`, `data_naixement`, `dorsal`, `foto`
+- **Partits** amb: `local_id`, `visitant_id`, `estadi_id`, `arbitre_id`, `data`, `jornada`, `gols`
+- Defineix relacions entre models:
+    - `equip → jugadores` (1:N)
+    - `equip → partits com local/visitant` (1:N)
+    - `partit → equip local/visitant` (N:1)
+    - `partit → estadi`, `partit → arbitre`
+
+---
+
+#### 3. Completa el CRUD de Jugadores amb Arquitectura Escalable
+- Implementa `JugadoraRepository` i `JugadoraService`
+- Completa els mètodes `create`, `store`, `edit`, `update`, `destroy` a `EstadiController`
+- Utilitza `JugadoraRequest` per validar les dades
+- Mostra els equips que hi juguen dins la vista `show`
+
+---
+
+#### 3. Factories i Seeders amb Calendari Automàtic
+- 18 equips, 30 àrbitres
+- Generar calendari (anada + tornada) usant Faker i Carbon
+- Resultats aleatoris si la data ja ha passat
+
+---
+
+#### 4. Formularis amb FormRequest
+- Crea `EstadiRequest`, `JugadoraRequest`, `PartitRequest`
+- Valida:
+    - `data_naixement` mínima de 16 anys
+    - `foto` (tipus .png i mida màxima)
+    - `dorsal`, `capacitat`, `gols` (numèrics positius)
+- Usa `authorize()` per controlar accés a modificació segons rol
+
+---
+
+#### 5. Autenticació i restriccions
+- Laravel Breeze per login, logout
+- Protegeix rutes amb `auth` i `@auth` en vistes
+- Policies per controlar:
+    - Jugadores: només el manager del seu equip
+    - Partits: només l’àrbitre assignat
+- No es permet crear partits manualment
+
+---
+
+#### 6. Vistes i components visuals
+- Components Blade per:
+    - Mostrar jugadores d’un equip
+    - Fitxa completa d’un partit
+- Selects per a estadis i equips
+- Vista de jornades amb partits filtrats per àrbitre
+
+---
+
+#### 7. Millores d’equip
+- Calcula i mostra:
+    - Edat mitjana de les jugadores
+    - Últims 5 partits jugats
+
+---
+
+#### 8. Classificació en temps real amb Livewire
+- Taula amb:
+    - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
+- Component Livewire que es refresca automàticament
+- Ordenació per punts i diferència de gols
+
+---
+
+#### 9. Proves
+- Crea proves per:
+    - EstadiController
+    - JugadoraController
+    - PartitController
+    - FormRequest i Policies
+
+---
+
+#### 10. Correu a àrbitres
+- Enviar correu personalitzat a cada àrbitre amb:
+    - Llistat de partits en què arbitrarà
+    - Format HTML amigable
 
 
 ###  📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
