@@ -16,7 +16,7 @@
 
 Laravel Breeze és el starter kit oficial més simple per implementar autenticació en Laravel. Inclou rutes, controladors i vistes per a registre, login i logout.
 
-Per **instal·lar-lo**, cal usar els comandos corresponents per a afegir el paquet, generar el frontend i aplicar les migracions.
+Per **instal·lar-lo**, cal usar els comandos corresponents per a afegir el paquet, generar el frontend i aplicar les **migracions**.
 
 ```bash
 ./vendor/bin/sail shell
@@ -61,7 +61,7 @@ configurar el correu SMTP al **fitxer `.env`**.
 
 **Hashing automàtic de contrasenyes**
 
-Laravel utilitza el sistema `Hash` per a encriptar contrasenyes abans de guardar-les a la base de dades. Breeze ja ho implementa automàticament en el registre.
+Laravel utilitza el sistema `Hash` per a encriptar contrasenyes abans de guardar-les a la base de dades. Breeze ja ho implementa automàticament en el **registre**.
 
 ```php
 use Illuminate\Support\Facades\Hash;

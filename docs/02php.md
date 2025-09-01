@@ -97,6 +97,7 @@ Exemple:
 $cadena = "123";
 $enter = (int)$cadena; // Converteix la cadena "123" a l'enter 123
 ```
+
 ### 🛑 Constants
 Són variables el valor dels quals no varien. Existeixen dues possibilitats:
 

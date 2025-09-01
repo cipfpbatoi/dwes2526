@@ -36,7 +36,7 @@ Aquest fitxer defineix com Laravel interpreta aquestes variables. Per exemple, a
 ```
 
 Això significa que Laravel utilitzarà la base de dades especificada a la variable DB_CONNECTION. Si no s’ha definit al .env, utilitzarà 'mysql' per defecte.
-Més avall, hi ha la secció connections amb les configuracions específiques per a cada tipus de base de dades. Per a MySQL:
+Més avall, hi ha la secció connections amb les configuracions específiques per a cada tipus de base de dades. Per a **MySQL**:
 
 ```php
 'mysql' => [
@@ -80,7 +80,7 @@ Una vegada creada, Laravel ja podrà accedir-hi i començar a treballar amb ella
 Les migracions són un sistema de control de versions per a la base de dades. Permeten mantindre un registre dels canvis estructurals que es fan (crear, modificar o eliminar taules i camps), i facilitar que tot l’equip de treball tinga la base de dades sincronitzada.
 Les migracions funcionen conjuntament amb l’eina Schema Builder per definir l’estructura de la base de dades utilitzant codi PHP.
 
----
+ 
 
 #### 📁 1.Estructura i funcionament
 
@@ -91,7 +91,7 @@ Les migracions es troben a la carpeta `database/migrations`. Cada fitxer inclou 
 
 Els fitxers de migració es creen mitjançant Artisan. És habitual trobar migracions per defecte en nous projectes Laravel (com la dels usuaris). Aquestes es poden modificar o eliminar segons les necessitats del projecte.
 
----
+ 
 
 #### 🔧 2.Tipus de columnes i modificadors
 
@@ -106,11 +106,11 @@ Per columnes de text llarg, es recomana `text` o `longText` en lloc de `string`,
 
 Per a definir claus primàries compostes, es pot utilitzar el mètode `primary`.
 
----
+ 
 
 ####  🛠️ 3.Crear una nova migració
 
-Per a generar un fitxer de migració s’utilitza:
+Per a generar un **fitxer de migració** s’utilitza:
 
 ```bash
 php artisan make:migration nom_de_la_migracio
@@ -118,21 +118,21 @@ php artisan make:migration nom_de_la_migracio
 
 Laravel analitza el nom de la migració i, si detecta patrons com `create_XXX_table` o `add_XXX_to_YYY_table`, assumeix el tipus d’operació.
 
-També es poden especificar directament les opcions:
+També es poden especificar directament les **opcions**:
 
 ```bash
 php artisan make:migration crear_tabla_equips --create=equips
 php artisan make:migration afegir_telefon_a_usuaris --table=usuaris
 ```
 
----
+ 
 
 #### 🔁 4.Modificar una taula existent
 
 Per a afegir o llevar camps d’una taula ja creada, es fa una nova migració indicant que s’està treballant sobre una taula existent.
 També es pot controlar l’ordre dels camps nous utilitzant modificadors com `after`.
 
----
+ 
 
 #### 🚀 5.Executar migracions
 
@@ -158,7 +158,8 @@ Açò ens permetrà desfer migracions deixant la base de dades en el mateix esta
 Per a especificar la taula a crear o modificar, així com les columnes i tipus de dades de les mateixes, s'utilitza la classe **Schema**. Aquesta classe té una sèrie de mètodes que ens permetrà especificar l'estructura de les taules independentment del sistema de base de dades que utilitzem.
 
 ##### Crear i esborrar una taula
-Per a afegir una nova taula a la base de dades s'utilitza el següent constructor:
+
+Per a **afegir una nova taula** a la base de dades s'utilitza el següent constructor:
 
 ```php
 	Schema::create('users', function (Blueprint $table) 	{ 
@@ -169,7 +170,7 @@ Per a afegir una nova taula a la base de dades s'utilitza el següent constructo
 On el primer argument és el nom de la taula i el segon és una funció que rep com a paràmetre un objecte
 del tipus Blueprint que utilitzarem per a configurar les columnes de la taula.
 
-En la secció down de la migració haurem d'eliminar la taula que hem creat, per a açò usarem algun dels
+En la secció down de la migració haurem **d'eliminar la taula** que hem creat, per a açò usarem algun dels
 següents mètodes:
 
 ```php
@@ -179,9 +180,10 @@ següents mètodes:
 En crear una migració amb el comando de Artisan make:migration ja ens ve aquest codi afegit per defecte, la creació i eliminació de la taula que s'ha indicat i a més s'afigen un parell de columnes per defecte (id i timestamps).
 
 ##### Afegir columnes
+
 El constructor Schema::create rep com a segon paràmetre una funció que ens permet especificar les columnes que va a tenir aquesta taula.
 
-En aquesta funció podem anar afegint tots els camps que vulguem, indicant per a cadascun d'ells el seu tipus i nom, i a més si volem també podrem indicar una sèrie de modificadors com a valor per defecte, índexs, etc. Per exemple:
+En aquesta funció podem anar afegint tots els camps que vulguem, indicant per a cadascun d'ells el seu **tipus i nom**, i a més si volem també podrem indicar una sèrie de modificadors com a valor per defecte, índexs, etc. Per exemple:
 
 ```php
 	Schema::create('users', function($table) {
@@ -232,14 +234,15 @@ Schema suporta els següents tipus d'índexs:
 | $table->unique('email');                 |  Definir el camp com UNIQUE|
 | $table->index('state');                  |Afegir un índex a una columna|
 
-En la taula s'especifica com afegir aquests índexs després de crear el camp, però també permet indicar aquests índexs alhora que es crea el camp:
+En la taula s'especifica com afegir aquests **índexs** després de crear el camp, però també permet indicar aquests índexs alhora que es crea el camp:
 
 ```php
 	$table->string('email')->unique();
 ```
 
 ##### Claus alienes
-Amb Schema també podem definir claus alienes entre taules:
+
+Amb Schema també podem definir **claus alienes** entre taules:
 
 ```php
 	$table->foreignId('module_id')->constrained('modules');
@@ -264,11 +267,11 @@ L’**Object-Relational Mapping (ORM)** és una tècnica que permet treballar am
 
 Amb Eloquent, cada **model** representa una **taula** de la base de dades, i cada **instància del model** representa un registre d’aquesta taula.
 
----
+ 
 
 ### 🔧 Creació d’un model
 
-Els models es creen dins la carpeta `app/Models`. Per generar-ne un:
+Els models es creen dins la **carpeta `app/Models`**. Per generar-ne un:
 
 ```php
      //  crearà una classe `Movie` associada, per defecte, a la taula `movies`. Si la taula té un nom diferent, podem indicar-ho al model amb la propietat `$table`.
@@ -280,25 +283,25 @@ Els models es creen dins la carpeta `app/Models`. Per generar-ne un:
      // Model + migració + controlador de recursos 
     php artisan make:model Movie -mcr
 ```
----
+ 
 
 ### 📐 Bones pràctiques de nomenclatura
 
-És recomanable mantindre una coherència entre:
+És recomanable mantindre una **coherència** entre:
 
 - Model → `Movie`
 - Controlador → `MovieController`
 - Taula → `movies`
 - Vistes → `resources/views/movies/index.blade.php`, etc.
 
----
+ 
 
 #### 🔑 Propietats especials dels models
 
 - `$primaryKey`: per indicar una clau primària diferent de `id`.
 - `$timestamps = false`: si la taula no té camps `created_at` i `updated_at`.
 
-Exemple de definició completa:
+Exemple de **definició completa**:
 
 ```php
 class User extends Model
@@ -336,7 +339,7 @@ $sum = Movie::sum('preu');
 
 Qun estem desenvolupant una aplicació, sovint necessitem disposar de **dades de prova** per poder treballar amb consultes, validacions, formularis, etc. Laravel ens ofereix dues eines molt útils per generar aquestes dades: els **seeders** i els **factories**.
 
----
+ 
 
 #### 🌱 Seeders (Sembradors de dades)
 
@@ -344,28 +347,30 @@ Els **seeders** són classes que permeten **inserir dades inicials** a la base d
 
 ##### Crear un seeder
 
-Per crear un seeder:
+Per crear un **seeder**:
 
-    php artisan make:seeder NomDelSeeder
-
+```bash
+    ./vendor/bin/bash artisan make:seeder NomDelSeeder
+```
 
 Es crearà una classe dins `database/seeders`. Dins del mètode `run()` podrem escriure les instruccions per crear els registres.
 
 ##### Registrar el seeder
 
-Perquè s’execute, cal registrar-lo al `DatabaseSeeder.php`:
+Perquè s’execute, cal **registrar-lo al `DatabaseSeeder.php`**:
 
 ```php
 $this->call(NomDelSeeder::class); 
 ``` 
 ###### Executar els seeders
-Per executar tots els seeders registrats:
+
+Per executar tots els **seeders** registrats:
 
 ```php
 php artisan db:seed
 ```
 
-Per netejar i tornar a sembrar la base de dades:
+Per **netejar** i tornar a sembrar la base de dades:
 
 ```php
 php artisan migrate:fresh --seed
@@ -376,7 +381,8 @@ php artisan migrate:fresh --seed
 Els factories permeten generar dades falses de manera automatitzada i en gran quantitat.
 
 #### Crear una factory
-Per crear una factory:
+
+Per crear una **factory**:
 
 ```php
 php artisan make:factory NomDelModelFactory
@@ -384,15 +390,19 @@ php artisan make:factory NomDelModelFactory
 Es crearà dins database/factories una classe associada automàticament al model corresponent.
 
 #### Definir la factory
+
 En el mètode definition(), s’utilitza el sistema faker per generar dades aleatòries (noms, correus, dates...).
 Els models han d’incloure el trait HasFactory per poder utilitzar les factories.
 
 #### 🧪 Exemple de seeder amb factory
-Un seeder pot usar una factory per generar múltiples registres:
+
+Un **seeder** pot usar una **factory** per generar múltiples registres:
+
 ```php
 User::factory()->count(10)->create();
 ``` 
-Per generar dades relacionades:
+
+Per generar **dades relacionades**:
 
 ```php
 $usuaris = User::all();
@@ -411,7 +421,7 @@ Post::factory()->count(2)->create([
 | Factory    | Generar dades aleatòries amb estructura definida           |
 | Faker      | Generador integrat per crear valors falsos                 |
 
----
+ 
 
 #### 📚 Referència
 
@@ -423,7 +433,7 @@ Post::factory()->count(2)->create([
 
 Aquesta secció introdueix les operacions bàsiques que podem realitzar amb models Eloquent: crear, llegir, actualitzar i esborrar registres, així com treballar amb relacions entre models, càrrega eficient de dades i paginació.
 
----
+ 
 
 ### ➕🗄️ Inserir dades
 
@@ -462,7 +472,7 @@ protected $fillable = ['titulo', 'director', 'precio'];
 }
 ```
 
----
+ 
 
 ###  ✏️🗄️ Modificar dades
 
@@ -479,7 +489,7 @@ $movie->save();
 Movie::findOrFail($id)->update($request->only(['titulo', 'director', 'precio']));
 
 ```
----
+ 
 
 ###  🗑️ Esborrar dades
 
@@ -507,7 +517,7 @@ public function destroy($id)
 	<button>Borrar</button>
 </form>
 ```
----
+ 
 
 ###  🔗 Relacions bàsiques entre models
 
@@ -558,7 +568,7 @@ return $this->belongsTo(Autor::class);
 // Accedir a la relació
 $libros = Autor::findOrFail($id)->libros;
 ```
----
+ 
 
 #### Molts a molts
 
@@ -590,7 +600,7 @@ Quan obtenim registres amb relacions, Eloquent pot fer consultes addicionals per
 $posts = Post::with('comments')->get();
 //Aquest exemple carrega tots els posts i els seus comments associats amb només dues consultes a la base de dades.
 ```
----
+ 
 
 #### 📑◀️▶️ Paginació
 
@@ -613,9 +623,9 @@ links perquè mostre els botons de paginació en el lloc desitjat:
 	@endforelse
 	{{   $movies->links() }}
 ```
----
+ 
 
- ---
+  
 
 ### 🧰 Resum visual de 4.2 – Primeres operacions amb Eloquent
 
@@ -627,7 +637,7 @@ links perquè mostre els botons de paginació en el lloc desitjat:
 | ✏️ Actualitzar    | `Model::find($id)->update([...])` | També necessita `$fillable`                  |
 | 🗑️ Esborrar       | `Model::find($id)->delete()` | Recomanat usar `findOrFail()`                     |
 
----
+ 
 
 ### 🔗 Tipus de relacions
 
@@ -637,7 +647,7 @@ links perquè mostre els botons de paginació en el lloc desitjat:
 | Un a molts    | `hasMany(ModelB::class)`  | `belongsTo(ModelA::class)` |
 | Molts a molts | `belongsToMany(ModelB::class)` | `belongsToMany(ModelA::class)` |
 
----
+ 
 
 ### ⚡️ Altres utilitats
 
@@ -657,7 +667,7 @@ Laravel proporciona una altra manera d’interactuar amb la base de dades a trav
 - Quan no calen **models Eloquent complets**.
 - Per a consultes amb **millor rendiment** o més específiques.
 
----
+ 
 
 #### 🧱 Exemple bàsic
 
@@ -868,7 +878,7 @@ Reestructurar l’aplicació de futbol femení (feta sense persistència) cap a 
 - Repository + Service
  
 
----
+ 
 
 #### 1. 🧱 Migració i model (branca bdd)
 
@@ -974,7 +984,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Persistència en base de dades amb Laravel Eloquent
 - Arquitectura escalable: `Controller → Service → Repository → Model`
  
----
+ 
 
 
 #### 2. Crear migracions i models relacionats
@@ -986,7 +996,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
     - `partit → equip local/visitant` (N:1)
     - `partit → estadi`, `partit → arbitre`
 
----
+ 
 
 #### 3. Completa el CRUD de Jugadores amb Arquitectura Escalable
 - Implementa `JugadoraRepository` i `JugadoraService`
@@ -994,7 +1004,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Valida les dades
 - Mostra els equips que hi juguen dins la vista `show`
 
----
+ 
 
 #### 3. Factories i Seeders amb Calendari Automàtic
 - 18 equips, 30 àrbitres
@@ -1008,14 +1018,14 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Selects per a estadis i equips
 - Vista de jornades amb partits filtrats per àrbitre
 
----
+ 
 
 #### 5. Millores d’equip
 - Calcula i mostra:
     - Edat mitjana de les jugadores
     - Últims 5 partits jugats
 
----
+ 
 
  
 ###  📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
