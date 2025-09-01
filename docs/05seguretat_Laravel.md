@@ -1,14 +1,14 @@
 # SA5. Aplicacions segures i reactives en Laravel
 
-??? abstract "Duració i criteris d'evaluació"
+??? abstract "Duració i criteris d'avaluació"
 
     Duració estimada: 16 hores
 
-    ---
+    <hr />
 
     | Resultat d'aprenentatge  | Criteris d'avaluació  |
-    | ------                    | -----                |
-    | RA6.-Genera pàgines web dinàmiques analitzant i utilitzant tecnologies i frameworks del servidor web que afigen codi al llenguatge de marques. | a) S'han identificat les diferències entre l'execució de codi en el servidor i en el client web. <br/>   b) S'han reconegut els avantatges d'unir totes dues tecnologies en el procés de desenvolupament de programes. <br/>   c) S'han identificat les tecnologies i frameworks relacionades amb la generació per part del servidor de pàgines web amb guions embeguts. <br/>d) S'han utilitzat aquestes tecnologies i frameworks per a generar pàgines web que incloguen interacció amb l'usuari.<br/> e) S'han utilitzat aquestes tecnologies i frameworks, per a generar pàgines web que incloguen verificació de formularis. <br/> f) S'han utilitzat aquestes tecnologies i frameworks per a generar pàgines web que incloguen modificació dinàmica del seu contingut i la seua estructura.<br/> g) S'han aplicat aquestes tecnologies i frameworks en la programació d'aplicacions web.
+    | ------                   | -----                 |
+    | RA6.-Genera pàgines web dinàmiques analitzant i utilitzant tecnologies i frameworks del servidor web que afigen codi al llenguatge de marques. | a) S'han identificat les diferències entre l'execució de codi en el servidor i en el client web. <br/>   b) S'han reconegut els avantatges d'unir totes dues tecnologies en el procés de desenvolupament de programes. <br/>   c) S'han identificat les tecnologies i frameworks relacionades amb la generació per part del servidor de pàgines web amb guions embeguts. <br/>d) S'han utilitzat aquestes tecnologies i frameworks per a generar pàgines web que incloguen interacció amb l'usuari.<br/> e) S'han utilitzat aquestes tecnologies i frameworks, per a generar pàgines web que incloguen verificació de formularis. <br/> f) S'han utilitzat aquestes tecnologies i frameworks per a generar pàgines web que incloguen modificació dinàmica del seu contingut i la seua estructura.<br/> g) S'han aplicat aquestes tecnologies i frameworks en la programació d'aplicacions web. |
 
 ## SA 5.1 Autenticació, hashing i autorització
 
@@ -16,7 +16,7 @@
 
 Laravel Breeze és el starter kit oficial més simple per implementar autenticació en Laravel. Inclou rutes, controladors i vistes per a registre, login i logout.
 
-Per instal·lar-lo, cal usar els comandos corresponents per a afegir el paquet, generar el frontend i aplicar les migracions.
+Per **instal·lar-lo**, cal usar els comandos corresponents per a afegir el paquet, generar el frontend i aplicar les migracions.
 
 ```bash
 ./vendor/bin/sail shell
@@ -37,7 +37,7 @@ $user = Auth::user();
 $id = Auth::id();
 ```
 
-També podem obtenir l’usuari des d'una petició injectada al controlador:
+També podem obtenir l’usuari des d'una **petició injectada al controlador**:
 ```php
 public function dashboard(Request $request)
 {
@@ -56,7 +56,7 @@ Laravel Breeze inclou logout preconfigurat:
 
 **Restabliment de contrasenya**
 Laravel Breeze genera automàticament els formularis i la lògica necessària, soles has de
-configurar el correu SMTP al fitxer `.env`.
+configurar el correu SMTP al **fitxer `.env`**.
 - 
 
 **Hashing automàtic de contrasenyes**
@@ -77,7 +77,7 @@ $user = User::create([
 
 #### 🛣️ Protecció de rutes amb `auth`
 
-Per a protegir rutes perquè només siguen accessibles per usuaris autenticats, es fa ús del middleware `auth`. Aquest es pot aplicar tant a grups de rutes com a rutes individuals.
+Per a protegir rutes perquè només siguen accessibles per usuaris autenticats, es fa ús del middleware `auth`. Aquest es pot aplicar tant a **grups de rutes**:
 
 ```php
 Route::middleware(['auth'])->group(function () {
@@ -85,7 +85,7 @@ Route::middleware(['auth'])->group(function () {
 });
 ```
 
-També pots protegir rutes individuals:
+com a **rutes individuals**:
 
 ```php
 Route::get('/dashboard', function () {
@@ -100,11 +100,12 @@ Route::get('/dashboard', function () {
 Un middleware és una classe que actua com a intermediari entre una sol·licitud HTTP i la seua resposta. Permet executar lògica abans o després d’arribar al controlador.
 
 S’usa per a:
+ 
 - 🔐 Autenticació d’usuaris
 - 🛡️ Validació de rols i permisos
 - 🧼 Neteja o modificació de peticions/respostes
 
-⚙️ Exemple senzill de middleware
+⚙️ Exemple senzill de **middleware**
 
 ```php
 public function handle($request, Closure $next)
@@ -118,19 +119,19 @@ public function handle($request, Closure $next)
 
 ##### 🧩 2. Rols i permisos
 
-🧱 Afegir camp role a la taula users
+Primer, hem d'afegir camp role a la taula users
 
-1. Crear una migració:
+1. Crear una **migració**:
    ```bash
    php artisan make:migration add_role_to_users_table --table=users
    ```
-2. Afegir el camp `role`:
+2. Afegir el **camp `role`**:
    ```php
    Schema::table('users', function (Blueprint $table) {
        $table->string('role')->default('user'); // Opcions: 'user', 'admin', etc.
    });
    ```
-3. Actualitzar el model `User`:
+3. Actualitzar el **model `User`**:
    ```php
    class User extends Authenticatable
    {
@@ -139,11 +140,12 @@ public function handle($request, Closure $next)
    ```
 
 ##### 🛡️ 3. Middleware personalitzat per a rols
-1. Crear el middleware:
+
+1. Crear el **middleware**:
    ```bash
    php artisan make:middleware RoleMiddleware
    ```
-2. Definir la lògica:
+2. Definir la **lògica**:
    ```php
    namespace App\Http\Middleware;
 
@@ -161,20 +163,20 @@ public function handle($request, Closure $next)
         }
     }
    ```
-3. Registrar-lo a `Kernel.php`:
+3. Registrar-lo a **`Kernel.php`**:
    ```php
    protected $routeMiddleware = [
        'role' => \App\Http\Middleware\RoleMiddleware::class,
    ];
    ```
-4. Aplicar-lo a una ruta:
+4. Aplicar-lo a una **ruta**:
  
    ```php
    Route::get('/admin', function () {
        return view('admin.dashboard');
    })->middleware('role:admin');
    ```
-   o en laravel 12, directament al controlador:
+   o en **laravel 12**, directament al **controlador**:
    
 ```php
   use Illuminate\Routing\Attributes\Middleware;
@@ -193,16 +195,18 @@ public function handle($request, Closure $next)
 Les **policies** en Laravel permeten controlar l’accés a recursos de manera precisa i reutilitzable. Es poden aplicar automàticament als models o explícitament mitjançant mètodes com `authorize()`.
 
 ##### 🛠️ 1. Crear una Policy
-Es genera una política associada a un model per controlar qui pot realitzar accions sobre aquest recurs.
+
+Es genera una **política associada a un model** per controlar qui pot realitzar accions sobre aquest recurs.
 
 ```bash
 ./vendor/bin/sail artisan make:policy PostPolicy --model=Post
 ``` 
 
-Es crea a app/Policies/PostPolicy.php.
+Es crea a **app/Policies/PostPolicy.php**.
 
 ##### 🧠 2. Definir les regles d’autorització
-Dins la policy es defineixen mètodes com `view`, `create`, `update` o `delete` que retornen si un usuari pot realitzar o no eixa acció.
+
+Dins la policy es **defineixen mètodes** com `view`, `create`, `update` o `delete` que retornen si un usuari pot realitzar o no eixa acció.
 
 ```php
 public function update(User $user, Post $post)
@@ -217,7 +221,8 @@ Cada mètode pot retornar:
 - O fins i tot llançar excepcions o missatges personalitzats
 
 ##### 🧾 3. Registrar la Policy
-Cal registrar la política al proveïdor d’autenticació (`AuthServiceProvider`) per vincular el model amb la seua policy corresponent.
+
+Cal **registrar la política** al proveïdor d’autenticació **(`AuthServiceProvider`)** per vincular el model amb la seua policy corresponent.
 
 ```php
 use App\Models\Post;
@@ -229,7 +234,8 @@ Post::class => PostPolicy::class,
 ``` 
 
 ##### 🧪 4. Utilitzar-la en controladors
-Dins dels controladors, s’utilitza la funció `authorize()` per verificar si l’usuari pot executar una acció determinada sobre un recurs.
+
+Dins dels controladors, s’utilitza la **funció `authorize()`** per verificar si l’usuari pot executar una acció determinada sobre un recurs.
 
 ```php
 public function edit(Post $post)
@@ -240,7 +246,8 @@ public function edit(Post $post)
 ```
 
 ##### ✅ 5. Ús en vistes Blade
-Amb la directiva `@can`, podem controlar l’accés a botons o seccions visuals segons la política definida.
+
+Amb la **directiva `@can`**, podem controlar l’accés a botons o seccions visuals segons la política definida.
 
 ```bladehtml
 @can('update', $post)
@@ -249,7 +256,8 @@ Amb la directiva `@can`, podem controlar l’accés a botons o seccions visuals 
 ```
 
 ##### 🔁 6. Regles globals
-És possible definir regles generals dins la policy (com per exemple donar accés total als usuaris administradors) mitjançant el mètode `before()`.
+
+És possible definir regles generals dins la policy (com per exemple donar accés total als usuaris administradors) mitjançant el **mètode `before()`**.
 
 ```php
 public function before(User $user, $ability)
@@ -260,18 +268,17 @@ public function before(User $user, $ability)
 }
 ```
  
-
 ## SA 5.2 Formularis amb seguretat i feedback
 
 ### 📋✅ Validació amb `FormRequest`
 
-La validació de dades pot separar-se del controlador utilitzant classes de tipus `FormRequest`. Aquestes classes permeten definir regles de validació clares i reutilitzables, millorant la neteja del codi.
+La validació de dades pot separar-se del controlador utilitzant **classes de tipus `FormRequest`**. Aquestes classes permeten definir regles de validació clares i reutilitzables, millorant la neteja del codi.
 
 ```bash
 php artisan make:request StoreEquipRequest
 ``` 
 
-A la classe generada, defines:
+A la classe generada, **defineixes**:
 
 ```php
 public function rules()
@@ -283,7 +290,7 @@ public function rules()
 }
 ```
 
-I al controlador:
+I al **controlador**:
 
 ```php
 public function store(StoreEquipRequest $request)
@@ -294,7 +301,7 @@ public function store(StoreEquipRequest $request)
 ``` 
 ### 🛡️ Autorització dins de FormRequest amb Policies
 
-Cada FormRequest inclou un mètode authorize() per controlar si l’usuari té permís per a executar l’acció abans de validar les dades. És el lloc idoni per invocar una policy.
+Cada FormRequest inclou un **mètode  authorize()** per controlar si l’usuari té permís per a executar l’acció abans de validar les dades. És el lloc idoni per invocar una policy.
 
 **Exemple amb policy:**
 Si tenim una policy EquipPolicy@update, dins el FormRequest:
@@ -334,13 +341,13 @@ public function authorize(): bool
 
 ### Missatges flash amb `session()->flash()`
 
-Permeten mostrar missatges temporals (èxit, error, etc.) després d’una acció, com una redirecció després de crear o modificar un recurs.
+Permeten mostrar **missatges temporals** (èxit, error, etc.) després d’una acció, com una redirecció després de crear o modificar un recurs.
 
 ```php
 return redirect()->route('equips.index')->with('ok', 'Equip creat correctament!');
 ```
 
-A la vista Blade:
+A la vista **Blade**:
 
 ```bladehtml
 @if (session('ok'))
@@ -358,7 +365,7 @@ L'ús combinat de `old()`, `@error`, missatges flash i bones pràctiques de diss
    
 Quan es produeixen errors de validació, Laravel redirigeix automàticament a la vista anterior amb la variable global `$errors`, que conté els errors de validació.
 
-Exemple de com mostrar un llistat d'errors al començament del formulari:
+Exemple de com mostrar un **llistat d'errors** al començament del formulari:
 ```php
 @if ($errors->any())
     <ul>
@@ -369,7 +376,7 @@ Exemple de com mostrar un llistat d'errors al començament del formulari:
 @endif
 ```
 
-A sota de cada camp:
+A **sota de cada camp**:
   
 ```php
 <div class="form-group">

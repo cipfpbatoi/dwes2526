@@ -7,7 +7,7 @@
     <hr />
 
     | Resultat d'aprenentatge  | Criteris d'avaluació  |
-    | ------                    | -----                |
+    | ------                   | -----                 |
     | 5. Desenvolupa aplicacions Web identificant i aplicant mecanismes per a separar el codi de presentació de la lògica de negoci. | a) S'han identificat els avantatges de separar la lògica de negoci dels aspectes de presentació de l'aplicació. <br/> b) S'han analitzat i utilitzat mecanismes i frameworks que permeten realitzar aquesta separació i les seues característiques principals.  <br/>c) S'han utilitzat objectes i controls en el servidor per a generar l'aspecte visual de l'aplicació web en el client. <br/> d) S'han utilitzat formularis generats de manera dinàmica per a respondre als esdeveniments de l'aplicació web. <br/> e) S'han identificat i aplicat els paràmetres relatius a la configuració de l'aplicació web. <br/> f) S'han escrit aplicacions web amb manteniment d'estat i separació de la lògica de negoci. <br/> g) S'han aplicat els principis i patrons de disseny de la programació orientada a objectes. <br/> h) S'ha provat i documentat el codi. |
 
 ## SA 3.1 MVC i instal·lació de Laravel
