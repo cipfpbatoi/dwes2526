@@ -2342,7 +2342,6 @@ Assegurar que només els usuaris amb rol d'`àrbitre` puguin modificar partits. 
 4. Sense filtres ni opcions addicionals, simplement la taula de classificació actualitzada.
 
 ### 9. Proves
-
 1. Crea proves per jugadoresController, EstadiController i PartitController.
 
 ### 10. Correu

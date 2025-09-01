@@ -856,174 +856,6 @@ public function __construct(private ProducteService $svc) {}
 | Controlador massa llarg o amb massa responsabilitats | ✅ | ✅ | Desacobles i neteges el codi |
 | Backend ja madur, busques escalabilitat | ✅ | ✅ | Segueixes arquitectura neta i escalable |
 
-## SA 4.4 Autenticació, hashing i autorització
-
-### 🌬️🍃 Laravel Breeze: registre, login, logout
-
-Laravel Breeze és el starter kit oficial més simple per implementar autenticació en Laravel. Inclou rutes, controladors i vistes per a registre, login i logout.
-
-Per instal·lar-lo, cal usar els comandos corresponents per a afegir el paquet, generar el frontend i aplicar les migracions.
-
-```bash
-./vendor/bin/sail shell
-composer require laravel/breeze --dev
-php artisan breeze:install blade
-npm install && npm run dev
-php artisan migrate
-``` 
-
-### 🛣️🔒 Protecció de rutes amb `auth`
-
-Per a protegir rutes perquè només siguen accessibles per usuaris autenticats, es fa ús del middleware `auth`. Aquest es pot aplicar tant a grups de rutes com a rutes individuals.
-
-```php
-Route::middleware(['auth'])->group(function () {
-    Route::resource('equips', EquipController::class);
-});
-```
-
-També pots protegir rutes individuals:
-
-```php
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth');
-``` 
-
-### 🔑⚙️ Hashing automàtic de contrasenyes
-
-Laravel utilitza el sistema `Hash` per a encriptar contrasenyes abans de guardar-les a la base de dades. Breeze ja ho implementa automàticament en el registre.
-
-```php
-use Illuminate\Support\Facades\Hash;
-
-$user = User::create([
-    'name' => $request->name,
-    'email' => $request->email,
-    'password' => Hash::make($request->password),
-]);
-```
-
-### 🚦🛡️ Middleware i polítiques (`Policy`) per a autorització
-
-Els middleware controlen qui pot accedir a determinades rutes. El middleware auth és un exemple.
-Les polítiques (Policies) permeten definir què pot fer cada usuari amb un model concret (per exemple, si pot editar o esborrar un equip).
-
-Per a crear una política:
-
-```bash
-php artisan make:policy EquipPolicy --model=Equip
-```
-Això crea una classe amb mètodes com view, update, delete, etc., que pots personalitzar. S’apliquen mitjançant la funció authorize() en el controlador:
-
-```php
-public function edit(Equip $equip)
-{
-    $this->authorize('update', $equip);
-    return view('equips.edit', compact('equip'));
-}
-```
- 
-
-## SA 4.5 Formularis amb seguretat i feedback
-
-### 📋✅ Validació amb `FormRequest`
-
-La validació de dades pot separar-se del controlador utilitzant classes de tipus `FormRequest`. Aquestes classes permeten definir regles de validació clares i reutilitzables, millorant la neteja del codi.
-
-```bash
-php artisan make:request StoreEquipRequest
-``` 
-
-A la classe generada, defines:
-
-```php
-public function rules()
-{
-    return [
-    'nom' => 'required|string|max:255',
-    'categoria' => 'required|string|max:100',
-    ];
-}
-```
-
-I en el controlador:
-
-```php
-public function store(StoreEquipRequest $request)
-{
-Equip::create($request->validated());
-return redirect()->route('equips.index');
-}
-``` 
-### 🛡️ Autorització dins de FormRequest amb Policies
-
-Laravel permet que cada FormRequest tinga un mètode authorize() on podem controlar si l’usuari té permís per a executar l’acció abans fins i tot de validar les dades.
-Aquest mètode és el lloc ideal per a invocar una policy associada al model.
-
-#### 🧪 Exemple: UpdateEquipRequest
-
-Suposem que tenim una política EquipPolicy amb un mètode update(User $user, Equip $equip). Per a utilitzar-la dins del FormRequest:
-
-```php
-public function authorize(): bool
-{
-    $equip = $this->route('equip'); // Obtenim el model Equip des de la ruta
-    return $this->user()->can('update', $equip); // Crida a la policy
-}
-``` 
-
-- Si l’usuari no pot fer update sobre aquest Equip, Laravel llançarà automàticament un error 403 Forbidden.
-- Si pot, passarà al mètode rules() per fer la validació.
-
-#### 🧑‍🏫 Alternativa amb Gate::allows()
-
-També podries fer-ho així:
-
-```php
-use Illuminate\Support\Facades\Gate;
-
-public function authorize(): bool
-{
-    return Gate::allows('update', $this->route('equip'));
-}
-``` 
-
-### 🛡️🔄⏮️⚠️ Ús de `@csrf`, `@method`, `old()`, `@error`
-
-- `@csrf`: Protecció contra atacs de tipus cross-site request forgery
-- `@method`: Permet enviar formularis amb verbs PUT o DELETE
-- `old()`: Manté les dades introduïdes en cas d’error de validació
-- `@error`: Mostra els errors de validació associats a cada camp
-
-### Missatges flash amb `session()->flash()`
-
-Permeten mostrar missatges temporals (èxit, error, etc.) després d’una acció, com una redirecció després de crear o modificar un recurs.
-
-```php
-return redirect()->route('equips.index')->with('ok', 'Equip creat correctament!');
-```
-
-A la vista Blade:
-
-```bladehtml
-@if (session('ok'))
-    <div class="alert alert-success">
-        {{ session('ok') }}
-    </div>
-@endif
-```
-
-### UX i manteniment d'estat
-
-L'ús combinat de `old()`, `@error`, missatges flash i bones pràctiques de disseny millora significativament l’experiència d’usuari (UX) en formularis.
-
- 
-### 4.7 Extensió opcional: CRUD dinàmic amb Livewire
-- Introducció a Livewire
-- Creació de component CRUD
-- Connexió amb Service i Repository
-- Millora UX sense JS explícit
 
 ##  Exercicis
 
@@ -1034,8 +866,7 @@ Reestructurar l’aplicació de futbol femení (feta sense persistència) cap a 
 - Model Eloquent
 - Migració i base de dades
 - Repository + Service
-- Validació amb FormRequest
-- Autenticació
+ 
 
 ---
 
@@ -1135,87 +966,14 @@ Route::resource('/estadis', EstadisController::class)
 
 [EquipService](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Services/EquipService.php)
 
-#### 6. 🧪 Validació amb FormRequest
-
-**Crear Validació**
-
-```bash
-./vendor/bin/sail artisan make:request StoreEquipRequest
-./vendor/bin/sail artisan make:request UpdateEquipRequest
-``` 
-
-**Modificar els fitxers** 
-
-[StoreEquipRequest](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Requests/StoreEquipRequest.php)
-[UpdateEquipRequest](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Requests/UpdateEquipRequest.php)
-
-#### 7. 💡 Controlador final
-
-[EquipController](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Controllers/EquipController.php)
-
-**Adaptar les [vistes](https://github.com/Curs-2025-26/futbol-femeni/bdd/escut/resources/views/equips)**
-
-#### 8.  🛡️ Afegir un escut a l'equip  (Branca escut)
-
-**Crear una migració per afegir un camp `escut` a la taula `equips`**
-
-```bash
-./vendor/bin/sail artisan make:migration add_escut_to_equips_table
-```
  
-Modificar la migració [`add_escut_to_equips_table`](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/database/migrations/2025_08_31_044414_add_escut_to_equips_table.php)  
-
-**Aplicar la migració**
-
-```bash
-./vendor/bin/sail artisan migrate
-```   
-
-**Modificar el model `Equip` per incloure el camp `escut`**
-
-```php 
-protected $fillable = ['nom', 'estadi_id', 'titols', 'escut'];
-``` 
-
-**Modificar la vista `equips.create` per incloure un camp d'arxiu per pujar l'escut de l'equip i incloure enctype="multipart/form-data" al  formulari**
-
-```bladehtml
-<form action="{{ route('equips.store') }}" method="POST" enctype="multipart/form-data">
-
-<div class="mb-4">
-    <label for="escut" class="block text-sm font-medium text-gray-700 mb-1">Escut:</label>
-    <input type="file" name="escut" id="escut"
-        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-</div>
-```
- 
-
-**Crear la  vista [`equips.edit`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/edit.blade.php) **
- 
-**Crear un enllaç simbòlic a la carpeta storage**
-
-```bash
-./vendor/bin/sail artisan storage:link
-```
-**Modificar el [controlador](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Controllers/EquipController.php) per passar el fitxer al servei**
-
-**Actualitzar les [validacions](https://github.com/Curs-2025-26/futbol-femeni/tree/escut/app/Http/Requests) per incorporar el camp escut**
-**Actualitzar el mètode store,update i destroy del [servei](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Services/EquipService.php)**
-  
-**Modificat el [component](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/components/equip.blade.php) de la vista [`equips.show`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/show.blade.php) per mostrar l'escut de l'equip**
-
- 
-
 ###  🏁 Exercici Final: Guia de Futbol Femení II
 
 #### 🎯 Objectiu
 Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Persistència en base de dades amb Laravel Eloquent
 - Arquitectura escalable: `Controller → Service → Repository → Model`
-- Validació robusta amb FormRequest
-- Autenticació i autorització amb Laravel Breeze i Policies
-- Components visuals, relacions entre models i funcionalitats avançades
-
+ 
 ---
 
 
@@ -1233,7 +991,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 #### 3. Completa el CRUD de Jugadores amb Arquitectura Escalable
 - Implementa `JugadoraRepository` i `JugadoraService`
 - Completa els mètodes `create`, `store`, `edit`, `update`, `destroy` a `EstadiController`
-- Utilitza `JugadoraRequest` per validar les dades
+- Valida les dades
 - Mostra els equips que hi juguen dins la vista `show`
 
 ---
@@ -1242,30 +1000,8 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - 18 equips, 30 àrbitres
 - Generar calendari (anada + tornada) usant Faker i Carbon
 - Resultats aleatoris si la data ja ha passat
-
----
-
-#### 4. Formularis amb FormRequest
-- Crea `EstadiRequest`, `JugadoraRequest`, `PartitRequest`
-- Valida:
-    - `data_naixement` mínima de 16 anys
-    - `foto` (tipus .png i mida màxima)
-    - `dorsal`, `capacitat`, `gols` (numèrics positius)
-- Usa `authorize()` per controlar accés a modificació segons rol
-
----
-
-#### 5. Autenticació i restriccions
-- Laravel Breeze per login, logout
-- Protegeix rutes amb `auth` i `@auth` en vistes
-- Policies per controlar:
-    - Jugadores: només el manager del seu equip
-    - Partits: només l’àrbitre assignat
-- No es permet crear partits manualment
-
----
-
-#### 6. Vistes i components visuals
+ 
+#### 4. Vistes i components visuals
 - Components Blade per:
     - Mostrar jugadores d’un equip
     - Fitxa completa d’un partit
@@ -1274,36 +1010,14 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
 ---
 
-#### 7. Millores d’equip
+#### 5. Millores d’equip
 - Calcula i mostra:
     - Edat mitjana de les jugadores
     - Últims 5 partits jugats
 
 ---
 
-#### 8. Classificació en temps real amb Livewire
-- Taula amb:
-    - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
-- Component Livewire que es refresca automàticament
-- Ordenació per punts i diferència de gols
-
----
-
-#### 9. Proves
-- Crea proves per:
-    - EstadiController
-    - JugadoraController
-    - PartitController
-    - FormRequest i Policies
-
----
-
-#### 10. Correu a àrbitres
-- Enviar correu personalitzat a cada àrbitre amb:
-    - Llistat de partits en què arbitrarà
-    - Format HTML amigable
-
-
+ 
 ###  📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
 
 Si volem que funcione el phpmyadmin haurien d'afegir un altre contenidor docker, o farem incluint el següent codi en el docker-compose.yml
