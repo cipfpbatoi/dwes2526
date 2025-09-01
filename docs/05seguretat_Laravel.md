@@ -407,25 +407,8 @@ Reestructurar l’aplicació de futbol femení (feta sense persistència) cap a 
 ---
 
  
-#### 1. 🧪 Validació amb FormRequest
 
-**Crear Validació**
 
-```bash
-./vendor/bin/sail artisan make:request StoreEquipRequest
-./vendor/bin/sail artisan make:request UpdateEquipRequest
-``` 
-
-**Modificar els fitxers**
-
-[StoreEquipRequest](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Requests/StoreEquipRequest.php)
-[UpdateEquipRequest](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Requests/UpdateEquipRequest.php)
-
-#### 2. 💡 Controlador final
-
-[EquipController](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Controllers/EquipController.php)
-
-**Adaptar les [vistes](https://github.com/Curs-2025-26/futbol-femeni/bdd/escut/resources/views/equips)**
 
 #### 3.  🛡️ Afegir un escut a l'equip  (Branca escut)
 

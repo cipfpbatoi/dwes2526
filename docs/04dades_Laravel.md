@@ -976,6 +976,26 @@ Route::resource('/estadis', EstadisController::class)
 
 [EquipService](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Services/EquipService.php)
 
+#### 6. 🧪 Validació amb FormRequest
+
+**Crear Validació**
+
+```bash
+./vendor/bin/sail artisan make:request StoreEquipRequest
+./vendor/bin/sail artisan make:request UpdateEquipRequest
+``` 
+
+**Modificar els fitxers**
+
+[StoreEquipRequest](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Requests/StoreEquipRequest.php)
+[UpdateEquipRequest](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Requests/UpdateEquipRequest.php)
+
+#### 7. 💡 Controlador final
+
+[EquipController](https://github.com/Curs-2025-26/futbol-femeni/blob/bdd/app/Http/Controllers/EquipController.php)
+
+**Adaptar les [vistes](https://github.com/Curs-2025-26/futbol-femeni/bdd/escut/resources/views/equips)**
+
  
 ###  🏁 Exercici Final: Guia de Futbol Femení II
 
@@ -984,10 +1004,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Persistència en base de dades amb Laravel Eloquent
 - Arquitectura escalable: `Controller → Service → Repository → Model`
  
- 
-
-
-#### 2. Crear migracions i models relacionats
+#### 1. Crear migracions i models relacionats
 - **Jugadores** amb: `equip_id`, `data_naixement`, `dorsal`, `foto`
 - **Partits** amb: `local_id`, `visitant_id`, `estadi_id`, `arbitre_id`, `data`, `jornada`, `gols`
 - Defineix relacions entre models:
@@ -998,7 +1015,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
  
 
-#### 3. Completa el CRUD de Jugadores amb Arquitectura Escalable
+#### 2. Completa el CRUD de Jugadores amb Arquitectura Escalable
 - Implementa `JugadoraRepository` i `JugadoraService`
 - Completa els mètodes `create`, `store`, `edit`, `update`, `destroy` a `EstadiController`
 - Valida les dades
@@ -1018,15 +1035,18 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Selects per a estadis i equips
 - Vista de jornades amb partits filtrats per àrbitre
 
+#### 5. Formularis amb FormRequest
  
-
-#### 5. Millores d’equip
+- Crea `EstadiRequest`, `JugadoraRequest`, `PartitRequest`
+- Valida:
+  - `data_naixement` mínima de 16 anys
+  - `foto` (tipus .png i mida màxima)
+  - `dorsal`, `capacitat`, `gols` (numèrics positius)
+  
+#### 6. Millores d’equip
 - Calcula i mostra:
     - Edat mitjana de les jugadores
     - Últims 5 partits jugats
-
- 
-
  
 ###  📎  Annex I: Instal·lació de phpMyAdmin amb Docker (opcional)
 
