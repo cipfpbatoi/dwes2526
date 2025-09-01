@@ -1012,17 +1012,13 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
     - `equip → partits com local/visitant` (1:N)
     - `partit → equip local/visitant` (N:1)
     - `partit → estadi`, `partit → arbitre`
-
  
-
 #### 2. Completa el CRUD de Jugadores amb Arquitectura Escalable
 - Implementa `JugadoraRepository` i `JugadoraService`
 - Completa els mètodes `create`, `store`, `edit`, `update`, `destroy` a `EstadiController`
 - Valida les dades
 - Mostra els equips que hi juguen dins la vista `show`
-
  
-
 #### 3. Factories i Seeders amb Calendari Automàtic
 - 18 equips, 30 àrbitres
 - Generar calendari (anada + tornada) usant Faker i Carbon
