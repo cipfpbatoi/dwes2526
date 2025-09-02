@@ -1180,6 +1180,1170 @@ protected $fillable = ['nom', 'estadi_id', 'titols', 'escut'];
 **Modificat el [component](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/components/equip.blade.php) de la vista [`equips.show`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/show.blade.php) per mostrar l'escut de l'equip**
 
 
+### Pas 1: Configurar l'autenticació amb Laravel Breeze
+1. Copia el fitxer app.blade.php de la carpeta resources/views/layouts a equips.blade.php.
+2. Guarda les rutes de la Guia d'Equips de Futbol Femení en algun fitxer per utilitzar després.
+3. Instal·la Laravel Breeze:
+
+```bash
+composer require laravel/breeze --dev
+php artisan breeze:install
+npm install && npm run dev
+php artisan migrate
+```
+
+
+### Pas 2: Afegir els rols al sistema
+
+#### Migració per al camp `role` als usuaris
+
+1. Crea una nova migració per afegir el camp `role` a usuaris:
+   ```bash
+   php artisan make:migration add_role_to_users_table --table=users
+   ```
+   Afegeix el camp:
+   ```php
+   Schema::table('users', function (Blueprint $table) {
+       $table->string('role')->default('arbitre');
+   });
+   ```
+   Aplica la migració:
+   ```bash
+   php artisan migrate
+   ```
+
+#### Crea el seeders d'usuaris i crea un usuari administrador
+
+  ```php
+  User::create([
+      'name' => 'Admin',
+      'email' => 'admin@example.com',
+      'password' => Hash::make('password'),
+      'role' => 'administrador',
+  ]);
+  ```
+
+### Pas 3: Middleware per a permisos de rol i manager
+
+#### Crear Middleware per a gestionar els rols
+1. Genera el middleware:
+   ```bash
+   php artisan make:middleware RoleMiddleware
+   ```
+2. Defineix el control dels rols:
+   ```php
+   public function handle($request, Closure $next, $role)
+   {
+       if (auth()->user()->role !== $role) {
+           return redirect('/')->with('error', 'No tens permís per accedir a aquesta pàgina.');
+       }
+       return $next($request);
+   }
+   ```
+
+#### Aplicar Middleware a rutes
+- Protegeix les rutes per tal que els equips,estadis soles puguen modificar-los els administradors:
+  ```php
+    Route::middleware(['auth', RoleMiddleware::class.':administrador' ])->group(function (){
+        Route::resource('/equips', EquipController::class)->except(['index', 'show']);
+        Route::resource('/estadis', EstadisController::class)->except(['index', 'show']);
+    });
+    Route::resource('/equips', EquipController::class)->only(['index', 'show']);
+    Route::resource('/estadis', EstadisController::class)->only(['index', 'show']);
+
+  ```
+
+
+### Pas 4: Associar managers a equips
+
+#### Migració per a l’associació entre usuaris i equips
+1. Crea una migració nova:
+   ```bash
+   php artisan make:migration add_team_id_to_users_table --table=users
+   ```
+2. Afegeix el camp `team_id`:
+   ```php
+   Schema::table('users', function (Blueprint $table) {
+       $table->unsignedBigInteger('equip_id')->nullable();
+       $table->foreign('equip_id')->references('id')->on('equips')->onDelete('set null');
+   });
+   ```
+3. Aplica la migració:
+   ```bash
+   php artisan migrate
+   ```
+
+#### Assignar equips als managers
+- Crea un manager per equip i assigna-li  :
+  ```php
+  foreach (Equip::all() as $equip){
+            User::create([
+                'name' => 'Manager  '.$equip->nom,
+                'email' => $equip->nom.'@manager.com',
+                'password' => Hash::make('1234'),
+                'role' => 'manager',
+                'equip_id' => $equip->id,
+            ]);
+        }
+  ```
+
+### Relació entre models
+- Defineix la relació al model `User`:
+  ```php
+  public function equip()
+  {
+      return $this->belongsTo(Equip::class );
+  }
+  ```
+- Defineix la relació inversa al model `Equip`:
+  ```php
+  public function manager()
+  {
+      return $this->hasOne(User::class );
+  }
+  ```
+
+
+### Pas 5: Adaptar les vistes al component layout de Breeze
+
+1. Modificar equips.blade.php per a utilitzar el layout de Breeze.
+
+```php
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            @yield('title','Guia de futbol femení')
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Guia de Futbol Femení</p>
+    </footer>
+</x-app-layout>
+```
+
+2. Modificar la vista de l'equip per a utilitzar el layout de Breeze.
+
+```php
+@extends('layouts.equips')
+```
+
+3. Modificar el layout de Breeze per a incloure el menú de navegació .
+
+En navigation.blade.php:
+```php
+    ...
+    <!-- Navigation Links -->
+    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            {{ __('Dashboard') }}
+        </x-nav-link>
+    </div>
+    @include('partials.menu')
+    ...
+```
+
+4. En partials/menu.blade.php:
+```php
+    ...
+    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+        <x-nav-link :href="route('equips.index')" :active="request()->routeIs('dashboard')">
+            {{ __('Guia Equips') }}
+        </x-nav-link>
+    </div>
+    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+        <x-nav-link :href="route('estadis.index')" :active="request()->routeIs('dashboard')">
+            {{ __('Estadis') }}
+        </x-nav-link>
+    </div>
+    ...
+```
+
+### Pas 6: El manager soles puga editar el seu equip
+
+#### 1. Crear la Política
+Executa el següent comandament per generar la política associada al model `Equip`:
+```bash
+php artisan make:policy EquipPolicy --model=Equip
+```
+
+#### 2. Definir la Lògica a la Política
+Edita el fitxer generat `app/Policies/EquipPolicy.php` i afegeix les regles de permisos.
+
+
+```php
+namespace App\Policies;
+
+use App\Models\User;
+use App\Models\Equip;
+
+class EquipPolicy
+{
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        // Només els administradors poden crear equips
+        return $user->role === 'administrador';
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Equip $equip)
+    {
+        // Permetre si l'usuari és un administrador o un manager i està assignat a aquest equip
+        return $user->role === 'administrador' || ($user->role === 'manager' && $user->equip_id === $equip->id);
+    }
+
+    /**
+     * Determina si l'usuari pot eliminar l'equip.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Equip $equip
+     * @return bool
+     */
+    public function delete(User $user, Equip $equip)
+    {
+        // Només els administradors poden eliminar equips
+        return $user->role === 'administrador';
+    }
+}
+```
+
+
+#### 3. Utilitzar la Política al Controlador
+Al controlador `EquipController`, utilitza el mètode `authorize` per aplicar la política abans de permetre accions.
+
+```php
+class EquipController extends Controller
+{
+
+    use AuthorizesRequests;
+
+    public function index() {
+        $equips = Equip::all();
+        return view('equips.index', compact('equips'));
+    }
+
+    public function show(Equip $equip) {
+        return view('equips.show', compact('equip'));
+    }
+
+    public function create() {
+        $this->authorize('create');
+        $estadis = Estadi::all();
+        return view('equips.create',compact('estadis'));
+    }
+
+    public function edit(Equip $equip) {
+        $this->authorize('update', $equip);
+        $estadis = Estadi::all();
+        return view('equips.edit', compact('equip','estadis'));
+    }
+
+
+    public function store(Request $request)
+    {
+        $this->authorize('create');
+        $validated = $request->validate([
+            'nom' => 'required|unique:equips',
+            'titols' => 'integer|min:0',
+            'estadi_id' => 'required|exists:estadis,id',
+            'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validació del fitxer
+        ]);
+
+        if ($request->hasFile('escut')) {
+            $path = $request->file('escut')->store('escuts', 'public');
+            $validated['escut'] = $path;
+        }
+
+        Equip::create($validated);
+
+        return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
+    }
+
+
+    public function update(Request $request, Equip $equip)
+    {
+        $this->authorize('update', $equip);
+        $validated = $request->validate([
+            'nom' => 'required|unique:equips,nom,' . $equip->id,
+            'titols' => 'integer|min:0',
+            'estadi_id' => 'required|exists:estadis,id',
+            'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+
+        if ($request->hasFile('escut')) {
+            if ($equip->escut) {
+                Storage::disk('public')->delete($equip->escut); // Esborra l'escut antic
+            }
+            $path = $request->file('escut')->store('escuts', 'public');
+            $validated['escut'] = $path;
+        }
+
+        $equip->update($validated);
+
+        return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament!');
+    }
+
+    public function destroy(Equip $equip)
+    {
+        $this->authorize('delete', $equip);
+        if ($equip->escut) {
+            Storage::disk('public')->delete($equip->escut);
+        }
+        $equip->delete();
+        return redirect()->route('equips.index')->with('success', 'Equip esborrat correctament!');
+    }
+
+
+}
+```
+
+
+#### 4. Utilitzar la Política a les Vistes
+A les vistes Blade, pots utilitzar les directives `@can` per verificar els permisos.
+
+
+```blade
+@can('update', $equip)
+    <a href="{{ route('equips.edit', $equip->id) }}" class="text-yellow-600 hover:underline">Editar</a>
+@endcan
+```
+
+### Pas 7. Afegir FormRequest per a la validació
+
+####  1. Generar el Form Request
+
+Executa el següent comandament per crear un Form Request:
+
+```bash
+php artisan make:request StoreEquipRequest
+php artisan make:request UpdateEquipRequest
+```
+
+Aquest comandament crearà una classe `StoreEquipRequest` i altra `UpdateEquipRequest  al directori `app/Http/Requests`.
+
+---
+
+####  2. Definir les regles de validació
+
+Obre el fitxer `StoreEquipRequest.php` i defineix les regles de validació al mètode `rules`.
+
+##### Exemple de validació:
+```php
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreEquipRequest extends FormRequest
+{
+    /**
+     * Determina si l'usuari està autoritzat a fer aquesta petició.
+     *
+     * @return bool
+     */
+    public function authorize(): bool
+    {
+         return $this->user()->can('create', Equip::class);
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'nom' => 'required|unique:equips',
+            'titols' => 'integer|min:0',
+            'estadi_id' => 'required|exists:estadis,id',
+            'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validació del fitxer
+        ];
+    }
+    
+    public function messages()
+    {
+        return [
+            'nom.required' => 'El camp "Nom" és obligatori.',
+            'nom.unique' => 'Aquest nom ja està en ús. Si us plau, tria un altre.',
+            'titols.integer' => 'El camp "Títols" ha de ser un número enter.',
+            'titols.min' => 'El nombre de títols no pot ser inferior a zero.',
+            'estadi_id.required' => 'El camp "Estadi" és obligatori.',
+            'estadi_id.exists' => 'L\'estadi seleccionat no és vàlid.',
+            'escut.image' => 'El camp "Escut" ha de ser una imatge.',
+            'escut.mimes' => 'El camp "Escut" només accepta formats: jpeg, png, jpg.',
+            'escut.max' => 'La mida de l\'escut no pot superar els 2 MB.',
+        ];
+    }
+}
+```
+
+#### 3. Modificar el Controlador per Utilitzar el Form Request
+
+Substitueix la injecció de `Request` pel nou `StoreEquipRequest` al mètode `store` del controlador `EquipController`.
+
+##### Exemple:
+```php
+use App\Http\Requests\StoreEquipRequest;
+
+public function store(StoreEquipRequest $request)
+{
+     
+    $validated = $request->validated(); // Obté les dades validades
+
+    if ($request->hasFile('escut')) {
+        $path = $request->file('escut')->store('escuts', 'public');
+        $validated['escut'] = $path;
+    }
+
+    Equip::create($validated);
+
+    return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
+}
+```
+
+#### 4. Fes el mateix per al Mètode `update`
+
+
+Defineix les regles al mètode `rules`, incloent l'excepció per al camp únic (en aquest cas, el `nom`):
+
+
+```php
+use App\Http\Requests\StoreEquipRequest;
+
+public function authorize()
+{
+    $equip = $this->route('equip'); // Obté l'equip de la ruta
+    return $this->user()->can('update', $equip);
+}
+
+public function rules()
+{
+    $equipId = $this->route('equip')->id; // Obté l'ID de l'equip actual
+
+    return [
+        'nom' => 'required|unique:equips,nom,' . $equipId,
+        'titols' => 'integer|min:0',
+        'estadi_id' => 'required|exists:estadis,id',
+        'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ];
+} 
+```
+## Pas 8. Idiomes al projecte
+
+#### 1. Publicar els Fitxers de Llenguatge
+
+Per defecte, Laravel no inclou el directori `lang`. Per personalitzar els fitxers de llenguatge o crear-ne de nous, executa:
+
+```bash
+php artisan lang:publish
+```
+
+Aquesta comanda crearà el directori `lang` i publicarà els fitxers de llenguatge predeterminats de Laravel.
+
+
+
+#### 2. Configurar l'Idioma Predeterminat
+
+Al fitxer `.env`, ajusta l'opcions `locale` per establir l'idioma predeterminat:
+
+```php
+APP_LOCALE=ca
+APP_FALLBACK_LOCALE=en
+```
+
+
+
+#### 3. Definir les Traduccions
+
+Les cadenes de traducció es poden emmagatzemar en fitxers PHP o JSON dins del directori `lang`.
+
+##### Utilitzant Fitxers PHP
+
+Crea subdirectoris per a cada idioma dins de `lang` i afegeix els fitxers de traducció corresponents. Per exemple:
+
+```
+/lang
+     ca.json
+     es.json 
+     en.json
+```
+
+Cada fitxer ha de retornar un array de cadenes traduïdes:
+
+```json
+ {
+  "Creació d'Equip": "Creació d'Equip",
+  "Guia d'Equips": "Guia d'Equips",
+  "Modificació d'Equip": "Modificació d'Equip",
+  "Escut actual": "Escut actual",
+  "Escut": "Escut",
+  "Estadi": "Estadi",
+  "Nom": "Nom",
+  "Títols": "Títols",
+  "Guardar": "Guardar",
+  "Actualitzar": "Actualitzar",
+  "Esborrar": "Esborrar",
+  "Crear Equip": "Crear Equip"  
+}
+```
+```json
+{
+  "Creació d'Equip": "Creación de Equipo",
+  "Guia d'Equips": "Guía de Equipos",
+  "Modificació d'Equip": "Modificación de Equipo",
+  "Escut actual": "Escudo actual",
+  "Escut": "Escudo",
+  "Estadi": "Estadio",
+  "Nom": "Nombre",
+  "Títols": "Títulos",
+  "Guardar": "Guardar",
+  "Actualitzar": "Actualizar",
+  "Esborrar": "Borrar",
+  "Crear Equip": "Crear Equipo"
+} 
+```
+```json
+{
+  "Creació d'Equip": "Team Creation",
+  "Guia d'Equips": "Team Guide",
+  "Modificació d'Equip": "Team Modification",
+  "Escut actual": "Current Shield",
+  "Escut": "Shield",
+  "Estadi": "Stadium",
+  "Nom": "Name",
+  "Títols": "Titles",
+  "Guardar": "Save",
+  "Actualitzar": "Update",
+  "Esborrar": "Delete",
+  "Crear Equip": "Create Team"
+}
+```
+
+
+#### 4. Recuperar Cadenes de Traducció
+
+Utilitza la funció `__` per obtenir les cadenes traduïdes:
+
+```php
+ 
+ @extends('layouts.equips')
+
+@section('title', __("Creació d'Equips"))
+
+@section('content')
+    <form action="{{ route('equips.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
+        @csrf
+        <div class="mb-4">
+            <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">{{ __('Nom')}}:</label>
+            <input type="text" name="nom" id="nom" required
+                   class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <div class="mb-4">
+            <label for="titols" class="block text-sm font-medium text-gray-700 mb-1">{{__('Títols')}}:</label>
+            <input type="number" name="titols" id="titols" required
+                   class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <div class="mb-4">
+            <label for="estadi_id" class="block text-sm font-medium text-gray-700 mb-1">{{__('Estadi')}}:</label>
+            <select name="estadi_id" id="estadi_id" required
+                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                @foreach ($estadis as $estadi)
+                    <option value="{{ $estadi->id }}">{{ $estadi->nom }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="escut" class="block text-sm font-medium text-gray-700 mb-1">{{__('Escut')}}:</label>
+            <input type="file" name="escut" id="escut"
+                   class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <button type="submit"
+                class="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-lg shadow hover:bg-blue-600 focus:ring focus:ring-blue-300">
+            {{__('Crear Equip')}}
+        </button>
+    </form>
+@endsection
+
+```
+
+#### 5. Canviar l'Idioma Dinàmicament
+
+Per canviar l'idioma durant l'execució, utilitza el mètode `setLocale`:
+
+```php
+App::setLocale('es');
+```
+
+Per facilitar als usuaris la selecció de l'idioma, pots crear rutes o enllaços que estableixin l'idioma desitjat.
+
+---
+
+#### 7. Traduir Missatges de Validació
+
+Els missatges de validació es poden personalitzar als fitxers de llenguatge corresponents. Per exemple, al fitxer `resources/lang/ca/validation.php`:
+
+```php
+<?php
+
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | Missatges de validació
+    |--------------------------------------------------------------------------
+    |
+    | Les següents línies contenen els missatges d'error per a les diferents
+    | regles de validació. Pots ajustar aquests missatges segons les
+    | necessitats de la teva aplicació.
+    |
+    */
+
+    'accepted' => 'El camp :attribute ha de ser acceptat.',
+    'active_url' => 'El camp :attribute no és una URL vàlida.',
+    'after' => 'El camp :attribute ha de ser una data posterior a :date.',
+    'after_or_equal' => 'El camp :attribute ha de ser una data igual o posterior a :date.',
+    'alpha' => 'El camp :attribute només pot contenir lletres.',
+    'alpha_dash' => 'El camp :attribute només pot contenir lletres, números, guions i guions baixos.',
+    'alpha_num' => 'El camp :attribute només pot contenir lletres i números.',
+    'array' => 'El camp :attribute ha de ser un array.',
+    'before' => 'El camp :attribute ha de ser una data anterior a :date.',
+    'before_or_equal' => 'El camp :attribute ha de ser una data igual o anterior a :date.',
+    'between' => [
+        'numeric' => 'El camp :attribute ha d\'estar entre :min i :max.',
+        'file' => 'El camp :attribute ha de tenir entre :min i :max kilobytes.',
+        'string' => 'El camp :attribute ha de tenir entre :min i :max caràcters.',
+        'array' => 'El camp :attribute ha de tenir entre :min i :max elements.',
+    ],
+    'boolean' => 'El camp :attribute ha de ser verdader o fals.',
+    'confirmed' => 'La confirmació del camp :attribute no coincideix.',
+    'date' => 'El camp :attribute no és una data vàlida.',
+    'date_format' => 'El camp :attribute no coincideix amb el format :format.',
+    'different' => 'Els camps :attribute i :other han de ser diferents.',
+    'digits' => 'El camp :attribute ha de tenir :digits dígits.',
+    'digits_between' => 'El camp :attribute ha de tenir entre :min i :max dígits.',
+    'dimensions' => 'El camp :attribute té dimensions d\'imatge no vàlides.',
+    'distinct' => 'El camp :attribute té un valor duplicat.',
+    'email' => 'El camp :attribute ha de ser una adreça de correu electrònic vàlida.',
+    'exists' => 'El camp :attribute seleccionat no és vàlid.',
+    'file' => 'El camp :attribute ha de ser un fitxer.',
+    'filled' => 'El camp :attribute ha de tenir un valor.',
+    'gt' => [
+        'numeric' => 'El camp :attribute ha de ser més gran que :value.',
+        'file' => 'El camp :attribute ha de tenir més de :value kilobytes.',
+        'string' => 'El camp :attribute ha de tenir més de :value caràcters.',
+        'array' => 'El camp :attribute ha de tenir més de :value elements.',
+    ],
+    'gte' => [
+        'numeric' => 'El camp :attribute ha de ser més gran o igual a :value.',
+        'file' => 'El camp :attribute ha de tenir com a mínim :value kilobytes.',
+        'string' => 'El camp :attribute ha de tenir com a mínim :value caràcters.',
+        'array' => 'El camp :attribute ha de tenir com a mínim :value elements.',
+    ],
+    'image' => 'El camp :attribute ha de ser una imatge.',
+    'in' => 'El camp :attribute seleccionat no és vàlid.',
+    'in_array' => 'El camp :attribute no existeix a :other.',
+    'integer' => 'El camp :attribute ha de ser un nombre enter.',
+    'ip' => 'El camp :attribute ha de ser una adreça IP vàlida.',
+    'ipv4' => 'El camp :attribute ha de ser una adreça IPv4 vàlida.',
+    'ipv6' => 'El camp :attribute ha de ser una adreça IPv6 vàlida.',
+    'json' => 'El camp :attribute ha de ser una cadena JSON vàlida.',
+    'lt' => [
+        'numeric' => 'El camp :attribute ha de ser més petit que :value.',
+        'file' => 'El camp :attribute ha de tenir menys de :value kilobytes.',
+        'string' => 'El camp :attribute ha de tenir menys de :value caràcters.',
+        'array' => 'El camp :attribute ha de tenir menys de :value elements.',
+    ],
+    'lte' => [
+        'numeric' => 'El camp :attribute ha de ser més petit o igual a :value.',
+        'file' => 'El camp :attribute ha de tenir com a màxim :value kilobytes.',
+        'string' => 'El camp :attribute ha de tenir com a màxim :value caràcters.',
+        'array' => 'El camp :attribute no ha de tenir més de :value elements.',
+    ],
+    'max' => [
+        'numeric' => 'El camp :attribute no pot ser més gran que :max.',
+        'file' => 'El camp :attribute no pot tenir més de :max kilobytes.',
+        'string' => 'El camp :attribute no pot tenir més de :max caràcters.',
+        'array' => 'El camp :attribute no pot tenir més de :max elements.',
+    ],
+    'mimes' => 'El camp :attribute ha de ser un fitxer de tipus: :values.',
+    'mimetypes' => 'El camp :attribute ha de ser un fitxer de tipus: :values.',
+    'min' => [
+        'numeric' => 'El camp :attribute ha de ser com a mínim :min.',
+        'file' => 'El camp :attribute ha de tenir com a mínim :min kilobytes.',
+        'string' => 'El camp :attribute ha de tenir com a mínim :min caràcters.',
+        'array' => 'El camp :attribute ha de tenir com a mínim :min elements.',
+    ],
+    'not_in' => 'El camp :attribute seleccionat no és vàlid.',
+    'not_regex' => 'El format del camp :attribute no és vàlid.',
+    'numeric' => 'El camp :attribute ha de ser un nombre.',
+    'present' => 'El camp :attribute ha de ser present.',
+    'regex' => 'El format del camp :attribute no és vàlid.',
+    'required' => 'El camp :attribute és obligatori.',
+    'required_if' => 'El camp :attribute és obligatori quan :other és :value.',
+    'required_unless' => 'El camp :attribute és obligatori excepte si :other és a :values.',
+    'required_with' => 'El camp :attribute és obligatori quan :values és present.',
+    'required_with_all' => 'El camp :attribute és obligatori quan :values són presents.',
+    'required_without' => 'El camp :attribute és obligatori quan :values no és present.',
+    'required_without_all' => 'El camp :attribute és obligatori quan cap de :values són presents.',
+    'same' => 'Els camps :attribute i :other han de coincidir.',
+    'size' => [
+        'numeric' => 'El camp :attribute ha de tenir la mida :size.',
+        'file' => 'El camp :attribute ha de tenir :size kilobytes.',
+        'string' => 'El camp :attribute ha de tenir :size caràcters.',
+        'array' => 'El camp :attribute ha de contenir :size elements.',
+    ],
+    'starts_with' => 'El camp :attribute ha de començar amb un dels valors següents: :values.',
+    'string' => 'El camp :attribute ha de ser una cadena de text.',
+    'timezone' => 'El camp :attribute ha de ser una zona horària vàlida.',
+    'unique' => 'El camp :attribute ja està en ús.',
+    'uploaded' => 'El camp :attribute ha fallat en pujar.',
+    'url' => 'El format del camp :attribute no és vàlid.',
+    'uuid' => 'El camp :attribute ha de ser un identificador UUID vàlid.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Missatges personalitzats per a atributs
+    |--------------------------------------------------------------------------
+    |
+    | Pots utilitzar aquesta secció per personalitzar els noms dels atributs.
+    |
+    */
+
+    'attributes' => [],
+];
+
+```
+
+Això assegura que els missatges de validació es mostren en l'idioma seleccionat.
+
+### Pas 9. Crear proves
+
+1. Crea un fitxer de proves per al CRUD d'equips:
+```bash
+php artisan make:test EquipCRUDTest
+```
+
+2. Modifica el fitxer de proves `tests/Feature/EquipCRUDTest.php`:
+```php
+namespace Tests\Feature;
+
+use App\Models\Estadi;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use App\Models\Equip;
+
+class EquipCrudTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /** @test */
+    public function es_pot_crear_un_equip_correctament()
+    {
+        // Actuar: Crear un equip
+        $estadi = Estadi::create([
+            'nom' => 'Camp Nou',
+            'ciutat' => 'Barcelona',
+            'capacitat' => 99354,
+        ]);
+        $equip = Equip::create([
+            'nom' => 'FC Barcelona',
+             'titols' =>30,
+             'estadi_id' => 1,
+        ]);
+
+        // Comprovar que l’equip es guarda a la base de dades
+        $this->assertDatabaseHas('equips', [
+            'nom' => 'FC Barcelona',
+            'titols' => 30,
+            'estadi_id' => 1,
+        ]);
+    }
+
+    public function es_poden_llistar_els_equips()
+    {
+        // Arrange: Crear equips
+        Equip::factory()->create(['nom' => 'FC Barcelona']);
+        Equip::factory()->create(['nom' => 'Real Madrid']);
+
+        // Actuar: Obtenir la llista d’equips
+        $equips = Equip::all();
+
+        // Comprovar que la llista conté els equips creats
+        $this->assertCount(2, $equips);
+        $this->assertEquals('FC Barcelona', $equips[0]->nom);
+        $this->assertEquals('Real Madrid', $equips[1]->nom);
+    }
+
+    public function es_pot_actualitzar_un_equip()
+    {
+        // Arrange: Crear un equip
+        $equip = Equip::create([
+            'nom' => 'FC Barcelona',
+            'ciutat' => 'Barcelona',
+        ]);
+
+        // Actuar: Actualitzar l’equip
+        $equip->update([
+            'nom' => 'Barça',
+            'ciutat' => 'Catalunya',
+        ]);
+
+        // Comprovar que els canvis es reflecteixen a la base de dades
+        $this->assertDatabaseHas('equips', [
+            'nom' => 'Barça',
+            'ciutat' => 'Catalunya',
+        ]);
+    }
+
+    public function es_pot_esborrar_un_equip()
+    {
+        // Arrange: Crear un equip
+        $equip = Equip::create([
+            'nom' => 'FC Barcelona',
+            'ciutat' => 'Barcelona',
+        ]);
+
+        // Actuar: Esborrar l’equip
+        $equip->delete();
+
+        // Comprovar que l’equip ja no existeix a la base de dades
+        $this->assertDatabaseMissing('equips', [
+            'nom' => 'FC Barcelona',
+            'ciutat' => 'Barcelona',
+        ]);
+    }
+
+    public function no_es_pot_crear_un_equip_sense_nom()
+    {
+        $this->expectException(\Illuminate\Database\QueryException::class);
+
+        // Intentar crear un equip sense nom
+        Equip::create([
+            'ciutat' => 'Barcelona',
+        ]);
+    }
+}
+```
+3. Copia el .env en .env.testing i modifica'l per a executar les proves en una BBDD de testing
+
+```bash
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=testing
+DB_USERNAME=sail
+DB_PASSWORD=password
+```
+
+4. Executa les proves:
+```bash
+php artisan test
+```
+
+### Pas 10. Generar un correu electrònic amb la jornada actual (partits programats) i enviar-lo als managers dels equips.
+
+#### **1. Crear una Comanda Artisan**
+```bash
+php artisan make:command EnviarJornadaManagers
+```
+
+Al fitxer `app/Console/Commands/EnviarJornadaManagers.php`:
+
+```php
+namespace App\Console\Commands;
+
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Partit;
+use App\Mail\JornadaMail;
+
+class EnviarJornadaManagers extends Command
+{
+    protected $signature = 'jornada:enviar';
+    protected $description = 'Envia la jornada actual als managers';
+
+    public function handle()
+    {
+        $partit = Partit::whereDate('data', '>', Carbon::now()) // Filtra partits posteriors a avui
+            ->orderBy('data', 'asc') // Ordena per la data més propera
+            ->first();
+        $partits = Partit::with(['equipLocal', 'equipVisitant'])->where('jornada',$partit->jornada)->get();
+
+        // Lògica per obtenir els correus dels managers
+        $managers = User::where('role','manager')->get();
+
+
+        foreach ($managers as $manager) {
+            Mail::to($manager->email)->send(new JornadaMail($partits));
+            $this->info($manager->name . ' ha rebut la jornada.');
+
+        }
+
+        $this->info('La jornada s\'ha enviat correctament als managers.');
+    }
+}
+ 
+#### **2. Crear el Mail**
+```bash
+php artisan make:mail JornadaMail --markdown=emails.jornada
+```
+
+Al fitxer `app/Mail/JornadaMail.php`:
+
+```php
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Queue\SerializesModels;
+
+class JornadaMail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $partits;
+
+    public function __construct($partits)
+    {
+        $this->partits = $partits;
+    }
+
+
+
+    public function content(): Content
+    {
+        return new Content(
+            markdown: 'emails.jornada',
+            with: [
+                'partits' => $this->partits,
+            ],
+        );
+    }
+}
+
+```
+
+
+#### **3. Crear la Vista del Correu**
+Al fitxer `resources/views/emails/jornada.blade.php`:
+
+```markdown
+<x-mail::message>
+    # Jornada {{ $partits->first()->jornada }}
+
+    ## Partits Programats:
+    @foreach($partits as $partit)
+        - **{{ $partit->equipLocal->nom }}** vs **{{ $partit->equipVisitant->nom }}** ({{ $partit->data }})
+    @endforeach
+
+    Gràcies,
+    **{{ config('app.name') }}**
+</x-mail::message>
+```
+
+#### **4. Efectuar l'Enviament**
+Pots enviar els correus manualment executant la comanda:
+
+```bash
+php artisan jornada:enviar
+``` 
+
+Pots programar la comanda al `Kernel.php`:
+
+```php
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('jornada:enviar')->weeklyOn(1, '8:00');
+}
+```
+
+
+### Pas 11. Crear un component livewire per a mostrar un històric de partits
+
+1. Instal·la Livewire:
+```bash
+composer require livewire/livewire
+php artisan livewire:publish
+```
+
+2. Afegeix els scripts de Livewire a la plantilla Blade:
+
+```html
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+</head>
+<body class="font-sans antialiased">
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    @include('layouts.navigation')
+
+    <!-- Page Heading -->
+    @isset($header)
+    <header class="bg-white dark:bg-gray-800 shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {{ $header }}
+        </div>
+    </header>
+    @endisset
+
+    <!-- Page Content -->
+    <main>
+        {{ $slot }}
+    </main>
+</div>
+@livewireScripts
+</body>
+</html>
+```
+3. Genera el component Livewire:
+```bash
+ php artisan make:livewire HistorialPartits
+```
+
+4. Modifica el component Livewire `app/Livewire/HistorialPartits.php`:
+```php
+namespace App\Livewire;
+
+use App\Models\Partit;
+use Livewire\Component;
+
+class HistorialPartits extends Component
+{
+    public $partits;
+    public $equip = '';
+    public $data = '';
+
+    public function mount()
+    {
+        $this->partits = Partit::with(['equipLocal', 'equipVisitant', 'estadi', 'arbitre'])->get();
+    }
+
+
+    public function filtrar()
+    {
+        $this->partits = Partit::with(['equipLocal', 'equipVisitant', 'estadi', 'arbitre'])
+            ->when($this->equip, function ($query) {
+                $query->whereHas('equipLocal', fn($q) => $q->where('nom', 'like', "%{$this->equip}%"))
+                    ->orWhereHas('equipVisitant', fn($q) => $q->where('nom', 'like', "%{$this->equip}%"));
+            })
+            ->when($this->data, function ($query) {
+                $query->whereDate('data', $this->data);
+            })
+            ->get();
+    }
+
+    public function render()
+    {
+        return view('livewire.historial-partits', ['partits' => $this->partits]);
+    }
+}
+```
+5. Modifica la vista del component Livewire `resources/views/livewire/historial-partits.blade.php`:
+```php
+<div>
+    <div class="flex space-x-4">
+        <input wire:model="equip" type="text" placeholder="Cerca equip" class="border px-4 py-2">
+        <input wire:model="data" type="date" class="border px-4 py-2">
+        <button wire:click="filtrar" class="bg-blue-500 text-white px-4 py-2">Filtrar</button>
+    </div>
+
+    <table class="table-auto w-full mt-4">
+        <thead>
+        <tr>
+            <th>Data</th>
+            <th>Equip Local</th>
+            <th>Equip Visitant</th>
+            <th>Resultat</th>
+            <th>Estadi</th>
+            <th>Àrbitre</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($partits as $partit)
+            <tr>
+                <td>{{ $partit->data }}</td>
+                <td>{{ $partit->equipLocal->nom }}</td>
+                <td>{{ $partit->equipVisitant->nom }}</td>
+                <td>{{ $partit->resultat }}</td>
+                <td>{{ $partit->estadi->nom }}</td>
+                <td>{{ $partit->arbitre->name }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
+```
+6. Crea la vista `resources/views/partits/historic.blade.php`:
+```php
+@extends('layouts.futbolFemeni')
+
+@section('title', __('Històric de partits' ))
+
+@section('content')
+
+    <!-- Afegim el component Livewire aquí -->
+    <div class="mt-8">
+        @livewire('historial-partits')
+    </div>
+@endsection
+```
+7. Modifica la ruta `routes/web.php`:
+```php
+Route::get('/historic', [PartitController::class, 'historic'])->name('partits.historic');
+
+```
+8. Modifica el controlador `app/Http/Controllers/PartitController.php`:
+```php
+public function historic()
+{
+    return view('partits.historic');
+}
+```
+9. Afegix entrada en el menú `resources/views/layouts/navigation.blade.php`:
+```php
+<div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+    <x-nav-link :href="route('partits.historic')" :active="request()->routeIs('partits.historic')">
+        {{ __('Històric Partits') }}
+    </x-nav-link>
+</div>
+```
+
+
 
 ###  🏁 Exercici Final: Guia de Futbol Femení II
 
