@@ -1176,7 +1176,7 @@ protected $fillable = ['nom', 'estadi_id', 'titols', 'escut'];
 **Modificat el [component](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/components/equip.blade.php) de la vista [`equips.show`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/show.blade.php) per mostrar l'escut de l'equip**
 
 
-#### 2. Configurar l'autenticació amb Laravel Breeze
+#### 🔑 2. Configurar l'autenticació amb Laravel Breeze
 
 1. Canviar el nom del fitxer app.blade.php de la carpeta resources/views/layouts a equip.blade.php.
 2. Guarda les rutes de la Guia d'Equips de Futbol Femení en algun fitxer per utilitzar després.
@@ -1192,11 +1192,9 @@ Triarem **blade amb alpine** i **PHPUNIT**
 
 4. Canviar totes les vistes per a que extenguen de layouts.equip
 
-#### 3.  Afegir els rols al sistema
-
-#### Migració per al camp `role` als usuaris
-
-1. Crea una nova migració per afegir el camp `role` a usuaris :
+#### 👥 3.  Afegir els rols al sistema
+  
+**Crea una nova migració per afegir el camp `role` a usuaris**
  
    ```bash
    php artisan make:migration add_role_to_users_table --table=users
@@ -1220,7 +1218,7 @@ Triarem **blade amb alpine** i **PHPUNIT**
 
 **Executa el [seeder](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/database/seeders/UserSeeder.php) havent canviat [DatabaseSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/database/seeders/DatabaseSeeder.php )**
 
-### Pas 3: Middleware per a permisos de rol i manager
+#### 🚪3. Middleware per a permisos de rol i manager
  
 - **Genera el middleware**
    ```bash
@@ -1228,69 +1226,34 @@ Triarem **blade amb alpine** i **PHPUNIT**
    ```
 - **Defineix el control dels rols en el metode [handle](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Middleware/RoleMiddleware.php)**
  
-- **Aplica  Middleware a [rutes](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php) ** fent que  les rutes per tal que els equips,estadis soles puguen modificar-los els administradors:
-  ```php
-    Route::middleware(['auth', RoleMiddleware::class.':administrador' ])->group(function (){
-        Route::resource('/equips', EquipController::class)->except(['index', 'show']);
-        Route::resource('/estadis', EstadisController::class)->except(['index', 'show']);
-    });
-    Route::resource('/equips', EquipController::class)->only(['index', 'show']);
-    Route::resource('/estadis', EstadisController::class)->only(['index', 'show']);
+- **Aplica  Middleware a [rutes](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php)** fent que  les rutes per tal que els equips,estadis soles puguen modificar-los els administradors. 
+ 
+ 
+#### 🧑‍💼👥 4. Associar managers a equips
 
-  ```
-
-
-### Pas 4: Associar managers a equips
-
-#### Migració per a l’associació entre usuaris i equips
-1. Crea una migració nova:
-   ```bash
+ 
+**Crea una migració nova**
+```bash
    php artisan make:migration add_team_id_to_users_table --table=users
-   ```
-2. Afegeix el camp `team_id`:
-   ```php
-   Schema::table('users', function (Blueprint $table) {
-       $table->unsignedBigInteger('equip_id')->nullable();
-       $table->foreign('equip_id')->references('id')->on('equips')->onDelete('set null');
-   });
-   ```
-3. Aplica la migració:
+```
+
+**Afegeix el camp [`team_id`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/database/migrations/2025_09_03_174708_add_team_id_to_users_table.php)**  i **aplica la migració**
    ```bash
    php artisan migrate
    ```
 
-#### Assignar equips als managers
-- Crea un manager per equip i assigna-li  :
-  ```php
-  foreach (Equip::all() as $equip){
-            User::create([
-                'name' => 'Manager  '.$equip->nom,
-                'email' => $equip->nom.'@manager.com',
-                'password' => Hash::make('1234'),
-                'role' => 'manager',
-                'equip_id' => $equip->id,
-            ]);
-        }
-  ```
+**Assigna equips als managers, creant u manager per equip i assigna-li** 
 
-### Relació entre models
-- Defineix la relació al model `User`:
-  ```php
-  public function equip()
-  {
-      return $this->belongsTo(Equip::class );
-  }
-  ```
-- Defineix la relació inversa al model `Equip`:
-  ```php
-  public function manager()
-  {
-      return $this->hasOne(User::class );
-  }
-  ```
+[EquipsSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/database/seeders/EquipsSeeder.php)   
+
+ 
+**Defineix la relació al model [`User`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Models/User.php)**
+ 
+**Defineix la relació inversa al model [`Equip`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Models/Equip.php)**
+  
 
 
-### Pas 5: Adaptar les vistes al component layout de Breeze
+### 🧩🖼️ 5. Adaptar les vistes al component layout de Breeze
 
 1. Modificar equips.blade.php per a utilitzar el layout de Breeze.
 
