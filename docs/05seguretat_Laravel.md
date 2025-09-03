@@ -853,7 +853,7 @@ class EquipServiceTest extends TestCase
  
 ### Bones pràctiques
 
-- Refactoritzar el codi amb Service, Repository, etc.
+-  Refactoritzar el codi amb Service, Repository, etc.
 -  Usar factories per crear dades de prova.
 -  Fer proves independents i narratives (test-first sempre que siga possible).
 -  Provar estats de sessió, permisos i policies.
@@ -1125,12 +1125,8 @@ Reestructurar l’aplicació de futbol femení (feta sense persistència) cap a 
 - Autenticació
 
 ---
-
- 
-
-
-
-#### 3.  🛡️ Afegir un escut a l'equip  (Branca escut)
+c
+#### 1.  🛡️ Afegir un escut a l'equip  (Branca escut)
 
 **Crear una migració per afegir un camp `escut` a la taula `equips`**
 
@@ -1180,28 +1176,32 @@ protected $fillable = ['nom', 'estadi_id', 'titols', 'escut'];
 **Modificat el [component](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/components/equip.blade.php) de la vista [`equips.show`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/show.blade.php) per mostrar l'escut de l'equip**
 
 
-### Pas 1: Configurar l'autenticació amb Laravel Breeze
-1. Copia el fitxer app.blade.php de la carpeta resources/views/layouts a equips.blade.php.
+#### 2. Configurar l'autenticació amb Laravel Breeze
+
+1. Canviar el nom del fitxer app.blade.php de la carpeta resources/views/layouts a equip.blade.php.
 2. Guarda les rutes de la Guia d'Equips de Futbol Femení en algun fitxer per utilitzar després.
 3. Instal·la Laravel Breeze:
 
 ```bash
 composer require laravel/breeze --dev
 php artisan breeze:install
-npm install && npm run dev
+npm install && npm run build
 php artisan migrate
 ```
+Triarem **blade amb alpine** i **PHPUNIT**
 
+4. Canviar totes les vistes per a que extenguen de layouts.equip
 
-### Pas 2: Afegir els rols al sistema
+#### 3.  Afegir els rols al sistema
 
 #### Migració per al camp `role` als usuaris
 
-1. Crea una nova migració per afegir el camp `role` a usuaris:
+1. Crea una nova migració per afegir el camp `role` a usuaris :
+ 
    ```bash
    php artisan make:migration add_role_to_users_table --table=users
    ```
-   Afegeix el camp:
+   Afegeix el [camp](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/database/migrations/2025_09_03_171410_add_role_to_users_table.php) i aplica-la:
    ```php
    Schema::table('users', function (Blueprint $table) {
        $table->string('role')->default('arbitre');
@@ -1212,37 +1212,23 @@ php artisan migrate
    php artisan migrate
    ```
 
-#### Crea el seeders d'usuaris i crea un usuari administrador
+**Crea el seeders d'usuaris i crea un usuari administrador**
 
-  ```php
-  User::create([
-      'name' => 'Admin',
-      'email' => 'admin@example.com',
-      'password' => Hash::make('password'),
-      'role' => 'administrador',
-  ]);
-  ```
+```bash
+ php artisan make:seeder UserSeeder
+``` 
+
+**Executa el [seeder](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/database/seeders/UserSeeder.php) havent canviat [DatabaseSeeder](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/database/seeders/DatabaseSeeder.php )**
 
 ### Pas 3: Middleware per a permisos de rol i manager
-
-#### Crear Middleware per a gestionar els rols
-1. Genera el middleware:
+ 
+- **Genera el middleware**
    ```bash
    php artisan make:middleware RoleMiddleware
    ```
-2. Defineix el control dels rols:
-   ```php
-   public function handle($request, Closure $next, $role)
-   {
-       if (auth()->user()->role !== $role) {
-           return redirect('/')->with('error', 'No tens permís per accedir a aquesta pàgina.');
-       }
-       return $next($request);
-   }
-   ```
-
-#### Aplicar Middleware a rutes
-- Protegeix les rutes per tal que els equips,estadis soles puguen modificar-los els administradors:
+- **Defineix el control dels rols en el metode [handle](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Middleware/RoleMiddleware.php)**
+ 
+- **Aplica  Middleware a [rutes](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php) ** fent que  les rutes per tal que els equips,estadis soles puguen modificar-los els administradors:
   ```php
     Route::middleware(['auth', RoleMiddleware::class.':administrador' ])->group(function (){
         Route::resource('/equips', EquipController::class)->except(['index', 'show']);
