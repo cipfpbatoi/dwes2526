@@ -1253,226 +1253,34 @@ Triarem **blade amb alpine** i **PHPUNIT**
   
 
 
-### 🧩🖼️ 5. Adaptar les vistes al component layout de Breeze
+#### 🧩🖼️ 5. Adaptar les vistes al component layout de Breeze
 
-1. Modificar equips.blade.php per a utilitzar el layout de Breeze.
+- **Modificar [`layouts/equip.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/layouts/equip.blade.php) per a utilitzar el layout de Breeze**.
+ 
+- **Modificar el layout de Breeze per a incloure el menú de navegació en [`layouts\navigation.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/layouts/navigation.blade.php)** .
+ 
+- **Modificar el menu de navegaciò [`partials/menu.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/partials/menu.blade.php) per acoplar-se**. 
+ 
 
-```php
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            @yield('title','Guia de futbol femení')
-        </h2>
-    </x-slot>
+####  🧑‍💼✏️🔒👥 6. El manager soles puga editar el seu equip
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    @yield('content')
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer>
-        <p>&copy; 2024 Guia de Futbol Femení</p>
-    </footer>
-</x-app-layout>
-```
+- **Crea la Política**
 
-2. Modificar la vista de l'equip per a utilitzar el layout de Breeze.
-
-```php
-@extends('layouts.equips')
-```
-
-3. Modificar el layout de Breeze per a incloure el menú de navegació .
-
-En navigation.blade.php:
-```php
-    ...
-    <!-- Navigation Links -->
-    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-            {{ __('Dashboard') }}
-        </x-nav-link>
-    </div>
-    @include('partials.menu')
-    ...
-```
-
-4. En partials/menu.blade.php:
-```php
-    ...
-    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-nav-link :href="route('equips.index')" :active="request()->routeIs('dashboard')">
-            {{ __('Guia Equips') }}
-        </x-nav-link>
-    </div>
-    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-nav-link :href="route('estadis.index')" :active="request()->routeIs('dashboard')">
-            {{ __('Estadis') }}
-        </x-nav-link>
-    </div>
-    ...
-```
-
-### Pas 6: El manager soles puga editar el seu equip
-
-#### 1. Crear la Política
-Executa el següent comandament per generar la política associada al model `Equip`:
 ```bash
 php artisan make:policy EquipPolicy --model=Equip
 ```
 
-#### 2. Definir la Lògica a la Política
-Edita el fitxer generat `app/Policies/EquipPolicy.php` i afegeix les regles de permisos.
+- **Defineix la Lògica a la Política** al fitxer generat [`app/Policies/EquipPolicy.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Policies/EquipPolicy.php) per tal d'afegir les regles i permisos.
 
+- **Utilitza  la Política al Controlador  [`EquipController`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Controllers/EquipController.php)**, utilitzant el mètode `authorize` per aplicar la política abans de permetre accions.
+ 
+- **Permet als manager accedir a les [rutes](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php)** per poder modificar. 
 
-```php
-namespace App\Policies;
+- **Utilitza  les directives `@can` per verificar els permisos a les vistes [`equis/index.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/index.blade.php)
 
-use App\Models\User;
-use App\Models\Equip;
-
-class EquipPolicy
-{
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        // Només els administradors poden crear equips
-        return $user->role === 'administrador';
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Equip $equip)
-    {
-        // Permetre si l'usuari és un administrador o un manager i està assignat a aquest equip
-        return $user->role === 'administrador' || ($user->role === 'manager' && $user->equip_id === $equip->id);
-    }
-
-    /**
-     * Determina si l'usuari pot eliminar l'equip.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Equip $equip
-     * @return bool
-     */
-    public function delete(User $user, Equip $equip)
-    {
-        // Només els administradors poden eliminar equips
-        return $user->role === 'administrador';
-    }
-}
-```
-
-
-#### 3. Utilitzar la Política al Controlador
-Al controlador `EquipController`, utilitza el mètode `authorize` per aplicar la política abans de permetre accions.
-
-```php
-class EquipController extends Controller
-{
-
-    use AuthorizesRequests;
-
-    public function index() {
-        $equips = Equip::all();
-        return view('equips.index', compact('equips'));
-    }
-
-    public function show(Equip $equip) {
-        return view('equips.show', compact('equip'));
-    }
-
-    public function create() {
-        $this->authorize('create');
-        $estadis = Estadi::all();
-        return view('equips.create',compact('estadis'));
-    }
-
-    public function edit(Equip $equip) {
-        $this->authorize('update', $equip);
-        $estadis = Estadi::all();
-        return view('equips.edit', compact('equip','estadis'));
-    }
-
-
-    public function store(Request $request)
-    {
-        $this->authorize('create');
-        $validated = $request->validate([
-            'nom' => 'required|unique:equips',
-            'titols' => 'integer|min:0',
-            'estadi_id' => 'required|exists:estadis,id',
-            'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validació del fitxer
-        ]);
-
-        if ($request->hasFile('escut')) {
-            $path = $request->file('escut')->store('escuts', 'public');
-            $validated['escut'] = $path;
-        }
-
-        Equip::create($validated);
-
-        return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
-    }
-
-
-    public function update(Request $request, Equip $equip)
-    {
-        $this->authorize('update', $equip);
-        $validated = $request->validate([
-            'nom' => 'required|unique:equips,nom,' . $equip->id,
-            'titols' => 'integer|min:0',
-            'estadi_id' => 'required|exists:estadis,id',
-            'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-
-        if ($request->hasFile('escut')) {
-            if ($equip->escut) {
-                Storage::disk('public')->delete($equip->escut); // Esborra l'escut antic
-            }
-            $path = $request->file('escut')->store('escuts', 'public');
-            $validated['escut'] = $path;
-        }
-
-        $equip->update($validated);
-
-        return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament!');
-    }
-
-    public function destroy(Equip $equip)
-    {
-        $this->authorize('delete', $equip);
-        if ($equip->escut) {
-            Storage::disk('public')->delete($equip->escut);
-        }
-        $equip->delete();
-        return redirect()->route('equips.index')->with('success', 'Equip esborrat correctament!');
-    }
-
-
-}
-```
-
-
-#### 4. Utilitzar la Política a les Vistes
-A les vistes Blade, pots utilitzar les directives `@can` per verificar els permisos.
-
-
-```blade
-@can('update', $equip)
-    <a href="{{ route('equips.edit', $equip->id) }}" class="text-yellow-600 hover:underline">Editar</a>
-@endcan
-```
-
-### Pas 7. Afegir FormRequest per a la validació
+- **Trasl 
+ 
+####  7. Afegir FormRequest per a la validació
 
 ####  1. Generar el Form Request
 
