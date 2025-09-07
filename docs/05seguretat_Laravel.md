@@ -1271,135 +1271,18 @@ php artisan make:policy EquipPolicy --model=Equip
 ```
 
 - **Defineix la Lògica a la Política** al fitxer generat [`app/Policies/EquipPolicy.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Policies/EquipPolicy.php) per tal d'afegir les regles i permisos.
+ 
+- **Defineix les regles d'autorització' en [`StoreEquipRequest.php`]()**.
+
+- **Fes el mateix amb  [`UpdateEquipRequest.php`]()**
+  
+- **Permet als manager accedir a les [rutes](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php)** per poder modificar.
 
 - **Utilitza  la Política al Controlador  [`EquipController`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Controllers/EquipController.php)**, utilitzant el mètode `authorize` per aplicar la política abans de permetre accions.
  
-- **Permet als manager accedir a les [rutes](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php)** per poder modificar. 
-
-- **Utilitza  les directives `@can` per verificar els permisos a les vistes [`equis/index.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/index.blade.php)
-
-- **Trasl 
+- **Utilitza  les directives `@can` per verificar els permisos a les vistes [`equis/index.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/index.blade.php)**.
+  
  
-####  7. Afegir FormRequest per a la validació
-
-####  1. Generar el Form Request
-
-Executa el següent comandament per crear un Form Request:
-
-```bash
-php artisan make:request StoreEquipRequest
-php artisan make:request UpdateEquipRequest
-```
-
-Aquest comandament crearà una classe `StoreEquipRequest` i altra `UpdateEquipRequest  al directori `app/Http/Requests`.
-
----
-
-####  2. Definir les regles de validació
-
-Obre el fitxer `StoreEquipRequest.php` i defineix les regles de validació al mètode `rules`.
-
-##### Exemple de validació:
-```php
-namespace App\Http\Requests;
-
-use Illuminate\Foundation\Http\FormRequest;
-
-class StoreEquipRequest extends FormRequest
-{
-    /**
-     * Determina si l'usuari està autoritzat a fer aquesta petició.
-     *
-     * @return bool
-     */
-    public function authorize(): bool
-    {
-         return $this->user()->can('create', Equip::class);
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
-    {
-        return [
-            'nom' => 'required|unique:equips',
-            'titols' => 'integer|min:0',
-            'estadi_id' => 'required|exists:estadis,id',
-            'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validació del fitxer
-        ];
-    }
-    
-    public function messages()
-    {
-        return [
-            'nom.required' => 'El camp "Nom" és obligatori.',
-            'nom.unique' => 'Aquest nom ja està en ús. Si us plau, tria un altre.',
-            'titols.integer' => 'El camp "Títols" ha de ser un número enter.',
-            'titols.min' => 'El nombre de títols no pot ser inferior a zero.',
-            'estadi_id.required' => 'El camp "Estadi" és obligatori.',
-            'estadi_id.exists' => 'L\'estadi seleccionat no és vàlid.',
-            'escut.image' => 'El camp "Escut" ha de ser una imatge.',
-            'escut.mimes' => 'El camp "Escut" només accepta formats: jpeg, png, jpg.',
-            'escut.max' => 'La mida de l\'escut no pot superar els 2 MB.',
-        ];
-    }
-}
-```
-
-#### 3. Modificar el Controlador per Utilitzar el Form Request
-
-Substitueix la injecció de `Request` pel nou `StoreEquipRequest` al mètode `store` del controlador `EquipController`.
-
-##### Exemple:
-```php
-use App\Http\Requests\StoreEquipRequest;
-
-public function store(StoreEquipRequest $request)
-{
-     
-    $validated = $request->validated(); // Obté les dades validades
-
-    if ($request->hasFile('escut')) {
-        $path = $request->file('escut')->store('escuts', 'public');
-        $validated['escut'] = $path;
-    }
-
-    Equip::create($validated);
-
-    return redirect()->route('equips.index')->with('success', 'Equip creat correctament!');
-}
-```
-
-#### 4. Fes el mateix per al Mètode `update`
-
-
-Defineix les regles al mètode `rules`, incloent l'excepció per al camp únic (en aquest cas, el `nom`):
-
-
-```php
-use App\Http\Requests\StoreEquipRequest;
-
-public function authorize()
-{
-    $equip = $this->route('equip'); // Obté l'equip de la ruta
-    return $this->user()->can('update', $equip);
-}
-
-public function rules()
-{
-    $equipId = $this->route('equip')->id; // Obté l'ID de l'equip actual
-
-    return [
-        'nom' => 'required|unique:equips,nom,' . $equipId,
-        'titols' => 'integer|min:0',
-        'estadi_id' => 'required|exists:estadis,id',
-        'escut' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-    ];
-} 
-```
 ## Pas 8. Idiomes al projecte
 
 #### 1. Publicar els Fitxers de Llenguatge
