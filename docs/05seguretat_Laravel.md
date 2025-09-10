@@ -376,7 +376,7 @@ A **sota de cada camp**:
 
 Laravel proporciona eines senzilles i potents per a la **localització d'aplicacions**, permetent suportar múltiples idiomes. Aquesta funcionalitat és ideal per a desenvolupar aplicacions accessibles a usuaris de diferents regions i llengües.
 
-### 1️⃣ Configuració Inicial
+#### 1️⃣ Configuració Inicial
  
 L'idioma predeterminat s'estableix al fitxer `config/app.php` mitjançant el paràmetre `locale`:
 ```php
@@ -384,7 +384,17 @@ L'idioma predeterminat s'estableix al fitxer `config/app.php` mitjançant el par
 'fallback_locale' => 'en', //altenNATIU
 ```
  
-### 2️⃣  Fitxers de Traducció
+#### 2️⃣  Fitxers de Traducció
+
+ 
+Per defecte, Laravel no inclou el directori `lang`. Per personalitzar els fitxers de llenguatge o crear-ne de nous, executa:
+
+```bash
+php artisan lang:publish
+composer require laravel-lang/lang --dev
+php artisan lang:add es
+php artisan lang:add ca
+```
  
 Els fitxers de traducció es guarden al directori `lang`. Cada idioma té la seua pròpia carpeta, amb fitxers `.php` que contenen arrays clau-valor per a les traduccions:
 
@@ -413,42 +423,7 @@ return [
 ];
 ```
 
----
-
-### 3️⃣ Ús de Traduccions en el Codi
- 
-Utilitza la funció auxiliar `__()` per obtenir les traduccions:
-```php
-echo __('messages.welcome'); // Welcome to our application!
-```
-Amb paràmetres:
- 
-```php
-// lang/en/messages.php
-return [
-    'greeting' => 'Hello, :name!',
-];
-```
-```php
-echo __('messages.greeting', ['name' => 'John']); // Hello, John!
-```
-
- 
-
-#### 4️⃣ Canviar l'Idioma Dinàmicament
-
-Per canviar l'idioma de l'aplicació en temps d'execució, utilitza el mètode `App::setLocale()`:
-
-```php
-use Illuminate\Support\Facades\App;
-
-App::setLocale('es'); // Canvia a espanyol
-```
-
-Aquesta configuració només afecta la petició actual.
-
-
-### 5️⃣ Traduccions amb Fitxers JSON
+#### 3️⃣ Traduccions amb Fitxers JSON
 
 Laravel permet utilitzar fitxers JSON per a traduccions simples. Aquest enfocament és útil per a aplicacions amb cadenes de traducció úniques i desordenades.
 
@@ -468,13 +443,46 @@ Per accedir a aquestes cadenes:
 echo __('I love programming.');
 ```
 
-# 📬 Enviament de Correus en Laravel 12
+
+#### 4️⃣ Ús de Traduccions en el Codi
+ 
+Utilitza la funció auxiliar `__()` per obtenir les traduccions:
+```php
+echo __('messages.welcome'); // Welcome to our application!
+```
+Amb paràmetres:
+ 
+```php
+// lang/en/messages.php
+return [
+    'greeting' => 'Hello, :name!',
+];
+```
+```php
+echo __('messages.greeting', ['name' => 'John']); // Hello, John!
+```
+ 
+####  5️⃣ Canviar l'Idioma Dinàmicament
+
+Per canviar l'idioma de l'aplicació en temps d'execució, utilitza el mètode `App::setLocale()`:
+
+```php
+use Illuminate\Support\Facades\App;
+
+App::setLocale('es'); // Canvia a espanyol
+```
+
+Aquesta configuració només afecta la petició actual.
+
+
+
+## 📬 Enviament de Correus en Laravel 12
 
 Laravel proporciona una API elegant per a l’enviament de correus electrònics a través de múltiples serveis (SMTP, Mailgun, Postmark, Amazon SES...).
 
 ---
 
-## 1️⃣ Configuració del Servei de Correu
+#### 1️⃣ Configuració del Servei de Correu
 
 Edita el fitxer `.env`:
 
@@ -491,7 +499,7 @@ MAIL_FROM_NAME="Nom del Projecte"
 ```
 El fitxer config/mail.php carregarà automàticament aquests valors.
 
-### 2️⃣ Crear una Classe de Correu
+#### 2️⃣ Crear una Classe de Correu
 
  
 ```bash
@@ -528,7 +536,7 @@ class WelcomeMail extends Mailable
 }
 ```
 
-### 3️⃣ Crear la Vista del Correu
+#### 3️⃣ Crear la Vista del Correu
 resources/views/emails/benvinguda.blade.php
 
 ```bladehtml
@@ -553,7 +561,7 @@ Mail::to('usuari@example.com')->send(new WelcomeMail($user));
 Mail::to(['user1@example.com', 'user2@example.com'])->send(new WelcomeMail($user));
 ```
 
-### 5️⃣ Correus amb Markdown
+#### 5️⃣ Correus amb Markdown
 
 Laravel permet crear correus amb components de Markdown. Generem un correu amb components:
 ```bash
@@ -580,7 +588,7 @@ Exemple de plantilla Markdown:
 
 ```
 
-### 6️⃣ Correus en cua (asíncrons)
+#### 6️⃣ Correus en cua (asíncrons)
 
 Per millorar el rendiment:
 ```php
@@ -597,16 +605,16 @@ QUEUE_CONNECTION=database
 Laravel proporciona una API senzilla per treballar amb fitxers i directoris a través del component `Storage`.
 
  
-### 1️⃣ Configuració del Sistema de Fitxers
+#### 1️⃣ Configuració del Sistema de Fitxers
 
 Els “discs” es configuren al fitxer `config/filesystems.php`.
 
-#### Tipus comuns:
+##### Tipus comuns:
 - `local`: emmagatzematge intern (no accessible públicament)
 - `public`: fitxers accessibles via navegador
 - `s3`: Amazon S3 o altres serveis compatibles
 
-#### `.env`:
+##### `.env`:
 
 ```env
 FILESYSTEM_DISK=local
@@ -616,7 +624,7 @@ AWS_DEFAULT_REGION=us-east-1
 AWS_BUCKET=el_teu_bucket
 ```
 
-### 2️⃣ Operacions Bàsiques
+#### 2️⃣ Operacions Bàsiques
 
 **Guardar fitxers**
  
@@ -671,7 +679,7 @@ $directories = Storage::directories('documents');
 $allDirectories = Storage::allDirectories('documents');
 ```
 
-### 3️⃣ Fitxers Públics
+#### 3️⃣ Fitxers Públics
 
 Per servir fitxers públicament, utilitza el disc public i crea un enllaç simbòlic:
 ```bash
@@ -684,7 +692,7 @@ php artisan storage:link
 $url = Storage::url('documents/file.txt'); // Genera una URL pública
 ```
 
-4️⃣ Amazon S3
+#### 4️⃣ Amazon S3
 
 Inclou les credencials d'Amazon S3 al fitxer `.env`:
 ```env
@@ -709,7 +717,7 @@ $url = Storage::disk('s3')->url('documents/file.txt');
 Laravel inclou una infraestructura de proves robusta basada en PHPUnit, que permet realitzar proves unitàries, d'integració i de funcionalitat HTTP.
  
 
-### 🧪 Tipus de proves
+#### 🧪 Tipus de proves
 
 - Proves Unitàries : Validen la lògica d’un component aïllat (model, servei, etc.).
 
@@ -721,9 +729,9 @@ Laravel inclou una infraestructura de proves robusta basada en PHPUnit, que perm
 
 ---
 
-### ⚙️ Configuració
+#### ⚙️ Configuració
 
-### `.env.testing`
+##### `.env.testing`
 Defineix la configuració per a l’entorn de proves:
 
 ```env
@@ -733,7 +741,7 @@ DB_DATABASE=:memory:
 ```
 S’utilitza automàticament en executar **php artisan test**.
  
-### ✏️ Crear proves
+#### ✏️ Crear proves
 
 Per generar una prova:
 ```bash
@@ -780,9 +788,9 @@ class EquipFeatureTest extends TestCase
 
 ```
 
-### Proves de Base de Dades
+#### Proves de Base de Dades
 
-####   Migracions 
+#####   Migracions 
 
 Utilitza el trait `RefreshDatabase` per executar les migracions abans de cada prova:
 
@@ -851,7 +859,7 @@ class EquipServiceTest extends TestCase
 ```
 
  
-### Bones pràctiques
+#### Bones pràctiques
 
 -  Refactoritzar el codi amb Service, Repository, etc.
 -  Usar factories per crear dades de prova.
@@ -865,7 +873,7 @@ class EquipServiceTest extends TestCase
 
 ---
 
-### ✅ 1. Instal·lació i configuració bàsica
+#### ✅ 1. Instal·lació i configuració bàsica
 
 ```bash
 composer require livewire/livewire
@@ -885,7 +893,7 @@ php artisan livewire:configure-vite
 
 ```
 
-### 🧱 2. Crear components
+#### 🧱 2. Crear components
 
 **Generar un Component**
  
@@ -928,9 +936,9 @@ resources/views/livewire/hello-world.blade.php
 <livewire:hello-world />
 ```
 
-### 🔁 3. Propietats reactives i accions
+#### 🔁 3. Propietats reactives i accions
 
-#### Propietats i bindings
+##### Propietats i bindings
 Les propietats de la classe PHP es poden vincular directament als camps d'un formulari HTML:
 
 ```php
@@ -961,7 +969,7 @@ class Counter extends Component
 ```
 
 
-### 💬 4. Validació
+#### 💬 4. Validació
 
 Livewire permet validar dades a mesura que l'usuari interactua amb el formulari:
 
@@ -989,7 +997,7 @@ public function updated($propertyName)
 
 ```
 
-### 📦 5. Components amb formularis
+#### 📦 5. Components amb formularis
 
  
 ```php
@@ -1018,7 +1026,7 @@ $this->validate([
 </form>
 ```
 
-### 🧠 6. Exemple complet
+#### 🧠 6. Exemple complet
 
 contador.php
 ```php
@@ -1045,7 +1053,7 @@ contador.blade.php
 </div>
 
 ```
-### 7. Altres funcionalitats útils
+#### 7. Altres funcionalitats útils
 
 **Hooks**
 
@@ -1065,7 +1073,7 @@ session()->flash('missatge', 'Guardat!');
 @endif
 ```
 
-### 🔐 8. Amb autenticació i autorització
+#### 🔐 8. Amb autenticació i autorització
 
 ```php
 public function mount()
@@ -1077,7 +1085,7 @@ public function mount()
 
 ```
 
-### 🧪 9. Proves de components Livewire
+#### 🧪 9. Proves de components Livewire
 
 ```php
 namespace Tests\Feature\Livewire;
@@ -1107,7 +1115,7 @@ class HistorialPartitsTest extends TestCase
 
 ```
 
-### 🧩 10. Avantatges de Livewire
+#### 🧩 10. Avantatges de Livewire
 
 - Sense JavaScript
 - Integració directa amb Laravel
@@ -1285,21 +1293,16 @@ php artisan make:policy EquipPolicy --model=Equip
  
 ## 🌍 7. Internacionalització
 
-**Publicar els Fitxers de Llenguatge**
-
-Per defecte, Laravel no inclou el directori `lang`. Per personalitzar els fitxers de llenguatge o crear-ne de nous, executa:
-
+#### Publicar els Fitxers de Llenguatge 
+  
 ```bash
 php artisan lang:publish
 composer require laravel-lang/lang --dev
 php artisan lang:add es
 php artisan lang:add ca
 ```
-
-Aquesta comanda crearà el directori `lang` i publicarà els fitxers de llenguatges   de Laravel.
-Això assegura que els missatges de validació es mostren en l'idioma seleccionat.
-
-**Configurar l'Idioma Predeterminat**
+ 
+#### Configurar l'Idioma Predeterminat 
 
 Al fitxer `.env`, ajusta l'opcions `locale` per establir l'idioma predeterminat:
 
@@ -1308,165 +1311,48 @@ APP_LOCALE=ca
 APP_FALLBACK_LOCALE=en
 ```
 **Definir les Traduccions**
-
-Les cadenes de traducció es poden emmagatzemar en fitxers PHP o JSON dins del directori `lang`.
- 
-Si utilitzem fitxer json hem de **crear un fiter per a cada idioma dins de `lang`** i afegir els fitxers de traducció corresponents. Per exemple:
-
-```
-/lang
-     ca.json
-     es.json 
-     en.json
-```
  
 - [ca.json](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/lang/ca.json)
 - [es.json](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/lang/es.json)
 - [en.json](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/lang/en.json)
  
-on cada fitxer  retorna  un array de cadenes traduïdes.
-
-**Recuperar Cadenes de Traducció**
+ 
+#### Recuperar Cadenes de Traducció 
 
 Utilitza la funció `__()` per obtenir les cadenes traduïdes en les vistes.
 
 Per exemple:  [equips/index.blade.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/index.blade.php)
 
-**Canviar l'Idioma Dinàmicament**
+#### Canviar l'Idioma Dinàmicament 
 
-Per canviar l'idioma durant l'execució, utilitza el mètode `setLocale`:
+**Crea  una [ruta](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php ) per canviar idioma**
 
-```php
-App::setLocale('es');
-```
- 
-Per facilitar als usuaris la selecció de l'idioma, pots crear rutes o enllaços que estableixin l'idioma desitjat.
-
- 
- 
-### Pas 9. Crear proves
-
-1. Crea un fitxer de proves per al CRUD d'equips:
-```bash
-php artisan make:test EquipCRUDTest
-```
-
-2. Modifica el fitxer de proves `tests/Feature/EquipCRUDTest.php`:
-```php
-namespace Tests\Feature;
-
-use App\Models\Estadi;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use App\Models\Equip;
-
-class EquipCrudTest extends TestCase
-{
-    use RefreshDatabase;
-
-    /** @test */
-    public function es_pot_crear_un_equip_correctament()
-    {
-        // Actuar: Crear un equip
-        $estadi = Estadi::create([
-            'nom' => 'Camp Nou',
-            'ciutat' => 'Barcelona',
-            'capacitat' => 99354,
-        ]);
-        $equip = Equip::create([
-            'nom' => 'FC Barcelona',
-             'titols' =>30,
-             'estadi_id' => 1,
-        ]);
-
-        // Comprovar que l’equip es guarda a la base de dades
-        $this->assertDatabaseHas('equips', [
-            'nom' => 'FC Barcelona',
-            'titols' => 30,
-            'estadi_id' => 1,
-        ]);
-    }
-
-    public function es_poden_llistar_els_equips()
-    {
-        // Arrange: Crear equips
-        Equip::factory()->create(['nom' => 'FC Barcelona']);
-        Equip::factory()->create(['nom' => 'Real Madrid']);
-
-        // Actuar: Obtenir la llista d’equips
-        $equips = Equip::all();
-
-        // Comprovar que la llista conté els equips creats
-        $this->assertCount(2, $equips);
-        $this->assertEquals('FC Barcelona', $equips[0]->nom);
-        $this->assertEquals('Real Madrid', $equips[1]->nom);
-    }
-
-    public function es_pot_actualitzar_un_equip()
-    {
-        // Arrange: Crear un equip
-        $equip = Equip::create([
-            'nom' => 'FC Barcelona',
-            'ciutat' => 'Barcelona',
-        ]);
-
-        // Actuar: Actualitzar l’equip
-        $equip->update([
-            'nom' => 'Barça',
-            'ciutat' => 'Catalunya',
-        ]);
-
-        // Comprovar que els canvis es reflecteixen a la base de dades
-        $this->assertDatabaseHas('equips', [
-            'nom' => 'Barça',
-            'ciutat' => 'Catalunya',
-        ]);
-    }
-
-    public function es_pot_esborrar_un_equip()
-    {
-        // Arrange: Crear un equip
-        $equip = Equip::create([
-            'nom' => 'FC Barcelona',
-            'ciutat' => 'Barcelona',
-        ]);
-
-        // Actuar: Esborrar l’equip
-        $equip->delete();
-
-        // Comprovar que l’equip ja no existeix a la base de dades
-        $this->assertDatabaseMissing('equips', [
-            'nom' => 'FC Barcelona',
-            'ciutat' => 'Barcelona',
-        ]);
-    }
-
-    public function no_es_pot_crear_un_equip_sense_nom()
-    {
-        $this->expectException(\Illuminate\Database\QueryException::class);
-
-        // Intentar crear un equip sense nom
-        Equip::create([
-            'ciutat' => 'Barcelona',
-        ]);
-    }
-}
-```
-3. Copia el .env en .env.testing i modifica'l per a executar les proves en una BBDD de testing
+**Crea  un Middleware per aplicar el idioma**
 
 ```bash
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=testing
-DB_USERNAME=sail
-DB_PASSWORD=password
+./vendor/bin/sail artisan make:middleware SetLocale
+``` 
+**Defineix el [middleware](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Middleware/SetLocale.php)**
+**Registra el middleware en [bootstrap/app.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/bootstrap/app.php)**
+**Utilitza el layout [navigation.blade.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/layouts/navigation.blade.php) per possar els enllaços de canviar d'idioma**
+
+ 
+### 8. Proves
+
+1. Crea els fitxers de proves per al CRUD d'equips:
+```bash
+php artisan make:test EquipServiceTest --unit
+php artisan make:test EquipCrudFeatureTest
+php artisan make:test EquipRepositoryTest --unit
+
 ```
 
-4. Executa les proves:
-```bash
-php artisan test
-```
+2. Modifica  els fixer per tal d'incorporar les proves
+   
+- [EquipServiceTest]()
+- [EquipCrudFeatureTest]()
+- [EquipRepositoryTest]()
+
 
 ### Pas 10. Generar un correu electrònic amb la jornada actual (partits programats) i enviar-lo als managers dels equips.
 
