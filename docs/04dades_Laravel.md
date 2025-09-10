@@ -2,7 +2,7 @@
 
 ??? abstract "Duració i criteris d'avaluació"
 
-    Duració estimada: 16 hores
+    Duració estimada: 20 hores
 
     <hr />
 
