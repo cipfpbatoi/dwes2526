@@ -34,7 +34,7 @@ En aquest model, el client (generalment un navegador web) envia sol·licituds al
 **Diagrama:**
 
 <figure>
-  <img src="imagenes/01/clienteservidor.png" />
+  <img src="imagenes/01/clientservidor.png" />
   <figcaption>Arquitectura Client Servidor</figcaption>
 </figure>
 
@@ -67,7 +67,7 @@ Aquesta arquitectura divideix l'aplicació en tres nivells: la capa de presentac
 **Diagrama:**
 
 <figure>
-  <img src="imagenes/01/model3capes.png" />
+  <img src="imagenes/01/model3capa.png" />
   <figcaption>Arquitectura 3 capes</figcaption>
 </figure>
  
@@ -97,7 +97,7 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
 **Diagrama:**
 
 <figure>
-  <img src="imagenes/01/microserveis.png" />
+  <img src="imagenes/01/microservei.png" />
   <figcaption>Arquitectura Microserveis</figcaption>
 </figure>
  
