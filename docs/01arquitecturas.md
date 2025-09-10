@@ -38,6 +38,13 @@ En aquest model, el client (generalment un navegador web) envia sol·licituds al
   <figcaption>Arquitectura Client Servidor</figcaption>
 </figure>
 
+ 
+- Client 🖥️: el navegador o aplicació que demana recursos o serveis.
+- Servidor 🖥️: processa les peticions, executa lògica i accedeix a la Base de Dades 💾.
+- La comunicació és bidireccional: el client envia sol·licituds i el servidor respon amb dades/resultats.
+
+ 👉 És la arquitectura més bàsica de les aplicacions web i el punt de partida d’altres models més complexos (3 capes, microserveis, etc.).
+
 **Característiques:**
 
 - El client és responsable de la interfície d'usuari.
@@ -63,9 +70,7 @@ Aquesta arquitectura divideix l'aplicació en tres nivells: la capa de presentac
   <img src="imagenes/01/model3capes.png" />
   <figcaption>Arquitectura 3 capes</figcaption>
 </figure>
-
-Ací tens un esquema del model de 3 capes:
-
+ 
 - **Capa de Presentació 🎨** Interfície d’usuari: navegador, app, vistes.
 - **Capa de Lògica de Negoci ⚙️** Conté les regles de negoci: controladors, serveis, processament.
 - **Capa de Dades 💾** Persistència: bases de dades, repositoris, fitxers.
@@ -95,9 +100,7 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
   <img src="imagenes/01/microserveis.png" />
   <figcaption>Arquitectura Microserveis</figcaption>
 </figure>
-
-Ací tens un gràfic senzill d’una **arquitectura web de  microserveis**:
-
+ 
 - El Client (navegador o app) es connecta a través d’un API Gateway.
 - El Gateway distribueix les peticions a diversos microserveis independents (usuaris, productes, pagaments…).
 - Cada microservei té la seua base de dades pròpia, evitant dependències fortes.
