@@ -43,7 +43,8 @@ En aquest model, el client (generalment un navegador web) envia sol·licituds al
 - Servidor 🖥️: processa les peticions, executa lògica i accedeix a la Base de Dades 💾.
 - La comunicació és bidireccional: el client envia sol·licituds i el servidor respon amb dades/resultats.
 
- 👉 És la arquitectura més bàsica de les aplicacions web i el punt de partida d’altres models més complexos (3 capes, microserveis, etc.).
+!!! tip "Arquitectura"
+    👉 És la arquitectura més bàsica de les aplicacions web i el punt de partida d’altres models més complexos (3 capes, microserveis, etc.).
 
 **Característiques:**
 
@@ -847,7 +848,7 @@ Al llarg del curs anirem creant diferents contenidors amb els serveis necessaris
 **Docker** es basa en l'ús d'imatges per a crear contenidors. *Docker Compose* simplifica el treball amb múltiples contenidors, i per això, per a facilitar l'arranc, ens centrarem en *Docker Compose* utilitzant una plantilla que únicament contindrà com a serveis Nginx i PHP.
 Per a facilitar la posada en marxa, us facilite un repositori, disponible per a la seua descarrega mitjançant el **git clone**.
  
-  - Grup A: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/y5FOCalw) 
+  - Grup A: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/9iMCZNy8) 
   - Grup B: [github classroom](#GitHub-Classroom) [Nginx/PHP](https://classroom.github.com/a/k_osQPW4)
 
  
