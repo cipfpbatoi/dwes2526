@@ -64,6 +64,11 @@ Aquesta arquitectura divideix l'aplicació en tres nivells: la capa de presentac
   <figcaption>Arquitectura 3 capes</figcaption>
 </figure>
 
+Ací tens un esquema del model de 3 capes:
+
+- **Capa de Presentació 🎨** Interfície d’usuari: navegador, app, vistes.
+- **Capa de Lògica de Negoci ⚙️** Conté les regles de negoci: controladors, serveis, processament.
+- **Capa de Dades 💾** Persistència: bases de dades, repositoris, fitxers.
 
 **Característiques:**
 
@@ -91,6 +96,11 @@ Els microserveis descomponen una aplicació en una sèrie de serveis petits i in
   <figcaption>Arquitectura Microserveis</figcaption>
 </figure>
 
+Ací tens un gràfic senzill d’una **arquitectura web de  microserveis**:
+
+- El Client (navegador o app) es connecta a través d’un API Gateway.
+- El Gateway distribueix les peticions a diversos microserveis independents (usuaris, productes, pagaments…).
+- Cada microservei té la seua base de dades pròpia, evitant dependències fortes.
 
 **Característiques:**
 
