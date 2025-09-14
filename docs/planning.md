@@ -1,35 +1,25 @@
 # Planificació
 
-## 1.- Arquitectures Web (3h)
+## 1.- Arquitectures Web (6h)
 
-- [] 1.- (L 18 setembre) Introducció mòdul. Arquitectures, decisions de disseny. Ferramentes. 
+- [ ] 1.- (Dl 15S) Exposició teòrica i exercici comparativa entre arquitectures
+- [ ] 2.- (Dj 18S) Test coneixements i instal·lació entorn desenvolupament
 
+## 2.- Desenvolupament amb PHP i Projectes (51h)
 
-## 2.- El llenguatge PHP (16h)
+- [ ] 1.- (Dl 22S) Introducció a PHP. Condicions, bucles i arrays. Exercicis 1 - 6
+- [ ] 2.- (Dj 25S) Variables de servidor i introducció a formularis. Exercicis 7 - 10
+- [ ] 3.- (Dl 29S) Sessions i cookies. Exercicis 11 - 13, 15 - 16
+- [ ] 4.- (Dj 02O) Autenticació d'usuaris i fitxers. Exercicis 14 i 17
+- [ ] 5.- (Dl 06O) Programació orientada a objectes. Exercicis 18 - 20
+- [ ] 6.- (Dl 13O) Exempcions i composer. Exercicis 21 - 24
+- [ ] 7.- (Dj 16O) Projecte intermodular
+- [ ] 8.- (Dl 20O) Projecte "El penjat"
+- [ ] 9.- (Dj 23O) Projecte "El penjat"
+- [ ] 10.- (Dl 27O) Projecte "El penjat"
+- [ ] 11.- (Dj 30O) Projecte "El penjat"
+- [ ] 12.- (Dl 03N) Examen PHP
 
-- [ ] 1.- (M 19S) Posada en funcionament. Docker.Sinta[ ]i. Activitats 201-209 - 3 
-- [ ] 2.- (J 21S) Condicions i Bucles. Activitats 220-227 - 5
-- [ ] 3.- (L 25S) Arrays, asociatius, bidimensionals. Activitats 230-238 - 8
-- [ ] 4.- (M 26S) Funcions, paràmetres por defecte i amb nom.Ambit i Funcions variable. Biblioteca de funcions.Plantilles Activitats 240-246 - 11
-- [ ] 5.- (J 28S) Cadenas i subcadenes. Activitats 250-257 - 13
-- [ ] 6.- (L 2O) Entrega Activitats 270-272 - 16
-
-    
-## 3.- Programació Orientada a Objectes (11h)
-
-- [ ] 6.- (M 3O) Classes i objectes. Constructor.Clases estàtiques. Herència. Activitats 300-307 - 3
-- [ ] 7.- (J 5O) Herencia. Classes abstractas.Interfaces Activitats 308-312 - 5
-- [ ] 8.- (M 10O) Mètodos encadenats. Namespaces. E[ ]empcions.Projecte BatoiBook. Activitats 320-323 - 8
-- [ ] 9.- (L 16O)  Projecte Batoi Book  - 11
-
-
-## 4.- Programació Web (13h)
-
-- [ ] 1.- (M 17O) Formularis. Upload Activitats 401-405 - 3
-- [ ] 2.- (J 19O) Cookies.Sessió Activitats 406-409 - 5
-- [ ] 3.- (L 23O) Gestió d'usuaris. Activitats 410-415 - 8
-- [ ] 4.- (M 24O) Projecte BatoiBook. Activitats 420-423 - 11 
-- [ ] 5.- (J 26O) Projecte BatoiBook. Activitats 424-426 - 13
 
 ## 5.- Accès a Dades (16h)
 
