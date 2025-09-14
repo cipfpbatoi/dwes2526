@@ -1,5 +1,5 @@
 site_name: Desenvolupament web en entorn de Servidor
-site_url: https://cipfpbatoi.github.io/dwes2223/
+site_url: https://cipfpbatoi.github.io/dwes2526/
 use_directory_urls: false
 nav:
   - "Inicio": "index.md"
@@ -76,4 +76,4 @@ markdown_extensions:
       permalink: true
       toc_depth: 3
 
-copyright: 2021-2025 Aitor Medrano, Luis Alemañ, Ignasi Gomis - Licencia CC BY-NC-SA
+copyright: 2021-2026 Aitor Medrano, Luis Alemañ, Ignasi Gomis - Licencia CC BY-NC-SA

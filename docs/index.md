@@ -2,7 +2,7 @@
 
 Ací pots trobar les anotacions del mòdul de *Desenvolupament web en entorn servidor*, que s'imparteix en el segon curs del cicle formatiu de grau superior de Desenvolupament d'Aplicacions Web.
 
-La duració del mòdul és de 160 hores lectives, a raó de **8 hores setmanals**, i es desenvolupa al llarg dels **dos primers trimestres** del curs. S'ha [planificat](planning.md) basant-se en 3 sessions de 3,3 i 2 hores lectives per setmana.
+La duració del mòdul és de 200 hores lectives, a raó de **6 hores setmanals**. S'ha [planificat](planning.md) basant-se en 2 sessions de   3 hores lectives per setmana.
 
 ## Què aprendré?
 
@@ -24,86 +24,25 @@ La duració del mòdul és de 160 hores lectives, a raó de **8 hores setmanals*
 
 ## Unitats didàctiques / Temporalització
 
-A continuació es mostren les unitats didàctiques i una [estimació temporal](planning.md) de cadascuna d'elles.
-La primera avaluació contindria les unitats compreses entre la 1 i 6. Així doncs, des de la meitat de la unitat 6 a la unitat 9 es veuran en la segona avaluació.
+A continuació es mostren les unitats didàctiques i una [estimació temporal](planning.md) de cadascuna d'elles, la distribució en RA i el pes a l'avaluació.
 
+| Situació d'aprenentatge                                | Hores | R.A. 1 | R.A. 2 | R.A. 3 | R.A. 4 | R.A. 5 | R.A. 6 | R.A. 7 | R.A. 8 | R.A. 9 | Pes  |
+|--------------------------------------------------------|-------|--------|--------|--------|--------|--------|--------|--------|--------|--------|------|
+| 1 - Arquitectures web. Entorn de desenvolupament       | 6     | ✅ **2%** |        |        |        |        |        |        |        |        | **2%**   |
+| 2 - Programació web amb PHP                            | 36    |        | ✅ **5%** | ✅ **10%** | ✅ **12%** |        |        |        |        |        | **27%**  |
+| 3 - Arquitectura MVC amb Laravel                       | 15    |        |        |        | ✅ **10%** |        |        |        |        |        | **10%**  |
+| 4 - Accés segur i estructurat a bases de dades amb Laravel | 15 |        |        |        |        | ✅ **15%** |        |        |        |        | **15%**  |
+| 5 - Aplicacions segures i reactives en Laravel         | 21    |        |        |        |        |        | ✅ **15%** |        |        |        | **15%**  |
+| 6 - Desenvolupament d'APIs amb NodeJS                  | 32    |        |        |        |        |        |        | ✅ **15%** |        |        | **15%**  |
+| 7 - Desenvolupament d'Aplicacions Web Híbrides         | 15    |        |        |        |        |        |        |        | ✅ **8%**  |        | **8%**   |
+| 8 - Desenvolupa aplicacions web en entorns de treball Dualitzable FE | 60 |        |        |        | ✅ **2%**  | ✅ **2%**  | ✅ **2%**  |        | ✅ **2%**  | **8%**   |
+| **Pes de cada R.A.**                                   | **200**   | **2%** | **5%** | **10%** | **12%** | **12%** | **17%** | **17%** | **15%** | **10%** | **100%** |
 
-### Primera avaluació
+- L'alumnat ha d'aprovar tots els RA per aprovar el mòdul.
+    
+Les notes agrupades, en conjunt ixen de les següents activitats:
 
-Duració estimada: 75 hores
-
-1. [Arquitectures Web](01arquitecturas.md) (3h)
-
-     * Client/Servidor. 
-     * MVC.
-
-2. [El llenguatge PHP](02php.md) (16h)
-   
-     * Condicions i bucles.
-     * Arrays.
-
-
-   
-3. [Programació Web](03web.md) (13h)
-
-     * Formularis.
-     * Cookies i sessió.
-   
-4. [Orientació a objectes amb PHP](04phpoo.md) (11h)
-
-   * Classes i objectes
-   * Namespaces
-   * Excepcions
-
-5. [Accés a dades](05accesoDatos.md) (16h)
-
-     * SQL
-     * PDO
-     * Fitxers CSV i PDF.
-
-6. Projecte Integrador
-
-### Segona avaluació
-
-Duració estimada: 85 hores
-
-
-   
-7. [Frameworks PHP. Laravel.](07frameworks.md) (29h)
-   
-     * [Rutes i vistes](07laravelRutesVistes.md)
-     * [Controladors](07laravelControladors.md)
-     * [Models i dades](07laravelModelsDades.md)
-     * [Validacio i Autenticacio](07laravelValidacioAutenticacio.md)
-     * [Notificacions](07laravelNotificacions.md)
-     * [Activitats](07laravelBatoiBook.md)
-     
-
-8. [Serveis Web](08laravelRestFull.md) (16h)
-
-    * Producció i consum.
-    * *AJAX* amb *JSON*.
-   
-9. [Webs Híbrides](09mashup.md) (16h)
-
-    * Reutilització de codi i dades.
-    * OAuth2
-   
-10. [Projecte Integrador](09mailLaravel.md) (24h)
-
-
-
-## Instruments de qualificació
-
-La nota del curs es calcula mitjançant:
-
-  * 30% Activitats classe
-    * Cada Unitat Temàtica (excepte la primera) tindrà una sèrie d'activitats avaluables que poden ser realitzades en classe i a casa. 
-      * Les activitats s'avaluen mitjançant tasques de *Aules* avaluables per rúbriques.
-      * La puntuació de cada unitat temàtica serà la del número de hores previstes per eixa unitat, descomptat les proves escrites.
-  * 10% Qüestionaris per unitat temàtica (excepte la primera).
-  * 20% Projecte Integrador (Final de curs)
-
-  * 40% Exàmen d'avaluació (Fan mitja a partir de 4)
-     * Un per cada avaluació.
-
+- Proves Objectives: 54,5 %
+- Projectes de clase: 29,5 %
+- Projecte intermodular: 8 %
+- Practiques empresa: 8 %
