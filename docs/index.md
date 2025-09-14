@@ -6,9 +6,12 @@ La duració del mòdul és de 200 hores lectives, a raó de **6 hores setmanals*
 
 ## Què aprendré?
 
-* A desenvolupar aplicacions web dinàmiques, que obtenen la informació a partir d'una base de dades.
-* Analitzar l'estructura d'una aplicació client/servidor, separant el codi de presentació de la lògica de negoci
-* Obtindre informació a partir de les dades emmagatzemades, així com modificar-los.
+* A desenvolupar aplicacions web dinàmiques amb accés segur i estructurat a bases de dades.
+* A dissenyar i implementar serveis web reutilitzables, APIs i aplicacions híbrides.
+* A separar el codi de presentació de la lògica de negoci seguint el patró MVC.
+* A utilitzar frameworks moderns com Laravel i Node.js.
+* A integrar repositoris externs d'informació i treballar amb formats de dades com JSON.
+* A desplegar aplicacions web en entorns reals, col·laborant en equips i seguint bones pràctiques.
 
 ## Resultats d'aprenentatge
 
@@ -26,19 +29,19 @@ La duració del mòdul és de 200 hores lectives, a raó de **6 hores setmanals*
 
 A continuació es mostren les unitats didàctiques i una [estimació temporal](planning.md) de cadascuna d'elles, la distribució en RA i el pes a l'avaluació.
 
-| Situació d'aprenentatge                                | Hores | R.A. 1 | R.A. 2 | R.A. 3 | R.A. 4 | R.A. 5 | R.A. 6 | R.A. 7 | R.A. 8 | R.A. 9 | Pes  |
-|--------------------------------------------------------|-------|--------|--------|--------|--------|--------|--------|--------|--------|--------|------|
-| 1 - Arquitectures web. Entorn de desenvolupament       | 6     | ✅ **2%** |        |        |        |        |        |        |        |        | **2%**   |
-| 2 - Programació web amb PHP                            | 36    |        | ✅ **5%** | ✅ **10%** | ✅ **12%** |        |        |        |        |        | **27%**  |
-| 3 - Arquitectura MVC amb Laravel                       | 15    |        |        |        | ✅ **10%** |        |        |        |        |        | **10%**  |
+| Situació d'aprenentatge                                    | Hores | R.A. 1 | R.A. 2 | R.A. 3 | R.A. 4 | R.A. 5 | R.A. 6 | R.A. 7 | R.A. 8 | R.A. 9 | Pes  |
+|------------------------------------------------------------|-------|--------|--------|--------|--------|--------|--------|--------|--------|--------|------|
+| 1 - Arquitectures web. Entorn de desenvolupament           | 6     | ✅ **2%** |        |        |        |        |        |        |        |        | **2%**   |
+| 2 - Programació web amb PHP                                | 36    |        | ✅ **5%** | ✅ **10%** | ✅ **12%** |        |        |        |        |        | **27%**  |
+| 3 - Arquitectura MVC amb Laravel                           | 15    |        |        |        | ✅ **10%** |        |        |        |        |        | **10%**  |
 | 4 - Accés segur i estructurat a bases de dades amb Laravel | 15 |        |        |        |        | ✅ **15%** |        |        |        |        | **15%**  |
-| 5 - Aplicacions segures i reactives en Laravel         | 21    |        |        |        |        |        | ✅ **15%** |        |        |        | **15%**  |
-| 6 - Desenvolupament d'APIs amb NodeJS                  | 32    |        |        |        |        |        |        | ✅ **15%** |        |        | **15%**  |
-| 7 - Desenvolupament d'Aplicacions Web Híbrides         | 15    |        |        |        |        |        |        |        | ✅ **8%**  |        | **8%**   |
-| 8 - Desenvolupa aplicacions web en entorns de treball Dualitzable FE | 60 |        |        |        | ✅ **2%**  | ✅ **2%**  | ✅ **2%**  |        | ✅ **2%**  | **8%**   |
-| **Pes de cada R.A.**                                   | **200**   | **2%** | **5%** | **10%** | **12%** | **12%** | **17%** | **17%** | **15%** | **10%** | **100%** |
+| 5 - Aplicacions segures i reactives en Laravel             | 21    |        |        |        |        |        | ✅ **15%** |        |        |        | **15%**  |
+| 6 - Desenvolupament d'APIs amb NodeJS                      | 32    |        |        |        |        |        |        | ✅ **15%** |        |        | **15%**  |
+| 7 - Desenvolupament d'Aplicacions Web Híbrides             | 15    |        |        |        |        |        |        |        | ✅ **8%**  |        | **8%**   |
+| 8 - Desenvolupa aplicacions web en entorns de treball      | 60 |        |        |        | ✅ **2%**  | ✅ **2%**  | ✅ **2%**  |        | ✅ **2%**  | **8%**   |
+| **Pes de cada R.A.**                                       | **200**   | **2%** | **5%** | **10%** | **12%** | **12%** | **17%** | **17%** | **15%** | **10%** | **100%** |
 
-- L'alumnat ha d'aprovar tots els RA per aprovar el mòdul.
+**L'alumnat ha d'aprovar tots els RA per aprovar el mòdul.**
     
 Les notes agrupades, en conjunt ixen de les següents activitats:
 
@@ -46,3 +49,5 @@ Les notes agrupades, en conjunt ixen de les següents activitats:
 - Projectes de clase: 29,5 %
 - Projecte intermodular: 8 %
 - Practiques empresa: 8 %
+
+
