@@ -867,7 +867,7 @@ FutbolFemeni/
 
 #### Pas 1: Configurar el projecte
 
-1. **Crear un projecte Laravel anomenat `futbol-femeni`:**
+1. **Crea un projecte Laravel anomenat `futbol-femeni`:**
 
  ```bash
   curl -s "https://laravel.build/futbol-femeni?with=mysql,mailpit" | bash
@@ -901,43 +901,52 @@ i despres acabem la instal·lació:
   cd futbol-femeni
   ./vendor/bin/sail up 
   ./vendor/bin/sail artisan migrate
+  ./vendor/bin/sail npm install && npm run build
 ```
  
----
 
-#### En marxa
+ Navega a http://localhost i a /equips
+
+   
  
-      - php artisan serve o ./vendor/bin/sail artisan serve
-      - npm install && npm run dev (o build)
-      - Navega a http://localhost i a /equips
+#### Pas 2: Crear rutes i controlador
+     
+**Defineix** les rutes a  [`routes/web.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/routes/web.php) 
 
-#### Teoria ràpida
-Laravel seguix MVC i separa Model (dades), Vista (presentació) i Controlador (flux). Açò millora mantenibilitat, testabilitat i escalabilitat.
+**Crea** el controlador: 
+```bash
+ ./vendor/bin/sail artisan make:controller EquipController
+``` 
+**Modifica** el controlador [`EquipController.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/app/Http/Controllers/EquipController.php)
 
-##### Tasques que faràs
+#### Pas 3: Crear les vistes
 
-      - Llistar equips a /equips.
-      - Veure el detall a /equips/{id}.
-      - Crear equips amb formulari (validació) i guardar-los en sessió.
-      - Estilar amb Blade + Vite (vegeu resources/css/equips.css i @vite).
- 
-#### Solució
+**Defineix** la plantilla [`layout\app.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/resources/views/layouts/app.blade.php)
 
-En el repositori [seguent](https://github.com/Curs-2025-26/futbol-femeni)
+**Crea** les vistes:
 
-Comencem pas  per pas:
+- [`partials/menu.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/resources/views/partials/menu.blade.php)
+- [`equips/index.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/resources/views/equips/index.blade.php)
+- [`equips/show.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/resources/views/equips/show.blade.php)
+- [`equips/create.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/resources/views/equips/create.blade.php)
 
-      - Definir les rutes a  `routes/web.php`  
-      - Crear el controlador
-      - Crear els layout  app.blade
-      - Crear les vistes:
-         - partials/meu.blade
-         - equips/index.blade
-         - equips/show.blade
-         - equips/create.blade
-         - component de la vista: equip
-         - equips.css
-      - configurar vite
+**Defineix** el component de la vista per a Equip:
+
+- [`components/equip.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/resources/views/components/equip.blade.php)
+
+**Afegeix** els estils:    
+    
+- [`equips.css`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/resources/css/equips.css)
+    
+**Configura** vite:
+
+- **Modifica** el fixer [`vite.config.js`](https://github.com/Curs-2025-26/futbol-femeni/blob/main/vite.config.js)
+- Executa:
+
+```bash
+  ./vendor/bin/sail npm install && npm run build
+```
+
 
 ##  🎯 Projecte "Futbol Femení I" 
 
