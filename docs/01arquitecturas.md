@@ -929,6 +929,7 @@ Una altra forma més senzilla per a llançar de nou els contenidors i gestionar-
 #### 🎯 Objectiu (RA1)
 Reconéixer les arquitectures web més habituals en entorn servidor, identificant els seus components, característiques i escenaris d’ús.
 
+```txt
 +---------------------+   +----------------------+   +---------------------------+
 |    Monolítica       |   |        MVC           |   |       Microserveis        |
 +---------------------+   +----------------------+   +---------------------------+
@@ -939,7 +940,7 @@ Reconéixer les arquitectures web més habituals en entorn servidor, identifican
 |                     |   | │  Model        │     |   |   │User│Product│          |
 |                     |   | │  View         │     |   |   │Srv │Srv    │          |
 +---------------------+   +----------------------+   +---------------------------+
-
+```
 
 ##### 1. Explora el següents repositoris
 
