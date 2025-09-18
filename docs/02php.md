@@ -1853,7 +1853,7 @@ if (is_dir("documents/buid")) {
 
 ### 🧩 Bateria d'Exercicis Solucionats per a la Unitat de PHP
 
-Hi ha un repositori preparat amb les solucions : https://github.com/Curs-2025-26/SA2.Exemples del que pots fer un fork.
+Hi ha un repositori preparat amb les [solucions](https://github.com/Curs-2025-26/SA2.Exemples).
  
 #### Enunciat dels exercicis
  
@@ -1862,7 +1862,7 @@ Escriu els següent programes:
 ##### 1. 'Hola món' 
      
 * Declare una variable amb el teu nom.
-* Mostre en pantalla un missatge com ara:  “Hola, món! , Ignasi” dins d’una etiqueta HTML <h1> utilitzant echo.
+* Mostre en pantalla un missatge com ara:  “Hola, món! , Ignasi” dins d’una etiqueta HTML  utilitzant echo.
    
   Pots combinar text i variables utilitzant el signe de concatenació (.).
 
