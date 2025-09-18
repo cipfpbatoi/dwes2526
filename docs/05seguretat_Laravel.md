@@ -1338,6 +1338,10 @@ Per exemple:  [equips/index.blade.php](https://github.com/Curs-2025-26/futbol-fe
 
  
 ### 8. Proves
+1. Modifica o crea l'entorn de prova:
+
+- [.env.testing](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/.env.testing)
+- [php.unit.xml](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/phpunit.xml)
 
 1. Crea els fitxers de proves per al CRUD d'equips:
 ```bash
@@ -1349,12 +1353,12 @@ php artisan make:test EquipRepositoryTest --unit
 
 2. Modifica  els fixer per tal d'incorporar les proves
    
-- [EquipServiceTest]()
-- [EquipCrudFeatureTest]()
-- [EquipRepositoryTest]()
+- [`EquipServiceTest.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/tests/Unit/EquipServiceTest.php)
+- [`EquipCrudFeatureTest.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/tests/Feature/EquipCrudFeatureTest.php)
+- [`EquipRepositoryTest.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/tests/Unit/EquipRepositoryTest.php)
 
 
-### Pas 10. Generar un correu electrònic amb la jornada actual (partits programats) i enviar-lo als managers dels equips.
+### 9. Generar un correu electrònic amb la jornada actual (partits programats) i enviar-lo als managers dels equips.
 
 #### **1. Crear una Comanda Artisan**
 ```bash
