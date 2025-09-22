@@ -2109,12 +2109,14 @@ Escriu els següent programes:
     * `require __DIR__ . '/../vendor/autoload.php';`
 * Importa la classe `Salutador` mitjançant `use App\Salutador`.
 * Crea una instància i crida al mètode `diu("Anna")` per mostrar el missatge.
-
-
-
+ 
 
 ### 🎯 Projecte "El penjat"
  
+#### Repositori
+
+[Grup A](https://classroom.github.com/a/DtM86hTQ)
+
 #### Entrega 1 
 
 Implementa una versió simplificada del joc "L'Ofegat" utilitzant HTML i PHP. El joc ha de permetre als jugadors endevinar les lletres d'una paraula predefinida i mostrar l'estat actual de les lletres endevinades. No és necessari mantenir l'estat del joc entre sol·licituds ni comprovar si s'han esgotat els intents en aquesta fase inicial.
