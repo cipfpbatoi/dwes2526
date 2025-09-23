@@ -2115,7 +2115,7 @@ Escriu els següent programes:
  
 #### Repositori
 
-[Grup A](https://classroom.github.com/a/DtM86hTQ)
+[Grup A](https://classroom.github.com/a/fq57XZGD)
 
 #### Entrega 1 
 
