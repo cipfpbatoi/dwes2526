@@ -1,5 +1,4 @@
- # 📘 Desenvolupament d'APIs amb Node.js  
-
+ 
 ## SA 6.1 – Introducció i conceptes previs
   
 ### 🧠 1. Què és Node.js?
@@ -157,7 +156,7 @@ Exemple de resposta:
 
 En aquesta secció construirem una **API REST d’inventari** amb **Express** utilitzant **ES Modules (`import/export`)** i **emmagatzematge en memòria** (sense base de dades). L’objectiu és entendre **clarament** el flux: *rutes → middleware → controladors → respostes*. A la Secció 3 connectarem la mateixa API a **MongoDB** sense canviar la interfície pública.
  
-### 1) Inicialització del projecte
+### ⚙️  Inicialització del projecte
 
 1. Crea una carpeta i inicialitza `npm`:
    ```bash
@@ -187,7 +186,7 @@ En aquesta secció construirem una **API REST d’inventari** amb **Express** ut
 
 > ℹ️ `swagger-ui-express` el farem servir per mostrar la documentació en la Secció 4 (ara deixarem el “ganxo” posat).
  
-### 2) Estructura del projecte
+### 🗂️ Estructura del projecte
 
 ```
 api-inventari/
@@ -208,7 +207,7 @@ api-inventari/
       └─ products.rules.js
 ```
  
-### 3) App i servidor
+### 🚀 App i servidor
 
 **`src/app.js`**
 ```js
@@ -250,7 +249,7 @@ app.listen(PORT, () => {
 });
 ```
  
-### 4) Middlewares de 404 i errors
+### 🧩 Middlewares de 404 i errors
 
 **`src/middlewares/not-found.js`**
 ```js
@@ -268,7 +267,7 @@ export default function errorHandler(err, req, res, next) {
 }
 ```
  
-### 5) Validació d’entrada amb `express-validator`
+### 🧪 Validació d’entrada amb `express-validator`
 
 **`src/validation/products.rules.js`**
 ```js
@@ -307,7 +306,7 @@ export const productStockRules = [
 > 💡 **Consell didàctic:** tracteu la **validació** com una “porta d’entrada” a la API. Tot passa per ací.
 
  
-### 6) Rutes i CRUD en memòria
+### 🔗 Rutes i CRUD en memòria
 
 **`src/routes/products.routes.js`**
 ```js
@@ -418,7 +417,7 @@ export async function remove(req, res, next) {
 }
 ```
  
-### 7) Proves amb Postman / curl
+### 🔍 Proves amb Postman / curl
 
 1. **Arranca el servidor**:
    ```bash
@@ -455,7 +454,7 @@ export async function remove(req, res, next) {
    curl -X DELETE http://localhost:3000/api/v1/products/1
    ```
  
-### 8) Proves des del client (JavaScript `fetch()`)
+### 🧪 Proves des del client (JavaScript `fetch()`)
 
 > Pots provar-ho des de la consola del navegador o en un fitxer `.html` senzill amb `<script type="module">`.
 
@@ -501,7 +500,7 @@ export async function remove(req, res, next) {
 </script>
 ```
  
-### 9) Extres útils per a classe
+### 🌐↔️🌐 Extres útils per a classe
 
 - **CORS**: si tens un frontend en un altre port (p. ex. Vite a `5173`), CORS ja està habilitat globalment amb `app.use(cors())`. Pots restringir l’origen si cal:
   ```js
@@ -514,7 +513,7 @@ export async function remove(req, res, next) {
 - **Logs**: `morgan('dev')` és ideal en dev. En prod, millor logs estructurats (p. ex. pino).
  
 
-### 10) Exercicis (per entregar)
+### 📝 Exercicis (per entregar)
 
 1. **Paginació i ordenació** a `GET /products` (`?page=1&limit=10&sort=price,-name`).
 2. **Filtre per rang de stock** (`stockMin`, `stockMax`).
@@ -525,7 +524,7 @@ export async function remove(req, res, next) {
 > 💡 Avaluació formativa: valorar codi net, ús correcte d’HTTP, validacions, i que no es trenque davant d’inputs erronis.
 
  
-### 11) Troubleshooting
+### 🐞🛠️ Troubleshooting
 
 - **`Error [ERR_MODULE_NOT_FOUND]`** → comprova rutes d’import i extensions `.js` en imports locals.
 - **`Unexpected token 'export'`** → falta `"type": "module"` al `package.json`.
@@ -536,16 +535,16 @@ export async function remove(req, res, next) {
 
 En aquesta secció convertirem l’API en memòria de la Secció 2 en una **API amb persistència real** utilitzant **MongoDB** i **Mongoose**. Mantindrem els **endpoints** i el **contracte** (mateixa interfície pública), canviant només la **capa de dades**.
  
-### 1) Requisits i configuració
+### 🧰 Requisits i configuració
 
-#### 1.1 Instal·lació de dependències
+#### Instal·lació de dependències
 
 Si no ho has fet encara:
 ```bash
 npm i mongoose dotenv
 ```
 
-#### 1.2 Variables d’entorn `.env`
+#### Variables d’entorn `.env`
 
 Crea o edita `.env` a l’arrel del projecte:
 ```
@@ -556,7 +555,7 @@ MONGO_URI=mongodb://127.0.0.1:27017/inventari
 
 > 💡 Si utilitzes **MongoDB Atlas**, reemplaça `MONGO_URI` pel connection string del teu cluster.
  
-### 2) Connexió a MongoDB
+### 🔌 Connexió a MongoDB
 
 **`src/lib/db.js`**
 ```js
@@ -598,7 +597,7 @@ const STORE = process.env.STORE ?? 'memory';
 })();
 ```
  
-### 3) Model de dades amb Mongoose
+###  🔌 Model de dades amb Mongoose
 
 **`src/models/product.model.js`**
 ```js
@@ -625,7 +624,7 @@ export const Product = mongoose.model('Product', productSchema);
 > - `timestamps: true` afegeix `createdAt` i `updatedAt` automàticament.
 
  
-### 4) Reescriure controladors per a Mongo
+###  ✍️ Reescriure controladors per a Mongo
 
 **`src/controllers/products.controller.mongo.js`**
 ```js
@@ -768,7 +767,7 @@ app.use(errorHandler);
 export default app;
 ```
  
-### 5) Seed de dades (opc.)
+###  🌱 Seed de dades  
 
 **`scripts/seed.js`**
 ```js
@@ -802,7 +801,7 @@ Executa:
 npm run seed
 ```
  
-### 6) Proves ràpides
+###  🧪 Proves ràpides
 
 ```bash
 # Crear
@@ -824,7 +823,7 @@ curl -X PATCH http://localhost:3000/api/v1/products/<id>/stock   -H "Content-Typ
 curl -X DELETE http://localhost:3000/api/v1/products/<id>
 ```
  
-### 7) Bones pràctiques de persistència
+###  💡 Bones pràctiques de persistència
 
 - **Índexs**: assegura índex únic per a `sku` i text per a cerques.  
 - **Validació a BD** (Mongoose) + **validació a API** (express-validator).  
@@ -834,7 +833,7 @@ curl -X DELETE http://localhost:3000/api/v1/products/<id>
 - **Errors Mongo**: captura `code 11000` (duplicats) i `ValidationError`.
 
  
-### 8) Exercicis (per entregar)
+### 📝 Exercicis (per entregar)
 
 1. **Paginació**: `GET /products?page=1&limit=10` amb metadades (`total`, `pages`, `page`).
 2. **Ordenació**: afegir `?sort=price,-name`.
@@ -843,7 +842,7 @@ curl -X DELETE http://localhost:3000/api/v1/products/<id>
 5. **Endpoint `GET /products/export.csv`** generant CSV des de Mongo.
 6. **Soft delete**: afegeix `deletedAt` i filtra per defecte elements no eliminats.
  
-### 9) Troubleshooting
+### 🐞🛠️ Troubleshooting
 
 - **`MongoServerError: E11000 duplicate key error`** → `sku` duplicat. Respon `409`.
 - **`CastError: Cast to ObjectId failed`** → ID no vàlid. Valida el format abans de la query.
