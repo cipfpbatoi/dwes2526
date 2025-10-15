@@ -6,7 +6,7 @@
 **Node.js** és un entorn d’execució de JavaScript fora del navegador.  
 En lloc d’executar-se al client (com en aplicacions web tradicionals), s’executa al **servidor**, permetent-nos construir aplicacions backend, APIs, serveis web i molt més utilitzant el mateix llenguatge que al frontend: **JavaScript**.
 
-💡 **Per què és interessant per a 2DAW?**
+💡 **Per què és interessant**
 
 - Permet treballar amb un únic llenguatge tant al client com al servidor.
 - És lleuger, ràpid i molt eficient gràcies al motor V8 de Chrome.
@@ -107,7 +107,7 @@ api-inventari/
 - Facilita el testing i el manteniment  
 - Permet escalar el projecte fàcilment
 
----
+  
 
 ### 🔧 5. Flux de treball d’una API
 
@@ -131,8 +131,7 @@ Exemple de resposta:
   "active": true
 }
 ```
-
----
+ 
 
 ### 🛠️ 6. Eines útils per al desenvolupament d’APIs
 
@@ -141,8 +140,7 @@ Exemple de resposta:
 - **Swagger UI** → per documentar i provar l’API  
 - **ESLint + Prettier** → per mantenir un codi net i consistent  
 - **dotenv** → per gestionar variables d’entorn
-
----
+ 
 
 ### 💡 Bones pràctiques des del principi
 
