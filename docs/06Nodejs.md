@@ -849,7 +849,8 @@ curl -X DELETE http://localhost:3000/api/v1/products/<id>
 - **`ValidationError`** → algun camp no compleix l’esquema. Respon `422` amb el missatge.
 - **Sense connexió** → revisa `MONGO_URI`, firewall, i que el servei de Mongo estiga actiu.
  
- ## SA 6.4  Documentació amb Swagger / OpenAPI
+
+## SA 6.4  Documentació amb Swagger / OpenAPI
 
 En aquesta secció afegirem **documentació formal** a la nostra API amb **OpenAPI 3.0** i la servirem amb **Swagger UI** perquè siga navegable i executable des del navegador.
  
