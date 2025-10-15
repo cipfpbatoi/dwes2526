@@ -854,7 +854,7 @@ curl -X DELETE http://localhost:3000/api/v1/products/<id>
 En aquesta secció afegirem **documentació formal** a la nostra API amb **OpenAPI 3.0** i la servirem amb **Swagger UI** perquè siga navegable i executable des del navegador.
  
 
-### 1) Arxiu `openapi.json` bàsic
+### 🧱 Arxiu `openapi.json` bàsic
 
 A l’arrel del projecte crea `openapi.json`. A continuació tens una plantilla completa per al nostre recurs **Producte** amb esquemes, validacions i exemples.
 
@@ -1024,7 +1024,7 @@ A l’arrel del projecte crea `openapi.json`. A continuació tens una plantilla 
 > 🔎 **Consell**: guarda aquest fitxer a l’arrel del projecte perquè siga fàcil de trobar i versionar.
 
  
-### 2) Servir Swagger UI
+### ⚙️ Servir Swagger UI
 
 Afegim Swagger UI a `app.js` (després de configurar les rutes).
 
@@ -1047,7 +1047,7 @@ Ara obri: **http://localhost:3000/api-docs**
 
  
 
-### 3) Afegir exemples i respostes detallades
+### 🧠 Afegir exemples i respostes detallades
 
 Els **exemples** ajuden l’alumnat a saber què enviar i què esperar:
 
@@ -1085,7 +1085,7 @@ També pots descriure **errors** amb esquemes (p. ex. per a 422):
 ```
 
  
-### 4) Bones pràctiques de documentació
+### 💡 Bones pràctiques de documentació
 
 - **Mantín sincronitzat** el que diu `openapi.json` amb la realitat del codi.
 - **Descripcions clares**: explica què fa cada endpoint i quins casos d’ús té.
@@ -1096,7 +1096,7 @@ També pots descriure **errors** amb esquemes (p. ex. per a 422):
 - **Respostes**: documenta les principals (`200`, `201`, `204`, `400/404/409/422`, `500`).
 
  
-### 5) Exercicis (per entregar)
+### 📝 Exercicis (per entregar)
 
 1. **Completa `openapi.json`** amb:  
    a) Resposta `400` per `id` mal format.  
@@ -1112,23 +1112,23 @@ També pots descriure **errors** amb esquemes (p. ex. per a 422):
 5. **Autenticació (bonus)**: afegeix `securitySchemes` (Bearer JWT) i marca `POST/PUT/PATCH/DELETE` com a protegits.
 
  
-### 6) Troubleshooting Swagger
+### 🐞🛠️ Troubleshooting Swagger
 
 - **Pantalla en blanc** a `/api-docs` → JSON mal format (valida’l en un JSON linter).  
 - **No carrega `openapi.json`** → rutes relatives: comprova la ruta `path.join(__dirname, '..', 'openapi.json')`.  
 - **Errors CORS** provant des de Swagger → assegura `app.use(cors())`.  
 - **Exemples no apareixen** → han d’estar dins de `content -> application/json -> examples`.
 
-### 7) Swagger automàtic amb swagger-jsdoc  
+### 🐞🛠️ Swagger automàtic amb swagger-jsdoc  
 
 Anem també a mostrar com **generar la documentació OpenAPI automàticament** a partir de **comentaris JSDoc** en les rutes d’Express, utilitzant **swagger-jsdoc** + **swagger-ui-express**.
 
-#### 1) Instal·lació
+#### 🛠️ Instal·lació
 ```bash
 npm i swagger-jsdoc swagger-ui-express
 ```
 
-#### 2) Configuració base
+#### 🧱 Configuració base
 **`src/swagger.js`**
 ```js
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -1157,7 +1157,7 @@ import { swaggerSpec } from './swagger.js';
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 ```
 
-#### 3) Comentaris JSDoc a les rutes
+#### 🗂️ Comentaris JSDoc a les rutes
 **`src/routes/products.routes.js`**
 ```js
 /**
@@ -1179,16 +1179,16 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 router.get('/', validate(listQueryRules), controller.list);
 ```
 
-#### 4) Components reutilitzables
+#### 🖥️ Components reutilitzables
 Pots definir **components** (schemas) en `swaggerSpec` (via `options.definition.components = {...}`) o incloure’ls en un fitxer `.yml` separat i combinar-los amb `swagger-jsdoc`.
 
-#### 5) Bones pràctiques
+#### 💡 Bones pràctiques
 - Posa **tags** per agrupar endpoints.
 - Escriu **exemples** a `requestBody` i `responses`.
 - Mantín el **contracte** sincronitzat. Si canvies una ruta, actualitza el JSDoc.
 - Valida amb un **validator OpenAPI** (ex. Swagger Editor) si afegeixes elements avançats.
 
-#### 6) Enllaç a la UI
+#### 🔗 Enllaç a la UI
 Amb el servidor en marxa:  
 **http://localhost:3000/api-docs**
 
