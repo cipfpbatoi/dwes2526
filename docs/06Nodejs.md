@@ -156,7 +156,7 @@ Exemple de resposta:
 
 En aquesta secció construirem una **API REST d’inventari** amb **Express** utilitzant **ES Modules (`import/export`)** i **emmagatzematge en memòria** (sense base de dades). L’objectiu és entendre **clarament** el flux: *rutes → middleware → controladors → respostes*. A la Secció 3 connectarem la mateixa API a **MongoDB** sense canviar la interfície pública.
  
-### ⚙️  Inicialització del projecte
+### ⚙️ 1. Inicialització del projecte
 
 1. Crea una carpeta i inicialitza `npm`:
    ```bash
@@ -186,7 +186,7 @@ En aquesta secció construirem una **API REST d’inventari** amb **Express** ut
 
 > ℹ️ `swagger-ui-express` el farem servir per mostrar la documentació en la Secció 4 (ara deixarem el “ganxo” posat).
  
-### 🗂️ Estructura del projecte
+### 🗂️ 2. Estructura del projecte
 
 ```
 api-inventari/
@@ -207,7 +207,7 @@ api-inventari/
       └─ products.rules.js
 ```
  
-### 🚀 App i servidor
+### 🚀 3. App i servidor
 
 **`src/app.js`**
 ```js
@@ -249,7 +249,7 @@ app.listen(PORT, () => {
 });
 ```
  
-### 🧩 Middlewares de 404 i errors
+### 🧩 4. Middlewares de 404 i errors
 
 **`src/middlewares/not-found.js`**
 ```js
@@ -267,7 +267,7 @@ export default function errorHandler(err, req, res, next) {
 }
 ```
  
-### 🧪 Validació d’entrada amb `express-validator`
+### 🧪 5. Validació d’entrada amb `express-validator`
 
 **`src/validation/products.rules.js`**
 ```js
@@ -306,7 +306,7 @@ export const productStockRules = [
 > 💡 **Consell didàctic:** tracteu la **validació** com una “porta d’entrada” a la API. Tot passa per ací.
 
  
-### 🔗 Rutes i CRUD en memòria
+### 🔗 6. Rutes i CRUD en memòria
 
 **`src/routes/products.routes.js`**
 ```js
@@ -417,7 +417,7 @@ export async function remove(req, res, next) {
 }
 ```
  
-### 🔍 Proves amb Postman / curl
+### 🔍 7. Proves amb Postman / curl
 
 1. **Arranca el servidor**:
    ```bash
@@ -454,7 +454,7 @@ export async function remove(req, res, next) {
    curl -X DELETE http://localhost:3000/api/v1/products/1
    ```
  
-### 🧪 Proves des del client (JavaScript `fetch()`)
+### 🧪 8. Proves des del client (JavaScript `fetch()`)
 
 > Pots provar-ho des de la consola del navegador o en un fitxer `.html` senzill amb `<script type="module">`.
 
@@ -500,7 +500,7 @@ export async function remove(req, res, next) {
 </script>
 ```
  
-### 🌐↔️🌐 Extres útils per a classe
+### 🌐↔️🌐 9. Extres útils  
 
 - **CORS**: si tens un frontend en un altre port (p. ex. Vite a `5173`), CORS ja està habilitat globalment amb `app.use(cors())`. Pots restringir l’origen si cal:
   ```js
@@ -513,7 +513,7 @@ export async function remove(req, res, next) {
 - **Logs**: `morgan('dev')` és ideal en dev. En prod, millor logs estructurats (p. ex. pino).
  
 
-### 📝 Exercicis (per entregar)
+### 📝 10. Exercicis (per entregar)
 
 1. **Paginació i ordenació** a `GET /products` (`?page=1&limit=10&sort=price,-name`).
 2. **Filtre per rang de stock** (`stockMin`, `stockMax`).
@@ -524,7 +524,7 @@ export async function remove(req, res, next) {
 > 💡 Avaluació formativa: valorar codi net, ús correcte d’HTTP, validacions, i que no es trenque davant d’inputs erronis.
 
  
-### 🐞🛠️ Troubleshooting
+### 🐞🛠️ 11. Troubleshooting
 
 - **`Error [ERR_MODULE_NOT_FOUND]`** → comprova rutes d’import i extensions `.js` en imports locals.
 - **`Unexpected token 'export'`** → falta `"type": "module"` al `package.json`.
@@ -535,7 +535,7 @@ export async function remove(req, res, next) {
 
 En aquesta secció convertirem l’API en memòria de la Secció 2 en una **API amb persistència real** utilitzant **MongoDB** i **Mongoose**. Mantindrem els **endpoints** i el **contracte** (mateixa interfície pública), canviant només la **capa de dades**.
  
-### 🧰 Requisits i configuració
+### 🧰 1. Requisits i configuració
 
 #### Instal·lació de dependències
 
@@ -555,7 +555,7 @@ MONGO_URI=mongodb://127.0.0.1:27017/inventari
 
 > 💡 Si utilitzes **MongoDB Atlas**, reemplaça `MONGO_URI` pel connection string del teu cluster.
  
-### 🔌 Connexió a MongoDB
+### 🔌 2. Connexió a MongoDB
 
 **`src/lib/db.js`**
 ```js
@@ -597,7 +597,7 @@ const STORE = process.env.STORE ?? 'memory';
 })();
 ```
  
-###  🔌 Model de dades amb Mongoose
+###  🔌 3. Model de dades amb Mongoose
 
 **`src/models/product.model.js`**
 ```js
@@ -624,7 +624,7 @@ export const Product = mongoose.model('Product', productSchema);
 > - `timestamps: true` afegeix `createdAt` i `updatedAt` automàticament.
 
  
-###  ✍️ Reescriure controladors per a Mongo
+###  ✍️ 4. Reescriure controladors per a Mongo
 
 **`src/controllers/products.controller.mongo.js`**
 ```js
@@ -767,7 +767,7 @@ app.use(errorHandler);
 export default app;
 ```
  
-###  🌱 Seed de dades  
+###  🌱 5. Seed de dades  
 
 **`scripts/seed.js`**
 ```js
@@ -801,7 +801,7 @@ Executa:
 npm run seed
 ```
  
-###  🧪 Proves ràpides
+###  🧪 7. Proves ràpides
 
 ```bash
 # Crear
@@ -823,7 +823,7 @@ curl -X PATCH http://localhost:3000/api/v1/products/<id>/stock   -H "Content-Typ
 curl -X DELETE http://localhost:3000/api/v1/products/<id>
 ```
  
-###  💡 Bones pràctiques de persistència
+###  💡 8. Bones pràctiques de persistència
 
 - **Índexs**: assegura índex únic per a `sku` i text per a cerques.  
 - **Validació a BD** (Mongoose) + **validació a API** (express-validator).  
@@ -833,7 +833,7 @@ curl -X DELETE http://localhost:3000/api/v1/products/<id>
 - **Errors Mongo**: captura `code 11000` (duplicats) i `ValidationError`.
 
  
-### 📝 Exercicis (per entregar)
+### 📝 9. Exercicis (per entregar)
 
 1. **Paginació**: `GET /products?page=1&limit=10` amb metadades (`total`, `pages`, `page`).
 2. **Ordenació**: afegir `?sort=price,-name`.
@@ -842,7 +842,7 @@ curl -X DELETE http://localhost:3000/api/v1/products/<id>
 5. **Endpoint `GET /products/export.csv`** generant CSV des de Mongo.
 6. **Soft delete**: afegeix `deletedAt` i filtra per defecte elements no eliminats.
  
-### 🐞🛠️ Troubleshooting
+### 🐞🛠️ 10. Troubleshooting
 
 - **`MongoServerError: E11000 duplicate key error`** → `sku` duplicat. Respon `409`.
 - **`CastError: Cast to ObjectId failed`** → ID no vàlid. Valida el format abans de la query.
@@ -855,7 +855,7 @@ curl -X DELETE http://localhost:3000/api/v1/products/<id>
 En aquesta secció afegirem **documentació formal** a la nostra API amb **OpenAPI 3.0** i la servirem amb **Swagger UI** perquè siga navegable i executable des del navegador.
  
 
-### 🧱 Arxiu `openapi.json` bàsic
+### 🧱 1. Arxiu `openapi.json` bàsic
 
 A l’arrel del projecte crea `openapi.json`. A continuació tens una plantilla completa per al nostre recurs **Producte** amb esquemes, validacions i exemples.
 
@@ -1025,7 +1025,7 @@ A l’arrel del projecte crea `openapi.json`. A continuació tens una plantilla 
 > 🔎 **Consell**: guarda aquest fitxer a l’arrel del projecte perquè siga fàcil de trobar i versionar.
 
  
-### ⚙️ Servir Swagger UI
+### ⚙️ 2. Servir Swagger UI
 
 Afegim Swagger UI a `app.js` (després de configurar les rutes).
 
@@ -1048,7 +1048,7 @@ Ara obri: **http://localhost:3000/api-docs**
 
  
 
-### 🧠 Afegir exemples i respostes detallades
+### 🧠 3. Afegir exemples i respostes detallades
 
 Els **exemples** ajuden l’alumnat a saber què enviar i què esperar:
 
@@ -1086,7 +1086,7 @@ També pots descriure **errors** amb esquemes (p. ex. per a 422):
 ```
 
  
-### 💡 Bones pràctiques de documentació
+### 💡 4. Bones pràctiques de documentació
 
 - **Mantín sincronitzat** el que diu `openapi.json` amb la realitat del codi.
 - **Descripcions clares**: explica què fa cada endpoint i quins casos d’ús té.
@@ -1097,7 +1097,7 @@ També pots descriure **errors** amb esquemes (p. ex. per a 422):
 - **Respostes**: documenta les principals (`200`, `201`, `204`, `400/404/409/422`, `500`).
 
  
-### 📝 Exercicis (per entregar)
+### 📝 5. Exercicis (per entregar)
 
 1. **Completa `openapi.json`** amb:  
    a) Resposta `400` per `id` mal format.  
@@ -1113,14 +1113,14 @@ També pots descriure **errors** amb esquemes (p. ex. per a 422):
 5. **Autenticació (bonus)**: afegeix `securitySchemes` (Bearer JWT) i marca `POST/PUT/PATCH/DELETE` com a protegits.
 
  
-### 🐞🛠️ Troubleshooting Swagger
+### 🐞🛠️ 6. Troubleshooting Swagger
 
 - **Pantalla en blanc** a `/api-docs` → JSON mal format (valida’l en un JSON linter).  
 - **No carrega `openapi.json`** → rutes relatives: comprova la ruta `path.join(__dirname, '..', 'openapi.json')`.  
 - **Errors CORS** provant des de Swagger → assegura `app.use(cors())`.  
 - **Exemples no apareixen** → han d’estar dins de `content -> application/json -> examples`.
 
-### 🐞🛠️ Swagger automàtic amb swagger-jsdoc  
+### 🐞🛠️ 7. Swagger automàtic amb swagger-jsdoc  
 
 Anem també a mostrar com **generar la documentació OpenAPI automàticament** a partir de **comentaris JSDoc** en les rutes d’Express, utilitzant **swagger-jsdoc** + **swagger-ui-express**.
 
@@ -1180,16 +1180,16 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 router.get('/', validate(listQueryRules), controller.list);
 ```
 
-#### 🖥️ Components reutilitzables
+#### 🖥️ 8. Components reutilitzables
 Pots definir **components** (schemas) en `swaggerSpec` (via `options.definition.components = {...}`) o incloure’ls en un fitxer `.yml` separat i combinar-los amb `swagger-jsdoc`.
 
-#### 💡 Bones pràctiques
+#### 💡 9. Bones pràctiques
 - Posa **tags** per agrupar endpoints.
 - Escriu **exemples** a `requestBody` i `responses`.
 - Mantín el **contracte** sincronitzat. Si canvies una ruta, actualitza el JSDoc.
 - Valida amb un **validator OpenAPI** (ex. Swagger Editor) si afegeixes elements avançats.
 
-#### 🔗 Enllaç a la UI
+#### 🔗 10. Enllaç a la UI
 Amb el servidor en marxa:  
 **http://localhost:3000/api-docs**
 
