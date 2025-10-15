@@ -1,0 +1,152 @@
+::Pregunta 1::
+On s'executa el codi HTML en una aplicació web?
+{
+    ~%-100% Al servidor
+    ~%-100% A la base de dades
+    ~%-100% En un sistema operatiu remot
+    =%100% Al client (navegador)
+}
+
+::Pregunta 2::
+Quina de les següents opcions descriu correctament l'execució del codi al servidor?
+{
+    ~%-100% El codi del servidor es processa al client
+    ~%-100% El codi s'executa completament en el navegador de l'usuari
+    =%100% El servidor processa les sol·licituds i retorna respostes dinàmiques al client
+    ~%-100% El servidor únicament envia codi HTML
+}
+
+::Pregunta 3::
+Quin és un dels principals avantatges de la generació dinàmica de pàgines web?
+{
+    ~%-100% Millora la velocitat del client
+    =%100% Permet personalitzar el contingut per a cada usuari
+    ~%-100% Redueix l'ús de llenguatges de programació
+    ~%-100% Elimina la necessitat de servidors web
+}
+
+::Pregunta 4::
+Quina és una diferència clau entre la generació dinàmica de pàgines i la inclusió de sentències de guions dins de les pàgines web?
+{
+    ~%-100% Les pàgines dinàmiques sempre necessiten JavaScript
+    =%100% Les pàgines dinàmiques són creades pel servidor en resposta a sol·licituds, mentre que les sentències de guions s'executen al client
+    ~%-100% Les sentències de guions només s'utilitzen per a la seguretat de la pàgina web
+    ~%-100% La generació dinàmica requereix codi HTML estàtic
+}
+
+::Pregunta 5::
+Què fa un servidor web quan rep una petició HTTP d'un client?
+{
+    =%100% Processa la sol·licitud i retorna una pàgina web generada
+    ~%-100% Envia directament els fitxers HTML al client sense processament
+    ~%-100% Controla el disseny gràfic de la pàgina
+    ~%-100% Elimina el codi JavaScript del client
+}
+
+::Pregunta 6::
+Quin d'aquests llenguatges és comunament utilitzat per a l'execució de codi en el servidor?
+{
+    ~%-100% HTML
+    =%100% PHP
+    ~%-100% CSS
+    ~%-100% SQL
+}
+
+::Pregunta 7::
+Quina és la funció principal d'un servidor d'aplicacions?
+{
+    ~%-100% Mostrar imatges als usuaris
+    =%100% Processar les sol·licituds del client i executar aplicacions empresarials
+    ~%-100% Gestionar les connexions del navegador
+    ~%-100% Emmagatzemar les dades HTML
+}
+
+::Pregunta 8::
+Com es relaciona un servidor d'aplicacions amb un servidor web?
+{
+    =%100% El servidor web fa sol·licituds al servidor d'aplicacions per obtenir respostes dinàmiques
+    ~%-100% El servidor d'aplicacions només serveix fitxers CSS al servidor web
+    ~%-100% El servidor d'aplicacions mostra les pàgines HTML estàtiques
+    ~%-100% El servidor d'aplicacions gestiona directament els estils gràfics
+}
+
+::Pregunta 9::
+Quin llenguatge s'utilitza sovint per programar aplicacions web en entorn servidor?
+{
+    ~%-100% HTML
+    =%100% PHP
+    ~%-100% CSS
+    ~%-100% JSON
+}
+
+::Pregunta 10::
+Quina tecnologia permet desenvolupar aplicacions web que s'executen al servidor i responen a sol·licituds dels clients?
+{
+    ~%-100% HTML
+    =%100% Node.js
+    ~%-100% CSS
+    ~%-100% Bootstrap
+}
+
+::Pregunta 11::
+Com s'integren habitualment els llenguatges de marques (com HTML) amb els llenguatges de servidor?
+{
+    =%100% Mitjançant l'ús de motors de plantilles que permeten inserir codi servidor dins de l'HTML
+    ~%-100% El codi de marques i el codi del servidor no es poden integrar
+    ~%-100% Els llenguatges de marques sempre es gestionen pel client sense intervenció del servidor
+    ~%-100% HTML s'executa directament al servidor sense altres llenguatges
+}
+
+::Pregunta 12::
+Quin motor de plantilles és comunament utilitzat en aplicacions web per integrar codi del servidor amb HTML?
+{
+    =%100% Blade (Laravel)
+    ~%-100% Jinja (Django)
+    ~%-100% Angular
+    ~%-100% React
+}
+
+::Pregunta 13::
+Quina és una de les funcions principals d'un framework en el desenvolupament web en entorn servidor?
+{
+    =%100% Organitzar el codi i proporcionar eines per desenvolupar aplicacions de manera eficient
+    ~%-100% Millorar la velocitat de càrrega del navegador
+    ~%-100% Crear dissenys gràfics
+    ~%-100% Processar únicament sol·licituds de bases de dades
+}
+
+::Pregunta 14::
+Quin framework és conegut per ser lleuger i ideal per a aplicacions Node.js?
+{
+    ~%-100% Laravel
+    =%100% Express.js
+    ~%-100% Django
+    ~%-100% Spring Boot
+}
+
+::Pregunta 15::
+Quins són els principals components de l'arquitectura web clàssica?
+{
+    =%100% Client, servidor, base de dades
+    ~%-100% Servidor, HTML, CSS
+    ~%-100% Navegador, HTML, CSS
+    ~%-100% Base de dades, JavaScript, servidor web
+}
+
+::Pregunta 16::
+En què consisteix l'arquitectura de 3 capes?
+{
+    ~%-100% Navegador, servidor web i connexió a Internet
+    =%100% Cap de presentació, cap de lògica de negoci i cap de dades
+    ~%-100% HTML, CSS i JavaScript
+    ~%-100% Servidor, client i base de dades en una única capa
+}
+
+::Pregunta 17::
+Què és una arquitectura de microserveis?
+{
+    =%100% Una arquitectura composta de serveis petits i independents que treballen junts
+    ~%-100% Una arquitectura que utilitza servidors grans per executar tot el codi
+    ~%-100% Un sistema on tots els serveis estan centralitzats en un sol servidor
+    ~%-100% Un model on el client gestiona tota la lògica i les dades
+}

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <quiz>
+<question type="multichoice">
+  <name>
+    <text>PDO en PHP</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Què representa PDO en PHP?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>na interfície unificada per accedir a diverses bases de dades</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Un framework PHP per a desenvolupament web</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Public Data Output</text>
+  </answer>
+</question>
+<question type="multichoice">
+  <name>
+    <text>Funció de PDO per a Connexió</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Quina línia de codi s'utilitza per a establir una connexió amb una base de dades usant PDO?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>new PDO("dsn", "username", "password");</text>
+  </answer>
+  <answer fraction="-50">
+    <text>PDO::connect("dsn", "username", "password");</text>
+  </answer>
+  <answer fraction="-50">
+    <text>PDO::connection("dsn", "username", "password");</text>
+  </answer>
+</question>
+<question type="multichoice">
+  <name>
+    <text>Sentències Preparades en PDO</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Quina és l'avantatge principal de l'ús de sentències preparades en PDO?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>Prevenció d'injeccions SQL</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Millora de la velocitat de consulta</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Menys ús de memòria</text>
+  </answer>
+</question>
+<question type="multichoice">
+  <name>
+    <text>bindParam vs bindValue</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Quina diferència hi ha entre bindParam i bindValue en PDO?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>bindParam enllaça una variable per referència, mentre que bindValue enllaça un valor</text>
+  </answer>
+  <answer fraction="-50">
+    <text>No hi ha cap diferència</text>
+  </answer>
+  <answer fraction="-50">
+    <text>bindValue és només per variables, bindParam és només per valors</text>
+  </answer>
+</question>
+<question type="multichoice">
+  <name>
+    <text>Login Usant PDO</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Quin mètode de PDO s'utilitza per a comprovar les credencials d'usuari durant el procés de login?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>Preparar una sentència SQL SELECT i utilitzar fetch()</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Utilitzar la funció query()</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Utilitzar la funció exec()</text>
+  </answer>
+</question>
+<question type="multichoice">
+  <name>
+    <text>Consulta amb PDO</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Com s'obté un conjunt de resultats d'una consulta SELECT en PDO?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>Preparar la consulta SELECT, utilitzar execute() i després fetch() o fetchAll()</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Utilitzar la funció query() directament</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Utilitzar la funció exec() i després fetch() o fetchAll()</text>
+  </answer>
+</question>
+<question type="multichoice">
+  <name>
+    <text>Login utilitzant PDO</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Quin és un pas important quan es crea un sistema de login utilitzant PDO?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>Utilitzar sentències preparades per prevenir injeccions SQL</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Guardar les contrasenyes en text pla</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Utilitzar sempre la mateixa connexió per a totes les operacions</text>
+  </answer>
+</question>
+<question type="multichoice">
+  <name>
+    <text>Insert amb PDO</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Quina és la manera correcta de fer una inserció utilitzant PDO?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>Preparar la sentència, lligar els valors i executar</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Executar directament una sentència SQL amb insert</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Utilitzar la funció exec() amb una sentència insert</text>
+  </answer>
+</question>
+<question type="multichoice">
+  <name>
+    <text>Update amb PDO</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Quin és el mètode correcte per actualitzar dades utilitzant PDO?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>prepare() seguit d'execute()</text>
+  </answer>
+  <answer fraction="-50">
+    <text>update()</text>
+  </answer>
+  <answer fraction="-50">
+    <text>modify()</text>
+  </answer>
+</question>
+
+<!-- Pregunta 8: Delete amb PDO -->
+<question type="multichoice">
+  <name>
+    <text>Delete amb PDO</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Que es retorna quan fem un DELETE en la base de dades utilitzant PDO?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>El nombre de registres afectats</text>
+  </answer>
+  <answer fraction="-50">
+    <text>El registre afectat</text>
+  </answer>
+  <answer fraction="-50">
+    <text>No es retorna res</text>
+  </answer>
+</question>
+<question type="multichoice">
+  <name>
+    <text>QueryBuilder</text>
+  </name>
+  <questiontext format="html">
+    <text><![CDATA[<p>Quin és l'avantatge principal d'utilitzar un Query Builder?</p>]]></text>
+  </questiontext>
+  <answer fraction="100">
+    <text>Facilita l'escriptura de consultes SQL mitjançant mètodes i classes, millorant la llegibilitat i seguretat</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Augmenta el rendiment de les consultes a la base de dades</text>
+  </answer>
+  <answer fraction="-50">
+    <text>Elimina la necessitat d'utilitzar SQL</text>
+  </answer>
+</question>
+  </quiz>
