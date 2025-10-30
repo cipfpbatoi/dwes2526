@@ -825,7 +825,131 @@ Dins, utilitzem etiquetes per descriure elements.
 -  Actualitza PHPDoc quan canvies la signatura d’un mètode.
 -  No sobrecarregues amb informació obvia; sigues clar i útil.
 
+# SA03 — MVC amb Laravel  
+**Duració:** 6 sessions de 3 hores  
+**Cicle:** 2n DAW  
+**Mòdul:** Desenvolupament web en entorn servidor (DWES)  
+**Enfocament:** Aprenentatge basat en reptes  
 
+---
+
+## 🎯 Objectiu general de la SA
+Comprendre i aplicar el patró **Model–Vista–Controlador (MVC)** utilitzant **Laravel**, construint aplicacions web amb dades simulades (sense base de dades) i una arquitectura clara i escalable.
+
+---
+
+## 🧩 Seqüència de reptes
+
+### 🧱 R1. Endreça el caos — Instal·la Laravel i aplica MVC bàsic
+**Duració:** 1 sessió (3 h)
+ 
+#### 🧩 Plantejament
+Un antic projecte PHP del client està tot en un sol fitxer ple d’`echo` i `if`.  
+T’han demanat “posar-ho bonic” amb Laravel i aplicar bones pràctiques.
+
+#### 📋 Tasques
+1. Instal·la Laravel.
+2. Prova que funcione la ruta `/` mostrant una vista Blade amb un text.
+3. Crea un controlador `WelcomeController` amb un mètode `index()`.
+4. Passa dades des del controlador a la vista (`compact()`).
+5. Mostra la informació en una vista `welcome.blade.php` amb Blade (`{{ $variable }}`).
+
+#### 🧾 Evidències esperades
+- Projecte Laravel funcionant localment.  
+- Controlador, ruta i vista correctament connectats.  
+- Vista amb dades dinàmiques.  
+
+#### 🧠 Explicació prèvia docent
+- Què és Laravel i com s’instal·la.  
+- Flux Request → Route → Controller → View.  
+- Passar dades amb `compact()` o `with()`.  
+- Sintaxi bàsica Blade (`{{ }}`, `@if`, `@foreach`).  
+ 
+---
+
+### 🧱 R2. El catàleg dinàmic — Models sense base de dades
+**Duració:** 1 sessió (3 h)
+
+ 
+#### 🧩 Plantejament
+Una empresa et demana una web de catàleg (llibres, pel·lícules o equips).  
+De moment no hi ha base de dades, però cal mostrar una llista i un detall.
+
+#### 📋 Tasques
+1. Crea un model (per exemple `Producte.php`) amb un array intern de dades.  
+2. Afegeix mètodes com `all()` i `find($id)`.  
+3. Crea un controlador `ProducteController` amb `index()` i `show($id)`.  
+4. Defineix rutes `/productes` i `/productes/{id}`.  
+5. Mostra la llista i la fitxa amb vistes Blade.
+
+#### 🧾 Evidències esperades
+- Model funcional amb array d’objectes.  
+- Controlador amb dos mètodes ben diferenciats.  
+- Vistes que reben i mostren dades reals.
+
+#### 🧠 Explicació prèvia docent
+- Models sense Eloquent: classes PHP normals.  
+- Rutes amb paràmetres (`Route::get('/productes/{id}')`).  
+- Passar dades amb `compact()`.  
+- Organització de carpetes (`app/Models`, `app/Http/Controllers`, `resources/views`).
+
+ 
+### 🧱 R3. Reutilitza i dissenya — Plantilles i components Blade
+**Duració:** 1 sessió (3 h)
+
+#### 🎯 Objectiu
+Aprendre a reutilitzar codi de vistes amb plantilles, seccions i components Blade.
+
+#### 🧩 Plantejament
+El client vol que totes les pàgines tinguen el mateix estil i menú.  
+T’has d’encarregar de crear una plantilla comuna per a tota la web.
+
+#### 📋 Tasques
+1. Crea un `layouts/app.blade.php` amb `@yield('content')`.  
+2. Modifica les vistes per `@extends('layouts.app')` i `@section('content')`.  
+3. Crea un `partials/menu.blade.php` i inclou-lo amb `@include`.  
+4. Afig un estil coherent (Tailwind o CSS senzill).  
+5. (Opcional) Crea un component Blade `<x-targeta>`.
+
+#### 🧾 Evidències esperades
+- Layout principal operatiu.  
+- Vistes hereten i mostren contingut coherent.  
+- Components o `@include` utilitzats correctament.
+
+#### 🧠 Explicació prèvia docent
+- Blade inheritance: `@extends`, `@yield`, `@section`.  
+- `@include` i components Blade.  
+- Bones pràctiques de modularitat i DRY.  
+  
+
+### 🧱 R4. Interacciona amb l’usuari — Formularis i validació
+**Duració:** 1–1,5 sessions (3–4,5 h)
+
+#### 🎯 Objectiu
+Aprendre a gestionar rutes POST, formularis i validació bàsica.
+
+#### 🧩 Plantejament
+El client vol un formulari de contacte o per a afegir un comentari, encara que no s’arxive.  
+Només cal mostrar un missatge de confirmació amb les dades rebudes.
+
+#### 📋 Tasques
+1. Crea una ruta `GET /contacte` i `POST /contacte`.  
+2. Implementa un formulari Blade amb `@csrf`.  
+3. Valida les dades amb `$request->validate()`.  
+4. Mostra errors amb `@error` i valors antics amb `old()`.  
+5. Redirigeix amb `redirect()->with('success', 'Missatge rebut!')`.
+
+#### 🧾 Evidències esperades
+- Formulari funcional.  
+- Validacions amb missatges.  
+- Confirmació visual correcta.
+
+#### 🧠 Explicació prèvia docent
+- Rutes `POST` i controladors.  
+- Validació bàsica i missatges d’error.  
+- Sessió i missatges flash.  
+
+ 
 
 ## Exercicis  
 
