@@ -824,19 +824,7 @@ Dins, utilitzem etiquetes per descriure elements.
 -  Usa tipus complets (no array, sinó string[] o int[] quan siga possible).
 -  Actualitza PHPDoc quan canvies la signatura d’un mètode.
 -  No sobrecarregues amb informació obvia; sigues clar i útil.
-
-# SA03 — MVC amb Laravel  
-**Duració:** 6 sessions de 3 hores  
-**Cicle:** 2n DAW  
-**Mòdul:** Desenvolupament web en entorn servidor (DWES)  
-**Enfocament:** Aprenentatge basat en reptes  
-
----
-
-## 🎯 Objectiu general de la SA
-Comprendre i aplicar el patró **Model–Vista–Controlador (MVC)** utilitzant **Laravel**, construint aplicacions web amb dades simulades (sense base de dades) i una arquitectura clara i escalable.
-
----
+  
 
 ## 🧩 Seqüència de reptes
 
