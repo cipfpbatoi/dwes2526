@@ -1006,12 +1006,12 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
  
 #### 1. Crear migracions i models relacionats
 - **Jugadores** amb: `equip_id`, `data_naixement`, `dorsal`, `foto`
-- **Partits** amb: `local_id`, `visitant_id`, `estadi_id`, `arbitre_id`, `data`, `jornada`, `gols`
+- **Partits** amb: `local_id`, `visitant_id`, `estadi_id`,    `data`, `jornada`, `gols`
 - Defineix relacions entre models:
     - `equip → jugadores` (1:N)
     - `equip → partits com local/visitant` (1:N)
     - `partit → equip local/visitant` (N:1)
-    - `partit → estadi`, `partit → arbitre`
+    - `partit → estadi` 
  
 #### 2. Completa el CRUD de Jugadores amb Arquitectura Escalable
 - Implementa `JugadoraRepository` i `JugadoraService`
@@ -1020,7 +1020,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Mostra els equips que hi juguen dins la vista `show`
  
 #### 3. Factories i Seeders amb Calendari Automàtic
-- 18 equips, 30 àrbitres
+- 18 equips 
 - Generar calendari (anada + tornada) usant Faker i Carbon
 - Resultats aleatoris si la data ja ha passat
  
