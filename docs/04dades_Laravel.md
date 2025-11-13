@@ -713,17 +713,186 @@ $peliculas = DB::table('movies')
 ###  Referència
 
 - Documentació oficial: [Eloquent ORM – Laravel 12](https://laravel.com/docs/12.x/eloquent)
-- Vídeo d’introducció a les operacions amb Eloquent
-
+ 
 ## SA4.3  Patrons de disseny orientats a objectes 
 
 ### Principis SOLID (microresum)
+ 
+Els principis SOLID són un conjunt de 5 normes de disseny de programari que ajuden a escriure codi:
 
-- Single Responsibility: cada classe, una responsabilitat.
-- Open/Closed: oberta a extensió, tancada a modificació.
-- Liskov: substitució segura de tipus base per derivats.
-- Interface Segregation: interfícies xicotetes i específiques.
-- Dependency Inversion: dependències d’abstraccions, no implementacions.
+- més net
+- més comprensible
+- més fàcil de mantenir
+- més fàcil de provar (testar)
+- més flexible i extensible
+ 
+
+#### S --- Single Responsibility (SRP)
+
+Cada classe, una responsabilitat =>Una classe ha de fer només una cosa i fer-la bé.
+Si fa massa coses, es torna difícil de llegir, de provar i de canviar sense trencar res.
+
+📦 Exemple:
+Una classe de “Usuari” no hauria d’enviar correus, validar dades i guardar a la base de dades.
+Això són responsabilitats separades.
+
+
+##### 🧑‍💻 Exemple PHP/Laravel
+
+**Mal:**
+
+``` php
+class UsuarioService {
+    public function crear($data) {
+        $this->validar($data);
+        $this->guardar($data);
+        $this->enviarCorreo($data);
+        $this->escribirLog($data);
+    }
+}
+```
+
+**Bé:**
+
+``` php
+class UsuarioValidator {...}
+class UsuarioRepository {...}
+class UsuarioMailer {...}
+class UsuarioLogger {...}
+```
+
+------------------------------------------------------------------------
+
+#### O --- Open/Closed (OCP)
+
+El codi ha d’estar obert a ser ampliat, però tancat a ser modificat. => Això significa que quan vols afegir funcionalitat, no has de tocar el codi vell, sinó afegir-ne de nou.
+
+🔧 L’objectiu: evitar que tocar una línia trenque mig projecte.
+
+##### Exemple Laravel
+
+**Mal:**
+
+``` php
+class Descompte {
+    public function calcula($producte) {
+        if ($producte->tipus === 'nadal') { ... }
+        if ($producte->tipus === 'vip') { ... }
+        if ($producte->tipus === 'liquidacio') { ... }
+    }
+}
+```
+
+**Bé:**
+
+``` php
+interface DescompteStrategy { public function calcula($producte); }
+
+class DescompteNadal implements DescompteStrategy {...}
+class DescompteVip implements DescompteStrategy {...}
+class DescompteLiquidacio implements DescompteStrategy {...}
+```
+
+------------------------------------------------------------------------
+
+#### L --- Liskov Substitution (LSP)
+
+Una classe filla ha de poder substituir la classe pare sense trencar res => Si un lloc espera un objecte del tipus “Animal”, qualsevol classe que herete d’“Animal” (Gos, Gat…) ha de comportar-se de manera coherent.
+
+🧠 Si una subclasse fa coses rares que la classe mare no feia, trenca aquest principi.
+
+##### Exemple Laravel
+
+``` php
+class Reporte {
+    public function generar() { /* ... */ }
+}
+```
+
+**Mal:**
+
+``` php
+class ReportePDF extends Reporte {
+    public function generar() {
+        throw new Exception("No puc generar PDF hui.");
+    }
+}
+```
+
+**Bé:**
+
+``` php
+class ReportePDF extends Reporte { ... }
+class ReporteCSV extends Reporte { ... }
+```
+
+------------------------------------------------------------------------
+
+#### I --- Interface Segregation (ISP)
+
+Millor interfícies xicotetes i específiques que una de gran i general=> No obligues una classe a implementar mètodes que no necessita.
+
+🎮 Exemple:
+Una interfície “Animal” amb vola() obligaria una tortuga a “volar”, cosa que no té cap sentit.
+Millor fer interfícies separades: “Volador”, “Corredor”, “Nedador”...
+
+##### Exemple PHP
+
+**Mal:**
+
+``` php
+interface Animal {
+    public function corre();
+    public function vola();
+    public function nada();
+}
+```
+
+**Bé:**
+
+``` php
+interface Corre { public function corre(); }
+interface Vola { public function vola(); }
+interface Nada { public function nada(); }
+```
+
+------------------------------------------------------------------------
+
+#### D --- Dependency Inversion (DIP)
+
+El codi ha de dependre d’abstraccions (interfícies), no d’implementacions concretes. Això fa que el teu codi siga flexible => Si un component depèn directament d’un altre molt concret, és difícil canviar-lo per un altre.
+
+🔌 Exemple:
+Un controlador no hauria de crear directament new UserMySQLRepository(), sinó rebre una interfície UserRepository.
+Així pots substituir MySQL per MongoDB, memòria, fitxer, etc., sense tocar el controlador.
+
+##### Exemple Laravel
+
+**Mal:**
+
+``` php
+class UsuarioController {
+    public function __construct() {
+        $this->repo = new UsuarioMySQLRepository();
+    }
+}
+```
+
+**Bé:**
+
+``` php
+interface UsuarioRepository { ... }
+
+class UsuarioMySQLRepository implements UsuarioRepository { ... }
+class UsuarioMemoryRepository implements UsuarioRepository { ... }
+
+class UsuarioController {
+    public function __construct(UsuarioRepository $repo) {
+        $this->repo = $repo;
+    }
+}
+```
+ 
 
 ### Patrons útils en Laravel
 
@@ -740,6 +909,7 @@ Controller  ->  Service  ->  Repository  ->  Eloquent Model
 
 **Interfície del Repositori**
 // app/Repositories/ProducteRepository.php
+
 ```php 
 namespace App\Repositories;
 
