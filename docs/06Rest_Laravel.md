@@ -21,22 +21,22 @@
 # Servicios REST
 
 
-## Introducció als serveis REST
+## 📘 Introducció als serveis REST
 
 
 Una **API** (Application Programming Interface) és un conjunt de funcions i procediments pels quals, una aplicació externa accedeix a les dades, a manera de biblioteca com una capa d'abstracció i la API s'encarrega d'enviar la dada sol·licitada.
 
 Una de les característiques fonamentals de les API és que són **Stateless**, la qual cosa vol dir que les peticions es fan i desapareixen, no hi ha usuaris loguejats ni dades que es queden emmagatzemats.
 
-### Característiques fonamentals de REST:
+### 🧭 Característiques fonamentals de REST:
 - **Stateless**: Cada petició HTTP conté tota la informació necessària per processar-la.
 - **Mètodes HTTP**: Utilitza mètodes com GET, POST, PUT i DELETE.
 - **Formats d'intercanvi de dades**: Habitualment JSON o XML.
  
 
-## Els serveis REST
+## 🌐 Els serveis REST
 
-### Consultar una API externa
+### 🔍 Consultar una API externa
 
 Per consultar una API externa com https://swapi.dev/ des de Laravel, pots utilitzar la biblioteca HTTP client de Laravel, que proporciona una interfície senzilla per a realitzar peticions HTTP. Ací tens un exemple de com fer una petició GET per a obtenir informació sobre personatges de "Star Wars":
 
@@ -69,7 +69,7 @@ public function getStarWarsCharacters()
 En aquest exemple, la petició GET a https://swapi.dev/api/people/ retorna informació sobre personatges de "Star Wars". La resposta es verifica per a comprovar si ha estat exitosa, i després es processen les dades JSON. Pots adaptar aquest codi per a fer altres tipus de consultes a l'API, depenent de la informació que necessites.
  
 
-### Construïnt una API/REST bàsica amb Laravel
+### 🛠️ Construïnt una API/REST bàsica amb Laravel
 
 Amb aquesta metodologia anomenada **REST** podrem construir *APIs* perquè des d'un client extern es puguen consumir.
 
@@ -229,7 +229,7 @@ php artisan route:list
 
 ```
 
-### Serveis GET
+### 📥 Serveis GET
 
 Començarem per definir el mètode index . En aquest cas, obtindrem el conjunt de jugadores de la base de dades i retornar-lo tal qual:
 
@@ -419,7 +419,7 @@ class JugadoraCollection extends ResourceCollection
 ```
 
 
-### **Paginar resultats:**
+### 📑 **Paginar resultats:**
 Utilitza el mètode `paginate()` per retornar resultats paginats. Les respostes amb `paginate()` inclouen metadades com el nombre total de registres, la pàgina actual i els enllaços de navegació.
 
 ```php
@@ -432,7 +432,7 @@ public function index()
 ```
 
 
-### **Respostes JSON amb paginació:**
+### 📄 **Respostes JSON amb paginació:**
 Quan utilitzes `paginate()`, Laravel afegeix metadades útils a la resposta JSON, com ara el total de registres, el nombre per pàgina, la pàgina actual, etc.
 
 ```json
@@ -467,7 +467,7 @@ Quan utilitzes `paginate()`, Laravel afegeix metadades útils a la resposta JSON
 }
 ```
 
-## 6. Personalització dels Recursos
+## 🎛️ 6. Personalització dels Recursos
 
 Els recursos també poden incloure dades de relacions o camps calculats, com ara informació agregada o camps derivats.
 
@@ -500,7 +500,7 @@ class JugadoraResource extends JsonResource
 
 Laravel 12 fa que el maneig de respostes JSON siga flexible, escalable i fàcil d'implementar.
 
-### Resta dels serveis
+### 🔄 Resta dels serveis
 
 
 Vegem ara com implementar la resta de serveis (POST, PUT i DELETE). En el cas de la inserció (POST), haurem de rebre en la petició les dades de l'objecte a inserir (una jugadora, en el nostre exemple). Igual que les dades del servidor al client s'envien en format JSON, és d'esperar en aplicacions que segueixen l'arquitectura REST que les dades del client al servidor també s'envien en format JSON.
@@ -634,7 +634,7 @@ Per a peticions DELETE, la mecànica és similar a la fitxa de l'element (operac
 
 ![](imagenes/08/postman_8.png)
 
-### Autenticació en serveis REST
+### 🔒 Autenticació en serveis REST
 
  
 En una API REST també pot ser necessari protegir certs serveis, de manera que només puguen accedir a ells els usuaris autenticats. No obstant això, en aquest cas no tenim disponible el mecanisme d'autenticació basat en sessions que vam veure en temes anteriors, ja que la parteix client que consula la API
@@ -860,11 +860,10 @@ A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les c
 
 
 
-## Exercici Pràctic: API per a la Guia d'Equips de Futbol Femení.
+## 📎 Annex I : API per a la Guia d'Equips de Futbol Femení.
 
-L'objectiu de l'exercici consisteix a implementar una API REST completa per gestionar la lliga femenina, incloent-hi les operacions CRUD, autenticació, autorització, i documentació amb Swagger.
-
-### Pas 1: Configuració inicial de l’API (instal·lació Sanctum)
+ 
+### ⚙️ Pas 1: Configuració inicial de l’API (instal·lació Sanctum)
 
 - Instal·la Laravel Sanctum al projecte (si treballes amb Laravel 11/12 i ja has executat `php artisan install:api`, aquest pas ja estarà fet; sinó):
   
@@ -909,7 +908,7 @@ return Application::configure(basePath: dirname(__DIR__))
 })->create();
 ```
 
-### Pas 2: Controladors i Rutes 
+### 🛣️ Pas 2: Controladors i Rutes 
  
 - Genera controladors per als models utilitzant Artisan:
   
@@ -1010,7 +1009,7 @@ class JugadoraController extends BaseController
 }
 
 ``` 
-### Pas 3: Resources
+### 📦 Pas 3: Resources
 
 - Genera un Recurso per a la Jugadora:
 
@@ -1083,7 +1082,7 @@ class JugadoraResource extends JsonResource
 
 
 
-### Pas 4: Autenticació i autorització
+### 🔐 Pas 4: Autenticació i autorització
 
 - Afegir al model User el trait HasApiTokens:
 
@@ -1181,19 +1180,19 @@ class AuthController extends BaseController
 
 ```
 
-## Exercici     
+## 🧪 Exercici     
 
 # Enunciat: Creació d'una API i la seva documentació
 
 Aquest exercici consisteix a crear una API per gestionar les taules que no són `jugadores` i documentar-la correctament utilitzant Swagger (`l5-swagger`). Segueix els passos indicats per implementar i documentar les operacions CRUD i altres funcionalitats específiques.
 
   
-### 1. **Entitats a gestionar**
+### 🏟️ 1. **Entitats a gestionar**
 - **Estadis**
 - **Equips**
 - **Partits**
 
-### 2. **Endpoints**
+### 🛤️ 2. **Endpoints**
 Implementa els següents endpoints per a cada entitat, seguint els estàndards REST:
 
 - `GET /api/{resource}`: Retorna una llista paginada de recursos.
