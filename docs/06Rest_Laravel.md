@@ -123,7 +123,7 @@ comandos.
 Per a proporcionar una API REST als clients que ho requerisquen, necessitem definir un controlador (ocontroladors) orientats a oferir aquests serveis REST. Aquests controladors en Laravel es denominen de tipus **api**, com vam veure en sessions prèvies. Normalment es definirà un controlador API per cadascun dels models als quals necessitem accedir. 
 
 ```php
-php artisan make:controller Api/MovieController --api --model=Movie
+php artisan make:controller Api/JugadoraController --api --model=Jugadora
 ```
 
 Això crearà el controlador en la carpeta **App\Http\Controllers\Api** amb una sèrie de funcions ja predefinides. No és obligatori situar-ho en aqueixa subcarpeta, òbviament, però això ens servirà per a separar els controladors de API de la resta. Aquesta serà l'aparença del controlador generat:
@@ -134,10 +134,10 @@ Això crearà el controlador en la carpeta **App\Http\Controllers\Api** amb una 
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Movie;
+use App\Models\Jugadora;
 use Illuminate\Http\Request;
 
-class MovieController extends Controller
+class JugadoraController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -163,10 +163,10 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Jugadora  $jugadora
      * @return \Illuminate\Http\Response
      */
-    public function show(Movie $movie)
+    public function show(Jugadora $jugadora)
     {
         //
     }
@@ -175,10 +175,10 @@ class MovieController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Jugadora  $jugadora
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Movie $movie)
+    public function update(Request $request, Jugadora $jugadora)
     {
         //
     }
@@ -186,17 +186,17 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Jugadora  $jugadora
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Movie $movie)
+    public function destroy(Jugadora $jugadora)
     {
         //
     }
 }
 ```
 
-Observem que s'incorpora automàticament la clàusula use per a carregar el model associat, que hem indicat en el paràmetre **--model** . A més, els mètodes show , update i destroy ja vénen amb un paràmetre de tipus Llibre que facilitarà molt algunes tasques.
+Observem que s'incorpora automàticament la clàusula use per a carregar el model associat, que hem indicat en el paràmetre **--model** . A més, els mètodes show , update i destroy ja vénen amb un paràmetre de tipus Jugadora que facilitarà molt algunes tasques.
 
 ##### Establint les rutes (endPoints)
 
@@ -205,13 +205,13 @@ Una vegada tenim el controlador API creat, definirem les rutes associades a cada
 **routes/api.php** per a establir automàticament totes les rutes d'un controlador de API. Afegim aquesta línia en aquest arxiu **routes/api.php** :
 
 ```
-Route::apiResource('movies',Api\MovieController::class);
+Route::apiResource('jugadores',Api\JugadoraController::class);
 ```
 
-Recorda importar el controlador: `use App\Http\Controllers\Api\MovieController;`.
+Recorda importar el controlador: `use App\Http\Controllers\Api\JugadoraController;`.
 
 Les rutes de API (aquelles definides en l'arxiu **routes/api.php** ) per defecte tenen un prefix api , tal com s'estableix en el provider **RouteServiceProvider** . Per tant, hem definit una
-ruta general **api/movies** , de manera que totes les subrutes que es deriven d'ella portaran a l'un o l'altre mètode del controlador de API de pel·lícules.
+ruta general **api/jugadores** , de manera que totes les subrutes que es deriven d'ella portaran a l'un o l'altre mètode del controlador de API de jugadores.
 Podem comprovar quines rutes hi ha actives amb aquest comando:
 
 ```
@@ -221,52 +221,50 @@ php artisan route:list
 | Domain | Method    | URI                | Name           | Action                                           | Middleware |
 +--------+-----------+--------------------+----------------+--------------------------------------------------+------------+
 |        | GET|HEAD  | /                  |                | App\Http\Controllers\HomeController              | web        |
-|        | GET|HEAD  | api/movies         | movies.index   | App\Http\Controllers\Api\MovieController@index   | api        |
-|        | POST      | api/movies         | movies.store   | App\Http\Controllers\Api\MovieController@store   | api        |
-|        | GET|HEAD  | api/movies/{movie} | movies.show    | App\Http\Controllers\Api\MovieController@show    | api        |
-|        | PUT|PATCH | api/movies/{movie} | movies.update  | App\Http\Controllers\Api\MovieController@update  | api        |
-|        | DELETE    | api/movies/{movie} | movies.destroy | App\Http\Controllers\Api\MovieController@destroy | api        |
+|        | GET|HEAD  | api/jugadores         | jugadores.index   | App\Http\Controllers\Api\JugadoraController@index   | api        |
+|        | POST      | api/jugadores         | jugadores.store   | App\Http\Controllers\Api\JugadoraController@store   | api        |
+|        | GET|HEAD  | api/jugadores/{jugadora} | jugadores.show    | App\Http\Controllers\Api\JugadoraController@show    | api        |
+|        | PUT|PATCH | api/jugadores/{jugadora} | jugadores.update  | App\Http\Controllers\Api\JugadoraController@update  | api        |
+|        | DELETE    | api/jugadores/{jugadora} | jugadores.destroy | App\Http\Controllers\Api\JugadoraController@destroy | api        |
 |        | GET|HEAD  | api/user           |                | Closure                                          +--------------------------------------------------+------------+
 
 ```
 
 ### Serveis GET
 
-Començarem per definir el mètode index . En aquest cas, obtindrem el conjunt de pel·lícules de la base de dades i retornar-lo tal qual:
+Començarem per definir el mètode index . En aquest cas, obtindrem el conjunt de jugadores de la base de dades i retornar-lo tal qual:
 
 ```php
 public function index()
 {
-	$movies = Movie::get();
-	return $movies;
+    $jugadores = Jugadora::get();
+    return $jugadores;
 }
 ```
 
-Si accedim a la ruta **api/movies** des del navegador, s'activarà el mètode index que acabem d'implementar, i rebrem les pel·lícules de la base de dades, directament en format JSON.
+Si accedim a la ruta **api/jugadores** des del navegador, s'activarà el mètode index que acabem d'implementar, i rebrem les jugadores de la base de dades, directament en format JSON.
 
 ```json
 [
   {
     "id": 1,
-    "title": "El padrino",
-    "year": "1972",
-    "director": "Francis Ford Coppola",
-    "poster": "http://example.com/godfather.jpg",
-    "rented": 0,
-    "synopsis": "Don Vito Corleone és el cap d'una família mafiosa de Nova York.",
-    "created_at": "2020-12-03T11:19:19.000000Z",
-    "updated_at": "2020-12-21T10:36:20.000000Z"
+    "nom": "Aitana Bonmatí",
+    "equip": "FC Barcelona",
+    "posicio": "Migcampista",
+    "dorsal": 14,
+    "edat": 26,
+    "created_at": "2024-01-10T11:19:19.000000Z",
+    "updated_at": "2024-02-12T10:36:20.000000Z"
   },
   {
     "id": 2,
-    "title": "El Padrino. Parte II",
-    "year": "1974",
-    "director": "Francis Ford Coppola",
-    "poster": "http://example.com/godfather2.jpg",
-    "rented": 0,
-    "synopsis": "Continuació de la història dels Corleone.",
-    "created_at": "2020-12-03T11:19:19.000000Z",
-    "updated_at": "2020-12-03T11:19:19.000000Z"
+    "nom": "Alexia Putellas",
+    "equip": "FC Barcelona",
+    "posicio": "Migcampista",
+    "dorsal": 11,
+    "edat": 29,
+    "created_at": "2024-01-10T11:19:19.000000Z",
+    "updated_at": "2024-01-15T11:19:19.000000Z"
   }
 ]
 ```
@@ -275,13 +273,13 @@ Si accedim a la ruta **api/movies** des del navegador, s'activarà el mètode in
 D'una forma similar, podríem implementar i provar el mètode show
 
 ```php
-public function show(Movie $movie)
+public function show(Jugadora $jugadora)
 {
-	return $movie;
+    return $jugadora;
 }
 ```
 
-En aquest cas, si accedim a la URI **api/movies/1** , obtindrem la informació de la pel·lícula amb id = 1. Notar que Laravel s'encarrega automàticament de buscar el registre per nosaltres (fer la corresponent operació **find** per a l'id proporcionat). És el que es coneix com a enllaç implícit, i és alguna cosa que també està disponible en els controladors web normals, sempre que els associem correctament amb el model vinculat. Això es fa automàticament si creem el controlador juntament amb el model o si usem el paràmetre --model per a associar-ho, com hem fet ací.
+En aquest cas, si accedim a la URI **api/jugadores/1** , obtindrem la informació de la jugadora amb id = 1. Notar que Laravel s'encarrega automàticament de buscar el registre per nosaltres (fer la corresponent operació **find** per a l'id proporcionat). És el que es coneix com a enllaç implícit, i és alguna cosa que també està disponible en els controladors web normals, sempre que els associem correctament amb el model vinculat. Això es fa automàticament si creem el controlador juntament amb el model o si usem el paràmetre --model per a associar-ho, com hem fet ací.
 
 #### Maneig de Respostes JSON en Laravel
 
@@ -292,9 +290,9 @@ Laravel ofereix diverses eines per gestionar respostes JSON, ja siga directament
 Aquest mètode et permet retornar respostes JSON personalitzades amb un codi d'estat específic.
 
 ```php
-public function show(Movie $movie)
+public function show(Jugadora $jugadora)
 {
-    return response()->json($movie, 200); // JSON amb codi 200 (èxit)
+    return response()->json($jugadora, 200); // JSON amb codi 200 (èxit)
 }
 
 ```
@@ -330,11 +328,11 @@ protected $visible = ['id', 'name', 'email'];
 Si necessites un control més gran sobre els camps retornats, pots definir manualment un array al controlador.
 
 ```php
-public function show(Movie $movie)
+public function show(Jugadora $jugadora)
 {
     return [
-        'title' => $movie->title,
-        'director' => $movie->director,
+        'nom' => $jugadora->nom,
+        'equip' => $jugadora->equip->nom ?? null,
     ];
 }
 
@@ -348,7 +346,7 @@ Els **API Resources** permeten controlar millor el format de les respostes JSON,
 Es pot generar un recurs amb Artisan, i aquest recurs s'utilitza per personalitzar les dades que es retornen.
 
 ```php
-php artisan make:resource MovieResource
+php artisan make:resource JugadoraResource
 ```
 
 **Definir el format al reecurs**
@@ -358,15 +356,17 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MovieResource extends JsonResource
+class JugadoraResource extends JsonResource
 {
     public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'director' => $this->director,
-            'release_year' => $this->year,
+            'nom' => $this->nom,
+            'equip' => $this->equip->nom ?? null,
+            'posicio' => $this->posicio,
+            'dorsal' => $this->dorsal,
+            'edat' => $this->edat,
         ];
     }
 }
@@ -375,11 +375,11 @@ class MovieResource extends JsonResource
 **Ús al controlador:**
 
 ```php
-use App\Http\Resources\MovieResource;
+use App\Http\Resources\JugadoraResource;
 
-public function show(Movie $movie)
+public function show(Jugadora $jugadora)
 {
-    return new MovieResource($movie);
+    return new JugadoraResource($jugadora);
 }
 ```
 
@@ -389,7 +389,7 @@ public function show(Movie $movie)
 També es poden crear recursos per transformar col·leccions de dades, incloent-hi metadades i enllaços addicionals.
 
 ```bash
-php artisan make:resource MovieCollection
+php artisan make:resource JugadoraCollection
 ```
 
 **Personalitzar les col·leccions:**
@@ -399,20 +399,20 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class MovieCollection extends ResourceCollection
+class JugadoraCollection extends ResourceCollection
 {
     public function toArray($request)
     {
         return [
             'data' => $this->collection,
             'meta' => [
-                'total_movies' => $this->resource->total(),
+                'total_jugadores' => $this->resource->total(),
                 'per_page' => $this->resource->perPage(),
                 'current_page' => $this->resource->currentPage(),
                 'last_page' => $this->resource->lastPage(),
             ],
             'links' => [
-                'self' => url('/api/movies'),
+                'self' => url('/api/jugadores'),
             ],
         ];
     }
@@ -424,11 +424,11 @@ class MovieCollection extends ResourceCollection
 Utilitza el mètode `paginate()` per retornar resultats paginats. Les respostes amb `paginate()` inclouen metadades com el nombre total de registres, la pàgina actual i els enllaços de navegació.
 
 ```php
-use App\Http\Resources\MovieCollection;
+use App\Http\Resources\JugadoraCollection;
 
 public function index()
 {
-    return new MovieCollection(Movie::paginate(10));
+    return new JugadoraCollection(Jugadora::paginate(10));
 }
 ```
 
@@ -441,25 +441,29 @@ Quan utilitzes `paginate()`, Laravel afegeix metadades útils a la resposta JSON
     "data": [
         {
             "id": 1,
-            "title": "The Godfather",
-            "director": "Francis Ford Coppola",
-            "release_year": 1972
+            "nom": "Aitana Bonmatí",
+            "equip": "FC Barcelona",
+            "posicio": "Migcampista",
+            "dorsal": 14,
+            "edat": 26
         },
         {
             "id": 2,
-            "title": "The Godfather: Part II",
-            "director": "Francis Ford Coppola",
-            "release_year": 1974
+            "nom": "Alexia Putellas",
+            "equip": "FC Barcelona",
+            "posicio": "Migcampista",
+            "dorsal": 11,
+            "edat": 29
         }
     ],
     "meta": {
-        "total_movies": 50,
+        "total_jugadores": 50,
         "per_page": 10,
         "current_page": 1,
         "last_page": 5
     },
     "links": {
-        "self": "http://example.com/api/movies"
+        "self": "http://example.com/api/jugadores"
     }
 }
 ```
@@ -469,17 +473,17 @@ Quan utilitzes `paginate()`, Laravel afegeix metadades útils a la resposta JSON
 Els recursos també poden incloure dades de relacions o camps calculats, com ara informació agregada o camps derivats.
 
 ```php
-class MovieResource extends JsonResource
+class JugadoraResource extends JsonResource
 {
     public function toArray($request)
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'director' => $this->director,
-            'release_year' => $this->year,
-            'genre' => $this->genre->name ?? 'Unknown', // Relació amb gènere
-            'rating' => $this->reviews->avg('rating'), // Mitjana de valoracions
+            'nom' => $this->nom,
+            'equip' => $this->equip->nom ?? 'Sense equip',
+            'posicio' => $this->posicio,
+            'dorsal' => $this->dorsal,
+            'edat' => $this->edat,
         ];
     }
 }
@@ -500,36 +504,37 @@ Laravel 12 fa que el maneig de respostes JSON siga flexible, escalable i fàcil 
 
 Vegem ara com implementar la resta de serveis (POST, PUT i DELETE). En el cas de la inserció (POST), haurem de rebre en la petició les dades de l'objecte a inserir (una pel·lícula, en el nostre exemple). Igual que les dades del servidor al client s'envien en format JSON, és d'esperar en aplicacions que segueixen l'arquitectura REST que les dades del client al servidor també s'envien en format JSON.
 
-Abans de res, crea un **Form Request** per validar (evitem l'antic `MoviePost`):
+Abans de res, crea un **Form Request** per validar (evitem requests ad-hoc sense validació clara):
 
 ```bash
-php artisan make:request MovieRequest
+php artisan make:request JugadoraRequest
 ```
 
 Defineix-hi les regles pertinents (`rules()`), i utilitza'l als mètodes.
 
 ```php
-use App\Http\Requests\MovieRequest;
+use App\Http\Requests\JugadoraRequest;
+use App\Models\Jugadora;
 
-public function store(MovieRequest $request)
+public function store(JugadoraRequest $request)
 {
-    $movie = Movie::create($request->validated());
-    return response()->json($movie, 201); // Recurs creat
+    $jugadora = Jugadora::create($request->validated());
+    return response()->json($jugadora, 201); // Recurs creat
 }
 
-public function update(MovieRequest $request, Movie $movie)
+public function update(JugadoraRequest $request, Jugadora $jugadora)
 {
-    $movie->update($request->validated());
-    return response()->json($movie, 200); // Actualització correcta
+    $jugadora->update($request->validated());
+    return response()->json($jugadora, 200); // Actualització correcta
 }
 ```
 
 Finalment, pel servei DELETE, hem d'implementar el mètode **destroy** , que podria quedar així:
 
 ```php
-public function destroy(Movie $movie)
+public function destroy(Jugadora $jugadora)
 {
-    $movie->delete();
+    $jugadora->delete();
     return response()->noContent(); // 204 sense cos
 }
 ```
@@ -581,7 +586,7 @@ aqueixos formularis per a després no utilitzar-los més no mereix molt la pena.
 La primera vegada que l'executem ens preguntarà si volem registrar-nos, de manera que puguem compartir els projectes que fem entre els diferents equips en què estiguem registrats, però podem saltar aquest pas fent clic en l'enllaç inferior.
 
 Després d'iniciar l'aplicació, veurem la pantalla d'inici de Postman. Al principi apareixeran diverses opcions en la zona central, per a crear col·leccions o peticions, encara que també les podem crear des del
-botó **New** a la cantonada superior esquerra. Per exemple, podem crear una col·lecció "Movies", i apareixerà en el panell esquerre:
+botó **New** a la cantonada superior esquerra. Per exemple, podem crear una col·lecció "Jugadores", i apareixerà en el panell esquerre:
 
 Des del mateix botó*New a la cantonada superior esquerra podem crear noves peticions i associar-les a una col·lecció. Existeix una forma alternativa (potser més còmoda) de crear aqueixes peticions, a través del panell
 de pestanyes, afegint noves:
@@ -593,8 +598,8 @@ Per a afegir una petició, habitualment triarem el tipus de comando sota les pes
 
 ![](imagenes/08/postman_1.png)
 
-Llavors, podem fer clic en el botó "Save" en la part dreta, i guardar la petició per a poder-la reutilitzar. En guardar-la, ens demanarà que li assignem un nom (per exemple, "GET movies" en aquest cas), i la
-col·lecció en la qual s'emmagatzemarà (la nostra col·lecció de "Movies").
+Llavors, podem fer clic en el botó "Save" en la part dreta, i guardar la petició per a poder-la reutilitzar. En guardar-la, ens demanarà que li assignem un nom (per exemple, "GET jugadores" en aquest cas), i la
+col·lecció en la qual s'emmagatzemarà (la nostra col·lecció de "Jugadores").
 
 ![](imagenes/08/postman_2.png)
 
@@ -613,7 +618,7 @@ Bastaria amb reemplaçar l'id de la URL pel qual vulguem consultar realment. Si 
 ##### Afegir altres tipus de peticions
 
 Les peticions POST difereixen de les peticions GET en què s'envia certa informació en el cos de la petició. Aquesta informació normalment són les dades que es volen afegir en el servidor. Com podem fer això amb Postman?
-En primer lloc, creem una nova petició, triem el comando POST i definim la URL (en el nostre cas, videoclub.my/api/movies o una cosa similar, depenent de com tinguem en marxa el servidor).
+En primer lloc, creem una nova petició, triem el comando POST i definim la URL (en el nostre cas, api/jugadores o similar, depenent de com tinguem en marxa el servidor).
 Llavors, fem clic en la pestanya Body, sota la URL, i establim el tipus com **raw** perquè ens deixe escriure'l sense restriccions. També convé canviar la propietat **Text** perquè siga JSON, i que així el servidor reculla el tipus de dada adequada. S'afegirà automàticament una capçalera de petició (**Header**)
 que especificarà que el tipus de contingut que s'enviarà són dades JSON. Després, en el quadre de text sota aquestes opcions, especifiquem l'objecte JSON que volem enviar per a inserir:
 
@@ -830,7 +835,7 @@ $schedule->command('sanctum:prune-expired --hours=24')->daily();
 
 ##### Prova d'autenticació amb POSTMAN
 
-Vegem com provar l'autenticació per token en el projecte de videoclub, per qualsevol dels mètodes vistos abans.
+Vegem com provar l'autenticació per token en el projecte de guia de futbol femení, per qualsevol dels mètodes vistos abans.
 En primer lloc, i després de posar en marxa el projecte, ens assegurarem que podem accedir sense restriccions als dos serveis que no requereixen autorització ( index o show ), igual que abans.
 
 
@@ -855,7 +860,7 @@ A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les c
 
 
 
-## Exercici Pràctic: API per a la Guia d'Equips de Futbol Femení.
+## Annex: Guia pas a pas (API Futbol Femení)
 
 L'objectiu de l'exercici consisteix a implementar una API REST completa per gestionar la lliga femenina, incloent-hi les operacions CRUD, autenticació, autorització, i documentació amb Swagger.
 
