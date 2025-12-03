@@ -342,7 +342,9 @@ let _id = 1;
 
 export async function list(req, res, next) {
   try {
-    const { q, active, minPrice, maxPrice } = req.query;
+    const { q, active } = req.query;
+    const minPrice = req.query.minPrice !== undefined ? Number(req.query.minPrice) : undefined;
+    const maxPrice = req.query.maxPrice !== undefined ? Number(req.query.maxPrice) : undefined;
     let data = [...PRODUCTS];
 
     if (q) {
@@ -350,8 +352,8 @@ export async function list(req, res, next) {
       data = data.filter(p => p.name.toLowerCase().includes(needle) || (p.sku ?? '').toLowerCase().includes(needle));
     }
     if (typeof active === 'boolean') data = data.filter(p => p.active === active);
-    if (typeof minPrice === 'number') data = data.filter(p => p.price >= minPrice);
-    if (typeof maxPrice === 'number') data = data.filter(p => p.price <= maxPrice);
+    if (Number.isFinite(minPrice)) data = data.filter(p => p.price >= minPrice);
+    if (Number.isFinite(maxPrice)) data = data.filter(p => p.price <= maxPrice);
 
     res.json(data);
   } catch (err) { next(err); }
