@@ -23,11 +23,10 @@
 
 ## Introducció als serveis REST
 
-[![](imagenes/ull.png)Video](https://youtu.be/ByJ804KuEas)
 
 Una **API** (Application Programming Interface) és un conjunt de funcions i procediments pels quals, una aplicació externa accedeix a les dades, a manera de biblioteca com una capa d'abstracció i la API s'encarrega d'enviar la dada sol·licitada.
 
-Una de les característiques fonamentals de les API és que són **Sateless**, la qual cosa vol dir que les peticions es fan i desapareixen, no hi ha usuaris loguejats ni dades que es queden emmagatzemats.
+Una de les característiques fonamentals de les API és que són **Stateless**, la qual cosa vol dir que les peticions es fan i desapareixen, no hi ha usuaris loguejats ni dades que es queden emmagatzemats.
 
 ### Característiques fonamentals de REST:
 - **Stateless**: Cada petició HTTP conté tota la informació necessària per processar-la.
@@ -41,8 +40,8 @@ Una de les característiques fonamentals de les API és que són **Sateless**, l
 
 Per consultar una API externa com https://swapi.dev/ des de Laravel, pots utilitzar la biblioteca HTTP client de Laravel, que proporciona una interfície senzilla per a realitzar peticions HTTP. Ací tens un exemple de com fer una petició GET per a obtenir informació sobre personatges de "Star Wars":
 
-**Instal·la la Biblioteca HTTP Client:**
-Si no està ja instal·lat, pots afegir la biblioteca HTTP client de Laravel al teu projecte amb Composer:
+**Client HTTP (Laravel 12):**
+El client HTTP de Laravel ja ve preparat amb Guzzle de sèrie. Només caldria afegir `composer require guzzlehttp/guzzle` si l'has eliminat del `composer.json`.
 
 ```bash
 composer require guzzlehttp/guzzle
@@ -74,7 +73,7 @@ En aquest exemple, la petició GET a https://swapi.dev/api/people/ retorna infor
 
 Amb aquesta metodologia anomenada **REST** podrem construir *APIs* perquè des d'un client extern es puguen consumir.
 
-Gràcies a aquest **standard** de l'arquitectura del programari podrem muntar una API que utilitze els mètodes standard GET, POST, PUT i DELETE.
+Gràcies a aquest **standard** de l'arquitectura del programari podrem muntar una API que utilitze els mètodes standard GET, POST, PUT , PATCH i DELETE.
 
 
 #### Instal·lació Laravel Sanctum
@@ -103,6 +102,8 @@ Per a aquesta funcionalitat:
 Sanctum només intentarà autenticar-se amb galetes si la petició prové del frontend de la SPA de la teua pròpia aplicació. Quan Sanctum examina una petició HTTP, comprova primer si existeix una galeta d'autenticació. Si no n'hi ha cap, llavors examina l'encapçalament `Authorization` per a un token d'API vàlid.
 
 ##### Instal·lació
+
+En Laravel 12 `php artisan install:api` ja deixa Sanctum preparat (migra la taula i registra el middleware). Només hauries de fer `composer require laravel/sanctum` si l'has eliminat.
 
 Es pot instal·lar amb el comanament d'artisan
 
@@ -207,8 +208,10 @@ Una vegada tenim el controlador API creat, definirem les rutes associades a cada
 Route::apiResource('movies',Api\MovieController::class);
 ```
 
+Recorda importar el controlador: `use App\Http\Controllers\Api\MovieController;`.
+
 Les rutes de API (aquelles definides en l'arxiu **routes/api.php** ) per defecte tenen un prefix api , tal com s'estableix en el provider **RouteServiceProvider** . Per tant, hem definit una
-ruta general **api/movies** , de manera que totes les subrutes que es deriven d'ella portaran a l'un o l'altre mètode del controlador de API de video.
+ruta general **api/movies** , de manera que totes les subrutes que es deriven d'ella portaran a l'un o l'altre mètode del controlador de API de pel·lícules.
 Podem comprovar quines rutes hi ha actives amb aquest comando:
 
 ```
@@ -229,7 +232,7 @@ php artisan route:list
 
 ### Serveis GET
 
-Començarem per definir el mètode index . En aquest cas, obtindrem el conjunt de videos de labase de dades i retornar-lo tal qual:
+Començarem per definir el mètode index . En aquest cas, obtindrem el conjunt de pel·lícules de la base de dades i retornar-lo tal qual:
 
 ```php
 public function index()
@@ -239,31 +242,33 @@ public function index()
 }
 ```
 
-Si accedim a la ruta **api/videos** des del navegador, s'activarà el mètode index que acabem d'implementar, i rebrem els llibres de la base de dades, directament en format JSON.
+Si accedim a la ruta **api/movies** des del navegador, s'activarà el mètode index que acabem d'implementar, i rebrem les pel·lícules de la base de dades, directament en format JSON.
 
 ```json
-{
-"id": 1,
-"title": "El padrino",
-"year": "1972",
-"director": "Francis Ford Coppola",
-"poster": "http://ia.media-imdb.cimages/M/MV5BMjEyMjcyNDI4MF5BMl5BanBnXkFtZTcwMDA5Mzg3OA@@._V1_SX214_AL_.jpg",
-"rented": 0,
-"synopsis": "Don Vito Corleone (Marlon Brando) es el respetado y temido jefe de una de las cinco familias de la mafia de Nueva York. Tiene cuatro hijos: Connie (Talia Shire), el impulsivo Sonny (James Caan), el pusilánime Freddie (John Cazale) y Michael (Al Pacino), que no quiere saber nada de los negocios de su padre. Cuando Corleone, en contra de los consejos de 'Il consigliere' Tom Hagen (Robert Duvall), se niega a intervenir en el negocio de las drogas, el jefe de otra banda ordena su asesinato. Empieza entonces una violenta y cruenta guerra entre las familias mafiosas.",
-"created_at": "2020-12-03T11:19:19.000000Z",
-"updated_at": "2020-12-21T10:36:20.000000Z"
-},
-{
-"id": 2,
-"title": "El Padrino. Parte II",
-"year": "1974",
-"director": "Francis Ford Coppola",
-"poster": "http://ia.media-imdb.cimages/M/MV5BNDc2NTM3MzU1Nl5BMl5BanBnXkFtZTcwMTA5Mzg3OA@@._V1_SX214_AL_.jpg",
-"rented": 0,
-"synopsis": "Continuación de la historia de los Corleone por medio de dos historias paralelas: la elección de Michael Corleone como jefe de los negocios familiares y los orígenes del patriarca, el ya fallecido Don Vito, primero en Sicilia y luego en Estados Unidos, donde, empezando desde abajo, llegó a ser un poderosísimo jefe de la mafia de Nueva York.",
-"created_at": "2020-12-03T11:19:19.000000Z",
-"updated_at": "2020-12-03T11:19:19.000000Z"
-}}
+[
+  {
+    "id": 1,
+    "title": "El padrino",
+    "year": "1972",
+    "director": "Francis Ford Coppola",
+    "poster": "http://example.com/godfather.jpg",
+    "rented": 0,
+    "synopsis": "Don Vito Corleone és el cap d'una família mafiosa de Nova York.",
+    "created_at": "2020-12-03T11:19:19.000000Z",
+    "updated_at": "2020-12-21T10:36:20.000000Z"
+  },
+  {
+    "id": 2,
+    "title": "El Padrino. Parte II",
+    "year": "1974",
+    "director": "Francis Ford Coppola",
+    "poster": "http://example.com/godfather2.jpg",
+    "rented": 0,
+    "synopsis": "Continuació de la història dels Corleone.",
+    "created_at": "2020-12-03T11:19:19.000000Z",
+    "updated_at": "2020-12-03T11:19:19.000000Z"
+  }
+]
 ```
 
 
@@ -276,7 +281,7 @@ public function show(Movie $movie)
 }
 ```
 
-En aquest cas, si accedim a la URI **api/movies/1** , obtindrem la informació del video amb id = 1. Notar que Laravel s'encarrega automàticament de buscar el llibre per nosaltres (fer la corresponent operació **find** per a l'id proporcionat). És el que es coneix com a enllaç implícit, i és alguna cosa que també està disponible en els controladors web normals, sempre que els associem correctament amb el model vinculat. Això es fa automàticament si creem el controlador juntament amb el model o si usem el paràmetre --model per a associar-ho, com hem fet ací.
+En aquest cas, si accedim a la URI **api/movies/1** , obtindrem la informació de la pel·lícula amb id = 1. Notar que Laravel s'encarrega automàticament de buscar el registre per nosaltres (fer la corresponent operació **find** per a l'id proporcionat). És el que es coneix com a enllaç implícit, i és alguna cosa que també està disponible en els controladors web normals, sempre que els associem correctament amb el model vinculat. Això es fa automàticament si creem el controlador juntament amb el model o si usem el paràmetre --model per a associar-ho, com hem fet ací.
 
 #### Maneig de Respostes JSON en Laravel
 
@@ -401,10 +406,10 @@ class MovieCollection extends ResourceCollection
         return [
             'data' => $this->collection,
             'meta' => [
-                'total_movies' => $this->collection->total(),
-                'per_page' => $this->collection->perPage(),
-                'current_page' => $this->collection->currentPage(),
-                'last_page' => $this->collection->lastPage(),
+                'total_movies' => $this->resource->total(),
+                'per_page' => $this->resource->perPage(),
+                'current_page' => $this->resource->currentPage(),
+                'last_page' => $this->resource->lastPage(),
             ],
             'links' => [
                 'self' => url('/api/movies'),
@@ -488,57 +493,45 @@ class MovieResource extends JsonResource
 3. **API Resources**: Separen la lògica de transformació i ofereixen flexibilitat.
 4. **Paginació**: Facilita la navegació de dades grans amb `paginate()`.
 
-Laravel 11 fa que el maneig de respostes JSON siga flexible, escalable i fàcil d'implementar.
+Laravel 12 fa que el maneig de respostes JSON siga flexible, escalable i fàcil d'implementar.
 
 ### Resta dels serveis
 
 
-Vegem ara com implementar la resta de serveis (POST, PUT i DELETE). En el cas de la inserció (POST), haurem de rebre en la petició les dades de l'objecte a inserir (un llibre, en el nostre exemple). Igual que les dades del servidor al client s'envien en format JSON, és d'esperar en aplicacions que segueixen l'arquitectura REST que les dades del client al servidor també s'envien en format JSON.
-El nostre mètode **store** , associat al servei POST, podria quedar d'aquesta manera (retornem el codi d'estat 201, que s'utilitza quan s'han inserit elements nous):
+Vegem ara com implementar la resta de serveis (POST, PUT i DELETE). En el cas de la inserció (POST), haurem de rebre en la petició les dades de l'objecte a inserir (una pel·lícula, en el nostre exemple). Igual que les dades del servidor al client s'envien en format JSON, és d'esperar en aplicacions que segueixen l'arquitectura REST que les dades del client al servidor també s'envien en format JSON.
 
-```php
-public function store(MoviePost $request)
-{
-        $movie = new Movie();
-        $movie->title = $request->title;
-        $movie->year = $request->year;
-        $movie->director = $request->director;
-        $movie->poster = $request->poster;
-        $movie->synopsis = $request->synopsis;
-        $movie->save();
-        return response()->json($movie, 201);
-}
+Abans de res, crea un **Form Request** per validar (evitem l'antic `MoviePost`):
+
+```bash
+php artisan make:request MovieRequest
 ```
 
-De forma semblant tindriem el mètode **update** per al servei PUT. En est cas tornem un codi 200.
+Defineix-hi les regles pertinents (`rules()`), i utilitza'l als mètodes.
 
 ```php
- public function update(MoviePost $request, Movie $movie)
-    {
-        $movie->title = $request->title;
-        $movie->year = $request->year;
-        $movie->director = $request->director;
-        $movie->poster = $request->poster;
-        $movie->synopsis = $request->synopsis;
-        $movie->save();
-        return response()->json($movie);
-    }
-```    
+use App\Http\Requests\MovieRequest;
+
+public function store(MovieRequest $request)
+{
+    $movie = Movie::create($request->validated());
+    return response()->json($movie, 201); // Recurs creat
+}
+
+public function update(MovieRequest $request, Movie $movie)
+{
+    $movie->update($request->validated());
+    return response()->json($movie, 200); // Actualització correcta
+}
+```
 
 Finalment, pel servei DELETE, hem d'implementar el mètode **destroy** , que podria quedar així:
 
 ```php
 public function destroy(Movie $movie)
 {
-	$movie->delete();
-	return response()->json(null, 204);
+    $movie->delete();
+    return response()->noContent(); // 204 sense cos
 }
-```
-
-Notar que retornem un codi d'estat 204, que indica que no estem retornant contingut (és null). D'altra banda, és habitual en aquesta mena d'operacions d'esborrat retornar en format JSON l'objecte que s'ha eliminat, per si de cas es vol desfer l'operació en un pas posterior. En aquest cas, la resposta del mètode d'esborrat seria així:
-
-```php
-return response()->json($movie,204);
 ```
 
 Com podem començar a intuir, provar aquests serveis no és tan senzill com provar serveis de tipus GET, ja que no podem simplement teclejar una URL en el navegador. Necessitem un mecanisme per a passar-li les dades al servidor en format JSON, i també el mètode (POST, PUT o DELETE).
@@ -555,60 +548,28 @@ Això no es compleix per defecte, ja que Laravel està configurat per a renderit
 
 ```php
 ->withExceptions(function (Exceptions $exceptions) {
-        // Gestionar excepcions en format JSON només per a rutes API
-        $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
-            // Només retornar JSON si la ruta comença amb "api/*"
-            return $request->is('api/*');
+        // Laravel 12: força JSON a les rutes api/*
+        $exceptions->shouldRenderJsonWhen(fn (Request $request) => $request->is('api/*'));
+
+        $exceptions->render(function (\Illuminate\Validation\ValidationException $e, Request $request) {
+            return response()->json([
+                'message' => 'Dades no vàlides.',
+                'errors' => $e->errors(),
+            ], 422);
         });
 
-        // Renderitzar excepcions personalitzades
-        $exceptions->render(function (Throwable $e, Request $request) {
-            // Excepcions de validació
-            if ($e instanceof \Illuminate\Validation\ValidationException) {
-                return response()->json([
-                    'message' => 'Dades no vàlides.',
-                    'errors' => $e->errors(),
-                ], 422);
-            }
-
-            // Excepcions d'autenticació
-            if ($e instanceof \Illuminate\Auth\AuthenticationException) {
-                return response()->json([
-                    'message' => 'No autenticat.',
-                ], 401);
-            }
-
-            // Ruta no trobada
-            if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
-                if ($request->is('api/*')) {
-                    return response()->json([
-                        'message' => 'Ruta no trobada.',
-                    ], 404);
-                }
-                // Comportament per defecte per a rutes no API (HTML)
-                return parent::render($request, $e);
-            }
-
-            // Recurs no trobat
-            if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
-                if ($request->is('api/*')) {
-                    return response()->json([
-                        'message' => 'Recurs no trobat.',
-                    ], 404);
-                }
-                return parent::render($request, $e);
-            }
-
-            // Resposta genèrica per a errors del servidor
-            if ($request->is('api/*')) {
-                return response()->json([
-                    'message' => 'Error del servidor.',
-                ], 500);
-            }
-
-            // Comportament per defecte per a rutes no API
-            return parent::render($request, $e);
+        $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, Request $request) {
+            return response()->json(['message' => 'No autenticat.'], 401);
         });
+
+        $exceptions->render(function (\Illuminate\Database\Eloquent\ModelNotFoundException|\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, Request $request) {
+            return response()->json(['message' => 'Recurs o ruta no trobada.'], 404);
+        });
+
+        $exceptions->render(function (\Throwable $e, Request $request) {
+            return response()->json(['message' => 'Error del servidor.'], 500);
+        });
+});
 ```
 #### Provant els serveis amb POSTMAN
 
@@ -753,20 +714,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends BaseController
 {
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $authUser = Auth::user();
-            $result['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
-            $result['name'] =  $authUser->name;
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-            return $this->sendResponse($result, 'User signed in');
+        if (!Auth::attempt($credentials)) {
+            return $this->sendError('Unauthorised.', ['error' => 'Credencials incorrectes'], 401);
         }
-        return $this->sendError('Unauthorised.', ['error'=>'incorrect Email/Password']);
+
+        $authUser = $request->user();
+        $result['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
+        $result['name'] =  $authUser->name;
+
+        return $this->sendResponse($result, 'User signed in');
     }
     public function register(Request $request)
     {
@@ -782,8 +750,8 @@ class AuthController extends BaseController
         }
 
         try {
-            $input = $request->all();
-            $input['password'] = bcrypt($input['password']);
+            $input = $validator->validated();
+            $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
             $result['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
             $result['name'] =  $user->name;
@@ -819,6 +787,7 @@ Route::middleware(['auth:sanctum','api'])->group( function () {
 });
 
  ```
+(`routes/api.php` ja porta el middleware `api` per defecte; l'indiquem ací només a mode d'exemple. L'important és afegir `auth:sanctum` a les rutes protegides.)
 
 ##### Protecció de rutes
 
@@ -892,7 +861,7 @@ L'objectiu de l'exercici consisteix a implementar una API REST completa per gest
 
 ### Pas 1: Configuració inicial de l’API (instal·lació Sanctum)
 
-- Instal·la Laravel Sanctum al projecte:
+- Instal·la Laravel Sanctum al projecte (si treballes amb Laravel 11/12 i ja has executat `php artisan install:api`, aquest pas ja estarà fet; sinó):
   
   ```bash
   composer require laravel/sanctum
@@ -1133,6 +1102,7 @@ Route::middleware(['auth:sanctum','api'])->group( function () {
 
 });
 ```
+(`routes/api.php` ja aplica el middleware `api`; el que importa és afegir `auth:sanctum` a les rutes protegides.)
 
 - Implementar el controlador AuthController amb els mètodes login, register i logout:
  
@@ -1143,20 +1113,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends BaseController
 {
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $authUser = Auth::user();
-            $result['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
-            $result['name'] =  $authUser->name;
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-            return $this->sendResponse($result, 'User signed in');
+        if (!Auth::attempt($credentials)) {
+            return $this->sendError('Unauthorised.', ['error'=>'incorrect Email/Password'], 401);
         }
-        return $this->sendError('Unauthorised.', ['error'=>'incorrect Email/Password']);
+
+        $authUser = $request->user();
+        $result['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
+        $result['name'] =  $authUser->name;
+
+        return $this->sendResponse($result, 'User signed in');
     }
     public function register(Request $request)
     {
@@ -1172,8 +1149,8 @@ class AuthController extends BaseController
         }
 
         try {
-            $input = $request->all();
-            $input['password'] = bcrypt($input['password']);
+            $input = $validator->validated();
+            $input['password'] = Hash::make($input['password']);
             $user = User::create($input);
             $result['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
             $result['name'] =  $user->name;
