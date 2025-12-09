@@ -181,18 +181,54 @@ Primer, hem d'afegir camp role a la taula users
 ```php
   use Illuminate\Routing\Attributes\Middleware;
   
-  #[Middleware('role:admin')]
-  class AdminController extends Controller
-  {
-    public function dashboard()
-    {
-      return view('admin.dashboard');
-    }
-  }
+   #[Middleware('role:admin')]
+   class AdminController extends Controller
+   {
+     public function dashboard()
+     {
+       return view('admin.dashboard');
+     }
+   }
+  ```
+
+#### 🚪 Gates: autoritzacions simples sense Policy
+
+Els **Gates** són funcions d’autorització basades en clau/acció que viuen a `AuthServiceProvider`. Són útils per validar permisos puntuals sense crear una Policy completa. També es poden usar a vistes (`@can`), controladors (`authorize`) i serveis (`Gate::allows`).
+
+**On es defineixen en Laravel 12:** al mètode `boot()` de `app/Providers/AuthServiceProvider.php` amb `Gate::define(...)`.
+
+**Definir un gate**:
+
+```php
+use Illuminate\Support\Facades\Gate;
+use App\Models\Post;
+
+public function boot(): void
+{
+    Gate::define('update-post', function (User $user, Post $post) {
+        return $user->id === $post->user_id;
+    });
+}
 ```
+
+**Usar-lo**:
+
+```php
+// Controlador
+$this->authorize('update-post', $post); // 403 si no pot
+
+// Blade
+@can('update-post', $post)
+  <a href="{{ route('posts.edit', $post) }}">Editar</a>
+@endcan
+```
+
+Tria **Gates** per casos senzills o accions aïllades; tria **Policies** per a lògica repetida associada a un model (view, create, update, delete).
+
 #### 🛡️  Polítiques (`Policy`) per  autoritzacions
  
 Les **policies** en Laravel permeten controlar l’accés a recursos de manera precisa i reutilitzable. Es poden aplicar automàticament als models o explícitament mitjançant mètodes com `authorize()`.
+
 
 ##### 🛠️ 1. Crear una Policy
 
@@ -216,9 +252,10 @@ public function update(User $user, Post $post)
 ``` 
 
 Cada mètode pot retornar:
-- true (permés)
-- false (denegat)
-- O fins i tot llançar excepcions o missatges personalitzats
+
+    - true (permés)
+    - false (denegat)
+    - O fins i tot llançar excepcions o missatges personalitzats
 
 ##### 🧾 3. Registrar la Policy
 
@@ -232,6 +269,8 @@ protected $policies = [
 Post::class => PostPolicy::class,
 ];
 ``` 
+
+En Laravel 12 també pots **deixar que s’auto-descobrisquen** si segueixes l’estructura per defecte (`app/Policies/FooPolicy.php` per al model `App\Models\Foo`). Si prefereixes registrar-les manualment, fes-ho al `AuthServiceProvider` com a l’exemple.
 
 ##### 🧪 4. Utilitzar-la en controladors
 
@@ -266,7 +305,7 @@ public function before(User $user, $ability)
     return true; // accés total
   }
 }
-```
+``` 
  
 ## SA 5.2 Seguretat en Formularis  i feedback
 
@@ -1697,4 +1736,3 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Enviar correu personalitzat a cada àrbitre amb:
    - Llistat de partits en què arbitrarà
    - Format HTML amigable
-

@@ -114,6 +114,7 @@ php artisan install:api
 Vegem ara quins passos donar per a construir una API REST en Laravel que done suport a les operacions bàsiques sobre una o diverses entitats: consultes (GET), insercions (POST), modificacions (PUT) i esborrats (DELETE). Emprarem per a això els denominats controladors de API i que proporcionen un conjunt de funcions ja definides per a donar suport a cadascun d'aquests comandos.
 
 
+
 #### Definint els controlador de la API
 
 Per a proporcionar una API REST als clients que ho requerisquen, necessitem definir un controlador (ocontroladors) orientats a oferir aquests serveis REST. Aquests controladors en Laravel es denominen de tipus **api**, com vam veure en sessions prèvies. Normalment es definirà un controlador API per cadascun dels models als quals necessitem accedir. 
