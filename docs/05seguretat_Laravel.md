@@ -1714,6 +1714,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
 ---
 #### 1. Autenticació i restriccions
+
 - Laravel Breeze per login, logout
 - Protegeix rutes amb `auth` i `@auth` en vistes
 - Rols: `admin`, `manager`, `arbitre`
@@ -1729,6 +1730,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 ---
 
 #### 2. Formularis amb FormRequest
+
 - Crea `EstadiRequest`, `JugadoraRequest`, `PartitRequest`
 - Valida:
    - `data_naixement` mínima de 16 anys
@@ -1743,6 +1745,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
  
 #### 3. Classificació en temps real amb Livewire
+
 - Taula amb:
    - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
 - Component Livewire que es refresca automàticament
@@ -1751,6 +1754,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 ---
 
 #### 4. Proves
+
 - Crea proves per:
    - EstadiController
    - JugadoraController
