@@ -1737,15 +1737,13 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
 - Crea `EstadiRequest`, `JugadoraRequest`, `PartitRequest`
 - Valida:
-
-   - `data_naixement` mínima de 16 anys
-   - `foto` (tipus .png i mida màxima)
-   - `dorsal`, `capacitat`, `gols` (numèrics positius)
+    - `data_naixement` mínima de 16 anys
+    - `foto` (tipus .png i mida màxima)
+    - `dorsal`, `capacitat`, `gols` (numèrics positius)
 - Usa `authorize()` per controlar accés a modificació segons rol:
-
-   - Managers només sobre el seu equip i les seues jugadores.
-   - Àrbitres només per modificar resultats dels seus partits.
-   - Administradors sense limitacions.
+    - Managers només sobre el seu equip i les seues jugadores.
+    - Àrbitres només per modificar resultats dels seus partits.
+    - Administradors sense limitacions.
 
 ---
 
@@ -1762,11 +1760,12 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
 #### 4. Proves
 
+- Prioritza proves unitàries sobre serveis/repositories (més ràpides i senzilles).
+- Deixa els tests de controlador/feature només per verificar que les rutes responen i apliquen middleware/policies.
 - Crea proves per:
-   - EstadiController
-   - JugadoraController
-   - PartitController
-   - FormRequest i Policies
+   - Serveis/Repositories d’estadis, jugadores i partits.
+   - FormRequest i Policies.
+   - Un test de controlador/feature mínim per ruta crítica (p. ex. llistat partits, crear/edit equip).
 
 ---
 
