@@ -1390,15 +1390,17 @@ Per exemple:  [equips/index.blade.php](https://github.com/Curs-2025-26/futbol-fe
 **Defineix el [middleware](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Middleware/SetLocale.php)**
 **Utilitza el layout [navigation.blade.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/layouts/navigation.blade.php) per possar els enllaços de canviar d'idioma**
 
- 
+
 ### 8. Proves
+
+Les més senzilles i ràpides solen ser les unitàries sobre serveis i repositories (no cal muntar rutes ni vistes). Deixa els tests de controlador/feature només per comprovar que les rutes responen i apliquen middleware/policies bàsics.
 
 1. Modifica o crea l'entorn de prova:
 
 - [.env.testing](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/.env.testing)
 - [php.unit.xml](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/phpunit.xml)
 
-2. Crea els fitxers de proves per al CRUD d'equips:
+2. Crea els fitxers de proves per al CRUD d'equips (centrats en lògica):
 ```bash
 php artisan make:test EquipServiceTest --unit
 php artisan make:test EquipCrudFeatureTest
@@ -1719,10 +1721,12 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Protegeix rutes amb `auth` i `@auth` en vistes
 - Rols: `admin`, `manager`, `arbitre`
 - Capacitats:
+
    - Managers: poden crear/editar/eliminar només el seu equip i les seues jugadores.
    - Àrbitres: poden modificar el resultat d’un partit només si són l’àrbitre assignat.
    - Administradors: poden crear i esborrar estadis i equips, i també tot el que poden fer els managers.
 - Policies per controlar:
+
    - Jugadores: només el manager del seu equip (o admin).
    - Partits: només l’àrbitre assignat pot modificar resultats (o admin).
 - No es permet crear partits manualment
@@ -1733,10 +1737,12 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
 - Crea `EstadiRequest`, `JugadoraRequest`, `PartitRequest`
 - Valida:
+
    - `data_naixement` mínima de 16 anys
    - `foto` (tipus .png i mida màxima)
    - `dorsal`, `capacitat`, `gols` (numèrics positius)
 - Usa `authorize()` per controlar accés a modificació segons rol:
+
    - Managers només sobre el seu equip i les seues jugadores.
    - Àrbitres només per modificar resultats dels seus partits.
    - Administradors sense limitacions.
@@ -1747,6 +1753,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 #### 3. Classificació en temps real amb Livewire
 
 - Taula amb:
+
    - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
 - Component Livewire que es refresca automàticament
 - Ordenació per punts i diferència de gols
