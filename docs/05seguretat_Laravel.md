@@ -254,9 +254,9 @@ public function update(User $user, Post $post)
 
 Cada mètode pot retornar:
 
-    - true (permés)
-    - false (denegat)
-    - O fins i tot llançar excepcions o missatges personalitzats
+- true (permés)
+- false (denegat)
+- O fins i tot llançar excepcions o missatges personalitzats
 
 ##### 🧾 3. Registrar la Policy
 
@@ -313,6 +313,7 @@ public function before(User $user, $ability)
 ### ⚠️ Personalitzar Missatges d'Error
 
 Podem personalitzar els missatges d'error sobreescrivint el mètode **messages()** dins del Form Request:
+
 ```php
 public function messages()
 {
@@ -448,6 +449,7 @@ Els fitxers de traducció es guarden al directori `lang`. Cada idioma té la seu
 ```
 
 **Exemples de ftixer**
+
 ```php
 // lang/en/messages.php
 return [
@@ -456,6 +458,7 @@ return [
 ```
 
 Per a altres idiomes:
+
 ```php
 // lang/es/messages.php
 return [
@@ -479,6 +482,7 @@ Laravel permet utilitzar fitxers JSON per a traduccions simples. Aquest enfocame
 ```
 
 Per accedir a aquestes cadenes:
+
 ```php
 echo __('I love programming.');
 ```
@@ -487,6 +491,7 @@ echo __('I love programming.');
 #### 4️⃣ Ús de Traduccions en el Codi
  
 Utilitza la funció auxiliar `__()` per obtenir les traduccions:
+
 ```php
 echo __('messages.welcome'); // Welcome to our application!
 ```
@@ -535,8 +540,8 @@ MAIL_PASSWORD=la_teua_contrasenya
 MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=el_teu_email@gmail.com
 MAIL_FROM_NAME="Nom del Projecte"
-
 ```
+
 El fitxer config/mail.php carregarà automàticament aquests valors.
 
 #### 2️⃣ Crear una Classe de Correu
@@ -577,6 +582,7 @@ class WelcomeMail extends Mailable
 ```
 
 #### 3️⃣ Crear la Vista del Correu
+
 resources/views/emails/benvinguda.blade.php
 
 ```bladehtml
@@ -604,6 +610,7 @@ Mail::to(['user1@example.com', 'user2@example.com'])->send(new WelcomeMail($user
 #### 5️⃣ Correus amb Markdown
 
 Laravel permet crear correus amb components de Markdown. Generem un correu amb components:
+
 ```bash
 php artisan make:mail WelcomeMail --markdown=emails.welcome
 ```
@@ -631,11 +638,13 @@ Exemple de plantilla Markdown:
 #### 6️⃣ Correus en cua (asíncrons)
 
 Per millorar el rendiment:
+
 ```php
 Mail::to('usuari@example.com')->queue(new WelcomeMail($user));
 ```
 
 Assegura't que el sistema de cues estiga configurat al fitxer `.env`:
+
 ```env
 QUEUE_CONNECTION=database
 ```
@@ -650,6 +659,7 @@ Laravel proporciona una API senzilla per treballar amb fitxers i directoris a tr
 Els “discs” es configuren al fitxer `config/filesystems.php`.
 
 ##### Tipus comuns:
+
 - `local`: emmagatzematge intern (no accessible públicament)
 - `public`: fitxers accessibles via navegador
 - `s3`: Amazon S3 o altres serveis compatibles
@@ -735,6 +745,7 @@ $url = Storage::url('documents/file.txt'); // Genera una URL pública
 #### 4️⃣ Amazon S3
 
 Inclou les credencials d'Amazon S3 al fitxer `.env`:
+
 ```env
 AWS_ACCESS_KEY_ID=el_teu_access_key
 AWS_SECRET_ACCESS_KEY=el_teu_secret_key
@@ -743,6 +754,7 @@ AWS_BUCKET=el_teu_bucket
 ```
 
 **Exemple**
+
 ```php
 use Illuminate\Support\Facades\Storage;
 
@@ -835,6 +847,7 @@ class EquipFeatureTest extends TestCase
 Utilitza el trait `RefreshDatabase` per executar les migracions abans de cada prova:
 
 **Exemple de CRUD complet amb Base de Dades**
+
 ```php
 namespace Tests\Feature;
 
@@ -948,6 +961,7 @@ Això genera:
 **Exemple de Component**
 
 app/Livewire/HelloWorld.php
+
 ```php
 namespace App\Livewire;
 
@@ -965,6 +979,7 @@ class HelloWorld extends Component
 ```
 
 resources/views/livewire/hello-world.blade.php
+
 ```bladehtml
 <div>
     <h1>{{ $message }}</h1>
@@ -972,6 +987,7 @@ resources/views/livewire/hello-world.blade.php
 ```
 
 **Inserir component en una vista**
+
 ```html
 <livewire:hello-world />
 ```
@@ -1173,7 +1189,7 @@ Reestructurar l’aplicació de futbol femení (feta sense persistència) cap a 
 - Autenticació
 
 ---
-c
+
 #### 1.  🛡️ Afegir un escut a l'equip  (Branca escut)
 
 **Crear una migració per afegir un camp `escut` a la taula `equips`**
@@ -1269,9 +1285,11 @@ Triarem **blade amb alpine** i **PHPUNIT**
 #### 🚪3. Middleware per a permisos de rol i manager
  
 - **Genera el middleware**
-   ```bash
-   php artisan make:middleware RoleMiddleware
-   ```
+
+```bash
+php artisan make:middleware RoleMiddleware
+```
+
 - **Defineix el control dels rols en el metode [handle](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Middleware/RoleMiddleware.php)**
  
 - **Aplica  Middleware a [rutes](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php)** fent que  les rutes per tal que els equips,estadis soles puguen modificar-los els administradors. 
@@ -1281,14 +1299,16 @@ Triarem **blade amb alpine** i **PHPUNIT**
 
  
 **Crea una migració nova**
+
 ```bash
    php artisan make:migration add_team_id_to_users_table --table=users
 ```
 
 **Afegeix el camp [`team_id`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/database/migrations/2025_09_03_174708_add_team_id_to_users_table.php)**  i **aplica la migració**
-   ```bash
-   php artisan migrate
-   ```
+
+```bash
+php artisan migrate
+```
 
 **Assigna equips als managers, creant u manager per equip i assigna-li** 
 
@@ -1350,6 +1370,7 @@ Al fitxer `.env`, ajusta l'opcions `locale` per establir l'idioma predeterminat:
 APP_LOCALE=ca
 APP_FALLBACK_LOCALE=en
 ```
+
 **Definir les Traduccions**
  
 - [ca.json](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/lang/ca.json)
@@ -1378,12 +1399,13 @@ Per exemple:  [equips/index.blade.php](https://github.com/Curs-2025-26/futbol-fe
 
  
 ### 8. Proves
+
 1. Modifica o crea l'entorn de prova:
 
 - [.env.testing](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/.env.testing)
 - [php.unit.xml](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/phpunit.xml)
 
-1. Crea els fitxers de proves per al CRUD d'equips:
+2. Crea els fitxers de proves per al CRUD d'equips:
 ```bash
 php artisan make:test EquipServiceTest --unit
 php artisan make:test EquipCrudFeatureTest
@@ -1391,7 +1413,7 @@ php artisan make:test EquipRepositoryTest --unit
 
 ```
 
-2. Modifica  els fixer per tal d'incorporar les proves
+3. Modifica  els fixer per tal d'incorporar les proves
    
 - [`EquipServiceTest.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/tests/Unit/EquipServiceTest.php)
 - [`EquipCrudFeatureTest.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/tests/Feature/EquipCrudFeatureTest.php)
@@ -1613,6 +1635,7 @@ class HistorialPartits extends Component
     }
 }
 ```
+
 5. Modifica la vista del component Livewire `resources/views/livewire/historial-partits.blade.php`:
 ```php
 <div>
@@ -1648,6 +1671,7 @@ class HistorialPartits extends Component
     </table>
 </div>
 ```
+
 6. Crea la vista `resources/views/partits/historic.blade.php`:
 ```php
 @extends('layouts.futbolFemeni')
@@ -1662,11 +1686,13 @@ class HistorialPartits extends Component
     </div>
 @endsection
 ```
+
 7. Modifica la ruta `routes/web.php`:
 ```php
 Route::get('/historic', [PartitController::class, 'historic'])->name('partits.historic');
 
 ```
+
 8. Modifica el controlador `app/Http/Controllers/PartitController.php`:
 ```php
 public function historic()
@@ -1674,6 +1700,7 @@ public function historic()
     return view('partits.historic');
 }
 ```
+
 9. Afegix entrada en el menú `resources/views/layouts/navigation.blade.php`:
 ```php
 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -1682,8 +1709,6 @@ public function historic()
     </x-nav-link>
 </div>
 ```
-
-
 
 ###  🏁 Exercici Final: Guia de Futbol Femení II
 
