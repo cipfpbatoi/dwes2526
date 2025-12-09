@@ -163,13 +163,7 @@ Primer, hem d'afegir camp role a la taula users
         }
     }
    ```
-3. Registrar-lo a **`Kernel.php`**:
-   ```php
-   protected $routeMiddleware = [
-       'role' => \App\Http\Middleware\RoleMiddleware::class,
-   ];
-   ```
-4. Aplicar-lo a una **ruta**:
+3. Aplicar-lo a una **ruta**:
  
    ```php
    Route::get('/admin', function () {
@@ -1333,7 +1327,6 @@ Per exemple:  [equips/index.blade.php](https://github.com/Curs-2025-26/futbol-fe
 ./vendor/bin/sail artisan make:middleware SetLocale
 ``` 
 **Defineix el [middleware](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Middleware/SetLocale.php)**
-**Registra el middleware en [bootstrap/app.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/bootstrap/app.php)**
 **Utilitza el layout [navigation.blade.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/layouts/navigation.blade.php) per possar els enllaços de canviar d'idioma**
 
  
@@ -1658,9 +1651,14 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 #### 1. Autenticació i restriccions
 - Laravel Breeze per login, logout
 - Protegeix rutes amb `auth` i `@auth` en vistes
+- Rols: `admin`, `manager`, `arbitre`
+- Capacitats:
+   - Managers: poden crear/editar/eliminar només el seu equip i les seues jugadores.
+   - Àrbitres: poden modificar el resultat d’un partit només si són l’àrbitre assignat.
+   - Administradors: poden crear i esborrar estadis i equips, i també tot el que poden fer els managers.
 - Policies per controlar:
-   - Jugadores: només el manager del seu equip
-   - Partits: només l’àrbitre assignat
+   - Jugadores: només el manager del seu equip (o admin).
+   - Partits: només l’àrbitre assignat pot modificar resultats (o admin).
 - No es permet crear partits manualment
 
 ---
@@ -1671,7 +1669,10 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
    - `data_naixement` mínima de 16 anys
    - `foto` (tipus .png i mida màxima)
    - `dorsal`, `capacitat`, `gols` (numèrics positius)
-- Usa `authorize()` per controlar accés a modificació segons rol
+- Usa `authorize()` per controlar accés a modificació segons rol:
+   - Managers només sobre el seu equip i les seues jugadores.
+   - Àrbitres només per modificar resultats dels seus partits.
+   - Administradors sense limitacions.
 
 ---
 
@@ -1697,4 +1698,3 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Enviar correu personalitzat a cada àrbitre amb:
    - Llistat de partits en què arbitrarà
    - Format HTML amigable
-
