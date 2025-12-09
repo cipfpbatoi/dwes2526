@@ -189,9 +189,9 @@ Primer, hem d'afegir camp role a la taula users
        return view('admin.dashboard');
      }
    }
-  ```
+```
 
-#### 🚪 Gates: autoritzacions simples sense Policy
+#### 🚪 Gates: autoritzacions simples
 
 Els **Gates** són funcions d’autorització basades en clau/acció que viuen a `AuthServiceProvider`. Són útils per validar permisos puntuals sense crear una Policy completa. També es poden usar a vistes (`@can`), controladors (`authorize`) i serveis (`Gate::allows`).
 
@@ -224,6 +224,7 @@ $this->authorize('update-post', $post); // 403 si no pot
 ```
 
 Tria **Gates** per casos senzills o accions aïllades; tria **Policies** per a lògica repetida associada a un model (view, create, update, delete).
+
 
 #### 🛡️  Polítiques (`Policy`) per  autoritzacions
  
