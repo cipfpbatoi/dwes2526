@@ -111,10 +111,7 @@ Es pot instal·lar amb el comanament d'artisan
 php artisan install:api
 ```
 
-Vegem ara quins passos donar per a construir una API REST en Laravel que done suport a les operacions
-bàsiques sobre una o diverses entitats: consultes (GET), insercions (POST), modificacions (PUT) i esborrats (DELETE). Emprarem per a això els denominats controladors de API
-i que proporcionen un conjunt de funcions ja definides per a donar suport a cadascun d'aquests
-comandos.
+Vegem ara quins passos donar per a construir una API REST en Laravel que done suport a les operacions bàsiques sobre una o diverses entitats: consultes (GET), insercions (POST), modificacions (PUT) i esborrats (DELETE). Emprarem per a això els denominats controladors de API i que proporcionen un conjunt de funcions ja definides per a donar suport a cadascun d'aquests comandos.
 
 
 
@@ -865,7 +862,7 @@ A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les c
  
 ### ⚙️ Pas 1: Configuració inicial de l’API (instal·lació Sanctum)
 
-- Instal·la Laravel Sanctum al projecte (si treballes amb Laravel 11/12 i ja has executat `php artisan install:api`, aquest pas ja estarà fet; sinó):
+- Instal·la Laravel Sanctum al projecte:
   
   ```bash
   composer require laravel/sanctum
@@ -1109,7 +1106,6 @@ Route::middleware(['auth:sanctum','api'])->group( function () {
 
 });
 ```
-(`routes/api.php` ja aplica el middleware `api`; el que importa és afegir `auth:sanctum` a les rutes protegides.)
 
 - Implementar el controlador AuthController amb els mètodes login, register i logout:
  
