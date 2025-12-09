@@ -1721,14 +1721,12 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 - Protegeix rutes amb `auth` i `@auth` en vistes
 - Rols: `admin`, `manager`, `arbitre`
 - Capacitats:
-
-   - Managers: poden crear/editar/eliminar només el seu equip i les seues jugadores.
-   - Àrbitres: poden modificar el resultat d’un partit només si són l’àrbitre assignat.
-   - Administradors: poden crear i esborrar estadis i equips, i també tot el que poden fer els managers.
+    - Managers: poden crear/editar/eliminar només el seu equip i les seues jugadores.
+    - Àrbitres: poden modificar el resultat d’un partit només si són l’àrbitre assignat.
+    - Administradors: poden crear i esborrar estadis i equips, i també tot el que poden fer els managers.
 - Policies per controlar:
-
-   - Jugadores: només el manager del seu equip (o admin).
-   - Partits: només l’àrbitre assignat pot modificar resultats (o admin).
+    - Jugadores: només el manager del seu equip (o admin).
+    - Partits: només l’àrbitre assignat pot modificar resultats (o admin).
 - No es permet crear partits manualment
 
 ---
@@ -1751,8 +1749,7 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 #### 3. Classificació en temps real amb Livewire
 
 - Taula amb:
-
-   - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
+    - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
 - Component Livewire que es refresca automàticament
 - Ordenació per punts i diferència de gols
 
@@ -1771,5 +1768,5 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
 #### 5. Correu a àrbitres
 - Enviar correu personalitzat a cada àrbitre amb:
-   - Llistat de partits en què arbitrarà
-   - Format HTML amigable
+    - Llistat de partits en què arbitrarà
+    - Format HTML amigable
