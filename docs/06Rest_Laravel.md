@@ -416,7 +416,7 @@ class JugadoraCollection extends ResourceCollection
 ```
 
 
-### 📑 **Paginar resultats:**
+###### 📑 **Paginar resultats:**
 Utilitza el mètode `paginate()` per retornar resultats paginats. Les respostes amb `paginate()` inclouen metadades com el nombre total de registres, la pàgina actual i els enllaços de navegació.
 
 ```php
@@ -429,7 +429,7 @@ public function index()
 ```
 
 
-### 📄 **Respostes JSON amb paginació:**
+###### 📄 **Respostes JSON amb paginació:**
 Quan utilitzes `paginate()`, Laravel afegeix metadades útils a la resposta JSON, com ara el total de registres, el nombre per pàgina, la pàgina actual, etc.
 
 ```json
@@ -464,7 +464,7 @@ Quan utilitzes `paginate()`, Laravel afegeix metadades útils a la resposta JSON
 }
 ```
 
-## 🎛️ 6. Personalització dels Recursos
+##### 🎛️ 6. Personalització dels Recursos
 
 Els recursos també poden incloure dades de relacions o camps calculats, com ara informació agregada o camps derivats.
 
