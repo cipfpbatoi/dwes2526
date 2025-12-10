@@ -1770,13 +1770,10 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
 ---
 
- 
-#### 3. Classificació en temps real amb Livewire
-
-- Taula amb:
-    - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
-- Component Livewire que es refresca automàticament
-- Ordenació per punts i diferència de gols
+#### 3. Correu a àrbitres
+- Enviar correu personalitzat a cada àrbitre amb:
+    - Llistat de partits en què arbitrarà
+    - Format HTML amigable
 
 ---
 
@@ -1791,7 +1788,11 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
 ---
 
-#### 5. Correu a àrbitres
-- Enviar correu personalitzat a cada àrbitre amb:
-    - Llistat de partits en què arbitrarà
-    - Format HTML amigable
+#### 5. Classificació en temps real amb Livewire
+
+- Taula amb:
+    - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
+- Component Livewire que es refresca automàticament
+- Ordenació per punts i diferència de gols
+
+
