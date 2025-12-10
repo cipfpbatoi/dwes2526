@@ -1256,6 +1256,31 @@ Triarem **blade amb alpine** i **PHPUNIT**
 
 4. Canviar totes les vistes per a que extenguen de layouts.equip
 
+5. Actualitza `resources/views/layouts/equip.blade.php` per a reutilitzar el layout de Breeze (`layouts/app.blade.php`), el mateix que fa servir el `dashboard`. Per exemple:
+
+```blade
+{{-- resources/views/layouts/equip.blade.php --}}
+<x-app-layout>
+   <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            @yield('title')
+        </h2>
+    </x-slot>
+    @if (session('success'))
+        <div class="bg-green-100 text-green-700 p-2 mb-4">{{ session('success') }}</div>
+    @endif
+  <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100"> 
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+```
+
 #### 👥 3.  Afegir els rols al sistema
   
 **Crea una nova migració per afegir el camp `role` a usuaris**
