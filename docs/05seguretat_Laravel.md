@@ -163,13 +163,7 @@ Primer, hem d'afegir camp role a la taula users
         }
     }
    ```
-3. Registrar-lo a **`Kernel.php`**:
-   ```php
-   protected $routeMiddleware = [
-       'role' => \App\Http\Middleware\RoleMiddleware::class,
-   ];
-   ```
-4. Aplicar-lo a una **ruta**:
+3. Aplicar-lo a una **ruta**:
  
    ```php
    Route::get('/admin', function () {
@@ -1419,18 +1413,19 @@ Per exemple:  [equips/index.blade.php](https://github.com/Curs-2025-26/futbol-fe
 ./vendor/bin/sail artisan make:middleware SetLocale
 ``` 
 **Defineix el [middleware](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Middleware/SetLocale.php)**
-**Registra el middleware en [bootstrap/app.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/bootstrap/app.php)**
 **Utilitza el layout [navigation.blade.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/layouts/navigation.blade.php) per possar els enllaços de canviar d'idioma**
 
- 
+
 ### 8. Proves
+
+Les més senzilles i ràpides solen ser les unitàries sobre serveis i repositories (no cal muntar rutes ni vistes). Deixa els tests de controlador/feature només per comprovar que les rutes responen i apliquen middleware/policies bàsics.
 
 1. Modifica o crea l'entorn de prova:
 
 - [.env.testing](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/.env.testing)
 - [php.unit.xml](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/phpunit.xml)
 
-2. Crea els fitxers de proves per al CRUD d'equips:
+2. Crea els fitxers de proves per al CRUD d'equips (centrats en lògica):
 ```bash
 php artisan make:test EquipServiceTest --unit
 php artisan make:test EquipCrudFeatureTest
@@ -1746,44 +1741,57 @@ Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
 
 ---
 #### 1. Autenticació i restriccions
+
 - Laravel Breeze per login, logout
 - Protegeix rutes amb `auth` i `@auth` en vistes
+- Rols: `admin`, `manager`, `arbitre`
+- Capacitats:
+    - Managers: poden crear/editar/eliminar només el seu equip i les seues jugadores.
+    - Àrbitres: poden modificar el resultat d’un partit només si són l’àrbitre assignat.
+    - Administradors: poden crear i esborrar estadis i equips, i també tot el que poden fer els managers.
 - Policies per controlar:
-   - Jugadores: només el manager del seu equip
-   - Partits: només l’àrbitre assignat
+    - Jugadores: només el manager del seu equip (o admin).
+    - Partits: només l’àrbitre assignat pot modificar resultats (o admin).
 - No es permet crear partits manualment
 
 ---
 
 #### 2. Formularis amb FormRequest
+
 - Crea `EstadiRequest`, `JugadoraRequest`, `PartitRequest`
 - Valida:
-   - `data_naixement` mínima de 16 anys
-   - `foto` (tipus .png i mida màxima)
-   - `dorsal`, `capacitat`, `gols` (numèrics positius)
-- Usa `authorize()` per controlar accés a modificació segons rol
+    - `data_naixement` mínima de 16 anys
+    - `foto` (tipus .png i mida màxima)
+    - `dorsal`, `capacitat`, `gols` (numèrics positius)
+- Usa `authorize()` per controlar accés a modificació segons rol:
+    - Managers només sobre el seu equip i les seues jugadores.
+    - Àrbitres només per modificar resultats dels seus partits.
+    - Administradors sense limitacions.
 
 ---
 
  
 #### 3. Classificació en temps real amb Livewire
+
 - Taula amb:
-   - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
+    - Nom de l’equip, punts, gols a favor/en contra, diferència, etc.
 - Component Livewire que es refresca automàticament
 - Ordenació per punts i diferència de gols
 
 ---
 
 #### 4. Proves
+
+- Prioritza proves unitàries sobre serveis/repositories (més ràpides i senzilles).
+- Deixa els tests de controlador/feature només per verificar que les rutes responen i apliquen middleware/policies.
 - Crea proves per:
-   - EstadiController
-   - JugadoraController
-   - PartitController
-   - FormRequest i Policies
+   - Serveis/Repositories d’estadis, jugadores i partits.
+   - FormRequest i Policies.
+   - Un test de controlador/feature mínim per ruta crítica (p. ex. llistat partits, crear/edit equip).
 
 ---
 
 #### 5. Correu a àrbitres
 - Enviar correu personalitzat a cada àrbitre amb:
-   - Llistat de partits en què arbitrarà
-   - Format HTML amigable
+    - Llistat de partits en què arbitrarà
+    - Format HTML amigable
