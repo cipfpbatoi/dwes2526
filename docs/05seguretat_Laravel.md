@@ -1370,9 +1370,9 @@ php artisan make:policy EquipPolicy --model=Equip
 - **Utilitza  les directives `@can` per verificar els permisos a les vistes [`equis/index.blade.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/index.blade.php)**.
   
  
-## 🌍 7. Internacionalització
+#### 🌍 7. Internacionalització
 
-#### Publicar els Fitxers de Llenguatge 
+##### Publicar els Fitxers de Llenguatge 
   
 ```bash
 php artisan lang:publish
@@ -1381,7 +1381,7 @@ php artisan lang:add es
 php artisan lang:add ca
 ```
  
-#### Configurar l'Idioma Predeterminat 
+##### Configurar l'Idioma Predeterminat 
 
 Al fitxer `.env`, ajusta l'opcions `locale` per establir l'idioma predeterminat:
 
@@ -1397,26 +1397,27 @@ APP_FALLBACK_LOCALE=en
 - [en.json](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/lang/en.json)
  
  
-#### Recuperar Cadenes de Traducció 
+##### Recuperar Cadenes de Traducció 
 
 Utilitza la funció `__()` per obtenir les cadenes traduïdes en les vistes.
 
 Per exemple:  [equips/index.blade.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/equips/index.blade.php)
 
-#### Canviar l'Idioma Dinàmicament 
+##### Canviar l'Idioma Dinàmicament 
 
-**Crea  una [ruta](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php ) per canviar idioma**
+Crea  una [ruta](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/routes/web.php ) per canviar idioma
 
 **Crea  un Middleware per aplicar el idioma**
 
 ```bash
 ./vendor/bin/sail artisan make:middleware SetLocale
 ``` 
-**Defineix el [middleware](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Middleware/SetLocale.php)**
+Defineix el [middleware](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/app/Http/Middleware/SetLocale.php)
+
 **Utilitza el layout [navigation.blade.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/layouts/navigation.blade.php) per possar els enllaços de canviar d'idioma**
 
 
-### 8. Proves
+#### 8. Proves
 
 Les més senzilles i ràpides solen ser les unitàries sobre serveis i repositories (no cal muntar rutes ni vistes). Deixa els tests de controlador/feature només per comprovar que les rutes responen i apliquen middleware/policies bàsics.
 
@@ -1440,9 +1441,10 @@ php artisan make:test EquipRepositoryTest --unit
 - [`EquipRepositoryTest.php`](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/tests/Unit/EquipRepositoryTest.php)
 
 
-### 9. Generar un correu electrònic amb la jornada actual (partits programats) i enviar-lo als managers dels equips.
+#### 9. Generar un correu electrònic amb la jornada actual (partits programats) i enviar-lo als managers dels equips.
 
-#### **1. Crear una Comanda Artisan**
+##### 1. Crear una Comanda Artisan
+
 ```bash
 php artisan make:command EnviarJornadaManagers
 ```
@@ -1484,8 +1486,10 @@ class EnviarJornadaManagers extends Command
         $this->info('La jornada s\'ha enviat correctament als managers.');
     }
 }
- 
-#### **2. Crear el Mail**
+```
+
+##### **2. Crear el Mail**
+
 ```bash
 php artisan make:mail JornadaMail --markdown=emails.jornada
 ```
@@ -1527,7 +1531,6 @@ class JornadaMail extends Mailable
 
 ```
 
-
 #### **3. Crear la Vista del Correu**
 Al fitxer `resources/views/emails/jornada.blade.php`:
 
@@ -1560,7 +1563,6 @@ protected function schedule(Schedule $schedule)
     $schedule->command('jornada:enviar')->weeklyOn(1, '8:00');
 }
 ```
-
 
 ### Pas 11. Crear un component livewire per a mostrar un històric de partits
 
@@ -1729,6 +1731,7 @@ public function historic()
     </x-nav-link>
 </div>
 ```
+
 
 ###  🏁 Exercici Final: Guia de Futbol Femení II
 
