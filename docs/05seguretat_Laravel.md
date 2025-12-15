@@ -1564,7 +1564,7 @@ protected function schedule(Schedule $schedule)
 }
 ```
 
-### Pas 11. Crear un component livewire per a mostrar un històric de partits
+#### Pas 11. Crear un component livewire per a mostrar un històric de partits
 
 1. Instal·la Livewire:
 ```bash
@@ -1733,7 +1733,7 @@ public function historic()
 ```
 
 
-###  🏁 Exercici Final: Guia de Futbol Femení II
+##  🏁 Exercici Final: Guia de Futbol Femení II
 
 #### 🎯 Objectiu
 Transformar i ampliar l’aplicació del projecte anterior per a incorporar:
