@@ -1416,6 +1416,7 @@ Defineix el [middleware](https://github.com/Curs-2025-26/futbol-femeni/blob/escu
 
 **Utilitza el layout [navigation.blade.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/resources/views/layouts/navigation.blade.php) per possar els enllaços de canviar d'idioma**
 
+**Modifica el fitxer [bootstrap/app.php](https://github.com/Curs-2025-26/futbol-femeni/blob/escut/bootstrap/app.php) per a fer efectiu el middleware**
 
 #### 8. Proves
 
