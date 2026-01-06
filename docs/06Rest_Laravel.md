@@ -1180,7 +1180,7 @@ class AuthController extends BaseController
 
 # Enunciat: Creació d'una API i la seva documentació
 
-Aquest exercici consisteix a crear una API per gestionar les taules que no són `jugadores` i documentar-la correctament utilitzant Swagger (`l5-swagger`). Segueix els passos indicats per implementar i documentar les operacions CRUD i altres funcionalitats específiques.
+Aquest exercici consisteix a crear una API per gestionar les taules que no són `jugadores`. Segueix els passos indicats per implementar i documentar les operacions CRUD i altres funcionalitats específiques.
 
   
 ### 🏟️ 1. **Entitats a gestionar**
