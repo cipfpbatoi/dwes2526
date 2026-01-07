@@ -584,10 +584,12 @@ La primera vegada que l'executem ens preguntarà si volem registrar-nos, de mane
 Després d'iniciar l'aplicació, veurem la pantalla d'inici de Postman. Al principi apareixeran diverses opcions en la zona central, per a crear col·leccions o peticions, encara que també les podem crear des del
 botó **New** a la cantonada superior esquerra. Per exemple, podem crear una col·lecció "Jugadores", i apareixerà en el panell esquerre:
 
-Des del mateix botó*New a la cantonada superior esquerra podem crear noves peticions i associar-les a una col·lecció. Existeix una forma alternativa (potser més còmoda) de crear aqueixes peticions, a través del panell
+Des del mateix botó *New* a la cantonada superior esquerra podem crear noves peticions i associar-les a una col·lecció. Existeix una forma alternativa (potser més còmoda) de crear aqueixes peticions, a través del panell
 de pestanyes, afegint noves:
 
 ##### Afegir peticions GET
+
+Nota: les captures són orientatives; el flux és el mateix però substitueix la col·lecció, la URL i els exemples perquè facen referència a **jugadores** (p. ex. `GET /api/jugadores`).
 
 
 Per a afegir una petició, habitualment triarem el tipus de comando sota les pestanyes (GET, POST, PUT, DELETE) i la URL associada a aquest comando. Per exemple:
@@ -856,331 +858,58 @@ A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les c
 
 
 
-## 📎 Annex I : API per a la Guia d'Equips de Futbol Femení.
+## 📎 Annex I: API per a la Guia d'Equips de Futbol Femení (resum operatiu)
 
- 
-### ⚙️ Pas 1: Configuració inicial de l’API (instal·lació Sanctum)
+> Aquesta secció és un checklist. Els detalls i exemples complets ja estan explicats al cos del tema i s'enllacen ací.
 
-- Instal·la Laravel Sanctum al projecte:
-  
+### ⚙️ Pas 1: Preparar l'API (Sanctum + errors JSON)
+
+- Si no ho has fet abans (vegeu [Instal·lació Laravel Sanctum](#instal·lació-laravel-sanctum)):
+
   ```bash
-  composer require laravel/sanctum
-  php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-  php artisan migrate
+  php artisan install:api
   ```
-  
-- Configura el fitxer bootstrap/app.php per tal que els missatges d'errada vinguen en format json:
 
-```php
-use App\Http\Middleware\SetLocale;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Configuration\Exceptions;
-use Illuminate\Foundation\Configuration\Middleware;
-use Throwable;
+- Assegura que les errades de l'API retornen JSON (vegeu [Respostes d'error](#respostes-derror)).
 
-return Application::configure(basePath: dirname(__DIR__))
-    ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        api: __DIR__.'/../routes/api.php',
-        commands: __DIR__.'/../routes/console.php',
-        health: '/up',
-    )
-    ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->appendToGroup('web',  SetLocale::class);
-    })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (Throwable $e, Request $request) {
-            if ($request->is('api/*')) {
-                $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
-                return response()->json([
-                    'success' => false,
-                    'message' => $e->getMessage(),
-                ], $statusCode);
-            }
-        });
-    })->create();
+### 🛣️ Pas 2: Controladors i rutes
 
-```
+- Crea el controlador (vegeu [Definint els controlador de la API](#definint-els-controlador-de-la-api)):
 
-### 🛣️ Pas 2: Controladors i Rutes 
- 
-- Genera controladors per als models utilitzant Artisan:
-  
   ```bash
-   php artisan make:controller Api/JugadoraController --api --model=Jugadora
+  php artisan make:controller Api/JugadoraController --api --model=Jugadora
   ```
--   Crea les rutes CRUD per als models:
 
-```php
-Route::apiResource('jugadores', Api\JugadoraController::class)
-    ->parameters(['jugadores' => 'jugadora'])
-    ->middleware('api');
-```
+- Rutes CRUD (vegeu [Establint les rutes (endPoints)](#establint-les-rutes-endpoints)):
 
-- Crea un controller BaseController per a gestionar les respostes de l'API:
+  ```php
+  Route::apiResource('jugadores', Api\JugadoraController::class)
+      ->parameters(['jugadores' => 'jugadora'])
+      ->middleware('api');
+  ```
 
-```php
+### 🧱 Pas 3: Respostes consistents (BaseController + Resources)
 
-namespace App\Http\Controllers\Api;
- use App\Http\Controllers\Controller as Controller;
-class BaseController extends Controller
-{
-    /**
-     * success response method.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function sendResponse($result, $message, $code = 200)
-    {
-        $response = [
-            'success' => true,
-            'data'    => $result,
-            'message' => $message,
-        ];
-        return response()->json($response, $code);
-    }
-    /**
-     * return error response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function sendError($error, $errorMessages = [], $code = 200)
-    {
-        $response = [
-            'success' => false,
-            'message' => $error,
-        ];
-        if(!empty($errorMessages)){
-            $response['info'] = $errorMessages;
-        }
-        return response()->json($response, $code);
-    }
-}
-```
+- BaseController per a `sendResponse` / `sendError` (vegeu [Maneig de Respostes JSON en Laravel](#maneig-de-respostes-json-en-laravel)).
+- Resource per a donar format:
 
+  ```bash
+  php artisan make:resource JugadoraResource
+  ```
 
-- Completa els mètodes CRUD en el controlador utilitzant els models i Form Requests per validar les dades:
+- Usa el Resource a `index` i `show` (vegeu [Ús de Recursos (API Resources)](#ús-de-recursos-api-resources)).
 
-```php
-namespace App\Http\Controllers\Api;
+### 🔐 Pas 4: Autenticació bàsica
 
- 
-use App\Http\Requests\JugadoraRequest;
-use App\Models\Jugadora;
- 
-
-class JugadoraController extends BaseController
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return Jugadora::paginate(10);
-    }
-
-    public function store(JugadoraRequest $request)
-    {
-        $jugadora = Jugadora::create($request->validated());
-        return $this->sendResponse($jugadora, 'Jugadora Creada amb exit', 201);
-    }
-
-    public function show(Jugadora $jugadora)
-    {
-        return $this->sendResponse($jugadora, 'Jugadora Recuperada amb exit', 200);
-    }
-
-    public function update(JugadoraRequest $request, Jugadora $jugadora)
-    {
-        $jugadora->update($request->validated());
-        return $this->sendResponse($jugadora, 'Jugadora Actualitzada amb èxit', 200);
-    }
-
-    public function destroy(Jugadora $jugadora)
-    {
-        $jugadora->delete();
-        return $this->sendResponse(null, 'Jugadora Eliminada amb exit', 200);
-    }
-}
-
-``` 
-### 📦 Pas 3: Resources
-
-- Genera un Recurso per a la Jugadora:
-
-```bash
-php artisan make:resource JugadoraResource
-```
-
-- Implementa el Recurs JugadoraResource:
-
-```php
-namespace App\Http\Resources;
-
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
-
-class JugadoraResource extends JsonResource
-{
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(Request $request): array
-    {
-        return [
-            'id' => $this->id,
-            'nom' => $this->nom,
-            'equip' => $this->Equip->nom,
-            'posicio' => $this->posicio,
-            'dorsal' => $this->dorsal,
-            'edat' => $this->edat
-        ];
-    }
-}
-```
-
-- Modifica el controlador JugadoraController per a utilitzar el Recurs JugadoraResource:
-
-```php
-
-    public function index()
-    {
-        return JugadoraResource::collection(Jugadora::paginate());
-    }
-    
-    public function show(Jugadora $jugadora)
-    {
-        return $this->sendResponse(new JugadoraResource($jugadora), 'Jugadora Recuperada amb èxit', 200);
-    }
-    
-    public function update(JugadoraRequest $request, Jugadora $jugadora)
-    {
-        $jugadora->update($request->validated());
-        return $this->sendResponse($jugadora, 'Jugadora Actualitzada amb èxit', 200);
-    }
-    
-    public function store(JugadoraRequest $request)
-    {
-        $jugadora = Jugadora::create($request->validated());
-        return $this->sendResponse(new JugadoraResource($jugadora), 'Jugadora Creada amb èxit', 201);
-    }
-    
-    public function destroy(Jugadora $jugadora)
-    {
-        $jugadora->delete();
-        return $this->sendResponse(null, 'Jugadora Eliminada amb èxit', 200);
-    }
-```
-    
-
-
-
-### 🔐 Pas 4: Autenticació i autorització
-
-- Afegir al model User el trait HasApiTokens:
-
-```php
-use Laravel\Sanctum\HasApiTokens;
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
-}
-``` 
-
-- Afegir les rutes d'autenticació a **routes/api.php**:
-
-```php
-
-Route::post('login', [AuthController::class, 'login'])->middleware('api');
-Route::post('register', [AuthController::class, 'register'])->middleware('api');
- 
-
-Route::middleware(['auth:sanctum','api'])->group( function () {
-    Route::apiResource('jugadores',  JugadoraController::class)
-        ->parameters(['jugadores' => 'jugadora']);
-    Route::post('logout', [AuthController::class, 'logout']);
-
-});
-```
-
-- Implementar el controlador AuthController amb els mètodes login, register i logout:
- 
-```php
-namespace App\Http\Controllers\Api;
-
-use Illuminate\Http\Request;
-use App\Http\Controllers\Api\BaseController as BaseController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-
-class AuthController extends BaseController
-{
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (!Auth::attempt($credentials)) {
-            return $this->sendError('Unauthorised.', ['error'=>'incorrect Email/Password'], 401);
-        }
-
-        $authUser = $request->user();
-        $result['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
-        $result['name'] =  $authUser->name;
-
-        return $this->sendResponse($result, 'User signed in');
-    }
-    public function register(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password',
-        ]);
-
-        if ($validator->fails()){
-            return $this->sendError('Error validation', $validator->errors());
-        }
-
-        try {
-            $input = $validator->validated();
-            $input['password'] = Hash::make($input['password']);
-            $user = User::create($input);
-            $result['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
-            $result['name'] =  $user->name;
-
-            return $this->sendResponse($result, 'User created successfully.');
-        } catch (\Exception $e) {
-            return $this->sendError('Registration Error' , $e->getMessage());
-        }
-    }
-    public function logout(Request $request)
-    {
- 
-        $user = request()->user(); //or Auth::user()
-        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
-        $success['name'] =  $user->name;
-         return $this->sendResponse($success, 'User successfully signed out.');
-    }
-
-}
-
-```
+- Afegir al model `User` el trait `HasApiTokens`.
+- Crea `AuthController` amb `login`/`register`/`logout` (vegeu [Generant tokens](#generant-tokens)).
+- Rutes `login`/`register`/`logout` i grup protegit amb `auth:sanctum` (vegeu [Protecció de rutes](#protecció-de-rutes) i [Revocant tokens](#revocant-tokens)).
 
 ## 🧪 Exercici     
 
 # Enunciat: Creació d'una API i la seva documentació
 
-Aquest exercici consisteix a crear una API per gestionar les taules que no són `jugadores`. Segueix els passos indicats per implementar i documentar les operacions CRUD i altres funcionalitats específiques.
+Aquest exercici consisteix a crear una API per gestionar les taules que no són `jugadores`. Has d'aplicar tot el que s'ha vist al tema: controladors API, validació, recursos, respostes JSON, autenticació i autorització. Respecta els permisos de cada usuari en cada taula segons el tema anterior.
 
   
 ### 🏟️ 1. **Entitats a gestionar**
@@ -1196,6 +925,9 @@ Implementa els següents endpoints per a cada entitat, seguint els estàndards R
 - `GET /api/{resource}/{id}`: Retorna un recurs específic.
 - `PUT /api/{resource}/{id}`: Actualitza un recurs específic.
 - `DELETE /api/{resource}/{id}`: Elimina un recurs específic.
+
+### 🔐 3. **Autenticació i permisos**
+A més de `login`/`register`/`logout`, implementa en `AuthController` un mètode extra per a l'API (per exemple, `me` o `profile`) que retorne l'usuari autenticat i els seus permisos/rols.
 
 
  
