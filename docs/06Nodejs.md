@@ -262,21 +262,24 @@ Controladors amb gestió d’errors d’SKU duplicat i validacions de Mongoose.
   ```
 
 ### ▶️ Posada en marxa
-Per arrancar el servidor:
-```bash
-npm run dev
-```
-Nota: açò **no** arranca MongoDB. Has de tindre Mongo en marxa. Si ho vols amb Docker:
+
+Nota: Arranca MongoDB  amb Docker:
+
 ```bash
 docker run -d -p 27017:27017 --name mongo mongo
 ```
 
+Per arrancar el servidor:
+```bash
+npm run dev
+```
+
+
 ### 🧪 Proves ràpides amb curl
+
 Executa-les mentre `npm run dev` està en marxa per comprovar el flux complet.
 ```bash
-# Arranca
-npm run dev
-
+ 
 # Crear
 curl -X POST http://localhost:3000/api/v1/products \
   -H "Content-Type: application/json" \
