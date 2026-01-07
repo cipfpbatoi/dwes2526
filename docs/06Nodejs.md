@@ -31,7 +31,22 @@ mkdir api-inventari && cd api-inventari
 npm init -y
 ```
 
-2) `package.json` mínim  
+2) Estructura de directoris i fitxers
+Crea totes les carpetes i fitxers necessaris de base:
+```bash
+mkdir -p src/{controllers,lib,middlewares,models,routes,validation}
+touch src/server.js src/app.js \
+  src/lib/db.js \
+  src/controllers/products.controller.js \
+  src/models/product.model.js \
+  src/routes/products.routes.js \
+  src/validation/products.rules.js \
+  src/middlewares/not-found.js \
+  src/middlewares/error-handler.js \
+  .env
+```
+
+3) `package.json` mínim  
 Defineix ES Modules, arrencada normal i mode watch per a dev.
 ```json
 {
@@ -43,13 +58,13 @@ Defineix ES Modules, arrencada normal i mode watch per a dev.
 }
 ```
 
-3) Dependències  
+4) Dependències  
 Express + seguretat bàsica + validació + accés a Mongo i variables d’entorn.
 ```bash
 npm i express mongoose cors helmet morgan express-validator dotenv
 ```
 
-4) Connexió i arrencada  
+5) Connexió i arrencada  
 - `.env`
   ```
   PORT=3000
@@ -240,6 +255,12 @@ Controladors amb gestió d’errors d’SKU duplicat i validacions de Mongoose.
     res.status(err.status ?? 500).json({ error: err.message ?? 'Error intern' });
   }
   ```
+
+### ▶️ Posada en marxa
+Per arrancar el servidor:
+```bash
+npm run dev
+```
 
 ### 🧪 Proves ràpides amb curl
 Executa-les mentre `npm run dev` està en marxa per comprovar el flux complet.
