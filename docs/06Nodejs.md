@@ -101,10 +101,7 @@ Aquest punt consisteix en crear **3 fitxers** i omplir-los amb el codi mínim pe
   })();
   ```
 
-Quan tens aquests 3 fitxers, ja pots fer:
-```bash
-npm run dev
-```
+ 
 
 5) App i rutes  
 - `src/app.js`
@@ -268,6 +265,10 @@ Controladors amb gestió d’errors d’SKU duplicat i validacions de Mongoose.
 Per arrancar el servidor:
 ```bash
 npm run dev
+```
+Nota: açò **no** arranca MongoDB. Has de tindre Mongo en marxa. Si ho vols amb Docker:
+```bash
+docker run -d -p 27017:27017 --name mongo mongo
 ```
 
 ### 🧪 Proves ràpides amb curl
