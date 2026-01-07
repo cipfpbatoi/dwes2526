@@ -549,29 +549,28 @@ D'altra banda, hem d'assegurar-nos que qualsevol error que es produïsca en la p
 Això no es compleix per defecte, ja que Laravel està configurat per a renderitzar una vista amb l'error produït.  Ho podem fer modificant el fitxer bootstrap/app.php.
 
 ```php
-->withExceptions(function (Exceptions $exceptions) {
-        // Laravel 12: força JSON a les rutes api/*
-        $exceptions->shouldRenderJsonWhen(fn (Request $request) => $request->is('api/*'));
-
-        $exceptions->render(function (\Illuminate\Validation\ValidationException $e, Request $request) {
-            return response()->json([
-                'message' => 'Dades no vàlides.',
-                'errors' => $e->errors(),
-            ], 422);
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->appendToGroup('web',  SetLocale::class);
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (Throwable $e, Request $request) {
+            if ($request->is('api/*')) {
+                $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                ], $statusCode);
+            }
         });
+    })->create();
 
-        $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, Request $request) {
-            return response()->json(['message' => 'No autenticat.'], 401);
-        });
-
-        $exceptions->render(function (\Illuminate\Database\Eloquent\ModelNotFoundException|\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, Request $request) {
-            return response()->json(['message' => 'Recurs o ruta no trobada.'], 404);
-        });
-
-        $exceptions->render(function (\Throwable $e, Request $request) {
-            return response()->json(['message' => 'Error del servidor.'], 500);
-        });
-});
 ```
 #### Provant els serveis amb POSTMAN
 
