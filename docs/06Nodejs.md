@@ -65,23 +65,26 @@ npm i express mongoose cors helmet morgan express-validator dotenv
 ```
 
 5) Connexió i arrencada  
-- `.env`
+Aquest punt consisteix en crear **3 fitxers** i omplir-los amb el codi mínim perquè l’app puga connectar a Mongo i escoltar peticions.
+
+- **A) `.env`** (variables d’entorn del projecte)
   ```
   PORT=3000
   MONGO_URI=mongodb://127.0.0.1:27017/inventari
-```
-- `src/lib/db.js`
-Pool de connexió Mongoose amb `strictQuery` activat.
+  ```
+
+- **B) `src/lib/db.js`** (funció de connexió a Mongo)
   ```js
   import mongoose from 'mongoose';
+
   export async function connectDB(uri) {
     mongoose.set('strictQuery', true);
     await mongoose.connect(uri, { dbName: 'inventari' });
     console.log('Mongo connectada');
   }
   ```
-- `src/server.js`
-Llig configuració, connecta i posa el servidor a escoltar.
+
+- **C) `src/server.js`** (arrencada del servidor)
   ```js
   import 'dotenv/config';
   import app from './app.js';
@@ -96,6 +99,11 @@ Llig configuració, connecta i posa el servidor a escoltar.
       console.log(`API a http://localhost:${PORT}`);
     });
   })();
+  ```
+
+Quan tens aquests 3 fitxers, ja pots fer:
+```bash
+npm run dev
 ```
 
 5) App i rutes  
