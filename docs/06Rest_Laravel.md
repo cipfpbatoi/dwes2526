@@ -873,36 +873,36 @@ A l'hora de traslladar aquestes proves a una aplicació "real", enviaríem les c
 - Configura el fitxer bootstrap/app.php per tal que els missatges d'errada vinguen en format json:
 
 ```php
+use App\Http\Middleware\SetLocale;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+use Throwable;
+
 return Application::configure(basePath: dirname(__DIR__))
-->withRouting(
-    web: __DIR__.'/../routes/web.php',
-    api: __DIR__.'/../routes/api.php',
-    commands: __DIR__.'/../routes/console.php',
-    health: '/up',
-)
-->withMiddleware(function (Middleware $middleware) {
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->appendToGroup('web',  SetLocale::class);
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (Throwable $e, Request $request) {
+            if ($request->is('api/*')) {
+                $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                ], $statusCode);
+            }
+        });
+    })->create();
 
-})
-->withExceptions(function (Exceptions $exceptions) {
-    $exceptions->render(function (Exception $e, Request $request) {
-        if ($request->is('api/*')) {
-            $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ], $statusCode);
-        }
-    });
-
-    $exceptions->render(function (Throwable $e, Request $request) {
-        if ($request->is('api/*')) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ], 500);
-        }
-    });
-})->create();
 ```
 
 ### 🛣️ Pas 2: Controladors i Rutes 
@@ -918,7 +918,8 @@ return Application::configure(basePath: dirname(__DIR__))
 Route::apiResource('jugadores', Api\JugadoraController::class)
     ->parameters(['jugadores' => 'jugadora'])
     ->middleware('api');
- ```
+```
+
 - Crea un controller BaseController per a gestionar les respostes de l'API:
 
 ```php
@@ -1189,7 +1190,7 @@ Aquest exercici consisteix a crear una API per gestionar les taules que no són 
 - **Partits**
 
 ### 🛤️ 2. **Endpoints**
-Implementa els següents endpoints per a cada entitat, seguint els estàndards REST:
+Implementa els següents endpoints per a cada entitat, seguint els estàndards REST, deixant els mateixos permisos que tens en el programa web, i utilitzant resource per a mostrar-los :
 
 - `GET /api/{resource}`: Retorna una llista paginada de recursos.
 - `POST /api/{resource}`: Crea un nou recurs.
