@@ -107,27 +107,34 @@ Aquest punt consisteix en crear **3 fitxers** i omplir-los amb el codi mínim pe
 - `src/app.js`
 Express amb middlewares de seguretat, logs i parseig de JSON. Ruta principal `/api/v1/products`.
   ```js
-  import express from 'express';
-  import morgan from 'morgan';
-  import helmet from 'helmet';
   import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import express from 'express';
 
-  import productsRouter from './routes/products.routes.js';
-  import notFound from './middlewares/not-found.js';
-  import errorHandler from './middlewares/error-handler.js';
+import productsRouter from './routes/products.routes.js';
+import notFound from './middlewares/not-found.js';
+import errorHandler from './middlewares/error-handler.js';
 
-  const app = express();
-  app.use(helmet());
-  app.use(cors());
-  app.use(express.json());
-  app.use(morgan('dev'));
+const app = express();
 
-  app.use('/api/v1/products', productsRouter);
+app.use(helmet());
+app.use(cors());
+app.use(morgan('dev'));
+app.use(express.json());
 
-  app.use(notFound);
-  app.use(errorHandler);
-  export default app;
-  ```
+app.get('/health', (_req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+app.use('/api/v1/products', productsRouter);
+
+app.use(notFound);
+app.use(errorHandler);
+
+export default app;
+
+```
 
 6) Model, validació i CRUD mínim  
 - `src/models/product.model.js`
@@ -261,6 +268,27 @@ Controladors amb gestió d’errors d’SKU duplicat i validacions de Mongoose.
   }
   ```
 
+### 🧭 Per a què serveix cada fitxer (resum ràpid)
+- `package.json`: dependències i scripts (`dev`, `start`). Activa ES Modules amb `"type": "module"`.
+- `.env`: configuració sensible (port, URI de Mongo, credencials). No pujar a Git.
+- `src/server.js`: punt d’entrada; carrega variables, connecta a BD i inicia el servidor.
+- `src/app.js`: configura Express (middlewares) i munta rutes i gestió d’errors.
+- `src/lib/db.js`: funció única de connexió a Mongo amb Mongoose.
+- `src/models/product.model.js`: esquema i regles de dades (validació i timestamps).
+- `src/validation/products.rules.js`: validacions per entrada d’usuari (create/update).
+- `src/routes/products.routes.js`: defineix endpoints i aplica validació abans de cridar el controlador.
+- `src/controllers/products.controller.js`: lògica de negoci i consultes; tradueix errors a respostes HTTP.
+- `src/middlewares/not-found.js`: resposta 404 quan no hi ha cap ruta.
+- `src/middlewares/error-handler.js`: error global (500 o l’estat que corresponga).
+
+### 🔄 Funcionament de tot plegat (flux complet)
+1) **Client** fa una petició HTTP (ex. `POST /api/v1/products`).  
+2) **Express** entra per `src/app.js`, aplica middlewares (seguretat, logs, JSON).  
+3) **Rutes** (`src/routes/products.routes.js`) identifiquen l’endpoint i executen validacions.  
+4) **Controlador** (`src/controllers/products.controller.js`) aplica lògica i consulta la BD.  
+5) **Model** (`src/models/product.model.js`) valida i interactua amb Mongo via Mongoose.  
+6) **Resposta** torna al client amb codi d’estat i JSON. Si hi ha error, el captura `error-handler`.
+
 ### ▶️ Posada en marxa
 
 Nota: Arranca MongoDB  amb Docker:
@@ -269,17 +297,14 @@ Nota: Arranca MongoDB  amb Docker:
 docker run -d -p 27017:27017 --name mongo mongo
 ```
 
-Per arrancar el servidor:
+
+#### 🧪 Proves ràpides amb curl
+
+
 ```bash
+# Arranca
 npm run dev
-```
 
-
-### 🧪 Proves ràpides amb curl
-
-Executa-les mentre `npm run dev` està en marxa per comprovar el flux complet.
-```bash
- 
 # Crear
 curl -X POST http://localhost:3000/api/v1/products \
   -H "Content-Type: application/json" \
