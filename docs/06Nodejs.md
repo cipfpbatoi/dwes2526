@@ -315,8 +315,86 @@ curl -X POST http://localhost:3000/api/v1/products \
 # Llistar
 curl http://localhost:3000/api/v1/products
 
+
+```
+
+Partint de l’ID obtingut abans, pots provar un show, una  actualització i un esborrat:
+```bash
 # Obtenir per ID
 curl http://localhost:3000/api/v1/products/<id>
+
+# Actualitzar (PUT)
+curl -X PUT http://localhost:3000/api/v1/products/<id> \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Tassa XL","price":5.25,"stock":18,"active":true}'
+
+# Esborrar (DELETE)
+curl -X DELETE http://localhost:3000/api/v1/products/<id>
+```
+
+#### 🧩 Exemple amb una altra taula: categories 
+
+Afegim una col·lecció `categories` i relacionem el producte amb `categoryId`.
+
+- `src/models/category.model.js`
+
+```js
+import mongoose from 'mongoose';
+const categorySchema = new mongoose.Schema({
+  name: { type: String, required: true, trim: true, unique: true }
+}, { timestamps: true });
+export const Category = mongoose.model('Category', categorySchema);
+```
+
+- (Opcional) Al model de producte, afegeix la relació:
+```js
+// dins de productSchema
+categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' }
+```
+
+- `src/controllers/categories.controller.js` (mínim)
+```js
+import { Category } from '../models/category.model.js';
+export async function list(req, res, next) {
+  try { res.json(await Category.find().sort({ name: 1 }).lean()); }
+  catch (err) { next(err); }
+}
+export async function create(req, res, next) {
+  try { res.status(201).json(await Category.create(req.body)); }
+  catch (err) { next(err); }
+}
+```
+
+- `src/routes/categories.routes.js` (mínim)
+```js
+import { Router } from 'express';
+import * as controller from '../controllers/categories.controller.js';
+const router = Router();
+router.get('/', controller.list);
+router.post('/', controller.create);
+export default router;
+```
+
+- `src/app.js`: munta les rutes
+```js
+import categoriesRouter from './routes/categories.routes.js';
+app.use('/api/v1/categories', categoriesRouter);
+```
+
+Prova ràpida amb curl:
+```bash
+# Crear categoria
+curl -X POST http://localhost:3000/api/v1/categories \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Tasses"}'
+
+# Crear producte referenciat (usa l’ID de la categoria)
+curl -X POST http://localhost:3000/api/v1/products \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Tassa Negra","sku":"TAS-010","price":6.5,"stock":10,"categoryId":"<categoryId>"}'
+
+# Llistar productes amb la categoria
+curl http://localhost:3000/api/v1/products
 ```
 
 ### 📄 Swagger / OpenAPI
