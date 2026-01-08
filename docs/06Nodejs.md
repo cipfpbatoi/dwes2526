@@ -527,6 +527,21 @@ curl http://localhost:3000/api/v1/products
   ```
 - Bones pràctiques: descriu paràmetres (`page`, `limit`, `sort`, filtres), codis d’error (`400`, `404`, `409`, `422`, `500`), i revisa l’especificació amb Swagger UI abans de lliurar. Posa `examples` en request/response perquè l’usuari puga provar amb un clic.
 
+
+
+### 📝 Exercici únic per a classe
+> Explica breument el flux `client → ruta → middleware → controlador → Mongo`.
+
+Implementa les millores següents sobre el projecte base:
+
+1. **Paginació i ordenació** a `GET /products` (`page`, `limit`, `sort`).
+2. **Filtrat extra**: `minPrice`, `maxPrice`, `category` (afegeix el camp al model).
+3. **Endpoint CSV**: `GET /products/export.csv` amb capçalera `text/csv`.
+4. **Validacions millorades**: nom min 3 caràcters, `sku` `[A-Z0-9-]+`, resposta `422` detallada.
+5. **Documentació**: actualitza `openapi.json` o els comentaris JSDoc perquè Swagger mostre els endpoints nous.
+
+Rubrica curta: codi net, rutes correctes, validacions completes, errors gestionats, proves amb curl/Postman i documentació al dia.
+
 ### 🛢️ Introducció ràpida a MySQL amb Node
 Objectiu: mateix CRUD però amb base de dades relacional. Servix com a plantilla mínima per fer proves sense ORM pesat.
 
@@ -591,16 +606,3 @@ Objectiu: mateix CRUD però amb base de dades relacional. Servix com a plantilla
   ```
 - Integració: al router, selecciona controlador segons `STORE=mysql|mongo` en `app.js` per reutilitzar les mateixes rutes.
 - Bones pràctiques MySQL: prepared statements sempre, defineix charset/timezone al pool si cal, usa transaccions per operacions multi-query (com crear ordre + línies).
-
-### 📝 Exercici únic per a classe
-> Explica breument el flux `client → ruta → middleware → controlador → Mongo` i deixa que completen el següent.
-
-Implementa les millores següents sobre el projecte base:
-
-1. **Paginació i ordenació** a `GET /products` (`page`, `limit`, `sort`).
-2. **Filtrat extra**: `minPrice`, `maxPrice`, `category` (afegeix el camp al model).
-3. **Endpoint CSV**: `GET /products/export.csv` amb capçalera `text/csv`.
-4. **Validacions millorades**: nom min 3 caràcters, `sku` `[A-Z0-9-]+`, resposta `422` detallada.
-5. **Documentació**: actualitza `openapi.json` o els comentaris JSDoc perquè Swagger mostre els endpoints nous.
-
-Rubrica curta: codi net, rutes correctes, validacions completes, errors gestionats, proves amb curl/Postman i documentació al dia.
