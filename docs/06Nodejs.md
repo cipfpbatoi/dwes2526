@@ -106,8 +106,9 @@ Aquest punt consisteix en crear **3 fitxers** i omplir-los amb el codi mínim pe
 5) App i rutes  
 - `src/app.js`
 Express amb middlewares de seguretat, logs i parseig de JSON. Ruta principal `/api/v1/products`.
-  ```js
-  import cors from 'cors';
+  
+```js
+import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import express from 'express';
@@ -137,6 +138,7 @@ export default app;
 ```
 
 6) Model, validació i CRUD mínim  
+
 - `src/models/product.model.js`
 Esquema Mongoose amb validació bàsica i timestamps automàtics.
   ```js
