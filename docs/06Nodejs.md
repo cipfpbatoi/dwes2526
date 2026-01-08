@@ -322,25 +322,29 @@ curl http://localhost:3000/api/v1/products/<id>
 - Què és: OpenAPI és l’estàndard per descriure APIs HTTP de forma formal (endpoints, paràmetres, esquemes, codis d’estat). Swagger UI és el visualitzador interactiu d’aquest contracte.
 - Per què documentar: 
 
-  - Contracte clar entre backend i frontend (evita malentesos).
-  - Autogenera una “prova” manual amb botons Try it out.
-  - Serveix com a font única de veritat; facilita QA i onboarding.
-  - Permet generar SDKs/clients i validació automàtica si s’integra amb linters.
+    - Contracte clar entre backend i frontend (evita malentesos).
+    - Autogenera una “prova” manual amb botons Try it out.
+    - Serveix com a font única de veritat; facilita QA i onboarding.
+    - Permet generar SDKs/clients i validació automàtica si s’integra amb linters.
+
 - On guardar la documentació:
 
-  - Fitxer `openapi.json` o `openapi.yml` a l’arrel (fàcil de versionar i consultar).
-  - O bé comentaris JSDoc a les rutes amb `swagger-jsdoc` que generen l’esquema en temps d’arrencada.
+    - Fitxer `openapi.json` o `openapi.yml` a l’arrel (fàcil de versionar i consultar).
+    - O bé comentaris JSDoc a les rutes amb `swagger-jsdoc` que generen l’esquema en temps d’arrencada.
+
 - Paquets típics:
 
-  - `swagger-ui-express`: serveix la UI a `/api-docs`.
-  - `swagger-jsdoc`: genera OpenAPI a partir de comentaris JSDoc en els fitxers de rutes/controladors.
+    - `swagger-ui-express`: serveix la UI a `/api-docs`.
+    - `swagger-jsdoc`: genera OpenAPI a partir de comentaris JSDoc en els fitxers de rutes/controladors.
+
 - “Documentar” no és un Word, sinó descriure formalment paths, requestBody, responses i schemas.
 - Passos ràpids per veure la UI:
 
-  1. `npm i swagger-ui-express swagger-jsdoc`
-  2. Crea `openapi.json` (o escriu comentaris JSDoc a les rutes).
-  3. A `app.js`, munta `/api-docs` amb `swagger-ui-express` (vegeu codi avall).
-  4. `npm run dev` i obri `http://localhost:3000/api-docs`.
+    1. `npm i swagger-ui-express swagger-jsdoc`
+    2. Crea `openapi.json` (o escriu comentaris JSDoc a les rutes).
+    3. A `app.js`, munta `/api-docs` amb `swagger-ui-express` (vegeu codi avall).
+    4. `npm run dev` i obri `http://localhost:3000/api-docs`.
+
 - Fitxer mínim `openapi.json` (arrel):
   ```json
   {
