@@ -255,6 +255,8 @@ Controladors amb gestió d’errors d’SKU duplicat i validacions de Mongoose.
   }
   ```
 
+
+
 - Middlewares bàsics  
   `src/middlewares/not-found.js`
   ```js
@@ -458,6 +460,44 @@ curl "http://localhost:3000/api/v1/products?minPrice=5&maxPrice=20&active=true&c
 curl "http://localhost:3000/api/v1/products?q=tassa&minPrice=3"
 ```
 
+##### ✅ Exemple de paginació 
+Afegim `page` i `limit` com a query params i retornem també `total` i `pages`.
+
+```js
+// products.controller.js (versio de list amb paginacio)
+export async function list(req, res, next) {
+  try {
+    const { q, active } = req.query;
+    const page = Math.max(parseInt(req.query.page ?? '1', 10), 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit ?? '10', 10), 1), 100);
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+    if (q) filter.$or = [{ name: { $regex: q, $options: 'i' } }, { sku: { $regex: q, $options: 'i' } }];
+    if (active !== undefined) filter.active = active === 'true';
+
+    const [total, data] = await Promise.all([
+      Product.countDocuments(filter),
+      Product.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean()
+    ]);
+
+    res.json({
+      data,
+      page,
+      limit,
+      total,
+      pages: Math.ceil(total / limit)
+    });
+  } catch (err) { next(err); }
+}
+```
+
+Exemple de crida:
+```bash
+curl "http://localhost:3000/api/v1/products?page=2&limit=5&q=tassa"
+```
+
+
 ### 📄 Swagger / OpenAPI
 
 - Què és: OpenAPI és l’estàndard per descriure APIs HTTP de forma formal (endpoints, paràmetres, esquemes, codis d’estat). Swagger UI és el visualitzador interactiu d’aquest contracte.
@@ -479,50 +519,19 @@ curl "http://localhost:3000/api/v1/products?q=tassa&minPrice=3"
     - `swagger-jsdoc`: genera OpenAPI a partir de comentaris JSDoc en els fitxers de rutes/controladors.
 
 - “Documentar” no és un Word, sinó descriure formalment paths, requestBody, responses i schemas.
-- Passos ràpids per veure la UI:
 
-    1. `npm i swagger-ui-express swagger-jsdoc`
-    2. Crea `openapi.json` (o escriu comentaris JSDoc a les rutes).
-    3. A `app.js`, munta `/api-docs` amb `swagger-ui-express` (vegeu codi avall).
-    4. `npm run dev` i obri `http://localhost:3000/api-docs`.
-
-- Fitxer mínim `openapi.json` (arrel):
-  ```json
-  {
-    "openapi": "3.0.3",
-    "info": { "title": "API Inventari", "version": "1.0.0" },
-    "servers": [{ "url": "http://localhost:3000" }],
-    "paths": {
-      "/api/v1/products": {
-        "get": { "summary": "Llistar", "responses": { "200": { "description": "OK" } } },
-        "post": { "summary": "Crear", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProductCreate" } } } }, "responses": { "201": { "description": "Creat" }, "409": { "description": "SKU duplicat" } } }
-      },
-      "/api/v1/products/{id}": {
-        "get": { "summary": "Per ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" }, "404": { "description": "No trobat" } } }
-      }
-    },
-    "components": {
-      "schemas": {
-        "Product": { "type": "object", "properties": { "id": { "type": "string" }, "name": { "type": "string" }, "sku": { "type": "string" }, "price": { "type": "number" }, "stock": { "type": "integer" }, "active": { "type": "boolean" } }, "required": ["id","name","price","stock"] },
-        "ProductCreate": { "type": "object", "properties": { "name": { "type": "string" }, "sku": { "type": "string" }, "price": { "type": "number" }, "stock": { "type": "integer" }, "active": { "type": "boolean" } }, "required": ["name","price","stock"] }
-      }
-    }
-  }
+- Passos ràpids per veure la UI (amb `swagger-jsdoc`):
+  ```bash
+  npm i swagger-ui-express swagger-jsdoc
   ```
-- Servei a `app.js`: carrega el JSON una sola vegada i munta `/api-docs`.
-  ```js
-  import swaggerUi from 'swagger-ui-express';
-  import { readFileSync } from 'node:fs';
-  import path from 'node:path';
-  import { fileURLToPath } from 'node:url';
+  1. Escriu comentaris JSDoc a les rutes.
+  2. Crea el fitxer de config `src/swagger.js`.
+  3. A `app.js`, munta `/api-docs` amb `swagger-ui-express`.
+  4. Obri `http://localhost:3000/api-docs`.
 
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  const openapiPath = path.join(__dirname, '..', 'openapi.json');
-  const openapi = JSON.parse(readFileSync(openapiPath, 'utf-8'));
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapi));
-  ```
-- Alternativa JSDoc (swagger-jsdoc) en rutes:
+- Nota: també pots mantindre un `openapi.json` o `openapi.yml` versionat a l’arrel del projecte, però ací no en posem cap exemple per evitar duplicitats.
+
+- JSDoc (swagger-jsdoc) en rutes:
   Escriu l’especificació al costat del codi per evitar desincronitzacions.
   ```js
   /**
@@ -570,22 +579,6 @@ curl "http://localhost:3000/api/v1/products?q=tassa&minPrice=3"
    *             schema: { $ref: '#/components/schemas/Error' }
   */
   ```
-- Components útils (afegeix-los a `openapi.json`):
-  Per reutilitzar errors i respostes paginades en totes les rutes.
-  ```json
-  "components": {
-    "schemas": {
-      "Error": { "type": "object", "properties": { "error": { "type": "string" }, "errors": { "type": "array", "items": { "type": "object" } } } },
-      "PaginatedProducts": {
-        "type": "object",
-        "properties": {
-          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Product" } },
-          "page": { "type": "integer" }, "pages": { "type": "integer" }, "total": { "type": "integer" }
-        }
-      }
-    }
-  }
-  ```
 - Bones pràctiques: descriu paràmetres (`page`, `limit`, `sort`, filtres), codis d’error (`400`, `404`, `409`, `422`, `500`), i revisa l’especificació amb Swagger UI abans de lliurar. Posa `examples` en request/response perquè l’usuari puga provar amb un clic.
 
 
@@ -600,7 +593,7 @@ Implementa les millores següents sobre el projecte base:
 3. **Validacions millorades**: nom min 3 caràcters, `sku` `[A-Z0-9-]+`, resposta `422` detallada.
 4. **Nova col·lecció relacionada (proveïdors o vendes)**: model, controlador i rutes CRUD mínimes.
 5. **Relació amb productes**: afegeix el camp corresponent (ex. `supplierId` o `saleId`) i retorna dades relacionades amb `populate`.
-6. **Documentació completa**: actualitza `openapi.json` o JSDoc amb tots els endpoints (products i nova col·lecció) i els esquemes corresponents.
+6. **Documentació completa**: actualitza els JSDoc amb tots els endpoints (products i nova col·lecció) i els esquemes corresponents.
 
 Rubrica curta: codi net, rutes correctes, validacions completes, errors gestionats, proves amb curl/Postman i documentació al dia.
 
