@@ -596,10 +596,11 @@ curl "http://localhost:3000/api/v1/products?q=tassa&minPrice=3"
 Implementa les millores següents sobre el projecte base:
 
 1. **Paginació i ordenació** a `GET /products` (`page`, `limit`, `sort`).
-2. **Filtrat extra**: `minPrice`, `maxPrice`, `category` (afegeix el camp al model).
-3. **Endpoint CSV**: `GET /products/export.csv` amb capçalera `text/csv`.
-4. **Validacions millorades**: nom min 3 caràcters, `sku` `[A-Z0-9-]+`, resposta `422` detallada.
-5. **Documentació**: actualitza `openapi.json` o els comentaris JSDoc perquè Swagger mostre els endpoints nous.
+2. **Endpoint CSV**: `GET /products/export.csv` amb capçalera `text/csv`.
+3. **Validacions millorades**: nom min 3 caràcters, `sku` `[A-Z0-9-]+`, resposta `422` detallada.
+4. **Nova col·lecció relacionada (proveïdors o vendes)**: model, controlador i rutes CRUD mínimes.
+5. **Relació amb productes**: afegeix el camp corresponent (ex. `supplierId` o `saleId`) i retorna dades relacionades amb `populate`.
+6. **Documentació completa**: actualitza `openapi.json` o JSDoc amb tots els endpoints (products i nova col·lecció) i els esquemes corresponents.
 
 Rubrica curta: codi net, rutes correctes, validacions completes, errors gestionats, proves amb curl/Postman i documentació al dia.
 
