@@ -528,10 +528,16 @@ curl "http://localhost:3000/api/v1/products?page=2&limit=5&q=tassa"
 npm i swagger-ui-express swagger-jsdoc
 ```
  
-  2. Crea el fitxer de config `src/swagger.js`.
+  2. Crea el fitxer de config `src/swagger.js` i un fitxer d’esquemes per recurs/taula.
 
 ```js
+import path from 'node:path';
 import swaggerJSDoc from 'swagger-jsdoc';
+
+const apis = [
+  path.resolve(process.cwd(), 'src/routes/*.js'),
+  path.resolve(process.cwd(), 'src/docs/products.openapi.js')
+];
 
 export const swaggerSpec = swaggerJSDoc({
   definition: {
@@ -539,7 +545,7 @@ export const swaggerSpec = swaggerJSDoc({
     info: { title: 'API Inventari', version: '1.0.0' },
     servers: [{ url: 'http://localhost:3000' }]
   },
-  apis: ['./src/routes/*.js']
+  apis
 });
 ```
 
@@ -549,6 +555,10 @@ export const swaggerSpec = swaggerJSDoc({
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './swagger.js';
 
+app.use('/api-docs', (_req, res, next) => {
+  res.removeHeader('Content-Security-Policy');
+  next();
+});
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 ```
 
@@ -562,116 +572,161 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 ```js
 /**
  * @openapi
-  * tags:
-  *   - name: Products
-  *     description: Operacions sobre productes
-  *
-  * /api/v1/products:
-  *   get:
-  *     summary: Llistar productes
-  *     tags: [Products]
-  *     parameters:
-  *       - in: query
-  *         name: page
-  *         schema: { type: integer, minimum: 1, default: 1 }
-  *         description: Pàgina actual
-  *       - in: query
-  *         name: limit
-  *         schema: { type: integer, minimum: 1, maximum: 100, default: 10 }
-  *         description: Elements per pàgina
-  *       - in: query
-  *         name: q
-  *         schema: { type: string }
-  *         description: Cerca per nom o sku
-  *       - in: query
-  *         name: active
-  *         schema: { type: boolean }
-  *         description: Filtra actius/inactius
-  *     responses:
-  *       200:
-  *         description: OK
-  *         content:
-  *           application/json:
-  *             schema:
-  *               type: object
-  *               properties:
-  *                 data:
-  *                   type: array
-  *                   items: { $ref: '#/components/schemas/Product' }
-  *                 page: { type: integer }
-  *                 limit: { type: integer }
-  *                 total: { type: integer }
-  *                 pages: { type: integer }
-  *
-  *   post:
-  *     summary: Crear producte
-  *     tags: [Products]
-  *     requestBody:
-  *       required: true
-  *       content:
-  *         application/json:
-  *           schema: { $ref: '#/components/schemas/ProductCreate' }
-  *           examples:
-  *             ok: { value: { name: "Tassa", sku: "TAS-001", price: 4.5, stock: 20 } }
-  *             invalid: { value: { name: "", price: -1 } }
-  *     responses:
-  *       201: { description: Creat }
-  *       409: { description: SKU duplicat }
-  *       422:
-  *         description: Validació incorrecta
-  *         content:
-  *           application/json:
-  *             schema: { $ref: '#/components/schemas/Error' }
-  *
-  * /api/v1/products/{id}:
-  *   get:
-  *     summary: Obtindre producte per ID
-  *     tags: [Products]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         required: true
-  *         schema: { type: string }
-  *     responses:
-  *       200: { description: OK }
-  *       404: { description: No trobat }
-  *
-  *   put:
-  *     summary: Actualitzar producte
-  *     tags: [Products]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         required: true
-  *         schema: { type: string }
-  *     requestBody:
-  *       required: true
-  *       content:
-  *         application/json:
-  *           schema: { $ref: '#/components/schemas/ProductUpdate' }
-  *     responses:
-  *       200: { description: OK }
-  *       404: { description: No trobat }
-  *       409: { description: SKU duplicat }
-  *       422:
-  *         description: Validació incorrecta
-  *         content:
-  *           application/json:
-  *             schema: { $ref: '#/components/schemas/Error' }
-  *
-  *   delete:
-  *     summary: Esborrar producte
-  *     tags: [Products]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         required: true
-  *         schema: { type: string }
-  *     responses:
-  *       204: { description: Esborrat }
-  *       404: { description: No trobat }
-  */
+ * tags:
+ *   - name: Products
+ *     description: Operacions sobre productes
+ *
+ * /api/v1/products:
+ *   get:
+ *     summary: Llistar productes
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer, minimum: 1, default: 1 }
+ *         description: Pàgina actual
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer, minimum: 1, maximum: 100, default: 10 }
+ *         description: Elements per pàgina
+ *       - in: query
+ *         name: q
+ *         schema: { type: string }
+ *         description: Cerca per nom o sku
+ *       - in: query
+ *         name: active
+ *         schema: { type: boolean }
+ *         description: Filtra actius/inactius
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items: { $ref: '#/components/schemas/Product' }
+ *                 page: { type: integer }
+ *                 limit: { type: integer }
+ *                 total: { type: integer }
+ *                 pages: { type: integer }
+ *
+ *   post:
+ *     summary: Crear producte
+ *     tags: [Products]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: { $ref: '#/components/schemas/ProductCreate' }
+ *           examples:
+ *             ok: { value: { name: "Tassa", sku: "TAS-001", price: 4.5, stock: 20 } }
+ *             invalid: { value: { name: "", price: -1 } }
+ *     responses:
+ *       201: { description: Creat }
+ *       409: { description: SKU duplicat }
+ *       422:
+ *         description: Validació incorrecta
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
+ *
+ * /api/v1/products/{id}:
+ *   get:
+ *     summary: Obtindre producte per ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200: { description: OK }
+ *       404: { description: No trobat }
+ *
+ *   put:
+ *     summary: Actualitzar producte
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: { $ref: '#/components/schemas/ProductUpdate' }
+ *     responses:
+ *       200: { description: OK }
+ *       404: { description: No trobat }
+ *       409: { description: SKU duplicat }
+ *       422:
+ *         description: Validació incorrecta
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
+ *
+ *   delete:
+ *     summary: Esborrar producte
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       204: { description: Esborrat }
+ *       404: { description: No trobat }
+ */
 ```
+
+  6. Esquemes per recurs/taula ('src/docs/products.openapi.js')  .
+
+```js
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       properties:
+ *         id: { type: string }
+ *         name: { type: string, minLength: 2 }
+ *         sku: { type: string, pattern: '^[A-Z0-9-]+$' }
+ *         price: { type: number, minimum: 0 }
+ *         stock: { type: integer, minimum: 0 }
+ *         active: { type: boolean }
+ *       required: [id, name, price, stock]
+ *     ProductCreate:
+ *       type: object
+ *       properties:
+ *         name: { type: string, minLength: 2 }
+ *         sku: { type: string, pattern: '^[A-Z0-9-]+$' }
+ *         price: { type: number, minimum: 0 }
+ *         stock: { type: integer, minimum: 0 }
+ *         active: { type: boolean }
+ *       required: [name, price, stock]
+ *     ProductUpdate:
+ *       type: object
+ *       properties:
+ *         name: { type: string, minLength: 2 }
+ *         sku: { type: string, pattern: '^[A-Z0-9-]+$' }
+ *         price: { type: number, minimum: 0 }
+ *         stock: { type: integer, minimum: 0 }
+ *         active: { type: boolean }
+ *     Error:
+ *       type: object
+ *       properties:
+ *         error: { type: string }
+ *         errors:
+ *           type: array
+ *           items: { type: object }
+ */
+```
+  Fitxer separat d’esquemes per a productes `src/docs/products.openapi.js`.
 
 - Bones pràctiques: descriu paràmetres (`page`, `limit`, `sort`, filtres), codis d’error (`400`, `404`, `409`, `422`, `500`), i revisa l’especificació amb Swagger UI abans de lliurar. Posa `examples` en request/response perquè l’usuari puga provar amb un clic.
 
