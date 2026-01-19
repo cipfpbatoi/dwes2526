@@ -543,15 +543,26 @@ curl "http://localhost:3000/api/v1/products?page=2&limit=5&q=tassa"
    *       200: { description: OK }
    */
   ```
-- Config base `swagger-jsdoc` (`src/swagger.js`):
+- `src/swagger.js` (config base amb `swagger-jsdoc`):
   ```js
   import swaggerJSDoc from 'swagger-jsdoc';
+
   export const swaggerSpec = swaggerJSDoc({
-    definition: { openapi: '3.0.3', info: { title: 'API Inventari', version: '1.0.0' }, servers: [{ url: 'http://localhost:3000' }] },
+    definition: {
+      openapi: '3.0.3',
+      info: { title: 'API Inventari', version: '1.0.0' },
+      servers: [{ url: 'http://localhost:3000' }]
+    },
     apis: ['./src/routes/*.js']
   });
   ```
-  A `app.js`: `import { swaggerSpec } from './swagger.js'; app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));`
+- Muntar `/api-docs` en `src/app.js`:
+  ```js
+  import swaggerUi from 'swagger-ui-express';
+  import { swaggerSpec } from './swagger.js';
+
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  ```
 - Exemple JSDoc complet per a POST amb esquemes reutilitzats:
   Inclou exemples bons i roïns perquè entenguen la validació.
   ```js
