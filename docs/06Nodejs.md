@@ -332,7 +332,9 @@ curl -X PUT http://localhost:3000/api/v1/products/<id> \
 curl -X DELETE http://localhost:3000/api/v1/products/<id>
 ```
 
-#### 🧩 Exemple amb una altra taula: categories 
+#### Exemples útils
+
+##### 🧩 Una altra taula: categories 
 
 Afegim una col·lecció `categories` i relacionem el producte amb `categoryId`.
 
@@ -395,6 +397,65 @@ curl -X POST http://localhost:3000/api/v1/products \
 
 # Llistar productes amb la categoria
 curl http://localhost:3000/api/v1/products
+```
+
+ 
+
+##### Retornar el nom de la categoria en un producte
+Si tens `categoryId` al model, pots fer `populate` per traure el nom en la mateixa resposta.
+
+- `src/controllers/products.controller.js` (exemple en `getById`)
+  ```js
+  export async function getById(req, res, next) {
+    try {
+      const product = await Product.findById(req.params.id)
+        .populate('categoryId', 'name')
+        .lean();
+      if (!product) return res.status(404).json({ error: 'No trobat' });
+      res.json(product);
+    } catch (err) { next(err); }
+  }
+  ```
+
+Resposta esperada (resum):
+```json
+{
+  "_id": "64f...",
+  "name": "Tassa Negra",
+  "categoryId": { "_id": "64a...", "name": "Tasses" }
+}
+```
+
+##### Consultes filtrades per preu i categoria
+Amplia el `list` perquè accepte `minPrice`, `maxPrice` i `category`.
+
+- `src/controllers/products.controller.js` (exemple en `list`)
+  ```js
+  export async function list(req, res, next) {
+    try {
+      const { q, active, minPrice, maxPrice, category } = req.query;
+      const filter = {};
+      if (q) filter.$or = [{ name: { $regex: q, $options: 'i' } }, { sku: { $regex: q, $options: 'i' } }];
+      if (active !== undefined) filter.active = active === 'true';
+      if (minPrice) filter.price = { ...filter.price, $gte: Number(minPrice) };
+      if (maxPrice) filter.price = { ...filter.price, $lte: Number(maxPrice) };
+      if (category) filter.categoryId = category; // id de categoria
+      const data = await Product.find(filter)
+        .populate('categoryId', 'name')
+        .sort({ createdAt: -1 })
+        .lean();
+      res.json(data);
+    } catch (err) { next(err); }
+  }
+  ```
+
+Prova ràpida amb curl:
+```bash
+# Productes entre 5 i 20, actius i d'una categoria concreta
+curl "http://localhost:3000/api/v1/products?minPrice=5&maxPrice=20&active=true&category=<categoryId>"
+
+# Cerca per text (nom o sku) i filtra per preu mínim
+curl "http://localhost:3000/api/v1/products?q=tassa&minPrice=3"
 ```
 
 ### 📄 Swagger / OpenAPI
