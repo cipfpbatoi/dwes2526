@@ -667,33 +667,6 @@ curl "http://localhost:3000/api/v1/products?page=2&limit=5&q=tassa"
 
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   ```
-- Exemple JSDoc complet per a POST amb esquemes reutilitzats:
-  Inclou exemples bons i roïns perquè entenguen la validació.
-  ```js
-  /**
-   * @openapi
-   * /api/v1/products:
-   *   post:
-   *     summary: Crear producte
-   *     tags: [Products]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema: { $ref: '#/components/schemas/ProductCreate' }
-   *           examples:
-   *             ok: { value: { name: "Tassa", sku: "TAS-001", price: 4.5, stock: 20 } }
-   *             invalid: { value: { name: "", price: -1 } }
-   *     responses:
-   *       201: { description: Creat }
-   *       409: { description: SKU duplicat }
-   *       422:
-   *         description: Validació incorrecta
-   *         content:
-   *           application/json:
-   *             schema: { $ref: '#/components/schemas/Error' }
-  */
-  ```
 - Bones pràctiques: descriu paràmetres (`page`, `limit`, `sort`, filtres), codis d’error (`400`, `404`, `409`, `422`, `500`), i revisa l’especificació amb Swagger UI abans de lliurar. Posa `examples` en request/response perquè l’usuari puga provar amb un clic.
 
 
