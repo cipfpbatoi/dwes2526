@@ -521,153 +521,163 @@ curl "http://localhost:3000/api/v1/products?page=2&limit=5&q=tassa"
 - “Documentar” no és un Word, sinó descriure formalment paths, requestBody, responses i schemas.
 
 - Passos ràpids per veure la UI (amb `swagger-jsdoc`):
-  ```bash
-  npm i swagger-ui-express swagger-jsdoc
-  ```
-  1. Escriu comentaris JSDoc a les rutes.
+
+  1. Instal·la paquets
+
+```bash
+npm i swagger-ui-express swagger-jsdoc
+```
+ 
   2. Crea el fitxer de config `src/swagger.js`.
+
+```js
+import swaggerJSDoc from 'swagger-jsdoc';
+
+export const swaggerSpec = swaggerJSDoc({
+  definition: {
+    openapi: '3.0.3',
+    info: { title: 'API Inventari', version: '1.0.0' },
+    servers: [{ url: 'http://localhost:3000' }]
+  },
+  apis: ['./src/routes/*.js']
+});
+```
+
   3. A `app.js`, munta `/api-docs` amb `swagger-ui-express`.
+
+```js
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger.js';
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+```
+
   4. Obri `http://localhost:3000/api-docs`.
+ 
+  5. JSDoc (swagger-jsdoc) en rutes:
 
-- Nota: també pots mantindre un `openapi.json` o `openapi.yml` versionat a l’arrel del projecte, però ací no en posem cap exemple per evitar duplicitats.
-
-- JSDoc (swagger-jsdoc) en rutes:
   Escriu l’especificació al costat del codi per evitar desincronitzacions.
   Exemple complet per a totes les rutes de products:
-  ```js
-  /**
-   * @openapi
-   * tags:
-   *   - name: Products
-   *     description: Operacions sobre productes
-   *
-   * /api/v1/products:
-   *   get:
-   *     summary: Llistar productes
-   *     tags: [Products]
-   *     parameters:
-   *       - in: query
-   *         name: page
-   *         schema: { type: integer, minimum: 1, default: 1 }
-   *         description: Pàgina actual
-   *       - in: query
-   *         name: limit
-   *         schema: { type: integer, minimum: 1, maximum: 100, default: 10 }
-   *         description: Elements per pàgina
-   *       - in: query
-   *         name: q
-   *         schema: { type: string }
-   *         description: Cerca per nom o sku
-   *       - in: query
-   *         name: active
-   *         schema: { type: boolean }
-   *         description: Filtra actius/inactius
-   *     responses:
-   *       200:
-   *         description: OK
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 data:
-   *                   type: array
-   *                   items: { $ref: '#/components/schemas/Product' }
-   *                 page: { type: integer }
-   *                 limit: { type: integer }
-   *                 total: { type: integer }
-   *                 pages: { type: integer }
-   *
-   *   post:
-   *     summary: Crear producte
-   *     tags: [Products]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema: { $ref: '#/components/schemas/ProductCreate' }
-   *           examples:
-   *             ok: { value: { name: "Tassa", sku: "TAS-001", price: 4.5, stock: 20 } }
-   *             invalid: { value: { name: "", price: -1 } }
-   *     responses:
-   *       201: { description: Creat }
-   *       409: { description: SKU duplicat }
-   *       422:
-   *         description: Validació incorrecta
-   *         content:
-   *           application/json:
-   *             schema: { $ref: '#/components/schemas/Error' }
-   *
-   * /api/v1/products/{id}:
-   *   get:
-   *     summary: Obtindre producte per ID
-   *     tags: [Products]
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *         required: true
-   *         schema: { type: string }
-   *     responses:
-   *       200: { description: OK }
-   *       404: { description: No trobat }
-   *
-   *   put:
-   *     summary: Actualitzar producte
-   *     tags: [Products]
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *         required: true
-   *         schema: { type: string }
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema: { $ref: '#/components/schemas/ProductUpdate' }
-   *     responses:
-   *       200: { description: OK }
-   *       404: { description: No trobat }
-   *       409: { description: SKU duplicat }
-   *       422:
-   *         description: Validació incorrecta
-   *         content:
-   *           application/json:
-   *             schema: { $ref: '#/components/schemas/Error' }
-   *
-   *   delete:
-   *     summary: Esborrar producte
-   *     tags: [Products]
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *         required: true
-   *         schema: { type: string }
-   *     responses:
-   *       204: { description: Esborrat }
-   *       404: { description: No trobat }
-   */
-  ```
-- `src/swagger.js` (config base amb `swagger-jsdoc`):
-  ```js
-  import swaggerJSDoc from 'swagger-jsdoc';
 
-  export const swaggerSpec = swaggerJSDoc({
-    definition: {
-      openapi: '3.0.3',
-      info: { title: 'API Inventari', version: '1.0.0' },
-      servers: [{ url: 'http://localhost:3000' }]
-    },
-    apis: ['./src/routes/*.js']
-  });
-  ```
-- Muntar `/api-docs` en `src/app.js`:
-  ```js
-  import swaggerUi from 'swagger-ui-express';
-  import { swaggerSpec } from './swagger.js';
+```js
+/**
+ * @openapi
+  * tags:
+  *   - name: Products
+  *     description: Operacions sobre productes
+  *
+  * /api/v1/products:
+  *   get:
+  *     summary: Llistar productes
+  *     tags: [Products]
+  *     parameters:
+  *       - in: query
+  *         name: page
+  *         schema: { type: integer, minimum: 1, default: 1 }
+  *         description: Pàgina actual
+  *       - in: query
+  *         name: limit
+  *         schema: { type: integer, minimum: 1, maximum: 100, default: 10 }
+  *         description: Elements per pàgina
+  *       - in: query
+  *         name: q
+  *         schema: { type: string }
+  *         description: Cerca per nom o sku
+  *       - in: query
+  *         name: active
+  *         schema: { type: boolean }
+  *         description: Filtra actius/inactius
+  *     responses:
+  *       200:
+  *         description: OK
+  *         content:
+  *           application/json:
+  *             schema:
+  *               type: object
+  *               properties:
+  *                 data:
+  *                   type: array
+  *                   items: { $ref: '#/components/schemas/Product' }
+  *                 page: { type: integer }
+  *                 limit: { type: integer }
+  *                 total: { type: integer }
+  *                 pages: { type: integer }
+  *
+  *   post:
+  *     summary: Crear producte
+  *     tags: [Products]
+  *     requestBody:
+  *       required: true
+  *       content:
+  *         application/json:
+  *           schema: { $ref: '#/components/schemas/ProductCreate' }
+  *           examples:
+  *             ok: { value: { name: "Tassa", sku: "TAS-001", price: 4.5, stock: 20 } }
+  *             invalid: { value: { name: "", price: -1 } }
+  *     responses:
+  *       201: { description: Creat }
+  *       409: { description: SKU duplicat }
+  *       422:
+  *         description: Validació incorrecta
+  *         content:
+  *           application/json:
+  *             schema: { $ref: '#/components/schemas/Error' }
+  *
+  * /api/v1/products/{id}:
+  *   get:
+  *     summary: Obtindre producte per ID
+  *     tags: [Products]
+  *     parameters:
+  *       - in: path
+  *         name: id
+  *         required: true
+  *         schema: { type: string }
+  *     responses:
+  *       200: { description: OK }
+  *       404: { description: No trobat }
+  *
+  *   put:
+  *     summary: Actualitzar producte
+  *     tags: [Products]
+  *     parameters:
+  *       - in: path
+  *         name: id
+  *         required: true
+  *         schema: { type: string }
+  *     requestBody:
+  *       required: true
+  *       content:
+  *         application/json:
+  *           schema: { $ref: '#/components/schemas/ProductUpdate' }
+  *     responses:
+  *       200: { description: OK }
+  *       404: { description: No trobat }
+  *       409: { description: SKU duplicat }
+  *       422:
+  *         description: Validació incorrecta
+  *         content:
+  *           application/json:
+  *             schema: { $ref: '#/components/schemas/Error' }
+  *
+  *   delete:
+  *     summary: Esborrar producte
+  *     tags: [Products]
+  *     parameters:
+  *       - in: path
+  *         name: id
+  *         required: true
+  *         schema: { type: string }
+  *     responses:
+  *       204: { description: Esborrat }
+  *       404: { description: No trobat }
+  */
+```
 
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  ```
 - Bones pràctiques: descriu paràmetres (`page`, `limit`, `sort`, filtres), codis d’error (`400`, `404`, `409`, `422`, `500`), i revisa l’especificació amb Swagger UI abans de lliurar. Posa `examples` en request/response perquè l’usuari puga provar amb un clic.
+
+- Nota: també pots mantindre un `openapi.json` o `openapi.yml` versionat a l’arrel del projecte, però ací no en posem cap exemple per evitar duplicitats.
+  
+
 
 
 
