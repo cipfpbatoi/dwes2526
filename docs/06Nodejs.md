@@ -532,11 +532,14 @@ npm i swagger-ui-express swagger-jsdoc
 
 ```js
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import swaggerJSDoc from 'swagger-jsdoc';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const apis = [
-  path.resolve(process.cwd(), 'src/routes/*.js'),
-  path.resolve(process.cwd(), 'src/docs/products.openapi.js')
+  path.resolve(__dirname, 'routes/*.js'),
+  path.resolve(__dirname, 'docs/products.openapi.js')
 ];
 
 export const swaggerSpec = swaggerJSDoc({
@@ -737,8 +740,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 ### 📝 Exercici únic per a classe
-> Explica breument el flux `client → ruta → middleware → controlador → Mongo`.
-
+ 
 Implementa les millores següents sobre el projecte base:
 
 1. **Paginació i ordenació** a `GET /products` (`page`, `limit`, `sort`).
