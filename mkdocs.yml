@@ -10,7 +10,7 @@ nav:
   - "5.- Aplicacions segures i reactives en Laravel": "05seguretat_Laravel.md"
   - "6a.- Desenvolupament d'APIs REST amb Laravel": "06Rest_Laravel.md"
   - "6b.- Desenvolupament d'APIs REST amb Node.js": "06Nodejs.md"
-  - "7.- Webs hibrides :" "07webs_hibrides.md"
+  - "7.- Webs hibrides": "07webs_hibrides.md"
 theme:
   language: ca
   favicon: imagenes/favicon.png
