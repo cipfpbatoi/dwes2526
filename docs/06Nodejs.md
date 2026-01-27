@@ -255,6 +255,8 @@ Controladors amb gestió d’errors d’SKU duplicat i validacions de Mongoose.
   }
   ```
 
+
+
 - Middlewares bàsics  
   `src/middlewares/not-found.js`
   ```js
@@ -332,7 +334,9 @@ curl -X PUT http://localhost:3000/api/v1/products/<id> \
 curl -X DELETE http://localhost:3000/api/v1/products/<id>
 ```
 
-#### 🧩 Exemple amb una altra taula: categories 
+#### Exemples útils
+
+##### 🧩 Una altra taula: categories 
 
 Afegim una col·lecció `categories` i relacionem el producte amb `categoryId`.
 
@@ -397,6 +401,103 @@ curl -X POST http://localhost:3000/api/v1/products \
 curl http://localhost:3000/api/v1/products
 ```
 
+ 
+
+##### Retornar el nom de la categoria en un producte
+Si tens `categoryId` al model, pots fer `populate` per traure el nom en la mateixa resposta.
+
+- `src/controllers/products.controller.js` (exemple en `getById`)
+  ```js
+  export async function getById(req, res, next) {
+    try {
+      const product = await Product.findById(req.params.id)
+        .populate('categoryId', 'name')
+        .lean();
+      if (!product) return res.status(404).json({ error: 'No trobat' });
+      res.json(product);
+    } catch (err) { next(err); }
+  }
+  ```
+
+Resposta esperada (resum):
+```json
+{
+  "_id": "64f...",
+  "name": "Tassa Negra",
+  "categoryId": { "_id": "64a...", "name": "Tasses" }
+}
+```
+
+##### Consultes filtrades per preu i categoria
+Amplia el `list` perquè accepte `minPrice`, `maxPrice` i `category`.
+
+- `src/controllers/products.controller.js` (exemple en `list`)
+  ```js
+  export async function list(req, res, next) {
+    try {
+      const { q, active, minPrice, maxPrice, category } = req.query;
+      const filter = {};
+      if (q) filter.$or = [{ name: { $regex: q, $options: 'i' } }, { sku: { $regex: q, $options: 'i' } }];
+      if (active !== undefined) filter.active = active === 'true';
+      if (minPrice) filter.price = { ...filter.price, $gte: Number(minPrice) };
+      if (maxPrice) filter.price = { ...filter.price, $lte: Number(maxPrice) };
+      if (category) filter.categoryId = category; // id de categoria
+      const data = await Product.find(filter)
+        .populate('categoryId', 'name')
+        .sort({ createdAt: -1 })
+        .lean();
+      res.json(data);
+    } catch (err) { next(err); }
+  }
+  ```
+
+Prova ràpida amb curl:
+```bash
+# Productes entre 5 i 20, actius i d'una categoria concreta
+curl "http://localhost:3000/api/v1/products?minPrice=5&maxPrice=20&active=true&category=<categoryId>"
+
+# Cerca per text (nom o sku) i filtra per preu mínim
+curl "http://localhost:3000/api/v1/products?q=tassa&minPrice=3"
+```
+
+##### ✅ Exemple de paginació 
+Afegim `page` i `limit` com a query params i retornem també `total` i `pages`.
+
+```js
+// products.controller.js (versio de list amb paginacio)
+export async function list(req, res, next) {
+  try {
+    const { q, active } = req.query;
+    const page = Math.max(parseInt(req.query.page ?? '1', 10), 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit ?? '10', 10), 1), 100);
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+    if (q) filter.$or = [{ name: { $regex: q, $options: 'i' } }, { sku: { $regex: q, $options: 'i' } }];
+    if (active !== undefined) filter.active = active === 'true';
+
+    const [total, data] = await Promise.all([
+      Product.countDocuments(filter),
+      Product.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean()
+    ]);
+
+    res.json({
+      data,
+      page,
+      limit,
+      total,
+      pages: Math.ceil(total / limit)
+    });
+  } catch (err) { next(err); }
+}
+```
+
+Exemple de crida:
+```bash
+curl "http://localhost:3000/api/v1/products?page=2&limit=5&q=tassa"
+```
+
+
 ### 📄 Swagger / OpenAPI
 
 - Què és: OpenAPI és l’estàndard per descriure APIs HTTP de forma formal (endpoints, paràmetres, esquemes, codis d’estat). Swagger UI és el visualitzador interactiu d’aquest contracte.
@@ -418,113 +519,218 @@ curl http://localhost:3000/api/v1/products
     - `swagger-jsdoc`: genera OpenAPI a partir de comentaris JSDoc en els fitxers de rutes/controladors.
 
 - “Documentar” no és un Word, sinó descriure formalment paths, requestBody, responses i schemas.
-- Passos ràpids per veure la UI:
 
-    1. `npm i swagger-ui-express swagger-jsdoc`
-    2. Crea `openapi.json` (o escriu comentaris JSDoc a les rutes).
-    3. A `app.js`, munta `/api-docs` amb `swagger-ui-express` (vegeu codi avall).
-    4. `npm run dev` i obri `http://localhost:3000/api-docs`.
+- Passos ràpids per veure la UI (amb `swagger-jsdoc`):
 
-- Fitxer mínim `openapi.json` (arrel):
-  ```json
-  {
-    "openapi": "3.0.3",
-    "info": { "title": "API Inventari", "version": "1.0.0" },
-    "servers": [{ "url": "http://localhost:3000" }],
-    "paths": {
-      "/api/v1/products": {
-        "get": { "summary": "Llistar", "responses": { "200": { "description": "OK" } } },
-        "post": { "summary": "Crear", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProductCreate" } } } }, "responses": { "201": { "description": "Creat" }, "409": { "description": "SKU duplicat" } } }
-      },
-      "/api/v1/products/{id}": {
-        "get": { "summary": "Per ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "OK" }, "404": { "description": "No trobat" } } }
-      }
-    },
-    "components": {
-      "schemas": {
-        "Product": { "type": "object", "properties": { "id": { "type": "string" }, "name": { "type": "string" }, "sku": { "type": "string" }, "price": { "type": "number" }, "stock": { "type": "integer" }, "active": { "type": "boolean" } }, "required": ["id","name","price","stock"] },
-        "ProductCreate": { "type": "object", "properties": { "name": { "type": "string" }, "sku": { "type": "string" }, "price": { "type": "number" }, "stock": { "type": "integer" }, "active": { "type": "boolean" } }, "required": ["name","price","stock"] }
-      }
-    }
-  }
-  ```
-- Servei a `app.js`: carrega el JSON una sola vegada i munta `/api-docs`.
-  ```js
-  import swaggerUi from 'swagger-ui-express';
-  import { readFileSync } from 'node:fs';
-  import path from 'node:path';
-  import { fileURLToPath } from 'node:url';
+  1. Instal·la paquets
 
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  const openapiPath = path.join(__dirname, '..', 'openapi.json');
-  const openapi = JSON.parse(readFileSync(openapiPath, 'utf-8'));
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapi));
-  ```
-- Alternativa JSDoc (swagger-jsdoc) en rutes:
+```bash
+npm i swagger-ui-express swagger-jsdoc
+```
+ 
+  2. Crea el fitxer de config `src/swagger.js` i un fitxer d’esquemes per recurs/taula.
+
+```js
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import swaggerJSDoc from 'swagger-jsdoc';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const apis = [
+  path.resolve(__dirname, 'routes/*.js'),
+  path.resolve(__dirname, 'docs/products.openapi.js')
+];
+
+export const swaggerSpec = swaggerJSDoc({
+  definition: {
+    openapi: '3.0.3',
+    info: { title: 'API Inventari', version: '1.0.0' },
+    servers: [{ url: 'http://localhost:3000' }]
+  },
+  apis
+});
+```
+
+  3. A `app.js`, munta `/api-docs` amb `swagger-ui-express`.
+
+```js
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger.js';
+
+app.use('/api-docs', (_req, res, next) => {
+  res.removeHeader('Content-Security-Policy');
+  next();
+});
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+```
+
+  4. Obri `http://localhost:3000/api-docs`.
+ 
+  5. JSDoc (swagger-jsdoc) en rutes:
+
   Escriu l’especificació al costat del codi per evitar desincronitzacions.
-  ```js
-  /**
-   * @openapi
-   * /api/v1/products:
-   *   get:
-   *     summary: Llistar productes
-   *     responses:
-   *       200: { description: OK }
-   */
-  ```
-- Config base `swagger-jsdoc` (`src/swagger.js`):
-  ```js
-  import swaggerJSDoc from 'swagger-jsdoc';
-  export const swaggerSpec = swaggerJSDoc({
-    definition: { openapi: '3.0.3', info: { title: 'API Inventari', version: '1.0.0' }, servers: [{ url: 'http://localhost:3000' }] },
-    apis: ['./src/routes/*.js']
-  });
-  ```
-  A `app.js`: `import { swaggerSpec } from './swagger.js'; app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));`
-- Exemple JSDoc complet per a POST amb esquemes reutilitzats:
-  Inclou exemples bons i roïns perquè entenguen la validació.
-  ```js
-  /**
-   * @openapi
-   * /api/v1/products:
-   *   post:
-   *     summary: Crear producte
-   *     tags: [Products]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema: { $ref: '#/components/schemas/ProductCreate' }
-   *           examples:
-   *             ok: { value: { name: "Tassa", sku: "TAS-001", price: 4.5, stock: 20 } }
-   *             invalid: { value: { name: "", price: -1 } }
-   *     responses:
-   *       201: { description: Creat }
-   *       409: { description: SKU duplicat }
-   *       422:
-   *         description: Validació incorrecta
-   *         content:
-   *           application/json:
-   *             schema: { $ref: '#/components/schemas/Error' }
-  */
-  ```
-- Components útils (afegeix-los a `openapi.json`):
-  Per reutilitzar errors i respostes paginades en totes les rutes.
-  ```json
-  "components": {
-    "schemas": {
-      "Error": { "type": "object", "properties": { "error": { "type": "string" }, "errors": { "type": "array", "items": { "type": "object" } } } },
-      "PaginatedProducts": {
-        "type": "object",
-        "properties": {
-          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Product" } },
-          "page": { "type": "integer" }, "pages": { "type": "integer" }, "total": { "type": "integer" }
-        }
-      }
-    }
-  }
-  ```
+  Exemple complet per a totes les rutes de products:
+
+```js
+/**
+ * @openapi
+ * tags:
+ *   - name: Products
+ *     description: Operacions sobre productes
+ *
+ * /api/v1/products:
+ *   get:
+ *     summary: Llistar productes
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer, minimum: 1, default: 1 }
+ *         description: Pàgina actual
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer, minimum: 1, maximum: 100, default: 10 }
+ *         description: Elements per pàgina
+ *       - in: query
+ *         name: q
+ *         schema: { type: string }
+ *         description: Cerca per nom o sku
+ *       - in: query
+ *         name: active
+ *         schema: { type: boolean }
+ *         description: Filtra actius/inactius
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items: { $ref: '#/components/schemas/Product' }
+ *                 page: { type: integer }
+ *                 limit: { type: integer }
+ *                 total: { type: integer }
+ *                 pages: { type: integer }
+ *
+ *   post:
+ *     summary: Crear producte
+ *     tags: [Products]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: { $ref: '#/components/schemas/ProductCreate' }
+ *           examples:
+ *             ok: { value: { name: "Tassa", sku: "TAS-001", price: 4.5, stock: 20 } }
+ *             invalid: { value: { name: "", price: -1 } }
+ *     responses:
+ *       201: { description: Creat }
+ *       409: { description: SKU duplicat }
+ *       422:
+ *         description: Validació incorrecta
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
+ *
+ * /api/v1/products/{id}:
+ *   get:
+ *     summary: Obtindre producte per ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200: { description: OK }
+ *       404: { description: No trobat }
+ *
+ *   put:
+ *     summary: Actualitzar producte
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: { $ref: '#/components/schemas/ProductUpdate' }
+ *     responses:
+ *       200: { description: OK }
+ *       404: { description: No trobat }
+ *       409: { description: SKU duplicat }
+ *       422:
+ *         description: Validació incorrecta
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
+ *
+ *   delete:
+ *     summary: Esborrar producte
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       204: { description: Esborrat }
+ *       404: { description: No trobat }
+ */
+```
+
+  6. Esquemes per recurs/taula ('src/docs/products.openapi.js')  .
+
+```js
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       properties:
+ *         id: { type: string }
+ *         name: { type: string, minLength: 2 }
+ *         sku: { type: string, pattern: '^[A-Z0-9-]+$' }
+ *         price: { type: number, minimum: 0 }
+ *         stock: { type: integer, minimum: 0 }
+ *         active: { type: boolean }
+ *       required: [id, name, price, stock]
+ *     ProductCreate:
+ *       type: object
+ *       properties:
+ *         name: { type: string, minLength: 2 }
+ *         sku: { type: string, pattern: '^[A-Z0-9-]+$' }
+ *         price: { type: number, minimum: 0 }
+ *         stock: { type: integer, minimum: 0 }
+ *         active: { type: boolean }
+ *       required: [name, price, stock]
+ *     ProductUpdate:
+ *       type: object
+ *       properties:
+ *         name: { type: string, minLength: 2 }
+ *         sku: { type: string, pattern: '^[A-Z0-9-]+$' }
+ *         price: { type: number, minimum: 0 }
+ *         stock: { type: integer, minimum: 0 }
+ *         active: { type: boolean }
+ *     Error:
+ *       type: object
+ *       properties:
+ *         error: { type: string }
+ *         errors:
+ *           type: array
+ *           items: { type: object }
+ */
+```
+  Fitxer separat d’esquemes per a productes `src/docs/products.openapi.js`.
+
 - Bones pràctiques: descriu paràmetres (`page`, `limit`, `sort`, filtres), codis d’error (`400`, `404`, `409`, `422`, `500`), i revisa l’especificació amb Swagger UI abans de lliurar. Posa `examples` en request/response perquè l’usuari puga provar amb un clic.
 
 ### 🔐 Autenticacio (JWT) i rutes protegides
@@ -687,19 +893,19 @@ Objectiu: permetre `login` i protegir endpoints amb un token JWT en `Authorizati
   ```
 
 Consell: posa `security` nomes en rutes protegides si vols que `login/register` siguen publiques.
-
-
+- Nota: també pots mantindre un `openapi.json` o `openapi.yml` versionat a l’arrel del projecte, però ací no en posem cap exemple per evitar duplicitats.
+  
 
 ### 📝 Exercici únic per a classe
-> Explica breument el flux `client → ruta → middleware → controlador → Mongo`.
-
+ 
 Implementa les millores següents sobre el projecte base:
 
 1. **Paginació i ordenació** a `GET /products` (`page`, `limit`, `sort`).
-2. **Filtrat extra**: `minPrice`, `maxPrice`, `category` (afegeix el camp al model).
-3. **Endpoint CSV**: `GET /products/export.csv` amb capçalera `text/csv`.
-4. **Validacions millorades**: nom min 3 caràcters, `sku` `[A-Z0-9-]+`, resposta `422` detallada.
-5. **Documentació**: actualitza `openapi.json` o els comentaris JSDoc perquè Swagger mostre els endpoints nous.
+2. **Endpoint CSV**: `GET /products/export.csv` amb capçalera `text/csv`.
+3. **Validacions millorades**: nom min 3 caràcters, `sku` `[A-Z0-9-]+`, resposta `422` detallada.
+4. **Nova col·lecció relacionada (proveïdors o vendes)**: model, controlador i rutes CRUD mínimes.
+5. **Relació amb productes**: afegeix el camp corresponent (ex. `supplierId` o `saleId`) i retorna dades relacionades amb `populate`.
+6. **Documentació completa**: actualitza els JSDoc amb tots els endpoints (products i nova col·lecció) i els esquemes corresponents.
 
 Rubrica curta: codi net, rutes correctes, validacions completes, errors gestionats, proves amb curl/Postman i documentació al dia.
 
