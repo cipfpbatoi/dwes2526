@@ -28,7 +28,7 @@ Les aplicacions web híbrides, també conegudes com a "mashups", són una combin
 Les seues característiques principals són:
 
 * **Integració de Dades de Diversos Orígens**: Les aplicacions web híbrides aprofiten dades i funcionalitats de múltiples fonts, com ara serveis web, APIs, i altres recursos en línia. Això permet combinar i reutilitzar recursos existents de manera creativa per a desenvolupar aplicacions més complexes i funcionals.
-* **Ús de Serveis Web i APIs**: Moltes d'aquestes aplicacions utilitzen dades accessibles a través de serveis web, com els que ofereixen empreses com Google, Yahoo!, Flickr, Microsoft, i Amazon. Aquestes dades es troben sovint en formats com JSON o XML i es poden accedir i manipular mitjançant APIs específiques.
+* **Ús de Serveis Web i APIs**: Moltes d'aquestes aplicacions utilitzen dades accessibles a través de serveis web. En este tema prioritzarem APIs gratuïtes o d'accés obert (open data), amb respostes en JSON o XML, per a poder integrar-les sense costos per a l'alumnat.
 * **Sindicació Web (RSS/Atom)**: Algunes aplicacions web híbrides fan ús de protocols de sindicació web, com RSS o Atom, per accedir a continguts actualitzats de manera regular. Aquests protocols simplifiquen el procés de compartir i distribuir continguts web.
 * **Dades Internes**: A més de les fonts externes, les aplicacions web híbrides poden incloure dades internes generades i gestionades per l'entitat propietària de l'aplicació, com podrien ser les dades corporatives o de negoci.
 * **Web Scraping**: Encara que és menys comú, algunes aplicacions utilitzen tècniques d'enginyeria inversa, com el web scraping, per extreure dades des de llocs web. Això pot ser útil per obtenir informació com els preus dels productes en les botigues en línia.
@@ -39,7 +39,7 @@ Aquesta actualització reflecteix l'evolució constant en el camp del desenvolup
 
 Per a poder reutilitzar codi i informació cal que tingem en conte les següents consideracions:
 
-* **Integració de Serveis Web de Tercers**: En el desenvolupament d'aplicacions web híbrides, és comú utilitzar serveis proporcionats per tercers. Aquests serveis poden oferir funcionalitats específiques que enriquiran l'aplicació sense necessitat de desenvolupar-les des de zero. Un exemple podria ser l'ús de l'API de Google Maps per mostrar la ubicació geogràfica de les franquícies d'una empresa en un mapa.
+* **Integració de Serveis Web de Tercers**: En el desenvolupament d'aplicacions web híbrides, és comú utilitzar serveis proporcionats per tercers. Aquests serveis poden oferir funcionalitats específiques que enriquiran l'aplicació sense necessitat de desenvolupar-les des de zero. Un exemple podria ser l'ús d'OpenStreetMap per mostrar la ubicació geogràfica de les franquícies d'una empresa en un mapa.
 * **Desenvolupament d'Aplicacions Pràctiques**: En aquest context, es posa l'accent en el desenvolupament d'aplicacions que faciliten processos específics, com podria ser la gestió d'enviaments en una botiga en línia. Aquest tipus d'aplicació pot millorar significativament l'experiència dels usuaris i l'eficiència de les operacions de l'empresa.
 * **Reconeixement de Necessitats i Oportunitats**: És important identificar funcionalitats que poden ser útils per als usuaris, fins i tot quan aquests no les han sol·licitat explícitament. Aquesta anticipació de necessitats pot ser un factor clau en el desenvolupament d'aplicacions web híbrides exitoses.
 * **Condicions i Límits en l'Ús de Serveis de Tercers**: Quan s'utilitzen serveis de tercers, cal tenir en compte les condicions i límits que aquests imposen. Això inclou restriccions d'ús, límits de sol·licituds, entre d'altres aspectes legals i tècnics.
@@ -47,12 +47,14 @@ Per a poder reutilitzar codi i informació cal que tingem en conte les següents
 
 Per exemple podriem desenvolupar:
 
-* **Integració de Google Maps API**: Imaginem que estàs desenvolupant una aplicació web per a una cadena de restaurants. Pots integrar l'API de Google Maps per mostrar la ubicació de tots els restaurants en un mapa interactiu. Els usuaris poden buscar el restaurant més proper, obtenir direccions, i fins i tot veure imatges del lloc.
+* **Mapa amb OpenStreetMap**: Imaginem que estàs desenvolupant una aplicació web per a una cadena de restaurants. Pots mostrar la ubicació de tots els restaurants en un mapa interactiu amb OpenStreetMap i Leaflet (sense necessitat de clau de pagament). Els usuaris poden buscar el restaurant més proper i veure informació bàsica.
 * **Gestió d'Enviaments amb APIs de Logística**: Per una botiga en línia, pots integrar APIs de serveis de missatgeria com UPS, FedEx o DHL. Això permet als usuaris fer seguiment dels seus enviaments en temps real, calcular costos d'enviament, i gestionar devolucions de manera eficient.
 * **Integració de Passarel·les de Pagament**: En una aplicació d'e-commerce, l'ús de passarel·les de pagament com Stripe, PayPal, o Square és essencial. Això no només ofereix una solució de pagament segura als usuaris, sinó que també simplifica la gestió financera de la botiga.
 * **Ús de APIs de Xarxes Socials**: Podries integrar APIs de xarxes socials com Facebook, Twitter, o Instagram per permetre als usuaris compartir productes o experiències directament des de la teva aplicació. Això pot augmentar la visibilitat i l'engagement del teu negoci.
-* **Serveis Meteorològics Integrats**: Per a una aplicació d'activitats a l'aire lliure, com una app de senderisme, integrar dades meteorològiques en temps real mitjançant APIs com OpenWeatherMap pot ser molt útil. Els usuaris podrien planificar les seves activitats basant-se en les condicions meteorològiques actuals i les previsions.
-* **Recollida d'Opinions amb APIs de Ressenyes**: En una aplicació per a hotels o restaurants, integrar un sistema de recollida d'opinions com Yelp o TripAdvisor pot ajudar a obtenir feedback valuós dels clients i millorar la qualitat del servei.
+* **Serveis Meteorològics Integrats**: Per a una aplicació d'activitats a l'aire lliure, com una app de senderisme, integrar dades meteorològiques en temps real amb APIs gratuïtes com Open-Meteo pot ser molt útil. Els usuaris podrien planificar les seves activitats basant-se en les condicions meteorològiques actuals i les previsions.
+* **Recollida d'Opinions amb Dades Obertes**: En una aplicació per a hotels o restaurants, pots partir de dades obertes (open data municipal o autonòmic) o construir el teu propi sistema de ressenyes dins l'aplicació.
+
+En este tema evitarem APIs de pagament. Els exemples de passarel·les de pagament o logística són referències conceptuals, però les pràctiques es faran amb dades obertes i serveis gratuïts.
 
 ## Autenticació amb Google
 
@@ -71,7 +73,7 @@ Laravel **Socialite** és la biblioteca oficial per gestionar l'autenticació am
 #### **2. Configura Google API**
 1. Accedeix a la [Consola de Desenvolupadors de Google](https://console.developers.google.com/).
 2. Crea un nou projecte o selecciona un projecte existent.
-3. Activa l'API "Google+ API" o "Google Identity Services".
+3. Activa "Google Identity Services" (o l'API de People si cal).
 4. Crea una credencial d'OAuth 2.0 i configura:
     - **Tipus d'aplicació**: Aplicació web.
     - **URI de redirecció autoritzat**:
@@ -168,11 +170,11 @@ Els **WebSockets** permeten implementar interfícies d'usuari que s'actualitzen 
 - **Esdeveniments**: L'aplicació Laravel envia esdeveniments a aquests canals des del backend. Els esdeveniments poden incloure dades que el frontend utilitza per actualitzar la interfície.
 
 ### Drivers de Difusió Suportats
-Laravel proporciona tres opcions per gestionar WebSockets:
+Laravel proporciona diverses opcions per gestionar WebSockets. En este tema prioritzarem opcions gratuïtes i autogestionades:
 
-1. **Laravel Reverb**: Solució autogestionada i integrada amb Laravel.
-2. **Pusher Channels**: Servei gestionat per a WebSockets.
-3. **Ably**: Plataforma avançada per a comunicacions en temps real.
+1. **Laravel Reverb**: Solució autogestionada i integrada amb Laravel (recomanada per a no dependre de serveis de pagament).
+2. **Pusher Channels**: Servei gestionat per a WebSockets (no gratuït en la majoria de casos).
+3. **Ably**: Plataforma avançada per a comunicacions en temps real (amb límits gratuïts, però de pagament en producció).
 
  
 ### Implementació Bàsica en el servidor
@@ -184,7 +186,7 @@ Laravel facilita la difusió d'esdeveniments (*event broadcasting*) gràcies a u
 ```bash
   php artisan install:broadcasting
 ```
-Em preguntarà si vull instal·lar reverb(no) i la part de client (si).         
+Em preguntarà si vull instal·lar Reverb (sí) i la part de client (sí).         
 
 Aquesta ordre:
 
@@ -192,47 +194,49 @@ Aquesta ordre:
 - Crearà el fitxer `routes/channels.php`, on pots registrar rutes d'autorització i callbacks per als canals de difusió.
 
  
-#### Configuració Bàsica de pusher
+#### Configuració Bàsica amb Laravel Reverb (gratuït i autogestionat)
 
-Si vols utilitzar **Pusher Channels** per a la difusió d'esdeveniments, segueix aquests passos:
+Reverb permet fer WebSockets sense dependre de serveis externs:
 
- 
-1. Instal·la el paquet de PHP de Pusher Channels amb Composer:
+1. Instal·la el paquet de Reverb:
    
 ```bash
-   composer require pusher/pusher-php-server
+composer require laravel/reverb
 ```
 
-2. Defineix les credencials de Pusher Channels al fitxer .env:
+2. Configura les variables al `.env`:
 
 ```env
-BROADCAST_DRIVER=pusher
+BROADCAST_DRIVER=reverb
 
-PUSHER_APP_ID=19143960
-PUSHER_APP_KEY=070b902204f2ac2a3b220
-PUSHER_APP_SECRET=6687bd960e437d3c2a550
-PUSHER_APP_CLUSTER=eu
+REVERB_APP_ID=your-app-id
+REVERB_APP_KEY=your-app-key
+REVERB_APP_SECRET=your-app-secret
+REVERB_HOST=localhost
+REVERB_PORT=8080
+REVERB_SCHEME=http
 
-VITE_PUSHER_APP_KEY=070b902204f2ac2a3b220
-VITE_PUSHER_APP_CLUSTER=eu
+VITE_REVERB_APP_KEY=your-app-key
+VITE_REVERB_HOST=localhost
+VITE_REVERB_PORT=8080
+VITE_REVERB_SCHEME=http
 ```
 
-i configura el driver de difusió a Pusher en el fitxer `config/broadcasting.php`:
+3. Configura el driver de difusió en `config/broadcasting.php`:
 
 ```php
-'pusher' => [
-    'driver' => 'pusher',
-    'key' => env('PUSHER_APP_KEY'),
-    'secret' => env('PUSHER_APP_SECRET'),
-    'app_id' => env('PUSHER_APP_ID'),
-    'options' => [
-        'cluster' => env('PUSHER_APP_CLUSTER'),
-        'useTLS' => true,
-    ],
+'reverb' => [
+    'driver' => 'reverb',
+    'key' => env('REVERB_APP_KEY'),
+    'secret' => env('REVERB_APP_SECRET'),
+    'app_id' => env('REVERB_APP_ID'),
+    'host' => env('REVERB_HOST'),
+    'port' => env('REVERB_PORT'),
+    'scheme' => env('REVERB_SCHEME'),
 ],
 ```
   
-3. Configuració de Laravel Echo
+4. Configuració de Laravel Echo
 
 Si no està instal·lat, instal·la Laravel Echo:
 
@@ -248,10 +252,13 @@ import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: import.meta.env.VITE_PUSHER_APP_KEY,
-    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
-    forceTLS: true
+    broadcaster: 'reverb',
+    key: import.meta.env.VITE_REVERB_APP_KEY,
+    wsHost: import.meta.env.VITE_REVERB_HOST,
+    wsPort: import.meta.env.VITE_REVERB_PORT,
+    wssPort: import.meta.env.VITE_REVERB_PORT,
+    forceTLS: import.meta.env.VITE_REVERB_SCHEME === 'https',
+    enabledTransports: ['ws', 'wss'],
 });
 ```
   
@@ -265,7 +272,7 @@ Echo.channel('channel-name')
 
 });
 ```
-4. **Creació de Canals**
+5. **Creació de Canals**
 
 Defineix canals en routes/channels.php. Per exemple, un canal privat:
 
@@ -275,7 +282,7 @@ Broadcast::channel('channel-name', function ($user) {
 });
 ```
  
-5. **Disparar Esdeveniments en Temps Real**
+6. **Disparar Esdeveniments en Temps Real**
 
 Crea esdeveniments que implementen ShouldBroadcast i defineix en quin canal s'han d'emetre.
 
@@ -288,7 +295,7 @@ class EventName implements ShouldBroadcast
     }
 }
 ```
-6. **Configuració de la Cua**
+7. **Configuració de la Cua**
 
 - Tots els esdeveniments de difusió s'envien a través de treballs en cua (queued jobs).
 - És necessari configurar i executar un treballador de cua per evitar que la resposta de l'aplicació es veja afectada durant la difusió dels esdeveniments:
@@ -297,35 +304,33 @@ class EventName implements ShouldBroadcast
   php artisan queue:work
 ```
  
-##  Integració amb ChatGPT API
+##  Integració amb IA sense pagament (local)
  
-#### Registra't i Obté les Credencials de l'API
+Per evitar APIs de pagament, podem utilitzar models locals amb **Ollama**. La idea és aixecar un model al teu ordinador i consumir-lo via HTTP des de Laravel.
 
-  * Registra't a OpenAI: Visita el lloc web d'OpenAI i crea un compte si encara no en tens un.
-  * Accedeix a la Secció d'API: Un cop registrat, busca l'opció per accedir a les credencials de l'API.
-  * Crea un Nou Projecte/API Key: Segueix les instruccions per crear un nou projecte i genera una clau API. Aquesta clau et permetrà realitzar peticions a l'API de ChatGPT.
+#### Requisits
+- Tindre Ollama instal·lat i un model descarregat (p. ex. `llama3` o `mistral`).
+- Servidor local escoltant en `http://localhost:11434`.
 
-#### Configura les Credencials de l'API
+#### Configura l'entorn
 
-Guarda les Credencials: Un cop tinguis la clau API, hauràs de guardar-la de manera segura.
-Actualitza el Fitxer .env: Afegeix la teva clau API al teu fitxer .env de Laravel. Això manté les teves credencials segures i separades del teu codi font.
-
-```php
-OPENAI_API_KEY=tua_clau_api
-```
-Conselles de Seguretat: No compartisques les teves claus API en el codi font, especialment si el codi és públic.
-
-En el teu fitxer de configuració (per exemple, config/services.php), afegeix una entrada per a OpenAI.
-
-```php
-'openai' => [
-    'api_key' => env('OPENAI_API_KEY'),
-]
+```dotenv
+LLM_BASE_URL=http://localhost:11434
+LLM_MODEL=llama3
 ```
 
-#### Creació d'un service per a OpenAI
+En el teu fitxer de configuració (p. ex. `config/services.php`), afegeix:
 
-Per a això creem un directori Services i un fixer ChatGPTService.php
+```php
+'llm' => [
+    'base_url' => env('LLM_BASE_URL', 'http://localhost:11434'),
+    'model' => env('LLM_MODEL', 'llama3'),
+],
+```
+
+#### Creació d'un service per a LLM local
+
+Per a això creem un directori Services i un fitxer `LLMService.php`.
 
 ```php
 namespace App\Services;
@@ -333,62 +338,49 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
-class ChatGPTService
+class LLMService
 {
 
-    public static function getChatResponse($question)
+    public static function getResponse($question)
     {
 
         try {
             $client = new Client([
-                'base_uri' => 'https://api.openai.com/v1/',
+                'base_uri' => config('services.llm.base_url') . '/',
                 'headers' => [
-                    'Authorization' => 'Bearer ' . config('services.openai.api_key'),
                     'Content-Type' => 'application/json',
                 ],
             ]);
-            $response = $client->post('chat/completions', [
+            $response = $client->post('api/generate', [
                 'json' => [
-                    'model' => 'gpt-3.5-turbo',
-                    'messages' => [
-                        ['role' => 'system', 'content' => 'Ets un fan del Barça.'],
-                        ['role' => 'user', 'content' => $question],
-                    ],
-                    'max_tokens' => 250,
+                    'model' => config('services.llm.model'),
+                    'prompt' => $question,
+                    'stream' => false,
                 ],
             ]);
 
             $body = json_decode($response->getBody()->getContents(), true);
-            $message = '';
-            foreach ($body['choices'] as $r){
-                if ($r['message']['role'] == 'assistant') {
-                    $message .= $r['message']['content'];
-                }
-            }
-            return $message;
+            return $body['response'] ?? '';
         } catch (\Exception $e) {
-            Log::error('Error en la resposta de ChatGPT: ' . $e->getMessage());
+            Log::error('Error en la resposta del LLM local: ' . $e->getMessage());
             return ['error' => 'No s\'ha pogut obtenir una resposta.'];
         }
     }
 }
-
-
 ```
 
 Ara la forma de utilitzar-lo de forma bàsica és la següent:
 
 ```php
-$descripcio = ChatGPTService::getChatResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
-        
-```        
+$descripcio = LLMService::getResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
+```
 
-
-A partir d'ahi hem de estudiar la [documentació de l'API](https://platform.openai.com/docs/api-reference) per a poder fer peticions i tractar les respostes.
-Al mateix temps crearem les rutes, les vistes i els metodes necessaries per incrementar la funcionalitat de la nostra aplicació.
+A partir d'ahi podem adaptar els prompts i el tractament de respostes segons necessitem.
 
 
 ## Gestió de pagaments
+
+> **Nota**: Aquesta part és informativa. Les passarel·les de pagament són serveis de pagament i es treballaran només en mode sandbox. Per a pràctiques, usarem **PayPal Sandbox** i **Stripe test mode (targeta)**.
 
 La primera decisió que hem de pendre es triar la passarel·la de Pagament: Hi ha moltes opcions com Stripe, PayPal, PayU, Braintree, Square, Authorize.Net...
 Totes solen tindre entorn de proves(sanbox) on fer transaccions fictícies per a provar el funcionament de la passarel·la de pagament.
@@ -552,6 +544,124 @@ Aquest exemple és molt bàsic i només per a fins educatius. En un entorn de pr
 Assegura't de provar aquest codi en l'entorn de Sandbox de PayPal abans de considerar la seva implementació en producció.
 Personalitza els imports del pagament (import, moneda, descripció) segons les necessitats del teu projecte.
 
+### Stripe (test mode amb targeta)
+
+Stripe permet fer proves amb targetes fictícies en **test mode**. És recomanable usar **Stripe Checkout** perquè simplifica el flux.
+
+1. Crea un compte a Stripe i activa el **test mode**.
+2. Obté les claus de test i afegeix-les al `.env`:
+
+```dotenv
+STRIPE_KEY=pk_test_your_key
+STRIPE_SECRET=sk_test_your_secret
+```
+
+3. Instal·la el SDK de Stripe:
+
+```bash
+composer require stripe/stripe-php
+```
+
+4. Endpoint bàsic per crear una sessió de Checkout:
+
+```php
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
+
+public function createStripeCheckout()
+{
+    Stripe::setApiKey(env('STRIPE_SECRET'));
+
+    $session = Session::create([
+        'mode' => 'payment',
+        'line_items' => [[
+            'price_data' => [
+                'currency' => 'eur',
+                'product_data' => ['name' => 'Subscripció Demo'],
+                'unit_amount' => 1000, // 10,00 €
+            ],
+            'quantity' => 1,
+        ]],
+        'success_url' => url('/stripe/success'),
+        'cancel_url' => url('/stripe/cancel'),
+    ]);
+
+    return redirect()->away($session->url);
+}
+```
+
+5. Per a provar, utilitza una targeta de test (p. ex. `4242 4242 4242 4242` amb qualsevol data futura i CVC).
+
+## Integració de n8n en el desenvolupament web (mashups)
+
+n8n és una eina d'automatització que pot actuar com a **orquestrador de dades** entre serveis gratuïts i la teua app web. Pots fer que n8n agregue dades de diverses APIs obertes i expose un endpoint únic per a la teua aplicació.
+
+### Patró recomanat
+1. **n8n** rep una petició (Webhook).
+2. **n8n** consulta una o més APIs gratuïtes (open data, Open-Meteo, OpenStreetMap, etc.).
+3. **n8n** normalitza i respon amb JSON.
+4. **Laravel** consumeix eixe JSON com si fora una API pròpia.
+
+### Exemple de flux en n8n
+- **Webhook** (trigger) → **HTTP Request** (API externa) → **Set** (netejar camps) → **Respond to Webhook**.
+
+### Mini-exemple n8n + OpenStreetMap (Nominatim)
+
+Objectiu: rebre un nom de lloc i tornar coordenades bàsiques.
+
+**Flux en n8n**
+1. **Webhook** (POST) amb cos:
+   ```json
+   { "q": "Universitat de València" }
+   ```
+2. **HTTP Request**:
+   - Method: `GET`
+   - URL: `https://nominatim.openstreetmap.org/search`
+   - Query:
+     - `q` = `{{$json.q}}`
+     - `format` = `json`
+     - `limit` = `1`
+   - Headers:
+     - `User-Agent`: `dwes-mashup-class`
+3. **Set** (netejar resposta):
+   - `name` = `{{$json[0].display_name}}`
+   - `lat` = `{{$json[0].lat}}`
+   - `lon` = `{{$json[0].lon}}`
+4. **Respond to Webhook** amb:
+   ```json
+   { "name": "...", "lat": "...", "lon": "..." }
+   ```
+
+**Consum des de Laravel**
+
+```php
+use Illuminate\Support\Facades\Http;
+
+$response = Http::post(env('N8N_WEBHOOK_URL'), [
+    'q' => 'Universitat de València',
+]);
+
+$coords = $response->json();
+```
+
+### Exemple de crida des de Laravel
+
+```php
+use Illuminate\Support\Facades\Http;
+
+$response = Http::post(env('N8N_WEBHOOK_URL'), [
+    'city' => 'València',
+    'date' => '2026-01-27',
+]);
+
+$data = $response->json();
+```
+
+### Seguretat bàsica
+- Usa URLs de webhook amb token o afegeix un header secret.
+- Limita i valida els paràmetres que accepts.
+- Registra errors i temps de resposta per a depurar.
+
 ## Exemple de reutilització de codi
 
 ### Autenticació amb Google
@@ -592,8 +702,8 @@ composer require laravel/socialite
 #### Pas 3 - Configuració de Socialite per a Google
 
 ```php
-GOOGLE_CLIENT_ID=3792956990940-bat7pikhu9a8piq93jncgcursmf7isg3.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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0
+GOOGLE_CLIENT_ID=your-client-id
+GOOGLE_CLIENT_SECRET=your-client-secret
 GOOGLE_REDIRECT=http://localhost/auth/google/callback
 ```
 Afegeix la Configuració de Google a config/services.php:
@@ -800,83 +910,33 @@ protected static function booted()
     }
 ```
 
-### Exemple Integració amb ChatGPT API
+### Exemple Integració amb LLM local
 
-#### Pas 1 - Configuració de l'API
+#### Pas 1 - Configuració local
 
-1. Obtenir les credencials de l'API de ChatGPT: Registra't a OpenAI i obtingues les credencials de l'API de ChatGPT.
-2. Configura les credencials en el fitxer .env: Afegeix la clau de l'API a les variables d'entorn del teu projecte Laravel.
+1. Configura el `.env` amb el servei local:
 
-```php
-OPENAI_API_KEY=tua_clau_api
+```dotenv
+LLM_BASE_URL=http://localhost:11434
+LLM_MODEL=llama3
 ```
 
-3. Afegeix la configuració de l'API a config/services.php:
+2. Afegeix la configuració a `config/services.php` (tal com s'ha vist abans):
 
 ```php
-'openai' => [
-        'api_key' => env('OPENAI_API_KEY'),
+'llm' => [
+        'base_url' => env('LLM_BASE_URL', 'http://localhost:11434'),
+        'model' => env('LLM_MODEL', 'llama3'),
     ],
 ```
 
-#### Pas 2 - Creació del Servei
+#### Pas 2 - Utilització del Servei
 
-Crea un servei per a gestionar les crides a l'API de ChatGPT:
-
-```php
-namespace App\Services;
-
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Log;
-
-class ChatGPTService
-{
-
-    public static function getChatResponse($question)
-    {
-
-        try {
-            $client = new Client([
-                'base_uri' => 'https://api.openai.com/v1/',
-                'headers' => [
-                    'Authorization' => 'Bearer ' . config('services.openai.api_key'),
-                    'Content-Type' => 'application/json',
-                ],
-            ]);
-            $response = $client->post('chat/completions', [
-                'json' => [
-                    'model' => 'gpt-3.5-turbo',
-                    'messages' => [
-                        ['role' => 'system', 'content' => 'Ets un fan del Barça.'],
-                        ['role' => 'user', 'content' => $question],
-                    ],
-                    'max_tokens' => 250,
-                ],
-            ]);
-
-            $body = json_decode($response->getBody()->getContents(), true);
-            $message = '';
-            foreach ($body['choices'] as $r){
-                if ($r['message']['role'] == 'assistant') {
-                    $message .= $r['message']['content'];
-                }
-            }
-            return $message;
-        } catch (\Exception $e) {
-            Log::error('Error en la resposta de ChatGPT: ' . $e->getMessage());
-            return ['error' => 'No s\'ha pogut obtenir una resposta.'];
-        }
-    }
-}
-``` 
-
-#### Pas 3 - Utilització del Servei
-
-Utilitza el servei en el teu controlador per obtenir respostes de ChatGPT:
+Utilitza el servei en el teu controlador per obtenir respostes del LLM local:
 
 ```php
 public function show(Equip $equip) {
-        $descripcio = ChatGPTService::getChatResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
+        $descripcio = LLMService::getResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
         return view('equips.show', compact('equip','descripcio'));
     }
 ```
@@ -904,8 +964,7 @@ Modifica el component de la vista ...
 
 1. Crea l'autenticació mitjançant google per a l'aplicació de Futbol-femeni fent un nou tipus d'usuari que serà [convidat], que no té permisos per a fer res en la base dades i no te passwords i soles es pot autenticar mitjançant google. Els altre usuaris no poden autenticar-se mitjançant google.
 2. Fes que, a banda de modificar la classificació, ixca una alerta en la pantalla i es canvie el color de l'equip a roig si baixa o a verd si puja.
-3. Fes que, al mostrar l'estadi isca una descripció de l'estadi feta per chatgpt.
-4. Crea una pasarela de pagament per a l'ús de l'aplicació de Futbol-femeni.
+3. Fes que, al mostrar l'estadi, isca una descripció de l'estadi feta per un LLM local (Ollama).
+4. Crea un mashup amb n8n que agregue dades obertes i mostra el resultat en l'aplicació.
 
  
-
