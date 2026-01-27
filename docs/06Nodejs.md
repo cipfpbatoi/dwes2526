@@ -527,6 +527,167 @@ curl http://localhost:3000/api/v1/products
   ```
 - Bones pràctiques: descriu paràmetres (`page`, `limit`, `sort`, filtres), codis d’error (`400`, `404`, `409`, `422`, `500`), i revisa l’especificació amb Swagger UI abans de lliurar. Posa `examples` en request/response perquè l’usuari puga provar amb un clic.
 
+### 🔐 Autenticacio (JWT) i rutes protegides
+
+Objectiu: permetre `login` i protegir endpoints amb un token JWT en `Authorization: Bearer <token>`.
+
+- Dependencies:
+  ```bash
+  npm i jsonwebtoken bcryptjs
+  ```
+
+- `.env`:
+  ```
+  JWT_SECRET=supersecret
+  JWT_EXPIRES=7d
+  ```
+
+- Model d'usuari (exemple minim, `src/models/user.model.js`):
+  ```js
+  import mongoose from 'mongoose';
+  const userSchema = new mongoose.Schema({
+    name: { type: String, required: true, trim: true },
+    email: { type: String, required: true, unique: true, lowercase: true },
+    passwordHash: { type: String, required: true }
+  }, { timestamps: true });
+  export const User = mongoose.model('User', userSchema);
+  ```
+
+- Helpers d'autenticacio (exemple, `src/controllers/auth.controller.js`):
+  ```js
+  import bcrypt from 'bcryptjs';
+  import jwt from 'jsonwebtoken';
+  import { User } from '../models/user.model.js';
+
+  export async function register(req, res, next) {
+    try {
+      const { name, email, password } = req.body;
+      const passwordHash = await bcrypt.hash(password, 10);
+      const user = await User.create({ name, email, passwordHash });
+      res.status(201).json({ id: user._id, name: user.name, email: user.email });
+    } catch (err) { next(err); }
+  }
+
+  export async function login(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) return res.status(401).json({ error: 'Credencials incorrectes' });
+      const ok = await bcrypt.compare(password, user.passwordHash);
+      if (!ok) return res.status(401).json({ error: 'Credencials incorrectes' });
+      const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES ?? '7d' });
+      res.json({ token });
+    } catch (err) { next(err); }
+  }
+  ```
+
+- Middleware `requireAuth` (exemple, `src/middlewares/require-auth.js`):
+  ```js
+  import jwt from 'jsonwebtoken';
+  export function requireAuth(req, res, next) {
+    const auth = req.headers.authorization ?? '';
+    const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;
+    if (!token) return res.status(401).json({ error: 'Token requerit' });
+    try {
+      req.user = jwt.verify(token, process.env.JWT_SECRET);
+      next();
+    } catch {
+      res.status(401).json({ error: 'Token invalid o caducat' });
+    }
+  }
+  ```
+
+- Rutes d'autenticacio (`src/routes/auth.routes.js`):
+  ```js
+  import { Router } from 'express';
+  import * as controller from '../controllers/auth.controller.js';
+  const router = Router();
+  router.post('/register', controller.register);
+  router.post('/login', controller.login);
+  export default router;
+  ```
+
+- Protegir rutes:
+  ```js
+  import { requireAuth } from './middlewares/require-auth.js';
+  app.use('/api/v1/products', requireAuth, productsRouter);
+  app.use('/api/v1/auth', authRouter);
+  ```
+
+- Prova rapida:
+  ```bash
+  # login
+  curl -X POST http://localhost:3000/api/v1/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{"email":"test@mail.com","password":"123456"}'
+
+  # us del token
+  curl http://localhost:3000/api/v1/products \
+    -H "Authorization: Bearer <token>"
+  ```
+
+### 📄 Documentar autenticacio en Swagger
+
+- Afegeix el `securityScheme` a `components`:
+  ```json
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+  ```
+
+- Marca els endpoints protegits (global o per ruta):
+  ```json
+  "security": [{ "bearerAuth": [] }]
+  ```
+
+- Documenta `login` i `register`:
+  ```yaml
+  /api/v1/auth/login:
+    post:
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, example: "test@mail.com" }
+                password: { type: string, example: "123456" }
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+  /api/v1/auth/register:
+    post:
+      summary: Registre
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                email: { type: string }
+                password: { type: string }
+      responses:
+        201: { description: Creat }
+  ```
+
+Consell: posa `security` nomes en rutes protegides si vols que `login/register` siguen publiques.
+
 
 
 ### 📝 Exercici únic per a classe
