@@ -738,18 +738,21 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 Objectiu: permetre `login` i protegir endpoints amb un token JWT en `Authorization: Bearer <token>`.
 
 - Dependencies:
-  ```bash
+
+```bash
   npm i jsonwebtoken bcryptjs
-  ```
+```
 
 - `.env`:
-  ```
+
+```
   JWT_SECRET=supersecret
   JWT_EXPIRES=7d
-  ```
+```
 
 - Model d'usuari (exemple minim, `src/models/user.model.js`):
-  ```js
+
+```js
   import mongoose from 'mongoose';
   const userSchema = new mongoose.Schema({
     name: { type: String, required: true, trim: true },
@@ -757,10 +760,11 @@ Objectiu: permetre `login` i protegir endpoints amb un token JWT en `Authorizati
     passwordHash: { type: String, required: true }
   }, { timestamps: true });
   export const User = mongoose.model('User', userSchema);
-  ```
+```
 
 - Helpers d'autenticacio (exemple, `src/controllers/auth.controller.js`):
-  ```js
+
+```js
   import bcrypt from 'bcryptjs';
   import jwt from 'jsonwebtoken';
   import { User } from '../models/user.model.js';
@@ -785,10 +789,11 @@ Objectiu: permetre `login` i protegir endpoints amb un token JWT en `Authorizati
       res.json({ token });
     } catch (err) { next(err); }
   }
-  ```
+```
 
 - Middleware `requireAuth` (exemple, `src/middlewares/require-auth.js`):
-  ```js
+
+```js
   import jwt from 'jsonwebtoken';
   export function requireAuth(req, res, next) {
     const auth = req.headers.authorization ?? '';
@@ -801,27 +806,35 @@ Objectiu: permetre `login` i protegir endpoints amb un token JWT en `Authorizati
       res.status(401).json({ error: 'Token invalid o caducat' });
     }
   }
-  ```
+```
 
 - Rutes d'autenticacio (`src/routes/auth.routes.js`):
-  ```js
+
+```js
   import { Router } from 'express';
   import * as controller from '../controllers/auth.controller.js';
   const router = Router();
   router.post('/register', controller.register);
   router.post('/login', controller.login);
   export default router;
-  ```
+```
 
 - Protegir rutes:
-  ```js
+
+```js
   import { requireAuth } from './middlewares/require-auth.js';
   app.use('/api/v1/products', requireAuth, productsRouter);
   app.use('/api/v1/auth', authRouter);
-  ```
+```
 
 - Prova rapida:
-  ```bash
+
+```bash
+  # register
+  curl -X POST http://localhost:3000/api/v1/auth/register \
+    -H "Content-Type: application/json" \
+    -d '{"name":"Test User","email":"test@mail.com","password":"123456"}'
+
   # login
   curl -X POST http://localhost:3000/api/v1/auth/login \
     -H "Content-Type: application/json" \
@@ -830,12 +843,27 @@ Objectiu: permetre `login` i protegir endpoints amb un token JWT en `Authorizati
   # us del token
   curl http://localhost:3000/api/v1/products \
     -H "Authorization: Bearer <token>"
-  ```
+```
 
 ### 📄 Documentar autenticacio en Swagger
 
-- Afegeix el `securityScheme` a `components`:
-  ```json
+- Afegeix el `securityScheme` a `components` (a l’arrel del document OpenAPI, al mateix nivell que `openapi`, `info`, `paths` i `servers`):
+
+```yaml
+  openapi: 3.0.3
+  info: { title: API, version: 1.0.0 }
+  paths: {}
+  components:
+    securitySchemes:
+      bearerAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+```
+  En JSON és el mateix, però amb claus/comes.
+
+  Exemple en JSON:
+```json
   "components": {
     "securitySchemes": {
       "bearerAuth": {
@@ -845,52 +873,87 @@ Objectiu: permetre `login` i protegir endpoints amb un token JWT en `Authorizati
       }
     }
   }
-  ```
+```
 
 - Marca els endpoints protegits (global o per ruta):
-  ```json
-  "security": [{ "bearerAuth": [] }]
-  ```
 
-- Documenta `login` i `register`:
-  ```yaml
+```json
+  "security": [{ "bearerAuth": [] }]
+```
+
+  Exemple per ruta (login/register públics, products protegit):
+
+```yaml
   /api/v1/auth/login:
     post:
       summary: Login
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email: { type: string, example: "test@mail.com" }
-                password: { type: string, example: "123456" }
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  token: { type: string }
+      security: []   # public
   /api/v1/auth/register:
     post:
       summary: Registre
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name: { type: string }
-                email: { type: string }
-                password: { type: string }
-      responses:
-        201: { description: Creat }
-  ```
+      security: []   # public
+  /api/v1/products:
+    get:
+      summary: Llistar productes
+      security:
+        - bearerAuth: []
+    post:
+      summary: Crear producte
+      security:
+        - bearerAuth: []
+```
+
+- Documenta `login` i `register`:
+
+```php
+ /**
+ * @openapi
+ * tags:
+ *   - name: Auth
+ *     description: Operacions d'autenticació
+ *
+ * /api/v1/auth/login:
+ *   post:
+ *     summary: Login
+ *     tags: [Auth]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email: { type: string, example: "test@mail.com" }
+ *               password: { type: string, example: "123456" }
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token: { type: string }
+ * /api/v1/auth/register:
+ *   post:
+ *     summary: Registre
+ *     tags: [Auth]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name: { type: string }
+ *               email: { type: string }
+ *               password: { type: string }
+ *     responses:
+ *       201: { description: Creat }
+ */
+```
 
 Consell: posa `security` nomes en rutes protegides si vols que `login/register` siguen publiques.
 - Nota: també pots mantindre un `openapi.json` o `openapi.yml` versionat a l’arrel del projecte, però ací no en posem cap exemple per evitar duplicitats.
