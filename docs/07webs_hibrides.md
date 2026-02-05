@@ -193,28 +193,21 @@ Aquesta ordre:
 - Crearà el fitxer `config/broadcasting.php`.
 - Crearà el fitxer `routes/channels.php`, on pots registrar rutes d'autorització i callbacks per als canals de difusió.
 
-#### Proveïdor de serveis (Broadcasting)
+#### Rutes de broadcasting (Laravel 12)
 
-Assegura't que el **BroadcastServiceProvider** està creat i registrat. És el que activa les rutes de difusió i carrega `routes/channels.php`.
+En **Laravel 12** el `BroadcastServiceProvider` no està per defecte. Laravel intenta registrar automàticament `/broadcasting/auth` quan executes `install:broadcasting`, però si no apareix, activa manualment les rutes en `bootstrap/app.php`:
 
 ```php
-// app/Providers/BroadcastServiceProvider.php
-public function boot(): void
-{
-    Broadcast::routes();
-    require base_path('routes/channels.php');
-}
+->withRouting(
+    web: __DIR__.'/../routes/web.php',
+    channels: __DIR__.'/../routes/channels.php',
+    health: '/up',
+)
 ```
 
-Registre del provider:
+Això enllaça correctament els canals i l’endpoint d’autorització (`/broadcasting/auth`).
 
- 
-- **Laravel 11** (`bootstrap/app.php`):
-  ```php
-  ->withProviders([
-      App\Providers\BroadcastServiceProvider::class,
-  ])
-  ```
+> **Laravel 11 i anteriors**: es registra `App\Providers\BroadcastServiceProvider` amb `Broadcast::routes()` i `routes/channels.php`.
 
  
 #### Configuració Bàsica amb Laravel Reverb (gratuït i autogestionat)
