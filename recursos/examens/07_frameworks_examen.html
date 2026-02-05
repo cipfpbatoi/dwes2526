@@ -1,0 +1,745 @@
+
+<!doctype html>
+<html lang="ca" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://cipfpbatoi.github.io/dwes2526/recursos/examens/07_frameworks_examen.html">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../imagenes/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Qüestionari Avaluable - Desenvolupament web en entorn de Servidor</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-X6D0LR7TC8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-X6D0LR7TC8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-X6D0LR7TC8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="Teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#questionari-avaluable" class="md-skip">
+          Salta el contingut
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Capçalera">
+    <a href="../../index.html" title="Desenvolupament web en entorn de Servidor" class="md-header__button md-logo" aria-label="Desenvolupament web en entorn de Servidor" data-md-component="logo">
+      
+  <img src="../../imagenes/logofp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Desenvolupament web en entorn de Servidor
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Qüestionari Avaluable
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="Teal"  aria-label="Canviar a mode nit"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Canviar a mode nit" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="light-blue" data-md-color-accent="Teal"  aria-label="Canviar a mode dia"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Canviar a mode dia" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Cerca" placeholder="Cerca" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Cerca">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Neteja" aria-label="Neteja" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicialitzant cerca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navegació" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="Desenvolupament web en entorn de Servidor" class="md-nav__button md-logo" aria-label="Desenvolupament web en entorn de Servidor" data-md-component="logo">
+      
+  <img src="../../imagenes/logofp.png" alt="logo">
+
+    </a>
+    Desenvolupament web en entorn de Servidor
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01arquitecturas.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.- Arquitectures Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02php.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.- Programació web amb PHP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03MVC_Laravel.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.- Arquitectura MVC amb Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04dades_Laravel.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4.- Accés segur i estructurat a bases de dades amb Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05seguretat_Laravel.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5.- Aplicacions segures i reactives en Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06Rest_Laravel.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6a.- Desenvolupament d'APIs REST amb Laravel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06Nodejs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6b.- Desenvolupament d'APIs REST amb Node.js
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07webs_hibrides.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.- Webs hibrides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="questionari-avaluable">Qüestionari Avaluable<a class="headerlink" href="#questionari-avaluable" title="Permanent link">&para;</a></h1>
+<h2 id="seccio-1-preguntes-tancades-teoria">Secció 1: Preguntes tancades (Teoria)<a class="headerlink" href="#seccio-1-preguntes-tancades-teoria" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Què és un framework i per què és útil en el desenvolupament d'aplicacions web?</strong></p>
+<ul>
+<li>a) És una eina que facilita la gestió de bases de dades.</li>
+<li>b) És un conjunt d’eines i regles que permeten estructurar aplicacions web de manera eficient.</li>
+<li>c) És un llenguatge de programació utilitzat per desenvolupar aplicacions web.</li>
+<li>d) És un conjunt de llibreries per afegir funcionalitats a l'aplicació.</li>
+</ul>
+</li>
+<li>
+<p><strong>Què és el patró MVC i quines capes defineix?</strong></p>
+<ul>
+<li>a) És un patró que separa la lògica de negoci, la base de dades i les vistes.</li>
+<li>b) És un patró que separa models, vistes i controladors.</li>
+<li>c) És una estructura que defineix mòduls, variables i connexions.</li>
+<li>d) És una configuració de Laravel per gestionar les rutes.</li>
+</ul>
+</li>
+<li>
+<p><strong>Quin és l'objectiu principal de la capa de presentació en MVC?</strong></p>
+<ul>
+<li>a) Gestionar les dades d’entrada i sortida.</li>
+<li>b) Connectar directament amb la base de dades.</li>
+<li>c) Mostrar el resultat de la lògica de negoci a l’usuari de manera visual.</li>
+<li>d) Validar els formularis de l'usuari.</li>
+</ul>
+</li>
+<li>
+<p><strong>Què fa la funció <code>@vite</code> en una vista Blade?</strong></p>
+<ul>
+<li>a) Crea un formulari dinàmic.</li>
+<li>b) Inclou fitxers CSS o JavaScript i activa Hot Module Replacement (HMR).</li>
+<li>c) Genera rutes automàtiques.</li>
+<li>d) Valida dades dins del controlador.</li>
+</ul>
+</li>
+<li>
+<p><strong>Per què és important utilitzar controladors en Laravel?</strong></p>
+<ul>
+<li>a) Perquè Laravel obliga a utilitzar-los.</li>
+<li>b) Per gestionar la lògica de negoci de manera separada de les rutes.</li>
+<li>c) Per emmagatzemar dades temporals.</li>
+<li>d) Per fer que les vistes siguin més eficients.</li>
+</ul>
+</li>
+<li>
+<p><strong>Quina diferència hi ha entre <code>view()</code> i <code>return</code> en Laravel?</strong></p>
+<ul>
+<li>a) <code>return</code> sempre retorna dades JSON, mentre que <code>view()</code> mostra vistes HTML.</li>
+<li>b) <code>view()</code> s'utilitza per carregar vistes, mentre que <code>return</code> pot retornar qualsevol tipus de dades.</li>
+<li>c) <code>return</code> només funciona amb rutes, i <code>view()</code> amb controladors.</li>
+<li>d) No hi ha cap diferència funcional.</li>
+</ul>
+</li>
+<li>
+<p><strong>Com es passa informació del controlador a la vista en Laravel?</strong></p>
+<ul>
+<li>a) Mitjançant un array o la funció <code>compact</code>.</li>
+<li>b) Amb variables globals.</li>
+<li>c) Utilitzant sessions.</li>
+<li>d) Directament amb JSON.</li>
+</ul>
+</li>
+<li>
+<p><strong>Quina diferència hi ha entre <code>Route::get()</code> i <code>Route::post()</code>?</strong></p>
+<ul>
+<li>a) <code>Route::get()</code> és per obtenir dades, mentre que <code>Route::post()</code> s'utilitza per enviar dades al servidor.</li>
+<li>b) No hi ha cap diferència funcional.</li>
+<li>c) <code>Route::post()</code> només funciona amb AJAX.</li>
+<li>d) <code>Route::get()</code> és per formularis, i <code>Route::post()</code> per JSON.</li>
+</ul>
+</li>
+<li>
+<p><strong>Com es defineixen rutes en Laravel?</strong></p>
+<ul>
+<li>a) Mitjançant el fitxer <code>routes/web.php</code>.</li>
+<li>b) Des del controlador directament.</li>
+<li>c) Amb la funció <code>route()</code> dins d’una vista Blade.</li>
+<li>d) No cal definir-les, Laravel les crea automàticament.</li>
+</ul>
+</li>
+<li>
+<p><strong>Què és una vista Blade i quins avantatges ofereix?</strong></p>
+<ul>
+<li>a) És un tipus especial de controlador que conté codi HTML i PHP.</li>
+<li>b) És una plantilla de presentació que permet estructurar HTML amb codi Blade.</li>
+<li>c) És un mètode que genera automàticament formularis dinàmics.</li>
+<li>d) És un fitxer CSS que s’inclou amb <code>@vite</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Quina diferència hi ha entre utilitzar <code>Route::resource()</code> i definir rutes manualment?</strong></p>
+<ul>
+<li>a) <code>Route::resource()</code> genera automàticament totes les rutes principals d'un controlador de recursos.</li>
+<li>b) No hi ha cap diferència; totes dues fan el mateix.</li>
+<li>c) <code>Route::resource()</code> és per a models, mentre que les rutes manuals són per a funcions estàtiques.</li>
+<li>d) Les rutes manuals són més ràpides d'executar que <code>Route::resource()</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Què és el mètode <code>compact()</code> i per què és útil en Laravel?</strong></p>
+<ul>
+<li>a) Crea un array associatiu a partir de variables existents amb el mateix nom.</li>
+<li>b) És un mètode que optimitza el rendiment de les vistes.</li>
+<li>c) Permet passar dades d'un controlador a un altre.</li>
+<li>d) Genera rutes dinàmicament.</li>
+</ul>
+</li>
+<li>
+<p><strong>Com es pot reutilitzar codi a les vistes Blade?</strong></p>
+<ul>
+<li>a) Utilitzant components Blade o plantilles amb <code>@include</code> i <code>@extends</code>.</li>
+<li>b) Definint variables globals accessibles des de totes les vistes.</li>
+<li>c) Emprant sessions per compartir informació entre vistes.</li>
+<li>d) Copiant el codi en cada vista per assegurar que funcioni correctament.</li>
+</ul>
+</li>
+<li>
+<p><strong>Què és una ruta amb nom (Named Route) a Laravel i quins avantatges ofereix?</strong></p>
+<ul>
+<li>a) Una ruta amb nom és una que utilitza la funció <code>name()</code> per assignar-li un identificador únic, facilitant-ne la reutilització i manteniment.</li>
+<li>b) És una ruta que només es pot accedir si està associada a un middleware específic.</li>
+<li>c) És una funcionalitat per generar rutes dinàmiques basades en controladors de recursos.</li>
+<li>d) Una ruta amb nom és aquella que no requereix paràmetres i retorna només text estàtic.</li>
+</ul>
+</li>
+<li>
+<p><strong>Quan és recomanable utilitzar components Blade en comptes de vistes parcials a Laravel?</strong></p>
+<ul>
+<li>a) Quan necessitem passar dades dinàmiques i encapsular la lògica de presentació en una estructura reutilitzable i clara.</li>
+<li>b) Quan la vista parcial és molt complexa i conté múltiples dependències externes.</li>
+<li>c) Quan volem crear mètodes d’ajuda per a consultes SQL directament des de la vista.</li>
+<li>d) Quan necessitem incloure una vista dins d’una altra sense passar-hi dades addicionals.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="seccio-2-preguntes-obertes-practica">Secció 2: Preguntes obertes (Pràctica)<a class="headerlink" href="#seccio-2-preguntes-obertes-practica" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Explica breument com has creat el llistat d'estadis a l'exercici pràctic.</p>
+</li>
+<li>
+<p>Què fa la ruta <code>/estadis/crear</code> en el projecte, i quina funcionalitat afegeix al llistat d'estadis?</p>
+</li>
+<li>
+<p>Com es pot incloure un fitxer CSS al projecte i fer que s’aplique a una vista concreta?</p>
+</li>
+<li>
+<p>Què és la directiva @include a Blade, i com pots utilitzar-la per fer el teu codi més modular?</p>
+</li>
+<li>
+<p>Què passa si a la vista Blade intentes accedir a una clau que no existeix en un array? Com pots evitar errors?</p>
+</li>
+<li>
+<p>Què passa si una ruta definida en el fitxer web.php no troba una vista o controlador associat? Com pots evitar errors en aquests casos?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      2021-2026 Aitor Medrano, Luis Alemañ, Ignasi Gomis - Licencia CC BY-NC-SA
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/aitormedrano" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.2 4.2 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.52 8.52 0 0 1-5.33 1.84q-.51 0-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:<a.medrano@edu.gva.es>" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12.13c-.15.01-.29.06-.39.17l-1 1 2.05 2 1-1c.22-.21.22-.56 0-.77l-1.24-1.23a.56.56 0 0 0-.38-.17m-2 1.75L13 19.94V22h2.06l6.06-6.07M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7v-.89l8.24-8.22c.47-.49 1.12-.76 1.8-.76.34 0 .68.06 1 .19V6c0-1.12-.92-2-2.04-2m0 4-8 5-8-5V6l8 5 8-5"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["header.autohide", "toc.integrate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiat al porta-retalls", "clipboard.copy": "C\u00f2pia al porta-retalls", "search.result.more.one": "1 m\u00e9s en aquesta p\u00e0gina", "search.result.more.other": "# m\u00e9s en aquesta p\u00e0gina", "search.result.none": "Cap document coincideix", "search.result.one": "1 document coincident", "search.result.other": "# documents coincidents", "search.result.placeholder": "Escriu per a comen\u00e7ar a cercar", "search.result.term.missing": "Desaparegut", "select.version": "Selecciona la versi\u00f3"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
