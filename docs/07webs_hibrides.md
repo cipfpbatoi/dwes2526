@@ -304,78 +304,130 @@ class EventName implements ShouldBroadcast
   php artisan queue:work
 ```
  
-##  Integració amb IA sense pagament (local)
- 
-Per evitar APIs de pagament, podem utilitzar models locals amb **Ollama**. La idea és aixecar un model al teu ordinador i consumir-lo via HTTP des de Laravel.
+## Integració amb IA (Gemini i/o ChatGPT)
 
-#### Requisits
-- Tindre Ollama instal·lat i un model descarregat (p. ex. `llama3` o `mistral`).
-- Servidor local escoltant en `http://localhost:11434`.
+Ara substituïm l'opció local per serveis externs. **Gemini** (Google) i **ChatGPT via API d'OpenAI** són de pagament, però solen tindre trams gratuïts o crèdits inicials. 
 
-#### Configura l'entorn
+### Configura l'entorn
 
 ```dotenv
-LLM_BASE_URL=http://localhost:11434
-LLM_MODEL=llama3
+OPENAI_API_KEY=your-openai-key
+OPENAI_MODEL=gpt-5.2
+
+GEMINI_API_KEY=your-gemini-key
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
-En el teu fitxer de configuració (p. ex. `config/services.php`), afegeix:
+En `config/services.php` afegeix:
 
 ```php
-'llm' => [
-    'base_url' => env('LLM_BASE_URL', 'http://localhost:11434'),
-    'model' => env('LLM_MODEL', 'llama3'),
+'openai' => [
+    'api_key' => env('OPENAI_API_KEY'),
+    'model' => env('OPENAI_MODEL', 'gpt-5.2'),
+],
+'gemini' => [
+    'api_key' => env('GEMINI_API_KEY'),
+    'model' => env('GEMINI_MODEL', 'gemini-2.5-flash'),
 ],
 ```
 
-#### Creació d'un service per a LLM local
+> **Nota**: Canvia el model pel que tingues disponible al teu compte.
 
-Per a això creem un directori Services i un fitxer `LLMService.php`.
+### Service per a ChatGPT (OpenAI)
 
 ```php
 namespace App\Services;
- 
+
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
-class LLMService
+class OpenAIService
 {
-
-    public static function getResponse($question)
+    public static function getResponse(string $question): string|array
     {
-
         try {
             $client = new Client([
-                'base_uri' => config('services.llm.base_url') . '/',
+                'base_uri' => 'https://api.openai.com/',
                 'headers' => [
                     'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . config('services.openai.api_key'),
                 ],
             ]);
-            $response = $client->post('api/generate', [
+
+            $response = $client->post('v1/chat/completions', [
                 'json' => [
-                    'model' => config('services.llm.model'),
-                    'prompt' => $question,
-                    'stream' => false,
+                    'model' => config('services.openai.model'),
+                    'messages' => [
+                        ['role' => 'user', 'content' => $question],
+                    ],
                 ],
             ]);
 
             $body = json_decode($response->getBody()->getContents(), true);
-            return $body['response'] ?? '';
+            return $body['choices'][0]['message']['content'] ?? '';
         } catch (\Exception $e) {
-            Log::error('Error en la resposta del LLM local: ' . $e->getMessage());
+            Log::error('Error en la resposta d\'OpenAI: ' . $e->getMessage());
             return ['error' => 'No s\'ha pogut obtenir una resposta.'];
         }
     }
 }
 ```
 
-Ara la forma de utilitzar-lo de forma bàsica és la següent:
+### Service per a Gemini (Google)
 
 ```php
-$descripcio = LLMService::getResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
+namespace App\Services;
+
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
+
+class GeminiService
+{
+    public static function getResponse(string $question): string|array
+    {
+        try {
+            $client = new Client([
+                'base_uri' => 'https://generativelanguage.googleapis.com/',
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+            ]);
+
+            $model = config('services.gemini.model');
+            $response = $client->post("v1beta/models/{$model}:generateContent", [
+                'headers' => [
+                    'x-goog-api-key' => config('services.gemini.api_key'),
+                ],
+                'json' => [
+                    'contents' => [
+                        [
+                            'parts' => [
+                                ['text' => $question],
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
+
+            $body = json_decode($response->getBody()->getContents(), true);
+            return $body['candidates'][0]['content']['parts'][0]['text'] ?? '';
+        } catch (\Exception $e) {
+            Log::error('Error en la resposta de Gemini: ' . $e->getMessage());
+            return ['error' => 'No s\'ha pogut obtenir una resposta.'];
+        }
+    }
+}
 ```
 
-A partir d'ahi podem adaptar els prompts i el tractament de respostes segons necessitem.
+### Ús bàsic
+
+```php
+$descripcio = OpenAIService::getResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
+// o bé
+$descripcio = GeminiService::getResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
+```
+
+A partir d'ací pots adaptar prompts, controlar costos i afegir memòria o historial de conversa segons necessites.
 
 
 ## Gestió de pagaments
@@ -910,35 +962,22 @@ protected static function booted()
     }
 ```
 
-### Exemple Integració amb LLM local
+### Exemple d'integració amb IA (Gemini o ChatGPT)
 
-#### Pas 1 - Configuració local
-
-1. Configura el `.env` amb el servei local:
-
-```dotenv
-LLM_BASE_URL=http://localhost:11434
-LLM_MODEL=llama3
-```
-
-2. Afegeix la configuració a `config/services.php` (tal com s'ha vist abans):
-
-```php
-'llm' => [
-        'base_url' => env('LLM_BASE_URL', 'http://localhost:11434'),
-        'model' => env('LLM_MODEL', 'llama3'),
-    ],
-```
-
-#### Pas 2 - Utilització del Servei
-
-Utilitza el servei en el teu controlador per obtenir respostes del LLM local:
+Utilitza el servei en el teu controlador per obtenir una descripció (equip o estadi):
 
 ```php
 public function show(Equip $equip) {
-        $descripcio = LLMService::getResponse('Dona una descripció del '.$equip->nom.' de Futbol Femení');
-        return view('equips.show', compact('equip','descripcio'));
-    }
+    $descripcio = OpenAIService::getResponse(
+        'Dona una descripció del '.$equip->nom.' de Futbol Femení'
+    );
+    // o bé
+    // $descripcio = GeminiService::getResponse(
+    //     'Dona una descripció de l\'estadi '.$equip->estadi->nom
+    // );
+
+    return view('equips.show', compact('equip','descripcio'));
+}
 ```
 
 Modifica la vista per a mostrar la descripció:
@@ -962,9 +1001,19 @@ Modifica el component de la vista ...
 
 ### Activitats
 
-1. Crea l'autenticació mitjançant google per a l'aplicació de Futbol-femeni fent un nou tipus d'usuari que serà [convidat], que no té permisos per a fer res en la base dades i no te passwords i soles es pot autenticar mitjançant google. Els altre usuaris no poden autenticar-se mitjançant google.
-2. Fes que, a banda de modificar la classificació, ixca una alerta en la pantalla i es canvie el color de l'equip a roig si baixa o a verd si puja.
-3. Fes que, al mostrar l'estadi, isca una descripció de l'estadi feta per un LLM local (Ollama).
-4. Crea un mashup amb n8n que agregue dades obertes i mostra el resultat en l'aplicació.
+1. Autenticació amb Google per a Futbol-femeni: crea el rol [convidat], sense permisos en BD i sense password; només pot entrar amb Google. La resta d'usuaris no poden autenticar-se amb Google.
+2. IA al projecte de Futbol-femeni: genera una descripció d'equip o estadi amb Gemini o ChatGPT i mostra-la a la vista (cache simple opcional).
+3. Mashup amb dades obertes (crides directes): **meteorologia**. Propostes:
+   - **Open‑Meteo** (sense API key, forecast global).
+   - **AEMET OpenData** (API oficial d’Espanya amb clau gratuïta).
+   Agrega la predicció del dia o el risc de pluja i mostra-ho en la fitxa d’equip/estadi.
+4. Opcional (si teniu classificació): quan canvia la classificació, mostra una alerta i canvia el color de l'equip a roig si baixa o a verd si puja.
+
+
+
+
+
+
+
 
  
