@@ -186,25 +186,48 @@ Laravel facilita la difusió d'esdeveniments (*event broadcasting*) gràcies a u
 ```bash
   php artisan install:broadcasting
 ```
-Em preguntarà si vull instal·lar Reverb (sí) i la part de client (sí).         
+Em preguntarà si vull instal·lar Reverb (sí) i la part de client (sí). Aquesta ordre ja instal·la Reverb i Laravel Echo, així que no cal repetir la instal·lació després.         
 
 Aquesta ordre:
 
 - Crearà el fitxer `config/broadcasting.php`.
 - Crearà el fitxer `routes/channels.php`, on pots registrar rutes d'autorització i callbacks per als canals de difusió.
 
+#### Proveïdor de serveis (Broadcasting)
+
+Assegura't que el **BroadcastServiceProvider** està creat i registrat. És el que activa les rutes de difusió i carrega `routes/channels.php`.
+
+```php
+// app/Providers/BroadcastServiceProvider.php
+public function boot(): void
+{
+    Broadcast::routes();
+    require base_path('routes/channels.php');
+}
+```
+
+Registre del provider:
+
+- **Laravel 10** (`config/app.php`):
+  ```php
+  'providers' => [
+      // ...
+      App\Providers\BroadcastServiceProvider::class,
+  ],
+  ```
+- **Laravel 11** (`bootstrap/app.php`):
+  ```php
+  ->withProviders([
+      App\Providers\BroadcastServiceProvider::class,
+  ])
+  ```
+
  
 #### Configuració Bàsica amb Laravel Reverb (gratuït i autogestionat)
 
 Reverb permet fer WebSockets sense dependre de serveis externs:
 
-1. Instal·la el paquet de Reverb:
-   
-```bash
-composer require laravel/reverb
-```
-
-2. Configura les variables al `.env`:
+1. Configura les variables al `.env`:
 
 ```env
 BROADCAST_DRIVER=reverb
@@ -222,7 +245,7 @@ VITE_REVERB_PORT=8080
 VITE_REVERB_SCHEME=http
 ```
 
-3. Configura el driver de difusió en `config/broadcasting.php`:
+2. Configura el driver de difusió en `config/broadcasting.php`:
 
 ```php
 'reverb' => [
@@ -236,14 +259,9 @@ VITE_REVERB_SCHEME=http
 ],
 ```
   
-4. Configuració de Laravel Echo
+3. Configuració de Laravel Echo
 
-Si no està instal·lat, instal·la Laravel Echo:
-
-```bash
-npm install --save-dev laravel-echo pusher-js
-npm run build
-```
+(Si has fet `php artisan install:broadcasting`, ja està instal·lat.)
  
 ```js
 import Echo from 'laravel-echo';
