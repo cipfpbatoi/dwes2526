@@ -208,13 +208,7 @@ public function boot(): void
 
 Registre del provider:
 
-- **Laravel 10** (`config/app.php`):
-  ```php
-  'providers' => [
-      // ...
-      App\Providers\BroadcastServiceProvider::class,
-  ],
-  ```
+ 
 - **Laravel 11** (`bootstrap/app.php`):
   ```php
   ->withProviders([
@@ -262,10 +256,18 @@ VITE_REVERB_SCHEME=http
 3. Configuració de Laravel Echo
 
 (Si has fet `php artisan install:broadcasting`, ja està instal·lat.)
- 
-```js
-import Echo from 'laravel-echo';
 
+**On posar el JS?**  
+En Laravel, el codi d’Echo va a `resources/js/bootstrap.js` (o `resources/js/app.js` si preferixes).  
+Després assegura’t que Vite carrega el fitxer a `resources/views/layouts/app.blade.php`:
+
+```php
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+```
+
+```js
+// resources/js/app.js (o bootstrap.js)
+import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
@@ -321,6 +323,55 @@ class EventName implements ShouldBroadcast
 ```bash
   php artisan queue:work
 ```
+
+#### Proveïdor extern (exemple: Pusher Channels)
+
+Si prefereixes un proveïdor gestionat (sense Reverb), pots usar **Pusher**.
+
+1. Crea una app a Pusher Channels (dashboard) i copia `app_id`, `key`, `secret`, `cluster`.
+2. `.env`:
+
+```env
+BROADCAST_DRIVER=pusher
+
+PUSHER_APP_ID=your-app-id
+PUSHER_APP_KEY=your-app-key
+PUSHER_APP_SECRET=your-app-secret
+PUSHER_APP_CLUSTER=eu
+
+VITE_PUSHER_APP_KEY=your-app-key
+VITE_PUSHER_APP_CLUSTER=eu
+```
+
+3. `config/broadcasting.php`:
+
+```php
+'pusher' => [
+    'driver' => 'pusher',
+    'key' => env('PUSHER_APP_KEY'),
+    'secret' => env('PUSHER_APP_SECRET'),
+    'app_id' => env('PUSHER_APP_ID'),
+    'options' => [
+        'cluster' => env('PUSHER_APP_CLUSTER'),
+        'useTLS' => true,
+    ],
+],
+```
+
+4. JS (mateix fitxer que abans, però canviant el provider):
+
+```js
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    forceTLS: true,
+});
+```
+
+5. **Crear un canal**:
+   - En Pusher **no “crees” canals al dashboard**. Els canals s’obrin automàticament quan el client es connecta a `channel-name`.  
+   - En Laravel, defineix el canal a `routes/channels.php` (autorització).
  
 ## Integració amb IA (Gemini i/o ChatGPT)
 
