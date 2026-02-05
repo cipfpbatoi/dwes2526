@@ -193,22 +193,7 @@ Aquesta ordre:
 - Crearà el fitxer `config/broadcasting.php`.
 - Crearà el fitxer `routes/channels.php`, on pots registrar rutes d'autorització i callbacks per als canals de difusió.
 
-#### Rutes de broadcasting (Laravel 12)
-
-En **Laravel 12** el `BroadcastServiceProvider` no està per defecte. Laravel intenta registrar automàticament `/broadcasting/auth` quan executes `install:broadcasting`, però si no apareix, activa manualment les rutes en `bootstrap/app.php`:
-
-```php
-->withRouting(
-    web: __DIR__.'/../routes/web.php',
-    channels: __DIR__.'/../routes/channels.php',
-    health: '/up',
-)
-```
-
-Això enllaça correctament els canals i l’endpoint d’autorització (`/broadcasting/auth`).
-
-> **Laravel 11 i anteriors**: es registra `App\Providers\BroadcastServiceProvider` amb `Broadcast::routes()` i `routes/channels.php`.
-
+  
  
 #### Configuració Bàsica amb Laravel Reverb (gratuït i autogestionat)
 
@@ -316,6 +301,126 @@ class EventName implements ShouldBroadcast
 ```bash
   php artisan queue:work
 ```
+
+# Exemple final: classificació Futbol-femeni (Reverb + Livewire)
+
+## Objectiu
+Actualitzar la classificació quan es modifica un resultat, sense polling.
+
+## Resum del flux
+1. Es guarda el partit.
+2. S’emet `PartitActualitzat`.
+3. Reverb publica al canal `futbol-femeni`.
+4. Echo rep l’event i fa `Livewire.dispatch('classificacio-refresh')`.
+5. Livewire re-renderitza la taula.
+
+## Configuració (primer)
+
+### 1) `.env`
+```env
+BROADCAST_CONNECTION=reverb
+
+REVERB_APP_ID=your-app-id
+REVERB_APP_KEY=your-app-key
+REVERB_APP_SECRET=your-app-secret
+REVERB_HOST=localhost
+REVERB_PORT=8080
+REVERB_SCHEME=http
+
+VITE_REVERB_APP_KEY=your-app-key
+VITE_REVERB_HOST=localhost
+VITE_REVERB_PORT=8080
+VITE_REVERB_SCHEME=http
+```
+
+### 2) `routes/channels.php`
+```php
+Broadcast::channel('futbol-femeni', function ($user) {
+    return true;
+});
+```
+### 3) `package.json`
+Assegurar (o actualitzar) Alpine:
+```json
+"alpinejs": "^3.14.0"
+```
+## Codi (després)
+
+### 3) `app/Events/PartitActualitzat.php`
+```php
+namespace App\Events;
+
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class PartitActualitzat implements ShouldBroadcast
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public function __construct(public $partit) {}
+
+    public function broadcastOn()
+    {
+        return new Channel('futbol-femeni');
+    }
+
+    public function broadcastAs()
+    {
+        return 'PartitActualitzat';
+    }
+}
+```
+
+### 4) Disparar l’event (model o service)
+```php
+protected static function booted()
+{
+    static::updated(function ($partit) {
+        event(new PartitActualitzat($partit));
+    });
+}
+```
+
+### 5) `resources/js/app.js`
+```js
+window.Echo.channel('futbol-femeni')
+    .listen('.PartitActualitzat', () => {
+        if (window.Livewire) {
+            window.Livewire.dispatch('classificacio-refresh');
+        }
+    });
+```
+
+### 6) Livewire (taula de classificació)
+```php
+use Livewire\Attributes\On;
+
+#[On('classificacio-refresh')]
+public function actualitzarClassificacio(): void
+{
+    $this->calcularClassificacio();
+    $this->dispatch('$refresh');
+}
+```
+
+## Al final (cua i arrencada)
+
+> **Per què cal la cua?** `reverb:start` només arranca el servidor WebSocket. Els events de broadcast van per la cua (si uses `ShouldBroadcast`).  
+> Si no vols cua, pots canviar l’event a `ShouldBroadcastNow`.
+
+> **Per què `npm install`?** Si has actualitzat la versió d’`alpinejs` al `package.json`, cal reinstal·lar dependències abans del build.
+
+```bash
+php artisan queue:work
+php artisan reverb:start
+npm install
+npm run build
+```
+
+
 
  
 ## Integració amb IA (Gemini i/o ChatGPT)
