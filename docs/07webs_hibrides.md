@@ -64,7 +64,7 @@ En este tema evitarem APIs de pagament. Els exemples de passarel·les de pagamen
 
 Laravel **Socialite** és la biblioteca oficial per gestionar l'autenticació amb proveïdors socials.
 
-#### **1. Instal·la Socialite** 
+#### **1.1. Instal·la Socialite** 
    ```bash
    composer require laravel/socialite
    php artisan vendor:publish --provider="Laravel\Socialite\SocialiteServiceProvider"
@@ -153,9 +153,39 @@ class AuthController extends Controller
 }
 ```
  
-#### **6. Modifica el Model `User` per afegir els camps nou i modifica la migració**
- 
-#### **7. Prova l'Autenticació**
+#### **6. Modifica el Model `User` i la migració**
+
+Afig els camps `google_id` i `avatar` al model i a la taula `users`.
+
+#### **7. Vistes mínimes (opcional)**
+
+Si vols mostrar un resultat explícit d'autenticació, crea:
+- `resources/views/auth/success.blade.php`
+- `resources/views/auth/error.blade.php`
+
+Exemple ràpid:
+
+```php
+{{-- resources/views/auth/success.blade.php --}}
+<h1>Login correcte</h1>
+```
+
+```php
+{{-- resources/views/auth/error.blade.php --}}
+<h1>Error d'autenticació</h1>
+<p>{{ $error ?? 'No s\\'ha pogut iniciar sessió amb Google.' }}</p>
+```
+
+I en la vista de login, enllaç al redirect:
+
+```html
+<a href="{{ route('google.redirect') }}">Inicia sessió amb Google</a>
+```
+
+> Amb el controlador de l'exemple (`return redirect('/home')`) aquestes vistes no són necessàries.
+> Només usa `success/error` si canvies el callback per a retornar vistes en lloc de redirigir.
+
+#### **8. Prova l'Autenticació**
 - Accedeix a l'URL: `http://localhost/auth/google/redirect`
 - Segueix el procés d'autenticació amb Google.
 
@@ -276,7 +306,7 @@ window.Echo = new Echo({
 });
 ```
   
-al front-end, afegeix el següent codi per connectar amb el servidor de WebSockets:
+al front-end, pots afegir el següent codi per comprovar la connexió amb el servidor de WebSockets (opcional):
 
  
 ```js
@@ -943,253 +973,42 @@ $data = $response->json();
 
 ## Exemple de reutilització de codi
 
-### Autenticació amb Google
+### Autenticació amb Google (integrada)
 
+Per evitar duplicats, usa com a referència la secció principal:
+`## Autenticació amb Google` (instal·lació, `.env`, `config/services.php`, rutes i controlador web).
 
-#### Pas 1 - Instal·lació
+#### Configuració del compte a Google Cloud (resum)
 
-Instal·lem el paquet de Google:
+1. Entra a [Google Cloud Console](https://console.cloud.google.com/).
+2. Crea (o selecciona) un projecte.
+3. Ves a `APIs & Services` -> `OAuth consent screen` i configura la pantalla de consentiment.
+4. Ves a `APIs & Services` -> `Credentials` -> `Create Credentials` -> `OAuth client ID`.
+5. Tria tipus **Web application**.
+6. Afegeix l'URI de redirecció autoritzat:
+   - `http://localhost/auth/google/callback`
+7. Guarda i copia `Client ID` i `Client Secret` al `.env`:
 
-```console
-composer require laravel/socialite
-```
-
-#### Pas 2 - Crear credencials a Google cloud
-
-* Obre la Consola de Google Cloud: Visita [Google Cloud Console](https://goo.gle/3oFLcJ5).
-
-**Crear un Projecte a Google Cloud**
-
-* Crea un Nou Projecte: En la consola, crea un nou projecte si encara no en tens cap.
-* Navega al Projecte: Un cop creat, selecciona el projecte per a configurar les credencials.
-
-**Configurar OAuth Consent Screen**
-
-* Vés a "APIs & Services > OAuth consent screen".
-* Selecciona l'usuari extern i omple els detalls necessaris. ![Fig.1](imagenes/09/consentiment1.png).
-* Afegeix la informació del teu domini i els detalls de l'aplicació. ![Fig.2](imagenes/09/consentiment2.png).
-
-
-**Crear Credencials**
-
-* Vés a "APIs & Services > Credentials".
-* Clica a "Create Credentials" i selecciona "OAuth client ID".
-* Selecciona l'aplicació web com a tipus d'aplicació. ![Fig.3](imagenes/09/credencials1.png).
-* Afegeix les URL de redirecció autoritzades des de Laravel (p. ex., http://localhost/auth/google/callback per a l'entorn de desenvolupament).
-* Obté l'ID de Client i el Secret de Client: Després de crear les credencials, anota l'ID de client i el secret que Google proporciona. ![Fig.4](imagenes/09/credencials2.png).
-
-#### Pas 3 - Configuració de Socialite per a Google
-
-```php
+```dotenv
 GOOGLE_CLIENT_ID=your-client-id
 GOOGLE_CLIENT_SECRET=your-client-secret
 GOOGLE_REDIRECT=http://localhost/auth/google/callback
 ```
-Afegeix la Configuració de Google a config/services.php:
+
+> Si treballes amb Sail i URL diferent de `localhost`, usa exactament la mateixa URL al `.env` i a la credencial d'OAuth.
+
+Si necessites una variant per a API:
+
+1. Després de validar el callback de Google, pots generar un token de Sanctum.
+2. Retorna JSON o una vista específica segons el teu flux.
+
+Exemple mínim (variant API):
 
 ```php
-'google' => [
-    'client_id' => env('GOOGLE_CLIENT_ID'),
-    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-    'redirect' => env('GOOGLE_REDIRECT'),
-],
+$token = $user->createToken('Personal Access Token')->plainTextToken;
+return response()->json(['token' => $token]);
 ```
-#### Pas 4 - Creació de Rutes i Controladors
-
-Defineix rutes en routes/web.php per a redirigir cap a Google i per al callback.
-
-```php  
-Route::get('auth/google', [LoginController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
-```
-
-En LoginController, afegeix la lògica per a redirigir a l'usuari cap a Google i manejar el callback.
-
-redirectToGoogle: Redirigeix l'usuari a la pàgina d'autenticació de Google.
-handleGoogleCallback: Processa la resposta de Google, crea o troba un usuari, i genera un token de Sanctum.
-
-```php  
-<?php
-// En LoginController 
-
-public function redirectToGoogle()
-{
-    return Socialite::driver('google')->redirect();
-}
-
-
-public function handleGoogleCallback()
-{
-    try {
-        $googleUser = Socialite::driver('google')->stateless()->user();
-
-            // Cerca o crea l'usuari a la base de dades
-            $user = User::updateOrCreate(
-                ['email' => $googleUser->email],
-                [
-                    'name' => $googleUser->name,
-                    'google_id' => $googleUser->id,
-                    'avatar' => $googleUser->avatar,
-                ]
-            );
-
-            // Autentica l'usuari
-            Auth::login($user);
-
-        // Generar token Sanctum
-        // Si volem autenticar en l'API podriem generar un token
-        $token = $userr->createToken('Personal Access Token')->plainTextToken;
-
-        // Redirigir l'usuari amb el token
-        return view('auth.success', ['token' => $token]); // Asumint que tens una vista 'auth.success'
-
-    } catch (\Exception $e) {
-        // Maneig d'errors
-        return view('auth.error', ['error' => $e->getMessage()]); // Asumint que tens una vista 'auth.error'
-    }
-}
-```
-Caldrà fer unes modificacions en el model User.php
-
-```php
  
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'google_id',
-        'avatar',
-    ];
- 
-```
-
-I afegir el camp google_id i avatar a la migració de la base de dades
-
-#### Pas 5 - Creació de les vistes de comprovació
-
-Crea dues vistes en resources/views/auth: success.blade.php i error.blade.php.
-
-```php
-{{-- resources/views/auth/success.blade.php --}}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Autenticació Exitosa</title>
-</head>
-<body>
-    <h1>Benvingut/da!</h1>
-    <p>La teua autenticació ha sigut exitosa.</p>
-    <p>El teu token d'accés és: {{ $token }}</p>
-</body>
-</html>
-```
-
-```php
-{{-- resources/views/auth/error.blade.php --}}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Error d'Autenticació</title>
-</head>
-<body>
-    <h1>Error d'Autenticació</h1>
-    <p>Ha ocorregut un error durant el procés d'autenticació: {{ $error }}</p>
-</body>
-</html>
-```
-
-#### Pas 6. Inclou l'enllaç en el login per redirigir a google
-
-```html
-<a href="{{ route('auth.google') }}">Inicia sessió amb Google</a>
-```
-
-### Actualització de la classificació en temps real.
-
-Després de configurar el pusher i el Laravel Echo, podem implementar que la classificació s'actualitze de forma automàtica quan es canvie un resultat.
-
-1. No cal JS personalitzat si escoltes l'event directament des de Livewire amb `#[On('echo:classificacio,partit.resultat')]`.
-
-Si vols debug, pots deixar este codi:
-
-```bootstrap.js
-window.Echo.channel('classificacio')
-    .listen('.partit.resultat', (data) => {
-        console.log('Esdeveniment rebut:', data);
-    });
-```
-
-2. `routes/channels.php` no és necessari en este cas, perquè el canal és públic (`Channel`).
-Només caldria si uses `PrivateChannel` o `PresenceChannel`.
-
-3. Modificar el component livewire per a gestionar l'esdeveniment rebut:
-
-```php
-    public int $tick = 0;
-
-    #[On('echo:classificacio,partit.resultat')]
-    #[On('classificacio-refresh')]
-    public function refreshFromBroadcast(): void
-    {
-        $this->tick++;
-    }
-```
-
-4. Crear el esdeveniment que s'enviarà al canal:
-
-```php
-namespace App\Events;
-
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
-
-class PartitActualitzat implements ShouldBroadcast
-{
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public int $partitId;
-
-    public function __construct(int $partitId)
-    {
-         $this->partitId = $partitId;
-    }
-
-    public function broadcastOn()
-    {
-        return new Channel('classificacio');
-    }
-
-    public function broadcastAs()
-    {
-         return 'partit.resultat';
-    }
-}
-```
-
-5. Disparar l'esdeveniment (servei/controlador recomanat; model opcional):
-
-```php
-// Servei o controlador (recomanat)
-$partit->update($dades);
-PartitActualitzat::dispatch($partit->id);
-```
-
-```php
-// Model (si vols que siga automàtic en qualsevol actualització)
-protected static function booted()
-{
-    static::updated(function ($partit) {
-        PartitActualitzat::dispatch($partit->id);
-    });
-}
-```
 
 ### Exemple d'integració amb IA (Gemini o ChatGPT)
 
@@ -1229,6 +1048,8 @@ Modifica la vista per a mostrar la descripció:
 Modifica el component de la vista ...
 
 ### Activitats
+
+#### Tria 2 d'estes o implementa 2 diferentes
 
 1. Autenticació amb Google per a Futbol-femeni: crea el rol [convidat], sense permisos en BD i sense password; només pot entrar amb Google. La resta d'usuaris no poden autenticar-se amb Google.
 2. IA al projecte de Futbol-femeni: genera una descripció d'equip o estadi amb Gemini o ChatGPT i mostra-la a la vista (cache simple opcional).
