@@ -157,6 +157,45 @@ class AuthController extends Controller
 
 Afig els camps `google_id` i `avatar` al model i a la taula `users`.
 
+Comanda per crear la migració:
+
+```bash
+./vendor/bin/sail artisan make:migration add_google_fields_to_users_table --table=users
+```
+
+Exemple de migració:
+
+```php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('google_id')->nullable()->unique()->after('email');
+            $table->string('avatar')->nullable()->after('google_id');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropUnique(['google_id']);
+            $table->dropColumn(['google_id', 'avatar']);
+        });
+    }
+};
+```
+
+Executa migracions:
+
+```bash
+./vendor/bin/sail artisan migrate
+```
+
 #### **7. Vistes mínimes (opcional)**
 
 Si vols mostrar un resultat explícit d'autenticació, crea:
