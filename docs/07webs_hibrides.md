@@ -310,8 +310,8 @@ Actualitzar la classificació quan es modifica un resultat, sense polling.
 ## Resum del flux
 1. Es guarda el partit.
 2. S’emet `PartitActualitzat`.
-3. Reverb publica al canal `futbol-femeni`.
-4. Echo rep l’event i fa `Livewire.dispatch('classificacio-refresh')`.
+3. Reverb publica al canal `classificacio` amb nom d’event `partit.resultat`.
+4. Livewire rep l’event directament amb `#[On('echo:classificacio,partit.resultat')]`.
 5. Livewire re-renderitza la taula.
 
 ## Configuració (primer)
@@ -335,7 +335,7 @@ VITE_REVERB_SCHEME=http
 
 ### 2) `routes/channels.php`
 ```php
-Broadcast::channel('futbol-femeni', function ($user) {
+Broadcast::channel('classificacio', function ($user) {
     return true;
 });
 ```
@@ -364,12 +364,12 @@ class PartitActualitzat implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('futbol-femeni');
+        return new Channel('classificacio');
     }
 
     public function broadcastAs()
     {
-        return 'PartitActualitzat';
+        return 'partit.resultat';
     }
 }
 ```
@@ -397,27 +397,110 @@ protected static function booted()
 }
 ```
 
-### 5) `resources/js/app.js`
+### 5) `resources/js/app.js` (opcional)
+No cal codi extra si uses l'atribut `#[On('echo:classificacio,partit.resultat')]` a Livewire.
+Si vols traça en consola, pots afegir:
+
 ```js
-window.Echo.channel('futbol-femeni')
-    .listen('.PartitActualitzat', (data) => {
-        if (window.Livewire) {
-            window.Livewire.dispatch('classificacio-refresh', {
-                partitId: data.partitId,
-            });
-        }
+window.Echo.channel('classificacio')
+    .listen('.partit.resultat', (data) => {
+        console.log('Esdeveniment rebut:', data);
     });
 ```
 
 ### 6) Livewire (taula de classificació)
 ```php
+namespace App\Livewire;
+
+use App\Models\Equip;
+use App\Models\Partit;
+use Livewire\Component;
 use Livewire\Attributes\On;
 
-#[On('classificacio-refresh')]
-public function actualitzarClassificacio(): void
+class ClassificacioTaula extends Component
 {
-    $this->calcularClassificacio();
-    $this->dispatch('$refresh');
+    public int $tick = 0;
+
+    #[On('echo:classificacio,partit.resultat')]
+    #[On('classificacio-refresh')]
+    public function refreshFromBroadcast(): void
+    {
+        $this->tick++;
+    }
+
+    public function render()
+    {
+        $equips = Equip::all();
+        $stats = [];
+
+        foreach ($equips as $equip) {
+            $stats[$equip->id] = [
+                'equip' => $equip,
+                'pj' => 0,
+                'pg' => 0,
+                'pe' => 0,
+                'pp' => 0,
+                'gf' => 0,
+                'gc' => 0,
+                'dif' => 0,
+                'punts' => 0,
+            ];
+        }
+
+        $partits = Partit::query()
+            ->whereNotNull('gols_local')
+            ->whereNotNull('gols_visitant')
+            ->get();
+
+        foreach ($partits as $partit) {
+            if (!isset($stats[$partit->equip_local_id]) || !isset($stats[$partit->equip_visitant_id])) {
+                continue;
+            }
+
+            $local =& $stats[$partit->equip_local_id];
+            $visitant =& $stats[$partit->equip_visitant_id];
+
+            $local['pj']++;
+            $visitant['pj']++;
+
+            $local['gf'] += $partit->gols_local;
+            $local['gc'] += $partit->gols_visitant;
+            $visitant['gf'] += $partit->gols_visitant;
+            $visitant['gc'] += $partit->gols_local;
+
+            if ($partit->gols_local > $partit->gols_visitant) {
+                $local['pg']++;
+                $visitant['pp']++;
+                $local['punts'] += 3;
+            } elseif ($partit->gols_local < $partit->gols_visitant) {
+                $visitant['pg']++;
+                $local['pp']++;
+                $visitant['punts'] += 3;
+            } else {
+                $local['pe']++;
+                $visitant['pe']++;
+                $local['punts'] += 1;
+                $visitant['punts'] += 1;
+            }
+
+            $local['dif'] = $local['gf'] - $local['gc'];
+            $visitant['dif'] = $visitant['gf'] - $visitant['gc'];
+        }
+
+        $classificacio = array_values($stats);
+
+        usort($classificacio, function ($a, $b) {
+            $cmp = [$b['punts'], $b['dif'], $b['gf']] <=> [$a['punts'], $a['dif'], $a['gf']];
+            if ($cmp !== 0) {
+                return $cmp;
+            }
+            return strcasecmp($a['equip']->nom, $b['equip']->nom);
+        });
+
+        return view('livewire.classificacio-taula', [
+            'classificacio' => $classificacio,
+        ]);
+    }
 }
 ```
 
@@ -1019,13 +1102,14 @@ Crea dues vistes en resources/views/auth: success.blade.php i error.blade.php.
 
 Després de configurar el pusher i el Laravel Echo, podem implementar que la classificació s'actualitze de forma automàtica quan es canvie un resultat.
 
-1. Afegir el codi per a gestionar l'escolta en el frontend:
+1. No cal JS personalitzat si escoltes l'event directament des de Livewire amb `#[On('echo:classificacio,partit.resultat')]`.
+
+Si vols debug, pots deixar este codi:
 
 ```bootstrap.js
-window.Echo.channel('futbol-femeni')
-    .listen('.PartitActualitzat', (data) => {
+window.Echo.channel('classificacio')
+    .listen('.partit.resultat', (data) => {
         console.log('Esdeveniment rebut:', data);
-        Livewire.dispatch('PartitActualitzat', { partitId: data.partitId });
     });
 ```
 
@@ -1035,7 +1119,7 @@ window.Echo.channel('futbol-femeni')
 
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('futbol-femeni', function () {
+Broadcast::channel('classificacio', function () {
     return true;
 });
 ```
@@ -1043,11 +1127,13 @@ Broadcast::channel('futbol-femeni', function () {
 3. Modificar el component livewire per a gestionar l'esdeveniment rebut:
 
 ```php
-    #[On('PartitActualitzat')] 
-    public function actualitzarClassificacio()
+    public int $tick = 0;
+
+    #[On('echo:classificacio,partit.resultat')]
+    #[On('classificacio-refresh')]
+    public function refreshFromBroadcast(): void
     {
-        $this->calcularClassificacio();
-        $this->dispatch('$refresh');
+        $this->tick++;
     }
 ```
 
@@ -1075,12 +1161,12 @@ class PartitActualitzat implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('futbol-femeni');
+        return new Channel('classificacio');
     }
 
     public function broadcastAs()
     {
-         return 'PartitActualitzat';
+         return 'partit.resultat';
     }
 }
 ```
