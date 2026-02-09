@@ -360,7 +360,7 @@ class PartitActualitzat implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(public $partit) {}
+    public function __construct(public int $partitId) {}
 
     public function broadcastOn()
     {
@@ -374,12 +374,25 @@ class PartitActualitzat implements ShouldBroadcast
 }
 ```
 
-### 4) Disparar l’event (model o service)
+### 4) Disparar l’event (servei/controlador recomanat)
+
+Per a tindre més control, és preferible disparar l'event des del punt on actualitzes el resultat (servei o controlador):
+
+```php
+public function updateResultat(Partit $partit, array $dades): void
+{
+    $partit->update($dades);
+    PartitActualitzat::dispatch($partit->id);
+}
+```
+
+Si vols que es llance sempre que el model canvie, pots usar el model:
+
 ```php
 protected static function booted()
 {
     static::updated(function ($partit) {
-        event(new PartitActualitzat($partit));
+        PartitActualitzat::dispatch($partit->id);
     });
 }
 ```
@@ -387,9 +400,11 @@ protected static function booted()
 ### 5) `resources/js/app.js`
 ```js
 window.Echo.channel('futbol-femeni')
-    .listen('.PartitActualitzat', () => {
+    .listen('.PartitActualitzat', (data) => {
         if (window.Livewire) {
-            window.Livewire.dispatch('classificacio-refresh');
+            window.Livewire.dispatch('classificacio-refresh', {
+                partitId: data.partitId,
+            });
         }
     });
 ```
@@ -1010,7 +1025,7 @@ Després de configurar el pusher i el Laravel Echo, podem implementar que la cla
 window.Echo.channel('futbol-femeni')
     .listen('.PartitActualitzat', (data) => {
         console.log('Esdeveniment rebut:', data);
-        Livewire.dispatch('PartitActualitzat',data);
+        Livewire.dispatch('PartitActualitzat', { partitId: data.partitId });
     });
 ```
 
@@ -1051,11 +1066,11 @@ class PartitActualitzat implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $partit;
+    public int $partitId;
 
-    public function __construct($partit)
+    public function __construct(int $partitId)
     {
-         $this->partit = $partit;
+         $this->partitId = $partitId;
     }
 
     public function broadcastOn()
@@ -1070,15 +1085,22 @@ class PartitActualitzat implements ShouldBroadcast
 }
 ```
 
-5. Disparar l'esdeveniment des del model:
+5. Disparar l'esdeveniment (servei/controlador recomanat; model opcional):
 
 ```php
+// Servei o controlador (recomanat)
+$partit->update($dades);
+PartitActualitzat::dispatch($partit->id);
+```
+
+```php
+// Model (si vols que siga automàtic en qualsevol actualització)
 protected static function booted()
-    {
-        static::updated(function ($partit) {
-            event(new PartitActualitzat($partit));
-        });
-    }
+{
+    static::updated(function ($partit) {
+        PartitActualitzat::dispatch($partit->id);
+    });
+}
 ```
 
 ### Exemple d'integració amb IA (Gemini o ChatGPT)
