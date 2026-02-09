@@ -465,7 +465,32 @@ window.Echo.channel('classificacio')
     });
 ```
 
-> Important: encara que no faces listeners manuals en `app.js`, sí que has de tindre la configuració base d'Echo en `resources/js/bootstrap.js` i carregar els assets amb Vite.
+**Configuració mínima obligatòria (sense listeners manuals):**
+
+```js
+// resources/js/bootstrap.js (o app.js)
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
+window.Pusher = Pusher;
+
+window.Echo = new Echo({
+    broadcaster: 'reverb',
+    key: import.meta.env.VITE_REVERB_APP_KEY,
+    wsHost: import.meta.env.VITE_REVERB_HOST,
+    wsPort: import.meta.env.VITE_REVERB_PORT,
+    wssPort: import.meta.env.VITE_REVERB_PORT,
+    forceTLS: import.meta.env.VITE_REVERB_SCHEME === 'https',
+    enabledTransports: ['ws', 'wss'],
+});
+```
+
+```php
+// resources/views/layouts/app.blade.php
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+```
+
+Sense aquest bloc base, el navegador no es connecta a Reverb i Livewire no rep `echo:...`.
 
 ### 8) Livewire (taula de classificació)
 ```php
