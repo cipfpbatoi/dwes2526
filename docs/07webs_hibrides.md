@@ -184,7 +184,7 @@ Laravel facilita la difusió d'esdeveniments (*event broadcasting*) gràcies a u
 #### Configuració
  
 ```bash
-  php artisan install:broadcasting
+  ./vendor/bin/sail artisan install:broadcasting
 ```
 Em preguntarà si vull instal·lar Reverb (sí) i la part de client (sí). Aquesta ordre ja instal·la Reverb i Laravel Echo, així que no cal repetir la instal·lació després.         
 
@@ -202,18 +202,18 @@ Reverb permet fer WebSockets sense dependre de serveis externs:
 1. Configura les variables al `.env`:
 
 ```env
-BROADCAST_DRIVER=reverb
+BROADCAST_CONNECTION=reverb
 
 REVERB_APP_ID=your-app-id
 REVERB_APP_KEY=your-app-key
 REVERB_APP_SECRET=your-app-secret
 REVERB_HOST=localhost
-REVERB_PORT=8080
+REVERB_PORT=8081
 REVERB_SCHEME=http
 
 VITE_REVERB_APP_KEY=your-app-key
 VITE_REVERB_HOST=localhost
-VITE_REVERB_PORT=8080
+VITE_REVERB_PORT=8081
 VITE_REVERB_SCHEME=http
 ```
 
@@ -233,7 +233,7 @@ VITE_REVERB_SCHEME=http
   
 3. Configuració de Laravel Echo
 
-(Si has fet `php artisan install:broadcasting`, ja està instal·lat.)
+(Si has fet `./vendor/bin/sail artisan install:broadcasting`, ja està instal·lat.)
 
 **On posar el JS?**  
 En Laravel, el codi d’Echo va a `resources/js/bootstrap.js` (o `resources/js/app.js` si preferixes).  
@@ -299,13 +299,22 @@ class EventName implements ShouldBroadcast
 - És necessari configurar i executar un treballador de cua per evitar que la resposta de l'aplicació es veja afectada durant la difusió dels esdeveniments:
 
 ```bash
-  php artisan queue:work
+  ./vendor/bin/sail artisan queue:work
 ```
 
 # Exemple final: classificació Futbol-femeni (Reverb + Livewire)
 
 ## Objectiu
 Actualitzar la classificació quan es modifica un resultat, sense polling.
+
+## Fitxers a modificar (mínim)
+1. `.env`
+2. `docker-compose.yml` (exposar port `8081`)
+3. `app/Events/PartitActualitzat.php`
+4. `app/Http/Controllers/PartitController.php` (o el controlador que actualitza resultats)
+5. `routes/web.php` (ruta update)
+6. `app/Livewire/ClassificacioTaula.php`
+7. `resources/js/bootstrap.js` (configuració base d'Echo, normalment ja ve amb `install:broadcasting`)
 
 ## Resum del flux
 1. Es guarda el partit.
@@ -324,29 +333,40 @@ REVERB_APP_ID=your-app-id
 REVERB_APP_KEY=your-app-key
 REVERB_APP_SECRET=your-app-secret
 REVERB_HOST=localhost
-REVERB_PORT=8080
+REVERB_PORT=8081
 REVERB_SCHEME=http
 
 VITE_REVERB_APP_KEY=your-app-key
 VITE_REVERB_HOST=localhost
-VITE_REVERB_PORT=8080
+VITE_REVERB_PORT=8081
 VITE_REVERB_SCHEME=http
 ```
 
-### 2) `routes/channels.php`
-```php
-Broadcast::channel('classificacio', function ($user) {
-    return true;
-});
+### 2) `docker-compose.yml`
+```yaml
+services:
+  laravel.test:
+    ports:
+      - "80:80"
+      - "5173:5173"
+      - "8081:8081"
 ```
-### 3) `package.json`
+
+> Si ja tens altres ports, deixa'ls i afegeix només `8081:8081`.
+
+### 3) `routes/channels.php` (en este exemple, no cal)
+Com que usem `new Channel('classificacio')` (canal públic), no fa falta registrar res en `routes/channels.php`.
+
+`routes/channels.php` només és necessari si canvies a `PrivateChannel` o `PresenceChannel` i has d'autoritzar accés.
+
+### 4) `package.json`
 Assegurar (o actualitzar) Alpine:
 ```json
 "alpinejs": "^3.14.0"
 ```
 ## Codi (després)
 
-### 3) `app/Events/PartitActualitzat.php`
+### 5) `app/Events/PartitActualitzat.php`
 ```php
 namespace App\Events;
 
@@ -374,16 +394,36 @@ class PartitActualitzat implements ShouldBroadcast
 }
 ```
 
-### 4) Disparar l’event (servei/controlador recomanat)
+### 6) Disparar l’event des del controlador
 
-Per a tindre més control, és preferible disparar l'event des del punt on actualitzes el resultat (servei o controlador):
+Exemple en `app/Http/Controllers/PartitController.php`:
 
 ```php
-public function updateResultat(Partit $partit, array $dades): void
+use App\Events\PartitActualitzat;
+use App\Models\Partit;
+use Illuminate\Http\Request;
+
+public function update(Request $request, Partit $partit)
 {
+    $dades = $request->validate([
+        'gols_local' => ['required', 'integer', 'min:0'],
+        'gols_visitant' => ['required', 'integer', 'min:0'],
+    ]);
+
     $partit->update($dades);
     PartitActualitzat::dispatch($partit->id);
+
+    return back()->with('status', 'Resultat actualitzat');
 }
+```
+
+Ruta en `routes/web.php`:
+
+```php
+use App\Http\Controllers\PartitController;
+
+Route::patch('/partits/{partit}', [PartitController::class, 'update'])
+    ->name('partits.update');
 ```
 
 Si vols que es llance sempre que el model canvie, pots usar el model:
@@ -397,7 +437,7 @@ protected static function booted()
 }
 ```
 
-### 5) `resources/js/app.js` (opcional)
+### 7) `resources/js/app.js` (opcional)
 No cal codi extra si uses l'atribut `#[On('echo:classificacio,partit.resultat')]` a Livewire.
 Si vols traça en consola, pots afegir:
 
@@ -408,7 +448,9 @@ window.Echo.channel('classificacio')
     });
 ```
 
-### 6) Livewire (taula de classificació)
+> Important: encara que no faces listeners manuals en `app.js`, sí que has de tindre la configuració base d'Echo en `resources/js/bootstrap.js` i carregar els assets amb Vite.
+
+### 8) Livewire (taula de classificació)
 ```php
 namespace App\Livewire;
 
@@ -504,7 +546,7 @@ class ClassificacioTaula extends Component
 }
 ```
 
-## Al final (cua i arrencada)
+## Al final (Sail: cua, Reverb i assets)
 
 > **Per què cal la cua?** `reverb:start` només arranca el servidor WebSocket. Els events de broadcast van per la cua (si uses `ShouldBroadcast`).  
 > Si no vols cua, pots canviar l’event a `ShouldBroadcastNow`.
@@ -512,10 +554,10 @@ class ClassificacioTaula extends Component
 > **Per què `npm install`?** Si has actualitzat la versió d’`alpinejs` al `package.json`, cal reinstal·lar dependències abans del build.
 
 ```bash
-php artisan queue:work
-php artisan reverb:start
-npm install
-npm run build
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run build
+./vendor/bin/sail artisan queue:work
+./vendor/bin/sail artisan reverb:start --host=0.0.0.0 --port=8081
 ```
 
 
@@ -1113,16 +1155,8 @@ window.Echo.channel('classificacio')
     });
 ```
 
-2. Modificar el routes/channel.php per a autoritzar l'accés al canal:
-
-```php
-
-use Illuminate\Support\Facades\Broadcast;
-
-Broadcast::channel('classificacio', function () {
-    return true;
-});
-```
+2. `routes/channels.php` no és necessari en este cas, perquè el canal és públic (`Channel`).
+Només caldria si uses `PrivateChannel` o `PresenceChannel`.
 
 3. Modificar el component livewire per a gestionar l'esdeveniment rebut:
 
