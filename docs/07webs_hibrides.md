@@ -471,94 +471,20 @@ window.Echo.channel('classificacio')
 ```php
 namespace App\Livewire;
 
-use App\Models\Equip;
-use App\Models\Partit;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
 class ClassificacioTaula extends Component
 {
-    public int $tick = 0;
-
     #[On('echo:classificacio,partit.resultat')]
     #[On('classificacio-refresh')]
     public function refreshFromBroadcast(): void
     {
-        $this->tick++;
-    }
+        // Opció 1: si fas la consulta en render(), n'hi ha prou amb refrescar.
+        $this->dispatch('$refresh');
 
-    public function render()
-    {
-        $equips = Equip::all();
-        $stats = [];
-
-        foreach ($equips as $equip) {
-            $stats[$equip->id] = [
-                'equip' => $equip,
-                'pj' => 0,
-                'pg' => 0,
-                'pe' => 0,
-                'pp' => 0,
-                'gf' => 0,
-                'gc' => 0,
-                'dif' => 0,
-                'punts' => 0,
-            ];
-        }
-
-        $partits = Partit::query()
-            ->whereNotNull('gols_local')
-            ->whereNotNull('gols_visitant')
-            ->get();
-
-        foreach ($partits as $partit) {
-            if (!isset($stats[$partit->equip_local_id]) || !isset($stats[$partit->equip_visitant_id])) {
-                continue;
-            }
-
-            $local =& $stats[$partit->equip_local_id];
-            $visitant =& $stats[$partit->equip_visitant_id];
-
-            $local['pj']++;
-            $visitant['pj']++;
-
-            $local['gf'] += $partit->gols_local;
-            $local['gc'] += $partit->gols_visitant;
-            $visitant['gf'] += $partit->gols_visitant;
-            $visitant['gc'] += $partit->gols_local;
-
-            if ($partit->gols_local > $partit->gols_visitant) {
-                $local['pg']++;
-                $visitant['pp']++;
-                $local['punts'] += 3;
-            } elseif ($partit->gols_local < $partit->gols_visitant) {
-                $visitant['pg']++;
-                $local['pp']++;
-                $visitant['punts'] += 3;
-            } else {
-                $local['pe']++;
-                $visitant['pe']++;
-                $local['punts'] += 1;
-                $visitant['punts'] += 1;
-            }
-
-            $local['dif'] = $local['gf'] - $local['gc'];
-            $visitant['dif'] = $visitant['gf'] - $visitant['gc'];
-        }
-
-        $classificacio = array_values($stats);
-
-        usort($classificacio, function ($a, $b) {
-            $cmp = [$b['punts'], $b['dif'], $b['gf']] <=> [$a['punts'], $a['dif'], $a['gf']];
-            if ($cmp !== 0) {
-                return $cmp;
-            }
-            return strcasecmp($a['equip']->nom, $b['equip']->nom);
-        });
-
-        return view('livewire.classificacio-taula', [
-            'classificacio' => $classificacio,
-        ]);
+        // Opció 2: si tens un mètode específic, crida'l ací.
+        // $this->calcularClassificacio();
     }
 }
 ```
