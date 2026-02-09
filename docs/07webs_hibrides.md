@@ -176,6 +176,22 @@ Laravel proporciona diverses opcions per gestionar WebSockets. En este tema prio
 2. **Pusher Channels**: Servei gestionat per a WebSockets (no gratuït en la majoria de casos).
 3. **Ably**: Plataforma avançada per a comunicacions en temps real (amb límits gratuïts, però de pagament en producció).
 
+### Guia ràpida (què fa cada peça)
+
+- **Event Laravel**: representa un fet del servidor (p. ex. s'ha actualitzat un resultat).
+- **Queue (`queue:work`)**: processa feines en segon pla. Amb `ShouldBroadcast`, l'enviament del broadcast passa per la cua.
+- **Reverb / Pusher / Ably**: servei WebSocket que fa el *push* en temps real als navegadors.
+- **Scheduler**: serveix per executar tasques periòdiques (cada minut, cada hora...). No és necessari per a este exemple.
+
+En este tema:
+1. El controlador guarda el resultat i llança `PartitActualitzat`.
+2. La cua processa el broadcast (si uses `ShouldBroadcast`).
+3. Reverb (o Pusher/Ably) envia l'event als clients connectats.
+4. Livewire l'escolta i refresca la classificació.
+
+> Si el navegador és remot i vols temps real, sí que necessites Reverb/Pusher/Ably.  
+> Si no uses WebSockets, l'alternativa és polling o recàrrega manual.
+
  
 ### Implementació Bàsica en el servidor
 
@@ -297,6 +313,7 @@ class EventName implements ShouldBroadcast
 
 - Tots els esdeveniments de difusió s'envien a través de treballs en cua (queued jobs).
 - És necessari configurar i executar un treballador de cua per evitar que la resposta de l'aplicació es veja afectada durant la difusió dels esdeveniments:
+- Açò **no** és el Scheduler: el Scheduler només cal per tasques periòdiques.
 
 ```bash
   ./vendor/bin/sail artisan queue:work
